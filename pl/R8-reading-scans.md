@@ -25,7 +25,8 @@ Przebieg w skrócie:
 > **Uwaga: odczyt modelem nie jest stuprocentowy.** Stare pismo czyta model AI, a dokładność odczytu zależy od modelu.
 > Metodyka chce do starego pisma najsilniejszego modelu, nigdy szybkiego ani taniego odczytu. Czytelnicy czytają
 > modelem do pisma (`model.vision`, w przeciwnym razie `strom read --model`), a rozmiar widoków zależy od modelu
-> ([R8.3.2](#R8.3.2)). Mimo to model się myli: w imionach i nazwiskach, numerach domów, datach i miejscach. Dlatego
+> ([R8.3.2](#R8.3.2)). Rozmiar widoków można skalibrować (`strom media calibrate`, potwierdza człowiek), a strom
+> dostraja odczyt osobno dla każdego agenta i modelu ([R8.4](#R8.4)). Mimo to model się myli: w imionach i nazwiskach, numerach domów, datach i miejscach. Dlatego
 > czytelnik przy każdym imieniu i nazwisku podaje pewność w procentach, „nieczytelne” ma pierwszeństwo przed domysłem,
 > trudne miejsce dostaje ślepy drugi odczyt, różne odczyty to sprzeczność, a Udokumentowane metodyka dopuszcza dopiero
 > po własnym odczycie wpisu przez głównego agenta ([R8.7](#R8.7)).

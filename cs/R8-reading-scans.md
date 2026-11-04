@@ -23,6 +23,8 @@ Postup v kostce:
 > **Poznámka: čtení modelem není stoprocentní.** Staré písmo čte model AI a přesnost čtení závisí na modelu.
 > Metodika chce na staré písmo nejsilnější model, nikdy rychlé nebo levné čtení. Čtenáři čtou modelem pro písmo
 > (`model.vision`, jinak `strom read --model`) a velikost pohledů se řídí modelem ([R8.3.2](#R8.3.2)).
+> Velikost pohledů jde zkalibrovat (`strom media calibrate`, potvrzuje člověk) a strom ladí čtení zvlášť pro každého
+> agenta a model ([R8.4](#R8.4)).
 > I tak se model plete: ve jménech, číslech domů, datech a místech. Proto čtenář u každého jména píše jistotu
 > v procentech, „nečitelné“ má přednost před odhadem, těžké místo dostane slepé druhé čtení, rozdílná čtení jsou
 > rozpor a Doložené chce metodika jen po vlastním čtení zápisu hlavním agentem ([R8.7](#R8.7)).

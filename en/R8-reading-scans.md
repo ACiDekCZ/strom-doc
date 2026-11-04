@@ -27,6 +27,8 @@ The procedure in brief:
 > of reading depends on the model. The method wants the strongest model for old handwriting, never fast or cheap
 > reading. Readers read with the model for handwriting (`model.vision`, otherwise `strom read --model`), and the size
 > of the views follows the model ([R8.3.2](#R8.3.2)).
+> The size of views can be calibrated (`strom media calibrate`, confirmed by a person), and strom tunes reading
+> separately for each agent and model ([R8.4](#R8.4)).
 > Even so the model makes mistakes: in names, house numbers, dates and places. That is why a reader gives its
 > certainty in per cent for each name, "illegible" beats a guess, a hard spot gets a blind second reading, different
 > readings are a conflict, and the method wants Proven only after the main agent has read the entry itself

@@ -28,6 +28,8 @@ Der Ablauf in Kürze:
 > Genauigkeit des Lesens hängt vom Modell ab. Die Methodik will für alte Schrift das stärkste Modell, nie ein
 > schnelles oder billiges Lesen. Leser lesen mit dem Modell für Schrift (`model.vision`, sonst `strom read --model`),
 > und die Größe der Ansichten richtet sich nach dem Modell ([R8.3.2](#R8.3.2)).
+> Die Größe der Ansichten lässt sich kalibrieren (`strom media calibrate`, bestätigt ein Mensch), und strom stimmt das
+> Lesen für jeden Agenten und jedes Modell getrennt ab ([R8.4](#R8.4)).
 > Trotzdem irrt sich das Modell: bei Namen, Hausnummern, Daten und Orten. Darum schreibt der Leser bei jedem Namen die
 > Sicherheit in Prozent, „unleserlich“ hat Vorrang vor einer Schätzung, eine schwierige Stelle bekommt eine blinde
 > zweite Lesung, abweichende Lesungen sind ein Widerspruch, und Belegt will die Methodik nur nach dem eigenen Lesen
