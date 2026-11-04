@@ -107,8 +107,16 @@ człowiek. Każde rozstrzygnięcie ma wniosek i uzasadnienie: który dowód prze
   Gdzie się rozstrzyga w menu i w aplikacji: [R5.6](#R5.6).
 - **Obowiązuje od:** badanie 1.0.0. Drugie rozstrzygnięcie tylko z powodem od 1.6.0, zapis, kto rozstrzygnął,
   od 1.14.0.
+- **Od badania 1.26.0:**
+  - sprzeczność ze zmiany rozstrzyga tylko człowiek. Agentowi badanie rozstrzygnięcie odrzuca, dopóki człowiek mu go
+    nie zostawi (`strom conflict leave X…`, w aplikacji **Zostaw agentowi**); `strom conflict leave` jest tylko dla
+    człowieka;
+  - sprzeczności ze zmian, które agent rozstrzygnął wcześniej, otwiera ponownie poprawka `strom fixes show|run|undo
+    edit-decisions`. Rozstrzygnięcie agenta zostaje w notatce sprzeczności, dane się nie zmieniają. Poprawkę uruchamia
+    tylko człowiek w terminalu, w Archiwum Strom jej nie ma. Dopóki nie zostanie wykonana, `strom check` zwraca uwagę
+    na takie sprzeczności.
 
-<!-- zdroj: research:assets/method/recording.md:76-78 · src/commands/analysis.ts:515-598 conflict resolve (by :561, poznámka „earlier decided“ :572-573, zápis :581) · src/core/conflicts.ts:105-113 againAllowed conflict.decided · src/core/conflicts.ts:27 conflictsToDecide · src/cli/context.ts:577 actor · cs.json ui.link.conflict.by, ui.conflict.earlier.* -->
+<!-- zdroj: research:assets/method/recording.md:76-78 · src/commands/analysis.ts:515-598 conflict resolve (by :561, poznámka „earlier decided“ :572-573, zápis :581) · src/core/conflicts.ts:105-113 againAllowed conflict.decided · src/core/conflicts.ts:27 conflictsToDecide · src/cli/context.ts:577 actor · cs.json ui.link.conflict.by, ui.conflict.earlier.* · 1.26.0: src/commands/analysis.ts:525, :572 conflict.users, :625 conflict leave (commit 1189532f) · src/commands/fixes.ts edit-decisions, strom check agent-decided-edit (commit 740e1893) -->
 
 <a id="R5.3.1"></a>
 ### R5.3.1 Sprzeczność ze zmiany rozstrzyga się stroną
@@ -165,8 +173,10 @@ albo pyta.
 - **Decyzja człowieka w sprzeczności:** [R5.4](#R5.4).
 - **Obsługa:** terminal: `strom story approve P…`, `strom story discard P…`; menu **Co czeka**.
 - **Obowiązuje od:** transkrypcja użytkownika badanie 1.12.0, zatwierdzona opowieść 1.10.0, ręczne położenie 1.25.0.
+- **Od badania 1.26.0:** `strom story approve|discard` uruchamia tylko człowiek. Agentowi badanie odrzuca też zapis
+  opowieści od razu jako zatwierdzonej (`strom story set --final`).
 
-<!-- zdroj: research:assets/method/verify.md:19-24 · src/commands/story.ts:94-96, :103 story approve, :121 story discard · src/core/placeid.ts:714 personsHand, :805-808 place.manual, :924 · app:strings.ts places.dialog.whoHand, places.waiting.kind.conflict -->
+<!-- zdroj: research:assets/method/verify.md:19-24 · src/commands/story.ts:94-96, :103 story approve, :121 story discard (1.26.0 person only, story.final) · src/core/placeid.ts:714 personsHand, :805-808 place.manual, :924 · app:strings.ts places.dialog.whoHand, places.waiting.kind.conflict -->
 
 <a id="R5.6"></a>
 ## R5.6 Gdzie widać sprzeczności i gdzie się je rozstrzyga
@@ -197,8 +207,15 @@ na komputerze, na którym działa badanie. Aplikacja otwiera badanie w terminalu
 - **Obowiązuje od:** aplikacja 3.4.0 (**Co wie badanie**, **sprzeczność ›**, **Rozstrzygnij w badaniu**, **Zostaw
   agentowi**), sekcja w panelu badania i znacznik na karcie od aplikacji 3.5.0. Wybór strony od aplikacji 3.11.0
   z badaniem 1.14.0. Sprzeczności w **Co czeka** od badania 1.20.0.
+- **Od badania 1.26.0:**
+  - **Zostaw agentowi** aplikacja proponuje także przy sprzeczności ze zmiany; odnośnik najpierw zostawia sprzeczność
+    agentowi (`strom conflict leave`);
+  - strona wybrana w aplikacji tylko się w terminalu potwierdza, powód jest nieobowiązkowy (**Dlaczego? (co
+    rozstrzyga; Enter: bez powodu, 0: bez rozstrzygnięcia)**). Bez powodu zapisuje się „wybrane w aplikacji Strom”;
+  - **Co czeka** proponuje opcje słowami aplikacji: **Zachowanie wartości z aplikacji**, **Przyjęcie wartości
+    z badania** (w archiwum **Przyjęcie wartości z Archiwum Strom**), **Pozostaw otwartą**.
 
-<!-- zdroj: research:src/core/waiting.ts:127 TERMINAL_ONLY, :443-449 · src/cli/menu-waiting.ts:486-513 decideConflictHere · src/cli/menu-links.ts:510-561 decideConflict, pickClaim · src/commands/links.ts:235-246 · src/core/live.ts:2063 decide.link · src/core/stromapp.ts APP_DECIDES_CONFLICTS="3.11.0" · app:v3.21.2 strings.ts research.knows, research.conflicts, research.conflictTag, research.decide, research.leaveToAgent, conflict.*, cardDensity.cardConflict · ui/person-research-ui.ts:139-150, :178-210 · ui/conflict-decide-ui.ts · research-decide.ts:55 canDecideInApp -->
+<!-- zdroj: research:src/core/waiting.ts:127 TERMINAL_ONLY, :443-449 · src/cli/menu-waiting.ts:486-513 decideConflictHere · src/cli/menu-links.ts:510-561 decideConflict, pickClaim · src/commands/links.ts:235-246 · src/core/live.ts:2063 decide.link · src/core/stromapp.ts APP_DECIDES_CONFLICTS="3.11.0" · app:v3.21.2 strings.ts research.knows, research.conflicts, research.conflictTag, research.decide, research.leaveToAgent, conflict.*, cardDensity.cardConflict · ui/person-research-ui.ts:139-150, :178-210 · ui/conflict-decide-ui.ts · research-decide.ts:55 canDecideInApp · 1.26.0: research:cs.json ui.wait.conflict.take.*, ui.link.conflict.whyMaybe, ui.link.conflict.inApp (commit 1189532f) · app:src/research-conflict-card.ts conflictCardView (agent u rozporu z úpravy) -->
 
 <a id="R5.6.1"></a>
 ### R5.6.1 Co można rozstrzygnąć stroną z aplikacji

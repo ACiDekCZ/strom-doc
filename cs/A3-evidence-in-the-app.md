@@ -193,11 +193,8 @@ k narození a úmrtí, k událostem, ke sňatkům a ke společným událostem p�
   pramenů je u položky menu.
 - **Ovládání:** menu osoby (klik na kartu) → **Prameny**.
 - **Platí od:** aplikace 3.3.0; **Najít pramen ve výzkumu** 3.19.0
-- **Od aplikace 3.22.0:** stránka osoby a kniha řadí za prameny údajů i prameny, o které se opírá vyprávění, se
-  štítkem
-  **Vyprávění** nebo **Vyprávění manželství**. Dialog **Prameny** z menu osoby je nemění.
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · HEAD src/person-sources.ts:59 opts.stories, src/person-page.ts:544, :2393, :3119 -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource -->
 
 <a id="A3.7"></a>
 ## A3.7 Kde chybí doklady

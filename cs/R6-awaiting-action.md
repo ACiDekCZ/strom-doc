@@ -108,6 +108,7 @@ jdou v seznamu první.
 - **Ovládání:** aplikace: **Nová verze vyprávění**, **Porovnat**, rozhodnutí odkazem do terminálu. Terminál:
   **Které vyprávění má mít rodinná kniha?**, `strom story approve|discard`.
 - **Platí od:** výzkum 1.14.0
+- **Od výzkumu 1.26.0:** rozhoduje jen člověk; agentovi výzkum `strom story approve|discard` odmítne ([R6.6](#R6.6)).
 
 <!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts -->
 
@@ -116,6 +117,7 @@ jdou v seznamu první.
 
 - Rostoucí větev mimo linie dostane otázku ve skupině **Větve mimo linie** ([R2.3.2](R2-lines-and-queue.md#R2.3.2)):
   **Přidat k linii**, **Založit linii**, **Nechat, jak je**, **Nezkoumat**.
+- **Hranice:** odpovídá jen člověk ([R6.6](#R6.6)).
 - **Ovládání:** terminál: **Co čeká** → položka, `strom offline answer`.
 - **Platí od:** výzkum 1.26.0
 
@@ -175,8 +177,12 @@ v systémovém okně, nebo příkaz odmítne.
   - schválení vyprávění a **Odesláno** dává agent jen na slovo člověka; tak to říká metodika.
 - **Ovládání:** terminál: **Odpovědět textem** (nejvýš 300 znaků), `strom task wake T… --answer "<text>"`.
 - **Platí od:** výzkum 1.14.0. Místa od 1.25.0.
+- **Od výzkumu 1.26.0:** jen člověk také: schválení a zahození vyprávění (`strom story approve|discard`; agentovi
+  výzkum odmítne i `strom story set --final`), odpověď na rostoucí větev (`strom offline answer`), nechání rozporu
+  z úpravy agentovi (`strom conflict leave`), vrácení a zahození poslání z aplikace (`strom sync undo|discard`)
+  a opravy `strom fixes … edit-decisions|woken-waits`.
 
-<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX -->
+<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) -->
 
 <a id="R6.7"></a>
 ## R6.7 Odesláno, odpověď a návrat do fronty
@@ -215,5 +221,11 @@ fronty a agent ji zpracuje při další práci.
 - **Ovládání:** terminál: `strom task park T… --reason "<proč>" --until RRRR-MM-DD`, zpět `strom task wake T…`.
   Aplikace: oddíl **Fronta**, **Odložit** (odkaz do terminálu, bez data).
 - **Platí od:** výzkum 1.0.0. Návrat po snímcích od 1.15.0, po rozhodnutí archivu od 1.14.0.
+- **Od výzkumu 1.26.0:**
+  - snímky vrátí jen úkol, který čeká na snímky právě té knihy. Úkol čekající na ověření webu člověkem nevrátí
+    nikdy. Dopis, dotaz na rodinu nebo web vrátí jen kniha, na kterou úkol čeká, ne kniha, ve které jen pracuje;
+  - úkoly, které snímky vrátily dřív neprávem, vrátí do čekání oprava `strom fixes show|run|undo woken-waits`:
+    úkol čeká jako předtím, i s odesláním. Úkol, na kterém se mezitím pracovalo, zůstane. Opravu spustí jen člověk
+    v terminálu, v Archivu Stromu není. Dokud neproběhne, `strom check` na takové úkoly upozorní.
 
-<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->
+<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->

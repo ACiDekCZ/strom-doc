@@ -29,6 +29,8 @@ most.
 - **Obsługa:** aplikacja: panel, przyciski **⤢ Otwórz przegląd** i **Zakończ śledzenie**; menu **Badanie → Przegląd
   badania**.
 - **Obowiązuje od:** aplikacja 3.5.0
+- **Od aplikacji 3.22.0:** każdą sekcję można rozwinąć, zwinąć lub ukryć, a wybór obowiązuje dla panelu i przeglądu
+  ([S4.1.2](#S4.1.2)). **Czeka na decyzję** nie rozwija się samo nawet przy nowej pozycji.
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue -->
 
@@ -45,6 +47,35 @@ Drzewo może samo przechodzić do osoby, nad którą agent właśnie pracuje (pi
 - **Obowiązuje od:** aplikacja 3.5.0
 
 <!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff -->
+
+<a id="S4.1.2"></a>
+### S4.1.2 Dostosowanie panelu
+
+Każda sekcja śledzenia badania ma jeden wybór: **Rozwinięta**, **Zwinięta** albo **Ukryta**. Wybór obowiązuje dla
+panelu i przeglądu.
+
+- **Granice:**
+  - sekcje: **Trwa praca** (w przeglądzie **Teraz**), **Czeka na decyzję**, **Ostatnie zmiany** (w przeglądzie
+    **Przebieg**), **W kolejce** (w przeglądzie **Kolejka**) i tylko w przeglądzie **Linie** oraz **Co wie badanie**;
+  - sekcja bez wyboru (**domyślna**) pokazuje się jak wcześniej: panel zwija, co się nie mieści (**zwinięta, brak
+    miejsca**), przegląd ma zwinięte sekcje **Kolejka** i **Co wie badanie**. Sekcji z wyborem panel sam nie zwija;
+  - kliknięcie nagłówka sekcji to trwały wybór (rozwinąć / zwinąć);
+  - wybór zapamiętuje się na tym urządzeniu dla wszystkich drzew, nic się nie synchronizuje. Wcześniejsze ręczne
+    zwinięcie sekcji przejmuje się jeden raz;
+  - **Przywróć domyślne** usuwa wszystkie wybory. Przywrócenie domyślnych i ukrycie sekcji z jej menu można przez
+    chwilę cofnąć (**Cofnij**). Gdy ukryte są wszystkie sekcje, panel mówi **Wszystkie sekcje są ukryte.**
+- **Czeka na decyzję zwinięte lub ukryte:**
+  - nowa pozycja sekcji nie rozwija. Nagłówek pokazuje liczbę i **{n} nowych**; wyróżnione, gdy jest wśród nich
+    decyzja lub zgoda (**w tym decyzja lub zgoda**);
+  - ukryte zostawia etykietę **Czeka {n}** w nagłówku panelu, w podsumowaniu zwiniętego panelu, w pasku na telefonie
+    i w przeglądzie. Kliknięcie pokazuje sekcję w przeglądzie, dopóki przegląd się nie zamknie (**Ukryta sekcja,
+    widoczna do zamknięcia przeglądu.**).
+- **Obsługa:** aplikacja: **⋯ → Dostosuj panel…** w nagłówku panelu i przeglądu; prawy przycisk albo długie
+  naciśnięcie na nagłówku sekcji (także klawisz Menu lub Shift+F10); **Ustawienia → Śledzenie badania**. Na
+  telefonie jako panel wysuwany od dołu.
+- **Obowiązuje od:** aplikacja 3.22.0
+
+<!-- zdroj: app:src/ui/live-section-prefs.ts SECTION_PREFS_KEY, PREF_KEYS, OVERVIEW_KEYS, OLD_PANEL_KEY · src/ui/live-section-edit.ts · src/ui/live-section-edit-ui.ts · src/ui/research-ui.ts:282 waitingHeadInfo, :312 waitingChip, :3180 toggle, :3215 resetLiveSections, :3225 hideLiveSection · src/ui/research-overview-ui.ts:376 shownOnce · strings.ts live.editPanel(Menu), sectionExpanded/Collapsed/Hidden/Default, resetDefaults, autoFoldedNote, allHidden, waitingShort, importantHint, shownOnce, settings groupResearchFollow · commity c4b1dcc, a56232a · spec 044 K1–K5 -->
 
 <a id="S4.2"></a>
 ## S4.2 Kolejka w aplikacji
@@ -70,8 +101,9 @@ Aplikacja pokazuje początek kolejki badania w kolejności, w jakiej bierze ją 
   z aplikacji, bez terminala ([R2.3.1](R2-lines-and-queue.md#R2.3.1)); przy zadaniu, nad którym pracuje agent, nie
   da się tego zrobić. Kolejkę czyta się stronami: **Wczytaj więcej** dodaje 50 zadań, lista trzyma najwyżej 300,
   resztę zawęża filtr linii lub gałęzi.
+  Etykieta gałęzi (**Gałąź {n} {k}**) zawęża całą kolejkę do zadań gałęzi; **Pokaż całą kolejkę** ją usuwa.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear -->
 
 <a id="S4.3"></a>
 ## S4.3 Linie w aplikacji
@@ -94,9 +126,13 @@ Przegląd pokazuje linie badania ([R2.1](R2-lines-and-queue.md#R2.1)): co na kt�
     kolejka.
 - **Obsługa:** aplikacja: **Przegląd badania → Linie**, przy linii **⋯**.
 - **Obowiązuje od:** aplikacja 3.5.0 (badanie 1.8.0). Podział panelu według linii od 3.13.1.
-- **Od aplikacji 3.22.0:** z badaniem 1.26.0 linie zmienia się bezpośrednio w aplikacji ([S4.3.1](#S4.3.1)).
+- **Od aplikacji 3.22.0:** z badaniem 1.26.0 linie zmienia się bezpośrednio w aplikacji ([S4.3.1](#S4.3.1)). Wiersz
+  linii pokazuje, nad czym teraz trwa praca (**Teraz: …**), i granice (**do {n} pokoleń**, **przed {rok}**; przy
+  linii wstrzymanej nie). Szczegóły linii mówią, co linia znalazła w ostatnich dniach (**Ostatnie {n} dni:** sesje,
+  osoby, źródła); osoby pokazują w drzewie. Zakończone linie są zwinięte na końcu (**Zakończone · {n}**). W wąskim
+  oknie i na telefonie przegląd jest panelem wysuwanym: zamiast uchwytu kolejności strzałki ▲▼.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume -->
+<!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume · 3.22.0: research-directions-ui.ts:703 dirEnded, :852 dirNow, :878 dirFoundIn, :720 sheet; strings.ts live.dirLimitGen, dirLimitBefore, dirFound* -->
 
 <a id="S4.3.1"></a>
 ### S4.3.1 Zarządzanie liniami z aplikacji
@@ -139,12 +175,25 @@ z [R2.3](R2-lines-and-queue.md#R2.3) i [R2.3.1](R2-lines-and-queue.md#R2.3.1) mo
 - **Granice:**
   - Dla całego badania: **Jak jest podejmowana praca poza liniami**: **Od czasu do czasu**, **Na końcu**,
     **Normalnie**, **Nigdy**.
-  - Dla gałęzi: **Dodaj do linii**, **Załóż linię z tej gałęzi**, **Nie badaj**, **Przywróć domyślne**.
-  - Pytania o rosnące gałęzie ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) są w **Czeka na decyzję**.
-- **Obsługa:** aplikacja: **Przegląd badania**, sekcja pracy poza liniami.
+  - Wiersz gałęzi: osoba gałęzi, związek z linią (**przy linii {n}**), liczba zadań, **rośnie**, **własny wybór**.
+  - Kliknięcie gałęzi pokazuje jej pierwsze zadania z miejscem w kolejce (**W kolejce · pierwsze {k} z {n}**,
+    **{i}. w kolejce**) i odnośnik **Wszystkie {n} zadań w kolejce ›**. Gdy zadania gałęzi stoją za wczytaną częścią
+    kolejki: **Zadania gałęzi stoją dalej w kolejce ({n}).**
+  - Dla gałęzi: **Podejmowana:** **Od czasu do czasu** / **Na końcu** / **Normalnie** (wybór badania ma
+    **(domyślne)**), **Dodaj do linii {n}** (najbliższa linia pierwsza), **Załóż linię z tej gałęzi**, **Nie badaj**
+    (zadania opuszczają kolejkę, nic nie jest usuwane), **Przywróć domyślne**. Gałęzie niebadane są razem
+    (**Nie jest badana · {n} gałęzi**).
+  - Pytania o rosnące gałęzie ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) są w **Czeka na decyzję**: dodać do linii
+    (przy linii wstrzymanej **Dodaj do linii {n} (wstrzymana)**), założyć linię, **Zostaw bez zmian**, nie badać. Bez
+    odpowiedzi gałąź jest podejmowana dalej jak dotąd.
+  - Okno **Badanie dla tego drzewa…**, grupa **Praca poza liniami**: wybór dla całego badania (**Od czasu do czasu**:
+    „Około 1 zadanie poza liniami na {k} zadań linii.”), **Proponuj linie dla rosnących gałęzi**, **Gałęzie
+    z własnym wyborem** i zadania z ręczną kolejnością.
+- **Obsługa:** aplikacja: **Przegląd badania**, sekcja pracy poza liniami, przy gałęzi **⋯** (**Opcje gałęzi**);
+  **Badanie dla tego drzewa…**.
 - **Obowiązuje od:** aplikacja 3.22.0 (badanie 1.26.0)
 
-<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset -->
+<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 -->
 
 <a id="S4.4"></a>
 ## S4.4 Czeka na decyzję w aplikacji

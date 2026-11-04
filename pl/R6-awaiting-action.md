@@ -114,6 +114,8 @@ Sekcja **decyzje** zbiera pytania, które wstrzymują agenta: zgoda archiwum, pr
 - **Obsługa:** aplikacja: **Nowa wersja opowieści**, **Porównaj**, decyzja odnośnikiem do terminala. Terminal:
   **Którą opowieść ma mieć Księga rodu?**, `strom story approve|discard`.
 - **Obowiązuje od:** badanie 1.14.0
+- **Od badania 1.26.0:** decyduje tylko człowiek; agentowi badanie `strom story approve|discard` odrzuca
+  ([R6.6](#R6.6)).
 
 <!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts -->
 
@@ -122,6 +124,7 @@ Sekcja **decyzje** zbiera pytania, które wstrzymują agenta: zgoda archiwum, pr
 
 - Rosnąca gałąź poza liniami dostaje pytanie w grupie **Gałęzie poza liniami** ([R2.3.2](R2-lines-and-queue.md#R2.3.2)):
   **Dodać do linii**, **Założyć linię**, **Zostawić bez zmian**, **Nie badać**.
+- **Granice:** odpowiada tylko człowiek ([R6.6](#R6.6)).
 - **Obsługa:** terminal: **Co czeka** → pozycja, `strom offline answer`.
 - **Obowiązuje od:** badanie 1.26.0
 
@@ -183,8 +186,12 @@ człowieka w oknie systemowym albo odrzuca polecenie.
   - zatwierdzenie opowieści i **Wysłano** agent wykonuje tylko na słowo człowieka; tak mówi metodyka.
 - **Obsługa:** terminal: **Odpowiedz tekstem** (najwyżej 300 znaków), `strom task wake T… --answer "<text>"`.
 - **Obowiązuje od:** badanie 1.14.0. Miejsca od 1.25.0.
+- **Od badania 1.26.0:** tylko człowiek także: zatwierdzenie i odrzucenie opowieści (`strom story approve|discard`;
+  agentowi badanie odrzuca też `strom story set --final`), odpowiedź na rosnącą gałąź (`strom offline answer`),
+  zostawienie sprzeczności ze zmiany agentowi (`strom conflict leave`), cofnięcie i odrzucenie wysłania z aplikacji
+  (`strom sync undo|discard`) oraz poprawki `strom fixes … edit-decisions|woken-waits`.
 
-<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX -->
+<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) -->
 
 <a id="R6.7"></a>
 ## R6.7 Wysłano, odpowiedź i powrót do kolejki
@@ -223,5 +230,13 @@ zadanie do kolejki, a agent przetwarza ją przy następnej pracy.
 - **Obsługa:** terminal: `strom task park T… --reason "<proč>" --until RRRR-MM-DD`, cofnięcie `strom task wake T…`.
   Aplikacja: sekcja **Kolejka**, **Odłóż** (odnośnik do terminala, bez daty).
 - **Obowiązuje od:** badanie 1.0.0. Powrót po skanach od 1.15.0, po decyzji archiwum od 1.14.0.
+- **Od badania 1.26.0:**
+  - skany przywracają tylko zadanie, które czeka na skany właśnie tej księgi. Zadania czekającego na sprawdzenie
+    witryny przez człowieka nie przywracają nigdy. List, zapytanie do rodziny lub internet przywraca tylko księga, na
+    którą zadanie czeka, a nie księga, w której tylko pracuje;
+  - zadania, które skany przywróciły wcześniej niesłusznie, przywraca do czekania poprawka `strom fixes show|run|undo
+    woken-waits`: zadanie czeka jak przedtem, także z wysłaniem. Zadanie, nad którym w międzyczasie pracowano,
+    zostaje. Poprawkę uruchamia tylko człowiek w terminalu, w Archiwum Strom jej nie ma. Dopóki nie zostanie
+    wykonana, `strom check` zwraca uwagę na takie zadania.
 
-<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->
+<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->

@@ -29,6 +29,8 @@ through the bridge.
 - **Controls:** app: the panel, buttons **⤢ Open overview** and **Stop following**; menu **Research → Research
   overview**.
 - **Since:** app 3.5.0
+- **From app 3.22.0:** each section can be expanded, collapsed or hidden, and the choice holds for the panel and the
+  overview ([S4.1.2](#S4.1.2)). **Awaiting action** does not expand by itself, not even with a new item.
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue -->
 
@@ -45,6 +47,37 @@ The tree can move by itself to the person the agent is working on right now (the
 - **Since:** app 3.5.0
 
 <!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff -->
+
+<a id="S4.1.2"></a>
+### S4.1.2 Customizing the panel
+
+Each section of research following has one choice: **Expanded**, **Collapsed** or **Hidden**. The choice holds for
+the panel and the overview.
+
+- **Limits:**
+  - sections: **At work** (in the overview **Now**), **Awaiting action**, **Latest changes** (in the overview
+    **Progress**), **Up next** (in the overview **Queue**) and only in the overview **Directions** and **What the
+    research knows**;
+  - a section without a choice (**default**) shows as before: the panel folds what does not fit (**folded to fit**),
+    the overview has **Queue** and **What the research knows** collapsed. The panel does not fold a section with a
+    choice by itself;
+  - a click on a section's heading is a lasting choice (expand / collapse);
+  - the choice is kept on this device for all trees, nothing is synchronized. An earlier manual folding of sections
+    is taken over once;
+  - **Restore defaults** cancels all choices. Restoring the defaults and hiding a section from its menu can be taken
+    back for a while (**Undo**). When all sections are hidden, the panel says **All sections are hidden.**
+- **Awaiting action collapsed or hidden:**
+  - a new item does not expand the section. The heading shows the count and **{n} new**; highlighted when a decision
+    or a permission is among them (**includes a decision or permission**);
+  - hidden, it leaves the chip **Waiting {n}** in the panel's header, in the summary of the collapsed panel, in the
+    strip on a phone and in the overview. A click shows the section in the overview until the overview closes
+    (**Hidden section, shown until the overview closes.**).
+- **Controls:** app: **⋯ → Customize panel…** in the header of the panel and of the overview; right click or long
+  press on a section's heading (also the Menu key or Shift+F10); **Settings → Following research**. On a phone as a
+  sheet from below.
+- **Since:** app 3.22.0
+
+<!-- zdroj: app:src/ui/live-section-prefs.ts SECTION_PREFS_KEY, PREF_KEYS, OVERVIEW_KEYS, OLD_PANEL_KEY · src/ui/live-section-edit.ts · src/ui/live-section-edit-ui.ts · src/ui/research-ui.ts:282 waitingHeadInfo, :312 waitingChip, :3180 toggle, :3215 resetLiveSections, :3225 hideLiveSection · src/ui/research-overview-ui.ts:376 shownOnce · strings.ts live.editPanel(Menu), sectionExpanded/Collapsed/Hidden/Default, resetDefaults, autoFoldedNote, allHidden, waitingShort, importantHint, shownOnce, settings groupResearchFollow · commity c4b1dcc, a56232a · spec 044 K1–K5 -->
 
 <a id="S4.2"></a>
 ## S4.2 The queue in the app
@@ -70,8 +103,10 @@ The app shows the beginning of the research's queue in the order in which the ag
   terminal ([R2.3.1](R2-lines-and-queue.md#R2.3.1)); not for the task the agent is working on. The queue is read in
   pages: **Load more** adds 50 tasks, the list holds at most 300, and the filter of a direction or a branch narrows
   the rest.
+  The branch chip (**Branch {n} {k}**) narrows the whole queue to the branch's tasks; **Show the whole queue**
+  cancels it.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear -->
 
 <a id="S4.3"></a>
 ## S4.3 Directions in the app
@@ -94,9 +129,14 @@ got. In app 3.21.2 directions are only read; every change is confirmed in the re
     is filtered by it.
 - **Controls:** app: **Research overview → Directions**, at a direction **⋯**.
 - **Since:** app 3.5.0 (research 1.8.0). The panel divided by direction from 3.13.1.
-- **From app 3.22.0:** with research 1.26.0 directions are changed right in the app ([S4.3.1](#S4.3.1)).
+- **From app 3.22.0:** with research 1.26.0 directions are changed right in the app ([S4.3.1](#S4.3.1)). A
+  direction's row shows what is being worked on now (**Now: …**) and the limits (**up to {n} generations**, **before
+  {year}**; not for a paused direction). The direction detail says what the direction found over the last days
+  (**Last {n} days:** sessions, people, sources); it shows the people in the tree. Ended directions are collapsed at
+  the end (**Ended · {n}**). In a narrow window and on a phone the overview is a sheet: arrows ▲▼ instead of the
+  order handle.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume -->
+<!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume · 3.22.0: research-directions-ui.ts:703 dirEnded, :852 dirNow, :878 dirFoundIn, :720 sheet; strings.ts live.dirLimitGen, dirLimitBefore, dirFound* -->
 
 <a id="S4.3.1"></a>
 ### S4.3.1 Managing directions from the app
@@ -138,13 +178,26 @@ With two or more directions, the overview shows the work outside the directions 
 - **Limits:**
   - For the whole research: **How work outside the directions is taken**: **Now and then**, **At the end**, **As
     usual**, **Never**.
-  - For a branch: **Add to a direction**, **Create a direction from this branch**, **Do not research**, **Reset to
-    default**.
-  - Questions about growing branches ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) are in **Awaiting action**.
-- **Controls:** app: **Research overview**, the section of work outside the directions.
+  - A branch's row: the branch's person, its relation to a direction (**near the direction {n}**), the number of
+    tasks, **growing**, **own choice**.
+  - A click on a branch shows its first tasks with their place in the queue (**In the queue · first {k} of {n}**,
+    **{i} in the queue**) and the link **All {n} tasks in the queue ›**. When the branch's tasks stand beyond the
+    loaded part of the queue: **The branch's tasks stand further on in the queue ({n}).**
+  - For a branch: **Taken:** **Now and then** / **At the end** / **As usual** (the research's choice has
+    **(default)**), **Add to the direction {n}** (the nearest direction first), **Create a direction from this
+    branch**, **Do not research** (the tasks leave the queue, nothing is deleted), **Reset to default**. Branches not
+    researched are together (**Not researched · {n} branches**).
+  - Questions about growing branches ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) are in **Awaiting action**: add to a
+    direction (for a paused direction **Add to the direction {n} (paused)**), create a direction, **Leave as it is**,
+    do not research. Without an answer the branch goes on being taken as before.
+  - The window **Research for this tree…**, the group **Work outside the directions**: the choice for the whole
+    research (**Now and then**: “About 1 task outside the directions per {k} tasks of the directions.”), **Suggest
+    directions for growing branches**, **Branches with their own choice** and tasks with a manual order.
+- **Controls:** app: **Research overview**, the section of work outside the directions, at a branch **⋯** (**Branch
+  options**); **Research for this tree…**.
 - **Since:** app 3.22.0 (research 1.26.0)
 
-<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset -->
+<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 -->
 
 <a id="S4.4"></a>
 ## S4.4 Awaiting action in the app

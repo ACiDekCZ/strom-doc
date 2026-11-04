@@ -150,8 +150,15 @@ Na otázky k místům odpovídá jen člověk, v aplikaci nebo v terminálu. Age
   s `--dry` a `--expect`
 - **Platí od:** výzkum 1.25.0, aplikace 3.21.0
 - **Od výzkumu 1.26.0:** malá mapa u otázky ukazuje jen body otázky a vzdálenost od návrhu (aplikace 3.22.0).
+- **Od výzkumu 1.26.0:**
+  - terminál říká slovy aplikace **Nevím** a **Žádný z nich**;
+  - **Nevím** jde i u **Rozporu polohy** (poloha zůstane, otázka zmizí, výzkum se může zeptat znovu) a u **Návrhu
+    zápisu** (údaje zůstanou, jak jsou). Aplikace 3.22.0 ho tam nabídne jen s výzkumem 1.26.0. **Žádný z nich**
+    zůstává jen u otázky **Kde je**;
+  - **Přijmout všechny navržené (n)** (`--take first`) vezme kandidáta A i u rozporu polohy. Ručně zadanou polohu
+    nepřepíše nikdy: takový rozpor vynechá.
 
-<!-- zdroj: research:src/commands/placeid.ts:345 answer (person only) · research:src/core/placeid.ts PLACE_TAKES, answerOne ~:1195 · research:src/core/waiting.ts:395–420 (v1.25.2) wait.group.places · research:src/cli/menu-waiting.ts:523–560 · app:src/waiting-places.ts placeQuestionChoices :40, bulkAcceptable :140, bulkKeepable, placeAreas · app:src/strings.ts waiting.* · app CHANGELOG.cs.md 3.22.0 -->
+<!-- zdroj: research:src/commands/placeid.ts:345 answer (person only) · research:src/core/placeid.ts PLACE_TAKES, answerOne ~:1195 · research:src/core/waiting.ts:395–420 (v1.25.2) wait.group.places · research:src/cli/menu-waiting.ts:523–560 · app:src/waiting-places.ts placeQuestionChoices :40, bulkAcceptable :140, bulkKeepable, placeAreas · app:src/strings.ts waiting.* · app CHANGELOG.cs.md 3.22.0 · 1.26.0: research:src/core/placeid.ts answerOne (first: locating.by person vynechá; unknown u conflict a form), cs.json ui.wait.place.unknown/none (commit fe59fb40) · app:src/waiting-places.ts PLACES_UNKNOWN_ALL_SINCE, ui/waiting-places-ui.ts:645 take first -->
 
 <a id="R4.5.1"></a>
 ### R4.5.1 Vrácení kroku

@@ -205,8 +205,10 @@ of the week have passed since it reset (a day ≈ 14.3 %) with the week's usage.
 - **Controls:** terminal: `strom config set run.gate "claude-usage 10 --cap 95"`. The menu does not accept a cap in
   1.25.2; it does from 1.26.0.
 - **Since:** research 1.14.0
+- **From research 1.26.0:** a running session gets the request to finish already at the cap (`--cap 95`: at 95 %
+  of the week; `--cap 100`: at 99 %).
 
-<!-- zdroj: research:assets/plugins/gates/claude-usage/gate.ts:213-219 --cap, :271-272 cap hard, FINISH_AT=0.99 :54, answer() watch :204 · src/core/gate.ts capProblem :159 · menu-settings.ts:350 (v1.25.2) -->
+<!-- zdroj: research:assets/plugins/gates/claude-usage/gate.ts:213-219 --cap, :271-272 cap hard, FINISH_AT=0.99 :54, answer() watch :204 · src/core/gate.ts capProblem :159 · menu-settings.ts:350 (v1.25.2) · 1.26.0: gate.ts finish min(0.99, cap/100) (commit 6276a16f) -->
 
 <a id="R7.6"></a>
 ## R7.6 The subscription limit stops the run

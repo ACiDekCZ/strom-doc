@@ -116,6 +116,8 @@ confirm, milder terms, a site to check, a story, a place (see [R4](R4-places.md)
 - **Controls:** app: **New version of the story**, **Compare**, the decision by a link to the terminal. Terminal:
   **Which story should the family book have?**, `strom story approve|discard`.
 - **Since:** research 1.14.0
+- **From research 1.26.0:** only a person decides; the research refuses the agent `strom story approve|discard`
+  ([R6.6](#R6.6)).
 
 <!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts -->
 
@@ -125,6 +127,7 @@ confirm, milder terms, a site to check, a story, a place (see [R4](R4-places.md)
 - A growing branch off the lines gets a question in the group **Branches off the lines**
   ([R2.3.2](R2-lines-and-queue.md#R2.3.2)): **Add to a line**, **Create a line**, **Leave it as it is**, **Do not
   research**.
+- **Limits:** only a person answers ([R6.6](#R6.6)).
 - **Controls:** terminal: **What waits** → the item, `strom offline answer`.
 - **Since:** research 1.26.0
 
@@ -188,8 +191,12 @@ asks the person in a system window, or refuses the command.
   - the agent approves a story and marks **Sent** only on a person's word; this is what the method says.
 - **Controls:** terminal: **Answer in words** (at most 300 characters), `strom task wake T… --answer "<text>"`.
 - **Since:** research 1.14.0. Places from 1.25.0.
+- **From research 1.26.0:** also only a person: approving and discarding a story (`strom story approve|discard`; the
+  research also refuses the agent `strom story set --final`), the answer to a growing branch (`strom offline
+  answer`), leaving a conflict from an edit to the agent (`strom conflict leave`), undoing and discarding a send from
+  the app (`strom sync undo|discard`) and the fixes `strom fixes … edit-decisions|woken-waits`.
 
-<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX -->
+<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) -->
 
 <a id="R6.7"></a>
 ## R6.7 Sent, the answer and the return to the queue
@@ -228,5 +235,13 @@ the task to the queue, and the agent deals with it in its next work.
 - **Controls:** terminal: `strom task park T… --reason "<why>" --until YYYY-MM-DD`, back `strom task wake T…`.
   App: the section **Queue**, **Park** (a link to the terminal, without a date).
 - **Since:** research 1.0.0. The return after images from 1.15.0, after an archive's decision from 1.14.0.
+- **From research 1.26.0:**
+  - images return only a task that waits for images of exactly that book. A task waiting for a person to check a
+    site they never return. A letter, a request to the family or a site is returned only by the book the task waits
+    for, not by a book it only works in;
+  - tasks that images returned wrongly before are put back to waiting by the fix `strom fixes show|run|undo
+    woken-waits`: the task waits as before, including the sending. A task worked on in the meantime stays. Only a
+    person runs the fix in the terminal; it is not in a Strom archive. Until it has run, `strom check` points such
+    tasks out.
 
-<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->
+<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->

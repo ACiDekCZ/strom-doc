@@ -174,8 +174,15 @@ Arten von Fragen: **Wo liegt** (Kandidaten), **Widerspruch der Lage** (die Lage 
 - **Gilt seit:** Forschung 1.25.0, App 3.21.0
 - **Ab Forschung 1.26.0:** die kleine Karte bei der Frage zeigt nur die Punkte der Frage und die Entfernung vom Vorschlag
   (App 3.22.0).
+- **Ab Forschung 1.26.0:**
+  - das Terminal sagt mit den Worten der App **Weiß nicht** und **Keiner davon**;
+  - **Weiß nicht** geht auch beim **Widerspruch der Lage** (die Lage bleibt, die Frage verschwindet, die Forschung
+    kann erneut fragen) und beim **Vorschlag zum Eintrag** (die Angaben bleiben, wie sie sind). Die App 3.22.0 bietet
+    es dort nur mit der Forschung 1.26.0 an. **Keiner davon** bleibt nur bei der Frage **Wo liegt**;
+  - **Alle Vorschläge übernehmen (n)** (`--take first`) nimmt den Kandidaten A auch beim Widerspruch der Lage. Eine
+    von Hand eingegebene Lage überschreibt es nie: einen solchen Widerspruch lässt es aus.
 
-<!-- zdroj: research:src/commands/placeid.ts:345 answer (person only) · research:src/core/placeid.ts PLACE_TAKES, answerOne ~:1195 · research:src/core/waiting.ts:395–420 (v1.25.2) wait.group.places · research:src/cli/menu-waiting.ts:523–560 · app:src/waiting-places.ts placeQuestionChoices :40, bulkAcceptable :140, bulkKeepable, placeAreas · app:src/strings.ts waiting.* · app CHANGELOG.cs.md 3.22.0 -->
+<!-- zdroj: research:src/commands/placeid.ts:345 answer (person only) · research:src/core/placeid.ts PLACE_TAKES, answerOne ~:1195 · research:src/core/waiting.ts:395–420 (v1.25.2) wait.group.places · research:src/cli/menu-waiting.ts:523–560 · app:src/waiting-places.ts placeQuestionChoices :40, bulkAcceptable :140, bulkKeepable, placeAreas · app:src/strings.ts waiting.* · app CHANGELOG.cs.md 3.22.0 · 1.26.0: research:src/core/placeid.ts answerOne (first: locating.by person vynechá; unknown u conflict a form), cs.json ui.wait.place.unknown/none (commit fe59fb40) · app:src/waiting-places.ts PLACES_UNKNOWN_ALL_SINCE, ui/waiting-places-ui.ts:645 take first -->
 
 <a id="R4.5.1"></a>
 ### R4.5.1 Rücknahme eines Schritts

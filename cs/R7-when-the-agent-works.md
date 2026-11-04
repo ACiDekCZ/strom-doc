@@ -191,8 +191,10 @@ jeho obnovení (den ≈ 14,3 %), s využitím týdne. Sezení začne, jen když 
 - **Ovládání:** terminál: `strom config set run.gate "claude-usage 10 --cap 95"`. Menu strop v 1.25.2 nepřijme,
   od 1.26.0 ano.
 - **Platí od:** výzkum 1.14.0
+- **Od výzkumu 1.26.0:** rozběhnuté sezení dostane žádost o dokončení už při stropu (`--cap 95`: při 95 % týdne;
+  `--cap 100`: při 99 %).
 
-<!-- zdroj: research:assets/plugins/gates/claude-usage/gate.ts:213-219 --cap, :271-272 cap hard, FINISH_AT=0.99 :54, answer() watch :204 · src/core/gate.ts capProblem :159 · menu-settings.ts:350 (v1.25.2) -->
+<!-- zdroj: research:assets/plugins/gates/claude-usage/gate.ts:213-219 --cap, :271-272 cap hard, FINISH_AT=0.99 :54, answer() watch :204 · src/core/gate.ts capProblem :159 · menu-settings.ts:350 (v1.25.2) · 1.26.0: gate.ts finish min(0.99, cap/100) (commit 6276a16f) -->
 
 <a id="R7.6"></a>
 ## R7.6 Limit předplatného zastaví běh

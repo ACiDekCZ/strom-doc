@@ -27,6 +27,8 @@ Research** a z něj větší **Přehled výzkumu**. Oba jen čtou. Co ukazují, 
 - **Ovládání:** aplikace: panel, tlačítka **⤢ Otevřít přehled** a **Ukončit sledování**; menu **Výzkum → Přehled
   výzkumu**.
 - **Platí od:** aplikace 3.5.0
+- **Od aplikace 3.22.0:** každý oddíl jde rozbalit, sbalit nebo skrýt a volba platí pro panel i Přehled
+  ([S4.1.2](#S4.1.2)). **Čeká na vyřízení** se sám nerozbalí ani při nové položce.
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue -->
 
@@ -42,6 +44,34 @@ Strom může sám přecházet na osobu, na které agent právě pracuje (první 
 - **Platí od:** aplikace 3.5.0
 
 <!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff -->
+
+<a id="S4.1.2"></a>
+### S4.1.2 Přizpůsobení panelu
+
+Každý oddíl sledování výzkumu má jednu volbu: **Rozbalená**, **Sbalená** nebo **Skrytá**. Volba platí pro panel
+i Přehled.
+
+- **Hranice:**
+  - oddíly: **Pracuje se** (v Přehledu **Teď**), **Čeká na vyřízení**, **Poslední změny** (v Přehledu **Průběh**),
+    **Na řadě** (v Přehledu **Fronta**) a jen v Přehledu **Linie** a **Co ví výzkum**;
+  - oddíl bez volby (**výchozí**) se ukáže jako dřív: panel sbalí, co se nevejde (**sbaleno, nevejde se**), Přehled
+    má sbalenou **Frontu** a **Co ví výzkum**. Oddíl s volbou panel sám nesbalí;
+  - klik na nadpis oddílu je trvalá volba (rozbalit / sbalit);
+  - volba se drží na tomto zařízení pro všechny stromy, nic se nesynchronizuje. Dřívější ruční sbalení oddílů se
+    převezme jednou;
+  - **Vrátit výchozí** zruší všechny volby. Vrácení výchozího i skrytí oddílu z jeho menu jde chvíli vzít zpět
+    (**Vrátit**). Když jsou skryté všechny oddíly, panel řekne **Všechny sekce jsou skryté.**
+- **Čeká na vyřízení sbalené nebo skryté:**
+  - nová položka oddíl nerozbalí. Nadpis ukáže počet a **{n} nových**; zvýrazněně, když je mezi nimi rozhodnutí
+    nebo povolení (**mezi nimi rozhodnutí nebo povolení**);
+  - skryté nechá štítek **Čeká {n}** v hlavičce panelu, ve shrnutí sbaleného panelu, v pruhu na telefonu
+    a v Přehledu. Klik ukáže oddíl v Přehledu, dokud se Přehled nezavře (**Skrytá sekce, ukázaná do zavření
+    Přehledu.**).
+- **Ovládání:** aplikace: **⋯ → Upravit panel…** v hlavičce panelu i Přehledu; pravé tlačítko nebo dlouhý stisk na
+  nadpisu oddílu (i klávesa Menu nebo Shift+F10); **Nastavení → Sledování výzkumu**. Na telefonu jako list zdola.
+- **Platí od:** aplikace 3.22.0
+
+<!-- zdroj: app:src/ui/live-section-prefs.ts SECTION_PREFS_KEY, PREF_KEYS, OVERVIEW_KEYS, OLD_PANEL_KEY · src/ui/live-section-edit.ts · src/ui/live-section-edit-ui.ts · src/ui/research-ui.ts:282 waitingHeadInfo, :312 waitingChip, :3180 toggle, :3215 resetLiveSections, :3225 hideLiveSection · src/ui/research-overview-ui.ts:376 shownOnce · strings.ts live.editPanel(Menu), sectionExpanded/Collapsed/Hidden/Default, resetDefaults, autoFoldedNote, allHidden, waitingShort, importantHint, shownOnce, settings groupResearchFollow · commity c4b1dcc, a56232a · spec 044 K1–K5 -->
 
 <a id="S4.2"></a>
 ## S4.2 Fronta v aplikaci
@@ -65,8 +95,9 @@ fronta zůstává ve výzkumu.
   **Udělat hned** a **Na konec** (a **Vrátit výchozí**) mění místo úkolu přímo z aplikace, bez terminálu
   ([R2.3.1](R2-lines-and-queue.md#R2.3.1)); u úkolu, na kterém agent pracuje, to nejde. Fronta se čte po stránkách:
   **Načíst další** přidá 50 úkolů, seznam drží nejvýš 300, zbytek zúží filtr linie nebo větve.
+  Štítek větve (**Větev {n} {k}**) zúží celou frontu na úkoly větve; **Ukázat celou frontu** ho zruší.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear -->
 
 <a id="S4.3"></a>
 ## S4.3 Linie v aplikaci
@@ -88,9 +119,13 @@ se linie jen čtou; každá změna se potvrzuje v terminálu výzkumu.
   - Se dvěma a více liniemi panel dělí práci po liniích a jednu linii jde vybrat; podle ní se filtruje fronta.
 - **Ovládání:** aplikace: **Přehled výzkumu → Linie**, u linie **⋯**.
 - **Platí od:** aplikace 3.5.0 (výzkum 1.8.0). Dělení panelu po liniích od 3.13.1.
-- **Od aplikace 3.22.0:** s výzkumem 1.26.0 se linie mění přímo v aplikaci ([S4.3.1](#S4.3.1)).
+- **Od aplikace 3.22.0:** s výzkumem 1.26.0 se linie mění přímo v aplikaci ([S4.3.1](#S4.3.1)). Řádek linie
+  ukáže, na čem se teď pracuje (**Teď: …**), a meze (**do {n} generací**, **před {rok}**; u pozastavené linie ne).
+  Detail linie řekne, co linie našla za poslední dny (**Za {n} dní:** sezení, osoby, prameny); osoby ukáže ve
+  stromu. Ukončené linie jsou sbalené na konci (**Ukončené · {n}**). V úzkém okně a na telefonu je přehled listem:
+  místo úchytu pořadí šipky ▲▼.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume -->
+<!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume · 3.22.0: research-directions-ui.ts:703 dirEnded, :852 dirNow, :878 dirFoundIn, :720 sheet; strings.ts live.dirLimitGen, dirLimitBefore, dirFound* -->
 
 <a id="S4.3.1"></a>
 ### S4.3.1 Správa linií z aplikace
@@ -124,12 +159,24 @@ Při dvou a více liniích ukazuje přehled práci mimo linie po větvích. Volb
 
 - **Hranice:**
   - Pro celý výzkum: **Jak se bere práce mimo linie**: **Občas**, **Na konci**, **Normálně**, **Nikdy**.
-  - Pro větev: **Přidat k linii**, **Založit linii z této větve**, **Nezkoumat**, **Vrátit výchozí**.
-  - Otázky k rostoucím větvím ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) jsou v **Čeká na vyřízení**.
-- **Ovládání:** aplikace: **Přehled výzkumu**, oddíl práce mimo linie.
+  - Řádek větve: osoba větve, vztah k linii (**u linie {n}**), počet úkolů, **roste**, **vlastní volba**.
+  - Klik na větev ukáže její první úkoly s místem ve frontě (**Ve frontě · první {k} z {n}**, **{i}. ve frontě**)
+    a odkaz **Všechny {n} úkolů ve Frontě ›**. Když úkoly větve stojí za načtenou částí fronty: **Úkoly větve
+    stojí ve frontě dál ({n}).**
+  - Pro větev: **Bere se:** **Občas** / **Na konci** / **Normálně** (volba výzkumu má **(výchozí)**), **Přidat
+    k linii {n}** (nejbližší linie první), **Založit linii z této větve**, **Nezkoumat** (úkoly odejdou z fronty,
+    nic se nesmaže), **Vrátit výchozí**. Nezkoumané větve jsou pohromadě (**Nezkoumá se · {n} větví**).
+  - Otázky k rostoucím větvím ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) jsou v **Čeká na vyřízení**: přidat k linii
+    (u pozastavené linie **Přidat k linii {n} (pozastavená)**), založit linii, **Nechat, jak je**, nezkoumat. Bez
+    odpovědi se větev bere dál jako dosud.
+  - Okno **Výzkum u tohoto stromu…**, skupina **Práce mimo linie**: volba pro celý výzkum (**Občas**: „Zhruba 1 úkol
+    mimo linie na {k} úkolů linií.“), **Navrhovat linie u rostoucích větví**, **Větve s vlastní volbou**
+    a úkoly s ručním pořadím.
+- **Ovládání:** aplikace: **Přehled výzkumu**, oddíl práce mimo linie, u větve **⋯** (**Možnosti větve**);
+  **Výzkum u tohoto stromu…**.
 - **Platí od:** aplikace 3.22.0 (výzkum 1.26.0)
 
-<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset -->
+<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 -->
 
 <a id="S4.4"></a>
 ## S4.4 Čeká na vyřízení v aplikaci

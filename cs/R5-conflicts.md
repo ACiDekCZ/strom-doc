@@ -99,8 +99,14 @@ závěr a zdůvodnění: který doklad převážil který.
 - **Ovládání:** terminál: `strom conflict resolve X… --resolution "…" --reasoning "…"`, znovu s `--reason "…"`.
   Kde se rozhoduje v menu a v aplikaci: [R5.6](#R5.6).
 - **Platí od:** výzkum 1.0.0. Druhé rozhodnutí jen s důvodem od 1.6.0, záznam, kdo rozhodl, od 1.14.0.
+- **Od výzkumu 1.26.0:**
+  - rozpor z úpravy rozhoduje jen člověk. Agentovi výzkum rozhodnutí odmítne, dokud mu ho člověk nenechá
+    (`strom conflict leave X…`, v aplikaci **Nechat na agentovi**); `strom conflict leave` je jen pro člověka;
+  - rozpory z úprav, které agent rozhodl dřív, otevře znovu oprava `strom fixes show|run|undo edit-decisions`.
+    Rozhodnutí agenta zůstane v poznámce rozporu, údaje se nezmění. Opravu spustí jen člověk v terminálu, v Archivu
+    Stromu není. Dokud neproběhne, `strom check` na takové rozpory upozorní.
 
-<!-- zdroj: research:assets/method/recording.md:76-78 · src/commands/analysis.ts:515-598 conflict resolve (by :561, poznámka „earlier decided“ :572-573, zápis :581) · src/core/conflicts.ts:105-113 againAllowed conflict.decided · src/core/conflicts.ts:27 conflictsToDecide · src/cli/context.ts:577 actor · cs.json ui.link.conflict.by, ui.conflict.earlier.* -->
+<!-- zdroj: research:assets/method/recording.md:76-78 · src/commands/analysis.ts:515-598 conflict resolve (by :561, poznámka „earlier decided“ :572-573, zápis :581) · src/core/conflicts.ts:105-113 againAllowed conflict.decided · src/core/conflicts.ts:27 conflictsToDecide · src/cli/context.ts:577 actor · cs.json ui.link.conflict.by, ui.conflict.earlier.* · 1.26.0: src/commands/analysis.ts:525, :572 conflict.users, :625 conflict leave (commit 1189532f) · src/commands/fixes.ts edit-decisions, strom check agent-decided-edit (commit 740e1893) -->
 
 <a id="R5.3.1"></a>
 ### R5.3.1 Rozpor z úpravy se rozhoduje stranou
@@ -152,8 +158,10 @@ Některé věci jsou slovem člověka. Agent je nepřepíše, ani když najde n�
 - **Rozhodnutí člověka v rozporu:** [R5.4](#R5.4).
 - **Ovládání:** terminál: `strom story approve P…`, `strom story discard P…`; menu **Co čeká**.
 - **Platí od:** přepis uživatele výzkum 1.12.0, schválené vyprávění 1.10.0, ruční poloha 1.25.0.
+- **Od výzkumu 1.26.0:** `strom story approve|discard` spustí jen člověk. Agentovi výzkum odmítne i zápis
+  vyprávění rovnou jako schváleného (`strom story set --final`).
 
-<!-- zdroj: research:assets/method/verify.md:19-24 · src/commands/story.ts:94-96, :103 story approve, :121 story discard · src/core/placeid.ts:714 personsHand, :805-808 place.manual, :924 · app:strings.ts places.dialog.whoHand, places.waiting.kind.conflict -->
+<!-- zdroj: research:assets/method/verify.md:19-24 · src/commands/story.ts:94-96, :103 story approve, :121 story discard (1.26.0 person only, story.final) · src/core/placeid.ts:714 personsHand, :805-808 place.manual, :924 · app:strings.ts places.dialog.whoHand, places.waiting.kind.conflict -->
 
 <a id="R5.6"></a>
 ## R5.6 Kde jsou rozpory vidět a kde se rozhodují
@@ -183,8 +191,15 @@ kde výzkum běží. Aplikace otevře výzkum v terminálu a ten se zeptá na po
 - **Platí od:** aplikace 3.4.0 (**Co ví výzkum**, **rozpor ›**, **Rozhodnout ve výzkumu**, **Nechat na agentovi**),
   oddíl v panelu výzkumu a značka na kartě od aplikace 3.5.0. Volba strany od aplikace 3.11.0 s výzkumem 1.14.0.
   Rozpory v **Co čeká** od výzkumu 1.20.0.
+- **Od výzkumu 1.26.0:**
+  - **Nechat na agentovi** nabídne aplikace i u rozporu z úpravy; odkaz rozpor nejdřív nechá agentovi
+    (`strom conflict leave`);
+  - strana vybraná v aplikaci se v terminálu jen potvrdí, důvod je nepovinný (**Proč? (co rozhoduje; Enter = bez
+    důvodu, 0 = nic nerozhodnout)**). Bez důvodu se zapíše „vybráno v aplikaci Strom“;
+  - **Co čeká** nabízí volby slovy aplikace: **Ponechat hodnotu z aplikace**, **Převzít hodnotu výzkumu** (v archivu
+    **Převzít hodnotu Archivu Stromu**), **Nechat otevřený**.
 
-<!-- zdroj: research:src/core/waiting.ts:127 TERMINAL_ONLY, :443-449 · src/cli/menu-waiting.ts:486-513 decideConflictHere · src/cli/menu-links.ts:510-561 decideConflict, pickClaim · src/commands/links.ts:235-246 · src/core/live.ts:2063 decide.link · src/core/stromapp.ts APP_DECIDES_CONFLICTS="3.11.0" · app:v3.21.2 strings.ts research.knows, research.conflicts, research.conflictTag, research.decide, research.leaveToAgent, conflict.*, cardDensity.cardConflict · ui/person-research-ui.ts:139-150, :178-210 · ui/conflict-decide-ui.ts · research-decide.ts:55 canDecideInApp -->
+<!-- zdroj: research:src/core/waiting.ts:127 TERMINAL_ONLY, :443-449 · src/cli/menu-waiting.ts:486-513 decideConflictHere · src/cli/menu-links.ts:510-561 decideConflict, pickClaim · src/commands/links.ts:235-246 · src/core/live.ts:2063 decide.link · src/core/stromapp.ts APP_DECIDES_CONFLICTS="3.11.0" · app:v3.21.2 strings.ts research.knows, research.conflicts, research.conflictTag, research.decide, research.leaveToAgent, conflict.*, cardDensity.cardConflict · ui/person-research-ui.ts:139-150, :178-210 · ui/conflict-decide-ui.ts · research-decide.ts:55 canDecideInApp · 1.26.0: research:cs.json ui.wait.conflict.take.*, ui.link.conflict.whyMaybe, ui.link.conflict.inApp (commit 1189532f) · app:src/research-conflict-card.ts conflictCardView (agent u rozporu z úpravy) -->
 
 <a id="R5.6.1"></a>
 ### R5.6.1 Co jde rozhodnout stranou z aplikace

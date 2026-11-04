@@ -114,8 +114,16 @@ Begründung: welcher Beleg welchen überwog.
   Wo im Menü und in der App entschieden wird: [R5.6](#R5.6).
 - **Gilt seit:** Forschung 1.0.0. Die zweite Entscheidung nur mit Grund seit 1.6.0, die Erfassung, wer entschieden
   hat, seit 1.14.0.
+- **Ab Forschung 1.26.0:**
+  - einen Widerspruch aus einer Änderung entscheidet nur der Mensch. Dem Agenten lehnt die Forschung die Entscheidung
+    ab, bis der Mensch sie ihm überlässt (`strom conflict leave X…`, in der App **Dem Agenten überlassen**);
+    `strom conflict leave` ist nur für den Menschen;
+  - Widersprüche aus Änderungen, die der Agent früher entschieden hat, öffnet die Korrektur `strom fixes
+    show|run|undo edit-decisions` erneut. Die Entscheidung des Agenten bleibt in der Notiz des Widerspruchs, die
+    Angaben ändern sich nicht. Die Korrektur startet nur der Mensch im Terminal, im Strom-Archiv gibt es sie nicht.
+    Solange sie nicht gelaufen ist, weist `strom check` auf solche Widersprüche hin.
 
-<!-- zdroj: research:assets/method/recording.md:76-78 · src/commands/analysis.ts:515-598 conflict resolve (by :561, poznámka „earlier decided“ :572-573, zápis :581) · src/core/conflicts.ts:105-113 againAllowed conflict.decided · src/core/conflicts.ts:27 conflictsToDecide · src/cli/context.ts:577 actor · cs.json ui.link.conflict.by, ui.conflict.earlier.* -->
+<!-- zdroj: research:assets/method/recording.md:76-78 · src/commands/analysis.ts:515-598 conflict resolve (by :561, poznámka „earlier decided“ :572-573, zápis :581) · src/core/conflicts.ts:105-113 againAllowed conflict.decided · src/core/conflicts.ts:27 conflictsToDecide · src/cli/context.ts:577 actor · cs.json ui.link.conflict.by, ui.conflict.earlier.* · 1.26.0: src/commands/analysis.ts:525, :572 conflict.users, :625 conflict leave (commit 1189532f) · src/commands/fixes.ts edit-decisions, strom check agent-decided-edit (commit 740e1893) -->
 
 <a id="R5.3.1"></a>
 ### R5.3.1 Ein Widerspruch aus einer Änderung wird durch eine Seite entschieden
@@ -174,8 +182,10 @@ Unterschied erfasst er daneben, oder er fragt.
 - **Entscheidung des Menschen in einem Widerspruch:** [R5.4](#R5.4).
 - **Bedienung:** Terminal: `strom story approve P…`, `strom story discard P…`; Menü **Was wartet**.
 - **Gilt seit:** Abschrift des Benutzers Forschung 1.12.0, freigegebene Erzählung 1.10.0, Lage von Hand 1.25.0.
+- **Ab Forschung 1.26.0:** `strom story approve|discard` startet nur der Mensch. Dem Agenten lehnt die Forschung auch
+  das Erfassen einer Erzählung gleich als freigegeben ab (`strom story set --final`).
 
-<!-- zdroj: research:assets/method/verify.md:19-24 · src/commands/story.ts:94-96, :103 story approve, :121 story discard · src/core/placeid.ts:714 personsHand, :805-808 place.manual, :924 · app:strings.ts places.dialog.whoHand, places.waiting.kind.conflict -->
+<!-- zdroj: research:assets/method/verify.md:19-24 · src/commands/story.ts:94-96, :103 story approve, :121 story discard (1.26.0 person only, story.final) · src/core/placeid.ts:714 personsHand, :805-808 place.manual, :924 · app:strings.ts places.dialog.whoHand, places.waiting.kind.conflict -->
 
 <a id="R5.6"></a>
 ## R5.6 Wo Widersprüche zu sehen sind und wo sie entschieden werden
@@ -211,8 +221,15 @@ fragt nach Bestätigung und Grund.
 - **Gilt seit:** App 3.4.0 (**Was die Forschung weiß**, **Widerspruch ›**, **In der Forschung entscheiden**, **Dem
   Agenten überlassen**), der Abschnitt im Forschungsbereich und die Marke auf der Karte seit App 3.5.0. Die Wahl der
   Seite seit App 3.11.0 mit Forschung 1.14.0. Widersprüche in **Was wartet** seit Forschung 1.20.0.
+- **Ab Forschung 1.26.0:**
+  - **Dem Agenten überlassen** bietet die App auch bei einem Widerspruch aus einer Änderung an; der Link überlässt den
+    Widerspruch zuerst dem Agenten (`strom conflict leave`);
+  - eine in der App gewählte Seite wird im Terminal nur bestätigt, der Grund ist freiwillig (**Warum? (was
+    entscheidet; Enter: ohne Grund, 0: nichts entscheiden)**). Ohne Grund wird „in der Strom-App gewählt“ erfasst;
+  - **Was wartet** bietet die Optionen mit den Worten der App an: **Wert aus der App behalten**, **Wert der Forschung
+    übernehmen** (im Archiv **Wert des Strom-Archivs übernehmen**), **Offen lassen**.
 
-<!-- zdroj: research:src/core/waiting.ts:127 TERMINAL_ONLY, :443-449 · src/cli/menu-waiting.ts:486-513 decideConflictHere · src/cli/menu-links.ts:510-561 decideConflict, pickClaim · src/commands/links.ts:235-246 · src/core/live.ts:2063 decide.link · src/core/stromapp.ts APP_DECIDES_CONFLICTS="3.11.0" · app:v3.21.2 strings.ts research.knows, research.conflicts, research.conflictTag, research.decide, research.leaveToAgent, conflict.*, cardDensity.cardConflict · ui/person-research-ui.ts:139-150, :178-210 · ui/conflict-decide-ui.ts · research-decide.ts:55 canDecideInApp -->
+<!-- zdroj: research:src/core/waiting.ts:127 TERMINAL_ONLY, :443-449 · src/cli/menu-waiting.ts:486-513 decideConflictHere · src/cli/menu-links.ts:510-561 decideConflict, pickClaim · src/commands/links.ts:235-246 · src/core/live.ts:2063 decide.link · src/core/stromapp.ts APP_DECIDES_CONFLICTS="3.11.0" · app:v3.21.2 strings.ts research.knows, research.conflicts, research.conflictTag, research.decide, research.leaveToAgent, conflict.*, cardDensity.cardConflict · ui/person-research-ui.ts:139-150, :178-210 · ui/conflict-decide-ui.ts · research-decide.ts:55 canDecideInApp · 1.26.0: research:cs.json ui.wait.conflict.take.*, ui.link.conflict.whyMaybe, ui.link.conflict.inApp (commit 1189532f) · app:src/research-conflict-card.ts conflictCardView (agent u rozporu z úpravy) -->
 
 <a id="R5.6.1"></a>
 ### R5.6.1 Was sich aus der App durch eine Seite entscheiden lässt

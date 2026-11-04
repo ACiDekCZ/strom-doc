@@ -206,11 +206,8 @@ do urodzenia i zgonu, do zdarzeń, do ślubów i do wspólnych zdarzeń par.
   źródło. Liczba źródeł jest przy pozycji menu.
 - **Obsługa:** menu osoby (kliknięcie karty) → **Źródła**.
 - **Obowiązuje od:** aplikacja 3.3.0; **Znajdź źródło w badaniu** 3.19.0
-- **Od aplikacji 3.22.0:** strona osoby i księga dodają za źródłami danych także źródła, na których opiera się
-  opowieść, z etykietą
-  **Opowieść** lub **Opowieść o małżeństwie**. Okna **Źródła** z menu osoby to nie zmienia.
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · HEAD src/person-sources.ts:59 opts.stories, src/person-page.ts:544, :2393, :3119 -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource -->
 
 <a id="A3.7"></a>
 ## A3.7 Gdzie brakuje dowodów

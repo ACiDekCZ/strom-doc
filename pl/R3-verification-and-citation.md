@@ -28,8 +28,10 @@ wniosek ze wszystkich źródeł danej, a nie, na ile dobre jest jedno źródło 
   `strom event edit E… --status … --reason "…"`.
 - **Obowiązuje od:** badanie 1.0.0; nazwy w języku interfejsu w terminalu 1.1.0 (przy `strom person show` 1.12.0);
   etykieta w aplikacji 3.9.0
+- **Od badania 1.26.0:** terminal nazywa stopnie słowami aplikacji: **udokumentowane**, **prawdopodobne**,
+  **możliwe**, **wskazówka**, **obalone**. Podsumowanie `strom stats` pisze nadal „tylko wskazówki”.
 
-<!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus -->
+<!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus · 1.26.0: src/cli/human.ts:139 STATUS, cs.json ui.st.* (commit fe59fb40) -->
 
 <a id="R3.1.1"></a>
 ### R3.1.1 Stopień domyślny i cytat, który go podnosi
@@ -253,3 +255,23 @@ osoby aplikacja liczy sama, tylko z cytatów.
 - **Obowiązuje od:** aplikacja 3.5.0
 
 <!-- zdroj: app:src/evidence-level.ts personEvidence, treeHasAnySource · strings.ts treeHealth.evidenceMode/evFull/evPartial/evNone, cardDensity.cardEvidence/cardShowHint, treeOverview.certaintyDesc -->
+
+<a id="R3.9"></a>
+## R3.9 Opowieść zachowuje swoje źródła
+
+Opowieść mówi, na których źródłach się opiera. Nowa wersja opowieści nie traci bez powodu niczego z poprzedniej
+wersji.
+
+- **Granice:**
+  - źródła opowieści to źródła, które cytują jej dane, źródła tła miejsca i czasu oraz źródła, które tekst wymienia
+    tylko identyfikatorem;
+  - nowa wersja musi zachować każdą daną, źródło i odnośnik poprzedniej wersji albo pominąć je z powodem. W przeciwnym
+    razie badanie ją odrzuca i wypisuje, czego by brakowało. Co wersja pominęła i dlaczego, zostaje przy opowieści;
+  - opowieść oparta na wskazówce wymienia w tekście nazwę źródła i to, że zapisu jeszcze nikt nie przeczytał. Gdy
+    tekst źródła nie wymienia, badanie na to zwraca uwagę;
+  - zatwierdzenie opowieści należy do człowieka ([R5.5](R5-conflicts.md#R5.5)).
+- **Obsługa:** terminal: `strom story show P…` (każda dana ze źródłami, potem tło), `strom story set P… --fact E…
+  --source S… --drop "E… <proč>"`. Plik Stromu: źródła opowieści jako `2 SOUR` pod `_STORY`.
+- **Obowiązuje od:** badanie 1.26.0
+
+<!-- zdroj: research:src/core/storykeep.ts StoryVersion, StoryDrop, StorySource, storySources · src/commands/story.ts:104 --drop, :151 told from a lead, :231 story show · assets/method/narrate.md · CHANGELOG.cs.md 1.26.0 -->

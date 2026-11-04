@@ -125,8 +125,10 @@ neztratí.
   - Po odmítnutí se automatické posílání zastaví. Samo se znovu pošle až po další úpravě.
 - **Ovládání:** aplikace: **Výzkum úpravy nepřijal** v panelu výzkumu, **Zkusit znovu**, **Podrobnosti (k předání)**
 - **Platí od:** aplikace 3.11.0 (výzkum 1.12.0); odložený zápis od výzkumu 1.20.0
+- **Od výzkumu 1.26.0:** velký rodokmen (zhruba 1 500 osob a víc) převzatý ve Windows se zapíše celý. Dřív skončil
+  chybou gitu o příliš dlouhém příkazu (ENAMETOOLONG) a nezapsalo se nic.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
 
 <a id="S2.6"></a>
 ## S2.6 Osoba odebraná v aplikaci
@@ -156,5 +158,7 @@ Poslání jde ve výzkumu vrátit. Úpravy v aplikaci přitom zůstanou; z výzk
   - Načtení verze výzkumu jde vrátit volbou **Vrátit stav před načtením**.
 - **Ovládání:** aplikace: **Výzkum → Další → Vrátit poslední poslání** · terminál: `strom sync undo`
 - **Platí od:** aplikace 3.4.0, výzkum 1.0.0
+- **Od výzkumu 1.26.0:** vrátit poslání (`strom sync undo`) a zahodit poslaný strom, který čeká (`strom sync
+  discard`), smí jen člověk; agentovi výzkum odmítne. Úpravy v aplikaci po zahození zůstanou a jdou poslat znovu.
 
-<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo -->
+<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) -->

@@ -28,8 +28,10 @@ the conclusion is from all the fact's sources, not how good one source is ([R3.2
   --reason "…"`.
 - **Since:** research 1.0.0; names in the user's language in the terminal 1.1.0 (for `strom person show` 1.12.0);
   the label in the app 3.9.0
+- **From research 1.26.0:** the terminal names the degrees in the app's words: **proven**, **probable**, **possible**,
+  **lead**, **disproven**. The summary `strom stats` still writes “only leads”.
 
-<!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus -->
+<!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus · 1.26.0: src/cli/human.ts:139 STATUS, cs.json ui.st.* (commit fe59fb40) -->
 
 <a id="R3.1.1"></a>
 ### R3.1.1 The default degree and the citation that raises it
@@ -254,3 +256,24 @@ documentation level of a person is counted by the app itself, from citations onl
 - **Since:** app 3.5.0
 
 <!-- zdroj: app:src/evidence-level.ts personEvidence, treeHasAnySource · strings.ts treeHealth.evidenceMode/evFull/evPartial/evNone, cardDensity.cardEvidence/cardShowHint, treeOverview.certaintyDesc -->
+
+<a id="R3.9"></a>
+## R3.9 A story keeps its sources
+
+A story says which sources it rests on. A new version of a story loses nothing of the previous version without a
+reason.
+
+- **Limits:**
+  - the sources of a story are the sources its facts cite, the sources of the background of the place and time, and
+    the sources the text names only by an identifier;
+  - a new version must keep every fact, source and reference of the previous version, or leave it out with a reason.
+    Otherwise the research refuses it and lists what would be missing. What a version left out and why stays with the
+    story;
+  - a story told from a lead names in the text the title of the source and that nobody has read the record yet. When
+    the text does not name the source, the research points it out;
+  - approving a story stays with a person ([R5.5](R5-conflicts.md#R5.5)).
+- **Controls:** terminal: `strom story show P…` (every fact with its sources, then the background), `strom story set
+  P… --fact E… --source S… --drop "E… <why>"`. The Strom file: the story's sources as `2 SOUR` under `_STORY`.
+- **Since:** research 1.26.0
+
+<!-- zdroj: research:src/core/storykeep.ts StoryVersion, StoryDrop, StorySource, storySources · src/commands/story.ts:104 --drop, :151 told from a lead, :231 story show · assets/method/narrate.md · CHANGELOG.cs.md 1.26.0 -->

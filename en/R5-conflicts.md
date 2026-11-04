@@ -106,8 +106,15 @@ conflicts. Every decision has a conclusion and a reasoning: which evidence outwe
 - **Controls:** terminal: `strom conflict resolve X… --resolution "…" --reasoning "…"`, again with `--reason "…"`.
   Where it is decided in the menu and in the app: [R5.6](#R5.6).
 - **Since:** research 1.0.0. A second decision only with a reason from 1.6.0, the record of who decided from 1.14.0.
+- **From research 1.26.0:**
+  - only a person decides a conflict from an edit. The research refuses the agent's decision until a person leaves it
+    to the agent (`strom conflict leave X…`, in the app **Leave it to the agent**); `strom conflict leave` is for a
+    person only;
+  - conflicts from edits the agent decided earlier are opened again by the fix `strom fixes show|run|undo
+    edit-decisions`. The agent's decision stays in the conflict's note, the facts do not change. Only a person runs
+    the fix in the terminal; it is not in a Strom archive. Until it has run, `strom check` points such conflicts out.
 
-<!-- zdroj: research:assets/method/recording.md:76-78 · src/commands/analysis.ts:515-598 conflict resolve (by :561, poznámka „earlier decided“ :572-573, zápis :581) · src/core/conflicts.ts:105-113 againAllowed conflict.decided · src/core/conflicts.ts:27 conflictsToDecide · src/cli/context.ts:577 actor · cs.json ui.link.conflict.by, ui.conflict.earlier.* -->
+<!-- zdroj: research:assets/method/recording.md:76-78 · src/commands/analysis.ts:515-598 conflict resolve (by :561, poznámka „earlier decided“ :572-573, zápis :581) · src/core/conflicts.ts:105-113 againAllowed conflict.decided · src/core/conflicts.ts:27 conflictsToDecide · src/cli/context.ts:577 actor · cs.json ui.link.conflict.by, ui.conflict.earlier.* · 1.26.0: src/commands/analysis.ts:525, :572 conflict.users, :625 conflict leave (commit 1189532f) · src/commands/fixes.ts edit-decisions, strom check agent-decided-edit (commit 740e1893) -->
 
 <a id="R5.3.1"></a>
 ### R5.3.1 A conflict from an edit is decided by a side
@@ -164,8 +171,10 @@ difference beside them, or asks.
 - **A person's decision in a conflict:** [R5.4](#R5.4).
 - **Controls:** terminal: `strom story approve P…`, `strom story discard P…`; the menu **What waits**.
 - **Since:** a user's transcription research 1.12.0, an approved story 1.10.0, a position by hand 1.25.0.
+- **From research 1.26.0:** only a person runs `strom story approve|discard`. The research also refuses the agent
+  writing a story as approved straight away (`strom story set --final`).
 
-<!-- zdroj: research:assets/method/verify.md:19-24 · src/commands/story.ts:94-96, :103 story approve, :121 story discard · src/core/placeid.ts:714 personsHand, :805-808 place.manual, :924 · app:strings.ts places.dialog.whoHand, places.waiting.kind.conflict -->
+<!-- zdroj: research:assets/method/verify.md:19-24 · src/commands/story.ts:94-96, :103 story approve, :121 story discard (1.26.0 person only, story.final) · src/core/placeid.ts:714 personsHand, :805-808 place.manual, :924 · app:strings.ts places.dialog.whoHand, places.waiting.kind.conflict -->
 
 <a id="R5.6"></a>
 ## R5.6 Where conflicts are seen and where they are decided
@@ -198,8 +207,15 @@ confirmation and a reason.
 - **Since:** app 3.4.0 (**What the research knows**, **conflict ›**, **Decide in the research**, **Leave it to the
   agent**), the section in the research panel and the tag on the card from app 3.5.0. Picking a side from app 3.11.0
   with research 1.14.0. Conflicts in **What waits** from research 1.20.0.
+- **From research 1.26.0:**
+  - the app offers **Leave it to the agent** also for a conflict from an edit; the link first leaves the conflict to
+    the agent (`strom conflict leave`);
+  - a side picked in the app is only confirmed in the terminal, the reason is optional (**Why? (what decides it;
+    Enter: no reason, 0: nothing decided)**). Without a reason, “picked in the Strom app” is written;
+  - **What waits** offers the choices in the app's words: **Keep the value from the app**, **Take the research's
+    value** (in an archive **Take the Strom archive's value**), **Leave it open**.
 
-<!-- zdroj: research:src/core/waiting.ts:127 TERMINAL_ONLY, :443-449 · src/cli/menu-waiting.ts:486-513 decideConflictHere · src/cli/menu-links.ts:510-561 decideConflict, pickClaim · src/commands/links.ts:235-246 · src/core/live.ts:2063 decide.link · src/core/stromapp.ts APP_DECIDES_CONFLICTS="3.11.0" · app:v3.21.2 strings.ts research.knows, research.conflicts, research.conflictTag, research.decide, research.leaveToAgent, conflict.*, cardDensity.cardConflict · ui/person-research-ui.ts:139-150, :178-210 · ui/conflict-decide-ui.ts · research-decide.ts:55 canDecideInApp -->
+<!-- zdroj: research:src/core/waiting.ts:127 TERMINAL_ONLY, :443-449 · src/cli/menu-waiting.ts:486-513 decideConflictHere · src/cli/menu-links.ts:510-561 decideConflict, pickClaim · src/commands/links.ts:235-246 · src/core/live.ts:2063 decide.link · src/core/stromapp.ts APP_DECIDES_CONFLICTS="3.11.0" · app:v3.21.2 strings.ts research.knows, research.conflicts, research.conflictTag, research.decide, research.leaveToAgent, conflict.*, cardDensity.cardConflict · ui/person-research-ui.ts:139-150, :178-210 · ui/conflict-decide-ui.ts · research-decide.ts:55 canDecideInApp · 1.26.0: research:cs.json ui.wait.conflict.take.*, ui.link.conflict.whyMaybe, ui.link.conflict.inApp (commit 1189532f) · app:src/research-conflict-card.ts conflictCardView (agent u rozporu z úpravy) -->
 
 <a id="R5.6.1"></a>
 ### R5.6.1 What can be decided by a side from the app

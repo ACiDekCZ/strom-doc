@@ -163,8 +163,15 @@ records) and **Entry suggestion** (how facts write the place).
 - **Since:** research 1.25.0, app 3.21.0
 - **From research 1.26.0:** the small map at a question shows only the question's points and the distance from the proposal
   (app 3.22.0).
+- **From research 1.26.0:**
+  - the terminal says **Don’t know** and **None of them** in the app's words;
+  - **Don’t know** is possible also for a **Location conflict** (the position stays, the question goes, the research
+    may ask again) and for an **Entry suggestion** (the facts stay as they are). App 3.22.0 offers it there only with
+    research 1.26.0. **None of them** stays only for the question **Where is**;
+  - **Accept all suggested (n)** (`--take first`) takes candidate A also for a location conflict. It never overwrites
+    a position entered by hand: it leaves such a conflict out.
 
-<!-- zdroj: research:src/commands/placeid.ts:345 answer (person only) · research:src/core/placeid.ts PLACE_TAKES, answerOne ~:1195 · research:src/core/waiting.ts:395–420 (v1.25.2) wait.group.places · research:src/cli/menu-waiting.ts:523–560 · app:src/waiting-places.ts placeQuestionChoices :40, bulkAcceptable :140, bulkKeepable, placeAreas · app:src/strings.ts waiting.* · app CHANGELOG.cs.md 3.22.0 -->
+<!-- zdroj: research:src/commands/placeid.ts:345 answer (person only) · research:src/core/placeid.ts PLACE_TAKES, answerOne ~:1195 · research:src/core/waiting.ts:395–420 (v1.25.2) wait.group.places · research:src/cli/menu-waiting.ts:523–560 · app:src/waiting-places.ts placeQuestionChoices :40, bulkAcceptable :140, bulkKeepable, placeAreas · app:src/strings.ts waiting.* · app CHANGELOG.cs.md 3.22.0 · 1.26.0: research:src/core/placeid.ts answerOne (first: locating.by person vynechá; unknown u conflict a form), cs.json ui.wait.place.unknown/none (commit fe59fb40) · app:src/waiting-places.ts PLACES_UNKNOWN_ALL_SINCE, ui/waiting-places-ui.ts:645 take first -->
 
 <a id="R4.5.1"></a>
 ### R4.5.1 Undoing a step

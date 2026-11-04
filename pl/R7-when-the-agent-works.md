@@ -207,8 +207,10 @@ upłynęło od jego odnowienia (dzień ≈ 14,3 %), z wykorzystaniem tygodnia. S
 - **Obsługa:** terminal: `strom config set run.gate "claude-usage 10 --cap 95"`. Menu w 1.25.2 pułapu nie przyjmuje,
   od 1.26.0 tak.
 - **Obowiązuje od:** badanie 1.14.0
+- **Od badania 1.26.0:** rozpoczęta sesja dostaje prośbę o dokończenie już przy pułapie (`--cap 95`: przy 95 %
+  tygodnia; `--cap 100`: przy 99 %).
 
-<!-- zdroj: research:assets/plugins/gates/claude-usage/gate.ts:213-219 --cap, :271-272 cap hard, FINISH_AT=0.99 :54, answer() watch :204 · src/core/gate.ts capProblem :159 · menu-settings.ts:350 (v1.25.2) -->
+<!-- zdroj: research:assets/plugins/gates/claude-usage/gate.ts:213-219 --cap, :271-272 cap hard, FINISH_AT=0.99 :54, answer() watch :204 · src/core/gate.ts capProblem :159 · menu-settings.ts:350 (v1.25.2) · 1.26.0: gate.ts finish min(0.99, cap/100) (commit 6276a16f) -->
 
 <a id="R7.6"></a>
 ## R7.6 Limit subskrypcji zatrzymuje przebieg

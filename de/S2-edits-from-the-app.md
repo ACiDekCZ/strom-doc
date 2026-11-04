@@ -143,8 +143,11 @@ bleiben in der App, und nichts geht verloren.
 - **Bedienung:** App: **Die Forschung hat die Änderungen nicht angenommen** im Panel der Forschung, **Erneut
   versuchen**, **Details (zum Weitergeben)**
 - **Gilt seit:** App 3.11.0 (Forschung 1.12.0); zurückgestelltes Schreiben seit Forschung 1.20.0
+- **Ab Forschung 1.26.0:** ein großer Stammbaum (etwa 1.500 Personen und mehr), der unter Windows übernommen wird,
+  wird ganz geschrieben. Früher endete das mit einem Git-Fehler über einen zu langen Befehl (ENAMETOOLONG), und
+  nichts wurde geschrieben.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
 
 <a id="S2.6"></a>
 ## S2.6 In der App entfernte Person
@@ -178,5 +181,8 @@ nur die Änderungen dieses Sendens.
   - Das Laden der Version der Forschung lässt sich mit **Laden rückgängig machen** zurücknehmen.
 - **Bedienung:** App: **Forschung → Weitere Aktionen → Letztes Senden zurücknehmen** · Terminal: `strom sync undo`
 - **Gilt seit:** App 3.4.0, Forschung 1.0.0
+- **Ab Forschung 1.26.0:** ein Senden zurücknehmen (`strom sync undo`) und einen gesendeten Stammbaum verwerfen, der
+  wartet (`strom sync discard`), darf nur der Mensch; dem Agenten lehnt die Forschung das ab. Die Änderungen in der
+  App bleiben nach dem Verwerfen und lassen sich erneut senden.
 
-<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo -->
+<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) -->

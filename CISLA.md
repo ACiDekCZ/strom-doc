@@ -24,6 +24,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R2.1.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Druhy linií a meze | Kinds of lines and their limits | Arten von Linien und Grenzen | Rodzaje linii i ograniczenia |
 | R2.1.2 | R2-lines-and-queue.md | výzkum 1.8.0 | platí | Pozastavená a ukončená linie | A paused and an ended line | Pausierte und beendete Linie | Linia wstrzymana i zakończona |
 | R2.1.3 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Kdo do linie patří | Who belongs to a line | Wer zu einer Linie gehört | Kto należy do linii |
+| R2.1.4 | R2-lines-and-queue.md | výzkum 1.26.0 | platí | Pořadí linií je pořadí práce | The order of the lines is the order of work | Die Reihenfolge der Linien ist die Reihenfolge der Arbeit | Kolejność linii to kolejność pracy |
 | R2.2 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Fronta určuje, který úkol přijde na řadu | The queue sets which task comes next | Die Warteschlange bestimmt, welche Aufgabe an die Reihe kommt | Kolejka wyznacza, które zadanie przychodzi na kolej |
 | R2.2.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Strategie fronty | The queue strategy | Strategie der Warteschlange | Strategia kolejki |
 | R2.2.2 | R2-lines-and-queue.md | výzkum 1.1.0 | platí | Vyprávění na řadě | A story is due | Erzählung an der Reihe | Opowieść na kolei |
@@ -45,6 +46,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R3.7 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Kdy se agent ptá člověka | When the agent asks a person | Wann der Agent den Menschen fragt | Kiedy agent pyta człowieka |
 | R3.8 | R3-verification-and-citation.md | aplikace 3.5.0 | platí | Jak doložení ukazuje aplikace | How the app shows evidence | Wie die App Belege zeigt | Jak udokumentowanie pokazuje aplikacja |
 | R3.8.1 | R3-verification-and-citation.md | aplikace 3.5.0 | platí | Úroveň doložení osoby | The documentation level of a person | Belegstufe einer Person | Poziom udokumentowania osoby |
+| R3.9 | R3-verification-and-citation.md | výzkum 1.26.0 | platí | Vyprávění drží své prameny | A story keeps its sources | Eine Erzählung behält ihre Quellen | Opowieść zachowuje swoje źródła |
 | R4 | R4-places.md | výzkum 1.22.0 | platí | Místa | Places | Orte | Miejsca |
 | R4.1 | R4-places.md | výzkum 1.25.0 | platí | Místo dostane polohu, jen když je jisté | A place gets a position only when it is certain | Ein Ort bekommt eine Lage nur, wenn er sicher ist | Miejsce dostaje położenie, tylko gdy jest pewne |
 | R4.1.1 | R4-places.md | výzkum 1.25.2 | platí | Stejné jméno, jiné místo | The same name, a different place | Gleicher Name, anderer Ort | Ta sama nazwa, inne miejsce |
@@ -208,6 +210,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Výzkum řízený z aplikace | Research run from the app | Forschung aus der App gesteuert | Badanie sterowane z aplikacji |
 | S4.1 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Panel a Přehled výzkumu ukazují běžící práci | The panel and the Research overview show running work | Panel und Forschungsübersicht zeigen die laufende Arbeit | Panel i Przegląd badania pokazują bieżącą pracę |
 | S4.1.1 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Sledovat agenta ve stromu | Follow the agent in the tree | Agenten im Stammbaum folgen | Śledź agenta w drzewie |
+| S4.1.2 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Přizpůsobení panelu | Customizing the panel | Panel anpassen | Dostosowanie panelu |
 | S4.2 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Fronta v aplikaci | The queue in the app | Warteschlange in der App | Kolejka w aplikacji |
 | S4.3 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Linie v aplikaci | Directions in the app | Linien in der App | Linie w aplikacji |
 | S4.3.1 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Správa linií z aplikace | Managing directions from the app | Verwaltung der Linien aus der App | Zarządzanie liniami z aplikacji |

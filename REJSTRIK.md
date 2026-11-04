@@ -98,7 +98,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Doložené (app) · doloženo (terminal) | Nejvyšší stupeň: kód chce citaci z pramene, který není slabý, s primární informací; metodika navíc vlastní čtení původního záznamu, který údaj uvádí přímo. |
+| cs | Doložené (app; terminal od výzkumu 1.26.0) · doloženo (terminal 1.25.2) | Nejvyšší stupeň: kód chce citaci z pramene, který není slabý, s primární informací; metodika navíc vlastní čtení původního záznamu, který údaj uvádí přímo. |
 | en | Proven (app) · proven (terminal) | The highest degree: the code requires a citation from a source that is not weak, with primary information; the method also requires reading the original record that states the fact directly. |
 | de | Belegt (app) · belegt (terminal) | Der höchste Grad: der Code verlangt eine Zitation aus einer Quelle, die nicht schwach ist, mit Primärinformation; die Methodik zusätzlich eine eigene Lesung des ursprünglichen Eintrags, der die Angabe direkt nennt. |
 | pl | Udokumentowane (app) · udokumentowane (terminal) | Najwyższy stopień: kod wymaga cytatu ze źródła, które nie jest słabe, z informacją pierwotną; metodyka ponadto własnego odczytu aktu oryginalnego, który podaje daną wprost. |
@@ -153,7 +153,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | pl | linia | Jeden cel badania: przodkowie osoby, potomkowie osoby albo jedno pytanie. Każde zadanie należy do którejś linii. |
 
 - **Genealogicky:** cíl výzkumu (research objective) ve smyslu GPS.
-- **Čísla:** [R2.1](cs/R2-lines-and-queue.md#R2.1), R2.1.1, R2.1.2, R2.1.3, S3.3
+- **Čísla:** [R2.1](cs/R2-lines-and-queue.md#R2.1), R2.1.1, R2.1.2, R2.1.3, R2.1.4, S3.3
 
 <a id="source-transcriptions-setting"></a>
 ### Moje přepisy pramenů
@@ -250,7 +250,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | de | Arbeit außerhalb der Linien (terminal) · Außerhalb der Richtungen (app) | Eine Aufgabe über Personen, die keine Linie erreicht und die keiner Linie hilft. Sie kommt erst nach der Arbeit an den Linien. |
 | pl | praca poza liniami | Zadanie o ludziach, do których nie sięga żadna linia, i które nie pomaga żadnej linii. Idzie dopiero po pracy nad liniami. |
 
-- **Čísla:** [R2.3](cs/R2-lines-and-queue.md#R2.3), R2.3.1, R2.3.2
+- **Čísla:** [R2.3](cs/R2-lines-and-queue.md#R2.3), R2.3.1, R2.3.2, S4.3.2
 
 <a id="for-researchers"></a>
 ### Pro badatele
@@ -380,10 +380,10 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Z aplikace · Ve výzkumu (app) · Platí hodnota z aplikace Strom · Platí hodnota ve výzkumu (terminal) | Dvě hodnoty rozporu z úpravy: hodnota upravená v aplikaci a hodnota, kterou má výzkum. |
-| en | From the app · In the research (app) · The value from the Strom app holds · The research's value holds (terminal) | The two values of a conflict from an edit: the value edited in the app and the value the research has. |
-| de | Aus der App · In der Forschung (app) · Der Wert aus der Strom-App gilt · Der Wert der Forschung gilt (terminal) | Die zwei Werte eines Widerspruchs aus einer Änderung: der in der App geänderte Wert und der Wert, den die Forschung hat. |
-| pl | Z aplikacji · W badaniu (app) · Obowiązuje wartość z aplikacji Strom · Obowiązuje wartość z badania (terminal) | Dwie wartości sprzeczności ze zmiany: wartość zmieniona w aplikacji i wartość, którą ma badanie. |
+| cs | Z aplikace · Ve výzkumu (app) · Platí hodnota z aplikace Strom · Platí hodnota ve výzkumu (terminal 1.25.2) · Ponechat hodnotu z aplikace · Převzít hodnotu výzkumu (terminal od výzkumu 1.26.0) | Dvě hodnoty rozporu z úpravy: hodnota upravená v aplikaci a hodnota, kterou má výzkum. |
+| en | From the app · In the research (app) · The value from the Strom app holds · The research's value holds (terminal 1.25.2) · Keep the value from the app · Take the research's value (terminal from research 1.26.0) | The two values of a conflict from an edit: the value edited in the app and the value the research has. |
+| de | Aus der App · In der Forschung (app) · Der Wert aus der Strom-App gilt · Der Wert der Forschung gilt (terminal 1.25.2) · Wert aus der App behalten · Wert der Forschung übernehmen (terminal ab Forschung 1.26.0) | Die zwei Werte eines Widerspruchs aus einer Änderung: der in der App geänderte Wert und der Wert, den die Forschung hat. |
+| pl | Z aplikacji · W badaniu (app) · Obowiązuje wartość z aplikacji Strom · Obowiązuje wartość z badania (terminal 1.25.2) · Zachowanie wartości z aplikacji · Przyjęcie wartości z badania (terminal od badania 1.26.0) | Dwie wartości sprzeczności ze zmiany: wartość zmieniona w aplikacji i wartość, którą ma badanie. |
 
 - **Čísla:** [R5.3.1](cs/R5-conflicts.md#R5.3.1), R5.6, R5.6.1
 
@@ -404,10 +404,10 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Vodítko · Možné · Pravděpodobné · Doložené (app, `factStatus`) · jen stopa · možné · pravděpodobné · doloženo (terminal, `ui.st.*`) | Jak jistý je závěr o údaji ze všech jeho pramenů. Určuje ho výzkum, aplikace ho jen ukazuje. |
-| en | Lead · Possible · Probable · Proven (app) · only a lead · possible · probable · proven (terminal) | How certain the conclusion about a fact is, from all its sources. The research sets it; the app only shows it. |
-| de | Hinweis · Möglich · Wahrscheinlich · Belegt (app) · nur ein Hinweis · möglich · wahrscheinlich · belegt (terminal) | Wie sicher die Schlussfolgerung über eine Angabe aus allen ihren Quellen ist. Sie bestimmt die Forschung, die App zeigt sie nur. |
-| pl | Wskazówka · Możliwe · Prawdopodobne · Udokumentowane (app) · tylko wskazówka · możliwe · prawdopodobne · udokumentowane (terminal) | Jak pewny jest wniosek o danej ze wszystkich jej źródeł. Ustala go badanie, aplikacja go tylko pokazuje. |
+| cs | Vodítko · Možné · Pravděpodobné · Doložené (app, `factStatus`) · jen stopa · možné · pravděpodobné · doloženo (terminal 1.25.2, `ui.st.*`; od výzkumu 1.26.0 slovy aplikace) | Jak jistý je závěr o údaji ze všech jeho pramenů. Určuje ho výzkum, aplikace ho jen ukazuje. |
+| en | Lead · Possible · Probable · Proven (app) · only a lead · possible · probable · proven (terminal 1.25.2; from research 1.26.0 lead in the app's words) | How certain the conclusion about a fact is, from all its sources. The research sets it; the app only shows it. |
+| de | Hinweis · Möglich · Wahrscheinlich · Belegt (app) · nur ein Hinweis · möglich · wahrscheinlich · belegt (terminal 1.25.2; ab Forschung 1.26.0 in den Worten der App) | Wie sicher die Schlussfolgerung über eine Angabe aus allen ihren Quellen ist. Sie bestimmt die Forschung, die App zeigt sie nur. |
+| pl | Wskazówka · Możliwe · Prawdopodobne · Udokumentowane (app) · tylko wskazówka · możliwe · prawdopodobne · udokumentowane (terminal 1.25.2; od badania 1.26.0 słowami aplikacji) | Jak pewny jest wniosek o danej ze wszystkich jej źródeł. Ustala go badanie, aplikacja go tylko pokazuje. |
 
 - **Genealogicky:** míra jistoty závěru (proof standard, GPS); stupně odpovídají „proved / probable / possible“.
 - **Čísla:** [R3.1](cs/R3-verification-and-citation.md#R3.1), R3.1.1, R3.2, R3.8
@@ -454,10 +454,10 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Vodítko (app) · jen stopa (terminal) | Co ověřit, ne údaj: rodinný příběh, rodokmen, rejstřík nebo odhad. Údaj bez citace nebo jen ze slabého pramene. |
-| en | Lead (app) · only a lead (terminal) | Something to verify, not a fact: a family story, a family tree, an index or an estimate. A fact without a citation or only from a weak source. |
-| de | Hinweis (app) · nur ein Hinweis (terminal) | Etwas zu Prüfendes, keine Angabe: eine Familiengeschichte, ein Stammbaum, ein Register oder eine Schätzung. Eine Angabe ohne Zitation oder nur aus einer schwachen Quelle. |
-| pl | Wskazówka (app) · tylko wskazówka (terminal) | Co zweryfikować, nie dana: opowieść rodzinna, drzewo genealogiczne, indeks lub szacunek. Dana bez cytatu lub tylko ze słabego źródła. |
+| cs | Vodítko (app; terminal od výzkumu 1.26.0) · jen stopa (terminal 1.25.2) | Co ověřit, ne údaj: rodinný příběh, rodokmen, rejstřík nebo odhad. Údaj bez citace nebo jen ze slabého pramene. |
+| en | Lead (app; terminal from research 1.26.0) · only a lead (terminal 1.25.2) | Something to verify, not a fact: a family story, a family tree, an index or an estimate. A fact without a citation or only from a weak source. |
+| de | Hinweis (app; terminal ab Forschung 1.26.0) · nur ein Hinweis (terminal 1.25.2) | Etwas zu Prüfendes, keine Angabe: eine Familiengeschichte, ein Stammbaum, ein Register oder eine Schätzung. Eine Angabe ohne Zitation oder nur aus einer schwachen Quelle. |
+| pl | Wskazówka (app; terminal od badania 1.26.0) · tylko wskazówka (terminal 1.25.2) | Co zweryfikować, nie dana: opowieść rodzinna, drzewo genealogiczne, indeks lub szacunek. Dana bez cytatu lub tylko ze słabego źródła. |
 
 - **Genealogicky:** hypotéza, stopa k ověření (lead); rejstřík a rodokmen jako odvozený nebo autorský pramen.
 - **Čísla:** [R3.3](cs/R3-verification-and-citation.md#R3.3), R3.1, R3.1.1, R3.5.1, S2.3
@@ -825,7 +825,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Forschungsübersicht (`live.overviewTitle`) | Die große Ansicht der App auf die verfolgte Forschung: was gerade geschieht, was wartet, Linien, Verlauf, Warteschlange und was die Forschung weiß. Sie liest nur. |
 | pl | Przegląd badania (`live.overviewTitle`) | Duży widok aplikacji na śledzone badanie: co się teraz dzieje, co czeka, linie, przebieg, kolejka i co wie badanie. Tylko czyta. |
 
-- **Čísla:** [S4.1](cs/S4-research-from-the-app.md#S4.1), S4.2, S4.3, S4.5.2
+- **Čísla:** [S4.1](cs/S4-research-from-the-app.md#S4.1), S4.1.2, S4.2, S4.3, S4.5.2
 
 <a id="load-images-on-import"></a>
 ### Při importu načítat obrázky

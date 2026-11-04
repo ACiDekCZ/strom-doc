@@ -135,8 +135,10 @@ lost.
 - **Controls:** app: **The research didn't accept the changes** in the research panel, **Try again**, **Details (to
   pass on)**
 - **Since:** app 3.11.0 (research 1.12.0); postponed writing from research 1.20.0
+- **From research 1.26.0:** a large family tree (roughly 1,500 people and more) taken over on Windows is written
+  whole. Before, it ended with a git error about a command too long (ENAMETOOLONG) and nothing was written.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
 
 <a id="S2.6"></a>
 ## S2.6 A person removed in the app
@@ -167,5 +169,8 @@ A send can be undone in the research. The edits in the app stay; only the change
   - Loading the research's version can be undone with **Restore the state before loading**.
 - **Controls:** app: **Research → Other actions → Undo last send** · terminal: `strom sync undo`
 - **Since:** app 3.4.0, research 1.0.0
+- **From research 1.26.0:** only a person may undo a send (`strom sync undo`) and discard a sent tree that waits
+  (`strom sync discard`); the research refuses the agent. The edits in the app stay after discarding and can be sent
+  again.
 
-<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo -->
+<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) -->

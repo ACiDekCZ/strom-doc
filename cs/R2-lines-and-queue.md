@@ -51,6 +51,25 @@ a agent pracuje na úkolech linií.
 
 <!-- zdroj: research:src/core/frontier.ts:159-194 researchPeople/linePeople · src/core/directions.ts:75-82 directionOf · CHANGELOG.cs.md 1.26.0 -->
 
+<a id="R2.1.4"></a>
+### R2.1.4 Pořadí linií je pořadí práce
+
+Linie mají jedno pořadí a v něm na ně přichází práce: první linie má přednost.
+
+- **Hranice:**
+  - pozastavená a ukončená linie si místo drží; po znovuspuštění je zpět, kde byla. Nová linie jde na konec;
+  - co pořadí pro frontu znamená, záleží na strategii ([R2.2.1](#R2.2.1)): **balanced** a **depth** dají úkolům
+    první běžící linie přídavek 2 body, poslední 0, ostatním poměrně; žádná linie nestojí. **priority** bere linie
+    přísně popořadě: první, dokud má práci, pak další; úkoly bez linie až po nich;
+  - výzkum bez uloženého pořadí řadí linie podle priority, pak podle data založení;
+  - užší mez linie (`strom research edit`) nic nesmaže: úkoly za mezí čekají mimo linii.
+- **Ovládání:** terminál: `strom research list` (v pořadí práce), `strom research order G… G…`, `strom research move
+  G… --to <n>|--up|--down|--first`, `strom research edit G… --name|--question|--generations|--before`. Aplikace:
+  oddíl **Linie** ([S4.3.1](S4-research-from-the-app.md#S4.3.1)), telefon ([S5](S5-phone.md)).
+- **Platí od:** výzkum 1.26.0
+
+<!-- zdroj: research:src/core/order.ts workOrder, orderMode · src/core/queue.ts:237-240 lineBonus, :396 priority lineRank · src/commands/research.ts:215 research edit, :303 research order, :326 research move -->
+
 <a id="R2.2"></a>
 ## R2.2 Fronta určuje, který úkol přijde na řadu
 
@@ -84,6 +103,8 @@ Otevřené úkoly všech běžících linií tvoří jednu frontu. Agent vždy b
 - **Ovládání:** terminál: `strom config set queue.strategy balanced|depth|priority`, priorita linie
   `strom research new … --priority <1–5>`.
 - **Platí od:** výzkum 1.0.0
+- **Od výzkumu 1.26.0:** váhu má i pořadí linií ([R2.1.4](#R2.1.4)); **priority** bere linie popořadě, uvnitř linie
+  podle priority úkolu a generace.
 
 <!-- zdroj: research:src/core/queue.ts:294-299, RECENT=4 :58 · src/core/config.ts queue.strategy · model.ts priority -->
 
@@ -141,11 +162,19 @@ který žádné linii nepomáhá. Taková práce jde **až po práci na liniích
 Kromě volby pro celý výzkum může mít vlastní volbu jedna větev (i „přidat k linii“) a jeden úkol (**hned** / **na
 konec**). Užší volba vyhrává: úkol před větví, větev před výzkumem.
 
-- **Ovládání:** terminál: `strom offline set`, `strom task order T… --next|--last|--default`. Aplikace 3.22.0:
-  **Udělat hned**, **Na konec**.
+- **Hranice:**
+  - větev: **občas**, **na konci**, **normálně**, **nikdy** (úkoly čekají mimo frontu, nic se nesmaže a nový úkol
+    se v ní nenavrhne), nebo přidat k linii: úkoly větve pak linii pomáhají a jdou s ní. Volba platí i pro nové úkoly
+    větve. Návrat k volbě výzkumu: výchozí;
+  - úkol **hned** přijde na řadu jako další, před liniemi, místy i dějinami, a jen jednou: po sezení na něm volba
+    zmizí sama. **Na konec** platí, dokud úkol není hotový nebo dokud se volba nevrátí. Úkol, na kterém agent
+    pracuje, místo nezmění.
+- **Ovládání:** terminál: `strom offline list|show`, `strom offline set B-P… --mode occasional|last|normal|never`,
+  `--line G…`, `--default`; `strom task order T… --next|--last|--default`. Aplikace 3.22.0:
+  **Udělat hned**, **Na konec**, volby větve ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 - **Platí od:** výzkum 1.26.0
 
-<!-- zdroj: research:src/commands/offline.ts:101,171 · quality/offline.json -->
+<!-- zdroj: research:src/commands/offline.ts:101 offline set (BRANCH_MODES), :171 task order (next once, queue.doing) · quality/offline.json -->
 
 <a id="R2.3.2"></a>
 ### R2.3.2 Rostoucí větev dostane návrh linie
@@ -154,11 +183,15 @@ Když větev mimo linie naroste na 10 otevřených úkolů nebo 5 osob, objeví 
 k linii, založit linii, nechat, jak je, nebo nezkoumat. Po odpovědi „nechat“ se znovu navrhne až při dvojnásobné
 velikosti. Větev s vlastní volbou a volba **nikdy** návrh nedostanou.
 
-- **Ovládání:** terminál: **Navrhovat linie u rostoucích větví** (zapnout/vypnout), `strom offline answer`,
-  `strom config set queue.suggestTasks|queue.suggestPersons <n>`.
+- **Hranice:** odpovídá jen člověk (aplikace nebo **Co čeká**); agentovi výzkum odpověď odmítne. Když je linie
+  u větve pozastavená nebo ukončená, aplikace nabídne nejužší běžící linii, do které osoba větve patří; když žádná
+  není, pozastavenou linii s poznámkou **(pozastavená)**.
+- **Ovládání:** terminál: **Navrhovat linie u rostoucích větví** (zapnout/vypnout), `strom offline answer B-P…
+  line|keep|never`, `strom config set queue.suggestTasks|queue.suggestPersons <n>`. Aplikace: **Čeká na vyřízení**,
+  nastavení **Navrhovat linie u rostoucích větví** ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 - **Platí od:** výzkum 1.26.0
 
-<!-- zdroj: research:src/core/offline.ts:449-455 grows · config.ts SUGGEST_TASKS=10, SUGGEST_PERSONS=5 · cs.json ui.wait.branch.done.keep -->
+<!-- zdroj: research:src/core/offline.ts:449-455 grows · config.ts SUGGEST_TASKS=10, SUGGEST_PERSONS=5 · cs.json ui.wait.branch.done.keep · src/commands/offline.ts:142 offline answer (person) · app:src/ui/research-offline-ui.ts answerGrowingBranch · strings.ts live.setSuggest, live.branchAddPaused -->
 
 <a id="R2.4"></a>
 ## R2.4 Proč úkol stojí, kde stojí

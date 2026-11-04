@@ -221,11 +221,8 @@ zur Person, zu Geburt und Tod, zu Ereignissen, zu Heiraten und zu gemeinsamen Er
   eine Quelle hat. Die Zahl der Quellen steht beim Menüpunkt.
 - **Bedienung:** Menü der Person (Klick auf die Karte) → **Quellen**.
 - **Gilt seit:** App 3.3.0; **Quelle in der Forschung finden** 3.19.0
-- **Ab App 3.22.0:** Personenseite und Buch ordnen hinter die Quellen der Angaben auch die Quellen ein, auf die
-  sich die Erzählung stützt, mit dem Etikett
-  **Erzählung** oder **Geschichte der Ehe**. Den Dialog **Quellen** aus dem Menü der Person ändert das nicht.
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · HEAD src/person-sources.ts:59 opts.stories, src/person-page.ts:544, :2393, :3119 -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource -->
 
 <a id="A3.7"></a>
 ## A3.7 Wo Belege fehlen

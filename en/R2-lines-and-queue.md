@@ -52,6 +52,28 @@ belongs to some line, and the agent works on the tasks of the lines. The app cal
 
 <!-- zdroj: research:src/core/frontier.ts:159-194 researchPeople/linePeople · src/core/directions.ts:75-82 directionOf · CHANGELOG.cs.md 1.26.0 -->
 
+<a id="R2.1.4"></a>
+### R2.1.4 The order of the lines is the order of work
+
+The lines have one order, and work comes to them in it: the first line has precedence.
+
+- **Limits:**
+  - a paused and an ended line keep their place; when started again, it is back where it was. A new line goes to the
+    end;
+  - what the order means for the queue depends on the strategy ([R2.2.1](#R2.2.1)): **balanced** and **depth** give
+    the tasks of the first running line a bonus of 2 points, the last 0, the others in proportion; no line stands
+    still. **priority** takes the lines strictly in order: the first while it has work, then the next; tasks without
+    a line only after them;
+  - a research without a saved order ranks the lines by priority, then by the date they were created;
+  - a narrower limit of a line (`strom research edit`) deletes nothing: the tasks beyond the limit wait outside the
+    line.
+- **Controls:** terminal: `strom research list` (in the order of work), `strom research order G… G…`, `strom research
+  move G… --to <n>|--up|--down|--first`, `strom research edit G… --name|--question|--generations|--before`. App:
+  section **Directions** ([S4.3.1](S4-research-from-the-app.md#S4.3.1)), phone ([S5](S5-phone.md)).
+- **Since:** research 1.26.0
+
+<!-- zdroj: research:src/core/order.ts workOrder, orderMode · src/core/queue.ts:237-240 lineBonus, :396 priority lineRank · src/commands/research.ts:215 research edit, :303 research order, :326 research move -->
+
 <a id="R2.2"></a>
 ## R2.2 The queue sets which task comes next
 
@@ -86,6 +108,8 @@ before all others.
 - **Controls:** terminal: `strom config set queue.strategy balanced|depth|priority`, a line's priority
   `strom research new … --priority <1–5>`.
 - **Since:** research 1.0.0
+- **From research 1.26.0:** the order of the lines counts too ([R2.1.4](#R2.1.4)); **priority** takes the lines in
+  order, within a line by the task's priority and generation.
 
 <!-- zdroj: research:src/core/queue.ts:294-299, RECENT=4 :58 · src/core/config.ts queue.strategy · model.ts priority -->
 
@@ -144,11 +168,19 @@ and her family) that helps no line. Such work comes **after the work on the line
 Besides the choice for the whole research, one branch (also “add to a line”) and one task (**Do next** / **To the
 end**) can have their own choice. The narrower choice wins: the task before the branch, the branch before the research.
 
-- **Controls:** terminal: `strom offline set`, `strom task order T… --next|--last|--default`. App 3.22.0:
-  **Do next**, **To the end**.
+- **Limits:**
+  - a branch: **now and then**, **at the end**, **as usual**, **never** (the tasks wait outside the queue, nothing is
+    deleted and no new task is proposed in it), or add it to a line: the branch's tasks then help the line and go
+    with it. The choice holds for new tasks of the branch too. Back to the research's choice: the default;
+  - a task **Do next** comes next, before the lines, places and history, and only once: after a session on it the
+    choice goes by itself. **To the end** holds until the task is done or until the choice is reset. A task the agent
+    is working on does not change its place.
+- **Controls:** terminal: `strom offline list|show`, `strom offline set B-P… --mode occasional|last|normal|never`,
+  `--line G…`, `--default`; `strom task order T… --next|--last|--default`. App 3.22.0:
+  **Do next**, **To the end**, the branch's choices ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 - **Since:** research 1.26.0
 
-<!-- zdroj: research:src/commands/offline.ts:101,171 · quality/offline.json -->
+<!-- zdroj: research:src/commands/offline.ts:101 offline set (BRANCH_MODES), :171 task order (next once, queue.doing) · quality/offline.json -->
 
 <a id="R2.3.2"></a>
 ### R2.3.2 A growing branch gets a line proposed
@@ -157,11 +189,15 @@ When a branch off the lines grows to 10 open tasks or 5 persons, a question appe
 a line, start a line, leave it as it is, or not research it. After the answer “leave it”, it is proposed again only at
 double the size. A branch with its own choice, and the choice **never**, get no proposal.
 
-- **Controls:** terminal: **Propose lines for branches that grow** (on/off), `strom offline answer`,
-  `strom config set queue.suggestTasks|queue.suggestPersons <n>`.
+- **Limits:** only a person answers (the app or **What waits**); the research refuses the agent's answer. When the
+  line at the branch is paused or ended, the app offers the narrowest running line the branch's person belongs to;
+  when there is none, the paused line with the note **(paused)**.
+- **Controls:** terminal: **Propose lines for branches that grow** (on/off), `strom offline answer B-P…
+  line|keep|never`, `strom config set queue.suggestTasks|queue.suggestPersons <n>`. App: **Awaiting action**,
+  the setting **Suggest directions for growing branches** ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 - **Since:** research 1.26.0
 
-<!-- zdroj: research:src/core/offline.ts:449-455 grows · config.ts SUGGEST_TASKS=10, SUGGEST_PERSONS=5 · cs.json ui.wait.branch.done.keep -->
+<!-- zdroj: research:src/core/offline.ts:449-455 grows · config.ts SUGGEST_TASKS=10, SUGGEST_PERSONS=5 · cs.json ui.wait.branch.done.keep · src/commands/offline.ts:142 offline answer (person) · app:src/ui/research-offline-ui.ts answerGrowingBranch · strings.ts live.setSuggest, live.branchAddPaused -->
 
 <a id="R2.4"></a>
 ## R2.4 Why a task stands where it stands

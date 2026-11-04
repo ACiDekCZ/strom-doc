@@ -133,8 +133,10 @@ i nic się nie traci.
 - **Obsługa:** aplikacja: **Badanie nie przyjęło zmian** w panelu badania, **Spróbuj ponownie**, **Szczegóły (do
   przekazania)**
 - **Obowiązuje od:** aplikacja 3.11.0 (badanie 1.12.0); odłożony zapis od badania 1.20.0
+- **Od badania 1.26.0:** duże drzewo genealogiczne (około 1 500 osób i więcej) przejęte w systemie Windows zapisuje
+  się w całości. Wcześniej kończyło się błędem gita o zbyt długim poleceniu (ENAMETOOLONG) i nie zapisywało się nic.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
 
 <a id="S2.6"></a>
 ## S2.6 Osoba usunięta w aplikacji
@@ -164,5 +166,8 @@ Wysłanie można w badaniu cofnąć. Zmiany w aplikacji przy tym zostają; z bad
   - Wczytanie wersji badania można cofnąć opcją **Przywróć stan sprzed wczytania**.
 - **Obsługa:** aplikacja: **Badanie → Więcej → Cofnij ostatnie wysłanie** · terminal: `strom sync undo`
 - **Obowiązuje od:** aplikacja 3.4.0, badanie 1.0.0
+- **Od badania 1.26.0:** cofnąć wysłanie (`strom sync undo`) i odrzucić wysłane drzewo, które czeka (`strom sync
+  discard`), może tylko człowiek; agentowi badanie odmawia. Zmiany w aplikacji po odrzuceniu zostają i można je
+  wysłać ponownie.
 
-<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo -->
+<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) -->

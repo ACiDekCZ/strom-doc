@@ -117,6 +117,8 @@ stehen in der Liste zuerst.
 - **Bedienung:** App: **Neue Fassung der Erzählung**, **Vergleichen**, Entscheidung über einen Link ins Terminal.
   Terminal: **Welche Erzählung soll das Familienbuch haben?**, `strom story approve|discard`.
 - **Gilt seit:** Forschung 1.14.0
+- **Ab Forschung 1.26.0:** es entscheidet nur der Mensch; dem Agenten lehnt die Forschung `strom story
+  approve|discard` ab ([R6.6](#R6.6)).
 
 <!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts -->
 
@@ -126,6 +128,7 @@ stehen in der Liste zuerst.
 - Ein wachsender Zweig außerhalb der Linien bekommt eine Frage in der Gruppe **Zweige außerhalb der Linien**
   ([R2.3.2](R2-lines-and-queue.md#R2.3.2)): **Einer Linie hinzufügen**, **Eine Linie anlegen**, **So lassen**,
   **Nicht erforschen**.
+- **Grenzen:** es antwortet nur der Mensch ([R6.6](#R6.6)).
 - **Bedienung:** Terminal: **Was wartet** → Eintrag, `strom offline answer`.
 - **Gilt seit:** Forschung 1.26.0
 
@@ -191,8 +194,13 @@ startet, fragt die Forschung den Menschen in einem Systemfenster, oder sie lehnt
     Methodik.
 - **Bedienung:** Terminal: **Mit Text antworten** (höchstens 300 Zeichen), `strom task wake T… --answer "<text>"`.
 - **Gilt seit:** Forschung 1.14.0. Orte seit 1.25.0.
+- **Ab Forschung 1.26.0:** nur der Mensch auch: Freigabe und Verwerfen einer Erzählung (`strom story
+  approve|discard`; dem Agenten lehnt die Forschung auch `strom story set --final` ab), die Antwort auf einen
+  wachsenden Zweig (`strom offline answer`), das Überlassen eines Widerspruchs aus einer Änderung an den Agenten
+  (`strom conflict leave`), das Zurücknehmen und Verwerfen eines Sendens aus der App (`strom sync undo|discard`) und
+  die Korrekturen `strom fixes … edit-decisions|woken-waits`.
 
-<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX -->
+<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) -->
 
 <a id="R6.7"></a>
 ## R6.7 Gesendet, Antwort und Rückkehr in die Warteschlange
@@ -234,5 +242,13 @@ Eine Antwort bringt die Aufgabe in die Warteschlange zurück, und der Agent vera
 - **Bedienung:** Terminal: `strom task park T… --reason "<proč>" --until RRRR-MM-DD`, zurück mit `strom task wake T…`.
   App: Abschnitt **Warteschlange**, **Zurückstellen** (Link ins Terminal, ohne Datum).
 - **Gilt seit:** Forschung 1.0.0. Rückkehr nach Bildern seit 1.15.0, nach der Entscheidung eines Archivs seit 1.14.0.
+- **Ab Forschung 1.26.0:**
+  - Bilder bringen nur eine Aufgabe zurück, die auf Bilder genau dieses Buches wartet. Eine Aufgabe, die auf das
+    Prüfen einer Seite durch den Menschen wartet, bringen sie nie zurück. Einen Brief, eine Anfrage an die Familie
+    oder eine Seite bringt nur das Buch zurück, auf das die Aufgabe wartet, nicht ein Buch, in dem sie nur arbeitet;
+  - Aufgaben, die Bilder früher zu Unrecht zurückgebracht haben, setzt die Korrektur `strom fixes show|run|undo
+    woken-waits` wieder ins Warten: die Aufgabe wartet wie vorher, samt dem Senden. Eine Aufgabe, an der
+    inzwischen gearbeitet wurde, bleibt. Die Korrektur startet nur der Mensch im Terminal, im Strom-Archiv gibt es sie
+    nicht. Solange sie nicht gelaufen ist, weist `strom check` auf solche Aufgaben hin.
 
-<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->
+<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->

@@ -26,8 +26,10 @@ ze všech pramenů údaje, ne jak dobrý je jeden pramen ([R3.2.1](#R3.2.1)).
   terminál: `strom person show`, `strom person card`, `strom stats` (řádek „Údaje: doložené … · jen stopy …“);
   zápis `strom event add … --status`, `strom cite E… S… --status`, `strom event edit E… --status … --reason "…"`.
 - **Platí od:** výzkum 1.0.0; české názvy v terminálu 1.1.0 (u `strom person show` 1.12.0); štítek v aplikaci 3.9.0
+- **Od výzkumu 1.26.0:** terminál říká stupně slovy aplikace: **doložené**, **pravděpodobné**, **možné**,
+  **vodítko**, **vyvrácené**. Souhrn `strom stats` píše dál „jen stopy“.
 
-<!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus -->
+<!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus · 1.26.0: src/cli/human.ts:139 STATUS, cs.json ui.st.* (commit fe59fb40) -->
 
 <a id="R3.1.1"></a>
 ### R3.1.1 Výchozí stupeň a citace, která ho zvedne
@@ -237,3 +239,22 @@ aplikace sama, jen z citací.
 - **Platí od:** aplikace 3.5.0
 
 <!-- zdroj: app:src/evidence-level.ts personEvidence, treeHasAnySource · strings.ts treeHealth.evidenceMode/evFull/evPartial/evNone, cardDensity.cardEvidence/cardShowHint, treeOverview.certaintyDesc -->
+
+<a id="R3.9"></a>
+## R3.9 Vyprávění drží své prameny
+
+Vyprávění říká, o které prameny se opírá. Nová verze vyprávění nic z předchozí verze neztratí bez důvodu.
+
+- **Hranice:**
+  - prameny vyprávění jsou prameny, které citují jeho údaje, prameny pozadí místa a doby a prameny, které text
+    jmenuje jen identifikátorem;
+  - nová verze musí ponechat každý údaj, pramen a odkaz předchozí verze, nebo ho vynechat s důvodem. Jinak ji
+    výzkum odmítne a vypíše, co by chybělo. Co verze vynechala a proč, zůstane u vyprávění;
+  - vyprávění podle vodítka jmenuje v textu název pramene a to, že záznam zatím nikdo nečetl. Když text pramen
+    nejmenuje, výzkum na to upozorní;
+  - schválení vyprávění zůstává na člověku ([R5.5](R5-conflicts.md#R5.5)).
+- **Ovládání:** terminál: `strom story show P…` (každý údaj s prameny, pak pozadí), `strom story set P… --fact E…
+  --source S… --drop "E… <proč>"`. Soubor Stromu: prameny vyprávění jako `2 SOUR` pod `_STORY`.
+- **Platí od:** výzkum 1.26.0
+
+<!-- zdroj: research:src/core/storykeep.ts StoryVersion, StoryDrop, StorySource, storySources · src/commands/story.ts:104 --drop, :151 told from a lead, :231 story show · assets/method/narrate.md · CHANGELOG.cs.md 1.26.0 -->

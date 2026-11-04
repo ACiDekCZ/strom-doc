@@ -206,11 +206,8 @@ person, for birth and death, for events, for marriages and for couples' shared e
   sources is at the menu item.
 - **Controls:** person menu (click on the card) → **Sources**.
 - **Since:** app 3.3.0; **Find a source in the research** 3.19.0
-- **From app 3.22.0:** the person page and the book list, after the sources of facts, also the sources a story
-  relies on, with the label **Story** or **Story of the marriage**. The dialog **Sources** from the person menu
-  does not change them.
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · HEAD src/person-sources.ts:59 opts.stories, src/person-page.ts:544, :2393, :3119 -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource -->
 
 <a id="A3.7"></a>
 ## A3.7 Where evidence is missing

@@ -55,6 +55,29 @@ Aufgabe gehört zu einer Linie, und der Agent arbeitet an den Aufgaben der Linie
 
 <!-- zdroj: research:src/core/frontier.ts:159-194 researchPeople/linePeople · src/core/directions.ts:75-82 directionOf · CHANGELOG.cs.md 1.26.0 -->
 
+<a id="R2.1.4"></a>
+### R2.1.4 Die Reihenfolge der Linien ist die Reihenfolge der Arbeit
+
+Die Linien haben eine Reihenfolge, und in ihr kommt die Arbeit zu ihnen: die erste Linie hat Vorrang.
+
+- **Grenzen:**
+  - eine pausierte und eine beendete Linie behalten ihren Platz; nach dem Neustart steht sie wieder, wo sie war. Eine
+    neue Linie kommt ans Ende;
+  - was die Reihenfolge für die Warteschlange bedeutet, hängt von der Strategie ab ([R2.2.1](#R2.2.1)): **balanced**
+    und **depth** geben den Aufgaben der ersten laufenden Linie einen Zuschlag von 2 Punkten, der letzten 0, den
+    übrigen anteilig; keine Linie steht still. **priority** nimmt die Linien streng der Reihe nach: die erste, solange
+    sie Arbeit hat, dann die nächste; Aufgaben ohne Linie erst nach ihnen;
+  - eine Forschung ohne gespeicherte Reihenfolge ordnet die Linien nach Priorität, dann nach dem Datum der Anlage;
+  - eine engere Grenze der Linie (`strom research edit`) löscht nichts: Aufgaben jenseits der Grenze warten außerhalb
+    der Linie.
+- **Bedienung:** Terminal: `strom research list` (in der Reihenfolge der Arbeit), `strom research order G… G…`,
+  `strom research move G… --to <n>|--up|--down|--first`, `strom research edit G…
+  --name|--question|--generations|--before`. App: Abschnitt **Richtungen**
+  ([S4.3.1](S4-research-from-the-app.md#S4.3.1)), Telefon ([S5](S5-phone.md)).
+- **Gilt seit:** Forschung 1.26.0
+
+<!-- zdroj: research:src/core/order.ts workOrder, orderMode · src/core/queue.ts:237-240 lineBonus, :396 priority lineRank · src/commands/research.ts:215 research edit, :303 research order, :326 research move -->
+
 <a id="R2.2"></a>
 ## R2.2 Die Warteschlange bestimmt, welche Aufgabe an die Reihe kommt
 
@@ -93,6 +116,8 @@ begonnene Aufgabe geht allen voran.
 - **Bedienung:** Terminal: `strom config set queue.strategy balanced|depth|priority`, Priorität der Linie
   `strom research new … --priority <1–5>`.
 - **Gilt seit:** Forschung 1.0.0
+- **Ab Forschung 1.26.0:** Gewicht hat auch die Reihenfolge der Linien ([R2.1.4](#R2.1.4)); **priority** nimmt die
+  Linien der Reihe nach, innerhalb einer Linie nach der Priorität der Aufgabe und der Generation.
 
 <!-- zdroj: research:src/core/queue.ts:294-299, RECENT=4 :58 · src/core/config.ts queue.strategy · model.ts priority -->
 
@@ -156,11 +181,20 @@ Linie erreicht (die Schwester eines Vorfahren und ihre Familie), und die keiner 
 Neben der Wahl für die ganze Forschung kann ein Zweig eine eigene Wahl haben (auch „einer Linie hinzufügen“) und eine
 Aufgabe (**sofort** / **ans Ende**). Die engere Wahl gewinnt: die Aufgabe vor dem Zweig, der Zweig vor der Forschung.
 
-- **Bedienung:** Terminal: `strom offline set`, `strom task order T… --next|--last|--default`. App 3.22.0:
-  **Als Nächstes**, **Ans Ende**.
+- **Grenzen:**
+  - Zweig: **ab und zu**, **am Ende**, **wie üblich**, **nie** (die Aufgaben warten außerhalb der Warteschlange,
+    nichts wird gelöscht, und in ihm wird keine neue Aufgabe vorgeschlagen), oder einer Linie hinzufügen: die
+    Aufgaben des Zweigs helfen dann der Linie und gehen mit ihr. Die Wahl gilt auch für neue Aufgaben des Zweigs.
+    Zurück zur Wahl der Forschung: Standard;
+  - eine Aufgabe **sofort** kommt als nächste an die Reihe, vor den Linien, Orten und der Geschichte, und nur einmal:
+    nach einer Sitzung an ihr verschwindet die Wahl von selbst. **Ans Ende** gilt, bis die Aufgabe erledigt ist oder
+    bis die Wahl zurückgesetzt wird. Eine Aufgabe, an der der Agent arbeitet, ändert ihren Platz nicht.
+- **Bedienung:** Terminal: `strom offline list|show`, `strom offline set B-P… --mode occasional|last|normal|never`,
+  `--line G…`, `--default`; `strom task order T… --next|--last|--default`. App 3.22.0:
+  **Als Nächstes**, **Ans Ende**, Optionen des Zweigs ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 - **Gilt seit:** Forschung 1.26.0
 
-<!-- zdroj: research:src/commands/offline.ts:101,171 · quality/offline.json -->
+<!-- zdroj: research:src/commands/offline.ts:101 offline set (BRANCH_MODES), :171 task order (next once, queue.doing) · quality/offline.json -->
 
 <a id="R2.3.2"></a>
 ### R2.3.2 Ein wachsender Zweig bekommt einen Vorschlag für eine Linie
@@ -170,11 +204,16 @@ Bearbeitung** eine Frage: einer Linie hinzufügen, eine Linie anlegen, so lassen
 Antwort „so lassen“ wird erst bei doppelter Größe wieder vorgeschlagen. Ein Zweig mit eigener Wahl und die Wahl
 **nie** bekommen keinen Vorschlag.
 
-- **Bedienung:** Terminal: **Linien für wachsende Zweige vorschlagen** (ein/aus), `strom offline answer`,
-  `strom config set queue.suggestTasks|queue.suggestPersons <n>`.
+- **Grenzen:** es antwortet nur der Mensch (App oder **Was wartet**); dem Agenten lehnt die Forschung die Antwort ab.
+  Ist die Linie beim Zweig pausiert oder beendet, bietet die App die engste laufende Linie an, zu der die Person des
+  Zweigs gehört; gibt es keine, die pausierte Linie mit der Notiz **(pausiert)**.
+- **Bedienung:** Terminal: **Linien für wachsende Zweige vorschlagen** (ein/aus), `strom offline answer B-P…
+  line|keep|never`, `strom config set queue.suggestTasks|queue.suggestPersons <n>`. App: **Wartet auf
+  Bearbeitung**, Einstellung **Richtungen für wachsende Zweige vorschlagen**
+  ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 - **Gilt seit:** Forschung 1.26.0
 
-<!-- zdroj: research:src/core/offline.ts:449-455 grows · config.ts SUGGEST_TASKS=10, SUGGEST_PERSONS=5 · cs.json ui.wait.branch.done.keep -->
+<!-- zdroj: research:src/core/offline.ts:449-455 grows · config.ts SUGGEST_TASKS=10, SUGGEST_PERSONS=5 · cs.json ui.wait.branch.done.keep · src/commands/offline.ts:142 offline answer (person) · app:src/ui/research-offline-ui.ts answerGrowingBranch · strings.ts live.setSuggest, live.branchAddPaused -->
 
 <a id="R2.4"></a>
 ## R2.4 Warum eine Aufgabe steht, wo sie steht

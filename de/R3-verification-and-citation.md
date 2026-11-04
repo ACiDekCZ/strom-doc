@@ -29,8 +29,10 @@ Schlussfolgerung aus allen Quellen der Angabe ist, nicht, wie gut eine einzelne 
   --reason "…"`.
 - **Gilt seit:** Forschung 1.0.0; übersetzte Namen im Terminal 1.1.0 (bei `strom person show`
   1.12.0); Etikett in der App 3.9.0
+- **Ab Forschung 1.26.0:** das Terminal nennt die Grade mit den Worten der App: **belegt**, **wahrscheinlich**,
+  **möglich**, **Hinweis**, **widerlegt**. Die Zusammenfassung `strom stats` schreibt weiter „nur Hinweise“.
 
-<!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus -->
+<!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus · 1.26.0: src/cli/human.ts:139 STATUS, cs.json ui.st.* (commit fe59fb40) -->
 
 <a id="R3.1.1"></a>
 ### R3.1.1 Standardgrad und die Zitation, die ihn hebt
@@ -263,3 +265,25 @@ Belegstufe einer Person berechnet die App selbst, nur aus Zitationen.
 - **Gilt seit:** App 3.5.0
 
 <!-- zdroj: app:src/evidence-level.ts personEvidence, treeHasAnySource · strings.ts treeHealth.evidenceMode/evFull/evPartial/evNone, cardDensity.cardEvidence/cardShowHint, treeOverview.certaintyDesc -->
+
+<a id="R3.9"></a>
+## R3.9 Eine Erzählung behält ihre Quellen
+
+Eine Erzählung sagt, auf welche Quellen sie sich stützt. Eine neue Fassung der Erzählung verliert nichts aus der
+vorigen Fassung ohne Grund.
+
+- **Grenzen:**
+  - Quellen der Erzählung sind die Quellen, die ihre Angaben zitieren, die Quellen des Hintergrunds von Ort und Zeit
+    und die Quellen, die der Text nur mit einer Kennung nennt;
+  - eine neue Fassung muss jede Angabe, Quelle und jeden Verweis der vorigen Fassung behalten oder mit Grund
+    weglassen. Sonst lehnt die Forschung sie ab und gibt aus, was fehlen würde. Was eine Fassung weggelassen hat und
+    warum, bleibt bei der Erzählung;
+  - eine Erzählung nach einem Hinweis nennt im Text den Titel der Quelle und dass den Eintrag noch niemand gelesen
+    hat. Nennt der Text die Quelle nicht, weist die Forschung darauf hin;
+  - die Freigabe der Erzählung bleibt beim Menschen ([R5.5](R5-conflicts.md#R5.5)).
+- **Bedienung:** Terminal: `strom story show P…` (jede Angabe mit ihren Quellen, dann der Hintergrund), `strom story
+  set P… --fact E… --source S… --drop "E… <warum>"`. Strom-Datei: Quellen der Erzählung als `2 SOUR` unter
+  `_STORY`.
+- **Gilt seit:** Forschung 1.26.0
+
+<!-- zdroj: research:src/core/storykeep.ts StoryVersion, StoryDrop, StorySource, storySources · src/commands/story.ts:104 --drop, :151 told from a lead, :231 story show · assets/method/narrate.md · CHANGELOG.cs.md 1.26.0 -->

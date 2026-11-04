@@ -32,6 +32,9 @@ zeigen, sendet die Forschung über die Brücke.
 - **Bedienung:** App: Panel, Schaltflächen **⤢ Übersicht öffnen** und **Verfolgung beenden**; Menü **Forschung →
   Forschungsübersicht**.
 - **Gilt seit:** App 3.5.0
+- **Ab App 3.22.0:** jeder Abschnitt lässt sich aufklappen, zuklappen oder ausblenden, und die Wahl gilt für das Panel
+  und die Übersicht ([S4.1.2](#S4.1.2)). **Wartet auf Bearbeitung** klappt sich auch bei einem neuen Eintrag nicht
+  von selbst auf.
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue -->
 
@@ -49,6 +52,38 @@ Arbeit im Abschnitt **Jetzt**).
 - **Gilt seit:** App 3.5.0
 
 <!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff -->
+
+<a id="S4.1.2"></a>
+### S4.1.2 Panel anpassen
+
+Jeder Abschnitt der Verfolgung der Forschung hat eine Wahl: **Aufgeklappt**, **Eingeklappt** oder **Ausgeblendet**.
+Die Wahl gilt für das Panel und die Übersicht.
+
+- **Grenzen:**
+  - Abschnitte: **In Arbeit** (in der Übersicht **Jetzt**), **Wartet auf Bearbeitung**, **Letzte Änderungen** (in der
+    Übersicht **Verlauf**), **Als Nächstes** (in der Übersicht **Warteschlange**) und nur in der Übersicht
+    **Richtungen** und **Was die Forschung weiß**;
+  - ein Abschnitt ohne Wahl (**Standard**) erscheint wie bisher: das Panel klappt zu, was keinen Platz hat
+    (**eingeklappt, kein Platz**), die Übersicht hat **Warteschlange** und **Was die Forschung weiß** zugeklappt.
+    Einen Abschnitt mit Wahl klappt das Panel nicht von selbst zu;
+  - ein Klick auf die Überschrift eines Abschnitts ist eine dauerhafte Wahl (aufklappen / zuklappen);
+  - die Wahl wird auf diesem Gerät für alle Stammbäume gespeichert, nichts wird synchronisiert. Ein früheres
+    Zuklappen von Abschnitten von Hand wird einmal übernommen;
+  - **Standard wiederherstellen** hebt alle Wahlen auf. Das Wiederherstellen des Standards und das Ausblenden eines
+    Abschnitts aus seinem Menü lassen sich eine Weile zurücknehmen (**Rückgängig**). Sind alle Abschnitte
+    ausgeblendet, sagt das Panel **Alle Bereiche sind ausgeblendet.**
+- **Wartet auf Bearbeitung eingeklappt oder ausgeblendet:**
+  - ein neuer Eintrag klappt den Abschnitt nicht auf. Die Überschrift zeigt die Zahl und **{n} neu**; hervorgehoben,
+    wenn darunter eine Entscheidung oder Erlaubnis ist (**darunter eine Entscheidung oder Erlaubnis**);
+  - ausgeblendet hinterlässt er die Marke **Wartet {n}** im Kopf des Panels, in der Zusammenfassung des eingeklappten
+    Panels, im Streifen auf dem Telefon und in der Übersicht. Ein Klick zeigt den Abschnitt in der Übersicht, bis die
+    Übersicht geschlossen wird (**Ausgeblendeter Bereich, sichtbar bis die Übersicht schließt.**).
+- **Bedienung:** App: **⋯ → Panel anpassen…** im Kopf des Panels und der Übersicht; rechte Maustaste oder langes
+  Drücken auf die Überschrift eines Abschnitts (auch die Menütaste oder Umschalt+F10); **Einstellungen → Forschung
+  verfolgen**. Auf dem Telefon als Blatt von unten.
+- **Gilt seit:** App 3.22.0
+
+<!-- zdroj: app:src/ui/live-section-prefs.ts SECTION_PREFS_KEY, PREF_KEYS, OVERVIEW_KEYS, OLD_PANEL_KEY · src/ui/live-section-edit.ts · src/ui/live-section-edit-ui.ts · src/ui/research-ui.ts:282 waitingHeadInfo, :312 waitingChip, :3180 toggle, :3215 resetLiveSections, :3225 hideLiveSection · src/ui/research-overview-ui.ts:376 shownOnce · strings.ts live.editPanel(Menu), sectionExpanded/Collapsed/Hidden/Default, resetDefaults, autoFoldedNote, allHidden, waitingShort, importantHint, shownOnce, settings groupResearchFollow · commity c4b1dcc, a56232a · spec 044 K1–K5 -->
 
 <a id="S4.2"></a>
 ## S4.2 Warteschlange in der App
@@ -76,8 +111,10 @@ Die App zeigt den Anfang der Warteschlange der Forschung in der Reihenfolge, in 
   App, ohne Terminal ([R2.3.1](R2-lines-and-queue.md#R2.3.1)); bei einer Aufgabe, an der der Agent arbeitet, geht
   das nicht. Die Warteschlange wird seitenweise gelesen: **Weitere laden** fügt 50 Aufgaben hinzu, die Liste hält
   höchstens 300, den Rest grenzt der Filter einer Linie oder eines Zweigs ein.
+  Die Marke des Zweigs (**Zweig {n} {k}**) grenzt die ganze Warteschlange auf die Aufgaben des Zweigs ein; **Ganze
+  Warteschlange zeigen** hebt sie auf.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear -->
 
 <a id="S4.3"></a>
 ## S4.3 Linien in der App
@@ -101,9 +138,14 @@ sie gekommen ist. In App 3.21.2 werden Linien nur gelesen; jede Änderung wird i
     die Warteschlange gefiltert.
 - **Bedienung:** App: **Forschungsübersicht → Richtungen**, bei der Linie **⋯**.
 - **Gilt seit:** App 3.5.0 (Forschung 1.8.0). Teilung des Panels nach Linien seit 3.13.1.
-- **Ab App 3.22.0:** mit der Forschung 1.26.0 werden Linien direkt in der App geändert ([S4.3.1](#S4.3.1)).
+- **Ab App 3.22.0:** mit der Forschung 1.26.0 werden Linien direkt in der App geändert ([S4.3.1](#S4.3.1)). Die
+  Zeile einer Linie zeigt, woran gerade gearbeitet wird (**Jetzt: …**), und die Grenzen (**bis {n} Generationen**,
+  **vor {Jahr}**; bei einer pausierten Linie nicht). Das Detail einer Linie sagt, was die Linie in den letzten Tagen
+  gefunden hat (**Letzte {n} Tage:** Sitzungen, Personen, Quellen); die Personen zeigt es im Stammbaum. Beendete
+  Linien sind am Ende zugeklappt (**Beendet · {n}**). In einem schmalen Fenster und auf dem Telefon ist die Übersicht
+  ein Blatt: statt des Griffs für die Reihenfolge Pfeile ▲▼.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume -->
+<!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume · 3.22.0: research-directions-ui.ts:703 dirEnded, :852 dirNow, :878 dirFoundIn, :720 sheet; strings.ts live.dirLimitGen, dirLimitBefore, dirFound* -->
 
 <a id="S4.3.1"></a>
 ### S4.3.1 Verwaltung der Linien aus der App
@@ -148,13 +190,28 @@ einstellen.
 - **Grenzen:**
   - Für die ganze Forschung: **Wie Arbeit außerhalb der Richtungen übernommen wird**: **Ab und zu**, **Am Ende**,
     **Wie üblich**, **Nie**.
-  - Für einen Zweig: **Zu einer Richtung hinzufügen**, **Richtung aus diesem Zweig anlegen**, **Nicht erforschen**,
-    **Auf Standard zurücksetzen**.
-  - Fragen zu wachsenden Zweigen ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) stehen in **Wartet auf Bearbeitung**.
-- **Bedienung:** App: **Forschungsübersicht**, Abschnitt der Arbeit außerhalb der Linien.
+  - Zeile eines Zweigs: Person des Zweigs, Bezug zur Linie (**bei der Richtung {n}**), Zahl der Aufgaben, **wächst**,
+    **eigene Wahl**.
+  - Ein Klick auf einen Zweig zeigt seine ersten Aufgaben mit dem Platz in der Warteschlange (**In der Warteschlange ·
+    die ersten {k} von {n}**, **{i}. in der Warteschlange**) und den Link **Alle {n} Aufgaben in der Warteschlange
+    ›**. Stehen die Aufgaben des Zweigs hinter dem geladenen Teil der Warteschlange: **Die Aufgaben des Zweigs stehen
+    weiter hinten in der Warteschlange ({n}).**
+  - Für einen Zweig: **Übernommen:** **Ab und zu** / **Am Ende** / **Wie üblich** (die Wahl der Forschung hat
+    **(Standard)**), **Zur Richtung {n} hinzufügen** (die nächste Linie zuerst), **Richtung aus diesem Zweig
+    anlegen**, **Nicht erforschen** (die Aufgaben verlassen die Warteschlange, nichts wird gelöscht), **Auf Standard
+    zurücksetzen**. Nicht erforschte Zweige stehen beisammen (**Nicht erforscht · {n} Zweige**).
+  - Fragen zu wachsenden Zweigen ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) stehen in **Wartet auf Bearbeitung**:
+    einer Linie hinzufügen (bei einer pausierten Linie **Zur Richtung {n} (pausiert) hinzufügen**), eine Linie
+    anlegen, **So lassen**, nicht erforschen. Ohne Antwort wird der Zweig weiter wie bisher übernommen.
+  - Fenster **Forschung für diesen Stammbaum…**, Gruppe **Arbeit außerhalb der Richtungen**: die Wahl für die ganze
+    Forschung (**Ab und zu**: „Etwa 1 Aufgabe außerhalb der Richtungen auf {k} Aufgaben der Richtungen.“),
+    **Richtungen für wachsende Zweige vorschlagen**, **Zweige mit eigener Wahl** und Aufgaben mit manueller
+    Reihenfolge.
+- **Bedienung:** App: **Forschungsübersicht**, Abschnitt der Arbeit außerhalb der Linien, beim Zweig **⋯** (**Optionen
+  des Zweigs**); **Forschung für diesen Stammbaum…**.
 - **Gilt seit:** App 3.22.0 (Forschung 1.26.0)
 
-<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset -->
+<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 -->
 
 <a id="S4.4"></a>
 ## S4.4 Wartet auf Bearbeitung in der App

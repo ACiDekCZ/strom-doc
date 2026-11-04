@@ -220,8 +220,10 @@ Sitzung beginnt nur, wenn der Vorsprung (vergangen − genutzt) mindestens die a
 - **Bedienung:** Terminal: `strom config set run.gate "claude-usage 10 --cap 95"`. Das Menü nimmt die Obergrenze in
   1.25.2 nicht an, seit 1.26.0 schon.
 - **Gilt seit:** Forschung 1.14.0
+- **Ab Forschung 1.26.0:** eine laufende Sitzung bekommt die Bitte um Abschluss schon bei der Obergrenze
+  (`--cap 95`: bei 95 % der Woche; `--cap 100`: bei 99 %).
 
-<!-- zdroj: research:assets/plugins/gates/claude-usage/gate.ts:213-219 --cap, :271-272 cap hard, FINISH_AT=0.99 :54, answer() watch :204 · src/core/gate.ts capProblem :159 · menu-settings.ts:350 (v1.25.2) -->
+<!-- zdroj: research:assets/plugins/gates/claude-usage/gate.ts:213-219 --cap, :271-272 cap hard, FINISH_AT=0.99 :54, answer() watch :204 · src/core/gate.ts capProblem :159 · menu-settings.ts:350 (v1.25.2) · 1.26.0: gate.ts finish min(0.99, cap/100) (commit 6276a16f) -->
 
 <a id="R7.6"></a>
 ## R7.6 Das Limit des Abonnements hält den Lauf an

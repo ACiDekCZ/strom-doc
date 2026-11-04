@@ -163,8 +163,15 @@ zapisu** (jak dane zapisują miejsce).
   z `--dry` i `--expect`
 - **Obowiązuje od:** badanie 1.25.0, aplikacja 3.21.0
 - **Od badania 1.26.0:** mała mapa przy pytaniu pokazuje tylko punkty pytania i odległość od propozycji (aplikacja 3.22.0).
+- **Od badania 1.26.0:**
+  - terminal mówi słowami aplikacji **Nie wiem** i **Żaden z nich**;
+  - **Nie wiem** działa też przy pytaniu **Sprzeczne położenie** (położenie zostaje, pytanie znika, badanie może
+    zapytać ponownie) i przy pytaniu **Propozycja zapisu** (dane zostają bez zmian). Aplikacja 3.22.0 proponuje je
+    tam tylko z badaniem 1.26.0. **Żaden z nich** zostaje tylko przy pytaniu **Gdzie jest**;
+  - **Przyjmij wszystkie propozycje (n)** (`--take first`) bierze kandydata A także przy sprzecznym położeniu.
+    Położenia wpisanego ręcznie nie nadpisuje nigdy: taką sprzeczność pomija.
 
-<!-- zdroj: research:src/commands/placeid.ts:345 answer (person only) · research:src/core/placeid.ts PLACE_TAKES, answerOne ~:1195 · research:src/core/waiting.ts:395–420 (v1.25.2) wait.group.places · research:src/cli/menu-waiting.ts:523–560 · app:src/waiting-places.ts placeQuestionChoices :40, bulkAcceptable :140, bulkKeepable, placeAreas · app:src/strings.ts waiting.* · app CHANGELOG.cs.md 3.22.0 -->
+<!-- zdroj: research:src/commands/placeid.ts:345 answer (person only) · research:src/core/placeid.ts PLACE_TAKES, answerOne ~:1195 · research:src/core/waiting.ts:395–420 (v1.25.2) wait.group.places · research:src/cli/menu-waiting.ts:523–560 · app:src/waiting-places.ts placeQuestionChoices :40, bulkAcceptable :140, bulkKeepable, placeAreas · app:src/strings.ts waiting.* · app CHANGELOG.cs.md 3.22.0 · 1.26.0: research:src/core/placeid.ts answerOne (first: locating.by person vynechá; unknown u conflict a form), cs.json ui.wait.place.unknown/none (commit fe59fb40) · app:src/waiting-places.ts PLACES_UNKNOWN_ALL_SINCE, ui/waiting-places-ui.ts:645 take first -->
 
 <a id="R4.5.1"></a>
 ### R4.5.1 Cofnięcie kroku

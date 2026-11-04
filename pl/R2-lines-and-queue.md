@@ -53,6 +53,28 @@ linii, a agent pracuje nad zadaniami linii.
 
 <!-- zdroj: research:src/core/frontier.ts:159-194 researchPeople/linePeople · src/core/directions.ts:75-82 directionOf · CHANGELOG.cs.md 1.26.0 -->
 
+<a id="R2.1.4"></a>
+### R2.1.4 Kolejność linii to kolejność pracy
+
+Linie mają jedną kolejność i w niej przychodzi na nie praca: pierwsza linia ma pierwszeństwo.
+
+- **Granice:**
+  - linia wstrzymana i zakończona zachowuje swoje miejsce; po ponownym uruchomieniu wraca tam, gdzie była. Nowa
+    linia idzie na koniec;
+  - co kolejność znaczy dla kolejki, zależy od strategii ([R2.2.1](#R2.2.1)): **balanced** i **depth** dają zadaniom
+    pierwszej trwającej linii dodatek 2 punktów, ostatniej 0, pozostałym proporcjonalnie; żadna linia nie stoi.
+    **priority** bierze linie ściśle po kolei: pierwszą, dopóki ma pracę, potem następną; zadania bez linii dopiero
+    po nich;
+  - badanie bez zapisanej kolejności układa linie według priorytetu, potem według daty założenia;
+  - węższa granica linii (`strom research edit`) niczego nie usuwa: zadania poza granicą czekają poza linią.
+- **Obsługa:** terminal: `strom research list` (w kolejności pracy), `strom research order G… G…`,
+  `strom research move G… --to <n>|--up|--down|--first`,
+  `strom research edit G… --name|--question|--generations|--before`. Aplikacja: sekcja **Linie**
+  ([S4.3.1](S4-research-from-the-app.md#S4.3.1)), telefon ([S5](S5-phone.md)).
+- **Obowiązuje od:** badanie 1.26.0
+
+<!-- zdroj: research:src/core/order.ts workOrder, orderMode · src/core/queue.ts:237-240 lineBonus, :396 priority lineRank · src/commands/research.ts:215 research edit, :303 research order, :326 research move -->
+
 <a id="R2.2"></a>
 ## R2.2 Kolejka wyznacza, które zadanie przychodzi na kolej
 
@@ -89,6 +111,8 @@ rozpoczęte idzie przed wszystkimi.
 - **Obsługa:** terminal: `strom config set queue.strategy balanced|depth|priority`, priorytet linii
   `strom research new … --priority <1–5>`.
 - **Obowiązuje od:** badanie 1.0.0
+- **Od badania 1.26.0:** znaczenie ma też kolejność linii ([R2.1.4](#R2.1.4)); **priority** bierze linie po kolei,
+  wewnątrz linii według priorytetu zadania i pokolenia.
 
 <!-- zdroj: research:src/core/queue.ts:294-299, RECENT=4 :58 · src/core/config.ts queue.strategy · model.ts priority -->
 
@@ -148,11 +172,19 @@ przodka i jej rodzina), które nie pomaga żadnej linii. Taka praca idzie **dopi
 Oprócz wyboru dla całego badania własny wybór może mieć jedna gałąź (także „dodać do linii”) i jedno zadanie
 (**od razu** / **na koniec**). Węższy wybór wygrywa: zadanie przed gałęzią, gałąź przed badaniem.
 
-- **Obsługa:** terminal: `strom offline set`, `strom task order T… --next|--last|--default`. Aplikacja 3.22.0:
-  **Zrób jako następne**, **Na koniec**.
+- **Granice:**
+  - gałąź: **czasem**, **na końcu**, **normalnie**, **nigdy** (zadania czekają poza kolejką, nic nie jest usuwane
+    i nowe zadanie się w niej nie proponuje), albo dodać do linii: zadania gałęzi wtedy pomagają linii i idą z nią.
+    Wybór obowiązuje też dla nowych zadań gałęzi. Powrót do wyboru badania: domyślny;
+  - zadanie **od razu** przychodzi na kolej jako następne, przed liniami, miejscami i historią miejsc, i tylko raz:
+    po sesji nad nim wybór znika sam. **Na koniec** obowiązuje, dopóki zadanie nie jest gotowe albo dopóki wybór nie
+    zostanie cofnięty. Zadanie, nad którym pracuje agent, miejsca nie zmienia.
+- **Obsługa:** terminal: `strom offline list|show`, `strom offline set B-P… --mode occasional|last|normal|never`,
+  `--line G…`, `--default`; `strom task order T… --next|--last|--default`. Aplikacja 3.22.0:
+  **Zrób jako następne**, **Na koniec**, opcje gałęzi ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 - **Obowiązuje od:** badanie 1.26.0
 
-<!-- zdroj: research:src/commands/offline.ts:101,171 · quality/offline.json -->
+<!-- zdroj: research:src/commands/offline.ts:101 offline set (BRANCH_MODES), :171 task order (next once, queue.doing) · quality/offline.json -->
 
 <a id="R2.3.2"></a>
 ### R2.3.2 Rosnąca gałąź dostaje propozycję linii
@@ -161,11 +193,15 @@ Gdy gałąź poza liniami urośnie do 10 otwartych zadań lub 5 osób, w **Czeka
 do linii, założyć linię, zostawić bez zmian albo nie badać. Po odpowiedzi „zostawić” propozycja wraca dopiero przy
 dwukrotnej wielkości. Gałąź z własnym wyborem i wybór **nigdy** propozycji nie dostają.
 
-- **Obsługa:** terminal: **Proponować linie dla rosnących gałęzi** (włączyć/wyłączyć), `strom offline answer`,
-  `strom config set queue.suggestTasks|queue.suggestPersons <n>`.
+- **Granice:** odpowiada tylko człowiek (aplikacja lub **Co czeka**); agentowi badanie odpowiedź odrzuca. Gdy linia
+  przy gałęzi jest wstrzymana lub zakończona, aplikacja proponuje najwęższą trwającą linię, do której należy osoba
+  gałęzi; gdy takiej nie ma, linię wstrzymaną z uwagą **(wstrzymana)**.
+- **Obsługa:** terminal: **Proponować linie dla rosnących gałęzi** (włączyć/wyłączyć), `strom offline answer B-P…
+  line|keep|never`, `strom config set queue.suggestTasks|queue.suggestPersons <n>`. Aplikacja: **Czeka na decyzję**,
+  ustawienie **Proponuj linie dla rosnących gałęzi** ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 - **Obowiązuje od:** badanie 1.26.0
 
-<!-- zdroj: research:src/core/offline.ts:449-455 grows · config.ts SUGGEST_TASKS=10, SUGGEST_PERSONS=5 · cs.json ui.wait.branch.done.keep -->
+<!-- zdroj: research:src/core/offline.ts:449-455 grows · config.ts SUGGEST_TASKS=10, SUGGEST_PERSONS=5 · cs.json ui.wait.branch.done.keep · src/commands/offline.ts:142 offline answer (person) · app:src/ui/research-offline-ui.ts answerGrowingBranch · strings.ts live.setSuggest, live.branchAddPaused -->
 
 <a id="R2.4"></a>
 ## R2.4 Dlaczego zadanie stoi tam, gdzie stoi
