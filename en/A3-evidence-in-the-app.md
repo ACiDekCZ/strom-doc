@@ -205,9 +205,21 @@ person, for birth and death, for events, for marriages and for couples' shared e
 - **Limits:** in a read-only or locked tree the menu item is there only when the person has some source. The number of
   sources is at the menu item.
 - **Controls:** person menu (click on the card) → **Sources**.
-- **Since:** app 3.3.0; **Find a source in the research** 3.19.0
+- **From app 3.22.0:** a story's sources are with the story itself. Under the text of a story there is one folded
+  section **What the text is based on (N)**, where N is the number of sources:
+  - **Sources**: each source once. First the sources the story itself points to, then the sources its facts cite. A
+    source with a web address is a link that opens in a new window;
+  - **Facts**: the facts the text is based on, readable ("Death 25 Sep 1857, Lhota"), without the research's codes;
+  - **Author's note**, when the story has one.
+- The section is in the window **Story**, on the person page, in the comparison of story versions and (read-only) in
+  the person's edit. A source code in the text (`[S0164]`) is shown as the source's title in parentheses when the tree
+  has it. The person page also lists a story's source among its sources, with **Story** or **Story of the marriage**
+  as what it supports. The menu **Sources** does not list a story's sources.
+- **Limits:** in print and in the family book there is nothing under the text; in the book a story's sources are
+  numbered in the list of sources. How the research keeps a story's sources: [R3.9](R3-verification-and-citation.md#R3.9).
+- **Since:** app 3.3.0; **Find a source in the research** 3.19.0; **What the text is based on** 3.22.0
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 -->
 
 <a id="A3.7"></a>
 ## A3.7 Where evidence is missing

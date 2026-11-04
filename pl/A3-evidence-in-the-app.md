@@ -205,9 +205,21 @@ do urodzenia i zgonu, do zdarzeń, do ślubów i do wspólnych zdarzeń par.
 - **Granice:** przy drzewie tylko do odczytu lub zablokowanym pozycja jest w menu tylko wtedy, gdy osoba ma jakieś
   źródło. Liczba źródeł jest przy pozycji menu.
 - **Obsługa:** menu osoby (kliknięcie karty) → **Źródła**.
-- **Obowiązuje od:** aplikacja 3.3.0; **Znajdź źródło w badaniu** 3.19.0
+- **Od aplikacji 3.22.0:** źródła opowieści są przy samej opowieści. Pod tekstem opowieści jest jedna zwinięta sekcja
+  **Na czym opiera się tekst (N)**, gdzie N to liczba źródeł:
+  - **Źródła**: każde źródło raz. Najpierw źródła, na które wskazuje sama opowieść, potem źródła, które cytują jej
+    dane. Źródło z adresem internetowym to odnośnik, który otwiera się w nowym oknie;
+  - **Fakty**: dane, na których opiera się tekst, w czytelnej postaci („Zgon 25.9.1857, Lhota”), bez kodów badania;
+  - **Notatka autora**, gdy opowieść ją ma.
+- Sekcja jest w oknie **Opowieść**, na stronie osoby, w porównaniu wersji opowieści i (tylko do odczytu) w edycji
+  osoby. Kod źródła w tekście (`[S0164]`) pokazuje się jako nazwa źródła w nawiasie, gdy strom ją ma. Strona osoby
+  wymienia źródło opowieści także wśród swoich źródeł, z **Opowieść** lub **Opowieść o małżeństwie** jako tym, co
+  dokumentuje. Menu **Źródła** źródeł opowieści nie wymienia.
+- **Granice:** w druku i w księdze rodu pod tekstem nic nie ma; źródła opowieści są w księdze ponumerowane w liście
+  źródeł. Jak badanie zachowuje źródła opowieści: [R3.9](R3-verification-and-citation.md#R3.9).
+- **Obowiązuje od:** aplikacja 3.3.0; **Znajdź źródło w badaniu** 3.19.0; **Na czym opiera się tekst** 3.22.0
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 -->
 
 <a id="A3.7"></a>
 ## A3.7 Gdzie brakuje dowodów

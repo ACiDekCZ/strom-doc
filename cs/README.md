@@ -18,6 +18,7 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [R5 Rozpory](R5-conflicts.md): jak rozpor vzniká, kdo ho rozhoduje, co agent nepřepíše
 - [R6 Čeká na vyřízení](R6-awaiting-action.md): co výzkum potřebuje od člověka a kde se to vyřizuje
 - [R7 Kdy a jak dlouho agent pracuje](R7-when-the-agent-works.md): sezení, časový limit, podmínka běhu, limit předplatného
+- [R8 Hledání a čtení záznamů ve skenech](R8-reading-scans.md): kniha, snímky přes stahovač, čtenáři, vlastní čtení, zápis nálezu a jistota
 
 ## A Aplikace Strom
 

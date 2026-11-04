@@ -19,6 +19,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R1.4 | R1-research-in-brief.md | výzkum 1.0.0 | platí | Jak výzkum váží důkazy | How the research weighs evidence | Wie die Forschung Beweise gewichtet | Jak badanie waży dowody |
 | R1.5 | R1-research-in-brief.md | výzkum 1.0.0 | platí | Co rozhoduje člověk | What a person decides | Was der Mensch entscheidet | Co rozstrzyga człowiek |
 | R1.6 | R1-research-in-brief.md | výzkum 1.0.0 | platí | Výzkum a aplikace Strom | The research and the Strom app | Die Forschung und die Strom-App | Badanie i aplikacja Strom |
+| R1.7 | R1-research-in-brief.md | výzkum 1.0.0 | platí | Jak výzkum čte skeny | How the research reads scans | Wie die Forschung Scans liest | Jak badanie czyta skany |
 | R2 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Linie a fronta | Lines and the queue | Linien und Warteschlange | Linie i kolejka |
 | R2.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Linie určuje, co výzkum zkoumá | A line sets what the research investigates | Die Linie bestimmt, was die Forschung untersucht | Linia wyznacza, co badanie bada |
 | R2.1.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Druhy linií a meze | Kinds of lines and their limits | Arten von Linien und Grenzen | Rodzaje linii i ograniczenia |
@@ -103,6 +104,24 @@ nenapsáno) · `neplatí od <verze>`.
 | R7.5.4 | R7-when-the-agent-works.md | výzkum 1.14.0 | platí | Strop týdne | The week's cap | Obergrenze der Woche | Pułap tygodnia |
 | R7.6 | R7-when-the-agent-works.md | výzkum 1.0.0 | platí | Limit předplatného zastaví běh | The subscription limit stops the run | Das Limit des Abonnements hält den Lauf an | Limit subskrypcji zatrzymuje przebieg |
 | R7.7 | R7-when-the-agent-works.md | výzkum 1.25.2 | platí | Nepřihlášený agent | An agent not logged in | Ein nicht angemeldeter Agent | Niezalogowany agent |
+| R8 | R8-reading-scans.md | výzkum 1.0.0 | platí | Hledání a čtení záznamů ve skenech | Finding and reading entries in scans | Einträge in Scans finden und lesen | Wyszukiwanie i odczyt wpisów w skanach |
+| R8.1 | R8-reading-scans.md | výzkum 1.0.0 | platí | Nejdřív kniha | The book first | Zuerst das Buch | Najpierw księga |
+| R8.1.1 | R8-reading-scans.md | výzkum 1.14.0 | platí | Rejstřík před listováním | An index before browsing | Ein Register vor dem Durchblättern | Indeks przed przeglądaniem |
+| R8.2 | R8-reading-scans.md | výzkum 1.0.0 | platí | Snímky jen přes stahovač | Images only through a downloader | Bilder nur über einen Downloader | Skany tylko przez program pobierający |
+| R8.3 | R8-reading-scans.md | výzkum 1.0.0 | platí | Čtenáři: kdo snímky čte | Readers: who reads the images | Leser: wer die Bilder liest | Czytelnicy: kto czyta skany |
+| R8.3.1 | R8-reading-scans.md | výzkum 1.0.0 | platí | Dávky, souběh a rozsah | Batches, readers at once and range | Stapel, gleichzeitige Leser und Umfang | Partie, czytelnicy naraz i zakres |
+| R8.3.2 | R8-reading-scans.md | výzkum 1.14.0 | platí | Velikost pohledů a dvoustrana v půlkách | View size and a double page in halves | Größe der Ansichten und eine Doppelseite in Hälften | Rozmiar widoków i rozkładówka w połówkach |
+| R8.3.3 | R8-reading-scans.md | výzkum 1.0.0 | platí | Co čtenář píše | What a reader writes | Was ein Leser schreibt | Co pisze czytelnik |
+| R8.3.4 | R8-reading-scans.md | výzkum 1.14.0 | platí | Časový limit čtenáře a výpadek služby | A reader's time limit and a service outage | Zeitlimit eines Lesers und Ausfall des Dienstes | Limit czasu czytelnika i awaria usługi |
+| R8.3.5 | R8-reading-scans.md | výzkum 1.15.0 | platí | Čtení do nálezu | Reading until found | Lesen bis zum Fund | Czytanie do znalezienia |
+| R8.3.6 | R8-reading-scans.md | výzkum 1.15.0 | platí | Čtení knihy, která se stahuje | Reading a book that is being downloaded | Lesen eines Buches, das gerade geladen wird | Czytanie księgi w trakcie pobierania |
+| R8.3.7 | R8-reading-scans.md | výzkum 1.0.0 | platí | Co se vrátí agentovi | What comes back to the agent | Was der Agent zurückbekommt | Co wraca do agenta |
+| R8.4 | R8-reading-scans.md | výzkum 1.14.0 | platí | Samoladění čtení | Self-tuning of reading | Selbstabstimmung des Lesens | Samodostrajanie odczytu |
+| R8.5 | R8-reading-scans.md | výzkum 1.0.0 | platí | Vlastní čtení hlavního agenta | The main agent's own reading | Eigenes Lesen des Hauptagenten | Własny odczyt głównego agenta |
+| R8.5.1 | R8-reading-scans.md | výzkum 1.4.1 | platí | Jméno a místo pro další hledání | A name and place for the next search | Name und Ort für die weitere Suche | Imię i miejsce do dalszego szukania |
+| R8.5.2 | R8-reading-scans.md | výzkum 1.14.0 | platí | Nejistě přečtené místo je vodítko | An uncertainly read place is a lead | Ein unsicher gelesener Ort ist ein Hinweis | Niepewnie odczytane miejsce to wskazówka |
+| R8.6 | R8-reading-scans.md | výzkum 1.0.0 | platí | Zápis nálezu | Recording a find | Erfassen eines Fundes | Zapis znaleziska |
+| R8.7 | R8-reading-scans.md | výzkum 1.0.0 | platí | Jistota a ověření přečteného | Certainty and verification of what was read | Sicherheit und Prüfung des Gelesenen | Pewność i weryfikacja odczytu |
 | A1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Aplikace v kostce | The app in brief | Die App im Überblick | Aplikacja w skrócie |
 | A1.1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Rodokmen v prohlížeči, data na zařízení | A family tree in the browser, data on the device | Stammbaum im Browser, Daten auf dem Gerät | Drzewo genealogiczne w przeglądarce, dane na urządzeniu |
 | A1.2 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Osoby, vztahy a rody | People, relationships and family lines | Personen, Beziehungen und Stammlinien | Osoby, relacje i rody |

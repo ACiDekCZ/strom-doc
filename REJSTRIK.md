@@ -55,6 +55,42 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 - **Čísla:** [R6.1](cs/R6-awaiting-action.md#R6.1), R6.1.1, R6.4, R6.5, S2.3
 
+<a id="reader"></a>
+### Čtenář
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | čtenář, čtenáři (terminal, `strom read`) | Samostatný běh agenta s čistým kontextem, který přečte dávku pohledů na snímky a napíše jen svou zprávu. Do výzkumu nezapisuje. |
+| en | reader, readers (terminal, `strom read`) | A separate run of the agent with a clean context that reads a batch of views of images and writes only its report. It never writes to the research. |
+| de | Leser (terminal, `strom read`) | Ein eigener Lauf des Agenten mit leerem Kontext, der einen Stapel Ansichten von Bildern liest und nur seinen Bericht schreibt. In die Forschung schreibt er nie. |
+| pl | czytelnik, czytelnicy (terminal, `strom read`) | Osobne uruchomienie agenta z czystym kontekstem, które odczytuje partię widoków skanów i pisze tylko swój raport. Do badania nie zapisuje. |
+
+- **Čísla:** [R8.3](cs/R8-reading-scans.md#R8.3), R8.3.1, R8.3.3, R8.3.7, R1.7
+
+<a id="reading-until-found"></a>
+### Čtení do nálezu
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | `strom read --until-found` | Čtení, ve kterém po prvním nahlášeném nálezu nezačne žádný další čtenář. Prohledané jsou jen přečtené snímky; hledání se zapíše jako částečné. |
+| en | `strom read --until-found` | A reading in which no further reader starts after the first reported find. Only the images read count as searched; the search is recorded as partial. |
+| de | `strom read --until-found` | Eine Lesung, in der nach dem ersten gemeldeten Fund kein weiterer Leser beginnt. Nur gelesene Bilder gelten als durchsucht; die Suche wird als teilweise erfasst. |
+| pl | `strom read --until-found` | Odczyt, w którym po pierwszym zgłoszonym znalezisku nie zaczyna żaden kolejny czytelnik. Przeszukane są tylko odczytane skany; wyszukiwanie zapisuje się jako częściowe. |
+
+- **Čísla:** [R8.3.5](cs/R8-reading-scans.md#R8.3.5)
+
+<a id="batch"></a>
+### Dávka
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | dávka, dávky (terminal, `strom read --batch`) | Pohledy, které čte jeden čtenář: výchozí 10, nejvýš 12. Dvoustrana čtená v půlkách jsou dva pohledy. |
+| en | batch (terminal, `strom read --batch`) | The views one reader reads: 10 by default, at most 12. A double page read in halves is two views. |
+| de | Stapel (terminal, `strom read --batch`) | Die Ansichten, die ein Leser liest: standardmäßig 10, höchstens 12. Eine in Hälften gelesene Doppelseite sind zwei Ansichten. |
+| pl | partia (terminal, `strom read --batch`) | Widoki, które czyta jeden czytelnik: domyślnie 10, najwyżej 12. Rozkładówka czytana w połówkach to dwa widoki. |
+
+- **Čísla:** [R8.3.1](cs/R8-reading-scans.md#R8.3.1), R8.4
+
 <a id="place-history"></a>
 ### Dějiny místa
 
@@ -202,7 +238,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | pl | negatywne wyszukiwanie (terminal) | Zapisane wyszukiwanie, które w dokładnie określonym zakresie niczego nie znalazło. Jest wynikiem i chroni przed ponownym szukaniem tego samego. |
 
 - **Genealogicky:** negativní nález (negative search); podklad negativního důkazu.
-- **Čísla:** [R3.6](cs/R3-verification-and-citation.md#R3.6), S3.6
+- **Čísla:** [R3.6](cs/R3-verification-and-citation.md#R3.6), S3.6, R8.3.3, R8.3.5, R8.6
 
 <a id="parked-task"></a>
 ### Odložený úkol
@@ -239,6 +275,18 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | pl | warunek | Program, który strom pyta przed sesją samodzielnej pracy: kontynuować, czekać czy zatrzymać. Ustawia go tylko człowiek. |
 
 - **Čísla:** [R7.4](cs/R7-when-the-agent-works.md#R7.4), R7.4.1, R7.4.3, R7.5
+
+<a id="view"></a>
+### Pohled
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | pohled, pohledy (terminal, `strom media view`) | Obrázek ze snímku připravený pro model: celý snímek zmenšený na nalezení zápisu, nebo půlka, výřez či díl ve velikosti, jakou model vezme celou. |
+| en | view, views (terminal, `strom media view`) | A picture made from an image for the model: the whole image reduced for finding an entry, or a half, crop or part at the size the model takes whole. |
+| de | Ansicht, Ansichten (terminal, `strom media view`) | Ein Bild aus einem Scan, für das Modell vorbereitet: das ganze Bild verkleinert zum Finden eines Eintrags, oder eine Hälfte, ein Ausschnitt oder ein Teil in der Größe, die das Modell ganz nimmt. |
+| pl | widok, widoki (terminal, `strom media view`) | Obraz ze skanu przygotowany dla modelu: cały skan zmniejszony do znalezienia wpisu albo połówka, wycinek lub część w rozmiarze, jaki model przyjmuje w całości. |
+
+- **Čísla:** [R8.5](cs/R8-reading-scans.md#R8.5), R8.3.2
 
 <a id="off-the-lines-work"></a>
 ### Práce mimo linie
@@ -338,6 +386,18 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 - **Čísla:** [R4.3](cs/R4-places.md#R4.3), R4.5
 
+<a id="reading-tuning"></a>
+### Samoladění čtení
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Čtení snímků (terminal, `strom media calibrate --report`); `tune.auto` | strom měří, jak čtení skenů probíhá, a po sezení sám mění, jak se čte: jen směrem k přesnosti nebo k menšímu počtu žádostí do archivu. |
+| en | Reading the scans (terminal, `strom media calibrate --report`); `tune.auto` | strom measures how reading the scans goes and, after a session, changes by itself how it reads: only towards accuracy or fewer requests to the archive. |
+| de | Lesen der Scans (terminal, `strom media calibrate --report`); `tune.auto` | strom misst, wie das Lesen der Scans verläuft, und ändert nach einer Sitzung selbst, wie gelesen wird: nur zu mehr Genauigkeit oder zu weniger Anfragen an das Archiv. |
+| pl | Odczyt skanów (terminal, `strom media calibrate --report`); `tune.auto` | strom mierzy, jak przebiega odczyt skanów, i po sesji sam zmienia sposób odczytu: tylko w stronę dokładności lub mniejszej liczby zapytań do archiwum. |
+
+- **Čísla:** [R8.4](cs/R8-reading-scans.md#R8.4)
+
 <a id="working-alone"></a>
 ### Samostatná práce agenta
 
@@ -361,7 +421,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | pl | ślepy odczyt, odczytany na ślepo (terminal) | Drugi, niezależny odczyt wpisu przez czytelnika, który nie zna oczekiwanej wartości. Zgodność dwóch odczytów to warunek metodyki dla Udokumentowane przy trudnej komórce. |
 
 - **Genealogicky:** nezávislé ověření přepisu (independent transcription).
-- **Čísla:** [R3.5](cs/R3-verification-and-citation.md#R3.5), R3.5.1
+- **Čísla:** [R3.5](cs/R3-verification-and-citation.md#R3.5), R3.5.1, R8.7, R8.3.2
 
 <a id="images-saved-by-hand"></a>
 ### Snímky uložené ručně
@@ -374,6 +434,18 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | pl | skany | Zadanie czeka, aż człowiek zapisze skany księgi do przygotowanego folderu; po ich zapisaniu do badania budzi się samo. |
 
 - **Čísla:** [R6.2.1](cs/R6-awaiting-action.md#R6.2.1), R6.7.2
+
+<a id="downloader"></a>
+### Stahovač
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | stahovač, Stahovače (terminal, Čeká na vyřízení) | Část stromu pro jeden archiv, přes kterou jedině strom stahuje katalog a snímky, podle podmínek archivu a v jeho tempu. |
+| en | downloader, Downloaders (terminal, awaiting action) | The part of strom for one archive through which alone strom downloads the catalogue and images, under the archive's terms and at its pace. |
+| de | Downloader (terminal, ausstehende Aktionen) | Der Teil von strom für ein Archiv, über den strom allein Katalog und Bilder lädt, nach den Bedingungen des Archivs und in seinem Tempo. |
+| pl | program pobierający, Programy pobierające (terminal) | Część stroma dla jednego archiwum, przez którą jedynie strom pobiera katalog i skany, zgodnie z warunkami archiwum i w jego tempie. |
+
+- **Čísla:** [R8.2](cs/R8-reading-scans.md#R8.2), R8.1, R6.3.1
 
 <a id="conflict-sides"></a>
 ### Strany rozporu
@@ -1041,7 +1113,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Ausschnitt des Eintrags (app) | Ein Bild nur dieses Eintrags, nicht der ganzen Seite. In der App höchstens zwei bei einer Quelle, JPEG bis 1200 px; die Forschung schreibt bis zu drei. |
 | pl | Wycinek zapisu (app) | Obraz tylko tego zapisu, nie całej strony. W aplikacji najwyżej dwa przy źródle, JPEG do 1200 px; badanie zapisuje do trzech. |
 
-- **Čísla:** [A3.3](cs/A3-evidence-in-the-app.md#A3.3), [R3.4](cs/R3-verification-and-citation.md#R3.4)
+- **Čísla:** [A3.3](cs/A3-evidence-in-the-app.md#A3.3), [R3.4](cs/R3-verification-and-citation.md#R3.4), R8.6
 
 <a id="research-not-running"></a>
 ### Výzkum neběží
@@ -1078,6 +1150,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Badanie nie przyjęło zmian | Badanie odrzuciło wysłanie w całości (rozmiar, inne badanie, cudze drzewo genealogiczne, puste drzewo). Zmiany zostają w aplikacji. |
 
 - **Čísla:** [S2.5](cs/S2-edits-from-the-app.md#S2.5)
+
+<a id="story-basis"></a>
+### Z čeho text vychází
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Z čeho text vychází (N) (app) | Sbalený oddíl pod vyprávěním: prameny vyprávění bez duplicit (webová adresa jako odkaz), fakta, ze kterých text vychází, a poznámka autora. N je počet pramenů. |
+| en | What the text is based on (N) (app) | A folded section under a story: the story's sources without duplicates (a web address as a link), the facts the text is based on and the author's note. N is the number of sources. |
+| de | Grundlage des Textes (N) (app) | Ein eingeklappter Abschnitt unter einer Erzählung: die Quellen der Erzählung ohne Doppelungen (eine Webadresse als Link), die Fakten, auf denen der Text beruht, und die Anmerkung des Autors. N ist die Zahl der Quellen. |
+| pl | Na czym opiera się tekst (N) (app) | Zwinięta sekcja pod opowieścią: źródła opowieści bez powtórzeń (adres internetowy jako link), fakty, na których opiera się tekst, i notatka autora. N to liczba źródeł. |
+
+- **Čísla:** [A3.6](cs/A3-evidence-in-the-app.md#A3.6), R3.9
 
 <a id="placeholder-person"></a>
 ### Zástupná osoba

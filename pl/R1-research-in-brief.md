@@ -85,3 +85,17 @@ akt, nie nadpisuje jej, lecz staje się sprzecznością ([R5](R5-conflicts.md)).
 część S.
 
 <!-- zdroj: research:src/core/sync.ts:1-19 · app:strings.ts research.knows -->
+
+<a id="R1.7"></a>
+## R1.7 Jak badanie czyta skany
+
+Większość danych pochodzi ze skanów ksiąg metrykalnych i innych ksiąg. Badanie najpierw ustala księgę, skany pobiera
+tylko przez program pobierający archiwum i tylko te potrzebne. Księgę przeglądają **czytelnicy** (`strom read`):
+samodzielni agenci, każdy z partią skanów. Wpis, który będzie cytowany, główny agent czyta sam z wycinka w pełnej
+rozdzielczości i zapisuje go z wycinkiem i transkrypcją. Odczyt modelem AI nie jest stuprocentowy; ważne dane powinien
+najlepiej sprawdzić jeszcze człowiek.
+
+- Szczegółowo, z przebiegiem krok po kroku: [R8](R8-reading-scans.md).
+- **Obowiązuje od:** badanie 1.0.0
+
+<!-- zdroj: research:assets/method/reading.md · assets/method/locate.md · assets/method/recording.md · src/commands/read.ts:183-200 -->

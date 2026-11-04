@@ -80,3 +80,16 @@ pracuje, i běžící práci. Úpravy v aplikaci se posílají zpět do výzkumu
 nepřepíše, ale stane se rozporem ([R5](R5-conflicts.md)). Spolupráci aplikace a výzkumu popíše část S.
 
 <!-- zdroj: research:src/core/sync.ts:1-19 · app:strings.ts research.knows -->
+
+<a id="R1.7"></a>
+## R1.7 Jak výzkum čte skeny
+
+Většina údajů pochází ze skenů matrik a jiných knih. Výzkum nejdřív určí knihu, snímky stahuje jen přes stahovač
+archivu a jen ty potřebné. Knihou listují **čtenáři** (`strom read`): samostatní agenti, každý s dávkou snímků.
+Zápis, který se bude citovat, si hlavní agent přečte sám z výřezu v plném rozlišení a zapíše ho s výřezem
+a přepisem. Čtení modelem AI není stoprocentní; důležité údaje má ideálně ověřit ještě člověk.
+
+- Podrobně, s postupem krok za krokem: [R8](R8-reading-scans.md).
+- **Platí od:** výzkum 1.0.0
+
+<!-- zdroj: research:assets/method/reading.md · assets/method/locate.md · assets/method/recording.md · src/commands/read.ts:183-200 -->

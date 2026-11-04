@@ -12,6 +12,10 @@ and experienced researchers.
 Every chapter and rule has a permanent number (`R2.3`) that can be quoted in
 answers, posts and tickets. The same number leads to the same rule in every
 language. All numbers with their titles in each language: [CISLA.md](CISLA.md).
+How the research finds a book, gets its images, reads them and records an
+entry, step by step: R8 ([cs](cs/R8-reading-scans.md),
+[en](en/R8-reading-scans.md), [de](de/R8-reading-scans.md),
+[pl](pl/R8-reading-scans.md)).
 Terms exactly as the app and the terminal say them, with definitions in each
 language: [REJSTRIK.md](REJSTRIK.md). Both registers have Czech headings.
 

@@ -84,3 +84,17 @@ record proves does not overwrite it but becomes a conflict ([R5](R5-conflicts.md
 and the research work together.
 
 <!-- zdroj: research:src/core/sync.ts:1-19 · app:strings.ts research.knows -->
+
+<a id="R1.7"></a>
+## R1.7 How the research reads scans
+
+Most facts come from scans of parish registers and other books. The research first determines the book, downloads
+images only through the archive's downloader and only those needed. A book is browsed by **readers** (`strom read`):
+separate agents, each with a batch of images. An entry that will be cited the main agent reads itself from a crop at
+full resolution and records it with a clip and a transcription. Reading by an AI model is not one hundred per cent;
+important facts should ideally be verified by a person as well.
+
+- In detail, step by step: [R8](R8-reading-scans.md).
+- **Since:** research 1.0.0
+
+<!-- zdroj: research:assets/method/reading.md · assets/method/locate.md · assets/method/recording.md · src/commands/read.ts:183-200 -->

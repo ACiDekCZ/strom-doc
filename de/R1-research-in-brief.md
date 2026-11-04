@@ -90,3 +90,17 @@ Forschung. Die Änderung einer Angabe, die ein Eintrag belegt, überschreibt sie
 Widerspruch ([R5](R5-conflicts.md)). Das Zusammenspiel von App und Forschung beschreibt Teil S.
 
 <!-- zdroj: research:src/core/sync.ts:1-19 · app:strings.ts research.knows -->
+
+<a id="R1.7"></a>
+## R1.7 Wie die Forschung Scans liest
+
+Die meisten Angaben stammen aus Scans von Kirchenbüchern und anderen Büchern. Die Forschung bestimmt zuerst das Buch,
+die Bilder lädt sie nur über den Downloader des Archivs und nur die nötigen. Das Buch blättern **Leser** durch
+(`strom read`): eigene Agenten, jeder mit einem Stapel Bilder. Einen Eintrag, der zitiert wird, liest der Hauptagent
+selbst aus einem Ausschnitt in voller Auflösung und erfasst ihn mit Ausschnitt und Abschrift. Das Lesen durch ein
+KI-Modell ist nicht hundertprozentig; wichtige Angaben soll idealerweise noch ein Mensch prüfen.
+
+- Ausführlich, mit dem Ablauf Schritt für Schritt: [R8](R8-reading-scans.md).
+- **Gilt seit:** Forschung 1.0.0
+
+<!-- zdroj: research:assets/method/reading.md · assets/method/locate.md · assets/method/recording.md · src/commands/read.ts:183-200 -->

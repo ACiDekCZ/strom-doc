@@ -192,9 +192,21 @@ k narození a úmrtí, k událostem, ke sňatkům a ke společným událostem p�
 - **Hranice:** u stromu jen pro čtení nebo uzamčeného je položka v menu, jen když osoba nějaký pramen má. Počet
   pramenů je u položky menu.
 - **Ovládání:** menu osoby (klik na kartu) → **Prameny**.
-- **Platí od:** aplikace 3.3.0; **Najít pramen ve výzkumu** 3.19.0
+- **Od aplikace 3.22.0:** prameny vyprávění jsou u vyprávění samotného. Pod textem vyprávění je jeden sbalený oddíl
+  **Z čeho text vychází (N)**, kde N je počet pramenů:
+  - **Prameny**: každý pramen jednou. Nejdřív prameny, na které ukazuje vyprávění samo, pak prameny, které citují
+    jeho údaje. Pramen s webovou adresou je odkaz, který se otevře v novém okně;
+  - **Fakta**: údaje, ze kterých text vychází, čitelně („Úmrtí 25. 9. 1857, Lhota“), bez kódů výzkumu;
+  - **Poznámka autora**, když ji vyprávění má.
+- Oddíl je v okně **Vyprávění**, na stránce osoby, ve srovnání verzí vyprávění a (jen pro čtení) v úpravě osoby.
+  Kód pramene v textu (`[S0164]`) se ukáže jako název pramene v závorce, když ho strom má. Stránka osoby uvede
+  pramen vyprávění i ve svých pramenech, s **Vyprávění** nebo **Vyprávění manželství** jako tím, co dokládá. Menu
+  **Prameny** prameny vyprávění neuvádí.
+- **Hranice:** v tisku a v knize rodu pod textem nic není; prameny vyprávění jsou v knize očíslované v seznamu
+  pramenů. Jak výzkum prameny vyprávění drží: [R3.9](R3-verification-and-citation.md#R3.9).
+- **Platí od:** aplikace 3.3.0; **Najít pramen ve výzkumu** 3.19.0; **Z čeho text vychází** 3.22.0
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 -->
 
 <a id="A3.7"></a>
 ## A3.7 Kde chybí doklady

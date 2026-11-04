@@ -220,9 +220,24 @@ zur Person, zu Geburt und Tod, zu Ereignissen, zu Heiraten und zu gemeinsamen Er
 - **Grenzen:** bei einem schreibgeschützten oder gesperrten Stammbaum steht der Punkt nur im Menü, wenn die Person
   eine Quelle hat. Die Zahl der Quellen steht beim Menüpunkt.
 - **Bedienung:** Menü der Person (Klick auf die Karte) → **Quellen**.
-- **Gilt seit:** App 3.3.0; **Quelle in der Forschung finden** 3.19.0
+- **Ab App 3.22.0:** die Quellen einer Erzählung stehen bei der Erzählung selbst. Unter dem Text der Erzählung ist
+  ein einziger eingeklappter Abschnitt **Grundlage des Textes (N)**, wobei N die Zahl der Quellen ist:
+  - **Quellen**: jede Quelle einmal. Zuerst die Quellen, auf die die Erzählung selbst verweist, dann die Quellen, die
+    ihre Angaben zitieren. Eine Quelle mit Webadresse ist ein Link, der sich in einem neuen Fenster öffnet;
+  - **Fakten**: die Angaben, auf denen der Text beruht, lesbar („Tod 25. 9. 1857, Lhota“), ohne Kennungen der
+    Forschung;
+  - **Anmerkung des Autors**, wenn die Erzählung eine hat.
+- Der Abschnitt steht im Fenster **Erzählung**, auf der Personenseite, im Vergleich der Fassungen einer Erzählung und
+  (nur lesbar) beim Bearbeiten der Person. Die Kennung einer Quelle im Text (`[S0164]`) erscheint als Titel der Quelle
+  in Klammern, wenn der Stammbaum sie hat. Die Personenseite führt eine Quelle der Erzählung auch unter ihren Quellen
+  auf, mit **Erzählung** oder **Geschichte der Ehe** als dem, was sie belegt. Das Menü **Quellen** führt die Quellen
+  der Erzählung nicht auf.
+- **Grenzen:** im Druck und im Familienbuch steht unter dem Text nichts; die Quellen der Erzählung sind im Buch
+  nummeriert im Verzeichnis der Quellen. Wie die Forschung die Quellen einer Erzählung hält:
+  [R3.9](R3-verification-and-citation.md#R3.9).
+- **Gilt seit:** App 3.3.0; **Quelle in der Forschung finden** 3.19.0; **Grundlage des Textes** 3.22.0
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 -->
 
 <a id="A3.7"></a>
 ## A3.7 Wo Belege fehlen

@@ -81,6 +81,17 @@ same in every language, so "R2.3" leads to the same rule in each.
 5. under it a hidden comment `<!-- zdroj: … -->` with the method file and the
    code (file:line, function, constant) it was written from.
 
+Optional, where a chapter needs them (R8 has them on every rule):
+
+- **Hlídá kód** / **Jen metodika** — whether `strom` (or the app) enforces the
+  rule, or it is only an instruction of the method to the agent (en *Enforced
+  by the code / Method only*, de *Prüft der Code / Nur Methodik*, pl *Pilnuje
+  kod / Tylko metodyka*);
+- **Proč** — why the rule is so, taken only from a source: the method, a
+  comment or commit in the code, the CHANGELOG, a retro or finding (en *Why*,
+  de *Warum*, pl *Dlaczego*). Where no source gives a reason, nothing is made
+  up: the rule goes without it and the question goes to the research.
+
 Terms are written exactly as the user interface says them, in short sentences
 that translate well.
 
