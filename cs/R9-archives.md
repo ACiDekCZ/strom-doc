@@ -389,7 +389,7 @@ Kroky u úkolu, který čeká na snímky archivu, kam agent nesmí:
 
 - Archiv: omezeno, jen přes prohlížeč člověka, tempo nejméně 4 s. Sčítací operáty (`/scitacioperaty/`) jsou podle
   archivu jen k prohlížení: zakázaná cesta, ani prohlížeč agenta; snímek uloží člověk.
-- Úkol: křest Jana Horáka v matrice v Acta Publica. Stahovač ani stažení webu se do archivu nedostanou.
+- Úkol: křest Marie Horákové v matrice v Acta Publica. Stahovač ani stažení webu se do archivu nedostanou.
 - S Claude Code, rozšířením a svolením **přes prohlížeč**: agent otevře snímek a uloží ho `strom media save`, tempem
   člověka (10 s; tempo archivu 4 s je spodní mez). Úkol se vrátí, až má všechny snímky.
 - Bez svolení nebo s jiným agentem: úkol čeká na snímky; Co čeká řekne, s čím by je agent uložil sám.
@@ -429,7 +429,7 @@ Kroky u úkolu, který čeká na snímky archivu, kam agent nesmí:
 
 - Archiv: dovoleno (podmínky CC BY-NC-ND), obrazový server také. Seznam archivů zakazuje některé cesty (hledání,
   listování stránek), ty zůstanou zavřené.
-- Úkol: pohřeb Josefa Horáka v bavorské farnosti. Stahovač stáhne jen potřebné snímky v tempu služby, bez svolení a
+- Úkol: pohřeb Marie Horákové v bavorské farnosti. Stahovač stáhne jen potřebné snímky v tempu služby, bez svolení a
   bez čekání. Bez stahovače ho agent postaví ([R8.2](R8-reading-scans.md#R8.2)).
 - **Platí od:** výzkum 1.14.0
 

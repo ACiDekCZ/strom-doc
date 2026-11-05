@@ -421,7 +421,7 @@ The levels and limits are from the list of archives of the research 1.27.0. The 
 - Archive: restricted, only through a person's browser, pace at least 4 s. The census returns (`/scitacioperaty/`)
   are, according to the archive, only for viewing: a forbidden path, not even the agent's browser; a person saves the
   image.
-- Task: the baptism of Jan Horák in a parish register in Acta Publica. Neither the downloader nor a web fetch gets
+- Task: the baptism of Marie Horáková in a parish register in Acta Publica. Neither the downloader nor a web fetch gets
   into the archive.
 - With Claude Code, the extension and the permission **through the browser**: the agent opens the image and saves it
   with `strom media save`, at a person's pace (10 s; the archive's pace of 4 s is the lower bound). The task returns
@@ -466,7 +466,7 @@ The levels and limits are from the list of archives of the research 1.27.0. The 
 
 - Archive: allowed (terms CC BY-NC-ND), the image server too. The list of archives forbids some paths (search,
   paging through pages); they stay closed.
-- Task: the burial of Josef Horák in a Bavarian parish. The downloader downloads only the images needed, at the
+- Task: the burial of Marie Horáková in a Bavarian parish. The downloader downloads only the images needed, at the
   service's pace, without permission and without waiting. Without a downloader the agent builds one
   ([R8.2](R8-reading-scans.md#R8.2)).
 - **Since:** research 1.14.0

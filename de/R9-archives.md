@@ -442,7 +442,7 @@ Stufen und Grenzen stammen aus der Liste der Archive der Forschung 1.27.0. Die F
 - Archiv: eingeschränkt, nur über den Browser eines Menschen, Tempo mindestens 4 s. Die Volkszählungsbögen
   (`/scitacioperaty/`) sind nach dem Archiv nur zum Ansehen: ein verbotener Pfad, auch nicht der Browser des Agenten;
   das Bild speichert der Mensch.
-- Aufgabe: die Taufe von Jan Horák in einer Matrik in Acta Publica. Weder der Downloader noch ein Webabruf kommt in
+- Aufgabe: die Taufe von Marie Horáková in einer Matrik in Acta Publica. Weder der Downloader noch ein Webabruf kommt in
   das Archiv.
 - Mit Claude Code, der Erweiterung und der Erlaubnis **über den Browser**: der Agent öffnet das Bild und speichert es
   mit `strom media save`, im Tempo eines Menschen (10 s; das Tempo des Archivs von 4 s ist die untere Grenze). Die
@@ -489,7 +489,7 @@ Stufen und Grenzen stammen aus der Liste der Archive der Forschung 1.27.0. Die F
 
 - Archiv: erlaubt (Bedingungen CC BY-NC-ND), der Bildserver ebenso. Die Liste der Archive verbietet einige Pfade
   (Suche, Blättern durch Seiten); sie bleiben geschlossen.
-- Aufgabe: das Begräbnis von Josef Horák in einer bayerischen Pfarrei. Der Downloader lädt nur die nötigen Bilder im
+- Aufgabe: das Begräbnis von Marie Horáková in einer bayerischen Pfarrei. Der Downloader lädt nur die nötigen Bilder im
   Tempo des Dienstes, ohne Erlaubnis und ohne Warten. Ohne Downloader baut der Agent einen
   ([R8.2](R8-reading-scans.md#R8.2)).
 - **Gilt seit:** Forschung 1.14.0

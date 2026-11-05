@@ -421,7 +421,7 @@ Poziomy i ograniczenia pochodzą z listy archiwów badania 1.27.0. Rodzina Horá
 - Archiwum: ograniczone, tylko przez przeglądarkę człowieka, tempo co najmniej 4 s. Operaty spisowe
   (`/scitacioperaty/`) są według archiwum tylko do przeglądania: zakazana ścieżka, nawet nie przeglądarka agenta;
   skan zapisuje człowiek.
-- Zadanie: chrzest Jana Horáka w księdze metrykalnej w Acta Publica. Ani program pobierający, ani pobieranie stron
+- Zadanie: chrzest Marie Horákovej w księdze metrykalnej w Acta Publica. Ani program pobierający, ani pobieranie stron
   nie dostaną się do archiwum.
 - Z Claude Code, rozszerzeniem i zgodą **przez przeglądarkę**: agent otwiera skan i zapisuje go przez `strom media
   save`, w tempie człowieka (10 s; tempo archiwum 4 s to dolna granica). Zadanie wraca, gdy ma wszystkie skany.
@@ -465,7 +465,7 @@ Poziomy i ograniczenia pochodzą z listy archiwów badania 1.27.0. Rodzina Horá
 
 - Archiwum: dozwolone (warunki CC BY-NC-ND), serwer obrazów także. Lista archiwów zakazuje niektórych ścieżek
   (wyszukiwanie, stronicowanie), te zostają zamknięte.
-- Zadanie: pochówek Josefa Horáka w bawarskiej parafii. Program pobierający pobiera tylko potrzebne skany w tempie
+- Zadanie: pochówek Marie Horákovej w bawarskiej parafii. Program pobierający pobiera tylko potrzebne skany w tempie
   usługi, bez zgody i bez czekania. Bez programu pobierającego agent go buduje ([R8.2](R8-reading-scans.md#R8.2)).
 - **Obowiązuje od:** badanie 1.14.0
 
