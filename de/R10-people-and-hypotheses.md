@@ -3,8 +3,8 @@
 
 Wie die Forschung erkennt, dass ein Eintrag der gesuchten Person gehört, was sie mit zwei Datensätzen einer Person
 tut, wie sie konkurrierende Erklärungen (Hypothesen) führt und wie sie Namen und die Personen erfasst, die ein Eintrag
-nennt. Beschrieben werden die Forschung 1.27.0 und die Strom-App 3.23.0. Bei den Regeln wird unterschieden, was
-**der Code prüft** und was nur eine **Regel der Methodik** ist.
+nennt. Beschrieben werden die Forschung 1.27.0 und die Strom-App 3.23.0. Änderungen aus einer neueren Version tragen
+deren Nummer. Bei den Regeln wird unterschieden, was **der Code prüft** und was nur eine **Regel der Methodik** ist.
 
 <a id="R10.1"></a>
 ## R10.1 Ein Namensvetter ist nicht die gesuchte Person
@@ -85,23 +85,41 @@ A, B, C… mit dem, was für jede spricht und was dagegen.
 <a id="R10.3.1"></a>
 ### R10.3.1 Entscheidung einer Hypothese
 
-Eine Hypothese wird für eine Version entschieden oder verworfen, wenn sich keine entscheiden lässt. Entschieden wird in
-der Forschung; die App lässt eine Hypothese nicht entscheiden.
+Eine Hypothese wird für eine Version entschieden oder verworfen, wenn sich keine entscheiden lässt. Entscheiden kann
+nur der Mensch, in der Forschung; der Agent schlägt die Entscheidung vor. Die App lässt eine Hypothese nicht
+entscheiden.
 
 - **Prüft der Code:**
-  - die Entscheidung braucht den Text der Entscheidung (`--decision`); das Verwerfen ist `--abandon`;
-  - erneut entscheiden lässt sich nur mit Grund (`--reason`). Die vorige Entscheidung bleibt in einer Notiz der
-    Hypothese;
-  - nach der Entscheidung gibt strom die Quellen aus, die die Hypothese nennt und die keine Angabe ihrer Personen
-    zitiert: was sie sagen, soll bei den Personen erfasst werden.
-- **Nur Methodik:** eine Hypothese, deren Versionen Verbindungen tragen, wird mit der Wahl einer Version entschieden
-  (`--variant B`). Eine entschiedene Hypothese, die ein neuer Eintrag umstößt, entscheidet der Agent mit Grund erneut.
-  Was der Agent zurückgehalten hat, solange die Person nur eine Hypothese war, erfasst er nach der Entscheidung bei
-  der Person.
-- **Bedienung:** Terminal: `strom hypothesis decide H… --variant B --decision "…"` (erneut mit `--reason "…"`).
+  - die Entscheidung ist ein Schritt des Menschen. Startet der Agent `strom hypothesis decide` (auch innerhalb von
+    `strom batch`), lehnt strom den Befehl ab;
+  - der Agent schlägt die Entscheidung vor: die Version und den Text der Entscheidung (`strom hypothesis propose`)
+    oder das Verwerfen (`--abandon`). Ein neuer Vorschlag ersetzt den vorigen. Auf die Antwort wird nicht gewartet,
+    die Arbeit geht weiter;
+  - der Vorschlag wartet in **Was wartet** in der Gruppe **Hypothesen zu entscheiden**
+    ([R6.3.4](R6-awaiting-action.md#R6.3.4)): der Mensch entscheidet wie vorgeschlagen, anders (eine andere Version
+    oder keine, mit Grund) oder lässt die Hypothese, wie sie ist. Ein nicht übernommener Vorschlag bleibt in einer
+    Notiz der Hypothese;
+  - sowohl die Entscheidung als auch der Vorschlag brauchen den Text der Entscheidung (`--decision`); das Verwerfen
+    ist `--abandon`;
+  - eine Hypothese, deren Versionen sagen, was sie verbinden würden, wird nur mit angegebener Version entschieden und
+    vorgeschlagen (`--variant B`). Ohne sie lehnt strom ab und erfasst nichts;
+  - erneut entscheiden (und erneut vorschlagen) lässt sich nur mit Grund (`--reason`). Die vorige Entscheidung bleibt
+    in einer Notiz der Hypothese;
+  - was die Entscheidung des Menschen verbindet, und die Quellen, die die Hypothese nennt und die keine Angabe ihrer
+    Personen zitiert, bekommt der Agent zu Beginn der nächsten Arbeit als erste Aufgabe zum Erfassen im Stammbaum.
+- **Nur Methodik:** der Agent schlägt eine Entscheidung vor, wenn die Einträge auf eine Version zeigen, und sagt es dem
+  Menschen in einem Satz. Eine entschiedene Hypothese, die ein neuer Eintrag umstößt, schlägt der Agent mit Grund
+  erneut vor. Was der Agent zurückgehalten hat, solange die Person nur eine Hypothese war, erfasst er bei der Person,
+  sobald der Mensch die Hypothese entscheidet.
+- **Bedienung:** Terminal: Menü `strom` → **Was wartet** → **Hypothesen zu entscheiden** → **Wie vorgeschlagen
+  entscheiden**, **Anders entscheiden**, **So lassen (Vorschlag nicht übernommen)**; per Befehl
+  `strom hypothesis decide H… --proposed`, `--keep-open` oder `--variant B --decision "…"` (erneut mit
+  `--reason "…"`). Agent: `strom hypothesis propose H… --variant B --decision "…"`.
 - **Gilt seit:** Forschung 1.0.0; Ausgabe nicht erfasster Quellen 1.12.0
+- **Ab Forschung 1.28.0:** entscheidet nur der Mensch, der Agent schlägt vor; die angegebene Version prüft der Code
+  (früher nur Methodik). Hypothesen, die früher der Agent entschieden hat, bleiben, wie sie waren.
 
-<!-- zdroj: research:src/commands/analysis.ts hypothesis decide (earlier decision in a note, "deciding again needs --reason", sourcesNotOnPeople od v1.12.0) · research:assets/method/core.md "Write as you go", "Say what a hypothesis would connect" · research:assets/method/recording.md "A decided hypothesis that a new record overturns" -->
+<!-- zdroj: research:src/commands/analysis.ts hypothesis propose, hypothesis decide (person: …, --proposed, --keep-open, againNeedsReason, decidedVariant) · src/cli/main.ts:288 def.person && isAgent · src/commands/batch.ts (def.person) · src/core/waiting.ts (hypotheses, TERMINAL_ONLY) · src/cli/menu-waiting.ts decideHypothesis · src/core/hypolinks.ts decidedToRecord, sourcesNotOnPeople · src/brief/brief.ts "Decided by the user — record it on the tree first" · assets/lang/cs.json wait.group.hypotheses, ui.wait.hypothesis.* · research:assets/method/core.md "The user decides a hypothesis" · assets/method/recording.md "is proposed again" · CHANGELOG.cs.md 1.28.0 · commit 9b12256a -->
 
 <a id="R10.4"></a>
 ## R10.4 Eine Familie außerhalb des Stammbaums wartet auf eine belegte Verbindung
