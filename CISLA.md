@@ -48,6 +48,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R3.8 | R3-verification-and-citation.md | aplikace 3.5.0 | platí | Jak doložení ukazuje aplikace | How the app shows evidence | Wie die App Belege zeigt | Jak udokumentowanie pokazuje aplikacja |
 | R3.8.1 | R3-verification-and-citation.md | aplikace 3.5.0 | platí | Úroveň doložení osoby | The documentation level of a person | Belegstufe einer Person | Poziom udokumentowania osoby |
 | R3.9 | R3-verification-and-citation.md | výzkum 1.26.0 | platí | Vyprávění drží své prameny | A story keeps its sources | Eine Erzählung behält ihre Quellen | Opowieść zachowuje swoje źródła |
+| R3.9.1 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Co vyprávění tvrdí | What a story claims | Was eine Erzählung behauptet | Co twierdzi opowieść |
 | R4 | R4-places.md | výzkum 1.22.0 | platí | Místa | Places | Orte | Miejsca |
 | R4.1 | R4-places.md | výzkum 1.25.0 | platí | Místo dostane polohu, jen když je jisté | A place gets a position only when it is certain | Ein Ort bekommt eine Lage nur, wenn er sicher ist | Miejsce dostaje położenie, tylko gdy jest pewne |
 | R4.1.1 | R4-places.md | výzkum 1.25.2 | platí | Stejné jméno, jiné místo | The same name, a different place | Gleicher Name, anderer Ort | Ta sama nazwa, inne miejsce |
@@ -147,6 +148,20 @@ nenapsáno) · `neplatí od <verze>`.
 | R9.10.4 | R9-archives.md | výzkum 1.14.0 | koncept | Matricula | Matricula | Matricula | Matricula |
 | R9.10.5 | R9-archives.md | výzkum 1.27.0 | koncept | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach |
 | R9.11 | R9-archives.md | výzkum 1.27.0 | koncept | Časté otázky | Frequently asked questions | Häufige Fragen | Częste pytania |
+| R10 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Osoby: ztotožnění, jména a hypotézy | People: identification, names and hypotheses | Personen: Identifizierung, Namen und Hypothesen | Osoby: identyfikacja, imiona i hipotezy |
+| R10.1 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Jmenovec není hledaná osoba | A namesake is not the person sought | Ein Namensvetter ist nicht die gesuchte Person | Imiennik to nie poszukiwana osoba |
+| R10.2 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Dva záznamy jedné osoby: sloučení | Two records of one person: merging | Zwei Einträge einer Person: Zusammenführen | Dwa wpisy jednej osoby: scalenie |
+| R10.3 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Hypotéza: soupeřící vysvětlení | A hypothesis: competing explanations | Eine Hypothese: konkurrierende Erklärungen | Hipoteza: konkurujące wyjaśnienia |
+| R10.3.1 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Rozhodnutí hypotézy | Deciding a hypothesis | Entscheidung einer Hypothese | Rozstrzygnięcie hipotezy |
+| R10.4 | R10-people-and-hypotheses.md | výzkum 1.9.0 | platí | Rodina mimo strom čeká na doloženou vazbu | A family outside the tree waits for a proven link | Eine Familie außerhalb des Stammbaums wartet auf eine belegte Verbindung | Rodzina poza drzewem czeka na udokumentowane powiązanie |
+| R10.5 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Jména osoby | A person's names | Die Namen einer Person | Imiona i nazwiska osoby |
+| R10.5.1 | R10-people-and-hypotheses.md | výzkum 1.18.0 | platí | Chybné jméno a poznámka se odvolají | A wrong name and a note are retracted | Ein falscher Name und eine Notiz werden zurückgezogen | Błędne imię i notatka zostają wycofane |
+| R10.6 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Lidé, které zápis jmenuje | People a record names | Personen, die ein Eintrag nennt | Osoby wymienione we wpisie |
+| R11 | R11-material-from-the-user.md | výzkum 1.0.0 | platí | Podklady od uživatele | Material from the user | Unterlagen vom Benutzer | Materiały od użytkownika |
+| R11.1 | R11-material-from-the-user.md | výzkum 1.0.0 | platí | Každý soubor je podklad s úkolem | Every file is material with a task | Jede Datei ist eine Unterlage mit einer Aufgabe | Każdy plik to materiał z zadaniem |
+| R11.2 | R11-material-from-the-user.md | výzkum 1.0.0 | platí | Doklad je pramen, ostatní je vodítko | A document is a source, the rest is a lead | Eine Urkunde ist eine Quelle, der Rest ist ein Hinweis | Dokument jest źródłem, reszta jest wskazówką |
+| R11.3 | R11-material-from-the-user.md | výzkum 1.0.0 | platí | Převzatý rodokmen | An imported family tree | Ein übernommener Stammbaum | Przejęte drzewo genealogiczne |
+| R11.4 | R11-material-from-the-user.md | výzkum 1.12.0 | platí | Dávka z aplikace | A batch from the app | Ein Stapel aus der App | Partia z aplikacji |
 | A1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Aplikace v kostce | The app in brief | Die App im Überblick | Aplikacja w skrócie |
 | A1.1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Rodokmen v prohlížeči, data na zařízení | A family tree in the browser, data on the device | Stammbaum im Browser, Daten auf dem Gerät | Drzewo genealogiczne w przeglądarce, dane na urządzeniu |
 | A1.2 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Osoby, vztahy a rody | People, relationships and family lines | Personen, Beziehungen und Stammlinien | Osoby, relacje i rody |
