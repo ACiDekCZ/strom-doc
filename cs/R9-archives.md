@@ -44,25 +44,35 @@ dělat automaticky; podrobná tabulka úrovní je v [R8.2](R8-reading-scans.md#R
 | **jen přes prohlížeč člověka** | žádné stažení webu, katalog ani snímky přes stahovač; nejvýš prohlížeč agenta se svolením „přes prohlížeč“ ([R9.4](#R9.4)) |
 | **tempo** | nejkratší odstup a nejvýš požadavků za hodinu; strom nikdy nejde rychleji |
 | **zakázané cesty** | části webu, kam nesmí nic automatického, ani prohlížeč agenta |
+| **obrazový server** | jiný web, ze kterého prohlížeč snímků archivu bere obrázky |
 | **podmínky, citace, datum kontroly** | odkud úroveň je (stránka podmínek nebo robots.txt) a kdy se ověřila |
 
 - **Hlídá kód:** úroveň archivu je nejpřísnější z: čtení podmínek stahovačem, záznamu archivu ve výzkumu, seznamu
   archivů dodaného s výzkumem (`assets/archives.json`), nejpřísnější úrovně, kterou strom u serveru kdy viděl, a
-  souboru robots.txt. Server, který automatickým nástrojům zakáže celý web (`Disallow: /`), platí za web jen přes
-  prohlížeč člověka. Server, který klienta stromu odmítl, platí za zakázaný.
+  souboru robots.txt. Server, jehož robots.txt zavírá celý web všem robotům (`Disallow: /`), platí za web jen přes
+  prohlížeč člověka s úrovní nejméně omezeno: prohlížeč agenta tam smí jen se svolením „přes prohlížeč“, po jedné
+  stránce a tempem člověka ([R9.4](#R9.4)). Výjimka: podmínky webu automatické použití výslovně dovolují a robots.txt
+  nejmenuje agenty AI. Server, který klienta stromu odmítl, platí za zakázaný.
+- **Jen ručně** (snímky uloží vždy člověk, svolení to neotevře) zůstává, co tak vede seznam archivů:
+  - cesta k záznamům, kterou robots.txt zavírá všem robotům (zakázaná cesta v seznamu);
+  - úroveň **jen ručně**: podmínky, které nic jiného nedovolují, nebo jmenovitý zákaz agentů AI tam, kde ho seznam
+    vede jako jen ručně (např. eBadatelna SOA Praha, [R9.10.3](#R9.10.3)). Jmenovitý zákaz AI v robots.txt sám o
+    sobě jen ručně neznamená: archiv s ním může být i jen přes prohlížeč člověka;
+  - prohlížeč snímků, který bere obrázky z obrazového serveru zavřeného celého všem robotům. Takový archiv má v
+    seznamu úroveň **jen ručně** (např. badatelny ZA Opava a SOA Litoměřice, [R9.10.2](#R9.10.2)).
 - **Hranice:**
   - archiv jen přes prohlížeč s úrovní **jen ručně** nebo se svolením **jen ručně** nedovolí nic, ani prohlížeč
-    agenta;
+    agenta, ani katalog;
   - zakázaná cesta `/` (celý obrazový server) zavře i prohlížeč agenta: snímky jen ručně;
   - weby jednoho archivu (např. digitální archiv a badatelna jednoho zemského archivu) mají každý svůj záznam;
     v Co čeká se ale ukazují pod jedním jménem archivu ([R9.6](#R9.6)).
-- **Proč:** metodika chce dodržet podmínky každého archivu. Archivy, jejichž podmínky nebo robots.txt automatické
-  nástroje zakazují, se automaticky neprocházejí.
+- **Proč:** metodika chce dodržet podmínky každého archivu. Kam robots.txt pustí jen prohlížeč, jde nejvýš prohlížeč
+  se svolením člověka a jeho tempem; co seznam archivů nechává na ruce člověka, ukládá člověk.
 - **Ovládání:** terminál: `strom net web --check <adresa>` (co by strom udělal s adresou), menu archivů, `strom
   allow archive` (jen člověk). Aplikace: Čeká na vyřízení.
-- **Platí od:** výzkum 1.14.0. Další archivy Česka, Německa a Polska od 1.27.0.
+- **Platí od:** výzkum 1.14.0. Další archivy Česka, Německa a Polska a obrazový server od 1.27.0.
 
-<!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel, :789-803 allows · assets/archives.json (level, browserOnly, pace, disallow, quote, quoteFrom, checked) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 -->
+<!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel (robots "Disallow: /" → browserOnly, restricted; robotsYield: openByTerms + robotsNamesAi false), :789-803 allows (browserOnly + manual → nothing) · assets/archives.json (level, browserOnly, pace, disallow, imagesFrom, quote, quoteFrom, checked; metrikai.lt, lagis, gov, online-ofb restricted + browserOnly; ebadatelna.soapraha.cz manual) · src/core/knownterms.ts imagesFrom · test/unit/known-terms.test.ts (imagesFrom closed whole ⇒ manual) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 (c3ee4422) -->
 
 <a id="R9.1.1"></a>
 ### R9.1.1 Web, který výzkum nezná
@@ -96,7 +106,8 @@ Archiv s úrovní omezeno nebo neznámé otevře pro snímky jen svolení člov�
     **Zapomenout rozhodnutí** (`--revoke`): při další potřebě se strom zeptá znovu;
   - archiv jen přes prohlížeč nikdy nedostane **pomalu** (snímky nikdy přes stahovač). Archiv jen přes prohlížeč,
     ke kterému nevede žádný stahovač, dostane jen **přes prohlížeč**, **jen ručně**, nebo odvolání;
-  - úroveň **jen ručně** a **zakázáno** svolení neotevře;
+  - úroveň **jen ručně** a **zakázáno** svolení neotevře: `strom allow archive … --way browser` (i `slow`) se
+    odmítne a aplikace odkaz **Svolení…** nenabídne;
   - tempo člověka (10 s, 120 za hodinu) jde změnit v nastavení `archive.pace` nebo `strom allow host --pace
     --per-hour`. Tempo ze seznamu archivů je spodní mez: strom jde vždy pomaleji z obou.
 - **Hranice:** po rozhodnutí se vrátí do fronty úkoly čekající na tento archiv ve všech výzkumech na počítači. Při
@@ -266,7 +277,8 @@ vrátí do fronty sám, až jsou ve výzkumu všechny jeho snímky.
     uloženo z kolika a které chybí;
   - snímky z aplikace jdou rovnou k úkolu: očíslované podle snímku, který aplikace uvede, jinak podle jména souboru,
     jinak podle pořadí chybějících; PDF stránku po stránce. Snímek s číslem, které výzkum už má, se odmítne, pokud ho
-    nemá nahradit; nahrazený se nikdy nesmaže. Snímek shodný s jiným už převzatým se odmítne a nic se nepřevezme;
+    nemá nahradit; nahrazený se nikdy nesmaže. Soubor shodný s jiným už převzatým snímkem (jiné číslo nebo kniha) se
+    odmítne a nic se nepřevezme. Stejný soubor poslaný znovu pod týmž číslem nic nezmění a hlásí se jako uložený;
   - odpověď napsaná v aplikaci vrátí úkol stejně jako odpověď v terminálu a uloží se s poznámkou, že přišla z
     aplikace. Úkol, který mezitím čeká na něco jiného, zůstane beze změny.
 - **Hranice (kdy snímky vrátí úkol):**
@@ -274,20 +286,26 @@ vrátí do fronty sám, až jsou ve výzkumu všechny jeho snímky.
   - úkol čekající na web (`--kind web`) vrátí kniha, kterou jmenuje, nebo jediná kniha, ve které pracuje;
   - dopis a dotaz na rodinu vrátí jen kniha, kterou jmenují;
   - úkol čekající na ověření webu člověkem nevrátí nikdy (odpovídá jen člověk).
-- **Jen metodika:** agent u ručních snímků řekne knihu, čísla snímků, formát (JPEG), jméno souboru a složku. Sám nic
-  neotevře a nestáhne, ani prohlížečem. Výjimka: `strom media save` se svolením přes prohlížeč ([R9.5](#R9.5)).
+- **Jen metodika (metodika, `strom guide` i brief agenta stejně):** agent u ručních snímků řekne knihu, čísla snímků,
+  formát (JPEG), jméno souboru a složku. Sám nic neotevře a nestáhne, ani prohlížečem. Jediná výjimka: u archivu jen
+  přes prohlížeč člověka, kterému člověk dal svolení **přes prohlížeč** a ke kterému nevede stahovač, uloží Claude
+  in Chrome snímky po jednom příkazem `strom media save` ([R9.5](#R9.5)). Nic jiného tam agent neotevře ani nestáhne;
+  kontrolu, zda je u počítače člověk, prochází jen člověk.
 - **Proč:** snímky jsou to, na co úkol čekal; část snímků úkol nedokončí.
 - **Ovládání:** terminál: `strom task wait T… --images B…:40-45`, `strom media add --inbox --waiting`, v Co čeká
   **Otevřít složku (uloženo {have}/{want})**. Aplikace: Čeká na vyřízení, u položky v tomto pořadí **Mám snímky**,
   **Otevřít web ↗**, **Odpovědět**, **Probrat s agentem**, **Otevřít složku** (poslední dvě otevřou výzkum v terminálu).
   Stav snímků ukazuje „1 ze 2 snímků“ a u knihy čipy **uložen** / **chybí**. Weby jednoho archivu čekají v jedné
   skupině **Archiv** pod jménem archivu, s odkazem **Web archivu ↗** a počtem chybějících snímků.
+- **Hranice (skupina archivu):** skupina je archiv výzkumu, ke kterému úkol patří: podle knihy úkolu, adresy archivu,
+  adresy jeho knihy, jiného webu téhož archivu podle seznamu archivů nebo jména archivu. Jen když výzkum takový archiv
+  nemá, je skupinou archiv ze seznamu archivů; jinak web sám.
 - **Hranice (aplikace):** odpověď nejvýš 4000 znaků; úkol čekající na ověření webu se odpovídá jen v terminálu. Na
   telefonu se snímky nepřidávají ani se neotevírá terminál.
 - **Platí od:** výzkum 1.0.0 (složka ve schránce), probuzení po uložení od 1.15.0. Převzetí bez příkazu, části snímků,
   odpověď a snímky z aplikace a archiv pod jedním jménem od výzkumu 1.27.0 a aplikace 3.23.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/core/waiting.ts actionsOf · assets/method/waiting.md "Images saved by hand" · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask -->
+<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/commands/media.ts:403-478 (same sha under its number → 200 same: true, added []; another number/book → 409 waiting.image-same) · src/core/waiting.ts actionsOf, archiveGroup · src/core/waitkind.ts waitGroupOf (repo: before archive:, host:) · assets/method/waiting.md "Images saved by hand" (the one exception, 7bd55fa1) · assets/method/reading.md · src/commands/guide.ts rule 7 · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask -->
 
 <a id="R9.7"></a>
 ## R9.7 Automatické sezení a chat
@@ -326,7 +344,7 @@ Pravidla archivů jsou v obou stejná. Liší se v tom, kdo je u toho a co se st
 | jen přes prohlížeč | žádné | Claude + Chrome | nic v archivu; `task wait --images` | čeká na snímky; Co čeká nabídne svolení |
 | jen přes prohlížeč | jakékoli | jiný agent nebo bez rozšíření | nic v archivu; `task wait --images` | čeká na snímky, uloží člověk |
 | jen přes prohlížeč | jen ručně | jakýkoli | nic; `task wait --images` | čeká na snímky, uloží člověk |
-| jen ručně, zakázaná cesta `/` | svolení neotevře | jakýkoli | nic; `task wait --images` | čeká na snímky, uloží člověk |
+| jen ručně, zakázaná cesta `/`, obrazový server zavřený celý | svolení neotevře | jakýkoli | nic; `task wait --images` | čeká na snímky, uloží člověk |
 | zakázáno, odmítl klienta | svolení neotevře | jakýkoli | jen stránka podmínek a robots.txt; jiná cesta | hledání neprůkazné; je-li pramen nutný, ověřit web ([R6.2.2](R6-awaiting-action.md#R6.2.2)) |
 
 - **Hranice:** stažení stránek webu (katalog, popis knihy) se řídí [R9.3](#R9.3) nezávisle na snímcích.
@@ -402,18 +420,20 @@ Kroky u úkolu, který čeká na snímky archivu, kam agent nesmí:
 <a id="R9.10.2"></a>
 ### R9.10.2 Zemský archiv v Opavě (digi.archives.cz)
 
-- Archiv: omezeno, jen přes prohlížeč člověka: robots.txt zakazuje celý web všem robotům. Stahovač k němu nevede.
-  Obrazový server (images.archives.cz) má v seznamu archivů zakázaný celý web, takže tam nesmí ani prohlížeč agenta.
-  Stránky chrání kontrola, zda je u počítače člověk.
+- Archiv: jen ručně, jen přes prohlížeč člověka. Robots.txt zavírá celý web všem robotům a stránky chrání kontrola,
+  zda je u počítače člověk. Prohlížeč snímků bere obrázky z obrazového serveru images.archives.cz, který robots.txt
+  zavírá celý také. Stahovač k archivu nevede. Stejně je na tom digitální badatelna SOA Litoměřice
+  (digi.soalitomerice.cz, obrázky z images.soalitomerice.cz).
+- Svolení **přes prohlížeč** tu nejde dát: `strom allow archive digi.archives.cz --way browser` se odmítne, aplikace
+  odkaz **Svolení…** nenabídne a `strom media save` snímek neuloží. Prohlížeč agenta by si o každý obrázek řekl
+  zavřenému obrazovému serveru.
 - Úkol: oddání Marie Vlkové. Agent nastaví `strom task wait T… --images B…:12-13`.
-- Co čeká v aplikaci ukazuje úkol pod jménem archivu se složkou. Člověk otevře knihu ve svém prohlížeči, uloží
-  snímky 12 a 13 (`12.jpg`, `13.jpg`) přes **Otevřít složku**, nebo je přidá přes **Mám snímky**. Úkol se vrátí.
-- S Claude Code a rozšířením jde archivu dát svolení **přes prohlížeč** i bez stahovače (odkaz **Svolení…**). Prohlížeč
-  agenta pak smí na stránky digi.archives.cz, ne na obrazový server. Kontrolu člověka neprochází: kde ji archiv
-  ukáže, snímky uloží člověk.
+- Jediná cesta je čekání na snímky: Co čeká v aplikaci ukazuje úkol pod jménem archivu se složkou. Člověk otevře
+  knihu ve svém prohlížeči, uloží snímky 12 a 13 (`12.jpg`, `13.jpg`) přes **Otevřít složku**, nebo je přidá přes
+  **Mám snímky**. Úkol se vrátí.
 - **Platí od:** výzkum 1.27.0
 
-<!-- zdroj: research:assets/archives.json digi.archives.cz, digi2.archives.cz (restricted, browserOnly, quoteFrom robots), images.archives.cz (disallow "/") · src/core/browserhelp.ts browserHelps · commit 74dcd58b (Svolení… without a connector) -->
+<!-- zdroj: research:assets/archives.json digi.archives.cz, digi2.archives.cz, digi.soalitomerice.cz (manual, browserOnly, quoteFrom robots, imagesFrom images.archives.cz / images.soalitomerice.cz; commit 69902466) · src/core/terms.ts allows (browserOnly + manual) · src/commands/archives.ts:676-680 (manual/forbidden: no permission) · src/core/browserhelp.ts browserHelps, treeBrowserArchives (never by hand only) · test/cli/media-save.test.ts (digi.archives.cz) · CHANGELOG.cs.md 1.27.0 -->
 
 <a id="R9.10.3"></a>
 ### R9.10.3 eBadatelna SOA Praha
@@ -463,6 +483,9 @@ Kroky u úkolu, který čeká na snímky archivu, kam agent nesmí:
 - **Proč Chrome chce dovolit víc stažení?** Chrome uloží z jedné stránky jen jeden soubor; další stažení dovolí člověk
   v adresním řádku. Agent nastavení Chrome nemění ([R9.5](#R9.5)).
 - **Co když je uložená jen část snímků?** Úkol čeká dál a Co čeká řekne, které chybí ([R9.6](#R9.6)).
+- **Proč u některého archivu jen přes prohlížeč není Svolení…?** Archiv je v seznamu jen ručně: jeho prohlížeč snímků
+  bere obrázky ze serveru zavřeného všem robotům, nebo to říkají jeho podmínky. Snímky uloží člověk
+  ([R9.1](#R9.1), [R9.10.2](#R9.10.2)).
 - **Platí od:** výzkum 1.27.0
 
 <!-- zdroj: research:CHANGELOG.cs.md 1.27.0 · src/core/browserhelp.ts · src/core/chromehook.ts:1-25 · src/commands/media.ts media save · assets/method/locate.md -->

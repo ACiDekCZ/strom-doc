@@ -46,26 +46,38 @@ strom may do automatically; the detailed table of levels is in [R8.2](R8-reading
 | **only through a person's browser** | no web fetch, no catalogue or images through a downloader; at most the agent's browser with the permission "through the browser" ([R9.4](#R9.4)) |
 | **pace** | the shortest gap and the most requests per hour; strom never goes faster |
 | **forbidden paths** | parts of the site where nothing automated may go, not even the agent's browser |
+| **image server** | another site the archive's image viewer takes its images from |
 | **terms, quote, date of check** | where the level comes from (the terms page or robots.txt) and when it was verified |
 
 - **Enforced by the code:** the level of an archive is the strictest of: the downloader's reading of the terms, the
   archive's record in the research, the list of archives shipped with the research (`assets/archives.json`), the
-  strictest level strom has ever seen at the server, and the robots.txt file. A server that forbids automated tools
-  the whole site (`Disallow: /`) counts as a site only through a person's browser. A server that refused the strom
-  client counts as forbidden.
+  strictest level strom has ever seen at the server, and the robots.txt file. A server whose robots.txt closes the
+  whole site to all robots (`Disallow: /`) counts as a site only through a person's browser, with the level
+  restricted at least: the agent's browser may go there only with the permission "through the browser", one page at
+  a time and at a person's pace ([R9.4](#R9.4)). The exception: the site's terms expressly allow automated use and
+  its robots.txt names no AI agents. A server that refused the strom client counts as forbidden.
+- **By hand only** (a person always saves the images, permission does not open it) stays what the list of archives
+  keeps so:
+  - a path to the records that robots.txt closes to all robots (a forbidden path in the list);
+  - the level **by hand only**: terms that allow nothing else, or a ban naming AI agents where the list keeps it as
+    by hand only (e.g. eBadatelna SOA Praha, [R9.10.3](#R9.10.3)). A ban naming AI in robots.txt does not by itself
+    mean by hand only: an archive with one can also be only through a person's browser;
+  - an image viewer that takes its images from an image server closed whole to all robots. Such an archive has the
+    level **by hand only** in the list (e.g. the reading rooms of ZA Opava and SOA Litoměřice, [R9.10.2](#R9.10.2)).
 - **Limits:**
   - an archive only through the browser with the level **by hand only** or with the permission **by hand only**
-    allows nothing, not even the agent's browser;
+    allows nothing, not even the agent's browser or the catalogue;
   - the forbidden path `/` (the whole image server) closes the agent's browser too: images by hand only;
   - the sites of one archive (e.g. the digital archive and the reading room of one regional archive) each have their
     own entry; in What waits, however, they show under one archive name ([R9.6](#R9.6)).
-- **Why:** the method wants the terms of every archive kept. Archives whose terms or robots.txt forbid automated
-  tools are not browsed automatically.
+- **Why:** the method wants the terms of every archive kept. Where robots.txt lets in only a browser, at most a
+  browser goes, with a person's permission and at a person's pace; what the list of archives keeps for a person's
+  hand, a person saves.
 - **Controls:** terminal: `strom net web --check <address>` (what strom would do with an address), the archives menu,
   `strom allow archive` (a person only). App: Awaiting action.
-- **Since:** research 1.14.0. Further archives of Czechia, Germany and Poland from 1.27.0.
+- **Since:** research 1.14.0. Further archives of Czechia, Germany and Poland and the image server from 1.27.0.
 
-<!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel, :789-803 allows · assets/archives.json (level, browserOnly, pace, disallow, quote, quoteFrom, checked) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 -->
+<!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel (robots "Disallow: /" → browserOnly, restricted; robotsYield: openByTerms + robotsNamesAi false), :789-803 allows (browserOnly + manual → nothing) · assets/archives.json (level, browserOnly, pace, disallow, imagesFrom, quote, quoteFrom, checked; metrikai.lt, lagis, gov, online-ofb restricted + browserOnly; ebadatelna.soapraha.cz manual) · src/core/knownterms.ts imagesFrom · test/unit/known-terms.test.ts (imagesFrom closed whole ⇒ manual) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 (c3ee4422) -->
 
 <a id="R9.1.1"></a>
 ### R9.1.1 A site the research does not know
@@ -101,7 +113,8 @@ three ways, and only a person gives it.
   - an archive only through the browser never gets **slowly** (images never through a downloader). An archive only
     through the browser that no downloader leads to gets only **through the browser**, **by hand only**, or
     revoking;
-  - the levels **by hand only** and **forbidden** are not opened by permission;
+  - the levels **by hand only** and **forbidden** are not opened by permission: `strom allow archive … --way browser`
+    (and `slow`) is refused and the app does not offer the link **Permission…**;
   - a person's pace (10 s, 120 an hour) can be changed in the setting `archive.pace` or by `strom allow host --pace
     --per-hour`. The pace from the list of archives is the lower bound: strom always goes at the slower of the two.
 - **Limits:** after the decision, the tasks waiting for this archive in all researches on the computer return to the
@@ -285,8 +298,9 @@ research.
     and What waits shows how many of how many are saved and which are missing;
   - images from the app go straight to the task: numbered by the image the app gives, otherwise by the file name,
     otherwise in the order of the missing ones; a PDF page by page. An image with a number the research already has
-    is refused unless it is to replace it; a replaced one is never deleted. An image identical to another already
-    taken in is refused and nothing is taken in;
+    is refused unless it is to replace it; a replaced one is never deleted. A file identical to another image already
+    taken in (another number or book) is refused and nothing is taken in. The same file sent again under the same
+    number changes nothing and is reported as saved;
   - an answer written in the app returns the task just as an answer in the terminal does, and is saved with a note
     that it came from the app. A task that meanwhile waits for something else stays unchanged.
 - **Limits (when images return a task):**
@@ -294,9 +308,12 @@ research.
   - a task waiting for a site (`--kind web`) is returned by the book it names, or by the only book it works in;
   - a letter and a request to the family are returned only by the book they name;
   - a task waiting for a person to check a site is never returned (only a person answers).
-- **Method only:** for images by hand, the agent names the book, the numbers of the images, the format (JPEG), the
-  file name and the folder. It opens and downloads nothing itself, not even with a browser. The exception:
-  `strom media save` with the permission through the browser ([R9.5](#R9.5)).
+- **Method only (the method, `strom guide` and the agent's brief alike):** for images by hand, the agent names the
+  book, the numbers of the images, the format (JPEG), the file name and the folder. It opens and downloads nothing
+  itself, not even with a browser. The one exception: at an archive only through a person's browser that the person
+  gave the permission **through the browser** and that no downloader leads to, Claude in Chrome saves the images one
+  at a time with `strom media save` ([R9.5](#R9.5)). Nothing else is opened or downloaded there; a check that a
+  person is at the computer is passed only by a person.
 - **Why:** the images are what the task waited for; part of the images does not finish the task.
 - **Controls:** terminal: `strom task wait T… --images B…:40-45`, `strom media add --inbox --waiting`, in What waits
   **Open the folder ({have}/{want} saved)**. App: Awaiting action, at the item in this order **Add images**, **Open
@@ -304,13 +321,17 @@ research.
   terminal). The state of the images shows "1 of 2 images" and, at the book, the chips **saved** / **missing**. The
   sites of one archive wait in one group **Archive** under the archive's name, with the link **Archive website ↗**
   and the number of images missing.
+- **Limits (the archive's group):** the group is the research's archive the task belongs to: by the task's book, the
+  archive's address, the address of its book, another site of the same archive by the list of archives, or the
+  archive's name. Only where the research has no such archive is the group an archive from the list of archives;
+  otherwise the site itself.
 - **Limits (app):** an answer of at most 4000 characters; a task waiting for a site to be checked is answered only in
   the terminal. On a phone images are not added and the terminal is not opened.
 - **Since:** research 1.0.0 (a folder in the inbox), waking after saving from 1.15.0. Taking in without a command,
   part of the images, the answer and images from the app and an archive under one name from research 1.27.0 and app
   3.23.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/core/waiting.ts actionsOf · assets/method/waiting.md "Images saved by hand" · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask -->
+<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/commands/media.ts:403-478 (same sha under its number → 200 same: true, added []; another number/book → 409 waiting.image-same) · src/core/waiting.ts actionsOf, archiveGroup · src/core/waitkind.ts waitGroupOf (repo: before archive:, host:) · assets/method/waiting.md "Images saved by hand" (the one exception, 7bd55fa1) · assets/method/reading.md · src/commands/guide.ts rule 7 · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask -->
 
 <a id="R9.7"></a>
 ## R9.7 An automatic session and a chat
@@ -349,7 +370,7 @@ the table says "Claude + Chrome", it means Claude Code with the Claude in Chrome
 | only through the browser | none | Claude + Chrome | nothing in the archive; `task wait --images` | waits for images; What waits offers permission |
 | only through the browser | any | another agent or without the extension | nothing in the archive; `task wait --images` | waits for images, a person saves them |
 | only through the browser | by hand only | any | nothing; `task wait --images` | waits for images, a person saves them |
-| by hand only, forbidden path `/` | permission does not open it | any | nothing; `task wait --images` | waits for images, a person saves them |
+| by hand only, forbidden path `/`, image server closed whole | permission does not open it | any | nothing; `task wait --images` | waits for images, a person saves them |
 | forbidden, refused the client | permission does not open it | any | only the terms page and robots.txt; another way | search inconclusive; if the source is needed, a site to check ([R6.2.2](R6-awaiting-action.md#R6.2.2)) |
 
 - **Limits:** fetching the pages of a site (catalogue, description of a book) follows [R9.3](#R9.3) independently of
@@ -437,19 +458,20 @@ The levels and limits are from the list of archives of the research 1.27.0. The 
 <a id="R9.10.2"></a>
 ### R9.10.2 Zemský archiv v Opavě (digi.archives.cz)
 
-- Archive: restricted, only through a person's browser: robots.txt forbids the whole site to all robots. No
-  downloader leads to it. The image server (images.archives.cz) has the whole site forbidden in the list of archives,
-  so not even the agent's browser may go there. The pages are protected by a check that a person is at the computer.
+- Archive: by hand only, only through a person's browser. robots.txt closes the whole site to all robots and the
+  pages are protected by a check that a person is at the computer. The image viewer takes its images from the image
+  server images.archives.cz, which robots.txt closes whole too. No downloader leads to the archive. The digital
+  reading room of SOA Litoměřice is the same (digi.soalitomerice.cz, images from images.soalitomerice.cz).
+- The permission **through the browser** cannot be given here: `strom allow archive digi.archives.cz --way browser`
+  is refused, the app does not offer the link **Permission…** and `strom media save` does not save the image. The
+  agent's browser would ask the closed image server for every image.
 - Task: the marriage of Marie Vlková. The agent sets `strom task wait T… --images B…:12-13`.
-- What waits in the app shows the task under the archive's name with a folder. A person opens the book in their own
-  browser and saves images 12 and 13 (`12.jpg`, `13.jpg`) through **Open folder**, or adds them through **Add
-  images**. The task returns.
-- With Claude Code and the extension, the archive can be given the permission **through the browser** even without a
-  downloader (the link **Permission…**). The agent's browser may then go to the pages of digi.archives.cz, not to the
-  image server. It does not pass a person's check: where the archive shows one, a person saves the images.
+- The only way is waiting for images: What waits in the app shows the task under the archive's name with a folder.
+  A person opens the book in their own browser and saves images 12 and 13 (`12.jpg`, `13.jpg`) through **Open
+  folder**, or adds them through **Add images**. The task returns.
 - **Since:** research 1.27.0
 
-<!-- zdroj: research:assets/archives.json digi.archives.cz, digi2.archives.cz (restricted, browserOnly, quoteFrom robots), images.archives.cz (disallow "/") · src/core/browserhelp.ts browserHelps · commit 74dcd58b (Svolení… without a connector) -->
+<!-- zdroj: research:assets/archives.json digi.archives.cz, digi2.archives.cz, digi.soalitomerice.cz (manual, browserOnly, quoteFrom robots, imagesFrom images.archives.cz / images.soalitomerice.cz; commit 69902466) · src/core/terms.ts allows (browserOnly + manual) · src/commands/archives.ts:676-680 (manual/forbidden: no permission) · src/core/browserhelp.ts browserHelps, treeBrowserArchives (never by hand only) · test/cli/media-save.test.ts (digi.archives.cz) · CHANGELOG.cs.md 1.27.0 -->
 
 <a id="R9.10.3"></a>
 ### R9.10.3 eBadatelna SOA Praha
@@ -504,6 +526,9 @@ The levels and limits are from the list of archives of the research 1.27.0. The 
   allowed by a person in the address bar. The agent does not change Chrome's settings ([R9.5](#R9.5)).
 - **What if only part of the images is saved?** The task goes on waiting, and What waits says which are missing
   ([R9.6](#R9.6)).
+- **Why is there no Permission… at some archives only through the browser?** The list keeps such an archive as by
+  hand only: its image viewer takes its images from a server closed to all robots, or its terms say so. A person saves
+  the images ([R9.1](#R9.1), [R9.10.2](#R9.10.2)).
 - **Since:** research 1.27.0
 
 <!-- zdroj: research:CHANGELOG.cs.md 1.27.0 · src/core/browserhelp.ts · src/core/chromehook.ts:1-25 · src/commands/media.ts media save · assets/method/locate.md -->

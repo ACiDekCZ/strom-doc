@@ -49,26 +49,42 @@ Die Stufe sagt, was strom automatisch tun darf; die ausführliche Tabelle der St
 | **nur über den Browser eines Menschen** | kein Webabruf, weder Katalog noch Bilder über einen Downloader; höchstens der Browser des Agenten mit der Erlaubnis „über den Browser“ ([R9.4](#R9.4)) |
 | **Tempo** | der kürzeste Abstand und höchstens so viele Anfragen pro Stunde; strom geht nie schneller |
 | **verbotene Pfade** | Teile der Website, wohin nichts Automatisches darf, auch nicht der Browser des Agenten |
+| **Bildserver** | eine andere Website, von der der Bildbetrachter des Archivs seine Bilder nimmt |
 | **Bedingungen, Zitat, Datum der Prüfung** | woher die Stufe stammt (Seite der Bedingungen oder robots.txt) und wann sie geprüft wurde |
 
 - **Prüft der Code:** die Stufe des Archivs ist die strengste aus: dem Lesen der Bedingungen durch den Downloader,
   dem Eintrag des Archivs in der Forschung, der mit der Forschung gelieferten Liste der Archive
   (`assets/archives.json`), der strengsten Stufe, die strom beim Server je gesehen hat, und der Datei robots.txt. Ein
-  Server, der automatischen Werkzeugen die ganze Website verbietet (`Disallow: /`), gilt als Website nur über den
-  Browser eines Menschen. Ein Server, der den Client von strom abgelehnt hat, gilt als verboten.
+  Server, dessen robots.txt die ganze Website allen Robotern schließt (`Disallow: /`), gilt als Website nur über den
+  Browser eines Menschen, mit mindestens der Stufe eingeschränkt: der Browser des Agenten darf dorthin nur mit der
+  Erlaubnis „über den Browser“, eine Seite nach der anderen und im Tempo eines Menschen ([R9.4](#R9.4)). Ausnahme:
+  die Bedingungen der Website erlauben die automatische Nutzung ausdrücklich, und ihre robots.txt nennt keine
+  KI-Agenten. Ein Server, der den Client von strom abgelehnt hat, gilt als verboten.
+- **Nur von Hand** (die Bilder speichert immer der Mensch, eine Erlaubnis öffnet das nicht) bleibt, was die Liste
+  der Archive so führt:
+  - ein Pfad zu den Einträgen, den robots.txt allen Robotern schließt (ein verbotener Pfad in der Liste);
+  - die Stufe **nur von Hand**: Bedingungen, die nichts anderes erlauben, oder ein namentliches Verbot für KI-Agenten
+    dort, wo die Liste es als nur von Hand führt (z. B. eBadatelna SOA Praha, [R9.10.3](#R9.10.3)). Ein namentliches
+    Verbot für KI in robots.txt bedeutet für sich allein nicht nur von Hand: ein Archiv damit kann auch nur über den
+    Browser eines Menschen gehen;
+  - ein Bildbetrachter, der seine Bilder von einem Bildserver nimmt, der ganz allen Robotern geschlossen ist. Ein
+    solches Archiv hat in der Liste die Stufe **nur von Hand** (z. B. die Lesesäle des ZA Opava und des SOA
+    Litoměřice, [R9.10.2](#R9.10.2)).
 - **Grenzen:**
   - ein Archiv nur über den Browser mit der Stufe **nur von Hand** oder mit der Erlaubnis **nur von Hand** erlaubt
-    nichts, auch nicht den Browser des Agenten;
+    nichts, weder den Browser des Agenten noch den Katalog;
   - der verbotene Pfad `/` (der ganze Bildserver) schließt auch den Browser des Agenten: Bilder nur von Hand;
   - die Websites eines Archivs (z. B. das digitale Archiv und der Lesesaal eines Landesarchivs) haben jede ihren
     eigenen Eintrag; in Was wartet erscheinen sie aber unter einem Namen des Archivs ([R9.6](#R9.6)).
-- **Warum:** die Methodik will die Bedingungen jedes Archivs einhalten. Archive, deren Bedingungen oder robots.txt
-  automatische Werkzeuge verbieten, werden nicht automatisch durchsucht.
+- **Warum:** die Methodik will die Bedingungen jedes Archivs einhalten. Wohin robots.txt nur einen Browser lässt,
+  geht höchstens ein Browser, mit Erlaubnis des Menschen und in seinem Tempo; was die Liste der Archive der Hand des
+  Menschen überlässt, speichert der Mensch.
 - **Bedienung:** Terminal: `strom net web --check <adresa>` (was strom mit einer Adresse tun würde), Menü der Archive,
   `strom allow archive` (nur der Mensch). App: Wartet auf Bearbeitung.
-- **Gilt seit:** Forschung 1.14.0. Weitere Archive Tschechiens, Deutschlands und Polens seit 1.27.0.
+- **Gilt seit:** Forschung 1.14.0. Weitere Archive Tschechiens, Deutschlands und Polens und der Bildserver seit
+  1.27.0.
 
-<!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel, :789-803 allows · assets/archives.json (level, browserOnly, pace, disallow, quote, quoteFrom, checked) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 -->
+<!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel (robots "Disallow: /" → browserOnly, restricted; robotsYield: openByTerms + robotsNamesAi false), :789-803 allows (browserOnly + manual → nothing) · assets/archives.json (level, browserOnly, pace, disallow, imagesFrom, quote, quoteFrom, checked; metrikai.lt, lagis, gov, online-ofb restricted + browserOnly; ebadatelna.soapraha.cz manual) · src/core/knownterms.ts imagesFrom · test/unit/known-terms.test.ts (imagesFrom closed whole ⇒ manual) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 (c3ee4422) -->
 
 <a id="R9.1.1"></a>
 ### R9.1.1 Eine Website, die die Forschung nicht kennt
@@ -104,7 +120,8 @@ hat drei Arten, und nur der Mensch gibt sie.
     fragt strom erneut;
   - ein Archiv nur über den Browser bekommt nie **langsam** (Bilder nie über einen Downloader). Ein Archiv nur über
     den Browser, zu dem kein Downloader führt, bekommt nur **über den Browser**, **nur von Hand** oder den Widerruf;
-  - die Stufen **nur von Hand** und **verboten** öffnet keine Erlaubnis;
+  - die Stufen **nur von Hand** und **verboten** öffnet keine Erlaubnis: `strom allow archive … --way browser` (auch
+    `slow`) wird abgelehnt, und die App bietet den Link **Erlaubnis…** nicht an;
   - das Tempo eines Menschen (10 s, 120 pro Stunde) lässt sich in der Einstellung `archive.pace` oder mit `strom
     allow host --pace --per-hour` ändern. Das Tempo aus der Liste der Archive ist die untere Grenze: strom geht immer
     langsamer von beiden.
@@ -298,8 +315,10 @@ sobald alle ihre Bilder in der Forschung sind.
     weiter, und Was wartet zeigt, wie viele von wie vielen gespeichert sind und welche fehlen;
   - Bilder aus der App gehen direkt zur Aufgabe: nummeriert nach dem Bild, das die App angibt, sonst nach dem
     Dateinamen, sonst in der Reihenfolge der fehlenden; ein PDF Seite für Seite. Ein Bild mit einer Nummer, die die
-    Forschung schon hat, wird abgelehnt, wenn es sie nicht ersetzen soll; ein ersetztes wird nie gelöscht. Ein Bild,
-    das mit einem schon übernommenen identisch ist, wird abgelehnt, und nichts wird übernommen;
+    Forschung schon hat, wird abgelehnt, wenn es sie nicht ersetzen soll; ein ersetztes wird nie gelöscht. Eine Datei,
+    die mit einem schon übernommenen Bild identisch ist (andere Nummer oder anderes Buch), wird abgelehnt, und nichts
+    wird übernommen. Dieselbe Datei, erneut unter derselben Nummer gesendet, ändert nichts und wird als gespeichert
+    gemeldet;
   - eine in der App geschriebene Antwort bringt die Aufgabe genauso zurück wie eine Antwort im Terminal und wird mit
     der Notiz gespeichert, dass sie aus der App kam. Eine Aufgabe, die inzwischen auf etwas anderes wartet, bleibt
     unverändert.
@@ -310,9 +329,12 @@ sobald alle ihre Bilder in der Forschung sind.
   - einen Brief und eine Anfrage an die Familie bringt nur das Buch zurück, das sie nennen;
   - eine Aufgabe, die auf das Prüfen einer Seite durch den Menschen wartet, bringen sie nie zurück (es antwortet nur
     der Mensch).
-- **Nur Methodik:** bei Bildern von Hand nennt der Agent das Buch, die Nummern der Bilder, das Format (JPEG), den
-  Dateinamen und den Ordner. Selbst öffnet und lädt er nichts, auch nicht mit einem Browser. Ausnahme:
-  `strom media save` mit der Erlaubnis über den Browser ([R9.5](#R9.5)).
+- **Nur Methodik (Methodik, `strom guide` und Briefing des Agenten gleich):** bei Bildern von Hand nennt der Agent
+  das Buch, die Nummern der Bilder, das Format (JPEG), den Dateinamen und den Ordner. Selbst öffnet und lädt er
+  nichts, auch nicht mit einem Browser. Die einzige Ausnahme: bei einem Archiv nur über den Browser eines Menschen,
+  dem der Mensch die Erlaubnis **über den Browser** gegeben hat und zu dem kein Downloader führt, speichert Claude in
+  Chrome die Bilder einzeln mit `strom media save` ([R9.5](#R9.5)). Sonst öffnet und lädt der Agent dort nichts;
+  die Prüfung, ob ein Mensch am Computer ist, durchläuft nur der Mensch.
 - **Warum:** die Bilder sind das, worauf die Aufgabe gewartet hat; ein Teil der Bilder schließt die Aufgabe nicht ab.
 - **Bedienung:** Terminal: `strom task wait T… --images B…:40-45`, `strom media add --inbox --waiting`, in Was wartet
   **Den Ordner öffnen ({have}/{want} gespeichert)**. App: Wartet auf Bearbeitung, beim Eintrag in dieser Reihenfolge
@@ -320,6 +342,10 @@ sobald alle ihre Bilder in der Forschung sind.
   letzten beiden öffnen die Forschung im Terminal). Den Zustand der Bilder zeigt „1 von 2 Bildern“ und beim Buch die
   Chips **gespeichert** / **fehlt**. Die Websites eines Archivs warten in einer Gruppe **Archiv** unter dem Namen des
   Archivs, mit dem Link **Archiv-Website ↗** und der Zahl der fehlenden Bilder.
+- **Grenzen (Gruppe des Archivs):** die Gruppe ist das Archiv der Forschung, zu dem die Aufgabe gehört: nach dem Buch
+  der Aufgabe, der Adresse des Archivs, der Adresse seines Buchs, einer anderen Website desselben Archivs laut Liste
+  der Archive oder dem Namen des Archivs. Nur wenn die Forschung kein solches Archiv hat, ist die Gruppe ein Archiv
+  aus der Liste der Archive; sonst die Website selbst.
 - **Grenzen (App):** eine Antwort höchstens 4000 Zeichen; auf eine Aufgabe, die auf das Prüfen einer Seite wartet,
   wird nur im Terminal geantwortet. Auf dem Telefon werden keine Bilder hinzugefügt, und das Terminal öffnet sich
   nicht.
@@ -327,7 +353,7 @@ sobald alle ihre Bilder in der Forschung sind.
   Teile der Bilder, Antwort und Bilder aus der App und ein Archiv unter einem Namen seit Forschung 1.27.0 und App
   3.23.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/core/waiting.ts actionsOf · assets/method/waiting.md "Images saved by hand" · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask -->
+<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/commands/media.ts:403-478 (same sha under its number → 200 same: true, added []; another number/book → 409 waiting.image-same) · src/core/waiting.ts actionsOf, archiveGroup · src/core/waitkind.ts waitGroupOf (repo: before archive:, host:) · assets/method/waiting.md "Images saved by hand" (the one exception, 7bd55fa1) · assets/method/reading.md · src/commands/guide.ts rule 7 · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask -->
 
 <a id="R9.7"></a>
 ## R9.7 Automatische Sitzung und Chat
@@ -368,7 +394,7 @@ laufendem Chrome gemeint.
 | nur über den Browser | keine | Claude + Chrome | nichts im Archiv; `task wait --images` | wartet auf Bilder; Was wartet bietet die Erlaubnis an |
 | nur über den Browser | beliebig | ein anderer Agent oder ohne Erweiterung | nichts im Archiv; `task wait --images` | wartet auf Bilder, der Mensch speichert sie |
 | nur über den Browser | nur von Hand | beliebig | nichts; `task wait --images` | wartet auf Bilder, der Mensch speichert sie |
-| nur von Hand, verbotener Pfad `/` | keine Erlaubnis öffnet es | beliebig | nichts; `task wait --images` | wartet auf Bilder, der Mensch speichert sie |
+| nur von Hand, verbotener Pfad `/`, Bildserver ganz geschlossen | keine Erlaubnis öffnet es | beliebig | nichts; `task wait --images` | wartet auf Bilder, der Mensch speichert sie |
 | verboten, hat den Client abgelehnt | keine Erlaubnis öffnet es | beliebig | nur die Seite der Bedingungen und robots.txt; ein anderer Weg | Suche unklar; ist die Quelle nötig, Seite prüfen ([R6.2.2](R6-awaiting-action.md#R6.2.2)) |
 
 - **Grenzen:** der Abruf von Seiten einer Website (Katalog, Beschreibung eines Buches) richtet sich nach
@@ -458,21 +484,20 @@ Stufen und Grenzen stammen aus der Liste der Archive der Forschung 1.27.0. Die F
 <a id="R9.10.2"></a>
 ### R9.10.2 Zemský archiv v Opavě (digi.archives.cz)
 
-- Archiv: eingeschränkt, nur über den Browser eines Menschen: robots.txt verbietet allen Robotern die ganze Website.
-  Kein Downloader führt dorthin. Der Bildserver (images.archives.cz) hat in der Liste der Archive die ganze Website
-  verboten, also darf dort auch der Browser des Agenten nicht hin. Die Seiten schützt eine Prüfung, ob ein Mensch am
-  Computer ist.
+- Archiv: nur von Hand, nur über den Browser eines Menschen. robots.txt schließt die ganze Website allen Robotern,
+  und die Seiten schützt eine Prüfung, ob ein Mensch am Computer ist. Der Bildbetrachter nimmt seine Bilder vom
+  Bildserver images.archives.cz, den robots.txt ebenfalls ganz schließt. Kein Downloader führt zum Archiv. Genauso
+  steht es um den digitalen Lesesaal des SOA Litoměřice (digi.soalitomerice.cz, Bilder von images.soalitomerice.cz).
+- Die Erlaubnis **über den Browser** lässt sich hier nicht geben: `strom allow archive digi.archives.cz --way
+  browser` wird abgelehnt, die App bietet den Link **Erlaubnis…** nicht an, und `strom media save` speichert das
+  Bild nicht. Der Browser des Agenten würde den geschlossenen Bildserver um jedes Bild bitten.
 - Aufgabe: die Trauung von Marie Vlková. Der Agent setzt `strom task wait T… --images B…:12-13`.
-- Was wartet in der App zeigt die Aufgabe unter dem Namen des Archivs mit einem Ordner. Der Mensch öffnet das Buch in
-  seinem Browser, speichert die Bilder 12 und 13 (`12.jpg`, `13.jpg`) über **Ordner öffnen** oder fügt sie über
-  **Bilder hinzufügen** hinzu. Die Aufgabe kehrt zurück.
-- Mit Claude Code und der Erweiterung lässt sich dem Archiv die Erlaubnis **über den Browser** auch ohne Downloader
-  geben (Link **Erlaubnis…**). Der Browser des Agenten darf dann auf die Seiten von digi.archives.cz, nicht auf den
-  Bildserver. Die Prüfung auf einen Menschen durchläuft er nicht: wo das Archiv sie zeigt, speichert der Mensch die
-  Bilder.
+- Der einzige Weg ist das Warten auf Bilder: Was wartet in der App zeigt die Aufgabe unter dem Namen des Archivs mit
+  einem Ordner. Der Mensch öffnet das Buch in seinem Browser, speichert die Bilder 12 und 13 (`12.jpg`, `13.jpg`)
+  über **Ordner öffnen** oder fügt sie über **Bilder hinzufügen** hinzu. Die Aufgabe kehrt zurück.
 - **Gilt seit:** Forschung 1.27.0
 
-<!-- zdroj: research:assets/archives.json digi.archives.cz, digi2.archives.cz (restricted, browserOnly, quoteFrom robots), images.archives.cz (disallow "/") · src/core/browserhelp.ts browserHelps · commit 74dcd58b (Svolení… without a connector) -->
+<!-- zdroj: research:assets/archives.json digi.archives.cz, digi2.archives.cz, digi.soalitomerice.cz (manual, browserOnly, quoteFrom robots, imagesFrom images.archives.cz / images.soalitomerice.cz; commit 69902466) · src/core/terms.ts allows (browserOnly + manual) · src/commands/archives.ts:676-680 (manual/forbidden: no permission) · src/core/browserhelp.ts browserHelps, treeBrowserArchives (never by hand only) · test/cli/media-save.test.ts (digi.archives.cz) · CHANGELOG.cs.md 1.27.0 -->
 
 <a id="R9.10.3"></a>
 ### R9.10.3 eBadatelna SOA Praha
@@ -528,6 +553,9 @@ Stufen und Grenzen stammen aus der Liste der Archive der Forschung 1.27.0. Die F
   ([R9.5](#R9.5)).
 - **Was, wenn nur ein Teil der Bilder gespeichert ist?** Die Aufgabe wartet weiter, und Was wartet sagt, welche
   fehlen ([R9.6](#R9.6)).
+- **Warum gibt es bei manchen Archiven nur über den Browser keine Erlaubnis…?** Die Liste führt ein solches Archiv
+  als nur von Hand: sein Bildbetrachter nimmt die Bilder von einem Server, der allen Robotern geschlossen ist, oder seine
+  Bedingungen sagen es so. Die Bilder speichert der Mensch ([R9.1](#R9.1), [R9.10.2](#R9.10.2)).
 - **Gilt seit:** Forschung 1.27.0
 
 <!-- zdroj: research:CHANGELOG.cs.md 1.27.0 · src/core/browserhelp.ts · src/core/chromehook.ts:1-25 · src/commands/media.ts media save · assets/method/locate.md -->

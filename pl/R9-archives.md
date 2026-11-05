@@ -46,26 +46,39 @@ strom może robić automatycznie; szczegółowa tabela poziomów jest w [R8.2](R
 | **tylko przez przeglądarkę człowieka** | bez pobierania stron, bez katalogu i skanów przez program pobierający; najwyżej przeglądarka agenta za zgodą „przez przeglądarkę” ([R9.4](#R9.4)) |
 | **tempo** | najkrótszy odstęp i najwyższa liczba zapytań na godzinę; strom nigdy nie idzie szybciej |
 | **zakazane ścieżki** | części witryny, do których nie wolno niczemu automatycznemu, nawet przeglądarce agenta |
+| **serwer obrazów** | inna witryna, z której przeglądarka skanów archiwum bierze obrazy |
 | **warunki, cytat, data sprawdzenia** | skąd pochodzi poziom (strona warunków lub robots.txt) i kiedy go sprawdzono |
 
 - **Pilnuje kod:** poziom archiwum to najsurowszy z: odczytu warunków przez program pobierający, zapisu archiwum
   w badaniu, listy archiwów dostarczonej z badaniem (`assets/archives.json`), najsurowszego poziomu, jaki strom
-  kiedykolwiek widział przy serwerze, i pliku robots.txt. Serwer, który automatycznym narzędziom zabrania całej
-  witryny (`Disallow: /`), uchodzi za witrynę tylko przez przeglądarkę człowieka. Serwer, który odrzucił klienta
-  strom, uchodzi za zakazany.
+  kiedykolwiek widział przy serwerze, i pliku robots.txt. Serwer, którego robots.txt zamyka całą witrynę wszystkim
+  robotom (`Disallow: /`), uchodzi za witrynę tylko przez przeglądarkę człowieka, z poziomem co najmniej
+  ograniczone: przeglądarka agenta może tam wejść tylko za zgodą „przez przeglądarkę”, po jednej stronie i w tempie
+  człowieka ([R9.4](#R9.4)). Wyjątek: warunki witryny wyraźnie pozwalają na automatyczne użycie, a jej robots.txt
+  nie wymienia agentów AI. Serwer, który odrzucił klienta strom, uchodzi za zakazany.
+- **Tylko ręcznie** (skany zapisuje zawsze człowiek, zgoda tego nie otwiera) zostaje to, co tak prowadzi lista
+  archiwów:
+  - ścieżka do zapisów, którą robots.txt zamyka wszystkim robotom (zakazana ścieżka na liście);
+  - poziom **tylko ręcznie**: warunki, które na nic innego nie pozwalają, albo imienny zakaz dla agentów AI tam, gdzie
+    lista prowadzi go jako tylko ręcznie (np. eBadatelna SOA Praha, [R9.10.3](#R9.10.3)). Imienny zakaz AI w
+    robots.txt sam w sobie nie oznacza tylko ręcznie: archiwum z nim może być także tylko przez przeglądarkę
+    człowieka;
+  - przeglądarka skanów, która bierze obrazy z serwera obrazów zamkniętego w całości dla wszystkich robotów. Takie
+    archiwum ma na liście poziom **tylko ręcznie** (np. czytelnie ZA Opava i SOA Litoměřice, [R9.10.2](#R9.10.2)).
 - **Granice:**
   - archiwum tylko przez przeglądarkę z poziomem **tylko ręcznie** lub ze zgodą **tylko ręcznie** nie pozwala na nic,
-    nawet przeglądarce agenta;
+    ani przeglądarce agenta, ani na katalog;
   - zakazana ścieżka `/` (cały serwer obrazów) zamyka także przeglądarkę agenta: skany tylko ręcznie;
   - witryny jednego archiwum (np. archiwum cyfrowe i czytelnia jednego archiwum krajowego) mają każda swój zapis;
     w Co czeka pokazują się jednak pod jedną nazwą archiwum ([R9.6](#R9.6)).
-- **Dlaczego:** metodyka chce przestrzegać warunków każdego archiwum. Archiwów, których warunki lub robots.txt
-  zabraniają automatycznych narzędzi, nie przegląda się automatycznie.
+- **Dlaczego:** metodyka chce przestrzegać warunków każdego archiwum. Tam, gdzie robots.txt wpuszcza tylko
+  przeglądarkę, idzie najwyżej przeglądarka, za zgodą człowieka i w jego tempie; to, co lista archiwów zostawia
+  ręce człowieka, zapisuje człowiek.
 - **Obsługa:** terminal: `strom net web --check <adresa>` (co strom zrobiłby z adresem), menu archiwów, `strom
   allow archive` (tylko człowiek). Aplikacja: Czeka na decyzję.
-- **Obowiązuje od:** badanie 1.14.0. Kolejne archiwa Czech, Niemiec i Polski od 1.27.0.
+- **Obowiązuje od:** badanie 1.14.0. Kolejne archiwa Czech, Niemiec i Polski oraz serwer obrazów od 1.27.0.
 
-<!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel, :789-803 allows · assets/archives.json (level, browserOnly, pace, disallow, quote, quoteFrom, checked) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 -->
+<!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel (robots "Disallow: /" → browserOnly, restricted; robotsYield: openByTerms + robotsNamesAi false), :789-803 allows (browserOnly + manual → nothing) · assets/archives.json (level, browserOnly, pace, disallow, imagesFrom, quote, quoteFrom, checked; metrikai.lt, lagis, gov, online-ofb restricted + browserOnly; ebadatelna.soapraha.cz manual) · src/core/knownterms.ts imagesFrom · test/unit/known-terms.test.ts (imagesFrom closed whole ⇒ manual) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 (c3ee4422) -->
 
 <a id="R9.1.1"></a>
 ### R9.1.1 Strona, której badanie nie zna
@@ -101,7 +114,8 @@ ją tylko człowiek.
   - archiwum tylko przez przeglądarkę nigdy nie dostaje **powoli** (skany nigdy przez program pobierający). Archiwum
     tylko przez przeglądarkę, do którego nie prowadzi żaden program pobierający, dostaje tylko **przez przeglądarkę**,
     **tylko ręcznie** albo odwołanie;
-  - poziomu **tylko ręcznie** i **zakazane** zgoda nie otwiera;
+  - poziomu **tylko ręcznie** i **zakazane** zgoda nie otwiera: `strom allow archive … --way browser` (także
+    `slow`) zostaje odrzucone, a aplikacja nie proponuje odnośnika **Zgoda…**;
   - tempo człowieka (10 s, 120 na godzinę) można zmienić w ustawieniu `archive.pace` albo `strom allow host --pace
     --per-hour`. Tempo z listy archiwów to dolna granica: strom zawsze stosuje wolniejsze z obu.
 - **Granice:** po decyzji wracają do kolejki zadania czekające na to archiwum we wszystkich badaniach na komputerze.
@@ -285,8 +299,9 @@ nich folder. Zadanie wraca do kolejki samo, gdy w badaniu są wszystkie jego ska
     ile zapisano z ilu i których brakuje;
   - skany z aplikacji idą prosto do zadania: ponumerowane według skanu, który poda aplikacja, w przeciwnym razie
     według nazwy pliku, w przeciwnym razie według kolejności brakujących; PDF strona po stronie. Skan z numerem, który
-    badanie już ma, zostaje odrzucony, jeśli nie ma go zastąpić; zastąpiony nigdy nie zostaje usunięty. Skan
-    identyczny z innym, już przejętym, zostaje odrzucony i nic nie zostaje przejęte;
+    badanie już ma, zostaje odrzucony, jeśli nie ma go zastąpić; zastąpiony nigdy nie zostaje usunięty. Plik
+    identyczny z innym, już przejętym skanem (inny numer lub księga), zostaje odrzucony i nic nie zostaje przejęte.
+    Ten sam plik wysłany ponownie pod tym samym numerem niczego nie zmienia i jest zgłaszany jako zapisany;
   - odpowiedź napisana w aplikacji przywraca zadanie tak samo jak odpowiedź w terminalu i zapisuje się z notatką, że
     przyszła z aplikacji. Zadanie, które w międzyczasie czeka na coś innego, zostaje bez zmian.
 - **Granice (kiedy skany przywracają zadanie):**
@@ -295,9 +310,12 @@ nich folder. Zadanie wraca do kolejki samo, gdy w badaniu są wszystkie jego ska
     pracuje;
   - list i zapytanie do rodziny przywraca tylko księga, którą wymieniają;
   - zadania czekającego na sprawdzenie witryny przez człowieka skany nie przywracają nigdy (odpowiada tylko człowiek).
-- **Tylko metodyka:** przy ręcznych skanach agent podaje księgę, numery skanów, format (JPEG), nazwę pliku i folder.
-  Sam nic nie otwiera i nie pobiera, nawet przeglądarką. Wyjątek: `strom media save` ze zgodą przez przeglądarkę
-  ([R9.5](#R9.5)).
+- **Tylko metodyka (metodyka, `strom guide` i brief agenta jednakowo):** przy ręcznych skanach agent podaje księgę,
+  numery skanów, format (JPEG), nazwę pliku i folder. Sam nic nie otwiera i nie pobiera, nawet przeglądarką. Jedyny
+  wyjątek: przy archiwum tylko przez przeglądarkę człowieka, któremu człowiek dał zgodę **przez przeglądarkę** i do
+  którego nie prowadzi program pobierający, Claude in Chrome zapisuje skany po jednym poleceniem `strom media save`
+  ([R9.5](#R9.5)). Nic innego agent tam nie otwiera ani nie pobiera; sprawdzenie, czy przy komputerze jest
+  człowiek, przechodzi tylko człowiek.
 - **Dlaczego:** skany to to, na co zadanie czekało; część skanów zadania nie kończy.
 - **Obsługa:** terminal: `strom task wait T… --images B…:40-45`, `strom media add --inbox --waiting`, w Co czeka
   **Otwórz folder (zapisano {have}/{want})**. Aplikacja: Czeka na decyzję, przy pozycji w tej kolejności **Dodaj
@@ -305,12 +323,15 @@ nich folder. Zadanie wraca do kolejki samo, gdy w badaniu są wszystkie jego ska
   w terminalu). Stan skanów pokazuje „1 z 2 skanów”, a przy księdze chipy **zapisany** / **brak**. Witryny jednego
   archiwum czekają w jednej grupie **Archiwum** pod nazwą archiwum, z odnośnikiem **Strona archiwum ↗** i liczbą
   brakujących skanów.
+- **Granice (grupa archiwum):** grupą jest archiwum badania, do którego należy zadanie: według księgi zadania, adresu
+  archiwum, adresu jego księgi, innej witryny tego samego archiwum według listy archiwów albo nazwy archiwum. Tylko
+  gdy badanie takiego archiwum nie ma, grupą jest archiwum z listy archiwów; w przeciwnym razie sama witryna.
 - **Granice (aplikacja):** odpowiedź najwyżej 4000 znaków; na zadanie czekające na sprawdzenie witryny odpowiada się
   tylko w terminalu. Na telefonie nie dodaje się skanów ani nie otwiera terminala.
 - **Obowiązuje od:** badanie 1.0.0 (folder w `inbox/`), budzenie po zapisaniu od 1.15.0. Przejęcie bez polecenia,
   części skanów, odpowiedź i skany z aplikacji oraz archiwum pod jedną nazwą od badania 1.27.0 i aplikacji 3.23.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/core/waiting.ts actionsOf · assets/method/waiting.md "Images saved by hand" · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask -->
+<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/commands/media.ts:403-478 (same sha under its number → 200 same: true, added []; another number/book → 409 waiting.image-same) · src/core/waiting.ts actionsOf, archiveGroup · src/core/waitkind.ts waitGroupOf (repo: before archive:, host:) · assets/method/waiting.md "Images saved by hand" (the one exception, 7bd55fa1) · assets/method/reading.md · src/commands/guide.ts rule 7 · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask -->
 
 <a id="R9.7"></a>
 ## R9.7 Sesja automatyczna i czat
@@ -349,7 +370,7 @@ mówi „Claude + Chrome”, chodzi o Claude Code z rozszerzeniem Claude in Chro
 | tylko przez przeglądarkę | żadna | Claude + Chrome | nic w archiwum; `task wait --images` | czeka na skany; Co czeka proponuje zgodę |
 | tylko przez przeglądarkę | dowolna | inny agent lub bez rozszerzenia | nic w archiwum; `task wait --images` | czeka na skany, zapisuje człowiek |
 | tylko przez przeglądarkę | tylko ręcznie | dowolny | nic; `task wait --images` | czeka na skany, zapisuje człowiek |
-| tylko ręcznie, zakazana ścieżka `/` | zgoda nie otwiera | dowolny | nic; `task wait --images` | czeka na skany, zapisuje człowiek |
+| tylko ręcznie, zakazana ścieżka `/`, serwer obrazów zamknięty w całości | zgoda nie otwiera | dowolny | nic; `task wait --images` | czeka na skany, zapisuje człowiek |
 | zakazane, odrzuciło klienta | zgoda nie otwiera | dowolny | tylko strona warunków i robots.txt; inna droga | wyszukiwanie nierozstrzygające; gdy źródło jest konieczne, witryna do sprawdzenia ([R6.2.2](R6-awaiting-action.md#R6.2.2)) |
 
 - **Granice:** pobieranie stron witryny (katalog, opis księgi) kieruje się [R9.3](#R9.3) niezależnie od skanów.
@@ -435,20 +456,20 @@ Poziomy i ograniczenia pochodzą z listy archiwów badania 1.27.0. Rodzina Horá
 <a id="R9.10.2"></a>
 ### R9.10.2 Zemský archiv v Opavě (digi.archives.cz)
 
-- Archiwum: ograniczone, tylko przez przeglądarkę człowieka: robots.txt zabrania całej witryny wszystkim robotom. Nie
-  prowadzi do niego żaden program pobierający. Serwer obrazów (images.archives.cz) ma na liście archiwów zakazaną całą
-  witrynę, więc nie wolno tam nawet przeglądarce agenta. Strony chroni sprawdzenie, czy przy komputerze jest
-  człowiek.
+- Archiwum: tylko ręcznie, tylko przez przeglądarkę człowieka. robots.txt zamyka całą witrynę wszystkim robotom, a
+  strony chroni sprawdzenie, czy przy komputerze jest człowiek. Przeglądarka skanów bierze obrazy z serwera obrazów
+  images.archives.cz, który robots.txt także zamyka w całości. Do archiwum nie prowadzi żaden program pobierający.
+  Tak samo jest z cyfrową czytelnią SOA Litoměřice (digi.soalitomerice.cz, obrazy z images.soalitomerice.cz).
+- Zgody **przez przeglądarkę** nie można tu dać: `strom allow archive digi.archives.cz --way browser` zostaje
+  odrzucone, aplikacja nie proponuje odnośnika **Zgoda…**, a `strom media save` skanu nie zapisze. Przeglądarka
+  agenta prosiłaby zamknięty serwer obrazów o każdy obraz.
 - Zadanie: ślub Marie Vlkovej. Agent ustawia `strom task wait T… --images B…:12-13`.
-- Co czeka w aplikacji pokazuje zadanie pod nazwą archiwum z folderem. Człowiek otwiera księgę w swojej przeglądarce,
-  zapisuje skany 12 i 13 (`12.jpg`, `13.jpg`) przez **Otwórz folder** albo dodaje je przez **Dodaj skany**. Zadanie
-  wraca.
-- Z Claude Code i rozszerzeniem można dać archiwum zgodę **przez przeglądarkę** także bez programu pobierającego
-  (odnośnik **Zgoda…**). Przeglądarka agenta może wtedy wchodzić na strony digi.archives.cz, nie na serwer obrazów.
-  Sprawdzenia człowieka nie przechodzi: gdzie archiwum je pokaże, skany zapisuje człowiek.
+- Jedyną drogą jest czekanie na skany: Co czeka w aplikacji pokazuje zadanie pod nazwą archiwum z folderem. Człowiek
+  otwiera księgę w swojej przeglądarce, zapisuje skany 12 i 13 (`12.jpg`, `13.jpg`) przez **Otwórz folder** albo
+  dodaje je przez **Dodaj skany**. Zadanie wraca.
 - **Obowiązuje od:** badanie 1.27.0
 
-<!-- zdroj: research:assets/archives.json digi.archives.cz, digi2.archives.cz (restricted, browserOnly, quoteFrom robots), images.archives.cz (disallow "/") · src/core/browserhelp.ts browserHelps · commit 74dcd58b (Svolení… without a connector) -->
+<!-- zdroj: research:assets/archives.json digi.archives.cz, digi2.archives.cz, digi.soalitomerice.cz (manual, browserOnly, quoteFrom robots, imagesFrom images.archives.cz / images.soalitomerice.cz; commit 69902466) · src/core/terms.ts allows (browserOnly + manual) · src/commands/archives.ts:676-680 (manual/forbidden: no permission) · src/core/browserhelp.ts browserHelps, treeBrowserArchives (never by hand only) · test/cli/media-save.test.ts (digi.archives.cz) · CHANGELOG.cs.md 1.27.0 -->
 
 <a id="R9.10.3"></a>
 ### R9.10.3 eBadatelna SOA Praha
@@ -500,6 +521,9 @@ Poziomy i ograniczenia pochodzą z listy archiwów badania 1.27.0. Rodzina Horá
 - **Dlaczego Chrome chce zgody na więcej pobrań?** Chrome zapisuje z jednej strony tylko jeden plik; na kolejne
   pobrania zezwala człowiek w pasku adresu. Agent nie zmienia ustawień Chrome ([R9.5](#R9.5)).
 - **Co, jeśli zapisano tylko część skanów?** Zadanie czeka dalej, a Co czeka mówi, których brakuje ([R9.6](#R9.6)).
+- **Dlaczego przy niektórych archiwach tylko przez przeglądarkę nie ma Zgody…?** Lista prowadzi takie archiwum jako
+  tylko ręcznie: jego przeglądarka skanów bierze obrazy z serwera zamkniętego dla wszystkich robotów albo tak mówią jego
+  warunki. Skany zapisuje człowiek ([R9.1](#R9.1), [R9.10.2](#R9.10.2)).
 - **Obowiązuje od:** badanie 1.27.0
 
 <!-- zdroj: research:CHANGELOG.cs.md 1.27.0 · src/core/browserhelp.ts · src/core/chromehook.ts:1-25 · src/commands/media.ts media save · assets/method/locate.md -->
