@@ -63,6 +63,7 @@ archive's permission**, **letter**, **family**, **web**, **other**.
   ([R6.7.2](#R6.7.2)).
 - **Controls:** terminal: `strom task wait T… --images B…:<from>-<to>`, then `strom media add --inbox`; in **What
   waits** **Open the folder ({have}/{want} saved)**. App: **Folder**.
+- Browser-only archives, images from the app and what a person does: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
 - **Since:** research 1.0.0. Waking after saving from 1.15.0.
 
 <!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:127-147 wakeWaiting · assets/method/waiting.md -->

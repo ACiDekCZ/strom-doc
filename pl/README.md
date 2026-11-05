@@ -19,6 +19,7 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [R6 Czeka na decyzję](R6-awaiting-action.md): czego badanie potrzebuje od człowieka i gdzie się to załatwia
 - [R7 Kiedy i jak długo agent pracuje](R7-when-the-agent-works.md): sesje, limit czasu, warunek przebiegu, limit subskrypcji
 - [R8 Wyszukiwanie i odczyt wpisów w skanach](R8-reading-scans.md): księga, skany przez program pobierający, czytelnicy, własny odczyt, zapis znaleziska i pewność
+- [R9 Archiwa: co wolno agentowi, a co robi człowiek](R9-archives.md): rodzaje archiwów, zgoda, przeglądarka agenta, oczekiwanie na skany, co robi człowiek
 
 ## A Aplikacja Strom
 

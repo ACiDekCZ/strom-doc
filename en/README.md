@@ -19,6 +19,7 @@ Parts R (the research), A (the app) and S (the app and the research together) ar
 - [R6 Awaiting action](R6-awaiting-action.md): what the research needs from a person and where it is dealt with
 - [R7 When and how long the agent works](R7-when-the-agent-works.md): sessions, the time limit, the run condition, the subscription limit
 - [R8 Finding and reading entries in scans](R8-reading-scans.md): the book, images through a downloader, readers, own reading, recording a find and certainty
+- [R9 Archives: what the agent may do and what a person does](R9-archives.md): kinds of archives, permission, the agent's browser, waiting for images, what a person does
 
 ## A The Strom app
 

@@ -57,6 +57,7 @@ určuje oddíl, skupinu a možné akce: **snímky**, **ověřit web**, **svolen�
 - Po uložení snímků do výzkumu se úkol probudí s poznámkou, které snímky chybí ([R6.7.2](#R6.7.2)).
 - **Ovládání:** terminál: `strom task wait T… --images B…:<od>-<do>`, potom `strom media add --inbox`; v **Co čeká**
   **Otevřít složku (uloženo {have}/{want})**. Aplikace: **Složka**.
+- Archivy jen přes prohlížeč, snímky z aplikace a co udělá člověk: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
 - **Platí od:** výzkum 1.0.0. Probuzení po uložení od 1.15.0.
 
 <!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:127-147 wakeWaiting · assets/method/waiting.md -->

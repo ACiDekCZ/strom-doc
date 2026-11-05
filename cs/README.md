@@ -19,6 +19,7 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [R6 Čeká na vyřízení](R6-awaiting-action.md): co výzkum potřebuje od člověka a kde se to vyřizuje
 - [R7 Kdy a jak dlouho agent pracuje](R7-when-the-agent-works.md): sezení, časový limit, podmínka běhu, limit předplatného
 - [R8 Hledání a čtení záznamů ve skenech](R8-reading-scans.md): kniha, snímky přes stahovač, čtenáři, vlastní čtení, zápis nálezu a jistota
+- [R9 Archivy: co smí agent a co udělá člověk](R9-archives.md): druhy archivů, svolení, prohlížeč agenta, čekání na snímky, co udělá člověk
 
 ## A Aplikace Strom
 

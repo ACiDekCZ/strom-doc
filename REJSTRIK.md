@@ -154,6 +154,18 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 - **Čísla:** [R2.2](cs/R2-lines-and-queue.md#R2.2), R2.2.1, R2.2.2, R2.2.3, R2.4
 
+<a id="browser-only-archive"></a>
+### Jen přes prohlížeč člověka
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | jen přes prohlížeč člověka (terminal, `strom doctor`) · archiv jen přes prohlížeč (app, řádek **Prohlížeč**) | Archiv, kam smí jen prohlížeč člověka: podle podmínek archivu nebo podle robots.txt, který zakazuje celý web. Žádné stažení webu ani stahovač; nejvýš prohlížeč agenta se svolením „přes prohlížeč“, jinak snímky uloží člověk. |
+| en | only through a person's browser (terminal) · browser-only archive (app, row **Browser**) | An archive only a person's browser may enter: by the archive's terms or by a robots.txt that closes the whole site. No web fetch and no downloader; at most the agent's browser with the permission "through the browser", otherwise a person saves the images. |
+| de | nur über den Browser eines Menschen (terminal) · Archiv, das nur im Browser zugänglich ist (app, Zeile **Browser**) | Ein Archiv, das nur der Browser eines Menschen betreten darf: nach den Bedingungen des Archivs oder nach einer robots.txt, die die ganze Website sperrt. Kein Webabruf und kein Downloader; höchstens der Browser des Agenten mit der Erlaubnis „über den Browser“, sonst speichert ein Mensch die Bilder. |
+| pl | tylko przez przeglądarkę człowieka (terminal) · archiwum dostępne tylko przez przeglądarkę (app, wiersz **Przeglądarka**) | Archiwum, do którego wolno wejść tylko przeglądarce człowieka: według warunków archiwum albo według robots.txt, który zamyka całą witrynę. Bez pobierania stron i bez programu pobierającego; najwyżej przeglądarka agenta za zgodą „przez przeglądarkę”, w przeciwnym razie skany zapisuje człowiek. |
+
+- **Čísla:** [R9.1](cs/R9-archives.md#R9.1), R9.2, R9.4, R9.8, R9.10
+
 <a id="terminal-only"></a>
 ### Jen tady v terminálu
 
@@ -312,6 +324,18 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 - **Čísla:** [R3.8](cs/R3-verification-and-citation.md#R3.8)
 
+<a id="agents-browser"></a>
+### Prohlížeč agenta
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | prohlížeč (Claude in Chrome) (terminal, `strom doctor`) · Prohlížeč (app, dialog **Výzkum u stromu**) | Chrome s rozšířením Claude in Chrome, který ovládá Claude Code. Strom kontroluje každé otevření stránky jako stažení webu a počítá je spolu. Prohlížeč jiného agenta a vestavěné prohlížeče desktopových aplikací strom nehlídá a nedoporučuje: do archivů jen přes prohlížeč s nimi agent sám nejde, použije je jen na výslovnou žádost člověka. |
+| en | Browser (Claude in Chrome) (terminal) · Browser (app, dialog **Research for this tree**) | Chrome with the Claude in Chrome extension, driven by Claude Code. strom checks each page it opens like a web fetch and counts them together. strom does not watch and does not recommend another agent's browser or the built-in browsers of desktop apps: the agent does not take them into browser-only archives of its own accord and uses them only when a person explicitly asks. |
+| de | Browser (Claude in Chrome) (terminal) · Browser (app, Dialog **Forschung für diesen Stammbaum**) | Chrome mit der Erweiterung Claude in Chrome, gesteuert von Claude Code. strom prüft jedes Öffnen einer Seite wie einen Webabruf und zählt beide zusammen. Den Browser eines anderen Agenten und die eingebauten Browser der Desktop-Apps überwacht strom nicht und empfiehlt sie nicht: in Archive, die nur im Browser zugänglich sind, geht der Agent damit nicht von sich aus, er nutzt sie nur, wenn ein Mensch ausdrücklich darum bittet. |
+| pl | przeglądarka (Claude in Chrome) (terminal) · Przeglądarka (app, okno **Badanie dla drzewa**) | Chrome z rozszerzeniem Claude in Chrome, sterowany przez Claude Code. strom sprawdza każde otwarcie strony jak pobranie strony i liczy je razem. Przeglądarki innego agenta ani wbudowanych przeglądarek aplikacji desktopowych strom nie śledzi i nie poleca: do archiwów dostępnych tylko przez przeglądarkę agent nie wchodzi z nimi sam, używa ich tylko na wyraźną prośbę człowieka. |
+
+- **Čísla:** [R9.4](cs/R9-archives.md#R9.4), R9.4.1, R9.4.2, R9.4.3, R9.5
+
 <a id="jurisdiction"></a>
 ### Příslušnost místa
 
@@ -433,7 +457,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | de | Bilder | Die Aufgabe wartet, bis der Mensch die Bilder eines Buches in einen vorbereiteten Ordner speichert; nach dem Speichern in die Forschung wird sie von selbst geweckt. |
 | pl | skany | Zadanie czeka, aż człowiek zapisze skany księgi do przygotowanego folderu; po ich zapisaniu do badania budzi się samo. |
 
-- **Čísla:** [R6.2.1](cs/R6-awaiting-action.md#R6.2.1), R6.7.2
+- **Čísla:** [R6.2.1](cs/R6-awaiting-action.md#R6.2.1), R6.7.2, R9.6, R9.9
 
 <a id="downloader"></a>
 ### Stahovač
@@ -494,7 +518,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | de | Erlaubnis eines Archivs | Die Frage, wie die Forschung aus einem Archiv herunterladen darf. Die Entscheidung weckt die Aufgaben, die auf dieses Archiv warten, in allen Forschungen auf dem Computer. |
 | pl | zgoda archiwum | Pytanie, jak badanie może pobierać z archiwum. Decyzja budzi zadania czekające na to archiwum we wszystkich badaniach na komputerze. |
 
-- **Čísla:** [R6.3.1](cs/R6-awaiting-action.md#R6.3.1), R6.6, R6.7.2
+- **Čísla:** [R6.3.1](cs/R6-awaiting-action.md#R6.3.1), R6.6, R6.7.2, R9.2
 
 <a id="record-backed-fact"></a>
 ### Údaj doložený záznamem

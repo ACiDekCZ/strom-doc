@@ -114,6 +114,7 @@ Agent lädt selbst nie herunter: weder mit einem Befehl noch mit einem Skript no
   Bedingungen des Portals und der robots.txt.
 - Bilder, die das Archiv nicht automatisch herunterladen lässt, speichert der Mensch in einen vorbereiteten Ordner
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); Erlaubnis eines Archivs: [R6.3.1](R6-awaiting-action.md#R6.3.1).
+  Archive nur über den Browser, der Browser des Agenten und der ganze Ablauf: [R9](R9-archives.md).
 - **Warum:** die Methodik will die Bedingungen jedes Archivs einhalten; ein Portal, dessen Bedingungen es verbieten,
   wird nicht automatisch durchsucht. Das Stundenlimit des Archivs hält die übrige Arbeit an, darum zuerst ganze Bilder
   und Teile nur dort, wo der Eintrag sie braucht.

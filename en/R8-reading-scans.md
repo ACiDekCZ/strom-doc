@@ -112,6 +112,7 @@ The agent never downloads by itself: not by a command, a script or its own brows
   portal's terms and robots.txt.
 - Images that the archive does not allow to download automatically are saved by a person into a prepared folder
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); an archive's permission: [R6.3.1](R6-awaiting-action.md#R6.3.1).
+  Browser-only archives, the agent's browser and the whole course: [R9](R9-archives.md).
 - **Why:** the method wants the terms of every archive kept; a portal whose terms forbid it is not browsed
   automatically. An archive's hourly cap stops the rest of the work, so whole images first and parts only where an
   entry needs them.

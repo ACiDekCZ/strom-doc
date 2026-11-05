@@ -99,6 +99,7 @@ nestahuje: ani příkazem, skriptem, ani svým prohlížečem.
   ji čte. Archiv bez stahovače: agent stahovač postaví (`strom connector new`) podle podmínek portálu a robots.txt.
 - Snímky, které archiv nedovolí stáhnout automaticky, uloží člověk do připravené složky
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); svolení archivu: [R6.3.1](R6-awaiting-action.md#R6.3.1).
+  Archivy jen přes prohlížeč, prohlížeč agenta a celý průběh: [R9](R9-archives.md).
 - **Proč:** metodika chce dodržet podmínky každého archivu; portál, jehož podmínky to zakazují, se automaticky
   neprochází. Hodinový limit archivu zastaví zbytek práce, proto nejdřív celé snímky a části jen tam, kde je zápis
   potřebuje.

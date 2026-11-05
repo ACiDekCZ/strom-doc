@@ -20,6 +20,7 @@ dauerhaft.
 - [R6 Wartet auf Bearbeitung](R6-awaiting-action.md): was die Forschung vom Menschen braucht und wo es erledigt wird
 - [R7 Wann und wie lange der Agent arbeitet](R7-when-the-agent-works.md): Sitzungen, Zeitlimit, Bedingung des Laufs, Limit des Abonnements
 - [R8 Einträge in Scans finden und lesen](R8-reading-scans.md): Buch, Bilder über einen Downloader, Leser, eigenes Lesen, Erfassen eines Fundes und Sicherheit
+- [R9 Archive: was der Agent darf und was der Mensch tut](R9-archives.md): Arten von Archiven, Erlaubnis, Browser des Agenten, Warten auf Bilder, was der Mensch tut
 
 ## A Die Strom-App
 

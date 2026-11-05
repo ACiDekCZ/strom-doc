@@ -61,6 +61,7 @@ Rodzaj oczekiwania wyznacza sekcję, grupę i możliwe akcje: **skany**, **witry
 - Po zapisaniu skanów do badania zadanie się budzi z notatką, których skanów brakuje ([R6.7.2](#R6.7.2)).
 - **Obsługa:** terminal: `strom task wait T… --images B…:<od>-<do>`, potem `strom media add --inbox`; w **Co czeka**
   **Otwórz folder (zapisano {have}/{want})**. Aplikacja: **Folder**.
+- Archiwa tylko przez przeglądarkę, skany z aplikacji i co robi człowiek: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
 - **Obowiązuje od:** badanie 1.0.0. Budzenie po zapisaniu od 1.15.0.
 
 <!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:127-147 wakeWaiting · assets/method/waiting.md -->

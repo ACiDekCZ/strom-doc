@@ -109,6 +109,7 @@ nigdy nie pobiera sam: ani poleceniem, ani skryptem, ani swoją przeglądarką.
   portalu i robots.txt.
 - Skany, których archiwum nie pozwala pobrać automatycznie, człowiek zapisuje do przygotowanego folderu
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); zgoda archiwum: [R6.3.1](R6-awaiting-action.md#R6.3.1).
+  Archiwa tylko przez przeglądarkę, przeglądarka agenta i cały przebieg: [R9](R9-archives.md).
 - **Dlaczego:** metodyka chce przestrzegać warunków każdego archiwum; portalu, którego warunki tego zabraniają, nie
   przegląda się automatycznie. Godzinowy limit archiwum zatrzymuje resztę pracy, dlatego najpierw całe skany, a części
   tylko tam, gdzie wymaga ich wpis.

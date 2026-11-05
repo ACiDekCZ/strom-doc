@@ -122,6 +122,28 @@ nenapsáno) · `neplatí od <verze>`.
 | R8.5.2 | R8-reading-scans.md | výzkum 1.14.0 | platí | Nejistě přečtené místo je vodítko | An uncertainly read place is a lead | Ein unsicher gelesener Ort ist ein Hinweis | Niepewnie odczytane miejsce to wskazówka |
 | R8.6 | R8-reading-scans.md | výzkum 1.0.0 | platí | Zápis nálezu | Recording a find | Erfassen eines Fundes | Zapis znaleziska |
 | R8.7 | R8-reading-scans.md | výzkum 1.0.0 | platí | Jistota a ověření přečteného | Certainty and verification of what was read | Sicherheit und Prüfung des Gelesenen | Pewność i weryfikacja odczytu |
+| R9 | R9-archives.md | výzkum 1.14.0 | koncept | Archivy: co smí agent a co udělá člověk | Archives: what the agent may do and what a person does | Archive: was der Agent darf und was der Mensch tut | Archiwa: co wolno agentowi, a co robi człowiek |
+| R9.1 | R9-archives.md | výzkum 1.14.0 | koncept | Druhy archivů | Kinds of archives | Arten von Archiven | Rodzaje archiwów |
+| R9.1.1 | R9-archives.md | výzkum 1.14.0 | koncept | Web, který výzkum nezná | A site the research does not know | Eine Website, die die Forschung nicht kennt | Strona, której badanie nie zna |
+| R9.2 | R9-archives.md | výzkum 1.14.0 | koncept | Svolení člověka | A person's permission | Die Erlaubnis des Menschen | Zgoda człowieka |
+| R9.3 | R9-archives.md | výzkum 1.14.0 | koncept | Stažení webu agentem | The agent's web fetch | Webabruf durch den Agenten | Pobieranie stron przez agenta |
+| R9.4 | R9-archives.md | výzkum 1.27.0 | koncept | Prohlížeč agenta | The agent's browser | Der Browser des Agenten | Przeglądarka agenta |
+| R9.4.1 | R9-archives.md | výzkum 1.14.0 | koncept | Kdy sezení dostane Chrome | When a session gets Chrome | Wann eine Sitzung Chrome bekommt | Kiedy sesja dostaje Chrome |
+| R9.4.2 | R9-archives.md | výzkum 1.27.0 | koncept | Vestavěné prohlížeče a ovládání počítače: nehlídané, nedoporučené | Built-in browsers and computer use: unwatched, not recommended | Eingebaute Browser und Computersteuerung: nicht überwacht, nicht empfohlen | Wbudowane przeglądarki i sterowanie komputerem: niepilnowane, niepolecane |
+| R9.4.3 | R9-archives.md | výzkum 1.27.0 | koncept | Stav prohlížeče ve strom doctor a v aplikaci | The browser's state in strom doctor and the app | Zustand des Browsers in strom doctor und in der App | Stan przeglądarki w strom doctor i w aplikacji |
+| R9.5 | R9-archives.md | výzkum 1.27.0 | koncept | Snímek přes prohlížeč agenta | An image through the agent's browser | Ein Bild über den Browser des Agenten | Skan przez przeglądarkę agenta |
+| R9.6 | R9-archives.md | výzkum 1.0.0 | koncept | Čekání na snímky a návrat úkolu | Waiting for images and the task's return | Warten auf Bilder und Rückkehr der Aufgabe | Oczekiwanie na skany i powrót zadania |
+| R9.7 | R9-archives.md | výzkum 1.14.0 | koncept | Automatické sezení a chat | An automatic session and a chat | Automatische Sitzung und Chat | Sesja automatyczna i czat |
+| R9.8 | R9-archives.md | výzkum 1.27.0 | koncept | Co se stane s úkolem: tabulka | What happens to a task: a table | Was mit einer Aufgabe geschieht: eine Tabelle | Co dzieje się z zadaniem: tabela |
+| R9.8.1 | R9-archives.md | výzkum 1.27.0 | koncept | Průběh úkolu, který čeká na snímky | The course of a task waiting for images | Ablauf einer Aufgabe, die auf Bilder wartet | Przebieg zadania czekającego na skany |
+| R9.9 | R9-archives.md | výzkum 1.27.0 | koncept | Co udělá člověk | What a person does | Was der Mensch tut | Co robi człowiek |
+| R9.10 | R9-archives.md | výzkum 1.27.0 | koncept | Příklady | Examples | Beispiele | Przykłady |
+| R9.10.1 | R9-archives.md | výzkum 1.27.0 | koncept | Moravský zemský archiv (Acta Publica) | Moravský zemský archiv (Acta Publica) | Moravský zemský archiv (Acta Publica) | Moravský zemský archiv (Acta Publica) |
+| R9.10.2 | R9-archives.md | výzkum 1.27.0 | koncept | Zemský archiv v Opavě (digi.archives.cz) | Zemský archiv v Opavě (digi.archives.cz) | Zemský archiv v Opavě (digi.archives.cz) | Zemský archiv v Opavě (digi.archives.cz) |
+| R9.10.3 | R9-archives.md | výzkum 1.27.0 | koncept | eBadatelna SOA Praha | eBadatelna SOA Praha | eBadatelna SOA Praha | eBadatelna SOA Praha |
+| R9.10.4 | R9-archives.md | výzkum 1.14.0 | koncept | Matricula | Matricula | Matricula | Matricula |
+| R9.10.5 | R9-archives.md | výzkum 1.27.0 | koncept | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach |
+| R9.11 | R9-archives.md | výzkum 1.27.0 | koncept | Časté otázky | Frequently asked questions | Häufige Fragen | Częste pytania |
 | A1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Aplikace v kostce | The app in brief | Die App im Überblick | Aplikacja w skrócie |
 | A1.1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Rodokmen v prohlížeči, data na zařízení | A family tree in the browser, data on the device | Stammbaum im Browser, Daten auf dem Gerät | Drzewo genealogiczne w przeglądarce, dane na urządzeniu |
 | A1.2 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Osoby, vztahy a rody | People, relationships and family lines | Personen, Beziehungen und Stammlinien | Osoby, relacje i rody |

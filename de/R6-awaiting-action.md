@@ -62,6 +62,7 @@ gebraucht wird. Die Art des Wartens bestimmt den Abschnitt, die Gruppe und die m
   ([R6.7.2](#R6.7.2)).
 - **Bedienung:** Terminal: `strom task wait T… --images B…:<od>-<do>`, danach `strom media add --inbox`; in **Was
   wartet** **Den Ordner öffnen ({have}/{want} gespeichert)**. App: **Ordner**.
+- Archive nur über den Browser, Bilder aus der App und was der Mensch tut: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
 - **Gilt seit:** Forschung 1.0.0. Wecken nach dem Speichern seit 1.15.0.
 
 <!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:127-147 wakeWaiting · assets/method/waiting.md -->
