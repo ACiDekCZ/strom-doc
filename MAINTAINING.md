@@ -71,6 +71,15 @@ to a rule is `[R2.3](R2-lines-and-queue.md#R2.3)`; the plain text "R2.3" is a
 reference too and is checked. File names and anchors are the
 same in every language, so "R2.3" leads to the same rule in each.
 
+### Renumbering log
+
+Every renumbering, old → new, with the date and the reason. Since the register
+was approved (4 Nov 2026) there has been none.
+
+| Date | Old | New | Why |
+|---|---|---|---|
+| 5 Nov 2026 | — | — | Gaps filled with new numbers only (R3.9.1, R7.8, R7.8.1, R8.1.2, R10, R11, A6.5.1). R3.3 keeps its number; material from the user moved to R11.2 and R3.3 links there. |
+
 ## A rule
 
 1. the principle in one sentence;
