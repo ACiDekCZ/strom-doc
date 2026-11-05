@@ -109,6 +109,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R8 | R8-reading-scans.md | výzkum 1.0.0 | platí | Hledání a čtení záznamů ve skenech | Finding and reading entries in scans | Einträge in Scans finden und lesen | Wyszukiwanie i odczyt wpisów w skanach |
 | R8.1 | R8-reading-scans.md | výzkum 1.0.0 | platí | Nejdřív kniha | The book first | Zuerst das Buch | Najpierw księga |
 | R8.1.1 | R8-reading-scans.md | výzkum 1.14.0 | platí | Rejstřík před listováním | An index before browsing | Ein Register vor dem Durchblättern | Indeks przed przeglądaniem |
+| R8.1.2 | R8-reading-scans.md | výzkum 1.0.0 | platí | Poučení ke knize | A lesson about a book | Eine Lehre zu einem Buch | Wniosek o księdze |
 | R8.2 | R8-reading-scans.md | výzkum 1.0.0 | platí | Snímky jen přes stahovač | Images only through a downloader | Bilder nur über einen Downloader | Skany tylko przez program pobierający |
 | R8.3 | R8-reading-scans.md | výzkum 1.0.0 | platí | Čtenáři: kdo snímky čte | Readers: who reads the images | Leser: wer die Bilder liest | Czytelnicy: kto czyta skany |
 | R8.3.1 | R8-reading-scans.md | výzkum 1.0.0 | platí | Dávky, souběh a rozsah | Batches, readers at once and range | Stapel, gleichzeitige Leser und Umfang | Partie, czytelnicy naraz i zakres |

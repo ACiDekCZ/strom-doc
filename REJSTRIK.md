@@ -300,6 +300,18 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 - **Čísla:** [R8.5](cs/R8-reading-scans.md#R8.5), R8.3.2
 
+<a id="lesson"></a>
+### Poučení
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | poučení (terminal, `strom lesson`) | Jedna věta o zvláštnosti knihy, archivu nebo místa, zapsaná k němu. Vidí ji každý úkol, který tam hledá. |
+| en | lesson (terminal, `strom lesson`) | One sentence about a peculiarity of a book, an archive or a place, recorded on it. Every task that searches there shows it. |
+| de | Lehre (terminal, `strom lesson`) | Ein Satz über eine Besonderheit eines Buches, eines Archivs oder eines Ortes, dort vermerkt. Jede Aufgabe, die dort sucht, zeigt ihn. |
+| pl | wniosek (terminal, `strom lesson`) | Jedno zdanie o osobliwości księgi, archiwum lub miejsca, zapisane przy nim. Pokazuje je każde zadanie, które tam szuka. |
+
+- **Čísla:** [R8.1.2](cs/R8-reading-scans.md#R8.1.2)
+
 <a id="off-the-lines-work"></a>
 ### Práce mimo linie
 
