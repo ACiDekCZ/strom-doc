@@ -123,7 +123,7 @@ zapisuje się tak, jak stoją w akcie; ujednolica się tylko daty.
 - **Pilnuje kod:**
   - rodzaje imienia i nazwiska: z urodzenia (`birth`), po ślubie (`married`), zakonne (`religious`), inne (`alias`),
     bez rodzaju;
-  - pełne imię i nazwisko z aktu uzupełnia imię bez nazwiska („Małgorzata”) i osoba pokazuje się potem pod nim. To samo
+  - pełne imię i nazwisko z aktu uzupełnia imię bez nazwiska („Marie”) i osoba pokazuje się potem pod nim. To samo
     imię i nazwisko podane ponownie tylko dodaje cytat;
   - kobieta pokazuje się pod nazwiskiem rodowym; nazwisko po ślubie zostaje obok;
   - tytuł pisany razem z imieniem i nazwiskiem („inż.”, „dr”, „mł.”) trafia do przedrostka lub przyrostka

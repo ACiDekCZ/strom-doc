@@ -123,7 +123,7 @@ own record. Names are recorded as they stand in the entry; only dates are standa
 
 - **Enforced by the code:**
   - kinds of name: birth (`birth`), married (`married`), religious (`religious`), another name (`alias`), no kind;
-  - a name without a surname (“Markéta”) is completed by the full name from the entry, and the person is then shown by
+  - a name without a surname (“Marie”) is completed by the full name from the entry, and the person is then shown by
     it. The same name again only adds a citation;
   - a woman is shown by her birth name; the married name stays beside it;
   - a title written with the name (“Ing.”, “MUDr.”, “ml.”) goes into the prefix or suffix of the name (`--prefix`,

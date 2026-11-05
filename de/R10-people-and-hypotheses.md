@@ -131,7 +131,7 @@ hat seinen eigenen Datensatz. Namen werden so erfasst, wie sie im Eintrag stehen
 - **Prüft der Code:**
   - Arten des Namens: Geburtsname (`birth`), nach der Heirat (`married`), Ordensname (`religious`), anderer Name
     (`alias`), ohne Art;
-  - ein Name ohne Familiennamen („Markéta“) wird um den vollen Namen aus dem Eintrag ergänzt, und die Person wird dann
+  - ein Name ohne Familiennamen („Marie“) wird um den vollen Namen aus dem Eintrag ergänzt, und die Person wird dann
     mit ihm gezeigt. Derselbe Name noch einmal fügt nur eine Zitation hinzu;
   - eine Frau wird mit ihrem Geburtsnamen gezeigt; der Ehename bleibt daneben;
   - ein mit dem Namen geschriebener Titel („Ing.“, „MUDr.“, „ml.“) kommt in das Präfix oder Suffix des Namens

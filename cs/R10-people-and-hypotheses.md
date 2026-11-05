@@ -116,7 +116,7 @@ stojí v záznamu; sjednocují se jen data.
 
 - **Hlídá kód:**
   - druhy jména: rodné (`birth`), po sňatku (`married`), řeholní (`religious`), jiné jméno (`alias`), bez druhu;
-  - jméno bez příjmení („Markéta“) doplní celé jméno ze záznamu a osoba se pak ukazuje jím. Stejné jméno znovu jen
+  - jméno bez příjmení („Marie“) doplní celé jméno ze záznamu a osoba se pak ukazuje jím. Stejné jméno znovu jen
     přidá citaci;
   - žena se ukazuje rodným jménem; jméno po sňatku zůstává vedle;
   - titul psaný se jménem („Ing.“, „MUDr.“, „ml.“) jde do předpony nebo přípony jména (`--prefix`, `--suffix`),
