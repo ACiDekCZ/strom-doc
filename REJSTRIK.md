@@ -597,7 +597,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Strom-Archiv (im Umschalter **Archiv**) | Ein Stammbaum, den die Forschung mit den Quellen auf der Festplatte hält, ohne Agent. Änderungen aus der App nimmt es immer als gültig. |
 | pl | Archiwum Strom (w przełączniku **Archiwum**) | Drzewo, które badanie przechowuje ze źródłami na dysku, bez agenta. Zmiany z aplikacji przyjmuje zawsze jako ważne. |
 
-- **Čísla:** [S1.3](cs/S1-connecting-app-and-research.md#S1.3), S2.4
+- **Čísla:** [R7.8](cs/R7-when-the-agent-works.md#R7.8), R7.8.1, S1.3, S2.4
 
 <a id="what-will-be-sent"></a>
 ### Co se pošle

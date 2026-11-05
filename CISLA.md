@@ -104,6 +104,8 @@ nenapsáno) · `neplatí od <verze>`.
 | R7.5.4 | R7-when-the-agent-works.md | výzkum 1.14.0 | platí | Strop týdne | The week's cap | Obergrenze der Woche | Pułap tygodnia |
 | R7.6 | R7-when-the-agent-works.md | výzkum 1.0.0 | platí | Limit předplatného zastaví běh | The subscription limit stops the run | Das Limit des Abonnements hält den Lauf an | Limit subskrypcji zatrzymuje przebieg |
 | R7.7 | R7-when-the-agent-works.md | výzkum 1.25.2 | platí | Nepřihlášený agent | An agent not logged in | Ein nicht angemeldeter Agent | Niezalogowany agent |
+| R7.8 | R7-when-the-agent-works.md | výzkum 1.12.0 | platí | Archiv Stromu: výzkum, na kterém agent nepracuje | Strom archive: a research the agent does not work on | Strom-Archiv: eine Forschung, an der kein Agent arbeitet | Archiwum Strom: badanie, nad którym agent nie pracuje |
+| R7.8.1 | R7-when-the-agent-works.md | výzkum 1.15.0 | platí | Výzkum čeká na agenta | A research waiting for an agent | Eine Forschung wartet auf einen Agenten | Badanie czeka na agenta |
 | R8 | R8-reading-scans.md | výzkum 1.0.0 | platí | Hledání a čtení záznamů ve skenech | Finding and reading entries in scans | Einträge in Scans finden und lesen | Wyszukiwanie i odczyt wpisów w skanach |
 | R8.1 | R8-reading-scans.md | výzkum 1.0.0 | platí | Nejdřív kniha | The book first | Zuerst das Buch | Najpierw księga |
 | R8.1.1 | R8-reading-scans.md | výzkum 1.14.0 | platí | Rejstřík před listováním | An index before browsing | Ein Register vor dem Durchblättern | Indeks przed przeglądaniem |
