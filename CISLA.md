@@ -147,7 +147,6 @@ nenapsáno) · `neplatí od <verze>`.
 | R9.10.3 | R9-archives.md | výzkum 1.27.0 | koncept | eBadatelna SOA Praha | eBadatelna SOA Praha | eBadatelna SOA Praha | eBadatelna SOA Praha |
 | R9.10.4 | R9-archives.md | výzkum 1.14.0 | koncept | Matricula | Matricula | Matricula | Matricula |
 | R9.10.5 | R9-archives.md | výzkum 1.27.0 | koncept | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach |
-| R9.11 | R9-archives.md | výzkum 1.27.0 | koncept | Časté otázky | Frequently asked questions | Häufige Fragen | Częste pytania |
 | R10 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Osoby: ztotožnění, jména a hypotézy | People: identification, names and hypotheses | Personen: Identifizierung, Namen und Hypothesen | Osoby: identyfikacja, imiona i hipotezy |
 | R10.1 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Jmenovec není hledaná osoba | A namesake is not the person sought | Ein Namensvetter ist nicht die gesuchte Person | Imiennik to nie poszukiwana osoba |
 | R10.2 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Dva záznamy jedné osoby: sloučení | Two records of one person: merging | Zwei Einträge einer Person: Zusammenführen | Dwa wpisy jednej osoby: scalenie |
