@@ -62,11 +62,11 @@ archive's permission**, **letter**, **family**, **web**, **other**.
 - After the images are saved into the research, the task wakes with a note of which images are missing
   ([R6.7.2](#R6.7.2)).
 - **Controls:** terminal: `strom task wait T… --images B…:<from>-<to>`, then `strom media add --inbox`; in **What
-  waits** **Open the folder ({have}/{want} saved)**. App: **Folder**.
+  waits** **Open the folder ({have}/{want} saved)**. App: **Open folder** (from app 3.23.0; before, **Folder**).
 - Browser-only archives, images from the app and what a person does: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
 - **Since:** research 1.0.0. Waking after saving from 1.15.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:127-147 wakeWaiting · assets/method/waiting.md -->
+<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
 
 <a id="R6.2.2"></a>
 ### R6.2.2 A site to check
@@ -240,9 +240,12 @@ the task to the queue, and the agent deals with it in its next work.
   - images return only a task that waits for images of exactly that book. A task waiting for a person to check a
     site they never return. A letter, a request to the family or a site is returned only by the book the task waits
     for, not by a book it only works in;
+  - from research 1.27.0 a task waiting for a site (`--kind web`) is also returned by the one book it works in: the
+    images saved there are what it waited for. A letter and a request to the family still only by the book they
+    wait for;
   - tasks that images returned wrongly before are put back to waiting by the fix `strom fixes show|run|undo
     woken-waits`: the task waits as before, including the sending. A task worked on in the meantime stays. Only a
     person runs the fix in the terminal; it is not in a Strom archive. Until it has run, `strom check` points such
     tasks out.
 
-<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->
+<!-- zdroj: research:src/commands/media.ts:135-170 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn; 1.27.0: web i singleBook) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->

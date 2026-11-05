@@ -56,11 +56,11 @@ určuje oddíl, skupinu a možné akce: **snímky**, **ověřit web**, **svolen�
 - Výzkum připraví složku v `inbox/` sdílené složky. Soubor nese číslo snímku (`9.jpg`, `9a.jpg`).
 - Po uložení snímků do výzkumu se úkol probudí s poznámkou, které snímky chybí ([R6.7.2](#R6.7.2)).
 - **Ovládání:** terminál: `strom task wait T… --images B…:<od>-<do>`, potom `strom media add --inbox`; v **Co čeká**
-  **Otevřít složku (uloženo {have}/{want})**. Aplikace: **Složka**.
+  **Otevřít složku (uloženo {have}/{want})**. Aplikace: **Otevřít složku** (od aplikace 3.23.0; dřív **Složka**).
 - Archivy jen přes prohlížeč, snímky z aplikace a co udělá člověk: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
 - **Platí od:** výzkum 1.0.0. Probuzení po uložení od 1.15.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:127-147 wakeWaiting · assets/method/waiting.md -->
+<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
 
 <a id="R6.2.2"></a>
 ### R6.2.2 Ověřit web
@@ -225,8 +225,10 @@ fronty a agent ji zpracuje při další práci.
 - **Od výzkumu 1.26.0:**
   - snímky vrátí jen úkol, který čeká na snímky právě té knihy. Úkol čekající na ověření webu člověkem nevrátí
     nikdy. Dopis, dotaz na rodinu nebo web vrátí jen kniha, na kterou úkol čeká, ne kniha, ve které jen pracuje;
+  - od výzkumu 1.27.0 vrátí úkol čekající na web (`--kind web`) i jediná kniha, ve které pracuje: snímky tam uložené
+    jsou to, na co čekal. Dopis a dotaz na rodinu dál jen kniha, na kterou čekají;
   - úkoly, které snímky vrátily dřív neprávem, vrátí do čekání oprava `strom fixes show|run|undo woken-waits`:
     úkol čeká jako předtím, i s odesláním. Úkol, na kterém se mezitím pracovalo, zůstane. Opravu spustí jen člověk
     v terminálu, v Archivu Stromu není. Dokud neproběhne, `strom check` na takové úkoly upozorní.
 
-<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->
+<!-- zdroj: research:src/commands/media.ts:135-170 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn; 1.27.0: web i singleBook) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->

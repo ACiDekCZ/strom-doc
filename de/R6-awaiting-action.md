@@ -61,11 +61,11 @@ gebraucht wird. Die Art des Wartens bestimmt den Abschnitt, die Gruppe und die m
 - Nach dem Speichern der Bilder in die Forschung wird die Aufgabe geweckt, mit einer Notiz, welche Bilder fehlen
   ([R6.7.2](#R6.7.2)).
 - **Bedienung:** Terminal: `strom task wait T… --images B…:<od>-<do>`, danach `strom media add --inbox`; in **Was
-  wartet** **Den Ordner öffnen ({have}/{want} gespeichert)**. App: **Ordner**.
+  wartet** **Den Ordner öffnen ({have}/{want} gespeichert)**. App: **Ordner öffnen** (seit App 3.23.0; vorher **Ordner**).
 - Archive nur über den Browser, Bilder aus der App und was der Mensch tut: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
 - **Gilt seit:** Forschung 1.0.0. Wecken nach dem Speichern seit 1.15.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:127-147 wakeWaiting · assets/method/waiting.md -->
+<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
 
 <a id="R6.2.2"></a>
 ### R6.2.2 Seite prüfen
@@ -247,9 +247,12 @@ Eine Antwort bringt die Aufgabe in die Warteschlange zurück, und der Agent vera
   - Bilder bringen nur eine Aufgabe zurück, die auf Bilder genau dieses Buches wartet. Eine Aufgabe, die auf das
     Prüfen einer Seite durch den Menschen wartet, bringen sie nie zurück. Einen Brief, eine Anfrage an die Familie
     oder eine Seite bringt nur das Buch zurück, auf das die Aufgabe wartet, nicht ein Buch, in dem sie nur arbeitet;
+  - seit Forschung 1.27.0 bringt eine Aufgabe, die auf eine Seite wartet (`--kind web`), auch das einzige Buch
+    zurück, in dem sie arbeitet: die dort gespeicherten Bilder sind das, worauf sie gewartet hat. Einen Brief und eine
+    Anfrage an die Familie weiter nur das Buch, auf das sie warten;
   - Aufgaben, die Bilder früher zu Unrecht zurückgebracht haben, setzt die Korrektur `strom fixes show|run|undo
     woken-waits` wieder ins Warten: die Aufgabe wartet wie vorher, samt dem Senden. Eine Aufgabe, an der
     inzwischen gearbeitet wurde, bleibt. Die Korrektur startet nur der Mensch im Terminal, im Strom-Archiv gibt es sie
     nicht. Solange sie nicht gelaufen ist, weist `strom check` auf solche Aufgaben hin.
 
-<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->
+<!-- zdroj: research:src/commands/media.ts:135-170 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn; 1.27.0: web i singleBook) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->

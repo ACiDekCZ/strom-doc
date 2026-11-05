@@ -60,11 +60,11 @@ Rodzaj oczekiwania wyznacza sekcję, grupę i możliwe akcje: **skany**, **witry
 - Badanie przygotowuje folder w `inbox/` folderu współdzielonego. Plik nosi numer skanu (`9.jpg`, `9a.jpg`).
 - Po zapisaniu skanów do badania zadanie się budzi z notatką, których skanów brakuje ([R6.7.2](#R6.7.2)).
 - **Obsługa:** terminal: `strom task wait T… --images B…:<od>-<do>`, potem `strom media add --inbox`; w **Co czeka**
-  **Otwórz folder (zapisano {have}/{want})**. Aplikacja: **Folder**.
+  **Otwórz folder (zapisano {have}/{want})**. Aplikacja: **Otwórz folder** (od aplikacji 3.23.0; wcześniej **Folder**).
 - Archiwa tylko przez przeglądarkę, skany z aplikacji i co robi człowiek: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
 - **Obowiązuje od:** badanie 1.0.0. Budzenie po zapisaniu od 1.15.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:127-147 wakeWaiting · assets/method/waiting.md -->
+<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
 
 <a id="R6.2.2"></a>
 ### R6.2.2 Witryna do sprawdzenia
@@ -235,9 +235,11 @@ zadanie do kolejki, a agent przetwarza ją przy następnej pracy.
   - skany przywracają tylko zadanie, które czeka na skany właśnie tej księgi. Zadania czekającego na sprawdzenie
     witryny przez człowieka nie przywracają nigdy. List, zapytanie do rodziny lub internet przywraca tylko księga, na
     którą zadanie czeka, a nie księga, w której tylko pracuje;
+  - od badania 1.27.0 zadanie czekające na internet (`--kind web`) przywraca także jedyna księga, w której pracuje:
+    zapisane tam skany są tym, na co czekało. List i zapytanie do rodziny nadal tylko księga, na którą czekają;
   - zadania, które skany przywróciły wcześniej niesłusznie, przywraca do czekania poprawka `strom fixes show|run|undo
     woken-waits`: zadanie czeka jak przedtem, także z wysłaniem. Zadanie, nad którym w międzyczasie pracowano,
     zostaje. Poprawkę uruchamia tylko człowiek w terminalu, w Archiwum Strom jej nie ma. Dopóki nie zostanie
     wykonana, `strom check` zwraca uwagę na takie zadania.
 
-<!-- zdroj: research:src/commands/media.ts:127-147 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->
+<!-- zdroj: research:src/commands/media.ts:135-170 wakeWaiting (1.26.0: awaits jen ta kniha, check nikdy, letter/family/web jen waitingOn; 1.27.0: web i singleBook) · src/commands/fixes.ts:835 woken-waits (commit 740e1893) · src/core/archivewait.ts:188 wakeForArchive · src/commands/tasks.ts:880-895 task park · src/core/queue.ts:112 effectiveState · app:src/ui/research-ui.ts:3473-3500 -->
