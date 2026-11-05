@@ -49,6 +49,8 @@ Datensatz verschwindet nicht: er bleibt zurückgezogen, mit einer Notiz, in wen 
     es dieselben Eltern in zwei Datensätzen, werden zuerst die Familien zusammengeführt (`strom family merge`).
 - **Nur Methodik:** eine Person aus einem übernommenen Stammbaum, die in der Forschung schon erforscht ist, wird **in**
   die erforschte Person zusammengeführt; diese behält ihre Belege ([R11.3](R11-material-from-the-user.md#R11.3)).
+- **Warum:** strom wählt zwischen zwei Angaben nie stillschweigend: welche gilt, entscheidet der Beleg. Die andere
+  wird mit Grund zurückgezogen, so bleibt sichtbar, was wo stand.
 - **Bedienung:** Terminal: `strom person merge`, `strom family merge`. Mögliche doppelte Personen im Stammbaum meldet
   die App in der Prüfung des Stammbaums ([A5.6](A5-tree-check.md#A5.6)).
 - **Gilt seit:** Forschung 1.0.0
@@ -111,6 +113,8 @@ entscheiden.
   Menschen in einem Satz. Eine entschiedene Hypothese, die ein neuer Eintrag umstößt, schlägt der Agent mit Grund
   erneut vor. Was der Agent zurückgehalten hat, solange die Person nur eine Hypothese war, erfasst er bei der Person,
   sobald der Mensch die Hypothese entscheidet.
+- **Warum:** eine neue Entscheidung braucht einen Grund, weil sich Entscheidungen offen ändern: die vorige bleibt
+  lesbar, und die neue sagt, was sie geändert hat (meist ein neuer Eintrag).
 - **Bedienung:** Terminal: Menü `strom` → **Was wartet** → **Hypothesen zu entscheiden** → **Wie vorgeschlagen
   entscheiden**, **Anders entscheiden**, **So lassen (Vorschlag nicht übernommen)**; per Befehl
   `strom hypothesis decide H… --proposed`, `--keep-open` oder `--variant B --decision "…"` (erneut mit
@@ -164,6 +168,9 @@ hat seinen eigenen Datensatz. Namen werden so erfasst, wie sie im Eintrag stehen
   - eine Person, die ein schwächerer Eintrag anders genannt hat, behält diesen Namen als Variante; der richtige Name
     wird als Hauptname markiert. Nichts wird gelöscht;
   - ein nur teilweise gelesener Name: [R8.6](R8-reading-scans.md#R8.6).
+- **Warum:** eine Beschreibung an Stelle des Namens („totgeborener Sohn“) würden die App und GEDCOM als Vornamen
+  zeigen und suchen, und der Abgleich der Namen hielte sie für einen Namen. Dass das Kind ohne Namen starb, ist eine
+  Angabe (Tod, Notiz).
 - **Bedienung:** Terminal: `strom name add P… "Marie /Vlková/" --kind birth --cite S…`, `strom name primary P…
   "…"` (`--clear` stellt den Geburtsnamen wieder her). Formen des Nachnamens in der App:
   [A4.5](A4-surnames-and-families.md#A4.5), [A4.6](A4-surnames-and-families.md#A4.6).

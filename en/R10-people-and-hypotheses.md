@@ -46,6 +46,8 @@ it stays retracted, with a note saying into whom it was merged.
     records, the families are merged first (`strom family merge`).
 - **Method only:** a person from an imported family tree who is already researched in the research is merged **into**
   the researched person; that person keeps their documents ([R11.3](R11-material-from-the-user.md#R11.3)).
+- **Why:** strom never chooses quietly between two facts: the evidence decides which one stands. The other is retracted
+  with a reason, so what stood where stays visible.
 - **Controls:** terminal: `strom person merge`, `strom family merge`. Possible duplicates in the tree are reported by
   the app in the Tree check ([A5.6](A5-tree-check.md#A5.6)).
 - **Since:** research 1.0.0
@@ -100,6 +102,8 @@ research; the agent proposes the decision. The app does not let a hypothesis be 
 - **Method only:** the agent proposes a decision when the records point to one version, and tells the person in one
   sentence. A decided hypothesis that a new record overturns the agent proposes again, with a reason. What the agent
   held back while the person was only a hypothesis it records at the person once a person decides the hypothesis.
+- **Why:** a new decision needs a reason because decisions change in the open: the previous one stays readable and
+  the new one says what changed it (usually a new record).
 - **Controls:** terminal: the `strom` menu → **What waits** → **Hypotheses to decide** → **Decide as proposed**,
   **Decide otherwise**, **Leave it as it is (the proposal not taken)**; by command `strom hypothesis decide H…
   --proposed`, `--keep-open`, or `--variant B --decision "…"` (again with `--reason "…"`). The agent: `strom
@@ -152,6 +156,9 @@ own record. Names are recorded as they stand in the entry; only dates are standa
   - a person whom a weaker record named differently keeps that name as a variant; the correct name is marked as the
     main one. Nothing is deleted;
   - a name read only in part: [R8.6](R8-reading-scans.md#R8.6).
+- **Why:** a description in place of a name (“stillborn son”) would be shown and searched as a given name by the app
+  and by GEDCOM, and name matching would take it for a name. That the child died without a name is a fact (a death,
+  a note).
 - **Controls:** terminal: `strom name add P… "Marie /Vlková/" --kind birth --cite S…`, `strom name primary P…
   "…"` (`--clear` returns the birth name). Surname forms in the app: [A4.5](A4-surnames-and-families.md#A4.5),
   [A4.6](A4-surnames-and-families.md#A4.6).

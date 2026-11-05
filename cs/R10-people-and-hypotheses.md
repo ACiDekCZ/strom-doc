@@ -43,6 +43,8 @@ s poznámkou, do koho byl sloučen.
     (`strom family merge`).
 - **Jen metodika:** osoba z převzatého rodokmenu, která už je ve výzkumu zkoumaná, se slučuje **do** zkoumané
   osoby; ta si drží své doklady ([R11.3](R11-material-from-the-user.md#R11.3)).
+- **Proč:** strom mezi dvěma údaji nevybírá potichu: který platí, rozhodne doklad. Druhý se odvolá s důvodem, takže
+  zůstane vidět, co kde stálo.
 - **Ovládání:** terminál: `strom person merge`, `strom family merge`. Možné duplicity ve stromu hlásí aplikace v
   Kontrole stromu ([A5.6](A5-tree-check.md#A5.6)).
 - **Platí od:** výzkum 1.0.0
@@ -95,6 +97,8 @@ agent rozhodnutí navrhne. Aplikace hypotézu rozhodnout nedá.
 - **Jen metodika:** agent navrhne rozhodnutí, když záznamy ukazují na jednu verzi, a řekne to člověku jednou větou.
   Rozhodnutou hypotézu, kterou nový záznam vyvrátí, agent navrhne znovu s důvodem. Co agent zadržel, dokud byla
   osoba jen hypotéza, zapíše k osobě, až člověk hypotézu rozhodne.
+- **Proč:** nové rozhodnutí potřebuje důvod, protože se rozhodnutí mění otevřeně: předchozí zůstane čitelné a nové
+  řekne, co ho změnilo (obvykle nový záznam).
 - **Ovládání:** terminál: menu `strom` → **Co čeká** → **Hypotézy k rozhodnutí** → **Rozhodnout podle návrhu**,
   **Rozhodnout jinak**, **Nechat, jak je (návrh nepřijat)**; příkazem `strom hypothesis decide H… --proposed`,
   `--keep-open`, nebo `--variant B --decision "…"` (znovu s `--reason "…"`). Agent: `strom hypothesis propose H…
@@ -145,6 +149,8 @@ stojí v záznamu; sjednocují se jen data.
   - osoba, kterou slabší záznam jmenoval jinak, si to jméno nechá jako variantu; správné jméno se označí jako
     hlavní. Nic se nemaže;
   - jméno přečtené jen zčásti: [R8.6](R8-reading-scans.md#R8.6).
+- **Proč:** popis místo jména („mrtvě narozený syn“) by aplikace i GEDCOM ukazovaly a hledaly jako křestní jméno
+  a párování jmen by ho za jméno bralo. To, že dítě zemřelo bez jména, je údaj (úmrtí, poznámka).
 - **Ovládání:** terminál: `strom name add P… "Marie /Vlková/" --kind birth --cite S…`, `strom name primary P…
   "…"` (`--clear` vrátí rodné jméno). Tvary příjmení v aplikaci: [A4.5](A4-surnames-and-families.md#A4.5),
   [A4.6](A4-surnames-and-families.md#A4.6).

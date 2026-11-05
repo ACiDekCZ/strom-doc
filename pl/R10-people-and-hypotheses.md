@@ -47,6 +47,8 @@ z którą osobą go scalono.
     (`strom family merge`).
 - **Tylko metodyka:** osobę z przejętego drzewa genealogicznego, która jest już w badaniu badana, scala się **do**
   badanej osoby; ta zachowuje swoje dowody ([R11.3](R11-material-from-the-user.md#R11.3)).
+- **Dlaczego:** strom nigdy nie wybiera po cichu między dwiema danymi: która obowiązuje, rozstrzyga dowód. Drugą
+  wycofuje się z powodem, więc zostaje widoczne, co gdzie stało.
 - **Obsługa:** terminal: `strom person merge`, `strom family merge`. Możliwe duplikaty w drzewie zgłasza aplikacja
   w Kontroli drzewa ([A5.6](A5-tree-check.md#A5.6)).
 - **Obowiązuje od:** badanie 1.0.0
@@ -100,6 +102,8 @@ człowiek, w badaniu; agent proponuje rozstrzygnięcie. Aplikacja nie pozwala ro
 - **Tylko metodyka:** agent proponuje rozstrzygnięcie, gdy akty wskazują na jedną wersję, i mówi to człowiekowi
   jednym zdaniem. Rozstrzygniętą hipotezę, którą obali nowy akt, agent proponuje ponownie z powodem. To, co agent
   wstrzymał, dopóki osoba była tylko hipotezą, zapisuje przy osobie, gdy człowiek rozstrzygnie hipotezę.
+- **Dlaczego:** nowe rozstrzygnięcie wymaga powodu, bo rozstrzygnięcia zmieniają się jawnie: poprzednie zostaje
+  czytelne, a nowe mówi, co je zmieniło (zwykle nowy akt).
 - **Obsługa:** terminal: menu `strom` → **Co czeka** → **Hipotezy do rozstrzygnięcia** → **Rozstrzygnąć zgodnie
   z propozycją**, **Rozstrzygnąć inaczej**, **Zostawić bez zmian (propozycja nieprzyjęta)**; poleceniem
   `strom hypothesis decide H… --proposed`, `--keep-open` albo `--variant B --decision "…"` (ponownie z `--reason "…"`).
@@ -153,6 +157,8 @@ zapisuje się tak, jak stoją w akcie; ujednolica się tylko daty.
   - osoba, którą słabszy akt nazwał inaczej, zachowuje to imię i nazwisko jako wariant; właściwe oznacza się jako
     główne. Nic się nie usuwa;
   - imię i nazwisko odczytane tylko częściowo: [R8.6](R8-reading-scans.md#R8.6).
+- **Dlaczego:** opis zamiast imienia („martwo urodzony syn”) aplikacja i GEDCOM pokazywałyby i wyszukiwały jako
+  imię, a parowanie imion brałoby go za imię. To, że dziecko zmarło bez imienia, jest daną (zgon, notatka).
 - **Obsługa:** terminal: `strom name add P… "Marie /Vlková/" --kind birth --cite S…`, `strom name primary P…
   "…"` (`--clear` przywraca imię i nazwisko z urodzenia). Formy nazwiska w aplikacji:
   [A4.5](A4-surnames-and-families.md#A4.5), [A4.6](A4-surnames-and-families.md#A4.6).

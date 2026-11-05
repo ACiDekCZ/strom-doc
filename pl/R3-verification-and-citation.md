@@ -298,6 +298,15 @@ Opowieść pisze się z danych dla rodziny. Tego, czego nie udokumentowano, się
   - dawny zawód i pojęcie, którego czytelnik nie rozumie, się objaśnia; pisze się w języku badania;
   - format tekstu: tylko akapity, śródtytuły, wypunktowania, pogrubienie i kursywa. Pozostałe (linki, tabele, cytaty,
     listy numerowane) aplikacja zgodnie z metodyką pokaże jako zwykły tekst.
+- **Dlaczego:**
+  - nic się nie dopowiada: opowieść jest dla rodziny i opiera się na dowodach. To, co brzmiałoby prawdopodobnie, ale
+    nie jest udokumentowane, zaczęłoby w rodzinie uchodzić za fakt;
+  - tło: jest udokumentowane dla miejsca, nie dla człowieka; jako przyczyna tego, co osoba zrobiła, byłoby domysłem
+    podawanym za fakt. Opowieść wymienia źródło tła (`--source`), żeby dało się je sprawdzić;
+  - opowieść pary: wspólne życie opowiada się raz, przy parze, żeby tego samego życia nie opowiadać dwa razy i żeby
+    wersje się nie rozchodziły;
+  - format: aplikacja Strom pokaże tylko akapity, śródtytuły, wypunktowania, pogrubienie i kursywę; resztę czytelnik
+    widziałby jako zwykły tekst ze znakami.
 - Zatwierdzenie i nowa wersja zatwierdzonej opowieści: [R6.3.2](R6-awaiting-action.md#R6.3.2).
 - **Obsługa:** terminal: `strom story set P… --text @notes/… --fact E… --source S… --note "co je odvozené"`
   (opowieść pary przy rodzinie F…).

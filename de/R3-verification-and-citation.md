@@ -313,6 +313,16 @@ Eine Erzählung wird aus den Angaben für die Familie geschrieben. Was nicht bel
     Sprache der Forschung;
   - Format des Textes: nur Absätze, Zwischenüberschriften, Aufzählungspunkte, Fettdruck und Kursivschrift. Anderes
     (Links, Tabellen, Zitate, nummerierte Listen) zeigt die App nach der Methodik als einfachen Text.
+- **Warum:**
+  - nichts wird hinzugedacht: eine Erzählung ist für die Familie und stützt sich auf Belege. Was wahrscheinlich
+    klänge, aber nicht belegt ist, würde in der Familie bald als Tatsache gelten;
+  - Hintergrund: er ist für den Ort belegt, nicht für die Person; als Ursache dessen, was die Person tat, wäre er eine
+    als Tatsache ausgegebene Vermutung. Die Erzählung nennt die Quelle des Hintergrunds (`--source`), damit sie sich
+    prüfen lässt;
+  - Erzählung eines Paares: das gemeinsame Leben wird einmal erzählt, beim Paar, damit dasselbe Leben nicht zweimal
+    erzählt wird und die Fassungen nicht auseinandergehen;
+  - Format: die Strom-App zeigt nur Absätze, Zwischenüberschriften, Aufzählungspunkte, Fettdruck und Kursivschrift;
+    alles andere sähen die Lesenden als einfachen Text mit Zeichen.
 - Freigabe und neue Fassung einer freigegebenen Erzählung: [R6.3.2](R6-awaiting-action.md#R6.3.2).
 - **Bedienung:** Terminal: `strom story set P… --text @notes/… --fact E… --source S… --note "co je odvozené"`
   (Erzählung eines Paares bei der Familie F…).

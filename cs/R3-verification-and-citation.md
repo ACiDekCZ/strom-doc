@@ -280,6 +280,15 @@ Vyprávění se píše z údajů pro rodinu. Co se nedoložilo, se nedomýšlí.
   - staré povolání a pojem, kterému čtenář nerozumí, se vysvětlí; píše se v jazyce výzkumu;
   - formát textu: jen odstavce, podnadpisy, odrážky, tučné písmo a kurzíva. Ostatní (odkazy, tabulky, citace,
     číslované seznamy) aplikace podle metodiky ukáže jako prostý text.
+- **Proč:**
+  - nic se nedomýšlí: vyprávění je pro rodinu a stojí na dokladech. Co by znělo pravděpodobně, ale doložené není,
+    by se v rodině začalo brát jako fakt;
+  - pozadí: je doložené pro místo, ne pro člověka; jako příčina toho, co osoba udělala, by bylo domněnkou vydávanou
+    za fakt. Pramen pozadí vyprávění jmenuje (`--source`), aby šel ověřit;
+  - vyprávění páru: společný život se vypráví jednou, u páru, aby se tentýž život nevyprávěl dvakrát a verze se
+    nerozcházely;
+  - formát: aplikace Strom ukáže jen odstavce, podnadpisy, odrážky, tučné písmo a kurzívu; ostatní by čtenář viděl
+    jako prostý text se značkami.
 - Schválení a nová verze schváleného vyprávění: [R6.3.2](R6-awaiting-action.md#R6.3.2).
 - **Ovládání:** terminál: `strom story set P… --text @notes/… --fact E… --source S… --note "co je odvozené"`
   (vyprávění páru na rodině F…).

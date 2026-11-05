@@ -300,6 +300,15 @@ A story is written from the facts, for the family. What has not been proven is n
     of the research;
   - the format of the text: only paragraphs, subheadings, bullets, bold and italics. Anything else (links, tables,
     quotations, numbered lists) the app shows as plain text, according to the method.
+- **Why:**
+  - nothing is made up: a story is for the family and rests on evidence. What would sound likely but is not proven
+    would start to be taken as fact in the family;
+  - background: it is proven for the place, not for the person; as the cause of what a person did it would be
+    a guess passed off as fact. The story names the source of the background (`--source`) so that it can be checked;
+  - a couple's story: the shared life is told once, with the couple, so that the same life is not told twice and the
+    versions do not drift apart;
+  - format: the Strom app shows only paragraphs, subheadings, bullets, bold and italics; anything else the reader would
+    see as plain text with marks.
 - Approval and a new version of an approved story: [R6.3.2](R6-awaiting-action.md#R6.3.2).
 - **Controls:** terminal: `strom story set P… --text @notes/… --fact E… --source S… --note "co je odvozené"`
   (a couple's story on the family F…).
