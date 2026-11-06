@@ -239,6 +239,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A7.5 | A7-book-pages-and-export.md | aplikace 3.20.0 | platí | Stránky rodu a stránky stromu | Family pages and tree pages | Familienseiten und Seiten des Stammbaums | Strony rodu i strony drzewa |
 | A7.6 | A7-book-pages-and-export.md | aplikace 3.18.0 | platí | Stránka osoby | Person page | Personenseite | Strona osoby |
 | A7.7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Uložené HTML (samostatný soubor) | Saved HTML (a standalone file) | Gespeichertes HTML (eigenständige Datei) | Zapisany HTML (samodzielny plik) |
+| A7.8 | A7-book-pages-and-export.md | aplikace 2.8.0 | platí | Vyprávění | Stories | Erzählungen | Opowieść |
 | A8 | A8-merging-trees.md | aplikace 1.0.0 | platí | Sloučení stromů | Merging trees | Zusammenführen von Stammbäumen | Scalanie drzew |
 | A8.1 | A8-merging-trees.md | aplikace 1.0.0 | platí | Sloučení vždy založí nový strom | A merge always creates a new tree | Zusammenführen legt immer einen neuen Stammbaum an | Scalenie zawsze zakłada nowe drzewo |
 | A8.2 | A8-merging-trees.md | aplikace 1.0.0 | platí | Párování osob | Pairing people | Abgleich der Personen | Łączenie osób w pary |
