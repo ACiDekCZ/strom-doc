@@ -1,17 +1,18 @@
 <a id="R12"></a>
 # R12 Where the agent works and what strom watches
 
-The agent is talked to in a terminal, or in the agent's desktop app; working alone runs without a conversation.
+The agent (Claude Code, Codex, Antigravity, Grok Build, OpenCode) is talked to in a terminal, or in the agent's
+desktop app when strom opens it; working alone runs without a conversation.
 Accordingly, what differs is where the conversation is, which browser the agent uses, what strom watches, what a
 person does and what does not work without the agent in the terminal. The archives' rules are the same everywhere
 ([R9](R9-archives.md)); only what strom stands before differs. Describes the research 1.29.0. Each rule says what is
 **enforced by the code** (the `strom` command or the agent's hook refuses it) and what is only a **rule of the
 method**. What has not been verified live on a Mac is said in [R12.6](#R12.6).
 
-<!-- zdroj: dirigent:spec/062-hlidani-desktop-a-codex/spec.md K5.1, K5.2 · test/vysledek-desktop-chrome.md · test/vysledek-062-u4-desktop.md · test/vysledek-1106-vyzkum-062-desktop.md · research:CHANGELOG.cs.md 1.29.0 -->
+<!-- zdroj: dirigent:spec/062-hlidani-desktop-a-codex/spec.md K5.1, K5.2 · test/vysledek-desktop-chrome.md · test/vysledek-062-u4-desktop.md · test/vysledek-1106-vyzkum-062-desktop.md · research:CHANGELOG.cs.md 1.29.0 · src/core/which.ts AGENTS -->
 
 <a id="R12.1"></a>
-## R12.1 Six ways of working: a table
+## R12.1 Ways of working: a table
 
 | Way of working | Where the conversation is | The agent's browser | What strom watches | A person's step | Without the agent in the terminal |
 |---|---|---|---|---|---|
@@ -20,11 +21,19 @@ method**. What has not been verified live on a Mac is said in [R12.6](#R12.6).
 | the Claude app without Claude Code in the terminal | the Claude app, Code tab (`strom chat`) | as in the row above | as in the row above | as in the row above; an installation of Claude Code that strom offers and that can be declined ([R12.4](#R12.4)) | working alone (`strom run`), reading scans by the readers (`strom read`) and work from the Strom app ([R12.4](#R12.4)) |
 | Codex in the terminal | the terminal: Codex in the research folder (`strom chat --where terminal`) | Codex's browser, Chrome and computer use, if its settings have them ([R12.5](#R12.5)) | only `strom` commands by the tree's rules for Codex; not Codex's browser, computer use or web ([R12.5](#R12.5)) | trust the research folder (only then the tree's rules apply); an archive's permission | – (Codex is in the terminal) |
 | the ChatGPT app (Codex) | the ChatGPT app (`strom chat`) | as with Codex in the terminal: the same settings ([R12.5](#R12.5)) | as with Codex in the terminal ([R12.5](#R12.5)) | as `strom chat` says, confirm the folder and send the prepared message (not verified, [R12.6](#R12.6)); an archive's permission | working alone, reading scans by the readers and work from the Strom app ([R12.5](#R12.5)) |
-| a run alone, `strom run` | nowhere: the agent works alone; the terminal and the Strom app show the course ([S1.4](S1-connecting-app-and-research.md#S1.4)) | Claude Code: Chrome by the task ([R9.4.1](R9-archives.md#R9.4.1)); Codex: browser and computer use switched off ([R12.5](#R12.5)) | Claude Code: as in the terminal; Codex: `strom` commands | start the run; an archive's permission beforehand, nobody is there during the run ([R9.7](R9-archives.md#R9.7)) | the whole run: it ends before any question or cost estimate ([R12.4](#R12.4)) |
+| Antigravity in the terminal | the terminal: Antigravity (`agy`) in the research folder (`strom chat`); strom does not open the Antigravity app ([R12.7](#R12.7)) | Antigravity's browser, if the agent has one; strom does not watch it ([R12.7](#R12.7)) | only what `strom` itself refuses: commands that belong to a person alone; Antigravity has no hook and no rules in the research folder ([R12.7](#R12.7)) | an archive's permission | – (Antigravity is in the terminal) |
+| Grok Build in the terminal | the terminal: Grok (`grok`) in the research folder (`strom chat`); strom opens no Grok app ([R12.8](#R12.8)) | none strom would watch ([R12.8](#R12.8)) | the web fetch ([R9.3](R9-archives.md#R9.3)) and commands in the agent's command line: strom's hooks and rules in `.grok/` ([R12.8](#R12.8)) | nothing more: `strom chat` starts Grok with the research folder as trusted; an archive's permission | – (Grok is in the terminal) |
+| OpenCode in the terminal | the terminal: OpenCode in the research folder (`strom chat --where terminal`) | none strom would watch ([R12.9](#R12.9)) | commands and files by the tree's rules in `opencode.json`; not the web fetch or a browser ([R12.9](#R12.9)) | approve commands other than `strom` that OpenCode asks about (except at the level `full`); an archive's permission | – (OpenCode is in the terminal) |
+| the OpenCode app | the OpenCode app (`strom chat`) | as with OpenCode in the terminal | as with OpenCode in the terminal (not verified, [R12.6](#R12.6)) | as `strom chat` says, confirm the folder and send the prepared message (not verified, [R12.6](#R12.6)); an archive's permission | working alone, reading scans by the readers and work from the Strom app ([R12.9](#R12.9)) |
+| a run alone, `strom run` | nowhere: the agent works alone; the terminal and the Strom app show the course ([S1.4](S1-connecting-app-and-research.md#S1.4)) | Claude Code: Chrome by the task ([R9.4.1](R9-archives.md#R9.4.1)); Codex: browser and computer use switched off ([R12.5](#R12.5)); Grok: without the MCP servers of Claude Code and Cursor ([R12.8](#R12.8)); Antigravity and OpenCode: strom changes nothing | Claude Code and Grok: as in the terminal; Codex: `strom` commands; Antigravity and OpenCode: what the rules do not allow is refused, nobody is asked ([R12.7](#R12.7), [R12.9](#R12.9)) | start the run; an archive's permission beforehand, nobody is there during the run ([R9.7](R9-archives.md#R9.7)) | the whole run: it ends before any question or cost estimate ([R12.4](#R12.4)) |
 
 - **Enforced by the code:**
   - strom's hooks in the research's `.claude/settings.json` are run by Claude Code in the terminal and by the Claude
-    app (Code tab); Codex reads the tree's rules in `.codex/rules/strom.rules`;
+    app (Code tab); Codex reads the tree's rules in `.codex/rules/strom.rules`, Grok Build in `.grok/config.toml` (and strom's
+    hooks in `.grok/hooks/strom.json`), OpenCode in `opencode.json`; Antigravity reads only the instructions in
+    `AGENTS.md`;
+  - commands that belong to a person alone (signing in, the seal, an archive's permission and others) `strom`
+    itself refuses to every agent it recognises, with all five agents;
   - nothing of the agents' apps is switched off. The one exception is a run alone with Codex without the agent's
     personal add-ons ([R12.5](#R12.5)).
 - **Limits:** computer use strom watches with no agent: the agent controls the computer with it as a person does.
@@ -32,11 +41,11 @@ method**. What has not been verified live on a Mac is said in [R12.6](#R12.6).
   use a browser strom does not recommend ([R9.4.2](R9-archives.md#R9.4.2)).
 - **Controls:** terminal: `strom chat` (where, says the setting `agent.where`: `app` the agent's app, `terminal` the
   terminal; unset: the app when it is installed), `strom chat --where app|terminal` once otherwise,
-  `strom agents use claude|codex`, `strom doctor` (rows **where the conversation is**, **the agent in the
+  `strom agents use claude|codex|antigravity|grok|opencode`, `strom doctor` (rows **where the conversation is**, **the agent in the
   terminal**, **browser (Claude in Chrome)**, **desktop apps' browser**).
 - **Since:** research 1.29.0
 
-<!-- zdroj: research:src/core/apps.ts DESKTOP_APPS (claude://code/new, codex://new; mac Claude.app, Codex.app, ChatGPT.app) · src/commands/start.ts:156-217 strom chat (where app|terminal, ui.chat.app.open) · src/core/config.ts:311 agent.where, :316 agent.addons · src/agents/files.ts codexRules · src/core/agentcli.ts · src/cli/ui.ts ui.doc.where, ui.doc.cli, ui.doc.browser, ui.doc.desktop · test/vysledek-desktop-chrome.md (Trust workspace, odkaz jen předvyplní zprávu) -->
+<!-- zdroj: research:src/core/apps.ts DESKTOP_APPS (claude://code/new, codex://new; mac Claude.app, Codex.app, ChatGPT.app) · src/commands/start.ts:156-217 strom chat (where app|terminal, ui.chat.app.open) · src/core/config.ts:311 agent.where, :316 agent.addons · src/agents/files.ts codexRules · src/core/agentcli.ts · src/cli/main.ts:290 (def.person && isAgent) · src/core/which.ts detectAgent · src/cli/ui.ts ui.doc.where, ui.doc.cli, ui.doc.browser, ui.doc.desktop · test/vysledek-desktop-chrome.md (Trust workspace, odkaz jen předvyplní zprávu) -->
 
 <a id="R12.2"></a>
 ## R12.2 The browser in the Claude app
@@ -156,8 +165,104 @@ Not yet verified live:
   Claude Code);
 - Codex live: neither in the terminal nor in the ChatGPT app (the tree's rules, opening a conversation by a link, a
   person's steps), nor that the ChatGPT app behaves like the older Codex app;
-- the Claude and ChatGPT apps on Windows.
+- Antigravity, Grok Build and OpenCode live in any way of working: strom's rules and hooks, a person's steps, the
+  refusal of a person's commands;
+- the OpenCode app: opening a conversation by a link, and that it reads the research's `opencode.json` rules;
+- Grok opened in the research folder other than through `strom chat` (in a folder it does not trust): what of
+  strom's rules and hooks then applies;
+- whether Antigravity, Grok Build and OpenCode have a browser or computer use and how the agent uses them (strom
+  does not watch them);
+- the Claude, ChatGPT and OpenCode apps on Windows.
 
 - **Since:** research 1.29.0
 
-<!-- zdroj: test/vysledek-desktop-chrome.md Neověřeno · test/vysledek-062-u4-desktop.md Neověřeno · test/vysledek-1106-vyzkum-062-desktop.md Neověřeno · dirigent 6. 11. (ChatGPT.app × Codex.app) · spec 062 Mimo rozsah (Windows) -->
+<!-- zdroj: test/vysledek-desktop-chrome.md Neověřeno · test/vysledek-062-u4-desktop.md Neověřeno · test/vysledek-1106-vyzkum-062-desktop.md Neověřeno · dirigent 6. 11. (ChatGPT.app × Codex.app) · spec 062 K5.1 (06. 11.: Antigravity, Grok, OpenCode jen z kódu) · spec 062 Mimo rozsah (Windows) -->
+
+<a id="R12.7"></a>
+## R12.7 Antigravity
+
+Antigravity is started in the terminal with the command `agy`. Antigravity has an app too, but strom opens no
+conversation in it (strom knows no link that would open one): `strom chat` with Antigravity is always in the
+terminal.
+
+- **Enforced by the code:**
+  - `strom setup` (and `strom agents install`) writes a rule into Antigravity's settings that `strom` may run without
+    asking (`command(strom)`);
+  - commands that belong to a person alone `strom` itself refuses ([R12.1](#R12.1));
+  - a run alone (`strom run`): what Antigravity's settings do not allow is refused, nobody is asked. When Antigravity
+    stops at a refused command, strom tells it in the same conversation to go on only through `strom`, at most
+    twice. At the level `full` the permissions are skipped;
+  - Antigravity's web fetches and searches in a run alone are written into the research's record only after they
+    happened.
+- **Limits:**
+  - Antigravity has no hook before a web fetch, a browser or a command: strom does not check the web's limits
+    ([R9.3](R9-archives.md#R9.3)), Antigravity's browser or computer use beforehand;
+  - strom writes no rules for files and git for Antigravity in the research folder;
+  - the bridge to the Strom app is protected only by its own checks.
+- **Method only:** the instructions in `AGENTS.md`: the agent works only through `strom`, checks a site beforehand
+  (`strom net web --check`), does not of its own accord use Antigravity's browser and does not go with it to an
+  archive only a person's browser goes to ([R9.4.2](R9-archives.md#R9.4.2)).
+- **Controls:** terminal: `strom agents use antigravity`, `strom chat`, `strom setup`.
+- **Since:** research 1.0.0; going on after a refused command since 1.14.0
+
+<!-- zdroj: research:src/core/apps.ts (Antigravity: no known link, strom talks to it in the terminal) · src/core/apps.ts whereToTalk · src/agents/global.ts allowRules command(strom) · src/commands/setup.ts installGlobal · src/agents/launch.ts antigravity (--mode accept-edits, --dangerously-skip-permissions) · src/runners/antigravity.ts (headless: what would ask is refused; AGY_GO_ON = 2; ANTIGRAVITY_WEB) · src/core/metrics.ts webOpt (from: stream) · src/core/bridgeguard.ts (agent without hooks: Codex, OpenCode, Antigravity) · src/core/browserhelp.ts GUARDED_BROWSER_AGENTS · src/agents/files.ts AGENTS.md body 10, syncAgentFiles (žádný soubor Antigravity) · git tagy v1.0.0, v1.14.0 -->
+
+<a id="R12.8"></a>
+## R12.8 Grok Build
+
+Grok Build is started in the terminal with the command `grok`. strom opens no Grok app: `strom chat` with Grok is
+always in the terminal.
+
+- **Enforced by the code:**
+  - the tree's rules in `.grok/config.toml`: `strom` allowed; signing in, the seal, installing and removing a
+    connector, git, the research's evidence and a person's settings forbidden. Grok reads them only in a folder it
+    trusts: `strom chat` and `strom run` start it with the research folder as trusted (recorded once per research);
+  - strom's hooks in `.grok/hooks/strom.json`: before a web fetch and a search the same rules as with Claude Code
+    ([R9.3](R9-archives.md#R9.3)); before a command in the agent's command line the refusal of the bridge to the
+    Strom app;
+  - a run alone without personal add-ons (`agent.addons off`, the default): Grok does not take over the skills, MCP
+    servers and hooks of Claude Code and Cursor and switches its memory off; strom's hooks in `.grok/hooks` still
+    apply. What the rules do not allow is refused, nobody is asked; at the level `full` only the prohibitions apply.
+- **Limits:**
+  - Grok's own skills, plugins and MCP servers stay in a run alone too: Grok has no switch for one run;
+  - Grok lets harmless commands through by its own judgement too: what holds are the prohibitions, not the list of
+    what is allowed;
+  - strom does not watch Grok's browser or computer use: it watches only Claude in Chrome and the Claude app's
+    built-in browser ([R12.2](#R12.2)).
+- **Method only:** the instructions in `AGENTS.md` and `.grok/rules/strom.md`: Grok reads scans itself, the way of
+  delegating in `CLAUDE.md` is not its own.
+- **Controls:** terminal: `strom agents use grok`, `strom chat`, `strom config set agent.addons on|off`.
+- **Since:** research 1.4.0; the web hooks and a run alone without personal add-ons since 1.14.0; the hook before a
+  command since 1.27.0
+
+<!-- zdroj: research:src/agents/files.ts treeRules(grok), grokConfig, GROK_RULES, grokHooks, GROK_HOOKS · src/core/web.ts grokWebHooks (web_fetch|web_search) · src/core/bridgeguard.ts grokShellHook (run_terminal_command|bash|shell) · src/runners/grok.ts grokTrust (--trust), GROK_CLEAN, dontAsk, --always-approve · src/agents/launch.ts grok · src/core/browserhelp.ts GUARDED_BROWSER_AGENTS · git tagy v1.4.0, v1.14.0, v1.27.0 -->
+
+<a id="R12.9"></a>
+## R12.9 OpenCode
+
+OpenCode is started in the terminal, or in the OpenCode app: `strom chat` opens it by a link with the research
+folder and a prepared message. The app takes the model from the research's `opencode.json`.
+
+- **Enforced by the code:**
+  - the tree's rules in `opencode.json` in the research folder: `strom` allowed; signing in, the seal, installing and
+    removing a connector, and git forbidden; the research's evidence and history (`.git`) are neither read nor
+    changed; without asking it writes only into the notes (`notes/`) and into connectors the agent builds; its own
+    rules and instructions (`opencode.json`, `AGENTS.md`, `CLAUDE.md`) the agent does not change. OpenCode asks
+    about other commands and writes; at the level `full` it does without asking everything the rules do not forbid;
+  - a run alone: OpenCode's agent `strom-run` with the same rules; what would ask is refused (OpenCode would
+    otherwise end the whole run at the first question);
+  - without OpenCode in the terminal (only the app) working alone, reading scans by the readers and work from the
+    Strom app end with the code `agent.cli-missing`, as with Claude ([R12.4](#R12.4));
+  - OpenCode's web fetches and searches in a run alone are written into the research's record only after they
+    happened.
+- **Limits:**
+  - OpenCode has no hook: the rules allow web fetches and searches and strom does not check them beforehand
+    ([R9.3](R9-archives.md#R9.3)); strom does not watch a browser or computer use, if OpenCode has them;
+  - OpenCode's personal add-ons stay in a run alone too: strom has no switch for them.
+- **Method only:** the instructions in `AGENTS.md`: the agent works only through `strom`, checks a site beforehand
+  (`strom net web --check`) and does not go to an archive only a person's browser goes to
+  ([R9.4.2](R9-archives.md#R9.4.2)).
+- **Controls:** terminal: `strom agents use opencode`, `strom chat`, `strom chat --where app|terminal`.
+- **Since:** research 1.0.0; the agent `strom-run` since 1.4.0
+
+<!-- zdroj: research:src/agents/files.ts opencodeConfig (bash strom * allow, login/seal/connector add|remove deny, git deny; read data/.git deny; edit notes allow; webfetch/websearch allow), OPENCODE_RUN_AGENT, refused (ask → deny) · src/core/apps.ts opencode (OpenCode.app, opencode://new?cwd=…&q=…) · src/commands/start.ts strom chat (model z opencode.json) · src/agents/launch.ts opencode (--auto) · src/core/agentcli.ts agentCliMissing · src/runners/opencode.ts OPENCODE_WEB · src/runners/runner.ts clean (jen Claude Code, Codex; Grok GROK_CLEAN) · git tagy v1.0.0, v1.4.0 -->

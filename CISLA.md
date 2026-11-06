@@ -167,12 +167,15 @@ nenapsáno) · `neplatí od <verze>`.
 | R11.3 | R11-material-from-the-user.md | výzkum 1.0.0 | platí | Převzatý rodokmen | An imported family tree | Ein übernommener Stammbaum | Przejęte drzewo genealogiczne |
 | R11.4 | R11-material-from-the-user.md | výzkum 1.12.0 | platí | Dávka z aplikace | A batch from the app | Ein Stapel aus der App | Partia z aplikacji |
 | R12 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Kde agent pracuje a co strom hlídá | Where the agent works and what strom watches | Wo der Agent arbeitet und was strom überwacht | Gdzie agent pracuje i czego strom pilnuje |
-| R12.1 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Šest způsobů práce: tabulka | Six ways of working: a table | Sechs Arten zu arbeiten: eine Tabelle | Sześć sposobów pracy: tabela |
+| R12.1 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Způsoby práce: tabulka | Ways of working: a table | Arten zu arbeiten: eine Tabelle | Sposoby pracy: tabela |
 | R12.2 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Prohlížeč v aplikaci Claude | The browser in the Claude app | Der Browser in der App Claude | Przeglądarka w aplikacji Claude |
 | R12.3 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Terminál aplikace Claude | The Claude app's terminal | Das Terminal der App Claude | Terminal aplikacji Claude |
 | R12.4 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Aplikace Claude bez Claude Code v terminálu | The Claude app without Claude Code in the terminal | Die App Claude ohne Claude Code im Terminal | Aplikacja Claude bez Claude Code w terminalu |
 | R12.5 | R12-where-the-agent-works.md | výzkum 1.27.0 | koncept | Codex: v terminálu a v aplikaci ChatGPT | Codex: in the terminal and in the ChatGPT app | Codex: im Terminal und in der App ChatGPT | Codex: w terminalu i w aplikacji ChatGPT |
 | R12.6 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Co ověřené není | What is not verified | Was nicht geprüft ist | Czego nie sprawdzono |
+| R12.7 | R12-where-the-agent-works.md | výzkum 1.0.0 | koncept | Antigravity | Antigravity | Antigravity | Antigravity |
+| R12.8 | R12-where-the-agent-works.md | výzkum 1.4.0 | koncept | Grok Build | Grok Build | Grok Build | Grok Build |
+| R12.9 | R12-where-the-agent-works.md | výzkum 1.0.0 | koncept | OpenCode | OpenCode | OpenCode | OpenCode |
 | A1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Aplikace v kostce | The app in brief | Die App im Überblick | Aplikacja w skrócie |
 | A1.1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Rodokmen v prohlížeči, data na zařízení | A family tree in the browser, data on the device | Stammbaum im Browser, Daten auf dem Gerät | Drzewo genealogiczne w przeglądarce, dane na urządzeniu |
 | A1.2 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Osoby, vztahy a rody | People, relationships and family lines | Personen, Beziehungen und Stammlinien | Osoby, relacje i rody |
