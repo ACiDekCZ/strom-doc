@@ -136,7 +136,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R9.3 | R9-archives.md | výzkum 1.14.0 | koncept | Stažení webu agentem | The agent's web fetch | Webabruf durch den Agenten | Pobieranie stron przez agenta |
 | R9.4 | R9-archives.md | výzkum 1.27.0 | koncept | Prohlížeč agenta | The agent's browser | Der Browser des Agenten | Przeglądarka agenta |
 | R9.4.1 | R9-archives.md | výzkum 1.14.0 | koncept | Kdy sezení dostane Chrome | When a session gets Chrome | Wann eine Sitzung Chrome bekommt | Kiedy sesja dostaje Chrome |
-| R9.4.2 | R9-archives.md | výzkum 1.27.0 | koncept | Vestavěné prohlížeče a ovládání počítače: nehlídané, nedoporučené | Built-in browsers and computer use: unwatched, not recommended | Eingebaute Browser und Computersteuerung: nicht überwacht, nicht empfohlen | Wbudowane przeglądarki i sterowanie komputerem: niepilnowane, niepolecane |
+| R9.4.2 | R9-archives.md | výzkum 1.27.0 | koncept | Vestavěné prohlížeče a ovládání počítače: nedoporučené | Built-in browsers and computer use: not recommended | Eingebaute Browser und Computersteuerung: nicht empfohlen | Wbudowane przeglądarki i sterowanie komputerem: niepolecane |
 | R9.4.3 | R9-archives.md | výzkum 1.27.0 | koncept | Stav prohlížeče ve strom doctor a v aplikaci | The browser's state in strom doctor and the app | Zustand des Browsers in strom doctor und in der App | Stan przeglądarki w strom doctor i w aplikacji |
 | R9.5 | R9-archives.md | výzkum 1.27.0 | koncept | Snímek přes prohlížeč agenta | An image through the agent's browser | Ein Bild über den Browser des Agenten | Skan przez przeglądarkę agenta |
 | R9.6 | R9-archives.md | výzkum 1.0.0 | koncept | Čekání na snímky a návrat úkolu | Waiting for images and the task's return | Warten auf Bilder und Rückkehr der Aufgabe | Oczekiwanie na skany i powrót zadania |
@@ -166,6 +166,13 @@ nenapsáno) · `neplatí od <verze>`.
 | R11.2 | R11-material-from-the-user.md | výzkum 1.0.0 | platí | Doklad je pramen, ostatní je vodítko | A document is a source, the rest is a lead | Eine Urkunde ist eine Quelle, der Rest ist ein Hinweis | Dokument jest źródłem, reszta jest wskazówką |
 | R11.3 | R11-material-from-the-user.md | výzkum 1.0.0 | platí | Převzatý rodokmen | An imported family tree | Ein übernommener Stammbaum | Przejęte drzewo genealogiczne |
 | R11.4 | R11-material-from-the-user.md | výzkum 1.12.0 | platí | Dávka z aplikace | A batch from the app | Ein Stapel aus der App | Partia z aplikacji |
+| R12 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Kde agent pracuje a co strom hlídá | Where the agent works and what strom watches | Wo der Agent arbeitet und was strom überwacht | Gdzie agent pracuje i czego strom pilnuje |
+| R12.1 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Šest způsobů práce: tabulka | Six ways of working: a table | Sechs Arten zu arbeiten: eine Tabelle | Sześć sposobów pracy: tabela |
+| R12.2 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Prohlížeč v aplikaci Claude | The browser in the Claude app | Der Browser in der App Claude | Przeglądarka w aplikacji Claude |
+| R12.3 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Terminál aplikace Claude | The Claude app's terminal | Das Terminal der App Claude | Terminal aplikacji Claude |
+| R12.4 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Aplikace Claude bez Claude Code v terminálu | The Claude app without Claude Code in the terminal | Die App Claude ohne Claude Code im Terminal | Aplikacja Claude bez Claude Code w terminalu |
+| R12.5 | R12-where-the-agent-works.md | výzkum 1.27.0 | koncept | Codex: v terminálu a v aplikaci ChatGPT | Codex: in the terminal and in the ChatGPT app | Codex: im Terminal und in der App ChatGPT | Codex: w terminalu i w aplikacji ChatGPT |
+| R12.6 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Co ověřené není | What is not verified | Was nicht geprüft ist | Czego nie sprawdzono |
 | A1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Aplikace v kostce | The app in brief | Die App im Überblick | Aplikacja w skrócie |
 | A1.1 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Rodokmen v prohlížeči, data na zařízení | A family tree in the browser, data on the device | Stammbaum im Browser, Daten auf dem Gerät | Drzewo genealogiczne w przeglądarce, dane na urządzeniu |
 | A1.2 | A1-the-app-in-brief.md | aplikace 1.0.0 | platí | Osoby, vztahy a rody | People, relationships and family lines | Personen, Beziehungen und Stammlinien | Osoby, relacje i rody |
