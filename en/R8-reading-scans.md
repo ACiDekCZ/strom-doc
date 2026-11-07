@@ -38,6 +38,8 @@ The procedure in brief:
 > checked by a person can be marked **Transcription verified** ([A3.1.1](A3-evidence-in-the-app.md#A3.1.1); how the
 > research counts it: [R3.5.1](R3-verification-and-citation.md#R3.5.1)). A wrong fact can be corrected in the app;
 > an edit of a fact backed by a record becomes a conflict ([S2](S2-edits-from-the-app.md)).
+> Reading by a model is only a proposal: a transcription a person wrote or confirmed is changed by nobody but a
+> person, not even by a new reading ([R3.4.1](R3-verification-and-citation.md#R3.4.1)).
 
 <!-- zdroj: research:assets/method/reading.md:3-8 · src/agents/profiles.ts:5 vision, :147 · src/commands/read.ts:214 --model · src/core/reader.ts:226 certainty · assets/method/verify.md · Milan 4. 11. 2026 (zásada ověření člověkem) -->
 
@@ -327,13 +329,17 @@ fewer requests to the archive.
   model. Each change is recorded with its reason.
 - **Controls:** terminal: `strom media calibrate --report` (how reading went, free), `--questions` (what a person
   decides), `--reset` (back to the defaults); `strom config set tune.auto off` turns self-tuning off. Calibrating the
-  size of views (`strom media calibrate`) is a paid reading of the research's own proven records and only a person
-  confirms it.
+  size of views (`strom media calibrate`) is a paid reading of the research's own proven records and only a person confirms it.
+  `strom doctor`, the line **after strom's tuning**: a change after which reading is worse (it recommends undoing
+  it), or a change after which reading is dearer and no surer (it recommends keeping it).
 - **Why:** according to the code only so that nothing gets worse by it: a change may add accuracy or save requests to
-  the archive; what could take away accuracy or burden the archive is a question for a person.
+  the archive; what could take away accuracy or burden the archive is a question for a person. `strom doctor` recommends keeping
+  a dearer change because it went toward accuracy and certainty is measured only by the uncertain places: a closer
+  view can read more precisely even when the uncertain places do not decrease.
 - **Since:** research 1.14.0
+- **From research 1.29.0:** `strom doctor` says for a dearer change why it recommends keeping it.
 
-<!-- zdroj: research:src/core/tune.ts:1-21 (A1–A7) · src/core/readstats.ts:88-99 TUNING smallest, backAfterDays · src/core/config.ts:337 tune.auto · src/commands/calibrate.ts:394-420 -->
+<!-- zdroj: research:src/core/tune.ts:1-21 (A1–A7) · src/core/readstats.ts:88-99 TUNING smallest, backAfterDays · src/core/config.ts:337 tune.auto · src/commands/calibrate.ts:394-420 · assets/lang/cs.json ui.doc.tuneworse, ui.doc.tuneworse.a, ui.doc.tuneworse.b (důvod od commitu 9bd14e84, 1.29.0) -->
 
 <a id="R8.5"></a>
 ## R8.5 The main agent's own reading
@@ -469,7 +475,8 @@ shows the places where they differ. Nothing read goes into the tree without conf
   - the result stays in the reading history (**Read documents**). It goes into the tree through **Suggest for the
     tree…**.
 - **Limits:**
-  - the research's agent and model for scans read it ([R8.3](#R8.3)); reading counts toward the research's cost, also
+  - without a choice, the research's agent and model for scans read it ([R8.3](#R8.3)); for each reader the agent,
+    model and thoroughness can be chosen ([R8.8.1](#R8.8.1)). Reading counts toward the research's cost, also
     a cancelled one: what the agent already read counts;
   - the window can be closed; reading goes on and the result is announced. The estimate in the window counts about a
     minute per reader, with Grok 4 minutes;
@@ -479,6 +486,130 @@ shows the places where they differ. Nothing read goes into the tree without conf
   files into the window or **Choose files…**; optionally **Document concerns** (a person) and **Note**; **Readers**;
   **Read**. A file dragged into the app offers **Read now**, or **Add to materials**
   ([R11](R11-material-from-the-user.md)). History: **Research for this tree… → Read documents (N) ›**.
+  A source that already has a transcription can be read again from its original ([R8.8.2](#R8.8.2)).
 - **Since:** app 3.14.0, research 1.18.0
 
-<!-- zdroj: app:src/ui/read-document-ui.ts · strings.ts read.* (menu, menuPerson, r1/r1Sub, r2/r2Sub, agree, differ, oneReader, variantNote, scanHint, whyText, advice, cancelled, closeNote, limit, propose, historyRow) · research:src/core/document.ts DOC_PAGES=10, SMALL_PX=800 · src/core/live-read.ts READ_MAX_BYTES=50 MB, READ_QUEUE_MAX=3, read.app (20/h, 60/den) · src/commands/document.ts:463 · config model.vision · spec 059 K1.1 -->
+
+- **From app 3.25.0 and research 1.29.0:** the choice of readers (**Adjust reading**, [R8.8.1](#R8.8.1)), who read,
+  **Read again…** at a source ([R8.8.2](#R8.8.2)) and the setting **Task from a new reading** ([R8.8.3](#R8.8.3)).
+
+<!-- zdroj: app:src/ui/read-document-ui.ts · strings.ts read.* (menu, menuPerson, r1/r1Sub, r2/r2Sub, agree, differ, oneReader, variantNote, scanHint, whyText, advice, cancelled, closeNote, limit, propose, historyRow) · research:src/core/document.ts DOC_PAGES=10, SMALL_PX=800 · src/core/live-read.ts READ_MAX_BYTES=50 MB, READ_QUEUE_MAX=3, read.app (20/h, 60/den) · src/commands/document.ts:463 · config model.vision · spec 059 K1.1 · 3.25.0/1.29.0: spec 059 K2.1, K3.1, K6, K7; app:6bd8609e strings.ts read.refine, read.sourceAgain · research:c2a690ea CHANGELOG.cs.md 1.29.0 -->
+
+<a id="R8.8.1"></a>
+### R8.8.1 Readers: program, model and thoroughness
+
+Each reader of a document can read with a different agent, model and thoroughness. Without a choice, reading follows
+the research's settings. The result says for each reading who read.
+
+- **Enforced by the code:**
+  - **1 reader** (faster), or **2 readers** (more reliable, for the tree). Two readers read separately; where their
+    texts disagree there may be a mistake, and that place is shown to check;
+  - in **Adjust reading**, **Reader 1** and **Reader 2** each have a **Program** (the agent), **Model** and
+    **Thoroughness** (**quick**, **standard**, **higher**, **highest**), only from what the research on this computer
+    offers. The default is **as the agent is set**; a change is kept for the next readings (**Default** returns the
+    research's settings);
+  - without a choice the research's model for scans reads (`model.vision`), never a cheaper model;
+  - the second reader reads blind and does not see the first reading ([R3.5](R3-verification-and-citation.md#R3.5));
+  - an agent that cannot read now (sign-in expired, limit reached) is offered with the reason, and a reader with it
+    cannot start. A model the installed Codex does not know ends the reading as a failure of the reader, with that
+    reason.
+- **Result:** **Read by** at each reading: agent · model · thoroughness of each reader, in the terminal, in the
+  reading's file and in the app. The text is by reader 1; reader 2 read independently, as a check, and its whole text
+  can be shown (**Reader’s transcription**: **Reader 1** / **Reader 2**). When both read with the same program, the
+  result says so.
+- **Why:** two readers of the same model are weaker evidence than two different models: where they agree, they may be
+  wrong in the same way. The task from a new reading says so too ([R8.8.3](#R8.8.3)).
+- **Controls:** app: **Read a document…** and **Read again…** → **Readers** → **Adjust reading**. Terminal:
+  `strom document read … --agent --model --effort` (the first reader) and `--blind-agent --blind-model --blind-effort`
+  (the blind reader), `--readers 2`.
+- **Since:** research 1.29.0, app 3.25.0
+
+<!-- zdroj: app:6bd8609e src/strings.ts read.c1/c1Sub/c2/c2Sub/readersWhy, refine, readerN, colProgram, colModel, colThorough, thorough.*, bySettings, changed, reset, agentWhyAuth/agentWhyLimit, downRow, readBy, readerView, whoLine, whoSame · research:c2a690ea strom help document read (--agent/--model/--effort, --blind-agent/--blind-model/--blind-effort: „default model.vision — never weaker for handwriting“) · assets/lang/cs.json read.source.same · CHANGELOG.cs.md 1.29.0 · spec 059 K1.2, K2.1, K2.2, K6.6 -->
+
+<a id="R8.8.2"></a>
+### R8.8.2 Reading a source again from its original
+
+A source that has a transcription can be read again from its original (the scan or the clip in the research), not
+from the transcription. The new reading is compared with the transcription place by place. The transcription does not
+change by it: the new reading stays saved with the source next to it.
+
+- **Enforced by the code:**
+  - only for a source whose original the research has on this computer and which has a transcription; otherwise the
+    app says why (**The research does not have the source’s original on this computer.**, **The source has no
+    transcript to compare a new reading with.**). On a phone only a sentence that reading again works in the app on
+    the computer with the research;
+  - the readers see neither the transcription nor the names. They get what the research knows about the record: the
+    kind, the language, the date and where the entry stands;
+  - only the source's entry is compared with the transcription, not neighbouring entries from the edge of the clip.
+    Not counted as a difference: column labels without a counterpart, headings and notes of the research and of the
+    reader in brackets, a long ſ against s, an illegible place against nothing, and words outside what both read;
+  - each place where the new reading differs from the transcription has a kind:
+    - **substantive change**: a name, a house number, a date, a person, or a word where the transcription has `[...]`;
+    - **minor detail**: spelling, an abbreviation, punctuation, a label, capital letters;
+  - a substantive change is **sure** only when both readers read it the same way against the transcription and the
+    new reading has neither `[...]` nor `[?]` there. A place where the readers disagree is an uncertainty, not a change
+    of the transcription;
+  - a place a task already assessed, or that a person kept or rejected, is not assessed again.
+- **Result** (the window **Source read again**): "Against the existing transcript N substantive changes and K minor
+  details.", or **Matches the existing transcript.**; **The readers agree.**, or "The readers disagree in N places.";
+  in **To check** the groups **Substantive changes to check** (for a transcription a person confirmed **Substantive
+  changes to review**), **Uncertain – readers disagree**, **Already assessed in task T…**, **Already decided: kept**
+  and **Minor details**. Only sure substantive changes go into a task ([R8.8.3](#R8.8.3)).
+- **Limits:** a person's confirmation of the transcription stays. A new reading never overwrites the transcription by
+  itself ([R3.4.1](R3-verification-and-citation.md#R3.4.1)).
+- **Controls:** app: source viewer → **Read again…** (AI mark), with the choice of readers ([R8.8.1](#R8.8.1)); at
+  the source then the line of the new reading with **Result ›**. Terminal: `strom document read --source S… [--clip …]`,
+  `strom source show S…`.
+- **Why:** after a time, a transcription can be checked by another reader, from the original. Agreement supports the
+  existing transcription; a difference is a guide for checking, not a new transcription.
+- **Since:** research 1.29.0, app 3.25.0
+
+<!-- zdroj: research:c2a690ea src/core/sourceread.ts (porovnání, druhy míst, sure, judged) · strom help document read --source · CHANGELOG.cs.md 1.29.0 · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 1, Tabulka scénářů) · app:6bd8609e src/ui/read-source-ui.ts (nabídka jen s originálem, AI) · strings.ts read.sourceAgain, sourceAgainTitle, againPhone, srcWhy.*, resultSource, vSrc, vSrcSame, vDis, check, gMajor, gMajorPerson, gUnsure, gJudged, gKept, gMinor, vk.*, againResultLink, keepConfirm · spec 059 K3.1–K3.3, K6.2, K6.3 · dirigent:test ověření aplikace 6bd8609e -->
+
+<a id="R8.8.3"></a>
+### R8.8.3 Task from a new reading
+
+A task from a source read again arises only from a sure substantive change nobody has assessed yet. Minor details and
+uncertain places never create a task. Whether the task arises at once or a person decides is set by the setting
+**Task from a new reading**.
+
+- **Setting** (`read.sourceTask`, for each tree):
+  - **Ask** (`ask`, the default): no task arises by itself. The reading stays with the source as not checked until a
+    person decides;
+  - **Always create** (`always`): the task arises at once; for a transcription a person confirmed, a proposed wording
+    for the person;
+  - **Never create** (`never`): no task arises by itself; the reading waits with the source and a person can decide
+    just as with **Ask**.
+- **Choices** (the footer of the window **Source read again**, at the source **Decide ▸**):
+  - a transcription a person did not confirm: **Task for the agent** → **Check with the agent now** (a task and at
+    once a conversation with the agent in the terminal) or **Queue for the agent** (a task ahead in the queue,
+    priority 3); **No task** → **Just save** (no task arises, the source no longer asks and the same places are not
+    offered again; at the source **Give to the agent…** can still be chosen then);
+  - a transcription a person confirmed: **Task for a person** → **Set aside for review** (a proposed wording for the
+    person; the agent does not work on it, [R3.4.1](R3-verification-and-citation.md#R3.4.1)), or **Just save**. A task
+    for the agent never arises here;
+  - a source with an unfinished task: **Add to T… and check now**, **Add to task T…**. One source has one task of its
+    readings at a time: new places are added to it, none twice.
+- **Enforced by the code:**
+  - only a person decides: in the app, or at their terminal. `strom document read --source` at a person's terminal
+    asks at once (**Go through it with the agent now**, **Put it in the queue as a task**, **Just keep the reading**,
+    for a confirmed transcription **Set it aside for review**); without a choice it decides nothing, and later
+    `strom source reading S…` decides. The agent may not decide: it tells the person what waits;
+  - the task states who read (agent · model · thoroughness of each reader), that two readers of the same model are
+    weaker evidence, and that the new reading is only a guide ([R3.4.1](R3-verification-and-citation.md#R3.4.1)).
+    Substantive changes come first in the task's reason;
+  - an app older than 3.25.0 has no choice: for an unconfirmed transcription a task for the agent arises at once, for
+    a confirmed one a proposed wording for the person.
+- **State at the source** (source viewer): **Newer reading of … differs (N substantive changes), not checked.**,
+  **… saved, no task created.**, **…: task T… for the agent (queued).**, **…: review task T….**, **…: only minor
+  details differ.**, **…: the readers disagree at …; the transcript stays.** After the task is created **Open task T…**
+  ([S4.5.3](S4-research-from-the-app.md#S4.5.3)).
+- **Controls:** app: **Research → Other actions → Research for this tree… → Reading documents → Task from a new
+  reading** (it is written into the research and applies also to readings started in the terminal). Terminal:
+  `strom config set read.sourceTask ask|always|never --for-tree`, once `strom document read --source S…
+  --source-task …`, `strom source reading S… [--take now|queue|keep|review]`, `strom source show S…`.
+- **Why:** a task costs the agent's work, which draws on the subscription; a minor detail or an uncertainty does not
+  change the transcription, and what was already assessed should not be assessed again.
+- **Since:** research 1.29.0, app 3.25.0
+
+<!-- zdroj: research:c2a690ea src/core/config.ts:310 read.sourceTask (ask|always|never, tree) · src/core/sourceread.ts:293-302, :438, :600-617 · src/commands/source-reading.ts · strom help source reading (--take now|queue|keep|review, priorita 3) · strom help document read --source-task · assets/lang/cs.json ui.reading.*, read.source.why/same · src/core/live.ts:124-138 taskChoice, POST sourceTask · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 2–4, Tabulka scénářů) · app:6bd8609e strings.ts treeResearch.readGroup/readTask/readTaskAsk/readTaskAlways/readTaskNever/rtOk, read.tAgent, tNow, tQueue, tNone, tSave, tPerson, tReview, tAppendNow, tAppendQueue, sUnchecked, sSaved, sTaskQueued, sTaskPerson, sMinor, sUnsure, sDecide, sGiveAgent, openTaskN · src/ui/read-task-setting-view.ts · dirigent:test ověření aplikace 6bd8609e · spec 059 K3.2, spec 065 K2.3 -->
