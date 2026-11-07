@@ -545,19 +545,21 @@ nowy odczyt zostaje zapisany przy źródle obok niej.
     podpisy kolumn bez odpowiednika, nagłówki i uwagi badania oraz czytelnika w nawiasach, długie ſ wobec s, nieczytelne
     miejsce wobec niczego i słowa poza tym, co przeczytali obaj;
   - każde miejsce, w którym nowy odczyt różni się od transkrypcji, ma rodzaj:
-    - **zmiana merytoryczna**: imię lub nazwisko, numer domu, data, osoba albo słowo tam, gdzie transkrypcja ma
+    - **zmiana merytoryczna**: imię lub nazwisko, liczba, data, osoba albo słowo tam, gdzie transkrypcja ma
       `[...]`;
     - **drobiazg**: pisownia, skrót, interpunkcja, podpis, wielkie litery;
   - zmiana merytoryczna jest **pewna** tylko wtedy, gdy obaj czytelnicy przeczytali ją wobec transkrypcji tak samo,
     a nowy odczyt nie ma tam `[...]` ani `[?]`. Miejsce, w którym czytelnicy się różnią, jest niepewnością, nie zmianą
-    transkrypcji;
+    transkrypcji. Przy jednym czytelniku niepewne miejsca to te, w których czytelnik nie był pewien (nowy odczyt ma tam
+    `[...]` albo `[?]`), nie różnica dwóch czytelników;
   - miejsca, które już oceniło zadanie albo które człowiek zostawił lub odrzucił, nie ocenia się ponownie.
 - **Wynik** (okno **Źródło przeczytane ponownie**): „Względem dotychczasowej transkrypcji N zmiany merytoryczne i K
   drobiazgów.” albo **Zgadza się z dotychczasową transkrypcją.**; **Czytelnicy są zgodni.** albo „Czytelnicy różnią się
   w N miejscach.”; w **Do sprawdzenia** grupy **Zmiany merytoryczne do sprawdzenia** (przy transkrypcji potwierdzonej
-  przez człowieka **Zmiany merytoryczne do oceny**), **Niepewne – czytelnicy się różnią**, **Już ocenione w zadaniu
-  T…**, **Już rozstrzygnięte: zostawione** i **Drobiazgi**. Do zadania trafiają tylko pewne zmiany merytoryczne
-  ([R8.8.3](#R8.8.3)).
+  przez człowieka **Zmiany merytoryczne do oceny**), **Niepewne – czytelnicy się różnią** (przy jednym czytelniku
+  **Niepewne – czytelnik nie był pewien**), **Już ocenione w zadaniu T…**, **Już rozstrzygnięte: zostawione**
+  i **Drobiazgi**. Do zadania trafiają same tylko pewne zmiany merytoryczne; niepewne miejsca tylko na prośbę
+  człowieka ([R8.8.3](#R8.8.3)).
 - **Granice:** potwierdzenie transkrypcji przez człowieka pozostaje. Nowy odczyt nigdy sam nie nadpisze transkrypcji
   ([R3.4.1](R3-verification-and-citation.md#R3.4.1)).
 - **Obsługa:** aplikacja: podgląd źródła → **Przeczytaj ponownie…** (oznaczenie AI), z wyborem czytelników
@@ -567,13 +569,14 @@ nowy odczyt zostaje zapisany przy źródle obok niej.
   transkrypcję; różnica jest podpowiedzią do sprawdzenia, nie nową transkrypcją.
 - **Obowiązuje od:** badanie 1.29.0, aplikacja 3.25.0
 
-<!-- zdroj: research:c2a690ea src/core/sourceread.ts (porovnání, druhy míst, sure, judged) · strom help document read --source · CHANGELOG.cs.md 1.29.0 · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 1, Tabulka scénářů) · app:6bd8609e src/ui/read-source-ui.ts (nabídka jen s originálem, AI) · strings.ts read.sourceAgain, sourceAgainTitle, againPhone, srcWhy.*, resultSource, vSrc, vSrcSame, vDis, check, gMajor, gMajorPerson, gUnsure, gJudged, gKept, gMinor, vk.*, againResultLink, keepConfirm · spec 059 K3.1–K3.3, K6.2, K6.3 · dirigent:test ověření aplikace 6bd8609e -->
+<!-- zdroj: research:c2a690ea src/core/sourceread.ts (porovnání, druhy míst, sure, judged) · strom help document read --source · CHANGELOG.cs.md 1.29.0 · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 1, Tabulka scénářů) · app:6bd8609e src/ui/read-source-ui.ts (nabídka jen s originálem, AI) · strings.ts read.sourceAgain, sourceAgainTitle, againPhone, srcWhy.*, resultSource, vSrc, vSrcSame, vDis, check, gMajor, gMajorPerson, gUnsure, gJudged, gKept, gMinor, vk.*, againResultLink, keepConfirm · spec 059 K3.1–K3.3, K6.2, K6.3 · dirigent:test ověření aplikace 6bd8609e · jeden čtenář: research:4895d0f0 src/core/sourceread.ts surely (jeden čtenář: nejisté jen `[...]`, `[?]`) · app:7327b758 strings.ts read.gUnsure1, vk.number („číslo“) · dirigent:test/vysledek-1107-nejista-mista.md -->
 
 <a id="R8.8.3"></a>
 ### R8.8.3 Zadanie z nowego odczytu
 
-Zadanie ze źródła przeczytanego ponownie powstaje tylko z pewnej zmiany merytorycznej, której nikt jeszcze nie ocenił.
-Drobiazgi i niepewne miejsca nigdy nie tworzą zadania. Czy zadanie powstanie od razu, czy zdecyduje człowiek, wyznacza
+Zadanie ze źródła przeczytanego ponownie powstaje samo tylko z pewnej zmiany merytorycznej, której nikt jeszcze nie
+ocenił. Drobiazgi nigdy nie tworzą zadania, a niepewne miejsca nie tworzą go same: agentowi można je przekazać tylko na
+prośbę człowieka. Czy zadanie z pewnej zmiany merytorycznej powstanie od razu, czy zdecyduje człowiek, wyznacza
 ustawienie **Zadanie z nowego odczytu**.
 
 - **Ustawienie** (`read.sourceTask`, dla każdego drzewa):
@@ -593,11 +596,34 @@ ustawienie **Zadanie z nowego odczytu**.
     Zadanie dla agenta nigdy tu nie powstaje;
   - źródło z niezakończonym zadaniem: **Dopisz do T… i sprawdź teraz**, **Dopisz do zadania T…**. Jedno źródło ma
     naraz jedno zadanie swoich odczytów: nowe miejsca dopisują się do niego, żadne dwa razy.
+- **Niepewne miejsca na prośbę:**
+  - oferowane tylko przy odczycie, który nie ma żadnej pewnej zmiany merytorycznej do rozstrzygnięcia, ale ma niepewne
+    miejsca, które nie są drobiazgiem i których nie oceniło jeszcze żadne zadanie. W stopce okna **Źródło przeczytane
+    ponownie** wybór stoi obok **Zamknij** (to zostaje głównym przyciskiem), przy źródle w wierszu nowego odczytu
+    (**Przekaż agentowi… ▸**, przy potwierdzonej transkrypcji **Odłóż do oceny… ▸**). Jest oferowany przy każdym
+    ustawieniu, także przy **Nie twórz**; na telefonie nie. Tylko drobiazgi albo miejsca już ocenione → wybór nie jest
+    oferowany;
+  - transkrypcja, której człowiek nie potwierdził: **Przekaż agentowi do oceny** (oznaczenie AI) → zadanie dla agenta
+    w kolejce (priorytet 3) albo miejsca dopisują się do niezakończonego zadania źródła. Czytelnicy czytali na ślepo,
+    bez transkrypcji i nazwisk ([R8.8.2](#R8.8.2)); miejsca ocenia dopiero agent, na skanie ze wszystkim, co badanie
+    wie o osobach, miejscach i datach aktu. Gdzie skan pokazuje to pewnie, poprawia transkrypcję i podaje powód;
+    gdzie indziej transkrypcję zostawia i przy źródle zapisuje notatkę, co obejrzał i dlaczego miejsce pozostaje
+    niepewne. Człowieka o nic nie pyta;
+  - transkrypcja potwierdzona przez człowieka: **Odłóż do oceny** → zadanie dla człowieka z propozycją brzmienia tylko
+    z niepewnych miejsc, które nowy odczyt odczytał (nie `[...]`, `[?]`); agent nie zmienia transkrypcji
+    ([R3.4.1](R3-verification-and-citation.md#R3.4.1)). Gdy nowy odczyt odczytał tylko nieczytelne miejsca, wybór nie
+    jest oferowany;
+  - zadanie z niepewnych miejsc powstaje tylko po kliknięciu, nigdy samo, nawet przy **Zawsze twórz**. Miejsc, które
+    potem trzyma zadanie, nie oferuje się ponownie przy kolejnych odczytach.
 - **Pilnuje kod:**
   - decyduje tylko człowiek: w aplikacji albo przy swoim terminalu. `strom document read --source` przy terminalu
     człowieka pyta od razu (**Przejrzeć to teraz z agentem**, **Dodać to do kolejki jako zadanie**, **Tylko zachować
     odczyt**, przy potwierdzonej transkrypcji **Odłożyć do oceny**); bez wyboru niczego nie rozstrzyga, a później
     rozstrzyga `strom source reading S…`. Agent nie może decydować: mówi człowiekowi, co czeka;
+  - niepewne miejsca przekazuje tylko człowiek: `strom source reading S… --take queue --unsure` (przy potwierdzonej
+    transkrypcji `--take review --unsure`); inaczej `--unsure` nie działa. Odczyt, który ma pewną zmianę merytoryczną
+    do rozstrzygnięcia, zostaje z `--unsure` odrzucony: rozstrzyga się go bez tej opcji, a niepewne miejsca idą razem
+    z nią. `strom source show S…` mówi, kiedy miejsca można przekazać;
   - zadanie podaje, kto czytał (agent · model · dokładność każdego czytelnika), że dwóch czytelników tego samego modelu
     to słabszy dowód i że nowy odczyt jest tylko podpowiedzią ([R3.4.1](R3-verification-and-citation.md#R3.4.1)).
     Zmiany merytoryczne są w powodzie zadania pierwsze;
@@ -605,14 +631,17 @@ ustawienie **Zadanie z nowego odczytu**.
     przy potwierdzonej propozycja brzmienia dla człowieka.
 - **Stan przy źródle** (podgląd źródła): **Nowszy odczyt z … się różni (N zmiany merytoryczne), niesprawdzony.**,
   **… zapisany, zadanie nie powstało.**, **…: zadanie T… dla agenta (w kolejce).**, **…: zadanie do oceny T….**,
-  **…: różnią się tylko drobiazgi.**, **…: czytelnicy różnią się w …, transkrypcja się nie zmienia.** Po utworzeniu
-  zadania **Otwórz zadanie T…** ([S4.5.3](S4-research-from-the-app.md#S4.5.3)).
+  **…: różnią się tylko drobiazgi.**, **…: czytelnicy różnią się w …, transkrypcja się nie zmienia.** (przy jednym
+  czytelniku **…: czytelnik nie był pewien w …, transkrypcja się nie zmienia.**) Po utworzeniu zadania **Otwórz
+  zadanie T…** ([S4.5.3](S4-research-from-the-app.md#S4.5.3)).
 - **Obsługa:** aplikacja: **Badanie → Więcej → Badanie dla tego drzewa… → Czytanie dokumentów → Zadanie z nowego
   odczytu** (zapisuje się do badania i dotyczy też odczytów uruchomionych w terminalu). Terminal:
   `strom config set read.sourceTask ask|always|never --for-tree`, jednorazowo `strom document read --source S…
-  --source-task …`, `strom source reading S… [--take now|queue|keep|review]`, `strom source show S…`.
+  --source-task …`, `strom source reading S… [--take now|queue|keep|review] [--unsure]`, `strom source show S…`.
 - **Dlaczego:** zadanie kosztuje pracę agenta, która zużywa subskrypcję; drobiazg ani niepewność nie zmieniają
-  transkrypcji, a tego, co już ocenione, nie należy oceniać ponownie.
+  transkrypcji, a tego, co już ocenione, nie należy oceniać ponownie. Niepewne miejsca można mimo to ocenić:
+  czytelnicy ich nie rozstrzygną, bo czytają na ślepo, ale agent może je ocenić z kontekstem badania, gdy człowiek
+  o to poprosi.
 - **Obowiązuje od:** badanie 1.29.0, aplikacja 3.25.0
 
-<!-- zdroj: research:c2a690ea src/core/config.ts:310 read.sourceTask (ask|always|never, tree) · src/core/sourceread.ts:293-302, :438, :600-617 · src/commands/source-reading.ts · strom help source reading (--take now|queue|keep|review, priorita 3) · strom help document read --source-task · assets/lang/cs.json ui.reading.*, read.source.why/same · src/core/live.ts:124-138 taskChoice, POST sourceTask · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 2–4, Tabulka scénářů) · app:6bd8609e strings.ts treeResearch.readGroup/readTask/readTaskAsk/readTaskAlways/readTaskNever/rtOk, read.tAgent, tNow, tQueue, tNone, tSave, tPerson, tReview, tAppendNow, tAppendQueue, sUnchecked, sSaved, sTaskQueued, sTaskPerson, sMinor, sUnsure, sDecide, sGiveAgent, openTaskN · src/ui/read-task-setting-view.ts · dirigent:test ověření aplikace 6bd8609e · spec 059 K3.2, spec 065 K2.3 -->
+<!-- zdroj: research:c2a690ea src/core/config.ts:310 read.sourceTask (ask|always|never, tree) · src/core/sourceread.ts:293-302, :438, :600-617 · src/commands/source-reading.ts · strom help source reading (--take now|queue|keep|review, priorita 3) · strom help document read --source-task · assets/lang/cs.json ui.reading.*, read.source.why/same · src/core/live.ts:124-138 taskChoice, POST sourceTask · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 2–4, Tabulka scénářů) · app:6bd8609e strings.ts treeResearch.readGroup/readTask/readTaskAsk/readTaskAlways/readTaskNever/rtOk, read.tAgent, tNow, tQueue, tNone, tSave, tPerson, tReview, tAppendNow, tAppendQueue, sUnchecked, sSaved, sTaskQueued, sTaskPerson, sMinor, sUnsure, sDecide, sGiveAgent, openTaskN · src/ui/read-task-setting-view.ts · dirigent:test ověření aplikace 6bd8609e · spec 059 K3.2, spec 065 K2.3 · nejistá místa na žádost: spec 059 P8 K8.1–K8.5 · research:4895d0f0 src/core/sourceread.ts unsureOffered, wordingOf, decideReading (unsure, read.decide.sure/nothing/noproposal), handOver priorita 3 · src/commands/source-reading.ts --unsure · assets/lang/cs.json read.source.unsure.* · CHANGELOG.cs.md 1.29.0 · app:docs/ZADANI_VYZKUM_cteni-vysledek.md „Odpověď výzkumu: nejistá místa na žádost“ · app:7327b758 src/ui/read-task-view.ts readTaskUnsureShown (B, D, jen počítač), unsureChoiceHtml · src/ui/read-source-state-view.ts · strings.ts read.close, tUnsureQueue, tUnsureQueueSub, tReview, tUnsureReviewSub, sGiveAgent, sReviewGive, sUnsure · dirigent:test/vysledek-1107-nejista-mista.md (i doověření N1) -->

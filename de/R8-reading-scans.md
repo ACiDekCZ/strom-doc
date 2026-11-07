@@ -564,20 +564,22 @@ dadurch nicht: Die neue Lesung bleibt neben ihr bei der Quelle gespeichert.
     des Lesers in Klammern, langes ſ gegen s, eine unleserliche Stelle gegen nichts und Wörter außerhalb dessen, was
     beide gelesen haben;
   - jede Stelle, an der die neue Lesung von der Abschrift abweicht, hat eine Art:
-    - **inhaltliche Änderung**: ein Name, eine Hausnummer, ein Datum, eine Person oder ein Wort dort, wo die Abschrift
+    - **inhaltliche Änderung**: ein Name, eine Zahl, ein Datum, eine Person oder ein Wort dort, wo die Abschrift
       `[...]` hat;
     - **Kleinigkeit**: Rechtschreibung, Abkürzung, Zeichensetzung, Beschriftung, Großbuchstaben;
   - eine inhaltliche Änderung ist nur dann **sicher**, wenn beide Leser sie gegenüber der Abschrift gleich gelesen
     haben und die neue Lesung dort weder `[...]` noch `[?]` hat. Eine Stelle, an der die Leser voneinander abweichen,
-    ist eine Unsicherheit, keine Änderung der Abschrift;
+    ist eine Unsicherheit, keine Änderung der Abschrift. Bei einem Leser sind die unsicheren Stellen die, an denen
+    sich der Leser nicht sicher war (die neue Lesung hat dort `[...]` oder `[?]`), keine Abweichung zweier Leser;
   - eine Stelle, die eine Aufgabe schon geprüft hat oder die der Mensch behalten oder abgelehnt hat, wird nicht erneut
     geprüft.
 - **Ergebnis** (Fenster **Quelle erneut gelesen**): „Gegenüber der bisherigen Abschrift N inhaltliche Änderungen und K
   Kleinigkeiten.“ oder **Stimmt mit der bisherigen Abschrift überein.**; **Die Leser stimmen überein.** oder „Die Leser
   weichen an N Stellen voneinander ab.“; in **Zu prüfen** die Gruppen **Inhaltliche Änderungen zu prüfen** (bei einer
-  vom Menschen bestätigten Abschrift **Inhaltliche Änderungen zur Prüfung**), **Unsicher – Leser weichen ab**,
-  **Bereits geprüft in Aufgabe T…**, **Bereits entschieden: behalten** und **Kleinigkeiten**. In eine Aufgabe gehen nur
-  sichere inhaltliche Änderungen ([R8.8.3](#R8.8.3)).
+  vom Menschen bestätigten Abschrift **Inhaltliche Änderungen zur Prüfung**), **Unsicher – Leser weichen ab** (bei
+  einem Leser **Unsicher – Leser war nicht sicher**), **Bereits geprüft in Aufgabe T…**, **Bereits entschieden:
+  behalten** und **Kleinigkeiten**. Von selbst gehen nur sichere inhaltliche Änderungen in eine Aufgabe, unsichere
+  Stellen nur auf Wunsch des Menschen ([R8.8.3](#R8.8.3)).
 - **Grenzen:** die Bestätigung der Abschrift durch den Menschen bleibt. Eine neue Lesung überschreibt die Abschrift nie
   von selbst ([R3.4.1](R3-verification-and-citation.md#R3.4.1)).
 - **Bedienung:** App: Quellenbetrachter → **Erneut lesen…** (Marke KI), mit der Wahl der Leser ([R8.8.1](#R8.8.1));
@@ -588,14 +590,15 @@ dadurch nicht: Die neue Lesung bleibt neben ihr bei der Quelle gespeichert.
   Abschrift.
 - **Gilt seit:** Forschung 1.29.0, App 3.25.0
 
-<!-- zdroj: research:c2a690ea src/core/sourceread.ts (porovnání, druhy míst, sure, judged) · strom help document read --source · CHANGELOG.cs.md 1.29.0 · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 1, Tabulka scénářů) · app:6bd8609e src/ui/read-source-ui.ts (nabídka jen s originálem, AI) · strings.ts read.sourceAgain, sourceAgainTitle, againPhone, srcWhy.*, resultSource, vSrc, vSrcSame, vDis, check, gMajor, gMajorPerson, gUnsure, gJudged, gKept, gMinor, vk.*, againResultLink, keepConfirm · spec 059 K3.1–K3.3, K6.2, K6.3 · dirigent:test ověření aplikace 6bd8609e -->
+<!-- zdroj: research:c2a690ea src/core/sourceread.ts (porovnání, druhy míst, sure, judged) · strom help document read --source · CHANGELOG.cs.md 1.29.0 · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 1, Tabulka scénářů) · app:6bd8609e src/ui/read-source-ui.ts (nabídka jen s originálem, AI) · strings.ts read.sourceAgain, sourceAgainTitle, againPhone, srcWhy.*, resultSource, vSrc, vSrcSame, vDis, check, gMajor, gMajorPerson, gUnsure, gJudged, gKept, gMinor, vk.*, againResultLink, keepConfirm · spec 059 K3.1–K3.3, K6.2, K6.3 · dirigent:test ověření aplikace 6bd8609e · jeden čtenář: research:4895d0f0 src/core/sourceread.ts surely (jeden čtenář: nejisté jen `[...]`, `[?]`) · app:7327b758 strings.ts read.gUnsure1, vk.number („číslo“) · dirigent:test/vysledek-1107-nejista-mista.md -->
 
 <a id="R8.8.3"></a>
 ### R8.8.3 Aufgabe aus einer neuen Lesung
 
-Eine Aufgabe aus einer erneut gelesenen Quelle entsteht nur aus einer sicheren inhaltlichen Änderung, die noch niemand
-geprüft hat. Kleinigkeiten und unsichere Stellen legen nie eine Aufgabe an. Ob die Aufgabe sofort entsteht oder der
-Mensch entscheidet, bestimmt die Einstellung **Aufgabe aus einer neuen Lesung**.
+Eine Aufgabe aus einer erneut gelesenen Quelle entsteht von selbst nur aus einer sicheren inhaltlichen Änderung, die
+noch niemand geprüft hat. Kleinigkeiten legen nie eine Aufgabe an, unsichere Stellen nicht von selbst: Sie lassen sich
+dem Agenten nur auf Wunsch des Menschen geben. Ob die Aufgabe aus einer sicheren inhaltlichen Änderung sofort entsteht
+oder der Mensch entscheidet, bestimmt die Einstellung **Aufgabe aus einer neuen Lesung**.
 
 - **Einstellung** (`read.sourceTask`, für jeden Stammbaum):
   - **Nachfragen** (`ask`, Standard): keine Aufgabe entsteht von selbst. Die Lesung bleibt bei der Quelle als nicht
@@ -616,12 +619,35 @@ Mensch entscheidet, bestimmt die Einstellung **Aufgabe aus einer neuen Lesung**.
     nie;
   - eine Quelle mit einer nicht abgeschlossenen Aufgabe: **An T… anfügen und jetzt prüfen**, **An Aufgabe T…
     anfügen**. Eine Quelle hat zugleich eine Aufgabe ihrer Lesungen: neue Stellen werden ihr angefügt, keine doppelt.
+- **Unsichere Stellen auf Wunsch:**
+  - angeboten nur bei einer Lesung, die keine sichere inhaltliche Änderung zu entscheiden hat, aber unsichere Stellen,
+    die keine Kleinigkeit sind und die noch keine Aufgabe geprüft hat. In der Fußzeile des Fensters **Quelle erneut
+    gelesen** steht die Wahl neben **Schließen** (das bleibt die Hauptschaltfläche), bei der Quelle in der Zeile der
+    neuen Lesung (**Dem Agenten geben… ▸**, bei einer bestätigten Abschrift **Zur Prüfung vormerken… ▸**). Sie wird
+    bei jeder Einstellung angeboten, auch bei **Nie anlegen**; am Telefon nicht. Nur Kleinigkeiten oder bereits
+    geprüfte Stellen → die Wahl wird nicht angeboten;
+  - eine Abschrift, die der Mensch nicht bestätigt hat: **Dem Agenten zur Prüfung geben** (Marke KI) → eine Aufgabe
+    für den Agenten in der Warteschlange (Priorität 3), oder die Stellen werden der nicht abgeschlossenen Aufgabe der
+    Quelle angefügt. Die Leser haben blind gelesen, ohne Abschrift und Namen ([R8.8.2](#R8.8.2)); die Stellen prüft
+    erst der Agent, am Scan mit allem, was die Forschung über die Personen, Orte und Daten des Eintrags weiß. Wo der
+    Scan es sicher zeigt, berichtigt er die Abschrift und schreibt den Grund; sonst lässt er die Abschrift und schreibt
+    zur Quelle eine Notiz, was er angesehen hat und warum die Stelle unsicher bleibt. Er fragt den Menschen nichts;
+  - eine vom Menschen bestätigte Abschrift: **Zur Prüfung vormerken** → eine Aufgabe für den Menschen mit einem
+    vorgeschlagenen Wortlaut nur aus den unsicheren Stellen, die die neue Lesung gelesen hat (nicht `[...]`, `[?]`);
+    der Agent ändert die Abschrift nicht ([R3.4.1](R3-verification-and-citation.md#R3.4.1)). Hat die neue Lesung nur
+    unleserliche Stellen gelesen, wird die Wahl nicht angeboten;
+  - eine Aufgabe aus unsicheren Stellen entsteht nur auf einen Klick, nie von selbst, auch nicht bei **Immer
+    anlegen**. Stellen, die dann eine Aufgabe hält, werden bei späteren Lesungen nicht erneut angeboten.
 - **Prüft der Code:**
   - nur der Mensch entscheidet: in der App oder an seinem Terminal. `strom document read --source` am Terminal des
     Menschen fragt sofort (**Jetzt mit dem Agenten durchgehen**, **Als Aufgabe in die Warteschlange stellen**, **Die
     Lesung nur aufbewahren**, bei einer bestätigten Abschrift **Zur Prüfung vormerken**); ohne Wahl entscheidet es
     nichts, und später entscheidet `strom source reading S…`. Der Agent darf nicht entscheiden: er sagt dem Menschen,
     was wartet;
+  - unsichere Stellen übergibt nur der Mensch: `strom source reading S… --take queue --unsure` (bei einer bestätigten
+    Abschrift `--take review --unsure`); sonst geht `--unsure` nicht. Eine Lesung mit einer sicheren inhaltlichen
+    Änderung zu entscheiden wird mit `--unsure` abgelehnt: Sie wird ohne es entschieden, und die unsicheren Stellen
+    gehen mit. `strom source show S…` sagt, wenn sich die Stellen übergeben lassen;
   - die Aufgabe nennt, wer gelesen hat (Agent · Modell · Gründlichkeit jedes Lesers), dass zwei Leser desselben Modells
     ein schwächerer Beleg sind und dass die neue Lesung nur ein Anhaltspunkt ist
     ([R3.4.1](R3-verification-and-citation.md#R3.4.1)). Inhaltliche Änderungen stehen im Grund der Aufgabe zuerst;
@@ -630,13 +656,16 @@ Mensch entscheidet, bestimmt die Einstellung **Aufgabe aus einer neuen Lesung**.
 - **Zustand bei der Quelle** (Quellenbetrachter): **Neuere Lesung vom … weicht ab (N inhaltliche Änderungen), nicht
   geprüft.**, **… gespeichert, keine Aufgabe angelegt.**, **…: Aufgabe T… für den Agenten (in der Warteschlange).**,
   **…: Aufgabe T… zur Prüfung.**, **…: nur Kleinigkeiten weichen ab.**, **…: Die Leser weichen an … ab, die Abschrift
-  bleibt.** Nach dem Anlegen der Aufgabe **Aufgabe T… öffnen** ([S4.5.3](S4-research-from-the-app.md#S4.5.3)).
+  bleibt.** (bei einem Leser **…: Der Leser war sich an … nicht sicher, die Abschrift bleibt.**) Nach dem Anlegen der
+  Aufgabe **Aufgabe T… öffnen** ([S4.5.3](S4-research-from-the-app.md#S4.5.3)).
 - **Bedienung:** App: **Forschung → Weitere Aktionen → Forschung für diesen Stammbaum… → Dokumente lesen → Aufgabe aus
   einer neuen Lesung** (wird in die Forschung geschrieben und gilt auch für Lesungen aus dem Terminal). Terminal:
   `strom config set read.sourceTask ask|always|never --for-tree`, einmalig `strom document read --source S…
-  --source-task …`, `strom source reading S… [--take now|queue|keep|review]`, `strom source show S…`.
+  --source-task …`, `strom source reading S… [--take now|queue|keep|review] [--unsure]`, `strom source show S…`.
 - **Warum:** eine Aufgabe kostet Arbeit des Agenten, die das Abonnement verbraucht; eine Kleinigkeit oder eine
-  Unsicherheit ändert die Abschrift nicht, und was schon geprüft wurde, soll nicht erneut geprüft werden.
+  Unsicherheit ändert die Abschrift nicht, und was schon geprüft wurde, soll nicht erneut geprüft werden. Unsichere
+  Stellen lassen sich trotzdem prüfen: Die Leser können sie nicht klären, weil sie blind lesen, der Agent aber mit dem
+  Zusammenhang der Forschung, wenn der Mensch darum bittet.
 - **Gilt seit:** Forschung 1.29.0, App 3.25.0
 
-<!-- zdroj: research:c2a690ea src/core/config.ts:310 read.sourceTask (ask|always|never, tree) · src/core/sourceread.ts:293-302, :438, :600-617 · src/commands/source-reading.ts · strom help source reading (--take now|queue|keep|review, priorita 3) · strom help document read --source-task · assets/lang/cs.json ui.reading.*, read.source.why/same · src/core/live.ts:124-138 taskChoice, POST sourceTask · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 2–4, Tabulka scénářů) · app:6bd8609e strings.ts treeResearch.readGroup/readTask/readTaskAsk/readTaskAlways/readTaskNever/rtOk, read.tAgent, tNow, tQueue, tNone, tSave, tPerson, tReview, tAppendNow, tAppendQueue, sUnchecked, sSaved, sTaskQueued, sTaskPerson, sMinor, sUnsure, sDecide, sGiveAgent, openTaskN · src/ui/read-task-setting-view.ts · dirigent:test ověření aplikace 6bd8609e · spec 059 K3.2, spec 065 K2.3 -->
+<!-- zdroj: research:c2a690ea src/core/config.ts:310 read.sourceTask (ask|always|never, tree) · src/core/sourceread.ts:293-302, :438, :600-617 · src/commands/source-reading.ts · strom help source reading (--take now|queue|keep|review, priorita 3) · strom help document read --source-task · assets/lang/cs.json ui.reading.*, read.source.why/same · src/core/live.ts:124-138 taskChoice, POST sourceTask · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 2–4, Tabulka scénářů) · app:6bd8609e strings.ts treeResearch.readGroup/readTask/readTaskAsk/readTaskAlways/readTaskNever/rtOk, read.tAgent, tNow, tQueue, tNone, tSave, tPerson, tReview, tAppendNow, tAppendQueue, sUnchecked, sSaved, sTaskQueued, sTaskPerson, sMinor, sUnsure, sDecide, sGiveAgent, openTaskN · src/ui/read-task-setting-view.ts · dirigent:test ověření aplikace 6bd8609e · spec 059 K3.2, spec 065 K2.3 · nejistá místa na žádost: spec 059 P8 K8.1–K8.5 · research:4895d0f0 src/core/sourceread.ts unsureOffered, wordingOf, decideReading (unsure, read.decide.sure/nothing/noproposal), handOver priorita 3 · src/commands/source-reading.ts --unsure · assets/lang/cs.json read.source.unsure.* · CHANGELOG.cs.md 1.29.0 · app:docs/ZADANI_VYZKUM_cteni-vysledek.md „Odpověď výzkumu: nejistá místa na žádost“ · app:7327b758 src/ui/read-task-view.ts readTaskUnsureShown (B, D, jen počítač), unsureChoiceHtml · src/ui/read-source-state-view.ts · strings.ts read.close, tUnsureQueue, tUnsureQueueSub, tReview, tUnsureReviewSub, sGiveAgent, sReviewGive, sUnsure · dirigent:test/vysledek-1107-nejista-mista.md (i doověření N1) -->

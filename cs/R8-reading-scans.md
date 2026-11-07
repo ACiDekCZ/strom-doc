@@ -494,17 +494,18 @@ se porovná s přepisem místo po místu. Přepis se tím nezmění: nové čten
     sloupců bez protějšku, záhlaví a poznámky výzkumu i čtenáře v závorkách, dlouhé ſ proti s, nečitelné místo proti
     ničemu a slova mimo to, co přečetli oba;
   - každé místo, kde se nové čtení liší od přepisu, má druh:
-    - **věcná změna**: jméno, číslo domu, datum, osoba, nebo slovo tam, kde přepis má `[...]`;
+    - **věcná změna**: jméno, číslo, datum, osoba, nebo slovo tam, kde přepis má `[...]`;
     - **drobnost**: pravopis, zkratka, interpunkce, popisek, velká písmena;
   - věcná změna je **jistá** jen tehdy, když ji oba čtenáři přečetli proti přepisu stejně a nové čtení tam nemá
-    `[...]` ani `[?]`. Místo, na kterém se čtenáři neshodnou, je nejistota, ne změna přepisu;
+    `[...]` ani `[?]`. Místo, na kterém se čtenáři neshodnou, je nejistota, ne změna přepisu. U jednoho čtenáře jsou
+    nejistá místa ta, kde si čtenář nebyl jistý (nové čtení tam má `[...]` nebo `[?]`), ne neshoda dvou čtenářů;
   - místo, které už posoudil úkol, nebo které člověk ponechal či zamítl, se znovu neposuzuje.
 - **Výsledek** (okno **Pramen přečten znovu**): „Proti dosavadnímu přepisu N věcné změny a K drobností.“, nebo
   **Shoduje se s dosavadním přepisem.**; **Čtenáři se shodli.**, nebo „Čtenáři se neshodli na N místech.“; v **Co
   ověřit** skupiny **Věcné změny k ověření**
-  (u přepisu potvrzeného člověkem **Věcné změny k posouzení**), **Nejisté – čtenáři se neshodli**, **Už posouzeno
-  v úkolu T…**, **Už rozhodnuto: ponecháno** a **Drobnosti**. Do úkolu jdou jen jisté věcné změny
-  ([R8.8.3](#R8.8.3)).
+  (u přepisu potvrzeného člověkem **Věcné změny k posouzení**), **Nejisté – čtenáři se neshodli** (u jednoho čtenáře
+  **Nejisté – čtenář si nebyl jistý**), **Už posouzeno v úkolu T…**, **Už rozhodnuto: ponecháno** a **Drobnosti**.
+  Do úkolu jdou samy jen jisté věcné změny; nejistá místa jen na žádost člověka ([R8.8.3](#R8.8.3)).
 - **Hranice:** potvrzení přepisu člověkem zůstává. Nové čtení přepis nikdy samo nepřepíše
   ([R3.4.1](R3-verification-and-citation.md#R3.4.1)).
 - **Ovládání:** aplikace: prohlížeč pramene → **Přečíst znovu…** (značka AI), s volbou čtenářů
@@ -514,13 +515,14 @@ se porovná s přepisem místo po místu. Přepis se tím nezmění: nové čten
   k ověření, ne nový přepis.
 - **Platí od:** výzkum 1.29.0, aplikace 3.25.0
 
-<!-- zdroj: research:c2a690ea src/core/sourceread.ts (porovnání, druhy míst, sure, judged) · strom help document read --source · CHANGELOG.cs.md 1.29.0 · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 1, Tabulka scénářů) · app:6bd8609e src/ui/read-source-ui.ts (nabídka jen s originálem, AI) · strings.ts read.sourceAgain, sourceAgainTitle, againPhone, srcWhy.*, resultSource, vSrc, vSrcSame, vDis, check, gMajor, gMajorPerson, gUnsure, gJudged, gKept, gMinor, vk.*, againResultLink, keepConfirm · spec 059 K3.1–K3.3, K6.2, K6.3 · dirigent:test ověření aplikace 6bd8609e -->
+<!-- zdroj: research:c2a690ea src/core/sourceread.ts (porovnání, druhy míst, sure, judged) · strom help document read --source · CHANGELOG.cs.md 1.29.0 · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 1, Tabulka scénářů) · app:6bd8609e src/ui/read-source-ui.ts (nabídka jen s originálem, AI) · strings.ts read.sourceAgain, sourceAgainTitle, againPhone, srcWhy.*, resultSource, vSrc, vSrcSame, vDis, check, gMajor, gMajorPerson, gUnsure, gJudged, gKept, gMinor, vk.*, againResultLink, keepConfirm · spec 059 K3.1–K3.3, K6.2, K6.3 · dirigent:test ověření aplikace 6bd8609e · jeden čtenář: research:4895d0f0 src/core/sourceread.ts surely (jeden čtenář: nejisté jen `[...]`, `[?]`) · app:7327b758 strings.ts read.gUnsure1, vk.number („číslo“) · dirigent:test/vysledek-1107-nejista-mista.md -->
 
 <a id="R8.8.3"></a>
 ### R8.8.3 Úkol z nového čtení
 
-Úkol z pramene přečteného znovu vzniká jen z jisté věcné změny, kterou ještě nikdo neposoudil. Drobnosti a nejistá
-místa úkol nikdy nezaloží. Jestli úkol vznikne hned, nebo rozhodne člověk, určuje nastavení **Úkol z nového čtení**.
+Úkol z pramene přečteného znovu vzniká sám jen z jisté věcné změny, kterou ještě nikdo neposoudil. Drobnosti úkol
+nikdy nezaloží a nejistá místa ho samy nezaloží: agentovi je jde dát jen na žádost člověka. Jestli úkol z jisté věcné
+změny vznikne hned, nebo rozhodne člověk, určuje nastavení **Úkol z nového čtení**.
 
 - **Nastavení** (`read.sourceTask`, pro každý strom):
   - **Zeptat se** (`ask`, výchozí): úkol nevznikne sám. Čtení zůstane u pramene jako neověřené, dokud člověk
@@ -538,11 +540,31 @@ místa úkol nikdy nezaloží. Jestli úkol vznikne hned, nebo rozhodne člověk
     nevznikne;
   - pramen s neukončeným úkolem: **Připsat k T… a ověřit teď**, **Připsat k úkolu T…**. Jeden pramen má najednou
     jeden úkol svých čtení: nová místa se připíšou k němu, žádné dvakrát.
+- **Nejistá místa na žádost:**
+  - nabízí se jen u čtení, které nemá žádnou jistou věcnou změnu k rozhodnutí, ale má nejistá místa, která nejsou
+    drobnost a která ještě neposoudil žádný úkol. V patičce okna **Pramen přečten znovu** stojí volba vedle
+    **Zavřít** (to zůstává hlavní tlačítko), u pramene v řádku nového čtení (**Dát agentovi… ▸**, u potvrzeného
+    přepisu **Dát k posouzení… ▸**). Nabízí se při každém nastavení, i při **Nezakládat**; na telefonu ne. Jen
+    drobnosti nebo už posouzená místa → volba se nenabízí;
+  - přepis, který člověk nepotvrdil: **Dát agentovi k posouzení** (značka AI) → úkol pro agenta ve frontě (priorita
+    3), nebo se místa připíšou k neukončenému úkolu pramene. Čtenáři četli naslepo, bez přepisu a jmen
+    ([R8.8.2](#R8.8.2)); místa posoudí až agent, na snímku se vším, co výzkum ví o lidech, místech a datech záznamu.
+    Kde to snímek ukazuje jistě, přepis opraví a napíše důvod; jinde přepis nechá a k prameni napíše poznámku, co
+    prohlédl a proč místo zůstává nejisté. Na nic se člověka neptá;
+  - přepis potvrzený člověkem: **Dát k posouzení** → úkol pro člověka s návrhem znění jen z nejistých míst, která nové
+    čtení přečetlo (ne `[...]`, `[?]`); agent přepis nemění ([R3.4.1](R3-verification-and-citation.md#R3.4.1)).
+    Když nové čtení přečetlo jen nečitelná místa, volba se nenabízí;
+  - úkol z nejistých míst vznikne jen na kliknutí, nikdy sám, ani při **Zakládat vždy**. Místa, která pak úkol drží,
+    se u dalších čtení znovu nenabízejí.
 - **Hlídá kód:**
   - rozhoduje jen člověk: v aplikaci, nebo u svého terminálu. `strom document read --source` u terminálu člověka se
     zeptá hned (**Projít to s agentem teď**, **Dát to do fronty jako úkol**, **Jen uložit čtení**, u potvrzeného
     přepisu **Dát k posouzení**); bez volby nic nerozhodne a později jde rozhodnout `strom source reading S…`.
     Agent rozhodnout nesmí: řekne člověku, co čeká;
+  - nejistá místa předá jen člověk: `strom source reading S… --take queue --unsure` (u potvrzeného přepisu
+    `--take review --unsure`), jindy `--unsure` nejde. Čtení, které má jistou věcnou změnu k rozhodnutí, se s
+    `--unsure` odmítne: rozhoduje se bez něj a nejistá místa jdou s ní. `strom source show S…` u nabídky řekne, že
+    místa jde předat;
   - úkol uvádí, kdo četl (agent · model · důkladnost každého čtenáře), že dva čtenáři téhož modelu jsou slabší doklad
     a že nové čtení je jen vodítko ([R3.4.1](R3-verification-and-citation.md#R3.4.1)). Věcné změny jsou v důvodu
     úkolu první;
@@ -550,14 +572,16 @@ místa úkol nikdy nezaloží. Jestli úkol vznikne hned, nebo rozhodne člověk
     znění pro člověka.
 - **Stav u pramene** (prohlížeč pramene): **Novější čtení … se liší (N věcné změny), neověřeno.**, **… uloženo, úkol
   nevznikl.**, **… úkol T… pro agenta (ve frontě).**, **… úkol T… k posouzení.**, **… liší se jen drobnosti.**,
-  **… čtenáři se neshodli …, přepis se nemění.** Po založení úkolu **Otevřít úkol T…**
+  **… čtenáři se neshodli …, přepis se nemění.** (u jednoho čtenáře **… čtenář si nebyl jistý …, přepis se nemění.**)
+  Po založení úkolu **Otevřít úkol T…**
   ([S4.5.3](S4-research-from-the-app.md#S4.5.3)).
 - **Ovládání:** aplikace: **Výzkum → Další → Výzkum u tohoto stromu… → Čtení dokumentů → Úkol z nového čtení**
   (zapíše se do výzkumu a platí i pro čtení spuštěná v terminálu). Terminál:
   `strom config set read.sourceTask ask|always|never --for-tree`, jednou `strom document read --source S…
-  --source-task …`, `strom source reading S… [--take now|queue|keep|review]`, `strom source show S…`.
+  --source-task …`, `strom source reading S… [--take now|queue|keep|review] [--unsure]`, `strom source show S…`.
 - **Proč:** úkol stojí práci agenta, která čerpá předplatné; drobnost ani nejistota přepis nemění, a co už bylo
-  posouzené, se nemá posuzovat znovu.
+  posouzené, se nemá posuzovat znovu. Nejistá místa jde přesto posoudit: čtenáři je nerozhodnou, protože čtou
+  naslepo, ale agent je může posoudit se souvislostmi výzkumu, když o to člověk požádá.
 - **Platí od:** výzkum 1.29.0, aplikace 3.25.0
 
-<!-- zdroj: research:c2a690ea src/core/config.ts:310 read.sourceTask (ask|always|never, tree) · src/core/sourceread.ts:293-302, :438, :600-617 · src/commands/source-reading.ts · strom help source reading (--take now|queue|keep|review, priorita 3) · strom help document read --source-task · assets/lang/cs.json ui.reading.*, read.source.why/same · src/core/live.ts:124-138 taskChoice, POST sourceTask · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 2–4, Tabulka scénářů) · app:6bd8609e strings.ts treeResearch.readGroup/readTask/readTaskAsk/readTaskAlways/readTaskNever/rtOk, read.tAgent, tNow, tQueue, tNone, tSave, tPerson, tReview, tAppendNow, tAppendQueue, sUnchecked, sSaved, sTaskQueued, sTaskPerson, sMinor, sUnsure, sDecide, sGiveAgent, openTaskN · src/ui/read-task-setting-view.ts · dirigent:test ověření aplikace 6bd8609e · spec 059 K3.2, spec 065 K2.3 -->
+<!-- zdroj: research:c2a690ea src/core/config.ts:310 read.sourceTask (ask|always|never, tree) · src/core/sourceread.ts:293-302, :438, :600-617 · src/commands/source-reading.ts · strom help source reading (--take now|queue|keep|review, priorita 3) · strom help document read --source-task · assets/lang/cs.json ui.reading.*, read.source.why/same · src/core/live.ts:124-138 taskChoice, POST sourceTask · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 2–4, Tabulka scénářů) · app:6bd8609e strings.ts treeResearch.readGroup/readTask/readTaskAsk/readTaskAlways/readTaskNever/rtOk, read.tAgent, tNow, tQueue, tNone, tSave, tPerson, tReview, tAppendNow, tAppendQueue, sUnchecked, sSaved, sTaskQueued, sTaskPerson, sMinor, sUnsure, sDecide, sGiveAgent, openTaskN · src/ui/read-task-setting-view.ts · dirigent:test ověření aplikace 6bd8609e · spec 059 K3.2, spec 065 K2.3 · nejistá místa na žádost: spec 059 P8 K8.1–K8.5 · research:4895d0f0 src/core/sourceread.ts unsureOffered, wordingOf, decideReading (unsure, read.decide.sure/nothing/noproposal), handOver priorita 3 · src/commands/source-reading.ts --unsure · assets/lang/cs.json read.source.unsure.* · CHANGELOG.cs.md 1.29.0 · app:docs/ZADANI_VYZKUM_cteni-vysledek.md „Odpověď výzkumu: nejistá místa na žádost“ · app:7327b758 src/ui/read-task-view.ts readTaskUnsureShown (B, D, jen počítač), unsureChoiceHtml · src/ui/read-source-state-view.ts · strings.ts read.close, tUnsureQueue, tUnsureQueueSub, tReview, tUnsureReviewSub, sGiveAgent, sReviewGive, sUnsure · dirigent:test/vysledek-1107-nejista-mista.md (i doověření N1) -->
