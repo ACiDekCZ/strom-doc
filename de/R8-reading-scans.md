@@ -24,6 +24,8 @@ Der Ablauf in Kürze:
 6. **Sicherheit:** der Grad der Sicherheit hängt davon ab, wer den Eintrag wie gelesen hat; eine schwierige Stelle
    braucht eine zweite, blinde Lesung ([R8.7](#R8.7)).
 
+Wer was liest, kurz und am Beispiel eines Eintrags, sagt [R8.9](#R8.9).
+
 > **Hinweis: das Lesen durch ein Modell ist nicht hundertprozentig.** Alte Schrift liest ein KI-Modell, und die
 > Genauigkeit des Lesens hängt vom Modell ab. Die Methodik will für alte Schrift das stärkste Modell, nie ein
 > schnelles oder billiges Lesen. Leser lesen mit dem Modell für Schrift (`model.vision`, sonst `strom read --model`),
@@ -669,3 +671,70 @@ oder der Mensch entscheidet, bestimmt die Einstellung **Aufgabe aus einer neuen 
 - **Gilt seit:** Forschung 1.29.0, App 3.25.0
 
 <!-- zdroj: research:c2a690ea src/core/config.ts:310 read.sourceTask (ask|always|never, tree) · src/core/sourceread.ts:293-302, :438, :600-617 · src/commands/source-reading.ts · strom help source reading (--take now|queue|keep|review, priorita 3) · strom help document read --source-task · assets/lang/cs.json ui.reading.*, read.source.why/same · src/core/live.ts:124-138 taskChoice, POST sourceTask · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 2–4, Tabulka scénářů) · app:6bd8609e strings.ts treeResearch.readGroup/readTask/readTaskAsk/readTaskAlways/readTaskNever/rtOk, read.tAgent, tNow, tQueue, tNone, tSave, tPerson, tReview, tAppendNow, tAppendQueue, sUnchecked, sSaved, sTaskQueued, sTaskPerson, sMinor, sUnsure, sDecide, sGiveAgent, openTaskN · src/ui/read-task-setting-view.ts · dirigent:test ověření aplikace 6bd8609e · spec 059 K3.2, spec 065 K2.3 · nejistá místa na žádost: spec 059 P8 K8.1–K8.5 · research:4895d0f0 src/core/sourceread.ts unsureOffered, wordingOf, decideReading (unsure, read.decide.sure/nothing/noproposal), handOver priorita 3 · src/commands/source-reading.ts --unsure · assets/lang/cs.json read.source.unsure.* · CHANGELOG.cs.md 1.29.0 · app:docs/ZADANI_VYZKUM_cteni-vysledek.md „Odpověď výzkumu: nejistá místa na žádost“ · app:7327b758 src/ui/read-task-view.ts readTaskUnsureShown (B, D, jen počítač), unsureChoiceHtml · src/ui/read-source-state-view.ts · strings.ts read.close, tUnsureQueue, tUnsureQueueSub, tReview, tUnsureReviewSub, sGiveAgent, sReviewGive, sUnsure · dirigent:test/vysledek-1107-nejista-mista.md (i doověření N1) -->
+
+<a id="R8.9"></a>
+## R8.9 Wer liest: Überblick und Beispiel eines Eintrags
+
+Einen Eintrag im Scan lesen mehrere Leser, jeder mit einer anderen Aufgabe und einem anderen Blick. Kein Leser
+schreibt in den Stammbaum: was er liest, ist eine Grundlage für den Hauptagenten und für den Menschen.
+
+| Wer liest | Was er sieht | Was er zurückgibt | Regel |
+|---|---|---|---|
+| Leser eines Buchs (`strom read`) | einen Stapel Ansichten und die ganze Frage; sonst nichts aus der Forschung | einen kurzen Bericht: Einträge zur Frage, bei Namen die Sicherheit in Prozent | [R8.3](#R8.3) |
+| Hauptagent | den Ausschnitt des Eintrags in voller Auflösung und alles, was die Forschung weiß | eine Quelle mit Abschrift und Angaben aus sicher Gelesenem | [R8.5](#R8.5), [R8.6](#R8.6) |
+| blinder zweiter Leser (`strom read --blind --crop`) | nur den Ausschnitt einer Zelle; nicht den erwarteten Wert, Namen, Ort und warum es darauf ankommt | seine Lesung dieser Zelle | [R3.5](R3-verification-and-citation.md#R3.5) |
+| Leser eines Dokuments aus der App (**1 Leser** oder **2 Leser**) | die Seiten des Dokuments; der zweite Leser sieht die Lesung des ersten nicht | Transkription, Übersetzung, Erläuterung und erwähnte Personen | [R8.8](#R8.8), [R8.8.1](#R8.8.1) |
+| Leser von **Erneut lesen…** (1 oder 2) | das Original des Eintrags und was die Forschung über den Eintrag weiß (Art, Sprache, Datum, wo der Eintrag steht); nicht die Abschrift und die Namen | eine neue Lesung, Stelle für Stelle mit der Abschrift verglichen | [R8.8.2](#R8.8.2) |
+
+- **Prüft der Code:**
+  - **blind** bedeutet: der Leser bekommt nicht, was von ihm erwartet wird. Der blinde zweite Leser bekommt nur den
+    Ausschnitt, der zweite Leser eines Dokuments sieht die erste Lesung nicht, und die Leser von **Erneut lesen…**
+    sehen weder die Abschrift noch die Namen;
+  - Leser lesen mit dem Modell der Forschung für Schrift (`model.vision`), nie mit einem schwächeren. Beim Lesen eines
+    Dokuments und bei **Erneut lesen…** hat jeder Leser sein Programm, Modell und seine Gründlichkeit, und das
+    Ergebnis sagt bei der Lesung, wer gelesen hat ([R8.8.1](#R8.8.1));
+  - wo zwei Leser voneinander abweichen, ist die Stelle unsicher, keine Berichtigung der Abschrift
+    ([R8.8.2](#R8.8.2)).
+- **Nur Methodik:** einen Eintrag, der zitiert wird, liest der Hauptagent selbst, aus dem Ausschnitt
+  ([R8.5](#R8.5)); eine schwierige Zelle bekommt eine blinde zweite Lesung
+  ([R3.5](R3-verification-and-citation.md#R3.5)).
+- **Warum:** wer den erwarteten Wert kennt, neigt dazu, ihn zu „lesen“. Zwei unabhängige Leser, am besten zweier
+  verschiedener Modelle, zeigen die Stellen, an denen sich die Schrift auf zweierlei Weise lesen lässt.
+- **Gilt seit:** Forschung 1.0.0 (Leser eines Buchs, blinde zweite Lesung); Lesen eines Dokuments Forschung 1.18.0;
+  Wahl der Leser und **Erneut lesen…** Forschung 1.29.0, App 3.25.0
+
+**Beispiel eines Eintrags (erfunden).** Die Quelle ist ein Taufeintrag aus dem Jahr 1843. Die bisherige Abschrift hat
+die Forschung geschrieben, und der Mensch hat sie nicht bestätigt: „Am 3. März 1843 getauft Jan, Sohn des Václav
+Horák, Häuslers in Javorná Nr. 12, und der Marie geb. Vlková.“ Das Taufdatum von Jan Horák hat der Mensch in der App in
+den Stammbaum eingetragen.
+
+1. **Erneut lesen…** bei der Quelle, **2 Leser**: Leser 1 Claude Code, Leser 2 Codex, jeder mit seinem Modell und
+   seiner Gründlichkeit. Beide bekommen nur das Original des Eintrags und das, was die Forschung über den Eintrag weiß
+   (Art, Sprache, Datum, wo der Eintrag steht); Abschrift und Namen sehen sie nicht.
+2. Die Leser lesen:
+   - Leser 1: „… 5. März 1843 … in Javorná Nr. 17, und der Marie geborene Vlková.“
+   - Leser 2: „… 5. März 1843 … in Javorná Nr. 12, und der Marie geborene Vlková.“
+3. Vergleich mit der Abschrift:
+   - der Tag **5.** statt **3.**: beide Leser lesen gleich und sicher → eine sichere inhaltliche Änderung;
+   - die Hausnummer: Leser 1 liest **17**, Leser 2 **12** → die Leser weichen ab; die Stelle ist unsicher, keine
+     Änderung der Abschrift;
+   - „geb.“ gegen „geborene“: eine Abkürzung → eine Kleinigkeit.
+4. In **Zu prüfen** stehen: **Inhaltliche Änderungen zu prüfen** (der Tag der Taufe), **Unsicher – Leser weichen ab**
+   (die Hausnummer) und **Kleinigkeiten** („geb.“). Die Abschrift hat sich nicht geändert; die neue Lesung bleibt bei
+   der Quelle.
+5. Bei der Einstellung **Nachfragen** entscheidet der Mensch: **Aufgabe für den Agenten** → **In die Warteschlange des
+   Agenten**. In die Aufgabe geht die sichere inhaltliche Änderung und mit ihr auch die unsichere Stelle; eine
+   Kleinigkeit legt von selbst keine Aufgabe an ([R8.8.3](#R8.8.3)).
+6. Der Agent sieht sich in der Aufgabe den Eintrag im Scan an, mit allem, was die Forschung über die Personen und Orte
+   weiß:
+   - der Tag ist im Scan sicher **5.**: er berichtigt die Abschrift und schreibt den Grund;
+   - die Hausnummer ist im Scan nicht sicher: er lässt die Abschrift und schreibt zur Quelle eine Notiz, was er
+     angesehen hat und warum die Stelle unsicher bleibt;
+   - das Taufdatum im Stammbaum hat der Mensch eingetragen: der Agent ändert es nicht, er schlägt nur den 5. März 1843
+     vor. Die App zeigt bei der Angabe **Die Forschung schlägt vor, eine von einem Menschen eingetragene Angabe zu
+     ändern** und **Widerspruch ›**; es entscheidet der Mensch ([S6.3](S6-tree-from-another-program.md#S6.3)).
+
+Eine Angabe aus dem Stammbaum eines anderen Programms dürfte der Agent nach dem zitierten Eintrag ändern; der Wert aus
+dem Stammbaum bliebe bei der Angabe zum Zurücksetzen ([S6.3](S6-tree-from-another-program.md#S6.3)).
+
+<!-- zdroj: research:v1.30.0 src/core/sourceread.ts placesOf (fresh, ordered: jistá věcná změna první, s ní ostatní neposouzená místa), decideReading, review · assets/lang/cs.json read.source.why, read.source.unsure.why · src/commands/read.ts --blind --crop · assets/method/verify.md · app:1c9b2392 strings.ts read.check „Co ověřit“, gMajor, gUnsure, gMinor, tAgent, tQueue, origin.proposeUser, origin.conflictOpen · spec 059 ukoly U6 (nové 8. 11.: oddíl se čtenáři a příkladem, jen text) -->

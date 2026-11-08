@@ -43,5 +43,6 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [S3 Co wie badanie](S3-what-the-research-knows.md): sprzeczności, hipotezy, przeszukano i Nad osobą w aplikacji
 - [S4 Badanie sterowane z aplikacji](S4-research-from-the-app.md): panel i przegląd badania, kolejka, linie, akcje do terminala
 - [S5 Telefon](S5-phone.md): strona badania w telefonie, parowanie, zdjęcia partiami
+- [S6 Drzewo z innego programu](S6-tree-from-another-program.md): drzewo z MyHeritage, Gramps, FamilySearch i programów dla Windows: co się wczytuje, znaczniki wiarygodności, dane z drzewa jako wskazówki, karta Co dalej, kopie zapasowe, eksport z powrotem, ponowny import
 
 Licencja: [CC BY 4.0](../LICENSE). Teksty można udostępniać i przerabiać z podaniem źródła.

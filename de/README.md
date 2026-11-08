@@ -44,5 +44,6 @@ dauerhaft.
 - [S3 Was die Forschung weiß](S3-what-the-research-knows.md): Widersprüche, Hypothesen, Durchsucht und Über der Person in der App
 - [S4 Forschung aus der App gesteuert](S4-research-from-the-app.md): Panel und Forschungsübersicht, Warteschlange, Linien, Aktionen ins Terminal
 - [S5 Telefon](S5-phone.md): Seite der Forschung auf dem Telefon, Koppeln, Fotos in Stapeln
+- [S6 Stammbaum aus einem anderen Programm](S6-tree-from-another-program.md): ein Stammbaum aus MyHeritage, Gramps, FamilySearch und Windows-Programmen: was geladen wird, Zuverlässigkeitsmarken, Angaben aus dem Stammbaum als Hinweise, die Karte Wie weiter, Sicherungen, Export zurück, wiederholter Import
 
 Lizenz: [CC BY 4.0](../LICENSE). Die Texte dürfen mit Quellenangabe geteilt und bearbeitet werden.

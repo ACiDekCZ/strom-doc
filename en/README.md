@@ -43,5 +43,6 @@ Parts R (the research), A (the app) and S (the app and the research together) ar
 - [S3 What the research knows](S3-what-the-research-knows.md): conflicts, hypotheses, searched records and Above the person in the app
 - [S4 Research run from the app](S4-research-from-the-app.md): the research panel and overview, the queue, directions, actions in the terminal
 - [S5 Phone](S5-phone.md): the research page on a phone, pairing, photos in batches
+- [S6 A tree from another program](S6-tree-from-another-program.md): a family tree from MyHeritage, Gramps, FamilySearch and Windows programs: what loads, reliability marks, family-tree facts as leads, the What next card, backups, export back, repeated import
 
 License: [CC BY 4.0](../LICENSE). The texts may be shared and adapted with attribution.
