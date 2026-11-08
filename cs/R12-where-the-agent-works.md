@@ -41,11 +41,12 @@ výzkum 1.30.0. U pravidel je rozlišeno, co **hlídá kód** (příkaz `strom` 
 - **Ovládání:** terminál: `strom chat` (kde, říká nastavení `agent.where`: `app` aplikace agenta, `terminal`
   terminál; bez nastavení aplikace, když je nainstalovaná), `strom chat --where app|terminal` jednou jinak,
   `strom agents use claude|codex|antigravity|grok|opencode`, `strom doctor` (řádky **kde se mluví s agentem**, **agent v terminálu**,
-  **prohlížeč (Claude in Chrome)**, **prohlížeč desktopových aplikací**, **aplikace ChatGPT**, **hooky Codexu (Codex v terminálu)**).
+  **prohlížeč (Claude in Chrome)**, **prohlížeč desktopových aplikací**, **aplikace ChatGPT**, **hooky Codexu (prohlížeč)**; při zvolené aplikaci ChatGPT se řádek hooků jmenuje
+  **hooky Codexu (Codex v terminálu)**).
 - **Platí od:** výzkum 1.29.0
 - **Od výzkumu 1.30.0:** řádek aplikace ChatGPT: její prohlížeč strom nehlídá ([R12.5.1](#R12.5.1)).
 
-<!-- zdroj: research:src/core/apps.ts DESKTOP_APPS (claude://code/new, codex://new; mac Claude.app, Codex.app, ChatGPT.app) · src/commands/start.ts:156-217 strom chat (where app|terminal, ui.chat.app.open) · src/core/config.ts:311 agent.where, :316 agent.addons · src/agents/files.ts codexRules · src/core/agentcli.ts · src/cli/main.ts:290 (def.person && isAgent) · src/core/which.ts detectAgent · assets/lang/cs.json ui.doc.where, ui.doc.cli, ui.doc.browser, ui.doc.desktop · test/vysledek-desktop-chrome.md (Trust workspace, odkaz jen předvyplní zprávu) -->
+<!-- zdroj: research:src/core/apps.ts DESKTOP_APPS (claude://code/new, codex://new; mac Claude.app, Codex.app, ChatGPT.app) · src/commands/start.ts:156-217 strom chat (where app|terminal, ui.chat.app.open) · src/core/config.ts:311 agent.where, :316 agent.addons · src/agents/files.ts codexRules · src/core/agentcli.ts · src/cli/main.ts:290 (def.person && isAgent) · src/core/which.ts detectAgent · src/commands/setup.ts:556-558 doctor codexhooks (ui.doc.codexhooks; ui.doc.codexhooks.terminal jen při chatgptApp) · assets/lang/cs.json ui.doc.where, ui.doc.cli, ui.doc.browser, ui.doc.desktop · test/vysledek-desktop-chrome.md (Trust workspace, odkaz jen předvyplní zprávu) -->
 
 <a id="R12.2"></a>
 ## R12.2 Prohlížeč v aplikaci Claude
@@ -168,7 +169,8 @@ stromu nevolá ([R12.5.1](#R12.5.1)).
 - **Proč:** prohlížeč Codexu se ovládá kódem, ne adresou stránky. strom posoudí jen adresu, kterou v kódu vidí; kód
   bez adresy proto neodmítá, jen ho zapíše.
 - **Ovládání:** Codex v terminálu ve složce výzkumu: **Review hooks** (`/hooks`) → hook **strom** → **Trust**.
-  Terminál: `strom doctor` (řádky **prohlížeč desktopových aplikací** a **hooky Codexu (Codex v terminálu)**),
+  Terminál: `strom doctor` (řádky **prohlížeč desktopových aplikací** a **hooky Codexu (prohlížeč)**; při zvolené
+  aplikaci ChatGPT se řádek hooků jmenuje **hooky Codexu (Codex v terminálu)**),
   `strom agents sync` (zapíše chybějící
   soubor hooku), `strom net web` (počet nehlídaných volání), `strom config set agent.addons on|off`.
 - **Platí od:** výzkum 1.27.0 (vypnutí prohlížeče a ovládání počítače v samostatném běhu); `agent.addons` od 1.14.0;

@@ -43,12 +43,12 @@ method**. What has not been verified live on a Mac is said in [R12.6](#R12.6).
 - **Controls:** terminal: `strom chat` (where, says the setting `agent.where`: `app` the agent's app, `terminal` the
   terminal; unset: the app when it is installed), `strom chat --where app|terminal` once otherwise,
   `strom agents use claude|codex|antigravity|grok|opencode`, `strom doctor` (rows **where the conversation is**, **the agent in the
-  terminal**, **browser (Claude in Chrome)**, **desktop apps' browser**, **the ChatGPT app**, **Codex's hooks (Codex in the
-  terminal)**).
+  terminal**, **browser (Claude in Chrome)**, **desktop apps' browser**, **the ChatGPT app**, **Codex's hooks (browser)**; with the ChatGPT app chosen, the hooks row is named
+  **Codex's hooks (Codex in the terminal)**).
 - **Since:** research 1.29.0
 - **From research 1.30.0:** the row the ChatGPT app: strom does not watch its browser ([R12.5.1](#R12.5.1)).
 
-<!-- zdroj: research:src/core/apps.ts DESKTOP_APPS (claude://code/new, codex://new; mac Claude.app, Codex.app, ChatGPT.app) · src/commands/start.ts:156-217 strom chat (where app|terminal, ui.chat.app.open) · src/core/config.ts:311 agent.where, :316 agent.addons · src/agents/files.ts codexRules · src/core/agentcli.ts · src/cli/main.ts:290 (def.person && isAgent) · src/core/which.ts detectAgent · src/cli/ui.ts ui.doc.where, ui.doc.cli, ui.doc.browser, ui.doc.desktop · test/vysledek-desktop-chrome.md (Trust workspace, odkaz jen předvyplní zprávu) -->
+<!-- zdroj: research:src/core/apps.ts DESKTOP_APPS (claude://code/new, codex://new; mac Claude.app, Codex.app, ChatGPT.app) · src/commands/start.ts:156-217 strom chat (where app|terminal, ui.chat.app.open) · src/core/config.ts:311 agent.where, :316 agent.addons · src/agents/files.ts codexRules · src/core/agentcli.ts · src/cli/main.ts:290 (def.person && isAgent) · src/core/which.ts detectAgent · src/commands/setup.ts:556-558 doctor codexhooks (ui.doc.codexhooks; ui.doc.codexhooks.terminal jen při chatgptApp) · src/cli/ui.ts ui.doc.where, ui.doc.cli, ui.doc.browser, ui.doc.desktop · test/vysledek-desktop-chrome.md (Trust workspace, odkaz jen předvyplní zprávu) -->
 
 <a id="R12.2"></a>
 ## R12.2 The browser in the Claude app
@@ -178,7 +178,8 @@ calls no strom hook ([R12.5.1](#R12.5.1)).
 - **Why:** Codex's browser is driven by code, not by a page's address. strom judges only an address it sees in the
   code; so it does not refuse code without an address, it only records it.
 - **Controls:** Codex in the terminal in the research folder: **Review hooks** (`/hooks`) → the hook **strom** →
-  **Trust**. Terminal: `strom doctor` (rows **desktop apps' browser** and **Codex's hooks (Codex in the terminal)**),
+  **Trust**. Terminal: `strom doctor` (rows **desktop apps' browser** and **Codex's hooks (browser)**; with the ChatGPT app
+  chosen, the hooks row is named **Codex's hooks (Codex in the terminal)**),
   `strom agents sync` (writes a missing hook file), `strom net web` (the number of unwatched calls), `strom config set agent.addons on|off`.
 - **Since:** research 1.27.0 (browser and computer use switched off in a run alone); `agent.addons` since 1.14.0;
   the hook before Codex's browser and Codex missing in the terminal since 1.29.0
