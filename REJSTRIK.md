@@ -1349,12 +1349,12 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Z rodokmenu | Značka spolehlivosti údaje převzatého z rodokmenu jiného programu, který nikdo neověřil ani nezměnil; platí, dokud má údaj hodnotu ze souboru. |
-| en | From family tree | The reliability mark of a fact taken from another program's family tree that nobody verified or changed; it holds while the fact has the file's value. |
-| de | Aus dem Stammbaum | Die Zuverlässigkeitsmarke einer Angabe aus dem Stammbaum eines anderen Programms, die niemand geprüft oder geändert hat; sie gilt, solange die Angabe den Wert aus der Datei hat. |
-| pl | Z drzewa | Znacznik wiarygodności danej przejętej z drzewa innego programu, której nikt nie sprawdził ani nie zmienił; obowiązuje, dopóki dana ma wartość z pliku. |
+| cs | Z rodokmenu | Značka spolehlivosti údaje převzatého z rodokmenu jiného programu, který nikdo neověřil ani nezměnil; platí, dokud má údaj hodnotu ze souboru. Ve stromu výzkumu ji má i údaj bez stupně jistoty z rodokmenu z aplikace Strom, který výzkum převzal a nikdo ho nezměnil. |
+| en | From family tree | The reliability mark of a fact taken from another program's family tree that nobody verified or changed; it holds while the fact has the file's value. In a research tree, a fact without a degree of certainty from a family tree from the Strom app, taken in by the research and changed by nobody, has it too. |
+| de | Aus dem Stammbaum | Die Zuverlässigkeitsmarke einer Angabe aus dem Stammbaum eines anderen Programms, die niemand geprüft oder geändert hat; sie gilt, solange die Angabe den Wert aus der Datei hat. In einem Forschungsbaum trägt sie auch eine Angabe ohne Sicherheitsgrad aus einem Stammbaum aus der App Strom, den die Forschung übernommen hat und die niemand geändert hat. |
+| pl | Z drzewa | Znacznik wiarygodności danej przejętej z drzewa innego programu, której nikt nie sprawdził ani nie zmienił; obowiązuje, dopóki dana ma wartość z pliku. W drzewie badania ma go też dana bez stopnia pewności z drzewa z aplikacji Strom, które badanie przejęło, jeśli nikt jej nie zmienił. |
 
-- **Čísla:** [S6.2](cs/S6-tree-from-another-program.md#S6.2), S6.3
+- **Čísla:** [S6.2](cs/S6-tree-from-another-program.md#S6.2), S6.3, S7.1, S7.2
 
 <a id="placeholder-person"></a>
 ### Zástupná osoba
