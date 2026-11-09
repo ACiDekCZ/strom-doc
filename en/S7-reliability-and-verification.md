@@ -4,7 +4,7 @@
 At each fact the app shows how reliable it is, and the card in the tree has one mark for the whole person. The
 research can verify a fact against the original record: in the background, for one fact, for a person or for a large
 part of the tree. Certainty, though, comes only when a **person** compares the fact with the scan of the record and
-confirms it (**Checked against the scan**, [S7.8](#S7.8)). Verification by the agent gives at most **Proven**; a
+confirms it (**Confirm against the scan**, [S7.8](#S7.8)). Verification by the agent gives at most **Proven**; a
 person's confirmation is stronger and the agent never changes it. The chapter describes the Strom app 3.26.0 and the
 research 1.30.0. What works only with the research's bridge and what works without it is summed up in [S7.9](#S7.9).
 
@@ -27,9 +27,9 @@ colour alone.
 
 - **The tip at the mark** (on a click): the fact's sources; with two readers **two readers agree**; for a fact that
   stayed probable or possible after verification, the line “Stays {degree} · verified by the research on {date}” and
-  the reason why it could not be proven; for a confirmed one “Confirmed by a person against the scan on {date}.”; for
+  the reason why it could not be proven; for a confirmed one “✓ Confirmed against the scan on {date}”; for
   a fact from the family tree that the family tree cites, **cited in the family tree, not verified in Strom**. The tip
-  also holds the actions **Verify** ([S7.3](#S7.3)), **Checked against the scan** and **Undo** ([S7.8](#S7.8)), where
+  also holds the actions **Verify** ([S7.3](#S7.3)), **Confirm against the scan** and **Undo** ([S7.8](#S7.8)), where
   they apply.
 - **Enforced by the code:**
   - two dots go only to a fact for which two readers of the record agreed when the research verified it
@@ -108,10 +108,15 @@ on the lines.
 <a id="S7.4"></a>
 ## S7.4 Verify facts at a person
 
-All unverified facts of one person can be sent to be verified at once. The item **Verify facts · N** is in the
-person's menu and in the tip at the mark on the card; it shows only when at least one fact of the person offers
-**Verify**.
+All unverified facts of one person can be sent to be verified at once: with the button **Verify facts (N)** in the
+person card and in the tip at the mark on the card, or with the item **Verify facts · N** in the person's menu.
 
+- **Where:**
+  - the person card: the button **Verify facts (N)** above the section **Events**. When the person has nothing to
+    offer for verification but their facts are waiting to be verified, it shows “N facts waiting to be verified”
+    instead of the button; otherwise nothing is there;
+  - the tip at the mark on the card in the tree ([S7.2](#S7.2)): **Verify facts (N)**, the same as in the person card;
+  - the person's menu: **Verify facts · N**, while verifying **Verifying · N**.
 - **The window Verify the person's facts:** “{name} · N unverified facts”, a list of facts to tick, each **low** or
   **higher**, “Estimate: {n} low, {n} higher” (“Low = read a known record. Higher = the record is still to be
   found.”) and the button **Verify (N)** by the ticked ones. After starting “N facts queued for verification.” and the
@@ -120,11 +125,14 @@ person's menu and in the tip at the mark on the card; it shows only when at leas
   research knows (residences too, and facts already proven by another reader), except those confirmed by a person,
   those waiting to be verified, the name and the sex. The count in the menu, in the window and in the message after
   starting is the same.
-- **Controls:** app: the person's menu or the tip at the mark on the card → **Verify facts · N** → **Verify (N)**.
-  Terminal: `strom verify facts P…`.
+- **Limits:** the button and the item show only with the research's bridge running ([S7.9](#S7.9)) and only when at
+  least one fact of the person offers **Verify**.
+- **Controls:** app: the person card → **Verify facts (N)** above **Events**; the tip at the mark on the card →
+  **Verify facts (N)**; the person's menu → **Verify facts · N**; then in the window **Verify (N)**. Terminal:
+  `strom verify facts P…`.
 - **Since:** research 1.30.0, app 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) -->
+<!-- zdroj: app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) -->
 
 <a id="S7.5"></a>
 ## S7.5 Verify facts in the tree
@@ -226,11 +234,11 @@ proven by the scan, or it stays as it was, with a reason.
 <!-- zdroj: research:6c6e7c3b strom help verify done (--proven --image | --kept --reason, jen uvnitř sezení) · cs.json ui.fixes.verify-originals.not · app:7b0471f8 strings.ts verify.reasonHead -->
 
 <a id="S7.8"></a>
-## S7.8 Checked against the scan: confirmation by a person
+## S7.8 Confirm against the scan: confirmation by a person
 
 The strongest mark is given by a person: they look at the scan of the record, compare it with the fact and in the tip
-at the mark click **Checked against the scan**. The fact is then **Confirmed** (✓) with the line “Confirmed by a
-person against the scan on {date}.”
+at the mark click **Confirm against the scan**. The fact is then **Confirmed** (✓), and in place of the action the
+tip shows the state “✓ Confirmed against the scan on {date}” and **Undo**.
 
 - **Enforced by the code:**
   - **Undo** takes the confirmation back (“Confirmation undone”); the fact then has the degree it had before;
@@ -239,21 +247,24 @@ person against the scan on {date}.”
   - a confirmed fact the agent never changes, it only proposes ([S6.3](S6-tree-from-another-program.md#S6.3));
   - a tree without research: the app keeps the confirmation itself, at a fact that cites a source, when the tree can be
     edited. The confirmation and its undoing go with the tree into the research, also through a GEDCOM file;
+  - a confirmation the app keeps is a change of the tree: it has a step back (“confirming a fact of {name} against
+    the scan”, “undoing the confirmation of {name}”) and an entry in the change history (“Fact of {name} confirmed
+    against the scan”, “Confirmation against the scan undone: {name}”);
   - a tree linked to the research: the research writes the confirmation through the bridge, only when the bridge runs
     and the research can do it; the name and the sex are not confirmed here;
   - in the terminal only a person at their own terminal confirms: `strom verify confirm E… [--undo]`. To the agent
     `strom` refuses the confirmation.
-- **Limits:** a tree linked to the research whose bridge does not run offers neither **Checked against the scan** nor
+- **Limits:** a tree linked to the research whose bridge does not run offers neither **Confirm against the scan** nor
   **Undo**; confirming works only with the bridge running, or in the terminal.
 - **Why:** certainty about a fact comes from a person seeing the record themselves. Verification by the agent is a
   reading by AI; ✓ says that a person saw the record. A confirmed transcript
   ([A3.1.1](A3-evidence-in-the-app.md#A3.1.1), [R3.4.1](R3-verification-and-citation.md#R3.4.1)) confirms the
-  text of the record, **Checked against the scan** a fact of the person.
-- **Controls:** app: the person card → the fact's mark → **Checked against the scan** / **Undo**. Terminal:
+  text of the record, **Confirm against the scan** a fact of the person.
+- **Controls:** app: the person card → the fact's mark → **Confirm against the scan** / **Undo**. Terminal:
   `strom verify confirm E…`, `strom verify confirm E… --undo`.
 - **Since:** research 1.30.0, app 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/verify-offer.ts (human → Vzít zpět; bez výzkumu scan u citovaného; ve stromu výzkumu scan jen s researchConfirms) · src/verify.ts factConfirmation/researchConfirmation (platí jen s nezměněnou hodnotou) · src/verify-ui-model.ts (jméno, pohlaví bez scan ve stromu výzkumu) · strings.ts verify.scan, undo, undone, confirmedAt · CHANGELOG.cs.md 3.26.0 · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2: bez mostu ✓ ani Vzít zpět ve stromu výzkumu) · prace/1109-app-potvrzeni-zmena · research:6c6e7c3b strom help verify confirm (jen uživatel, most; mimo něj requireHuman) -->
+<!-- zdroj: app:7b0471f8 src/verify-offer.ts (human → Vzít zpět; bez výzkumu scan u citovaného; ve stromu výzkumu scan jen s researchConfirms) · src/verify.ts factConfirmation/researchConfirmation (platí jen s nezměněnou hodnotou) · src/verify-ui-model.ts (jméno, pohlaví bez scan ve stromu výzkumu) · strings.ts verify.scan, undo, undone, confirmedAt · app:7eb903a3 src/ui/verify-ui.ts (✓ jen u stavu, akce bez ✓; verifyConfirm: bez mostu DataManager.confirmFact) · src/data.ts confirmFact/unconfirmFact (undo.confirmFact, unconfirmFact, auditLog.confirmedFact, unconfirmedFact) · strings.ts verify.scan, confirmedAt · CHANGELOG.cs.md 3.26.0 · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2: bez mostu ✓ ani Vzít zpět ve stromu výzkumu) · prace/1109-app-potvrzeni-zmena · research:6c6e7c3b strom help verify confirm (jen uživatel, most; mimo něj requireHuman) -->
 
 <a id="S7.9"></a>
 ## S7.9 What works with the bridge and what without it
@@ -262,7 +273,7 @@ person against the scan on {date}.”
 |---|---|---|---|
 | Marks at facts and on the card | yes | yes, by the last state from the file | yes, from the import and the citations |
 | **Verify**, **Verify facts · N**, **Verify facts in the tree…** | yes | no | no (a line about the ancestor research) |
-| **Checked against the scan**, **Undo** | yes, the research writes it | no | yes, the app keeps it |
+| **Confirm against the scan**, **Undo** | yes, the research writes it | no | yes, the app keeps it |
 | **Stop** verifying | yes | no; `strom verify stop` in the terminal | – |
 | Verifying in the research's queue | runs | runs (the research does not wait for the app) | – |
 

@@ -45,6 +45,6 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [S4 Výzkum řízený z aplikace](S4-research-from-the-app.md): panel a přehled výzkumu, fronta, linie, akce do terminálu
 - [S5 Telefon](S5-phone.md): stránka výzkumu v telefonu, párování, fotky po dávkách
 - [S6 Strom z jiného programu](S6-tree-from-another-program.md): rodokmen z MyHeritage, Gramps, FamilySearch a programů pro Windows: co se načte, značky spolehlivosti, údaje z rodokmenu jako vodítka, karta Co teď, zálohy, export zpět, opakovaný import
-- [S7 Spolehlivost údajů a ověření podle originálů](S7-reliability-and-verification.md): značky u údajů a na kartičce, Ověřit u údaje, u osoby a ve stromu, ověřování ve frontě výzkumu, Ověřeno podle skenu, co jde s mostem a bez něj
+- [S7 Spolehlivost údajů a ověření podle originálů](S7-reliability-and-verification.md): značky u údajů a na kartičce, Ověřit u údaje, u osoby a ve stromu, ověřování ve frontě výzkumu, Potvrdit podle skenu, co jde s mostem a bez něj
 
 Licence: [CC BY 4.0](../LICENSE). Texty je možné sdílet a upravovat s uvedením zdroje.

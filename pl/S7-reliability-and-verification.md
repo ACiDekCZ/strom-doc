@@ -3,8 +3,8 @@
 
 Przy każdej danej aplikacja pokazuje, jak jest wiarygodna, a karta w drzewie ma jeden znacznik za całą osobę. Badanie
 potrafi zweryfikować daną według oryginału aktu: w tle, przy jednej danej, przy osobie albo w dużej części drzewa.
-Pewność powstaje jednak dopiero wtedy, gdy **człowiek** sam porówna daną ze skanem aktu i ją potwierdzi (**Sprawdzone
-ze skanem**, [S7.8](#S7.8)). Weryfikacja przez agenta daje najwyżej **Udokumentowane**; potwierdzenie przez człowieka
+Pewność powstaje jednak dopiero wtedy, gdy **człowiek** sam porówna daną ze skanem aktu i ją potwierdzi (**Potwierdź
+według skanu**, [S7.8](#S7.8)). Weryfikacja przez agenta daje najwyżej **Udokumentowane**; potwierdzenie przez człowieka
 jest silniejsze i agent nigdy go nie zmienia. Rozdział opisuje aplikację Strom 3.26.0 i badanie 1.30.0. Co działa
 tylko z mostem badania, a co także bez niego, podsumowuje [S7.9](#S7.9).
 
@@ -27,9 +27,9 @@ kolorem.
 
 - **Podpowiedź przy znaczniku** (po kliknięciu): źródła danej; przy dwóch czytelnikach **dwóch czytających
   zgodnie**; przy danej, która po weryfikacji została prawdopodobna lub możliwa, wiersz „Pozostaje {stopień} · badanie
-  sprawdziło {data}” i powód, dlaczego nie dało się jej udokumentować; przy potwierdzonej „Potwierdzone przez
-  człowieka ze skanem {data}.”; przy danej z drzewa, którą drzewo cytuje, **cytowane w drzewie, w Strom
-  niezweryfikowane**. W podpowiedzi są też akcje **Zweryfikuj** ([S7.3](#S7.3)), **Sprawdzone ze skanem** i **Cofnij**
+  sprawdziło {data}” i powód, dlaczego nie dało się jej udokumentować; przy potwierdzonej „✓ Potwierdzone
+  według skanu {data}”; przy danej z drzewa, którą drzewo cytuje, **cytowane w drzewie, w Strom
+  niezweryfikowane**. W podpowiedzi są też akcje **Zweryfikuj** ([S7.3](#S7.3)), **Potwierdź według skanu** i **Cofnij**
   ([S7.8](#S7.8)), gdzie mają zastosowanie.
 - **Pilnuje kod:**
   - dwie kropki dostaje tylko dana, przy której podczas weryfikacji przez badanie zgodzili się dwaj czytelnicy aktu
@@ -107,10 +107,15 @@ znacznika oferuje **Zweryfikuj**. Badanie weryfikuje wtedy daną według orygina
 <a id="S7.4"></a>
 ## S7.4 Zweryfikuj dane przy osobie
 
-Wszystkie niezweryfikowane dane jednej osoby można wysłać do weryfikacji naraz. Pozycja **Zweryfikuj dane · N** jest
-w menu osoby i w podpowiedzi znacznika na karcie; pokazuje się tylko wtedy, gdy co najmniej jedna dana osoby oferuje
-**Zweryfikuj**.
+Wszystkie niezweryfikowane dane jednej osoby można wysłać do weryfikacji naraz: przyciskiem **Zweryfikuj dane (N)**
+w karcie osoby i w podpowiedzi znacznika na karcie w drzewie albo pozycją **Zweryfikuj dane · N** w menu osoby.
 
+- **Gdzie:**
+  - karta osoby: przycisk **Zweryfikuj dane (N)** nad sekcją **Zdarzenia**. Gdy osoba nie ma nic do zaoferowania
+    do weryfikacji, ale jej dane czekają na weryfikację, zamiast przycisku jest tam „N danych czeka na weryfikację”;
+    w przeciwnym razie nie ma tam nic;
+  - podpowiedź znacznika na karcie w drzewie ([S7.2](#S7.2)): **Zweryfikuj dane (N)**, tak jak w karcie osoby;
+  - menu osoby: **Zweryfikuj dane · N**, w trakcie weryfikacji **Weryfikacja · N**.
 - **Okno Zweryfikuj dane osoby:** „{imię} · N niezweryfikowanych danych”, lista danych do zaznaczenia, przy każdej
   **tanio** albo **drożej**, „Szacunek: {n} tanio, {n} drożej” („Tanio = odczytać znany zapis. Drożej = zapis trzeba
   znaleźć.”) i przycisk **Zweryfikuj (N)** według zaznaczonych. Po uruchomieniu „N danych czeka w kolejce do
@@ -118,11 +123,14 @@ w menu osoby i w podpowiedzi znacznika na karcie; pokazuje się tylko wtedy, gdy
 - **Pilnuje kod:** N to dokładnie to, co weźmie badanie: dane osoby i jej rodzin, które badanie zna (także miejsce
   zamieszkania i dane już udokumentowane przez innego czytelnika), poza potwierdzonymi przez człowieka, czekającymi na
   weryfikację, imieniem i płcią. Liczba w menu, w oknie i w komunikacie po uruchomieniu jest taka sama.
-- **Obsługa:** aplikacja: menu osoby albo podpowiedź znacznika na karcie → **Zweryfikuj dane · N** → **Zweryfikuj
-  (N)**. Terminal: `strom verify facts P…`.
+- **Granice:** przycisk i pozycja pokazują się tylko przy działającym moście badania ([S7.9](#S7.9)) i tylko wtedy,
+  gdy co najmniej jedna dana osoby oferuje **Zweryfikuj**.
+- **Obsługa:** aplikacja: karta osoby → **Zweryfikuj dane (N)** nad **Zdarzeniami**; podpowiedź znacznika na karcie
+  w drzewie → **Zweryfikuj dane (N)**; menu osoby → **Zweryfikuj dane · N**; potem w oknie **Zweryfikuj (N)**.
+  Terminal: `strom verify facts P…`.
 - **Obowiązuje od:** badanie 1.30.0, aplikacja 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) -->
+<!-- zdroj: app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) -->
 
 <a id="S7.5"></a>
 ## S7.5 Zweryfikuj dane w drzewie
@@ -225,11 +233,11 @@ udokumentowana albo została taka, jaka była, z powodem.
 <!-- zdroj: research:6c6e7c3b strom help verify done (--proven --image | --kept --reason, jen uvnitř sezení) · cs.json ui.fixes.verify-originals.not · app:7b0471f8 strings.ts verify.reasonHead -->
 
 <a id="S7.8"></a>
-## S7.8 Sprawdzone ze skanem: potwierdzenie przez człowieka
+## S7.8 Potwierdź według skanu: potwierdzenie przez człowieka
 
 Najsilniejszy znacznik daje człowiek: patrzy na skan aktu, porównuje go z daną i w podpowiedzi znacznika klika
-**Sprawdzone ze skanem**. Dana ma wtedy **Potwierdzone** (✓) z wierszem „Potwierdzone przez człowieka ze skanem
-{data}.”
+**Potwierdź według skanu**. Dana ma wtedy **Potwierdzone** (✓), a podpowiedź zamiast akcji pokazuje stan
+„✓ Potwierdzone według skanu {data}” i **Cofnij**.
 
 - **Pilnuje kod:**
   - **Cofnij** anuluje potwierdzenie („Potwierdzenie cofnięte”); dana ma wtedy znowu stopień, który miała;
@@ -238,20 +246,23 @@ Najsilniejszy znacznik daje człowiek: patrzy na skan aktu, porównuje go z dan�
   - potwierdzonej danej agent nigdy nie zmienia, tylko proponuje ([S6.3](S6-tree-from-another-program.md#S6.3));
   - drzewo bez badania: potwierdzenie przechowuje sama aplikacja, przy danej, która cytuje źródło, gdy drzewo można
     edytować. Potwierdzenie i jego cofnięcie przechodzą z drzewem do badania, także przez plik GEDCOM;
+  - potwierdzenie przechowywane przez aplikację to zmiana drzewa: ma krok wstecz („potwierdzenie danej osoby {imię}
+    według skanu”, „cofnięcie potwierdzenia osoby {imię}”) i wpis w historii zmian („Dana osoby {imię} potwierdzona
+    według skanu”, „Cofnięto potwierdzenie według skanu: {imię}”);
   - drzewo powiązane z badaniem: potwierdzenie zapisuje badanie przez most, tylko gdy most działa, a badanie to
     potrafi; imienia i płci się tu nie potwierdza;
   - w terminalu potwierdza tylko człowiek przy swoim terminalu: `strom verify confirm E… [--undo]`. Agentowi `strom`
     potwierdzenie odrzuca.
-- **Granice:** drzewo powiązane z badaniem, którego most nie działa, nie oferuje **Sprawdzone ze skanem** ani
+- **Granice:** drzewo powiązane z badaniem, którego most nie działa, nie oferuje **Potwierdź według skanu** ani
   **Cofnij**; potwierdzić można dopiero przy działającym moście albo w terminalu.
 - **Dlaczego:** pewność o danej powstaje wtedy, gdy człowiek sam widzi akt. Weryfikacja przez agenta to odczyt AI; ✓
   mówi, że akt widział człowiek. Potwierdzona transkrypcja ([A3.1.1](A3-evidence-in-the-app.md#A3.1.1),
-  [R3.4.1](R3-verification-and-citation.md#R3.4.1)) potwierdza tekst aktu, **Sprawdzone ze skanem** daną osoby.
-- **Obsługa:** aplikacja: karta osoby → znacznik danej → **Sprawdzone ze skanem** / **Cofnij**. Terminal:
+  [R3.4.1](R3-verification-and-citation.md#R3.4.1)) potwierdza tekst aktu, **Potwierdź według skanu** daną osoby.
+- **Obsługa:** aplikacja: karta osoby → znacznik danej → **Potwierdź według skanu** / **Cofnij**. Terminal:
   `strom verify confirm E…`, `strom verify confirm E… --undo`.
 - **Obowiązuje od:** badanie 1.30.0, aplikacja 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/verify-offer.ts (human → Vzít zpět; bez výzkumu scan u citovaného; ve stromu výzkumu scan jen s researchConfirms) · src/verify.ts factConfirmation/researchConfirmation (platí jen s nezměněnou hodnotou) · src/verify-ui-model.ts (jméno, pohlaví bez scan ve stromu výzkumu) · strings.ts verify.scan, undo, undone, confirmedAt · CHANGELOG.cs.md 3.26.0 · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2: bez mostu ✓ ani Vzít zpět ve stromu výzkumu) · prace/1109-app-potvrzeni-zmena · research:6c6e7c3b strom help verify confirm (jen uživatel, most; mimo něj requireHuman) -->
+<!-- zdroj: app:7b0471f8 src/verify-offer.ts (human → Vzít zpět; bez výzkumu scan u citovaného; ve stromu výzkumu scan jen s researchConfirms) · src/verify.ts factConfirmation/researchConfirmation (platí jen s nezměněnou hodnotou) · src/verify-ui-model.ts (jméno, pohlaví bez scan ve stromu výzkumu) · strings.ts verify.scan, undo, undone, confirmedAt · app:7eb903a3 src/ui/verify-ui.ts (✓ jen u stavu, akce bez ✓; verifyConfirm: bez mostu DataManager.confirmFact) · src/data.ts confirmFact/unconfirmFact (undo.confirmFact, unconfirmFact, auditLog.confirmedFact, unconfirmedFact) · strings.ts verify.scan, confirmedAt · CHANGELOG.cs.md 3.26.0 · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2: bez mostu ✓ ani Vzít zpět ve stromu výzkumu) · prace/1109-app-potvrzeni-zmena · research:6c6e7c3b strom help verify confirm (jen uživatel, most; mimo něj requireHuman) -->
 
 <a id="S7.9"></a>
 ## S7.9 Co działa z mostem, a co bez niego
@@ -260,7 +271,7 @@ Najsilniejszy znacznik daje człowiek: patrzy na skan aktu, porównuje go z dan�
 |---|---|---|---|
 | Znaczniki przy danych i na karcie | tak | tak, według ostatniego stanu z pliku | tak, z importu i z cytatów |
 | **Zweryfikuj**, **Zweryfikuj dane · N**, **Zweryfikuj dane w drzewie…** | tak | nie | nie (wiersz o badaniu przodków) |
-| **Sprawdzone ze skanem**, **Cofnij** | tak, zapisuje badanie | nie | tak, przechowuje aplikacja |
+| **Potwierdź według skanu**, **Cofnij** | tak, zapisuje badanie | nie | tak, przechowuje aplikacja |
 | **Zatrzymaj** weryfikację | tak | nie; `strom verify stop` w terminalu | – |
 | Weryfikacja w kolejce badania | działa | działa (badanie nie czeka na aplikację) | – |
 

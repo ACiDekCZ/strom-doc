@@ -45,6 +45,6 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [S4 Badanie sterowane z aplikacji](S4-research-from-the-app.md): panel i przegląd badania, kolejka, linie, akcje do terminala
 - [S5 Telefon](S5-phone.md): strona badania w telefonie, parowanie, zdjęcia partiami
 - [S6 Drzewo z innego programu](S6-tree-from-another-program.md): drzewo z MyHeritage, Gramps, FamilySearch i programów dla Windows: co się wczytuje, znaczniki wiarygodności, dane z drzewa jako wskazówki, karta Co dalej, kopie zapasowe, eksport z powrotem, ponowny import
-- [S7 Wiarygodność danych i weryfikacja według oryginałów](S7-reliability-and-verification.md): znaczniki przy danych i na karcie, Zweryfikuj przy danej, przy osobie i w drzewie, weryfikacja w kolejce badania, Sprawdzone ze skanem, co działa z mostem, a co bez niego
+- [S7 Wiarygodność danych i weryfikacja według oryginałów](S7-reliability-and-verification.md): znaczniki przy danych i na karcie, Zweryfikuj przy danej, przy osobie i w drzewie, weryfikacja w kolejce badania, Potwierdź według skanu, co działa z mostem, a co bez niego
 
 Licencja: [CC BY 4.0](../LICENSE). Teksty można udostępniać i przerabiać z podaniem źródła.

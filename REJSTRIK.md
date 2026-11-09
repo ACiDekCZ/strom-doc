@@ -937,14 +937,14 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 - **Čísla:** [A7.2](cs/A7-book-pages-and-export.md#A7.2), A7.1, A7.2.1
 
 <a id="checked-against-scan"></a>
-### Ověřeno podle skenu
+### Potvrdit podle skenu
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Ověřeno podle skenu (app, `verify.scan`) · `strom verify confirm` | Potvrzení údaje člověkem, který ho porovnal se skenem záznamu: značka Potvrzeno (✓). Platí, dokud se hodnota nezmění; Vzít zpět ho zruší. Agent ho nikdy nezmění. |
-| en | Checked against the scan (app) · `strom verify confirm` | A fact confirmed by a person who compared it with the scan of the record: the mark Confirmed (✓). It holds while the value does not change; Undo takes it back. The agent never changes it. |
-| de | Anhand des Scans geprüft (app) · `strom verify confirm` | Die Bestätigung einer Angabe durch einen Menschen, der sie mit dem Scan des Eintrags verglichen hat: die Marke Bestätigt (✓). Sie gilt, solange sich der Wert nicht ändert; Zurücknehmen hebt sie auf. Der Agent ändert sie nie. |
-| pl | Sprawdzone ze skanem (app) · `strom verify confirm` | Potwierdzenie danej przez człowieka, który porównał ją ze skanem aktu: znacznik Potwierdzone (✓). Obowiązuje, dopóki wartość się nie zmieni; Cofnij je wycofuje. Agent nigdy go nie zmienia. |
+| cs | Potvrdit podle skenu, stav Potvrzeno podle skenu {datum} (app, `verify.scan`, `verify.confirmedAt`) · `strom verify confirm` | Potvrzení údaje člověkem, který ho porovnal se skenem záznamu: značka Potvrzeno (✓). Platí, dokud se hodnota nezmění; Vzít zpět ho zruší. Agent ho nikdy nezmění. |
+| en | Confirm against the scan, the state Confirmed against the scan on {date} (app) · `strom verify confirm` | A fact confirmed by a person who compared it with the scan of the record: the mark Confirmed (✓). It holds while the value does not change; Undo takes it back. The agent never changes it. |
+| de | Anhand des Scans bestätigen, der Stand Am {datum} anhand des Scans bestätigt (app) · `strom verify confirm` | Die Bestätigung einer Angabe durch einen Menschen, der sie mit dem Scan des Eintrags verglichen hat: die Marke Bestätigt (✓). Sie gilt, solange sich der Wert nicht ändert; Zurücknehmen hebt sie auf. Der Agent ändert sie nie. |
+| pl | Potwierdź według skanu, stan Potwierdzone według skanu {data} (app) · `strom verify confirm` | Potwierdzenie danej przez człowieka, który porównał ją ze skanem aktu: znacznik Potwierdzone (✓). Obowiązuje, dopóki wartość się nie zmieni; Cofnij je wycofuje. Agent nigdy go nie zmienia. |
 
 - **Čísla:** [S7.8](cs/S7-reliability-and-verification.md#S7.8), S7.1, S7.9
 
@@ -953,10 +953,10 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Ověřit (u údaje) · Ověřit údaje · N (u osoby) · Ověřit údaje ve stromu… (app, `verify.*`) · `strom verify facts`, `strom verify bulk` | Úkol pro výzkum ověřit údaj podle originálu záznamu: přečíst známý záznam, nebo ho najít a přečíst. Běží na pozadí výzkumu; výsledek je doloženo, nebo ponecháno s důvodem. |
-| en | Verify (at a fact) · Verify facts · N (at a person) · Verify facts in the tree… (app) · `strom verify facts`, `strom verify bulk` | A task for the research to verify a fact against the original record: read a known record, or find it and read it. It runs in the research's background; the result is proven, or kept with a reason. |
-| de | Prüfen (an einer Angabe) · Angaben prüfen · N (bei einer Person) · Angaben im Baum prüfen… (app) · `strom verify facts`, `strom verify bulk` | Eine Aufgabe für die Forschung, eine Angabe am Originaleintrag zu prüfen: einen bekannten Eintrag lesen oder ihn finden und lesen. Sie läuft im Hintergrund der Forschung; das Ergebnis ist belegt oder mit Begründung belassen. |
-| pl | Zweryfikuj (przy danej) · Zweryfikuj dane · N (przy osobie) · Zweryfikuj dane w drzewie… (app) · `strom verify facts`, `strom verify bulk` | Zadanie dla badania, by zweryfikować daną według oryginalnego aktu: przeczytać znany akt albo go znaleźć i przeczytać. Działa w tle badania; wynik to udokumentowane albo pozostawione z uzasadnieniem. |
+| cs | Ověřit (u údaje) · Ověřit údaje (N), Ověřit údaje · N (u osoby) · Ověřit údaje ve stromu… (app, `verify.*`) · `strom verify facts`, `strom verify bulk` | Úkol pro výzkum ověřit údaj podle originálu záznamu: přečíst známý záznam, nebo ho najít a přečíst. Běží na pozadí výzkumu; výsledek je doloženo, nebo ponecháno s důvodem. |
+| en | Verify (at a fact) · Verify facts (N), Verify facts · N (at a person) · Verify facts in the tree… (app) · `strom verify facts`, `strom verify bulk` | A task for the research to verify a fact against the original record: read a known record, or find it and read it. It runs in the research's background; the result is proven, or kept with a reason. |
+| de | Prüfen (an einer Angabe) · Angaben prüfen (N), Angaben prüfen · N (bei einer Person) · Angaben im Baum prüfen… (app) · `strom verify facts`, `strom verify bulk` | Eine Aufgabe für die Forschung, eine Angabe am Originaleintrag zu prüfen: einen bekannten Eintrag lesen oder ihn finden und lesen. Sie läuft im Hintergrund der Forschung; das Ergebnis ist belegt oder mit Begründung belassen. |
+| pl | Zweryfikuj (przy danej) · Zweryfikuj dane (N), Zweryfikuj dane · N (przy osobie) · Zweryfikuj dane w drzewie… (app) · `strom verify facts`, `strom verify bulk` | Zadanie dla badania, by zweryfikować daną według oryginalnego aktu: przeczytać znany akt albo go znaleźć i przeczytać. Działa w tle badania; wynik to udokumentowane albo pozostawione z uzasadnieniem. |
 
 - **Čísla:** [S7.3](cs/S7-reliability-and-verification.md#S7.3), S7.4, S7.5, S7.6, S7.7
 

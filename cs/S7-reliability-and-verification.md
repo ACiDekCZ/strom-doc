@@ -3,7 +3,7 @@
 
 U každého údaje aplikace ukazuje, jak spolehlivý je, a kartička ve stromu má jednu značku za celou osobu. Výzkum umí
 údaj ověřit podle originálu záznamu: na pozadí, u jednoho údaje, u osoby nebo ve velké části stromu. Jistota ale
-vzniká až tím, že **člověk** sám porovná údaj se skenem záznamu a potvrdí ho (**Ověřeno podle skenu**, [S7.8](#S7.8)).
+vzniká až tím, že **člověk** sám porovná údaj se skenem záznamu a potvrdí ho (**Potvrdit podle skenu**, [S7.8](#S7.8)).
 Ověření agentem dá nejvýš **Doloženo**; potvrzení člověkem je silnější a agent ho nikdy nezmění. Kapitola popisuje
 aplikaci Strom 3.26.0 a výzkum 1.30.0. Co jde jen s mostem výzkumu a co i bez něj, shrnuje [S7.9](#S7.9).
 
@@ -25,8 +25,8 @@ jiného programu a nikdo ho neověřil. Stupně se liší fajfkou, tečkami a r�
 
 - **Bublina u značky** (po kliknutí): prameny údaje; u dvou čtenářů **dva čtenáři shodně**; u údaje, který po
   ověření zůstal pravděpodobný nebo možný, řádek „Zůstává {stupeň} · výzkum ověřil {datum}“ a důvod, proč se doložit
-  nedal; u potvrzeného „Potvrdil člověk podle skenu {datum}.“; u údaje z rodokmenu, který rodokmen cituje,
-  **citováno v rodokmenu, ve Stromu neověřeno**. V bublině jsou i akce **Ověřit** ([S7.3](#S7.3)), **Ověřeno podle
+  nedal; u potvrzeného „✓ Potvrzeno podle skenu {datum}“; u údaje z rodokmenu, který rodokmen cituje,
+  **citováno v rodokmenu, ve Stromu neověřeno**. V bublině jsou i akce **Ověřit** ([S7.3](#S7.3)), **Potvrdit podle
   skenu** a **Vzít zpět** ([S7.8](#S7.8)), kde platí.
 - **Hlídá kód:**
   - dvě tečky dostane jen údaj, u kterého se při ověření výzkumem shodli dva čtenáři záznamu
@@ -100,9 +100,14 @@ Výzkum pak údaj ověří podle originálu záznamu: na pozadí, mimo práci na
 <a id="S7.4"></a>
 ## S7.4 Ověřit údaje u osoby
 
-Všechny neověřené údaje jedné osoby se dají poslat k ověření najednou. Položka **Ověřit údaje · N** je v nabídce
-osoby a v bublině značky na kartičce; ukáže se jen tehdy, když aspoň jeden údaj osoby nabízí **Ověřit**.
+Všechny neověřené údaje jedné osoby se dají poslat k ověření najednou: tlačítkem **Ověřit údaje (N)** v kartě osoby
+a v bublině značky na kartičce, nebo položkou **Ověřit údaje · N** v nabídce osoby.
 
+- **Kde:**
+  - karta osoby: tlačítko **Ověřit údaje (N)** nad oddílem **Události**. Když osoba nemá co nabídnout k ověření, ale
+    její údaje čekají na ověření, je tam místo tlačítka „N údajů čeká na ověření“; jinak tam není nic;
+  - bublina značky na kartičce ve stromu ([S7.2](#S7.2)): **Ověřit údaje (N)**, stejně jako v kartě osoby;
+  - nabídka osoby: **Ověřit údaje · N**, při ověřování **Ověřuje se · N**.
 - **Okno Ověřit údaje osoby:** „{jméno} · N neověřených údajů“, seznam údajů k zaškrtnutí, u každého **levné** nebo
   **dražší**, „Odhad: {n} levné, {n} dražší“ („Levné = přečíst známý záznam. Dražší = záznam se teprve hledá.“)
   a tlačítko **Ověřit (N)** podle zaškrtnutých. Po spuštění „N údajů je zařazeno k ověření.“ a položka v nabídce
@@ -110,11 +115,14 @@ osoby a v bublině značky na kartičce; ukáže se jen tehdy, když aspoň jede
 - **Hlídá kód:** N je přesně to, co výzkum vezme: údaje osoby a jejích rodin, které výzkum zná (i bydliště a údaje
   už doložené jiným čtenářem), kromě potvrzených člověkem, čekajících na ověření, jména a pohlaví. Počet v nabídce,
   v okně a ve zprávě po spuštění je stejný.
-- **Ovládání:** aplikace: nabídka osoby nebo bublina značky na kartičce → **Ověřit údaje · N** → **Ověřit (N)**.
-  Terminál: `strom verify facts P…`.
+- **Hranice:** tlačítko i položka se ukážou jen s běžícím mostem výzkumu ([S7.9](#S7.9)) a jen tehdy, když aspoň
+  jeden údaj osoby nabízí **Ověřit**.
+- **Ovládání:** aplikace: karta osoby → **Ověřit údaje (N)** nad **Událostmi**; bublina značky na kartičce →
+  **Ověřit údaje (N)**; nabídka osoby → **Ověřit údaje · N**; pak v okně **Ověřit (N)**. Terminál:
+  `strom verify facts P…`.
 - **Platí od:** výzkum 1.30.0, aplikace 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) -->
+<!-- zdroj: app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) -->
 
 <a id="S7.5"></a>
 ## S7.5 Ověřit údaje ve stromu
@@ -209,10 +217,11 @@ doložený, nebo zůstal, jak byl, s důvodem.
 <!-- zdroj: research:6c6e7c3b strom help verify done (--proven --image | --kept --reason, jen uvnitř sezení) · cs.json ui.fixes.verify-originals.not · app:7b0471f8 strings.ts verify.reasonHead -->
 
 <a id="S7.8"></a>
-## S7.8 Ověřeno podle skenu: potvrzení člověkem
+## S7.8 Potvrdit podle skenu: potvrzení člověkem
 
-Nejsilnější značku dá člověk: podívá se na sken záznamu, porovná ho s údajem a v bublině značky klikne **Ověřeno
-podle skenu**. Údaj je pak **Potvrzeno** (✓) s řádkem „Potvrdil člověk podle skenu {datum}.“
+Nejsilnější značku dá člověk: podívá se na sken záznamu, porovná ho s údajem a v bublině značky klikne **Potvrdit
+podle skenu**. Údaj je pak **Potvrzeno** (✓) a bublina místo akce ukazuje stav „✓ Potvrzeno podle skenu {datum}“
+a **Vzít zpět**.
 
 - **Hlídá kód:**
   - **Vzít zpět** potvrzení zruší („Potvrzení vzato zpět“); údaj má pak zase stupeň, který měl;
@@ -220,20 +229,23 @@ podle skenu**. Údaj je pak **Potvrzeno** (✓) s řádkem „Potvrdil člověk 
   - potvrzený údaj agent nikdy nezmění, jen navrhne ([S6.3](S6-tree-from-another-program.md#S6.3));
   - strom bez výzkumu: potvrzení drží aplikace sama, u údaje, který cituje pramen, když strom jde upravovat.
     Potvrzení i jeho vzetí zpět přejde se stromem do výzkumu, i přes soubor GEDCOM;
+  - potvrzení, které drží aplikace, je změna stromu: má krok zpět („potvrzení údaje u {jméno} podle skenu“, „vzetí
+    zpět potvrzení u {jméno}“) a zápis v historii změn („Údaj u {jméno} potvrzen podle skenu“, „Potvrzení podle skenu
+    vzato zpět: {jméno}“);
   - strom napojený na výzkum: potvrzení zapíše výzkum přes most, jen když most běží a výzkum to umí; jméno a pohlaví
     se tu nepotvrzují;
   - v terminálu potvrzuje jen člověk u svého terminálu: `strom verify confirm E… [--undo]`. Agentovi `strom`
     potvrzení odmítne.
-- **Hranice:** strom napojený na výzkum, jehož most neběží, **Ověřeno podle skenu** ani **Vzít zpět** nenabídne;
+- **Hranice:** strom napojený na výzkum, jehož most neběží, **Potvrdit podle skenu** ani **Vzít zpět** nenabídne;
   potvrdit jde až s běžícím mostem, nebo v terminálu.
 - **Proč:** jistota o údaji vzniká tím, že člověk sám vidí záznam. Ověření agentem je čtení AI; ✓ říká, že záznam
   viděl člověk. Potvrzený přepis ([A3.1.1](A3-evidence-in-the-app.md#A3.1.1),
-  [R3.4.1](R3-verification-and-citation.md#R3.4.1)) potvrzuje text záznamu, **Ověřeno podle skenu** údaj osoby.
-- **Ovládání:** aplikace: karta osoby → značka údaje → **Ověřeno podle skenu** / **Vzít zpět**. Terminál:
+  [R3.4.1](R3-verification-and-citation.md#R3.4.1)) potvrzuje text záznamu, **Potvrdit podle skenu** údaj osoby.
+- **Ovládání:** aplikace: karta osoby → značka údaje → **Potvrdit podle skenu** / **Vzít zpět**. Terminál:
   `strom verify confirm E…`, `strom verify confirm E… --undo`.
 - **Platí od:** výzkum 1.30.0, aplikace 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/verify-offer.ts (human → Vzít zpět; bez výzkumu scan u citovaného; ve stromu výzkumu scan jen s researchConfirms) · src/verify.ts factConfirmation/researchConfirmation (platí jen s nezměněnou hodnotou) · src/verify-ui-model.ts (jméno, pohlaví bez scan ve stromu výzkumu) · strings.ts verify.scan, undo, undone, confirmedAt · CHANGELOG.cs.md 3.26.0 · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2: bez mostu ✓ ani Vzít zpět ve stromu výzkumu) · prace/1109-app-potvrzeni-zmena · research:6c6e7c3b strom help verify confirm (jen uživatel, most; mimo něj requireHuman) -->
+<!-- zdroj: app:7b0471f8 src/verify-offer.ts (human → Vzít zpět; bez výzkumu scan u citovaného; ve stromu výzkumu scan jen s researchConfirms) · src/verify.ts factConfirmation/researchConfirmation (platí jen s nezměněnou hodnotou) · src/verify-ui-model.ts (jméno, pohlaví bez scan ve stromu výzkumu) · strings.ts verify.scan, undo, undone, confirmedAt · app:7eb903a3 src/ui/verify-ui.ts (✓ jen u stavu, akce bez ✓; verifyConfirm: bez mostu DataManager.confirmFact) · src/data.ts confirmFact/unconfirmFact (undo.confirmFact, unconfirmFact, auditLog.confirmedFact, unconfirmedFact) · strings.ts verify.scan, confirmedAt · CHANGELOG.cs.md 3.26.0 · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2: bez mostu ✓ ani Vzít zpět ve stromu výzkumu) · prace/1109-app-potvrzeni-zmena · research:6c6e7c3b strom help verify confirm (jen uživatel, most; mimo něj requireHuman) -->
 
 <a id="S7.9"></a>
 ## S7.9 Co jde s mostem a co bez něj
@@ -242,7 +254,7 @@ podle skenu**. Údaj je pak **Potvrzeno** (✓) s řádkem „Potvrdil člověk 
 |---|---|---|---|
 | Značky u údajů a na kartičce | ano | ano, podle posledního stavu ze souboru | ano, z importu a z citací |
 | **Ověřit**, **Ověřit údaje · N**, **Ověřit údaje ve stromu…** | ano | ne | ne (řádek o výzkumu předků) |
-| **Ověřeno podle skenu**, **Vzít zpět** | ano, zapíše výzkum | ne | ano, drží aplikace |
+| **Potvrdit podle skenu**, **Vzít zpět** | ano, zapíše výzkum | ne | ano, drží aplikace |
 | **Zastavit** ověřování | ano | ne; `strom verify stop` v terminálu | – |
 | Ověřování ve frontě výzkumu | běží | běží (výzkum na aplikaci nečeká) | – |
 

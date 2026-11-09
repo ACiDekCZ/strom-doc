@@ -4,7 +4,7 @@
 Bei jeder Angabe zeigt die App, wie zuverlässig sie ist, und das Kärtchen im Baum hat eine Marke für die ganze Person.
 Die Forschung kann eine Angabe am Original des Eintrags prüfen: im Hintergrund, bei einer Angabe, bei einer Person oder
 in einem großen Teil des Stammbaums. Gewissheit entsteht aber erst dadurch, dass **ein Mensch** die Angabe selbst mit
-dem Scan des Eintrags vergleicht und sie bestätigt (**Anhand des Scans geprüft**, [S7.8](#S7.8)). Die Prüfung durch
+dem Scan des Eintrags vergleicht und sie bestätigt (**Anhand des Scans bestätigen**, [S7.8](#S7.8)). Die Prüfung durch
 einen Agenten gibt höchstens **Belegt**; die Bestätigung durch einen Menschen ist stärker, und der Agent ändert sie nie.
 Beschrieben werden die Strom-App 3.26.0 und die Forschung 1.30.0. Was nur mit der Brücke der Forschung geht und was
 auch ohne sie, fasst [S7.9](#S7.9) zusammen.
@@ -28,10 +28,10 @@ Häkchen, Punkte und Rahmen, nie nur durch die Farbe.
 
 - **Popup der Marke** (nach einem Klick): die Quellen der Angabe; bei zwei Lesern **zwei Leser übereinstimmend**; bei
   einer Angabe, die nach der Prüfung wahrscheinlich oder möglich geblieben ist, die Zeile „Bleibt {stufe} · von der
-  Recherche geprüft am {datum}“ und der Grund, warum sie sich nicht belegen ließ; bei einer bestätigten „Von einer
-  Person am {datum} anhand des Scans bestätigt.“; bei einer Angabe aus dem Stammbaum, die der Stammbaum zitiert, **im
+  Recherche geprüft am {datum}“ und der Grund, warum sie sich nicht belegen ließ; bei einer bestätigten „✓ Am {datum}
+  anhand des Scans bestätigt“; bei einer Angabe aus dem Stammbaum, die der Stammbaum zitiert, **im
   Stammbaum zitiert, in Strom nicht geprüft**. Im Popup sind auch die Aktionen **Prüfen** ([S7.3](#S7.3)), **Anhand des
-  Scans geprüft** und **Zurücknehmen** ([S7.8](#S7.8)), wo sie gelten.
+  Scans bestätigen** und **Zurücknehmen** ([S7.8](#S7.8)), wo sie gelten.
 - **Prüft der Code:**
   - zwei Punkte bekommt nur eine Angabe, bei der sich bei der Prüfung durch die Forschung zwei Leser des Eintrags
     einig waren ([R8.8.1](R8-reading-scans.md#R8.8.1)); eine anders belegte hat einen;
@@ -110,10 +110,16 @@ den Linien.
 <a id="S7.4"></a>
 ## S7.4 Angaben prüfen bei einer Person
 
-Alle ungeprüften Angaben einer Person lassen sich auf einmal zur Prüfung schicken. Der Eintrag **Angaben prüfen · N**
-steht im Menü der Person und im Popup der Marke auf dem Kärtchen; er erscheint nur, wenn mindestens eine Angabe der
-Person **Prüfen** anbietet.
+Alle ungeprüften Angaben einer Person lassen sich auf einmal zur Prüfung schicken: mit der Schaltfläche **Angaben
+prüfen (N)** in der Personenkarte und im Popup der Marke auf dem Kärtchen, oder mit dem Eintrag **Angaben prüfen · N**
+im Menü der Person.
 
+- **Wo:**
+  - Personenkarte: die Schaltfläche **Angaben prüfen (N)** über dem Abschnitt **Ereignisse**. Hat die Person nichts
+    zur Prüfung anzubieten, warten aber ihre Angaben auf Prüfung, steht dort statt der Schaltfläche „N Angaben warten
+    auf Prüfung“; sonst steht dort nichts;
+  - Popup der Marke auf dem Kärtchen im Baum ([S7.2](#S7.2)): **Angaben prüfen (N)**, wie in der Personenkarte;
+  - Menü der Person: **Angaben prüfen · N**, während der Prüfung **Wird geprüft · N**.
 - **Fenster Angaben der Person prüfen:** „{name} · N ungeprüfte Angaben“, eine Liste der Angaben zum Ankreuzen, bei
   jeder **günstig** oder **teurer**, „Schätzung: {n} günstig, {n} teurer“ („Günstig = einen bekannten Eintrag lesen.
   Teurer = der Eintrag wird erst gesucht.“) und die Schaltfläche **Prüfen (N)** nach den angekreuzten. Nach dem Start
@@ -122,11 +128,14 @@ Person **Prüfen** anbietet.
   Forschung kennt (auch Wohnorte und Angaben, die schon ein anderer Leser belegt hat), außer den von einem Menschen
   bestätigten, den auf Prüfung wartenden, Name und Geschlecht. Die Zahl im Menü, im Fenster und in der Meldung nach dem
   Start ist dieselbe.
-- **Bedienung:** App: Menü der Person oder Popup der Marke auf dem Kärtchen → **Angaben prüfen · N** → **Prüfen (N)**.
-  Terminal: `strom verify facts P…`.
+- **Grenzen:** Schaltfläche und Eintrag erscheinen nur mit laufender Brücke der Forschung ([S7.9](#S7.9)) und nur,
+  wenn mindestens eine Angabe der Person **Prüfen** anbietet.
+- **Bedienung:** App: Personenkarte → **Angaben prüfen (N)** über **Ereignisse**; Popup der Marke auf dem Kärtchen →
+  **Angaben prüfen (N)**; Menü der Person → **Angaben prüfen · N**; dann im Fenster **Prüfen (N)**. Terminal:
+  `strom verify facts P…`.
 - **Gilt seit:** Forschung 1.30.0, App 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) -->
+<!-- zdroj: app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) -->
 
 <a id="S7.5"></a>
 ## S7.5 Angaben im Baum prüfen
@@ -230,11 +239,11 @@ Angabe ist nach dem Bild belegt, oder sie ist geblieben, wie sie war, mit einer 
 <!-- zdroj: research:6c6e7c3b strom help verify done (--proven --image | --kept --reason, jen uvnitř sezení) · cs.json ui.fixes.verify-originals.not · app:7b0471f8 strings.ts verify.reasonHead -->
 
 <a id="S7.8"></a>
-## S7.8 Anhand des Scans geprüft: Bestätigung durch einen Menschen
+## S7.8 Anhand des Scans bestätigen: Bestätigung durch einen Menschen
 
 Die stärkste Marke gibt ein Mensch: er sieht sich den Scan des Eintrags an, vergleicht ihn mit der Angabe und klickt
-im Popup der Marke auf **Anhand des Scans geprüft**. Die Angabe ist dann **Bestätigt** (✓) mit der Zeile „Von einer
-Person am {datum} anhand des Scans bestätigt.“
+im Popup der Marke auf **Anhand des Scans bestätigen**. Die Angabe ist dann **Bestätigt** (✓), und das Popup zeigt
+statt der Aktion den Stand „✓ Am {datum} anhand des Scans bestätigt“ und **Zurücknehmen**.
 
 - **Prüft der Code:**
   - **Zurücknehmen** hebt die Bestätigung auf („Bestätigung zurückgenommen“); die Angabe hat dann wieder die Stufe,
@@ -245,21 +254,25 @@ Person am {datum} anhand des Scans bestätigt.“
   - Stammbaum ohne Forschung: die Bestätigung hält die App selbst, bei einer Angabe, die eine Quelle zitiert, wenn
     sich der Stammbaum bearbeiten lässt. Die Bestätigung und ihre Rücknahme gehen mit dem Stammbaum in die Forschung
     über, auch über eine GEDCOM-Datei;
+  - eine Bestätigung, die die App hält, ist eine Änderung des Stammbaums: sie hat einen Schritt zurück („Angabe von
+    {name} anhand des Scans bestätigen“, „Bestätigung von {name} zurücknehmen“) und einen Eintrag im
+    Änderungsverlauf („Angabe von {name} anhand des Scans bestätigt“, „Bestätigung anhand des Scans zurückgenommen:
+    {name}“);
   - an die Forschung gebundener Stammbaum: die Bestätigung schreibt die Forschung über die Brücke, nur wenn die Brücke
     läuft und die Forschung es beherrscht; Name und Geschlecht werden hier nicht bestätigt;
   - im Terminal bestätigt nur ein Mensch an seinem Terminal: `strom verify confirm E… [--undo]`. Einem Agenten lehnt
     `strom` die Bestätigung ab.
 - **Grenzen:** ein an die Forschung gebundener Stammbaum, dessen Brücke nicht läuft, bietet weder **Anhand des Scans
-  geprüft** noch **Zurücknehmen** an; bestätigen lässt sich erst mit laufender Brücke oder im Terminal.
+  bestätigen** noch **Zurücknehmen** an; bestätigen lässt sich erst mit laufender Brücke oder im Terminal.
 - **Warum:** Gewissheit über eine Angabe entsteht dadurch, dass ein Mensch den Eintrag selbst sieht. Die Prüfung durch
   einen Agenten ist eine Lesung durch KI; ✓ sagt, dass ein Mensch den Eintrag gesehen hat. Die bestätigte Abschrift
   ([A3.1.1](A3-evidence-in-the-app.md#A3.1.1), [R3.4.1](R3-verification-and-citation.md#R3.4.1)) bestätigt den Text
-  des Eintrags, **Anhand des Scans geprüft** die Angabe einer Person.
-- **Bedienung:** App: Personenkarte → Marke der Angabe → **Anhand des Scans geprüft** / **Zurücknehmen**. Terminal:
+  des Eintrags, **Anhand des Scans bestätigen** die Angabe einer Person.
+- **Bedienung:** App: Personenkarte → Marke der Angabe → **Anhand des Scans bestätigen** / **Zurücknehmen**. Terminal:
   `strom verify confirm E…`, `strom verify confirm E… --undo`.
 - **Gilt seit:** Forschung 1.30.0, App 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/verify-offer.ts (human → Vzít zpět; bez výzkumu scan u citovaného; ve stromu výzkumu scan jen s researchConfirms) · src/verify.ts factConfirmation/researchConfirmation (platí jen s nezměněnou hodnotou) · src/verify-ui-model.ts (jméno, pohlaví bez scan ve stromu výzkumu) · strings.ts verify.scan, undo, undone, confirmedAt · CHANGELOG.cs.md 3.26.0 · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2: bez mostu ✓ ani Vzít zpět ve stromu výzkumu) · prace/1109-app-potvrzeni-zmena · research:6c6e7c3b strom help verify confirm (jen uživatel, most; mimo něj requireHuman) -->
+<!-- zdroj: app:7b0471f8 src/verify-offer.ts (human → Vzít zpět; bez výzkumu scan u citovaného; ve stromu výzkumu scan jen s researchConfirms) · src/verify.ts factConfirmation/researchConfirmation (platí jen s nezměněnou hodnotou) · src/verify-ui-model.ts (jméno, pohlaví bez scan ve stromu výzkumu) · strings.ts verify.scan, undo, undone, confirmedAt · app:7eb903a3 src/ui/verify-ui.ts (✓ jen u stavu, akce bez ✓; verifyConfirm: bez mostu DataManager.confirmFact) · src/data.ts confirmFact/unconfirmFact (undo.confirmFact, unconfirmFact, auditLog.confirmedFact, unconfirmedFact) · strings.ts verify.scan, confirmedAt · CHANGELOG.cs.md 3.26.0 · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2: bez mostu ✓ ani Vzít zpět ve stromu výzkumu) · prace/1109-app-potvrzeni-zmena · research:6c6e7c3b strom help verify confirm (jen uživatel, most; mimo něj requireHuman) -->
 
 <a id="S7.9"></a>
 ## S7.9 Was mit der Brücke geht und was ohne sie
@@ -268,7 +281,7 @@ Person am {datum} anhand des Scans bestätigt.“
 |---|---|---|---|
 | Marken an Angaben und auf dem Kärtchen | ja | ja, nach dem letzten Stand aus der Datei | ja, aus dem Import und aus den Zitationen |
 | **Prüfen**, **Angaben prüfen · N**, **Angaben im Baum prüfen…** | ja | nein | nein (Zeile zur Ahnenforschung) |
-| **Anhand des Scans geprüft**, **Zurücknehmen** | ja, schreibt die Forschung | nein | ja, hält die App |
+| **Anhand des Scans bestätigen**, **Zurücknehmen** | ja, schreibt die Forschung | nein | ja, hält die App |
 | **Anhalten** der Prüfung | ja | nein; `strom verify stop` im Terminal | – |
 | Prüfung in der Warteschlange der Forschung | läuft | läuft (die Forschung wartet nicht auf die App) | – |
 

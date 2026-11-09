@@ -46,6 +46,6 @@ dauerhaft.
 - [S4 Forschung aus der App gesteuert](S4-research-from-the-app.md): Panel und Forschungsübersicht, Warteschlange, Linien, Aktionen ins Terminal
 - [S5 Telefon](S5-phone.md): Seite der Forschung auf dem Telefon, Koppeln, Fotos in Stapeln
 - [S6 Stammbaum aus einem anderen Programm](S6-tree-from-another-program.md): ein Stammbaum aus MyHeritage, Gramps, FamilySearch und Windows-Programmen: was geladen wird, Zuverlässigkeitsmarken, Angaben aus dem Stammbaum als Hinweise, die Karte Wie weiter, Sicherungen, Export zurück, wiederholter Import
-- [S7 Zuverlässigkeit von Angaben und Prüfung an den Originalen](S7-reliability-and-verification.md): Marken an Angaben und auf dem Kärtchen, Prüfen an einer Angabe, bei einer Person und im Baum, Prüfung in der Warteschlange der Forschung, Anhand des Scans geprüft, was mit der Brücke geht und was ohne sie
+- [S7 Zuverlässigkeit von Angaben und Prüfung an den Originalen](S7-reliability-and-verification.md): Marken an Angaben und auf dem Kärtchen, Prüfen an einer Angabe, bei einer Person und im Baum, Prüfung in der Warteschlange der Forschung, Anhand des Scans bestätigen, was mit der Brücke geht und was ohne sie
 
 Lizenz: [CC BY 4.0](../LICENSE). Die Texte dürfen mit Quellenangabe geteilt und bearbeitet werden.
