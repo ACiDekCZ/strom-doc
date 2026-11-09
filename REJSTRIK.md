@@ -587,12 +587,12 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Doloženo · Částečně doloženo · Nedoloženo (`treeHealth.evFull/evPartial/evNone`); zvýraznění Doložení; karta Doložení prameny | Kolik toho o osobě cituje pramen (narození, úmrtí). Počítá aplikace sama jen z citací, bez stupně jistoty. |
-| en | Documented · Partly documented · Undocumented; Evidence; Evidence from sources | How much about a person a source cites (birth, death). The app counts it by itself from citations only, without the degree of certainty. |
-| de | Belegt · Teilweise belegt · Unbelegt; Belege; Belege aus Quellen | Wie viel über eine Person eine Quelle zitiert (Geburt, Tod). Die App berechnet sie selbst nur aus Zitationen, ohne Grad der Sicherheit. |
-| pl | Udokumentowane · Częściowo udokumentowane · Nieudokumentowane; Udokumentowanie; Udokumentowanie w źródłach | Ile o osobie cytuje źródło (urodzenie, zgon). Aplikacja liczy to sama tylko z cytatów, bez stopnia pewności. |
+| cs | Doloženo · Částečně doloženo · Nedoloženo (`treeHealth.evFull/evPartial/evNone`); režim Doložení; Doložení ve stromu | Kolik toho o osobě cituje pramen (narození, úmrtí). Počítá aplikace sama jen z citací, bez stupně jistoty. |
+| en | Documented · Partly documented · Undocumented; Evidence; Evidence in the tree | How much about a person a source cites (birth, death). The app counts it by itself from citations only, without the degree of certainty. |
+| de | Belegt · Teilweise belegt · Unbelegt; Belege; Belege im Baum | Wie viel über eine Person eine Quelle zitiert (Geburt, Tod). Die App berechnet sie selbst nur aus Zitationen, ohne Grad der Sicherheit. |
+| pl | Udokumentowane · Częściowo udokumentowane · Nieudokumentowane; Udokumentowanie; Udokumentowanie w drzewie | Ile o osobie cytuje źródło (urodzenie, zgon). Aplikacja liczy to sama tylko z cytatów, bez stopnia pewności. |
 
-- **Čísla:** [R3.8.1](cs/R3-verification-and-citation.md#R3.8.1), R3.8
+- **Čísla:** [R3.8.1](cs/R3-verification-and-citation.md#R3.8.1), R3.8, [A3.7](cs/A3-evidence-in-the-app.md#A3.7), [S7.2](cs/S7-reliability-and-verification.md#S7.2)
 
 <a id="lead"></a>
 ### Vodítko
