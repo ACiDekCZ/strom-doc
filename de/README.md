@@ -25,7 +25,7 @@ dauerhaft.
 - [R11 Unterlagen vom Benutzer](R11-material-from-the-user.md): Dateien und Texte vom Benutzer, Urkunde und Hinweis, ein übernommener Stammbaum, ein Stapel aus der App
 - [R12 Wo der Agent arbeitet und was strom überwacht](R12-where-the-agent-works.md): Terminal, die Apps Claude, ChatGPT (Codex) und OpenCode, Antigravity und Grok Build, selbstständiger Lauf: was strom wo überwacht und was der Mensch tut
 - [R13 Ein Problem melden: `strom error`](R13-reporting-a-problem.md): eine ZIP-Datei zum Versenden, was darin ist und was nicht, welches Problem und welcher Befehl, Daten von Personen nur mit Zustimmung, der Agent und das Melden eines Problems
-- [R14 Siegel und Unversehrtheit der Forschung](R14-seal-and-integrity.md): was nicht zu seinem Siegel passt, und die Wege weiter (`strom repair`, `strom seal adopt`, `strom seal accept`), die Forschung annehmen, wie sie ist, wenn ihre Geschichte verloren ist
+- [R14 Siegel und Unversehrtheit der Forschung](R14-seal-and-integrity.md): was nicht zu seinem Siegel passt, und die Wege weiter (`strom repair`, `strom seal adopt`, `strom seal accept`), die Forschung annehmen, wie sie ist, wenn ihre Geschichte verloren ist, eine Geschichte, älter als die Forschung, `strom repair` fragt den Menschen und `strom repair undo`
 
 ## A Die Strom-App
 

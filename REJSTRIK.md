@@ -311,7 +311,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | de | Siegel · `strom verify`, `strom seal accept` | Eine Signatur mit dem Schlüssel dieses Computers, die strom auf jede seiner Änderungen einer Forschung setzt (eine Operation in der Geschichte und einen Commit). `strom verify` erkennt an den Siegeln, was außerhalb von strom geändert wurde. Ist die Geschichte verloren, kann ein Mensch die Forschung, wie sie ist, als neue Grundlage versiegeln (`strom seal accept`). |
 | pl | pieczęć · `strom verify`, `strom seal accept` | Podpis kluczem tego komputera, którym strom zamyka każdą swoją zmianę badania (operację w historii i commit). `strom verify` po pieczęciach poznaje, co zmieniono poza strom. Gdy historia zaginie, człowiek może zapieczętować badanie takie, jakie jest, jako nową podstawę (`strom seal accept`). |
 
-- **Čísla:** [R14.1](cs/R14-seal-and-integrity.md#R14.1), R14.2, R14.2.1, R14.2.2
+- **Čísla:** [R14.1](cs/R14-seal-and-integrity.md#R14.1), R14.1.1, R14.2, R14.2.1, R14.2.2, R14.3, R14.3.1
 
 <a id="input"></a>
 ### Podklad

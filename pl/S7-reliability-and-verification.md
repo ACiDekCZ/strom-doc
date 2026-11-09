@@ -102,6 +102,10 @@ znacznika oferuje **Zweryfikuj**. Badanie weryfikuje wtedy daną według orygina
   nie jest następna w kolejce, ma w podpowiedzi **Zweryfikuj w pierwszej kolejności**. Następuje ten sam podgląd
   z szacunkiem co przy **Zweryfikuj**; po **Rozpocznij weryfikację** badanie przesunie zadanie z tą daną na początek
   kolejki, a podpowiedź pokaże pozycję, którą badanie odpowie („1. w kolejce badania”).
+  - **Od badania 1.31.0:** zadanie, które człowiek tak przesunął, jest w pliku dla aplikacji, w stanie mostu
+    (`/status`) i w liczbach `strom verify status` prowadzone jako zlecone przez człowieka (`asked`), dopóki nie
+    skończy się sesja nad nim. Aplikacja nie oferuje wtedy przy danej **Zweryfikuj w pierwszej kolejności** ponownie
+    po odświeżeniu; wcześniej oferowała. Dotyczy to także całej osoby ([S7.4](#S7.4)).
 - **Pilnuje kod:**
   - weryfikacja, o którą poprosił człowiek, idzie w kolejce badania pierwsza ([R2](R2-lines-and-queue.md));
   - **Zweryfikuj** jest oferowane tylko przy drzewie powiązanym z badaniem, gdy most działa, a badanie potrafi
@@ -118,7 +122,7 @@ znacznika oferuje **Zweryfikuj**. Badanie weryfikuje wtedy daną według orygina
   kolejności**) → **Rozpocznij weryfikację**. Terminal: `strom verify facts P…|F…|E… [--fact …] [--dry-run]`.
 - **Obowiązuje od:** badanie 1.30.0, aplikacja 3.26.0
 
-<!-- zdroj: app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) -->
+<!-- zdroj: app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) · research:4ac323ef src/core/verify.ts askedFor (úkol přeřazený člověkem, queueAt next, do konce sezení na něm → asked v souboru, /status, verify status) · app:src/verify-offer.ts (asked: Verify first se nenabízí) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="S7.4"></a>
 ## S7.4 Zweryfikuj dane przy osobie

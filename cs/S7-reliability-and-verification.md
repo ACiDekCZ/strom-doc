@@ -94,6 +94,10 @@ Výzkum pak údaj ověří podle originálu záznamu: na pozadí, mimo práci na
 - **Ověřit přednostně:** údaj, který výzkum zařadil k ověření sám ([S7.6](#S7.6)) a který není první na řadě, má
   v bublině **Ověřit přednostně**. Následuje stejný náhled s odhadem jako u **Ověřit**; po **Spustit ověření** dá
   výzkum úkol s tímto údajem na začátek fronty a bublina ukáže pořadí, které výzkum odpoví („1. na řadě“).
+  - **Od výzkumu 1.31.0:** úkol, který člověk takto přeřadil, je v souboru pro aplikaci, ve stavu mostu (`/status`)
+    i v počtech `strom verify status` vedený jako vyžádaný člověkem (`asked`), dokud neskončí sezení na něm. Aplikace
+    pak **Ověřit přednostně** u údaje po obnovení znovu nenabídne; dřív ho nabízela znovu. Platí i pro celou osobu
+    ([S7.4](#S7.4)).
 - **Hlídá kód:**
   - ověření vyžádané člověkem jde ve frontě výzkumu první ([R2](R2-lines-and-queue.md));
   - **Ověřit** se nabízí jen u stromu napojeného na výzkum, když most běží a výzkum ověřování umí ([S7.9](#S7.9));
@@ -109,7 +113,7 @@ Výzkum pak údaj ověří podle originálu záznamu: na pozadí, mimo práci na
   ověření**. Terminál: `strom verify facts P…|F…|E… [--fact …] [--dry-run]`.
 - **Platí od:** výzkum 1.30.0, aplikace 3.26.0
 
-<!-- zdroj: app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) -->
+<!-- zdroj: app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) · research:4ac323ef src/core/verify.ts askedFor (úkol přeřazený člověkem, queueAt next, do konce sezení na něm → asked v souboru, /status, verify status) · app:src/verify-offer.ts (asked: Verify first se nenabízí) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="S7.4"></a>
 ## S7.4 Ověřit údaje u osoby
