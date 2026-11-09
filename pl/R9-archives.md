@@ -23,15 +23,17 @@ Przebieg w skrócie:
 
 > **Uwaga: gdzie dokładnie obowiązuje przeglądarka agenta.** Przeglądarki agenta strom pilnuje przy **Claude Code**
 > z rozszerzeniem **Claude in Chrome**, we wbudowanej przeglądarce aplikacji Claude
-> ([R12.2](R12-where-the-agent-works.md#R12.2)) i w przeglądarce Codexu według adresów w jej kodzie, gdy człowiek
-> potwierdził hook stroma ([R12.5](R12-where-the-agent-works.md#R12.5)). Przeglądarki innego agenta (Antigravity
+> ([R12.2](R12-where-the-agent-works.md#R12.2)) i w przeglądarce Codexu w terminalu według adresów w jej kodzie, gdy
+> człowiek potwierdził hook stroma ([R12.5](R12-where-the-agent-works.md#R12.5)). Przeglądarka aplikacji ChatGPT
+> (Codex) działa przez chmurę ChatGPT i strom jej nie pilnuje ([R12.5.1](R12-where-the-agent-works.md#R12.5.1)).
+> Przeglądarki innego agenta (Antigravity
 > i inne) ani sterowania komputerem żadnego agenta strom pilnować nie potrafi: agent nie wchodzi z nimi sam do
 > archiwum, do którego wolno tylko przeglądarce człowieka, a skany zapisuje człowiek. Wbudowanych przeglądarek i sterowania komputerem
 > aplikacji desktopowych agentów strom nie poleca; agent używa ich tylko na wyraźną prośbę człowieka
 > ([R9.4.2](#R9.4.2)). Gdzie rozmawia się z agentem i czego strom gdzie pilnuje, podsumowuje
 > [R12](R12-where-the-agent-works.md).
 
-<!-- zdroj: research:CHANGELOG.cs.md 1.27.0, 1.29.0 · src/core/browserhelp.ts GUARDED_BROWSER_AGENTS, ON_REQUEST · src/core/chromehook.ts:1-25 · src/core/codexhook.ts · app:CHANGELOG.cs.md 3.23.0 -->
+<!-- zdroj: research:CHANGELOG.cs.md 1.27.0, 1.29.0, 1.30.0 · src/core/browserhelp.ts GUARDED_BROWSER_AGENTS, ON_REQUEST, codexInChatgptApp (v1.30.0, 33ac2e38) · src/core/chromehook.ts:1-25 · src/core/codexhook.ts · app:CHANGELOG.cs.md 3.23.0 -->
 
 <a id="R9.1"></a>
 ## R9.1 Rodzaje archiwów
@@ -217,9 +219,11 @@ człowieka. Tak samo pilnuje wbudowanej przeglądarki aplikacji Claude
 ### R9.4.2 Wbudowane przeglądarki i sterowanie komputerem: niepolecane
 
 - W badaniu nic z aplikacji desktopowych agentów się nie wyłącza. Wbudowanej przeglądarki aplikacji Claude (także jej
-  podglądu) strom pilnuje jak Claude in Chrome ([R12.2](R12-where-the-agent-works.md#R12.2)), przeglądarki aplikacji
-  ChatGPT (Codex) według adresów w jej kodzie, gdy człowiek potwierdzi hook stroma
-  ([R12.5](R12-where-the-agent-works.md#R12.5)). Sterowania komputerem aplikacji Claude ani aplikacji ChatGPT strom
+  podglądu) strom pilnuje jak Claude in Chrome ([R12.2](R12-where-the-agent-works.md#R12.2)). Przeglądarka aplikacji
+  ChatGPT (Codex) działa przez chmurę ChatGPT i strom jej nie pilnuje, niezależnie od tego, czy hook stroma jest
+  w Codexie potwierdzony; o stronach decyduje okno dialogowe ChatGPT
+  ([R12.5.1](R12-where-the-agent-works.md#R12.5.1)). Przeglądarki Codexu w terminalu strom pilnuje według adresów
+  w jej kodzie, gdy człowiek potwierdzi hook stroma ([R12.5](R12-where-the-agent-works.md#R12.5)). Sterowania komputerem aplikacji Claude ani aplikacji ChatGPT strom
   nie pilnuje ([R12.10](R12-where-the-agent-works.md#R12.10)). Żadnego z nich strom nie poleca.
 - **Tylko metodyka:** agent nie używa ich sam z siebie: nie wchodzi z nimi do archiwum, do którego wolno tylko
   przeglądarce człowieka, a skany zapisuje człowiek ([R9.6](#R9.6)). Gdy człowiek wyraźnie o nie poprosi, to wybór
@@ -230,9 +234,10 @@ człowieka. Tak samo pilnuje wbudowanej przeglądarki aplikacji Claude
   pobierający archiwum, pobieranie stron witryny i przeglądarka agenta w Chrome zawsze kierują się zasadami archiwów
   ([R9.3](#R9.3), [R9.4](#R9.4)).
 - **Obsługa:** terminal: `strom doctor`, wiersz **przeglądarka aplikacji desktopowych**.
-- **Obowiązuje od:** badanie 1.27.0; 1.29.0: wbudowana przeglądarka aplikacji Claude i przeglądarka Codexu pilnowane
+- **Obowiązuje od:** badanie 1.27.0; 1.29.0: wbudowana przeglądarka aplikacji Claude i przeglądarka Codexu pilnowane;
+  1.30.0: przeglądarki aplikacji ChatGPT strom nie pilnuje
 
-<!-- zdroj: research:src/core/browserhelp.ts ON_REQUEST, browserKept · src/core/browser.ts CODEX_BROWSER_SERVERS, Claude_Browser matcher · src/brief/brief.ts · src/commands/guide.ts · src/commands/setup.ts:527 desktop · assets/lang/cs.json ui.doc.desktop.unwatched · CHANGELOG.cs.md 1.27.0, 1.29.0 · commit 6968ab72 (agent řekne, zda strom cestu hlídá) -->
+<!-- zdroj: research:src/core/browserhelp.ts ON_REQUEST, browserKept · src/core/browser.ts CODEX_BROWSER_SERVERS, Claude_Browser matcher · src/brief/brief.ts · src/commands/guide.ts · src/commands/setup.ts:527 desktop · assets/lang/cs.json ui.doc.desktop.unwatched · CHANGELOG.cs.md 1.27.0, 1.29.0 · research:v1.30.0 (33ac2e38) src/core/browserhelp.ts codexInChatgptApp, browserKept; assets/lang/pl.json ui.doc.desktop.codex; CHANGELOG.pl.md 1.30.0 · dirigent:test/vysledek-062-u4-codex.md · 1.29.0 (53dba68d; dev 6968ab72): agent řekne, zda strom cestu hlídá -->
 
 <a id="R9.4.3"></a>
 ### R9.4.3 Stan przeglądarki w strom doctor i w aplikacji

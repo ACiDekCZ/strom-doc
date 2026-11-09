@@ -23,15 +23,17 @@ The procedure in brief:
 
 > **Note: where exactly the agent's browser applies.** strom watches the agent's browser with **Claude Code** and
 > the **Claude in Chrome** extension, in the Claude app's built-in browser
-> ([R12.2](R12-where-the-agent-works.md#R12.2)) and in Codex's browser by the addresses in its code, when a person
-> has confirmed strom's hook ([R12.5](R12-where-the-agent-works.md#R12.5)). strom cannot watch the browser of
+> ([R12.2](R12-where-the-agent-works.md#R12.2)) and in the browser of Codex in the terminal by the addresses in its
+> code, when a person has confirmed strom's hook ([R12.5](R12-where-the-agent-works.md#R12.5)). The ChatGPT app's
+> (Codex) browser runs through ChatGPT's cloud and strom does not watch it
+> ([R12.5.1](R12-where-the-agent-works.md#R12.5.1)). strom cannot watch the browser of
 > another agent (Antigravity and others) or the computer use of any agent: the agent does not take them of its own
 > accord into an archive only a person's browser may enter, and a person saves the images. The built-in browsers and computer use of the agents'
 > desktop apps strom does not recommend; the agent uses them only when a person explicitly asks
 > ([R9.4.2](#R9.4.2)). Where the agent is talked to and what strom watches where, [R12](R12-where-the-agent-works.md)
 > sums up.
 
-<!-- zdroj: research:CHANGELOG.cs.md 1.27.0, 1.29.0 · src/core/browserhelp.ts GUARDED_BROWSER_AGENTS, ON_REQUEST · src/core/chromehook.ts:1-25 · src/core/codexhook.ts · app:CHANGELOG.cs.md 3.23.0 -->
+<!-- zdroj: research:CHANGELOG.cs.md 1.27.0, 1.29.0, 1.30.0 · src/core/browserhelp.ts GUARDED_BROWSER_AGENTS, ON_REQUEST, codexInChatgptApp (v1.30.0, 33ac2e38) · src/core/chromehook.ts:1-25 · src/core/codexhook.ts · app:CHANGELOG.cs.md 3.23.0 -->
 
 <a id="R9.1"></a>
 ## R9.1 Kinds of archives
@@ -217,9 +219,11 @@ Claude app's built-in browser it watches the same way ([R12.2](R12-where-the-age
 ### R9.4.2 Built-in browsers and computer use: not recommended
 
 - Nothing of the agents' desktop apps is switched off in the research. The Claude app's built-in browser (its preview
-  too) strom watches as it does Claude in Chrome ([R12.2](R12-where-the-agent-works.md#R12.2)), the ChatGPT app's
-  (Codex) browser by the addresses in its code, once a person confirms strom's hook
-  ([R12.5](R12-where-the-agent-works.md#R12.5)). Computer use of the Claude app and of the ChatGPT app strom does not
+  too) strom watches as it does Claude in Chrome ([R12.2](R12-where-the-agent-works.md#R12.2)). The ChatGPT app's
+  (Codex) browser runs through ChatGPT's cloud and strom does not watch it, whether strom's hook in Codex is
+  confirmed or not; the sites are decided by ChatGPT's dialog ([R12.5.1](R12-where-the-agent-works.md#R12.5.1)).
+  The browser of Codex in the terminal strom watches by the addresses in its code, once a person confirms strom's
+  hook ([R12.5](R12-where-the-agent-works.md#R12.5)). Computer use of the Claude app and of the ChatGPT app strom does not
   watch ([R12.10](R12-where-the-agent-works.md#R12.10)). None of them strom recommends.
 - **Method only:** the agent does not use them of its own accord: it does not take them into an archive only a
   person's browser may enter, and a person saves the images ([R9.6](#R9.6)). When a person explicitly asks for them,
@@ -230,8 +234,10 @@ Claude app's built-in browser it watches the same way ([R12.2](R12-where-the-age
   downloader, the web fetch of pages and the agent's browser in Chrome always follow the archives' rules
   ([R9.3](#R9.3), [R9.4](#R9.4)).
 - **Controls:** terminal: `strom doctor`, the row **desktop apps' browser**.
-- **Since:** research 1.27.0; 1.29.0: the Claude app's built-in browser and Codex's browser watched
-<!-- zdroj: research:src/core/browserhelp.ts ON_REQUEST, browserKept · src/core/browser.ts CODEX_BROWSER_SERVERS, Claude_Browser matcher · src/brief/brief.ts · src/commands/guide.ts · src/commands/setup.ts:527 desktop · assets/lang/cs.json ui.doc.desktop.unwatched · CHANGELOG.cs.md 1.27.0, 1.29.0 · commit 6968ab72 (agent řekne, zda strom cestu hlídá) -->
+- **Since:** research 1.27.0; 1.29.0: the Claude app's built-in browser and Codex's browser watched; 1.30.0: the
+  ChatGPT app's browser strom does not watch
+
+<!-- zdroj: research:src/core/browserhelp.ts ON_REQUEST, browserKept · src/core/browser.ts CODEX_BROWSER_SERVERS, Claude_Browser matcher · src/brief/brief.ts · src/commands/guide.ts · src/commands/setup.ts:527 desktop · assets/lang/cs.json ui.doc.desktop.unwatched · CHANGELOG.cs.md 1.27.0, 1.29.0 · research:v1.30.0 (33ac2e38) src/core/browserhelp.ts codexInChatgptApp, browserKept; src/cli/ui.ts ui.doc.desktop.codex; CHANGELOG.md 1.30.0 · dirigent:test/vysledek-062-u4-codex.md · 1.29.0 (53dba68d; dev 6968ab72): agent řekne, zda strom cestu hlídá -->
 
 <a id="R9.4.3"></a>
 ### R9.4.3 The browser's state in strom doctor and the app
