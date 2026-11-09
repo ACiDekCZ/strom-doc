@@ -51,10 +51,11 @@ kolorem.
 | Znacznik | Znaczenie (opis po najechaniu) |
 |---|---|
 | **Potwierdzone** (✓) | **Potwierdzone przez człowieka**: daną potwierdził, wpisał lub przywrócił człowiek albo przyjął propozycję badania |
-| **Udokumentowane** (pełne kropki) | dana jest udokumentowana ([R3.1](R3-verification-and-citation.md#R3.1)); dwie pełne kropki tylko wtedy, gdy dwóch czytelników zapisu czyta zgodnie |
+| **Udokumentowane** (pełne kropki) | dana jest udokumentowana ([R3.1](R3-verification-and-citation.md#R3.1)); dwie pełne kropki tylko wtedy, gdy dwóch czytelników zapisu czyta zgodnie ([S7.1](S7-reliability-and-verification.md#S7.1)) |
 | **Z drzewa** (puste kropki) | „Z drzewa (niezweryfikowane): przejęte z {program}, plik {data}” |
 
-Pozostałe dane pokazują stopień pewności badania ([R3.1](R3-verification-and-citation.md#R3.1)).
+Pozostałe dane pokazują stopień pewności badania ([R3.1](R3-verification-and-citation.md#R3.1)). Wszystkie znaczniki,
+znacznik na karcie w drzewie i weryfikację danych według oryginałów opisuje [S7](S7-reliability-and-verification.md).
 
 - **Pilnuje kod:**
   - znacznik **Z drzewa** obowiązuje, dopóki dana ma wartość z pliku. Edycja kończy znacznik; przy danej zmienionej
@@ -65,14 +66,17 @@ Pozostałe dane pokazują stopień pewności badania ([R3.1](R3-verification-and
     zgaduje;
   - wiersz przy osobie mówi, skąd pochodzą dane: „Wszystkie dane osoby pochodzą z {program} (plik {data}, wczytano
     {data}).” albo „Dane oznaczone „z drzewa” pochodzą z …”.
-- **Granice:** ilu czytelników czytało akt i że dana nie ma źródła, aplikacja od badania jeszcze nie dostaje: znacznik
-  **Bez źródła** się nie pokazuje, a **Udokumentowane** ma jedną pełną kropkę.
+- **Granice:** że dana nie ma źródła, aplikacja przy danej jeszcze nie pokazuje: znacznika **Bez źródła** przy danej
+  nie ma ([S7.1](S7-reliability-and-verification.md#S7.1)).
 - **Obsługa:** karta osoby (przy danej znacznik, **Co oznaczają znaczniki**); **Ustawienia → Karta osoby →
-  Wiarygodność na karcie osoby** (domyślnie włączone) i **Wiarygodność na kartach w drzewie** (domyślnie wyłączone;
-  karta w drzewie pokazuje najsłabszą z danych imię, urodzenie, zgon).
+  Wiarygodność przy danych w karcie osoby** (domyślnie włączone) i **Na karcie pokazuj → Udokumentowanie
+  i wiarygodność** (domyślnie włączone; karta w drzewie pokazuje najsłabszą z danych imię, urodzenie, zgon,
+  [S7.2](S7-reliability-and-verification.md#S7.2)).
+- **Od aplikacji 3.26.0:** dwie pełne kropki przy **Udokumentowane** dostaje dana, przy której podczas weryfikacji przez
+  badanie zgodzili się dwaj czytelnicy aktu; karta w drzewie ma jeden znacznik zamiast dawnych dwóch opcji.
 - **Obowiązuje od:** aplikacja 3.26.0, badanie 1.30.0
 
-<!-- zdroj: app:1c9b2392 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; evidence 065 nezapojené) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON), display.reliabilityTree (OFF) · index.html settings-group-card · strings.ts reliability.*, settings.groupCard -->
+<!-- zdroj: app:7b0471f8 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; readers z _STROM_CHECKED, noSource nekrmeno) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON) · src/ui/card-signals-ui.ts (signál status, výchozí zapnuto) · index.html settings-group-card · strings.ts reliability.settingCard, cardDensity.cardStatus, settings.groupCard -->
 
 <a id="S6.3"></a>
 ## S6.3 Dane z drzewa są wskazówkami: agent proponuje, człowiek decyduje
@@ -141,7 +145,8 @@ scalono.
   - gdy plik zawiera kilka rodzin, których nic nie łączy: **Wydziel niepołączone części…**;
   - badanie: bez badania na tym komputerze **Badanie przodków z tym drzewem** i **Badanie przodków**; z badaniem
     **Rozpocznij badanie z tym drzewem**; drzewo powiązane z badaniem **Badanie z tym drzewem** (miejsca bez położenia
-    i osoby z danymi z drzewa) i **Odszukaj miejsca**;
+    i osoby z danymi z drzewa), **Odszukaj miejsca** oraz, gdy badanie potrafi zbiorczą weryfikację, **Sprawdź dane
+    w źródłach** (otwiera **Zweryfikuj dane w drzewie**, [S7.5](S7-reliability-and-verification.md#S7.5));
   - zdanie „Badania traktują dane z drzewa jako wskazówki: bez dowodu ze źródła ich nie nadpisują, a zmienione można
     przywrócić.”;
   - odnośniki **Z powrotem do {program}: eksport ze źródłami…** ([S6.6](#S6.6)) i pomoc **Drzewo z innego programu**.
@@ -149,7 +154,7 @@ scalono.
   rodzin).
 - **Obowiązuje od:** aplikacja 3.26.0
 
-<!-- zdroj: app:1c9b2392 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', IMPORT_NEXT_VERIFY_FEATURES prázdné → „Ověřit údaje v pramenech“ se neukazuje, nextCardClosed) · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
+<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
 
 <a id="S6.5"></a>
 ## S6.5 Kopie zapasowe i powrót w czasie
@@ -213,11 +218,23 @@ programu. Osoba, która ma ten sam identyfikator, ale poza tym się nie zgadza, 
     programu; same dopasowania nie tworzą;
   - nierozstrzygnięte dopasowanie przy scaleniu potwierdza się samo dopiero od wyniku 80; dopasowanie 50–79 jest tylko
     proponowane (?) i bez decyzji człowieka się nie łączy ([A8.3](A8-merging-trees.md#A8.3));
-  - notatka osoby, relacji i źródła przy scaleniu się nie podwaja.
-- **Granice:** rodzin według identyfikatora się nie paruje. Ręczne scalenie dwóch osób notatek nie łączy.
+  - notatka osoby, relacji i źródła przy scaleniu się nie podwaja;
+  - rodzeństwo znane tylko z nazwiska przy ponownym scaleniu tego samego pliku nie przybywa po raz drugi.
+- **Drzewo wczytane starszą wersją aplikacji:** scalenie tego samego pliku daje to samo drzewo i ten sam eksport
+  **Z powrotem do {program}** co nowy import: rodziny (ani rodzina z jednym nazwanym rodzicem) się nie podwajają i nie
+  przybywa ślub, którego plik nie ma. Osoba tylko z imieniem i bez dat paruje się z osobą drzewa o tym samym imieniu
+  przez sparowanego krewnego (powód na przykład **Dziecko dopasowanej osoby**, **Rodzeństwo dopasowanej osoby**,
+  **Teść, teściowa, zięć lub synowa dopasowanej osoby**); wynik 50, zawsze tylko do sprawdzenia. Nie paruje się, gdy
+  krewny ma dwie osoby o tym samym imieniu, różni się płeć albo daty urodzenia lub zgonu.
+- **Granice:**
+  - rodzin według identyfikatora się nie paruje. Ręczne scalenie dwóch osób notatek nie łączy;
+  - znaczników **Z drzewa** scalenie drzewa ze starszej wersji nie uzupełnia: jego wartości pozostają danymi
+    człowieka. Znaczniki daje nowy import pliku;
+  - duplikatów z wcześniejszego scalenia scalenie nie usuwa; usuwa się je ręcznie.
 - **Obsługa:** **Import → Import GEDCOM → Scal z istniejącym** ([A8](A8-merging-trees.md)).
 - **Obowiązuje od:** aplikacja 3.26.0
 
+<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek -->
 <!-- zdroj: app:1c9b2392 src/merge/matching.ts ID_MATCH_SCORE 100, ID_CANDIDATE_SCORE 60, ID_MAX_YEAR_GAP 3, WEAK_ID_BONUS 25, offerOnlyCap · src/merge/executor.ts:82 AUTO_CONFIRM_SCORE = 80 · src/merge/notes.ts · strings.ts merge reason id „Stejné ID v souboru“ · dirigent:prace/1108-app-066-u8/karta.md Výsledek (FAM se podle ID nepárují; mergePersons neslučuje poznámky) -->
 
 <a id="S6.8"></a>

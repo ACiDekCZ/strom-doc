@@ -134,6 +134,10 @@ The agent never downloads by itself: not by a command, a script or its own brows
 - **Method only:** download only the images the task reads, never a whole book "just in case". The book is downloaded
   by the session that reads it. An archive without a downloader: the agent builds one (`strom connector new`) by the
   portal's terms and robots.txt.
+- **From research 1.30.0:** `strom connector test --fetch` warns when one image costs more than 10 requests (tiles,
+  most likely), says how long an image and a book take at the archive's pace, and sends the agent to look first for
+  the portal's link to the full image, a download of the whole book or the full image through IIIF; tiles only as a
+  last resort.
 - Images that the archive does not allow to download automatically are saved by a person into a prepared folder
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); an archive's permission: [R6.3.1](R6-awaiting-action.md#R6.3.1).
   Browser-only archives, the agent's browser and the whole course: [R9](R9-archives.md).
@@ -144,7 +148,7 @@ The agent never downloads by itself: not by a command, a script or its own brows
   only). App: Awaiting action.
 - **Since:** research 1.0.0 (downloading only through strom); the levels of terms and a person's pace 1.14.0
 
-<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 -->
+<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 · research:773c475a src/commands/connectors.ts HEAVY_IMAGE = 10 -->
 
 <a id="R8.3"></a>
 ## R8.3 Readers: who reads the images

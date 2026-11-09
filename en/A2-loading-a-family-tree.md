@@ -31,7 +31,12 @@ source.
     ([S6.1](S6-tree-from-another-program.md#S6.1));
   - the program's own tags (`_XXX`) directly on a person, family and source are kept for the export **Back to
     {program}** ([S6.6](S6-tree-from-another-program.md#S6.6)); deeper own tags are counted;
-  - MyHeritage photo cutouts (`_POSITION`, `_CUTOUT`) are bookkeeping and are not counted.
+  - MyHeritage photo cutouts (`_POSITION`, `_CUTOUT`) are bookkeeping and are not counted;
+  - a divorce written before the marriage (PAF) is not lost and does not overwrite the marriage; an empty marriage or
+    divorce written before another one with a date (MyHeritage) keeps the date and place of the dated one;
+  - a name written as a description (`Son`, `Unknown`) comes back as it was written, with no note made of it; text on
+    the line of a fact (education, burial, a custom event), an address in parts (`ADR1`, `CITY`…) and a web link in
+    the text of a source stay and come back as the file had them.
 
 <!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels -->
 

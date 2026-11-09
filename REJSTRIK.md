@@ -228,6 +228,18 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 - **Čísla:** [R3.5.1](cs/R3-verification-and-citation.md#R3.5.1), R3.8
 
+<a id="report-a-problem"></a>
+### Nahlásit problém
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Nahlásit problém (terminal, `ui.maintenance.report`) · `strom error` | Jeden soubor ZIP se zprávou o problému: počítač, instalace, `strom doctor`, agenti, konektory, most a výzkum jen v číslech, bez lidí z rodokmenu. Strom nic neodesílá, soubor pošle člověk. |
+| en | Report a problem (terminal) · `strom error` | One ZIP file with a report of the problem: the computer, the installation, `strom doctor`, the agents, connectors, the bridge and the research in numbers only, nothing of the family tree's people. Strom sends nothing; a person sends the file. |
+| de | Ein Problem melden (terminal) · `strom error` | Eine ZIP-Datei mit einem Bericht über das Problem: Computer, Installation, `strom doctor`, Agenten, Konnektoren, Brücke und die Forschung nur in Zahlen, nichts über die Menschen des Stammbaums. Strom sendet nichts; die Datei schickt ein Mensch. |
+| pl | Zgłosić problem (terminal) · `strom error` | Jeden plik ZIP z raportem o problemie: komputer, instalacja, `strom doctor`, agenci, konektory, most i badanie tylko w liczbach, nic o ludziach z drzewa. Strom niczego nie wysyła; plik wysyła człowiek. |
+
+- **Čísla:** [R13.1](cs/R13-reporting-a-problem.md#R13.1), R13.2, R13.3, R13.5, R13.7
+
 <a id="in-hand"></a>
 ### Náskok
 
@@ -672,6 +684,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A4.3](cs/A4-surnames-and-families.md#A4.3)
 
+<a id="card-status-mark"></a>
+### Doložení a spolehlivost
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Doložení a spolehlivost (app, `cardDensity.cardStatus`) | Jedna značka vpravo dole na kartičce ve stromu: nejslabší z údajů jméno, narození a úmrtí (✓, ●●, ●○, ○, ○○, tečkovaný rámeček). Zapíná se v Na kartě ukázat. |
+| en | Sources and reliability (app) | One mark in the bottom right corner of the card in the tree: the weakest of the facts name, birth and death (✓, ●●, ●○, ○, ○○, a dotted frame). Switched on in Show on card. |
+| de | Belege und Verlässlichkeit (app) | Eine Marke unten rechts auf der Karte im Baum: die schwächste der Angaben Name, Geburt und Tod (✓, ●●, ●○, ○, ○○, ein gepunkteter Rahmen). Eingeschaltet in Auf der Karte zeigen. |
+| pl | Udokumentowanie i wiarygodność (app) | Jeden znacznik w prawym dolnym rogu karty w drzewie: najsłabsza z danych imię, urodzenie i zgon (✓, ●●, ●○, ○, ○○, kropkowana ramka). Włącza się w Na karcie pokazuj. |
+
+- **Čísla:** [S7.2](cs/S7-reliability-and-verification.md#S7.2), S6.2
+
 <a id="hypothesis"></a>
 ### Hypotéza
 
@@ -911,6 +935,30 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Prywatność osób żyjących (eksport) · Ochrona osób żyjących (księga rodu) | Opcja wyniku, jak pokazać osoby żyjące: Pełne dane, Inicjały + rok urodzenia, Ukryj imiona i nazwiska, Zostaw tylko nazwisko. Struktura drzewa zostaje. |
 
 - **Čísla:** [A7.2](cs/A7-book-pages-and-export.md#A7.2), A7.1, A7.2.1
+
+<a id="checked-against-scan"></a>
+### Ověřeno podle skenu
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Ověřeno podle skenu (app, `verify.scan`) · `strom verify confirm` | Potvrzení údaje člověkem, který ho porovnal se skenem záznamu: značka Potvrzeno (✓). Platí, dokud se hodnota nezmění; Vzít zpět ho zruší. Agent ho nikdy nezmění. |
+| en | Checked against the scan (app) · `strom verify confirm` | A fact confirmed by a person who compared it with the scan of the record: the mark Confirmed (✓). It holds while the value does not change; Undo takes it back. The agent never changes it. |
+| de | Anhand des Scans geprüft (app) · `strom verify confirm` | Die Bestätigung einer Angabe durch einen Menschen, der sie mit dem Scan des Eintrags verglichen hat: die Marke Bestätigt (✓). Sie gilt, solange sich der Wert nicht ändert; Zurücknehmen hebt sie auf. Der Agent ändert sie nie. |
+| pl | Sprawdzone ze skanem (app) · `strom verify confirm` | Potwierdzenie danej przez człowieka, który porównał ją ze skanem aktu: znacznik Potwierdzone (✓). Obowiązuje, dopóki wartość się nie zmieni; Cofnij je wycofuje. Agent nigdy go nie zmienia. |
+
+- **Čísla:** [S7.8](cs/S7-reliability-and-verification.md#S7.8), S7.1, S7.9
+
+<a id="verify-facts"></a>
+### Ověřit údaje
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Ověřit (u údaje) · Ověřit údaje · N (u osoby) · Ověřit údaje ve stromu… (app, `verify.*`) · `strom verify facts`, `strom verify bulk` | Úkol pro výzkum ověřit údaj podle originálu záznamu: přečíst známý záznam, nebo ho najít a přečíst. Běží na pozadí výzkumu; výsledek je doloženo, nebo ponecháno s důvodem. |
+| en | Verify (at a fact) · Verify facts · N (at a person) · Verify facts in the tree… (app) · `strom verify facts`, `strom verify bulk` | A task for the research to verify a fact against the original record: read a known record, or find it and read it. It runs in the research's background; the result is proven, or kept with a reason. |
+| de | Prüfen (an einer Angabe) · Angaben prüfen · N (bei einer Person) · Angaben im Baum prüfen… (app) · `strom verify facts`, `strom verify bulk` | Eine Aufgabe für die Forschung, eine Angabe am Originaleintrag zu prüfen: einen bekannten Eintrag lesen oder ihn finden und lesen. Sie läuft im Hintergrund der Forschung; das Ergebnis ist belegt oder mit Begründung belassen. |
+| pl | Zweryfikuj (przy danej) · Zweryfikuj dane · N (przy osobie) · Zweryfikuj dane w drzewie… (app) · `strom verify facts`, `strom verify bulk` | Zadanie dla badania, by zweryfikować daną według oryginalnego aktu: przeczytać znany akt albo go znaleźć i przeczytać. Działa w tle badania; wynik to udokumentowane albo pozostawione z uzasadnieniem. |
+
+- **Čísla:** [S7.3](cs/S7-reliability-and-verification.md#S7.3), S7.4, S7.5, S7.6, S7.7
 
 <a id="send-mode"></a>
 ### Posílat úpravy

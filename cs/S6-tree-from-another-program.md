@@ -48,10 +48,11 @@ programu a nikdo ho zatím neověřil. Stupně se liší tečkami, fajfkou a rá
 | Značka | Význam (popisek po najetí) |
 |---|---|
 | **Potvrzeno** (✓) | **Potvrdil člověk**: údaj potvrdil, zapsal nebo vrátil člověk, nebo přijal návrh výzkumu |
-| **Doloženo** (plné tečky) | údaj je doložený ([R3.1](R3-verification-and-citation.md#R3.1)); dvě plné tečky jen u dvou čtenářů záznamu shodně |
+| **Doloženo** (plné tečky) | údaj je doložený ([R3.1](R3-verification-and-citation.md#R3.1)); dvě plné tečky jen u dvou čtenářů záznamu shodně ([S7.1](S7-reliability-and-verification.md#S7.1)) |
 | **Z rodokmenu** (prázdné tečky) | „Z rodokmenu (neověřeno): převzato z rodokmenu {program}, soubor {datum}“ |
 
-Ostatní údaje ukazují stupeň jistoty výzkumu ([R3.1](R3-verification-and-citation.md#R3.1)).
+Ostatní údaje ukazují stupeň jistoty výzkumu ([R3.1](R3-verification-and-citation.md#R3.1)). Všechny značky, značku
+na kartičce ve stromu a ověření údajů podle originálů popisuje [S7](S7-reliability-and-verification.md).
 
 - **Hlídá kód:**
   - značka **Z rodokmenu** platí, dokud má údaj hodnotu ze souboru. Úprava značku ukončí; u údaje se částečně
@@ -61,14 +62,16 @@ Ostatní údaje ukazují stupeň jistoty výzkumu ([R3.1](R3-verification-and-ci
   - strom bez záznamu o importu (starší import, soubor Stromu) značku **Z rodokmenu** neukáže: nic se nehádá;
   - řádek u osoby říká, odkud údaje jsou: „Všechny údaje osoby jsou z {program} (soubor {datum}, načteno {datum}).“,
     nebo „Údaje se značkou z rodokmenu jsou z …“.
-- **Hranice:** kolik čtenářů záznam četlo a že údaj nemá pramen, aplikace od výzkumu zatím nedostává: značka
-  **Bez pramene** se neukazuje a **Doloženo** má jednu plnou tečku.
-- **Ovládání:** karta osoby (u údaje značka, **Co značky znamenají**); **Nastavení → Karta osoby → Spolehlivost na
-  kartě osoby** (výchozí zapnuto) a **Spolehlivost na kartičkách ve stromu** (výchozí vypnuto; kartička ukáže
-  nejslabší z údajů jméno, narození, úmrtí).
+- **Hranice:** že údaj nemá pramen, aplikace u údaje zatím neukazuje: značka **Bez pramene** u údaje není
+  ([S7.1](S7-reliability-and-verification.md#S7.1)).
+- **Ovládání:** karta osoby (u údaje značka, **Co značky znamenají**); **Nastavení → Karta osoby → Spolehlivost
+  u údajů v kartě osoby** (výchozí zapnuto) a **Na kartě ukázat → Doložení a spolehlivost** (výchozí zapnuto;
+  kartička ukáže nejslabší z údajů jméno, narození, úmrtí, [S7.2](S7-reliability-and-verification.md#S7.2)).
+- **Od aplikace 3.26.0:** dvě plné tečky u **Doloženo** dostane údaj, u kterého se při ověření výzkumem shodli dva
+  čtenáři záznamu; kartička ve stromu má jednu značku místo dřívějších dvou voleb.
 - **Platí od:** aplikace 3.26.0, výzkum 1.30.0
 
-<!-- zdroj: app:1c9b2392 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; evidence 065 nezapojené) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON), display.reliabilityTree (OFF) · index.html settings-group-card · strings.ts reliability.*, settings.groupCard -->
+<!-- zdroj: app:7b0471f8 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; readers z _STROM_CHECKED, noSource nekrmeno) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON) · src/ui/card-signals-ui.ts (signál status, výchozí zapnuto) · index.html settings-group-card · strings.ts reliability.settingCard, cardDensity.cardStatus, settings.groupCard -->
 
 <a id="S6.3"></a>
 ## S6.3 Údaje z rodokmenu jsou vodítka: agent navrhuje, člověk rozhoduje
@@ -133,14 +136,15 @@ Ukáže se jednou po každém importu, ať se strom založil nový, vložil, neb
   - když soubor obsahuje víc rodin, které nic nespojuje: **Oddělit nespojené části…**;
   - výzkum: bez výzkumu na tomto počítači **Výzkum předků s tímto stromem** a **Výzkum předků**; s výzkumem **Začít
     výzkum s tímto stromem**; strom napojený na výzkum **Výzkum s tímto stromem** (místa bez polohy a osoby s údaji
-    z rodokmenu) a **Dohledat místa**;
+    z rodokmenu), **Dohledat místa** a, když výzkum umí hromadné ověření, **Ověřit údaje v pramenech** (otevře
+    **Ověřit údaje ve stromu**, [S7.5](S7-reliability-and-verification.md#S7.5));
   - věta „Údaje z rodokmenu bere výzkum jako vodítka: bez dokladu z pramene je nepřepíše a změněné jde vrátit.“;
   - odkazy **Zpět do {program}: export s prameny…** ([S6.6](#S6.6)) a nápověda **Strom z jiného programu**.
 - **Hranice:** karta je jen u souboru jiného programu. Nahrazuje dřívější otázky po importu (kontrola, oddělení
   rodin).
 - **Platí od:** aplikace 3.26.0
 
-<!-- zdroj: app:1c9b2392 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', IMPORT_NEXT_VERIFY_FEATURES prázdné → „Ověřit údaje v pramenech“ se neukazuje, nextCardClosed) · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
+<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
 
 <a id="S6.5"></a>
 ## S6.5 Zálohy a návrat v čase
@@ -201,11 +205,23 @@ ID, ale jinak se neshoduje, se jen nabídne.
   - označení záznamu a `RIN` přidají ke shodě jmen 25 bodů, jen u souborů téhož programu; samy shodu nezaloží;
   - nerozhodnutá shoda se při sloučení potvrdí sama až od skóre 80; shoda 50–79 se jen nabídne (?) a bez rozhodnutí
     člověka se nespojí ([A8.3](A8-merging-trees.md#A8.3));
-  - poznámka osoby, vztahu i pramene se při sloučení nezdvojí.
-- **Hranice:** rodiny se podle ID nepárují. Ruční sloučení dvou osob poznámky nespojuje.
+  - poznámka osoby, vztahu i pramene se při sloučení nezdvojí;
+  - sourozenci známí jen příjmením při opakovaném sloučení téhož souboru nepřibudou podruhé.
+- **Strom načtený starší verzí aplikace:** sloučení téhož souboru dá stejný strom a stejné **Zpět do {program}** jako
+  nový import: rodiny (ani rodina s jedním pojmenovaným rodičem) se nezdvojí a nepřibude sňatek, který soubor nemá.
+  Osoba jen s křestním jménem a bez dat se spáruje se stejnojmennou osobou stromu přes spárovaného příbuzného (důvod
+  například **Dítě spárované osoby**, **Sourozenec spárované osoby**, **Tchán, tchyně, zeť nebo snacha spárované
+  osoby**); skóre 50, vždy jen ke kontrole. Nespáruje se, když má příbuzný dvě stejnojmenné osoby, liší se pohlaví
+  nebo data narození či úmrtí.
+- **Hranice:**
+  - rodiny se podle ID nepárují. Ruční sloučení dvou osob poznámky nespojuje;
+  - značky **Z rodokmenu** sloučení stromu ze starší verze nedoplní: jeho hodnoty zůstanou údaji člověka. Značky dá
+    nový import souboru;
+  - dvojníky z dřívějšího sloučení sloučení neodstraní; mažou se ručně.
 - **Ovládání:** **Import → Import GEDCOM → Sloučit s existujícím** ([A8](A8-merging-trees.md)).
 - **Platí od:** aplikace 3.26.0
 
+<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek -->
 <!-- zdroj: app:1c9b2392 src/merge/matching.ts ID_MATCH_SCORE 100, ID_CANDIDATE_SCORE 60, ID_MAX_YEAR_GAP 3, WEAK_ID_BONUS 25, offerOnlyCap · src/merge/executor.ts:82 AUTO_CONFIRM_SCORE = 80 · src/merge/notes.ts · strings.ts merge reason id „Stejné ID v souboru“ · dirigent:prace/1108-app-066-u8/karta.md Výsledek (FAM se podle ID nepárují; mergePersons neslučuje poznámky) -->
 
 <a id="S6.8"></a>

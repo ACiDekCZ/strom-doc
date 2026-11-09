@@ -119,6 +119,9 @@ nestahuje: ani příkazem, skriptem, ani svým prohlížečem.
     10 s a nejvýš 120 za hodinu (tempo člověka), pokud člověk pro server nenastavil vlastní; strom ho nikdy nezrychlí.
 - **Jen metodika:** stáhnout jen snímky, které úkol čte, nikdy celou knihu „pro jistotu“. Knihu stahuje sezení, které
   ji čte. Archiv bez stahovače: agent stahovač postaví (`strom connector new`) podle podmínek portálu a robots.txt.
+- **Od výzkumu 1.30.0:** `strom connector test --fetch` upozorní, když jeden snímek stojí víc než 10 žádostí (nejspíš
+  dlaždice), řekne, jak dlouho v tempu archivu potrvá snímek a kniha, a agenta pošle nejdřív hledat odkaz portálu na
+  celý snímek, stažení celé knihy nebo celý snímek přes IIIF; dlaždice až nakonec.
 - Snímky, které archiv nedovolí stáhnout automaticky, uloží člověk do připravené složky
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); svolení archivu: [R6.3.1](R6-awaiting-action.md#R6.3.1).
   Archivy jen přes prohlížeč, prohlížeč agenta a celý průběh: [R9](R9-archives.md).
@@ -129,7 +132,7 @@ nestahuje: ani příkazem, skriptem, ani svým prohlížečem.
   člověk). Aplikace: Čeká na vyřízení.
 - **Platí od:** výzkum 1.0.0 (stahování jen přes strom); úrovně podmínek a tempo člověka 1.14.0
 
-<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 -->
+<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 · research:773c475a src/commands/connectors.ts HEAVY_IMAGE = 10 -->
 
 <a id="R8.3"></a>
 ## R8.3 Čtenáři: kdo snímky čte

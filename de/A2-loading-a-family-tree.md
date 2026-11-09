@@ -34,7 +34,14 @@ Angabe von Person, Familie und Quelle geht nichts stillschweigend verloren.
     ([S6.1](S6-tree-from-another-program.md#S6.1));
   - eigene Tags des Programms (`_XXX`) direkt bei Person, Familie und Quelle bleiben für den Export **Zurück zu
     {program}** erhalten ([S6.6](S6-tree-from-another-program.md#S6.6)); tiefere eigene Tags werden gezählt;
-  - Fotoausschnitte von MyHeritage (`_POSITION`, `_CUTOUT`) sind Verwaltungsangaben und werden nicht gezählt.
+  - Fotoausschnitte von MyHeritage (`_POSITION`, `_CUTOUT`) sind Verwaltungsangaben und werden nicht gezählt;
+  - eine vor der Heirat eingetragene Scheidung (PAF) geht nicht verloren und überschreibt die Heirat nicht; eine leere
+    Heirat oder Scheidung, die vor einer anderen mit Datum eingetragen ist (MyHeritage), behält Datum und Ort der
+    datierten;
+  - ein als Beschreibung eingetragener Name (`Son`, `Unknown`) kommt so zurück, wie er eingetragen war, ohne eine
+    daraus gemachte Notiz; Text auf der Zeile einer Angabe (Bildung, Begräbnis, eigenes Ereignis), eine Adresse in
+    Teilen (`ADR1`, `CITY`…) und ein Weblink im Text einer Quelle bleiben erhalten und kommen so zurück, wie die Datei
+    sie hatte.
 
 <!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels -->
 

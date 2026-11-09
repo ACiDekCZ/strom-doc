@@ -28,7 +28,12 @@ tiše neztratí na úrovni záznamu ani přímého údaje osoby, rodiny a pramen
     spolu s původním označením záznamu (`@I12@`) jako ID programu ([S6.1](S6-tree-from-another-program.md#S6.1));
   - vlastní značky programu (`_XXX`) přímo u osoby, rodiny a pramene se uchovají pro export **Zpět do {program}**
     ([S6.6](S6-tree-from-another-program.md#S6.6)); hlubší vlastní značky se spočítají;
-  - výřezy fotek MyHeritage (`_POSITION`, `_CUTOUT`) jsou evidenční a nepočítají se.
+  - výřezy fotek MyHeritage (`_POSITION`, `_CUTOUT`) jsou evidenční a nepočítají se;
+  - rozvod zapsaný před sňatkem (PAF) se neztratí a sňatek nepřepíše; prázdný sňatek nebo rozvod zapsaný před
+    jiným s datem (MyHeritage) si nechá datum a místo toho s datem;
+  - jméno zapsané jako popis (`Son`, `Unknown`) se vrací tak, jak bylo zapsané, bez poznámky z něj udělané; text na
+    řádku údaje (vzdělání, pohřeb, vlastní událost), adresa po částech (`ADR1`, `CITY`…) a webový odkaz v textu
+    pramene zůstanou a vrátí se tak, jak je soubor měl.
 
 <!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels -->
 

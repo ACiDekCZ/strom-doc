@@ -131,6 +131,9 @@ nigdy nie pobiera sam: ani poleceniem, ani skryptem, ani swoją przeglądarką.
 - **Tylko metodyka:** pobrać tylko skany, które zadanie czyta, nigdy całej księgi „na wszelki wypadek”. Księgę pobiera
   sesja, która ją czyta. Archiwum bez programu pobierającego: agent go buduje (`strom connector new`) według warunków
   portalu i robots.txt.
+- **Od badania 1.30.0:** `strom connector test --fetch` ostrzega, gdy jeden skan kosztuje więcej niż 10 zapytań
+  (najpewniej kafelki), mówi, jak długo w tempie archiwum potrwa skan i księga, i kieruje agenta najpierw do szukania
+  odnośnika portalu do całego skanu, pobrania całej księgi albo całego skanu przez IIIF; kafelki dopiero na końcu.
 - Skany, których archiwum nie pozwala pobrać automatycznie, człowiek zapisuje do przygotowanego folderu
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); zgoda archiwum: [R6.3.1](R6-awaiting-action.md#R6.3.1).
   Archiwa tylko przez przeglądarkę, przeglądarka agenta i cały przebieg: [R9](R9-archives.md).
@@ -141,7 +144,7 @@ nigdy nie pobiera sam: ani poleceniem, ani skryptem, ani swoją przeglądarką.
   człowiek). Aplikacja: Czeka na decyzję.
 - **Obowiązuje od:** badanie 1.0.0 (pobieranie tylko przez strom); poziomy warunków i tempo człowieka 1.14.0
 
-<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 -->
+<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 · research:773c475a src/commands/connectors.ts HEAVY_IMAGE = 10 -->
 
 <a id="R8.3"></a>
 ## R8.3 Czytelnicy: kto czyta skany

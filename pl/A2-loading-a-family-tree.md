@@ -32,7 +32,12 @@ rekordy**. Nic nie ginie po cichu na poziomie rekordu ani bezpośredniej danej o
     ([S6.1](S6-tree-from-another-program.md#S6.1));
   - własne znaczniki programu (`_XXX`) bezpośrednio przy osobie, rodzinie i źródle zachowują się do eksportu **Z powrotem
     do {program}** ([S6.6](S6-tree-from-another-program.md#S6.6)); głębsze własne znaczniki się liczy;
-  - wycinki zdjęć MyHeritage (`_POSITION`, `_CUTOUT`) są ewidencyjne i się ich nie liczy.
+  - wycinki zdjęć MyHeritage (`_POSITION`, `_CUTOUT`) są ewidencyjne i się ich nie liczy;
+  - rozwód zapisany przed ślubem (PAF) nie ginie i nie nadpisuje ślubu; pusty ślub lub rozwód zapisany przed innym
+    z datą (MyHeritage) zachowuje datę i miejsce tego z datą;
+  - imię zapisane jako opis (`Son`, `Unknown`) wraca tak, jak było zapisane, bez zrobionej z niego notatki; tekst
+    w wierszu danej (wykształcenie, pogrzeb, własne zdarzenie), adres w częściach (`ADR1`, `CITY`…) i odnośnik
+    internetowy w tekście źródła zostają i wracają tak, jak miał je plik.
 
 <!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels -->
 

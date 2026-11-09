@@ -53,10 +53,12 @@ Punkte, Häkchen und Rahmen, nie nur durch die Farbe.
 | Marke | Bedeutung (Beschriftung beim Darüberfahren) |
 |---|---|
 | **Bestätigt** (✓) | **Von einem Menschen bestätigt**: die Angabe hat ein Mensch bestätigt, eingetragen oder zurückgesetzt, oder er hat einen Vorschlag der Forschung angenommen |
-| **Belegt** (volle Punkte) | die Angabe ist belegt ([R3.1](R3-verification-and-citation.md#R3.1)); zwei volle Punkte nur bei zwei übereinstimmenden Lesern des Eintrags |
+| **Belegt** (volle Punkte) | die Angabe ist belegt ([R3.1](R3-verification-and-citation.md#R3.1)); zwei volle Punkte nur bei zwei übereinstimmenden Lesern des Eintrags ([S7.1](S7-reliability-and-verification.md#S7.1)) |
 | **Aus dem Stammbaum** (leere Punkte) | „Aus dem Stammbaum (ungeprüft): übernommen aus {program}, Datei vom {datum}“ |
 
-Die übrigen Angaben zeigen den Grad der Sicherheit der Forschung ([R3.1](R3-verification-and-citation.md#R3.1)).
+Die übrigen Angaben zeigen den Grad der Sicherheit der Forschung ([R3.1](R3-verification-and-citation.md#R3.1)). Alle
+Marken, die Marke auf dem Kärtchen im Stammbaum und die Prüfung der Angaben an den Originalen beschreibt
+[S7](S7-reliability-and-verification.md).
 
 - **Prüft der Code:**
   - die Marke **Aus dem Stammbaum** gilt, solange die Angabe den Wert aus der Datei hat. Eine Änderung beendet die
@@ -68,14 +70,18 @@ Die übrigen Angaben zeigen den Grad der Sicherheit der Forschung ([R3.1](R3-ver
     Stammbaum** nicht: nichts wird erraten;
   - eine Zeile bei der Person sagt, woher die Angaben stammen: „Alle Angaben der Person stammen aus {program} (Datei
     vom {datum}, geladen am {datum}).“ oder „Angaben mit der Marke „aus dem Stammbaum“ stammen aus …“.
-- **Grenzen:** wie viele Leser einen Eintrag gelesen haben und dass eine Angabe keine Quelle hat, bekommt die App von
-  der Forschung noch nicht: die Marke **Ohne Quelle** wird nicht gezeigt, und **Belegt** hat einen vollen Punkt.
+- **Grenzen:** dass eine Angabe keine Quelle hat, zeigt die App bei der Angabe noch nicht: die Marke **Ohne Quelle**
+  gibt es bei der Angabe nicht ([S7.1](S7-reliability-and-verification.md#S7.1)).
 - **Bedienung:** Personenkarte (bei der Angabe die Marke, **Was die Marken bedeuten**); **Einstellungen →
-  Personenkarte → Zuverlässigkeit in der Personenkarte** (standardmäßig ein) und **Zuverlässigkeit auf den Kärtchen im
-  Stammbaum** (standardmäßig aus; das Kärtchen zeigt die schwächste der Angaben Name, Geburt, Tod).
+  Personenkarte → Verlässlichkeit bei Angaben in der Personenkarte** (standardmäßig ein) und **Auf der Karte zeigen →
+  Belege und Verlässlichkeit** (standardmäßig ein; das Kärtchen zeigt die schwächste der Angaben Name, Geburt, Tod,
+  [S7.2](S7-reliability-and-verification.md#S7.2)).
+- **Ab App 3.26.0:** zwei volle Punkte bei **Belegt** bekommt eine Angabe, bei der sich bei der Prüfung durch die
+  Forschung zwei Leser des Eintrags einig waren; das Kärtchen im Stammbaum hat eine Marke statt der früheren zwei
+  Optionen.
 - **Gilt seit:** App 3.26.0, Forschung 1.30.0
 
-<!-- zdroj: app:1c9b2392 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; evidence 065 nezapojené) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON), display.reliabilityTree (OFF) · index.html settings-group-card · strings.ts reliability.*, settings.groupCard -->
+<!-- zdroj: app:7b0471f8 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; readers z _STROM_CHECKED, noSource nekrmeno) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON) · src/ui/card-signals-ui.ts (signál status, výchozí zapnuto) · index.html settings-group-card · strings.ts reliability.settingCard, cardDensity.cardStatus, settings.groupCard -->
 
 <a id="S6.3"></a>
 ## S6.3 Angaben aus einem Stammbaum sind Hinweise: der Agent schlägt vor, ein Mensch entscheidet
@@ -151,7 +157,9 @@ angelegt, eingefügt oder zusammengeführt wurde.
   - wenn die Datei mehrere Familien ohne Verbindung enthält: **Nicht verbundene Teile trennen…**;
   - Forschung: ohne Forschung auf diesem Computer **Ahnenforschung mit diesem Stammbaum** und **Ahnenforschung**; mit
     Forschung **Forschung mit diesem Stammbaum starten**; ein an die Forschung gebundener Stammbaum **Forschung mit
-    diesem Stammbaum** (Orte ohne Position und Personen mit Angaben aus dem Stammbaum) und **Orte suchen**;
+    diesem Stammbaum** (Orte ohne Position und Personen mit Angaben aus dem Stammbaum), **Orte suchen** und, wenn die
+    Forschung die Prüfung in großem Umfang beherrscht, **Angaben an Quellen prüfen** (öffnet **Angaben im Baum
+    prüfen**, [S7.5](S7-reliability-and-verification.md#S7.5));
   - der Satz „Angaben aus dem Stammbaum nimmt die Forschung als Hinweise: ohne Beleg aus einer Quelle überschreibt sie
     sie nicht, und Geändertes lässt sich zurücksetzen.“;
   - die Links **Zurück zu {program}: Export mit Quellen…** ([S6.6](#S6.6)) und die Hilfe **Stammbaum aus einem
@@ -160,7 +168,7 @@ angelegt, eingefügt oder zusammengeführt wurde.
   Import (Prüfung, Trennen von Familien).
 - **Gilt seit:** App 3.26.0
 
-<!-- zdroj: app:1c9b2392 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', IMPORT_NEXT_VERIFY_FEATURES prázdné → „Ověřit údaje v pramenech“ se neukazuje, nextCardClosed) · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
+<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
 
 <a id="S6.5"></a>
 ## S6.5 Sicherungen und Zurückgehen in der Zeit
@@ -228,11 +236,25 @@ der Programm-ID. Eine Person, die dieselbe ID hat, aber sonst nicht übereinstim
   - eine unentschiedene Übereinstimmung wird beim Zusammenführen erst ab dem Wert 80 von selbst bestätigt; eine
     Übereinstimmung von 50–79 wird nur angeboten (?) und ohne Entscheidung des Menschen nicht verbunden
     ([A8.3](A8-merging-trees.md#A8.3));
-  - Notizen von Person, Beziehung und Quelle werden beim Zusammenführen nicht verdoppelt.
-- **Grenzen:** Familien werden nicht nach der ID gepaart. Das manuelle Zusammenführen zweier Personen verbindet die
-  Notizen nicht.
+  - Notizen von Person, Beziehung und Quelle werden beim Zusammenführen nicht verdoppelt;
+  - Geschwister, die nur mit dem Nachnamen bekannt sind, kommen beim wiederholten Zusammenführen derselben Datei nicht
+    ein zweites Mal hinzu.
+- **Ein mit einer älteren Version der App geladener Stammbaum:** das Zusammenführen derselben Datei ergibt denselben
+  Stammbaum und dasselbe **Zurück zu {program}** wie ein neuer Import: Familien (auch eine Familie mit einem einzigen
+  benannten Elternteil) werden nicht verdoppelt, und es kommt keine Heirat hinzu, die die Datei nicht hat. Eine Person
+  nur mit Vornamen und ohne Daten wird mit der gleichnamigen Person des Stammbaums über einen gepaarten Verwandten
+  gepaart (Grund zum Beispiel **Kind einer abgeglichenen Person**, **Geschwister einer abgeglichenen Person**,
+  **Schwiegerverwandte einer abgeglichenen Person**); Wert 50, immer nur zur Kontrolle. Nicht gepaart wird, wenn der
+  Verwandte zwei gleichnamige Personen hat, das Geschlecht abweicht oder die Daten von Geburt oder Tod abweichen.
+- **Grenzen:**
+  - Familien werden nicht nach der ID gepaart. Das manuelle Zusammenführen zweier Personen verbindet die Notizen nicht;
+  - die Marken **Aus dem Stammbaum** ergänzt das Zusammenführen eines Stammbaums aus einer älteren Version nicht: seine
+    Werte bleiben Angaben des Menschen. Die Marken gibt ein neuer Import der Datei;
+  - Doppelgänger aus einem früheren Zusammenführen entfernt das Zusammenführen nicht; sie werden von Hand gelöscht.
 - **Bedienung:** **Import → GEDCOM importieren → Mit Vorhandenem zusammenführen** ([A8](A8-merging-trees.md)).
 - **Gilt seit:** App 3.26.0
+
+<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek -->
 
 <!-- zdroj: app:1c9b2392 src/merge/matching.ts ID_MATCH_SCORE 100, ID_CANDIDATE_SCORE 60, ID_MAX_YEAR_GAP 3, WEAK_ID_BONUS 25, offerOnlyCap · src/merge/executor.ts:82 AUTO_CONFIRM_SCORE = 80 · src/merge/notes.ts · strings.ts merge reason id „Stejné ID v souboru“ · dirigent:prace/1108-app-066-u8/karta.md Výsledek (FAM se podle ID nepárují; mergePersons neslučuje poznámky) -->
 

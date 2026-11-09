@@ -51,10 +51,12 @@ alone.
 | Mark | Meaning (the label on hover) |
 |---|---|
 | **Confirmed** (✓) | **Confirmed by a person**: a person confirmed, entered or reverted the fact, or accepted a proposal of the research |
-| **Proven** (full dots) | the fact is proven ([R3.1](R3-verification-and-citation.md#R3.1)); two full dots only with two readers of the record agreeing |
+| **Proven** (full dots) | the fact is proven ([R3.1](R3-verification-and-citation.md#R3.1)); two full dots only with two readers of the record agreeing ([S7.1](S7-reliability-and-verification.md#S7.1)) |
 | **From family tree** (empty dots) | “From the family tree (unverified): taken from {program}, file {date}” |
 
-Other facts show the research's degree of certainty ([R3.1](R3-verification-and-citation.md#R3.1)).
+Other facts show the research's degree of certainty ([R3.1](R3-verification-and-citation.md#R3.1)). All the marks, the
+mark on the card in the tree and verifying facts against the originals are described in
+[S7](S7-reliability-and-verification.md).
 
 - **Enforced by the code:**
   - the mark **From family tree** holds while the fact has the value from the file. An edit ends the mark; for a fact
@@ -65,14 +67,17 @@ Other facts show the research's degree of certainty ([R3.1](R3-verification-and-
     tree**: nothing is guessed;
   - a line at the person says where the facts come from: “All of this person's facts come from {program} (file {date},
     loaded {date}).”, or “Facts marked “from family tree” come from …”.
-- **Limits:** how many readers read the record and that a fact has no source the app does not yet get from the
-  research: the mark **No source** is not shown and **Proven** has one full dot.
+- **Limits:** that a fact has no source the app does not yet show at the fact: there is no mark **No source** at a
+  fact ([S7.1](S7-reliability-and-verification.md#S7.1)).
 - **Controls:** the person card (the mark at the fact, **What the marks mean**); **Settings → Person card →
-  Reliability on the person card** (on by default) and **Reliability on the cards in the tree** (off by default; the
-  card shows the weakest of the facts name, birth, death).
+  Reliability at facts in the person card** (on by default) and **Show on card → Sources and reliability** (on by
+  default; the card shows the weakest of the facts name, birth, death,
+  [S7.2](S7-reliability-and-verification.md#S7.2)).
+- **From app 3.26.0:** two full dots at **Proven** go to a fact for which two readers of the record agreed when the
+  research verified it; the card in the tree has one mark instead of the earlier two settings.
 - **Since:** app 3.26.0, research 1.30.0
 
-<!-- zdroj: app:1c9b2392 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; evidence 065 nezapojené) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON), display.reliabilityTree (OFF) · index.html settings-group-card · strings.ts reliability.*, settings.groupCard -->
+<!-- zdroj: app:7b0471f8 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; readers z _STROM_CHECKED, noSource nekrmeno) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON) · src/ui/card-signals-ui.ts (signál status, výchozí zapnuto) · index.html settings-group-card · strings.ts reliability.settingCard, cardDensity.cardStatus, settings.groupCard -->
 
 <a id="S6.3"></a>
 ## S6.3 Facts from a family tree are leads: the agent proposes, a person decides
@@ -141,7 +146,9 @@ what can be done with it next. It shows once after each import, whether the tree
   - when the file holds several families with nothing connecting them: **Separate disconnected parts…**;
   - the research: without research on this computer **Ancestor research with this tree** and **Ancestor research**;
     with research **Start research with this tree**; a tree linked to the research **Research with this tree**
-    (places without a location and people with facts from the family tree) and **Find places**;
+    (places without a location and people with facts from the family tree), **Find places** and, when the research
+    can verify in bulk, **Check facts against sources** (opens **Verify facts in the tree**,
+    [S7.5](S7-reliability-and-verification.md#S7.5));
   - the sentence “The research takes facts from the family tree as leads: without proof from a source it does not
     overwrite them, and changed ones can be reverted.”;
   - the links **Back to {program}: export with sources…** ([S6.6](#S6.6)) and the help **A tree from another
@@ -150,7 +157,7 @@ what can be done with it next. It shows once after each import, whether the tree
   check, separating families).
 - **Since:** app 3.26.0
 
-<!-- zdroj: app:1c9b2392 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', IMPORT_NEXT_VERIFY_FEATURES prázdné → „Ověřit údaje v pramenech“ se neukazuje, nextCardClosed) · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
+<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
 
 <a id="S6.5"></a>
 ## S6.5 Backups and going back in time
@@ -215,11 +222,23 @@ has the same ID but otherwise does not match is only offered.
     they make no match;
   - an undecided match is confirmed by itself in a merge only from a score of 80; a match of 50–79 is only offered (?)
     and without a person's decision it is not joined ([A8.3](A8-merging-trees.md#A8.3));
-  - a note of a person, a relationship and a source is not doubled in a merge.
-- **Limits:** families are not paired by ID. A manual merge of two people does not join notes.
+  - a note of a person, a relationship and a source is not doubled in a merge;
+  - siblings known only by surname are not added a second time when the same file is merged again.
+- **A tree loaded by an older version of the app:** merging the same file gives the same tree and the same **Back to
+  {program}** as a new import: families (also a family with one named parent) are not doubled and no marriage the file
+  does not have is added. A person with only a given name and no dates is paired with the person of the same name in
+  the tree through a matched relative (the reason for example **Child of matched person**, **Sibling of matched
+  person**, **In-law of matched person**); score 50, always only for review. No pairing when the relative has two
+  people of that name, the sex differs or the dates of birth or death differ.
+- **Limits:**
+  - families are not paired by ID. A manual merge of two people does not join notes;
+  - the marks **From family tree** are not added by merging into a tree from an older version: its values stay a
+    person's facts. A new import of the file gives the marks;
+  - doubles from an earlier merge are not removed by merging; they are deleted by hand.
 - **Controls:** **Import → Import GEDCOM → Merge with existing** ([A8](A8-merging-trees.md)).
 - **Since:** app 3.26.0
 
+<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek -->
 <!-- zdroj: app:1c9b2392 src/merge/matching.ts ID_MATCH_SCORE 100, ID_CANDIDATE_SCORE 60, ID_MAX_YEAR_GAP 3, WEAK_ID_BONUS 25, offerOnlyCap · src/merge/executor.ts:82 AUTO_CONFIRM_SCORE = 80 · src/merge/notes.ts · strings.ts merge reason id „Stejné ID v souboru“ · dirigent:prace/1108-app-066-u8/karta.md Výsledek (FAM se podle ID nepárují; mergePersons neslučuje poznámky) -->
 
 <a id="S6.8"></a>
