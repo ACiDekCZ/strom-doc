@@ -1265,12 +1265,12 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Tabulka (pohled) · Osoby · Svazky (řádky) | Pohled aplikace na celý strom po řádcích osob nebo svazků: údaje, dopočty, úplnost a nálezy kontroly ve sloupcích, s filtrem, řazením, uloženými pohledy a exportem CSV. |
-| en | Table (view) · People · Unions (rows) | The app's view of the whole tree in rows of people or unions: facts, computed values, completeness and the check's findings in columns, with a filter, sorting, saved views and a CSV export. |
-| de | Tabelle (Ansicht) · Personen · Verbindungen (Zeilen) | Die Ansicht der App auf den ganzen Stammbaum in Zeilen von Personen oder Verbindungen: Angaben, berechnete Werte, Vollständigkeit und Befunde der Prüfung in Spalten, mit Filter, Sortierung, gespeicherten Ansichten und CSV-Export. |
-| pl | Tabela (widok) · Osoby · Związki (wiersze) | Widok aplikacji na całe drzewo w wierszach osób lub związków: dane, wartości obliczone, kompletność i wyniki kontroli w kolumnach, z filtrem, sortowaniem, zapisanymi widokami i eksportem CSV. |
+| cs | Tabulka (pohled) · Osoby · Svazky · Události · Prameny (řádky) | Pohled aplikace na celý strom po řádcích osob, svazků, událostí nebo pramenů: údaje, dopočty, úplnost, citace a nálezy kontroly ve sloupcích, s filtrem, řazením, uloženými pohledy a exportem CSV a XLSX. |
+| en | Table (view) · People · Unions · Events · Sources (rows) | The app's view of the whole tree in rows of people, unions, events or sources: facts, computed values, completeness, citations and the check's findings in columns, with a filter, sorting, saved views and a CSV and XLSX export. |
+| de | Tabelle (Ansicht) · Personen · Verbindungen · Ereignisse · Quellen (Zeilen) | Die Ansicht der App auf den ganzen Stammbaum in Zeilen von Personen, Verbindungen, Ereignissen oder Quellen: Angaben, berechnete Werte, Vollständigkeit, Quellenangaben und Befunde der Prüfung in Spalten, mit Filter, Sortierung, gespeicherten Ansichten und CSV- und XLSX-Export. |
+| pl | Tabela (widok) · Osoby · Związki · Wydarzenia · Źródła (wiersze) | Widok aplikacji na całe drzewo w wierszach osób, związków, wydarzeń lub źródeł: dane, wartości obliczone, kompletność, cytowania i wyniki kontroli w kolumnach, z filtrem, sortowaniem, zapisanymi widokami i eksportem CSV i XLSX. |
 
-- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9
+- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12
 
 <a id="surname-spellings"></a>
 ### Tvary příjmení

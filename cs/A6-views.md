@@ -216,14 +216,17 @@ do rodu přišli sňatkem, slaběji, ostatní potlačeně. Platí v pohledech Ro
 <a id="A6.7"></a>
 ## A6.7 Tabulka
 
-Tabulka ukazuje celý strom po řádcích: každou osobu, nebo každý svazek, s údaji ve sloupcích. Slouží k hledání mezer,
-rozporů a nálezů kontroly napříč stromem. Nezávisí na hloubce **Předci** a **Potomci**.
+Tabulka ukazuje celý strom po řádcích: každou osobu, každý svazek, každou událost nebo každý pramen, s údaji ve
+sloupcích. Slouží k hledání mezer, rozporů a nálezů kontroly napříč stromem. Nezávisí na hloubce **Předci** a **Potomci**.
 Pohled Tabulka vychází z tabulky od Ondřeje Chrpy.
 
-- **Řádky:** přepínač **Řádky**: **Osoby** · **Svazky**. Každý typ řádků má vlastní sloupce, filtr a řazení.
+- **Řádky:** přepínač **Řádky**: **Osoby** · **Svazky** · **Události** · **Prameny**. Každý typ řádků má vlastní sloupce,
+  filtr a řazení.
   - **Osoby:** jeden řádek na osobu stromu; zástupné osoby (prázdné místo pro neznámého rodiče) se vynechávají.
   - **Svazky:** jeden řádek na svazek, který má aspoň jednoho skutečného partnera. **Partner 1** je ten z dvojice,
     kdo je pokrevní příbuzný hlavní osoby; jinak první partner svazku.
+  - **Události:** jeden řádek na událost stromu ([A6.7.10](#A6.7.10)).
+  - **Prameny:** jeden řádek na pramen stromu ([A6.7.11](#A6.7.11)).
 - **Hlavní osoba** je ústřední osoba stromu ([A6.1](#A6.1)). Podle ní se počítá sloupec **Vztah k hlavní osobě**
   a čip **Pokrevní příbuzní**: předci hlavní osoby (i ona sama) a všichni jejich potomci. Partneři, kteří do rodiny
   přišli sňatkem, mezi ně nepatří.
@@ -236,12 +239,12 @@ Pohled Tabulka vychází z tabulky od Ondřeje Chrpy.
   - strom jen ke čtení (sledovaný strom, strom uložený novější verzí aplikace, zamčený strom) tabulka jen
     ukazuje: „Jen ke čtení: úpravy a „Není chyba“ tu nejsou.“ Prohlížení, filtr, řazení a export CSV fungují;
     pohled uložit, přejmenovat ani smazat nejde;
-  - tabulka zvládne strom s 5 000 osobami.
+  - tabulka zvládne strom s 5 000 osobami (i jejich události a 2 000 pramenů).
 - **Ovládání:** v liště pohledů **Tabulka** (za **Mapa**); v úzkém okně a na telefonu **Více → Pohled → Tabulka**.
   Pohled se pamatuje jako ostatní ([A6.1.1](#A6.1.1)).
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Svazky v tabulce osob
@@ -370,7 +373,7 @@ podbarvená a má značku úrovně. Kontrola běží nad celým stromem na pozad
 
 Filtr vybere řádky, hledání je zúží dál, řazení určí pořadí.
 
-- **Čipy** (jen tabulka osob): **Žijící**, **Zemřelí** (vylučují se), **Pokrevní příbuzní**, **Rod** (výběr rodů),
+- **Čipy** tabulky osob (svazky čipy nemají, události a prameny mají vlastní, [A6.7.10](#A6.7.10), [A6.7.11](#A6.7.11)): **Žijící**, **Zemřelí** (vylučují se), **Pokrevní příbuzní**, **Rod** (výběr rodů),
   **Generace** (rozsah), **Víc svazků**, **Bez data narození**, **Nejisté datum** (narození nebo úmrtí),
   **Bez pramene**, **S nálezem** (chyba nebo k ověření; stopa ne), **Neobvyklé**, **Nepotvrzené z výzkumu**
   (jen strom z výzkumu). Čipy nálezů čekají na kontrolu („Až doběhnou kontroly“). Co se nevejde, je v **Další (n)**.
@@ -405,6 +408,8 @@ uloží člověk.
 | **Prameny a citace** | osoby | počet pramenů, doložení, spolehlivost narození a úmrtí; od nejméně pramenů |
 | **Mezery** | osoby | úplnost celkem i po částech, narození, rodiče, prameny; od nejméně úplných; svazky sbalené |
 | **Kontroly** | osoby | úroveň a počet nálezů, data, věk rodičů, sňatek; čip **S nálezem**; od nejvyšší úrovně, pak počtu nálezů |
+| **Všechny události** (výchozí pro události) | události | typ, osoba nebo pár, datum, místo, věk při události, kmotři, svědci, oddávající, pramen; řazeno podle data |
+| **Všechny prameny** (výchozí pro prameny) | prameny | titul, archiv, kniha a signatura, online, osob, údajů, přečteno výzkumem, přepis; řazeno podle titulu |
 
 - **Pohled ukládá:** typ řádků, sloupce (pořadí, šířky, ukotvení, sbalené skupiny), řádek pokrytí, filtr, řazení
   a rozbalení svazků. Neukládá hledání, výběr řádku ani posun.
@@ -421,7 +426,7 @@ uloží člověk.
 - **Ovládání:** nabídka **Pohled** v liště tabulky (**Vestavěné**, **Vlastní**, **Uložit jako nový…**,
   **Přejmenovat…**, **Smazat**).
 
-<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (7: overview, births, marriages, deaths, sources, gaps, checks), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.*, changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff -->
+<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (9: overview, births, marriages, deaths, sources, gaps, checks, events, allSources), defaultViewId (události → Všechny události, prameny → Všechny prameny), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky, DEFAULT_VIEWS.events, .sources) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.* (events, allSources), changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff -->
 
 <a id="A6.7.8"></a>
 ### A6.7.8 Akce u řádku a úpravy
@@ -435,6 +440,8 @@ Klik vybere řádek (i podřádek svazku); šipky, Page Up/Down a Ctrl+Home/End 
 | **Upravit…** (dvojklik) | otevře úpravu osoby; u podřádku svazku a v tabulce svazků vztahy osoby na tom svazku |
 
 - V tabulce svazků se akce týkají osoby **Partner 1**.
+- V tabulce událostí se týkají první osoby řádku a **Upravit…** otevře úpravu té události ([A6.7.10](#A6.7.10)); v tabulce
+  pramenů je **Otevřít pramen** ([A6.7.11](#A6.7.11)).
 - Po úpravě oznámení „Uloženo: …“, řádek krátce blikne a řádky zůstanou v pořadí. Řádek, který už filtru
   nevyhovuje, zůstane se štítkem „nevyhovuje filtru“ do další změny řazení, filtru nebo pohledu. Změnu z výzkumu
   ohlásí „Výzkum změnil 3 údaje: …“.
@@ -445,20 +452,118 @@ Klik vybere řádek (i podřádek svazku); šipky, Page Up/Down a Ctrl+Home/End 
 <!-- zdroj: app:src/ui/table-view/table-ui.ts tableMethods (tableRowAction: tree → Rodina, focus, highlight; open; edit → dialog osoby / panel vztahů na svazku), personOfRow (Partner 1), keepWork · table-refresh.ts keepOrder, watchEdit, changedKeys, bridgeChanges, namesList · table-grid.ts FLASH_MS · strings.ts table.act.*, dblClickHint, actionsOf, unionWith, editMore, staleRow, savedToast, bridgeToast · commity da6b9786, de46ae30, e4a35406 -->
 
 <a id="A6.7.9"></a>
-### A6.7.9 Export CSV
+### A6.7.9 Export CSV a XLSX
 
-Export uloží tabulku, jak je vidět, do souboru CSV pro tabulkové programy.
+Export uloží tabulku, jak je vidět, do souboru pro tabulkové programy: **CSV** nebo **XLSX** (sešit Excelu).
 
 - **Co jde ven:** viditelné sloupce v pořadí tabulky (sloupce sbalené skupiny celé) a řádky po filtru, hledání a
-  řazení. Hodnoty jsou text, jak je tabulka píše: data v zápisu aplikace, „cca …“, „≈ 67“, „křt. …“, „–“.
-  Značky nálezů a barvy se nevyvážejí.
+  řazení. Hodnoty jsou, jak je tabulka píše: data v zápisu aplikace, „cca …“, „≈ 67“, „křt. …“, „–“.
+- **Řádky:** bez filtru a hledání jdou ven všechny řádky („Vše zobrazené · 120 osob“). S filtrem nebo hledáním je
+  na výběr:
+  - **Zobrazené** (výchozí): jen řádky, které tabulka ukazuje, s počtem a připomínkou filtru („Zobrazené · 28 z 866
+    osob (platí filtr: …)“);
+  - **Všechny … bez filtru** („Všechny osoby bez filtru · 866“): všechny řádky toho typu v pořadí podle řazení, bez
+    filtru i hledání.
+
+  Řádek se štítkem „nevyhovuje filtru“ ([A6.7.8](#A6.7.8)) do zobrazených nepatří.
 - Osoba se dvěma a více svazky: první svazek, který vyhoví filtru, je v jejím řádku, každý další v pokračovacím
   řádku s prázdnými údaji osoby. Za jménem je sloupec **Svazek** („1 z 3“).
-- **Soubor:** UTF-8 se značkou BOM, oddělovač středník, konce řádků CRLF; buňka, která by se v tabulkovém programu
-  spustila jako vzorec, se zneškodní. Název `{strom}_{pohled}_{RRRR-MM-DD}.csv` bez diakritiky.
-- **Ovládání:** **Export ▾** v liště tabulky (na telefonu v **⋯**) → „CSV · pro Excel a Tabulky Google“ →
-  **Stáhnout CSV**; oznámení „Staženo: …“ s počtem osob, řádků a sloupců.
+- **CSV:** text, UTF-8 se značkou BOM, oddělovač středník, konce řádků CRLF; buňka, která by se v tabulkovém programu
+  spustila jako vzorec, se zneškodní. Značky nálezů a barvy se nevyvážejí.
+- **XLSX:** jeden list pojmenovaný podle pohledu.
+  - Řádek 1 jsou skupiny sloupců (sloučené buňky), řádek 2 záhlaví, řádek 3 řádek pokrytí ([A6.7.4](#A6.7.4)).
+    Ukotvené sloupce tabulky a tyto tři řádky jsou v listu ukotvené.
+  - Každá skupina sloupců je osnova: jde sbalit, její první sloupec zůstane. Pokračovací řádky svazků jsou o úroveň
+    níž pod řádkem osoby (úroveň 2 osnovy řádků).
+  - Buňka s nálezem **chyba** nebo **k ověření** je podbarvená a nálezy má v komentáři. Stopa a neobvyklé barvu
+    ani komentář nemají.
+  - Počty, věky v celých letech a úplnost jsou čísla (úplnost a pokrytí jako procento); ostatní je text, jak ho píše
+    tabulka (i „≈ 67“, „28–29“, data). Text se nikdy nestane vzorcem. Odkaz pramene je v buňce jako odkaz.
+- **Soubor:** `{strom}_{pohled}_{RRRR-MM-DD}.csv` nebo `.xlsx`, bez diakritiky.
+- **Ovládání:** **Export ▾** v liště tabulky (na telefonu v **⋯**): **Formát** „CSV · pro Excel a Tabulky Google“ nebo
+  „XLSX · skupiny, ukotvení, barvy kontrol“, **Řádky**, **Stáhnout CSV** / **Stáhnout XLSX**; oznámení „Staženo: …“
+  s počtem osob, řádků a sloupců.
 - **Hranice:** export z menu stromu (**Tabulka osob (CSV)**, [A7](A7-book-pages-and-export.md)) je jiný soubor
   s pevnými sloupci.
+- **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-export.ts tableCsvField (neutralizace vzorců), buildTableCsv (BOM, ;, CRLF, pokračovací řádky, sloupec Svazek), fileNamePart, tableCsvFileName · table-viewbar.ts exportForm · strings.ts table.export, exportCsv, exportAll, exportFile, exportWhat, exportDownload, csvUnionCol, csvUnionOf, exportedToast · commit 2368683b -->
+<!-- zdroj: app:src/ui/table-view/table-export.ts tableCsvField (neutralizace vzorců), buildExportTable, buildTableCsv (BOM, ;, CRLF, pokračovací řádky, sloupec Svazek), fileNamePart, tableCsvFileName (csv | xlsx) · table-xlsx.ts buildTableXlsx (řádky 1–3, merges, outline sloupců za ukotvenou částí, pokračovací řádky outline 1, freeze, errorFill/warningFill + findingsComment jen chyba a k ověření, href), xlsxNumber (COUNT_COLUMNS, věk ^\d+$, procento) · src/xlsx.ts (ignoredErrors numberStoredAsText, styl @ pro text) · table-viewbar.ts exportForm (Formát, Řádky: Zobrazené / Všechny bez filtru jen s filtrem nebo hledáním) · table-ui.ts tableExportNow (unfiltered: všechny řádky typu v řazení, stale ven) · strings.ts table.export, exportFormat, exportRows, exportCsv, exportXlsx, exportAll, exportShown, exportFilterNote, exportUnfiltered.*, exportWhat.*, exportWhatAll.*, exportFile, exportDownload, exportDownloadXlsx, csvUnionCol, csvUnionOf, exportedToast · commity 2368683b, 5a67797b, 4308633b, e0ce4ec2, ebc1542f, e5b97725 · dirigent:prace/1110-app-tabulka-p2, 1110-app-tabulka-opravy -->
+
+<a id="A6.7.10"></a>
+### A6.7.10 Události v řádcích
+
+Tabulka událostí má řádek na každou událost stromu: kdo, kdy, kde, v jakém věku a kdo byl u toho.
+
+- **Co je řádek:**
+  - každá událost osoby (křest, povolání, bydliště, vojsko …) a každá událost páru;
+  - narození a úmrtí z údajů osoby, když je u nich něco zapsané (datum, místo, adresa, pramen; u úmrtí i příčina
+    nebo věk);
+  - sňatek svazku: u manželství vždy, u jiného vztahu („Začátek vztahu“) jen se zapsaným údajem; rozvod („Konec
+    vztahu“), když je svazek rozvedený nebo je zapsaný jeho konec.
+- **Sdílená událost** (bydliště, vojsko, vystěhování, přistěhování, naturalizace, vlastní událost) zapsaná u více osob
+  stejně je jeden řádek se všemi osobami. Stejně znamená stejný typ, datum, místo, adresu, poznámku a prameny; datum
+  musí být zapsané a k němu místo nebo pramen. Křest, povolání nebo titul je vždy jen jedné osoby.
+- **Sloupce** ve skupinách **Událost** · **Účastníci** · **Pramen**:
+  - **Typ**, **Osoba nebo pár** (u páru nejdřív pokrevní příbuzný hlavní osoby), **Datum**, **Místo**;
+  - **Věk při události** jako jinde ([A6.7.3](#A6.7.3)); do jednoho roku z přesných dat ve dnech („12 d.“); u více
+    osob věk každé v pořadí jmen („–“ neznámý); u narození **Nevztahuje se**;
+  - **Údaj**: hodnota události (povolání, titul), jinak příčina; u úmrtí příčina úmrtí;
+  - **Kmotři**, **Svědci**, **Oddávající, křtitel**, **Jiní přítomní**: účastníci podle role; osoba stromu je odkaz;
+  - **Pramen**: citované prameny „titul, signatura“, více oddělených středníkem; **Spolehlivost** údaje.
+- **Čipy:** **Narození a křty** (i narození z údajů osoby), **Sňatky** (i zasnoubení, ohlášky, povolení, smlouva),
+  **Úmrtí a pohřby** (i kremace), **Ostatní události**, **Bez pramene**.
+- **Filtr podle účastníka:** klik na jméno účastníka nabídne „Filtr: kmotr …“ (u osoby stromu i **Otevřít osobu**).
+  Filtr je čip „Kmotr: … ×“ (Svědek, Oddávající, křtitel, Přítomen) a nahradí předchozí filtr účastníka. Osobu stromu
+  hledá podle osoby, zapsané jméno podle písmen bez ohledu na velikost, diakritiku a mezery.
+- **Kmotr, který se opakuje** ([A5.5](A5-tree-check.md#A5.5)) je v buňce účastníka jako **stopa**.
+- **Ovládání:** vestavěný pohled **Všechny události**; akce u řádku ([A6.7.8](#A6.7.8)) se týkají první osoby řádku.
+  **Upravit…** otevře u události osoby úpravu osoby na té události (u sdílené na první kopii), u narození a úmrtí
+  úpravu osoby, u události páru její dialog, u sňatku a rozvodu vztahy osoby na tom svazku.
+- **Hranice:** zástupné osoby řádky nemají; narození a úmrtí bez zapsaného údaje řádek nemají.
+- **Platí od:** aplikace 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES, shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 -->
+
+<a id="A6.7.11"></a>
+### A6.7.11 Prameny v řádcích
+
+Tabulka pramenů má řádek na každý pramen stromu (**Akce → Prameny**, [A3.1](A3-evidence-in-the-app.md#A3.1)) a říká,
+kolik toho pramen ve stromu dokládá.
+
+- **Sloupce** ve skupinách **Pramen** · **Použití**:
+  - **Titul**, **Archiv**, **Kniha, signatura, folio**, **Online** (adresa bez `https://`; webová adresa je odkaz ↗
+    do nového okna);
+  - **Osob**: kolik osob má údaj, který pramen cituje; údaj svazku dokládá oba partnery;
+  - **Údajů**: kolik údajů pramen cituje. Údaj je jeden seznam citací: citace osoby, narození, úmrtí, každá událost
+    osoby, sňatek, rozvod a každá událost páru;
+  - **Přečteno výzkumem**: kolik čtenářů přepis četlo („1 čtenář“, „2 čtenáři“: člověk v aplikaci a výzkum), jinak „ne“;
+  - **Přepis**: ano / ne; v katalogu sloupců je i **Datum záznamu**.
+- Citace zástupných osob a pramenů příběhu se nepočítají.
+- **Čipy:** **Bez osoby** (žádná osoba ho necituje), **Nepřečteno**, **S přepisem**, **Online**.
+- **Ovládání:** vestavěný pohled **Všechny prameny**. U řádku **Otevřít pramen** a **Upravit…**: obojí otevře správce
+  pramenů na tom pramenu; **Ukázat ve stromu** tu není.
+- **Hranice:** v zamčeném stromu se pramen jen ukáže, bez úprav.
+- **Platí od:** aplikace 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 -->
+
+<a id="A6.7.12"></a>
+### A6.7.12 Citace a kmotři v tabulce osob
+
+Tabulka osob má sloupce, které ukážou, z jakého pramene je narození, sňatek a úmrtí, a kdo byl kmotrem.
+
+- **Citace** (skupina **Prameny**): **Narození: archiv**, **Narození: signatura**, **Narození: odkaz** a totéž pro
+  **Sňatek** a **Úmrtí**. Buňka ukáže archiv, signaturu nebo webovou adresu prvního citovaného pramene; další prameny
+  jsou v tlačítku „+N“.
+  - Narození bere citace narození, pak událostí narození a křtu; úmrtí citace úmrtí, pak událostí úmrtí, pohřbu a
+    kremace; sňatek citace svazku (u podřádku svazku toho svazku). Každý pramen jednou.
+  - Prameny z původu údaje ve výzkumu se nepočítají, jen citace v datech.
+  - U žijící osoby mají sloupce úmrtí **Nevztahuje se**.
+  - Řadí a filtruje se podle prvního pramene.
+- **Kmotři** (skupina **Narození a křest**): kmotři událostí narození a křtu, každý jednou; osoba stromu je odkaz.
+  Kmotr, který se opakuje ([A5.5](A5-tree-check.md#A5.5)), má v buňce značku **stopa**.
+- **Ovládání:** sloupce se zapínají po jednom v panelu **Sloupce** ([A6.7.2](#A6.7.2)). Klik na „+N“ otevře bublinu
+  **Další citace** (na telefonu panel zdola); klik na pramen ho otevře ve správci pramenů.
+- **Platí od:** aplikace 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->

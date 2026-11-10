@@ -143,8 +143,48 @@ Co nie mieści się w formie, zostaje w notatce osoby, nic nie przepada.
   miesiąc, także ze znacznikiem lub słowem przed nimi (`ABT`, „cca”, „kolem”, „před”, „po”). Liczy się tylko miesiąc
   1–12: `13/1987` nie czyta się jako miesiąca. Podwójny rok (1699/00) i data z dniem (12.03.1919) nie czytają się
   w ten sposób.
+  Daty zapisane tak, jak piszą je ludzie (`cca 1850`, `14/6/1850`, `mezi 1850-1852`), czyta [A2.4.1](#A2.4.1).
 
 <!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase · 3.27.0: app:655212fd src/gedcom-date-read.ts readGedcomDate numericMonth (/^(\d{1,2})[./](\d{3,4})$/, měsíc 1–12), bareDate · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T42) -->
+
+<a id="A2.4.1"></a>
+### A2.4.1 Daty zapisane tak, jak piszą je ludzie
+
+Data zapisana tak, jak piszą ją ludzie, a nie słowami GEDCOM, czyta się jako data. Dotyczy to tak samo pól daty
+(osoba, wydarzenie, związek), importu GEDCOM i tekstu, który już jest w danych drzewa (np. z ręcznie zmienionego
+JSON).
+
+| Zapis (przykład) | Czyta się jako |
+|---|---|
+| `cca 1850`, `asi 1850`, `okolo 1850`, `kolem 1850`, `ca 1850`; także z miesiącem lub dniem | około (`ABT`) |
+| `před 1850`, `před 14.6.1850` | przed (`BEF`) |
+| `po 1850`, `po roce 1850`, `po 6/1850` | po (`AFT`) |
+| `14/6/1850`, `cca 14/6/1850` | dzień, miesiąc i rok |
+| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852`, `1850-11/1851` | przedział (`BET … AND`) |
+| `5-7/1850`, `14-15/6/1850` | przedział w roku (maj do lipca 1850) lub w miesiącu (14. do 15. 6. 1850) |
+| `cca 1850-1852`, `asi 1850-1852` | przedział; zakres sam mówi „kiedyś między”, „cca” się pomija |
+
+- Słowa czyta się po czesku, a także po angielsku, niemiecku i polsku („about”, „um”, „około”, „zwischen”, „między” …).
+- **Dzień i miesiąc, które można zamienić** (`7/8/1850`: oba do 12 i różne), czyta się według języka aplikacji: po
+  czesku, niemiecku i polsku dzień pierwszy, po angielsku miesiąc pierwszy. Ten sam plik GEDCOM wczytany w innym
+  języku aplikacji daje więc inną datę. Jednoznaczną datę (`25/3/1919`, `3/3/1919`) czyta się wszędzie tak samo.
+- **Import GEDCOM** przy zamienialnym dniu i miesiącu oraz przy „cca” przed zakresem zostawia obok daty notatkę
+  z pierwotnym zapisem („Data w zapisie: Cca 1850-1852”). `Mezi 1850 - 1852` czyta się jako przedział 1850–1852.
+- **Tekst w danych** pokazuje się, sortuje, liczy się z niego wiek i do GEDCOM idzie jako data (`ABT`, `BEF`, `AFT`,
+  `BET … AND`). Sam tekst się nie zmienia; zapisanie formularza osoby, wydarzenia lub związku zapisze go w zapisie
+  aplikacji.
+- **Granice:**
+  - tekstem zostaje: dwa lata jako alternatywa (`1850/1851` w imporcie), znak zapytania (`1850?`), nieznane cyfry
+    (`18XX`), kwartał (`Q4/1850`), pora roku, „nebo”, „cca po” i „cca před” oraz wartości słowne. Pole daty odrzuca
+    je jako nieprawidłową datę; import zostawia je w notatce „Data w zapisie: …” (`Cca po 1850` i `Cca podzim 1850`
+    czyta jako „około 1850” z notatką);
+  - tekstem zostaje też data, która nie istnieje (`31/4/1850`), rok z pięcioma cyframi i zakres, którego początek
+    jest po końcu;
+  - drzewa zaimportowane wcześniej same się nie poprawią; poprawi je nowy import GEDCOM.
+- **Obsługa:** pole daty w formularzu; import GEDCOM ([A2.1](#A2.1)).
+- **Obowiązuje od:** aplikacja 3.27.0
+
+<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
 
 <a id="A2.5"></a>
 ## A2.5 Relacje i stan pary

@@ -22,7 +22,7 @@ osoby; to, co dotyczy całego drzewa, jest na pasku narzędzi i w menu **Akcje**
 | źródła drzewa | **Akcje → Źródła** | [A3.1](A3-evidence-in-the-app.md#A3.1) |
 | edytować osobę | menu osoby → **Edytuj** | [S2](S2-edits-from-the-app.md), przy śledzeniu [A9.3](#A9.3) |
 | widok Mapa i inne widoki | przełącznik widoków na pasku narzędzi; w wąskim oknie i na telefonie **Więcej → Widok** | [A6](A6-views.md) |
-| całe drzewo w wierszach, eksport CSV | **Tabela** w przełączniku widoków; w wąskim oknie i na telefonie **Więcej → Widok → Tabela** | [A6.7](A6-views.md#A6.7) |
+| całe drzewo w wierszach, eksport CSV i XLSX | **Tabela** w przełączniku widoków; w wąskim oknie i na telefonie **Więcej → Widok → Tabela** | [A6.7](A6-views.md#A6.7) |
 | podkład mapy | **Pokaż mapę** przy powiadomieniu, że podkład wczytuje się z openstreetmap.org | [A9.4](#A9.4) |
 | miejsca poza mapą | pasek stanu mapy → **W badaniu**; w badaniu sekcja **Czeka na decyzję** | [A6.5.2](A6-views.md#A6.5.2), [R4.5](R4-places.md#R4.5) |
 | praca badania | panel badania, **⤢ Otwórz przegląd**; menu **Badanie → Przegląd badania** | [S4.1](S4-research-from-the-app.md#S4.1) |

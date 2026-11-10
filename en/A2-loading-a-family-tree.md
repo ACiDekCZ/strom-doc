@@ -133,7 +133,7 @@ What does not fit the form stays in the person's note; nothing is thrown away.
 
 - **Limits:** a double year (1699/00) keeps the first year. A calendar other than the Gregorian is removed and the
   note says "Date in the Julian calendar: …" (also Hebrew, French revolutionary, Roman). Text in brackets is kept as
-  "Date in the record: …". An unknown month leaves only the year, with a note. Words in Czech, Slovak, Polish, German,
+  "Date as written: …". An unknown month leaves only the year, with a note. Words in Czech, Slovak, Polish, German,
   Russian and Ukrainian ("po", "před", "kolem", "mezi … a", "nach", "około") are read as tags only when a valid date
   follows them; "po válce" stays text. The age at an event (`AGE`) is written as "61 years", `INFANT` as "infant". A
   form of date that the app would write differently (e.g. `EST` or `CAL`) is remembered at the person and the
@@ -143,8 +143,51 @@ What does not fit the form stays in the person's note; nothing is thrown away.
 - **From app 3.27.0:** a month and year in figures (`07/1987`, `7/1987`, `07.1987`, `7.1987`) are read as that
   month, also with a mark or a word before them (`ABT`, “cca”, “kolem”, “před”, “po”). Only a month 1–12 counts:
   `13/1987` is not read as a month. A double year (1699/00) and a date with a day (12.03.1919) are not read this way.
+  Dates written the way people write them (`cca 1850`, `14/6/1850`, `mezi 1850-1852`) are read as in [A2.4.1](#A2.4.1).
 
 <!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase · 3.27.0: app:655212fd src/gedcom-date-read.ts readGedcomDate numericMonth (/^(\d{1,2})[./](\d{3,4})$/, měsíc 1–12), bareDate · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T42) -->
+
+<a id="A2.4.1"></a>
+### A2.4.1 Dates written the way people write them
+
+A date written the way people write it, and not in GEDCOM words, is read as a date. This holds alike for the date
+fields (person, event, union), for the GEDCOM import and for text that is already in the tree's data (e.g. from a JSON
+edited by hand).
+
+| Written (example) | Read as |
+|---|---|
+| `cca 1850`, `asi 1850`, `okolo 1850`, `kolem 1850`, `ca 1850`; also with a month or a day | about (`ABT`) |
+| `před 1850`, `před 14.6.1850` | before (`BEF`) |
+| `po 1850`, `po roce 1850`, `po 6/1850` | after (`AFT`) |
+| `14/6/1850`, `cca 14/6/1850` | day, month and year |
+| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852`, `1850-11/1851` | a range (`BET … AND`) |
+| `5-7/1850`, `14-15/6/1850` | a range within a year (May to July 1850) or within a month (14 to 15 June 1850) |
+| `cca 1850-1852`, `asi 1850-1852` | a range; the range itself says “some time between”, “cca” is left out |
+
+- The words are read in Czech and also in English, German and Polish (“about”, “um”, “około”, “zwischen”,
+  “między” …).
+- **A day and month that can be swapped** (`7/8/1850`: both up to 12 and different) are read by the language of the
+  app: in Czech, German and Polish the day first, in English the month first. The same GEDCOM file loaded in another
+  language of the app thus gives a different date. An unambiguous date (`25/3/1919`, `3/3/1919`) is read the same
+  everywhere.
+- **The GEDCOM import**, for a day and month that can be swapped and for “cca” before a range, leaves a note next to
+  the date with the original notation (“Date as written: Cca 1850-1852”). `Mezi 1850 - 1852` is read as the range
+  1850–1852.
+- **Text in the data** is shown, sorted, ages are counted from it and it goes to GEDCOM as a date (`ABT`, `BEF`,
+  `AFT`, `BET … AND`). The text itself does not change; saving the form of the person, event or union writes it in the
+  app's notation.
+- **Limits:**
+  - text remains: two years as an alternative (`1850/1851` in the import), a question mark (`1850?`), unknown digits
+    (`18XX`), a quarter (`Q4/1850`), a season, “nebo”, “cca po” and “cca před” and values in words. The date field
+    refuses them as an invalid date; the import leaves them in the note “Date as written: …” (it reads `Cca po 1850`
+    and `Cca podzim 1850` as “about 1850” with a note);
+  - a date that does not exist (`31/4/1850`), a year with five digits and a range whose start is after its end also
+    remain text;
+  - trees imported earlier are not corrected by themselves; a new GEDCOM import corrects them.
+- **Controls:** the date field in the form; the GEDCOM import ([A2.1](#A2.1)).
+- **Since:** app 3.27.0
+
+<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
 
 <a id="A2.5"></a>
 ## A2.5 Relationships and the status of a couple

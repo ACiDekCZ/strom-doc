@@ -214,6 +214,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A2.2 | A2-loading-a-family-tree.md | aplikace 1.16.0 | platí | Kódování a verze GEDCOM | Encoding and GEDCOM version | Kodierung und Version von GEDCOM | Kodowanie i wersja GEDCOM |
 | A2.3 | A2-loading-a-family-tree.md | aplikace 3.10.0 | platí | Jména a příjmení | Given names and surnames | Vornamen und Nachnamen | Imiona i nazwiska |
 | A2.4 | A2-loading-a-family-tree.md | aplikace 3.0.0 | platí | Data a jejich tvary | Dates and their forms | Daten und ihre Formen | Daty i ich formy |
+| A2.4.1 | A2-loading-a-family-tree.md | aplikace 3.27.0 | platí | Data psaná lidsky | Dates written the way people write them | Daten, wie Menschen sie schreiben | Daty zapisane tak, jak piszą je ludzie |
 | A2.5 | A2-loading-a-family-tree.md | aplikace 3.0.0 | platí | Vztahy a stav páru | Relationships and the status of a couple | Beziehungen und Stand des Paares | Relacje i stan pary |
 | A2.6 | A2-loading-a-family-tree.md | aplikace 1.9.4 | platí | Prameny, citace a QUAY | Sources, citations and QUAY | Quellen, Zitationen und QUAY | Źródła, cytaty i QUAY |
 | A2.7 | A2-loading-a-family-tree.md | aplikace 3.9.0 | platí | Vlastní značky Stromu a co se vrací | Strom's own tags and what comes back | Eigene Tags von Strom und was zurückkommt | Własne znaczniki Stromu i co wraca |
@@ -272,7 +273,10 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.7.6 | A6-views.md | aplikace 3.27.0 | platí | Filtr, hledání a řazení | Filter, search and sort | Filter, Suche und Sortierung | Filtr, wyszukiwanie i sortowanie |
 | A6.7.7 | A6-views.md | aplikace 3.27.0 | platí | Pohledy tabulky | Table views | Tabellenansichten | Widoki tabeli |
 | A6.7.8 | A6-views.md | aplikace 3.27.0 | platí | Akce u řádku a úpravy | Row actions and edits | Zeilenaktionen und Bearbeitung | Akcje wiersza i edycja |
-| A6.7.9 | A6-views.md | aplikace 3.27.0 | platí | Export CSV | CSV export | CSV-Export | Eksport CSV |
+| A6.7.9 | A6-views.md | aplikace 3.27.0 | platí | Export CSV a XLSX | CSV and XLSX export | CSV- und XLSX-Export | Eksport CSV i XLSX |
+| A6.7.10 | A6-views.md | aplikace 3.27.0 | platí | Události v řádcích | Events in rows | Ereignisse in Zeilen | Wydarzenia w wierszach |
+| A6.7.11 | A6-views.md | aplikace 3.27.0 | platí | Prameny v řádcích | Sources in rows | Quellen in Zeilen | Źródła w wierszach |
+| A6.7.12 | A6-views.md | aplikace 3.27.0 | platí | Citace a kmotři v tabulce osob | Citations and godparents in the People table | Quellenangaben und Paten in der Personentabelle | Cytowania i chrzestni w tabeli osób |
 | A7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Kniha, stránky a export | Book, pages and export | Buch, Seiten und Export | Księga, strony i eksport |
 | A7.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Kdo je žijící osoba | Who is a living person | Wer eine lebende Person ist | Kto jest osobą żyjącą |
 | A7.2 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Ochrana žijících | Privacy of living people | Schutz lebender Personen | Ochrona osób żyjących |

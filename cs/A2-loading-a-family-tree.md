@@ -133,8 +133,46 @@ nevejde, zůstane v poznámce osoby, nic se nezahodí.
 - **Od aplikace 3.27.0:** měsíc a rok číslicemi (`07/1987`, `7/1987`, `07.1987`, `7.1987`) se čtou jako ten měsíc,
   i se značkou nebo slovem před nimi (`ABT`, „cca“, „kolem“, „před“, „po“). Platí jen měsíc 1–12: `13/1987` se jako měsíc
   nečte. Dvojí rok (1699/00) a datum s dnem (12.03.1919) se tak nečtou.
+  Data psaná lidsky (`cca 1850`, `14/6/1850`, `mezi 1850-1852`) čte [A2.4.1](#A2.4.1).
 
 <!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase · 3.27.0: app:655212fd src/gedcom-date-read.ts readGedcomDate numericMonth (/^(\d{1,2})[./](\d{3,4})$/, měsíc 1–12), bareDate · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T42) -->
+
+<a id="A2.4.1"></a>
+### A2.4.1 Data psaná lidsky
+
+Datum zapsané tak, jak ho lidé píšou, a ne slovy GEDCOM, se čte jako datum. Platí stejně pro pole data (osoba,
+událost, svazek), pro import GEDCOM a pro text, který už v datech stromu je (např. z ručně upraveného JSON).
+
+| Zápis (příklad) | Čte se jako |
+|---|---|
+| `cca 1850`, `asi 1850`, `okolo 1850`, `kolem 1850`, `ca 1850`; i s měsícem nebo dnem | přibližně (`ABT`) |
+| `před 1850`, `před 14.6.1850` | před (`BEF`) |
+| `po 1850`, `po roce 1850`, `po 6/1850` | po (`AFT`) |
+| `14/6/1850`, `cca 14/6/1850` | den, měsíc a rok |
+| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852`, `1850-11/1851` | rozmezí (`BET … AND`) |
+| `5-7/1850`, `14-15/6/1850` | rozmezí v roce (květen až červenec 1850) nebo v měsíci (14. až 15. 6. 1850) |
+| `cca 1850-1852`, `asi 1850-1852` | rozmezí; rozsah sám říká „někdy mezi“, „cca“ se vynechá |
+
+- Slova se čtou i v angličtině, němčině a polštině („about“, „um“, „około“, „zwischen“, „między“ …).
+- **Den a měsíc, které jdou zaměnit** (`7/8/1850`: oba do 12 a různé), se čtou podle jazyka aplikace: v češtině,
+  němčině a polštině den první, v angličtině měsíc první. Stejný soubor GEDCOM načtený v jiném jazyce aplikace tak
+  dá jiné datum. Jednoznačné datum (`25/3/1919`, `3/3/1919`) se čte všude stejně.
+- **Import GEDCOM** u zaměnitelného dne a měsíce a u „cca“ před rozsahem nechá vedle data poznámku s původním
+  zápisem („Datum v záznamu: Cca 1850-1852“). `Mezi 1850 - 1852` se čte jako rozmezí 1850–1852.
+- **Text v datech** se ukáže, řadí, počítá z něj věk a do GEDCOM jde jako datum (`ABT`, `BEF`, `AFT`, `BET … AND`).
+  Sám text se nemění; uložení formuláře osoby, události nebo svazku ho zapíše v zápisu aplikace.
+- **Hranice:**
+  - textem zůstane: dva roky jako alternativa (`1850/1851` v importu), otazník (`1850?`), neznámé číslice (`18XX`),
+    čtvrtletí (`Q4/1850`), roční období, „nebo“, „cca po“ a „cca před“ a slovní hodnoty. Pole data je odmítne jako
+    neplatné datum; import je nechá v poznámce „Datum v záznamu: …“ (`Cca po 1850` a `Cca podzim 1850` čte jako
+    „přibližně 1850“ s poznámkou);
+  - textem zůstane i datum, které neexistuje (`31/4/1850`), rok s pěti číslicemi a rozsah, jehož začátek je po
+    konci;
+  - stromy importované dřív se samy neopraví; opraví je nový import GEDCOM.
+- **Ovládání:** pole data ve formuláři; import GEDCOM ([A2.1](#A2.1)).
+- **Platí od:** aplikace 3.27.0
+
+<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
 
 <a id="A2.5"></a>
 ## A2.5 Vztahy a stav páru

@@ -228,15 +228,18 @@ married into it more faintly, the others subdued. This holds in the views Family
 <a id="A6.7"></a>
 ## A6.7 Table
 
-The Table shows the whole tree in rows: each person, or each union, with the facts in columns. It serves for finding
-gaps, contradictions and findings of the check across the tree. It does not depend on the depth **Ancestors** and
-**Descendants**. The Table view is based on a table by Ondřej Chrpa.
+The Table shows the whole tree in rows: each person, each union, each event or each source, with the facts in
+columns. It serves for finding gaps, contradictions and findings of the check across the tree. It does not depend on
+the depth **Ancestors** and **Descendants**. The Table view is based on a table by Ondřej Chrpa.
 
-- **Rows:** the switch **Rows**: **People** · **Unions**. Each row type has its own columns, filter and sort.
+- **Rows:** the switch **Rows**: **People** · **Unions** · **Events** · **Sources**. Each row type has its own
+  columns, filter and sort.
   - **People:** one row per person of the tree; placeholder persons (an empty place for an unknown parent) are left
     out.
   - **Unions:** one row per union that has at least one real partner. **Partner 1** is the one of the couple who is a
     blood relative of the home person; otherwise the union's first partner.
+  - **Events:** one row per event of the tree ([A6.7.10](#A6.7.10)).
+  - **Sources:** one row per source of the tree ([A6.7.11](#A6.7.11)).
 - The **home person** is the central person of the tree ([A6.1](#A6.1)). From them the column **Relationship to home
   person** and the chip **Blood relatives** are counted: the home person's ancestors (the home person too) and all
   their descendants. Partners who came into the family by marriage are not among them.
@@ -250,12 +253,12 @@ gaps, contradictions and findings of the check across the tree. It does not depe
   - a read-only tree (a followed tree, a tree saved by a newer version of the app, a locked tree) the table only
     shows: “Read only: edits and “Not an error” are not available here.” Browsing, filter, sort and CSV export work;
     a view cannot be saved, renamed or deleted;
-  - the table handles a tree with 5,000 people.
+  - the table handles a tree with 5,000 people (their events too, and 2,000 sources).
 - **Controls:** **Table** in the view bar (after **Map**); in a narrow window and on a phone **More → View → Table**.
   The view is remembered like the others ([A6.1.1](#A6.1.1)).
 - **Since:** app 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Unions in the People table
@@ -391,7 +394,8 @@ shaded and has a mark of the level. The check runs over the whole tree in the ba
 
 The filter chooses the rows, the search narrows them further, the sort sets the order.
 
-- **Chips** (People table only): **Living**, **Deceased** (they exclude each other), **Blood relatives**, **Family
+- **Chips** of the People table (unions have no chips, events and sources have their own, [A6.7.10](#A6.7.10),
+  [A6.7.11](#A6.7.11)): **Living**, **Deceased** (they exclude each other), **Blood relatives**, **Family
   line** (a choice of family lines), **Generation** (a range), **Several unions**, **No birth date**, **Uncertain
   date** (birth or death), **No source**, **With findings** (error or to check; not a lead), **Unusual**,
   **Unconfirmed research** (only a tree from the research). The finding chips wait for the check (“Once the checks
@@ -428,6 +432,8 @@ saves a custom view.
 | **Sources and citations** | people | number of sources, documentation, reliability of birth and death; from the fewest sources |
 | **Gaps** | people | completeness overall and by parts, birth, parents, sources; from the least complete; unions collapsed |
 | **Checks** | people | level and number of findings, dates, the parents' age, marriage; the chip **With findings**; from the highest level, then the number of findings |
+| **All events** (default for events) | events | type, person or couple, date, place, age at the event, godparents, witnesses, officiant, source; sorted by date |
+| **All sources** (default for sources) | sources | title, archive, book and reference, online, people, facts, read by the research, transcript; sorted by title |
 
 - **A view saves:** the row type, the columns (order, widths, pinning, collapsed groups), the coverage row, the
   filter, the sort and the expanding of unions. It does not save the search, the selected row or the scroll.
@@ -445,7 +451,7 @@ saves a custom view.
 - **Controls:** the menu **View** in the table's bar (**Built-in**, **Custom**, **Save as new…**, **Rename…**,
   **Delete**).
 
-<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (7: overview, births, marriages, deaths, sources, gaps, checks), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.*, changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff -->
+<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (9: overview, births, marriages, deaths, sources, gaps, checks, events, allSources), defaultViewId (události → Všechny události, prameny → Všechny prameny), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky, DEFAULT_VIEWS.events, .sources) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.* (events, allSources), changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff -->
 
 <a id="A6.7.8"></a>
 ### A6.7.8 Row actions and edits
@@ -460,6 +466,8 @@ cancels it.
 | **Edit…** (double click) | opens editing of the person; at a union sub-row and in the Unions table the person's relationships on that union |
 
 - In the Unions table the actions concern the person **Partner 1**.
+- In the Events table they concern the first person of the row and **Edit…** opens editing of that event
+  ([A6.7.10](#A6.7.10)); in the Sources table there is **Open source** ([A6.7.11](#A6.7.11)).
 - After an edit the notice “Saved: …”, the row flashes briefly and the rows keep their order. A row that no longer
   matches the filter stays with the label “no longer matches” until the next change of the sort, filter or view.
   A change from the research is announced by “Research changed 3 facts: …”.
@@ -470,20 +478,130 @@ cancels it.
 <!-- zdroj: app:src/ui/table-view/table-ui.ts tableMethods (tableRowAction: tree → Rodina, focus, highlight; open; edit → dialog osoby / panel vztahů na svazku), personOfRow (Partner 1), keepWork · table-refresh.ts keepOrder, watchEdit, changedKeys, bridgeChanges, namesList · table-grid.ts FLASH_MS · strings.ts table.act.*, dblClickHint, actionsOf, unionWith, editMore, staleRow, savedToast, bridgeToast · commity da6b9786, de46ae30, e4a35406 -->
 
 <a id="A6.7.9"></a>
-### A6.7.9 CSV export
+### A6.7.9 CSV and XLSX export
 
-The export saves the table as it is seen into a CSV file for spreadsheet programs.
+The export saves the table as it is seen into a file for spreadsheet programs: **CSV** or **XLSX** (an Excel
+workbook).
 
 - **What goes out:** the visible columns in the table's order (the columns of a collapsed group whole) and the rows
-  after the filter, search and sort. The values are text as the table writes them: dates in the app's notation,
-  “abt. …”, “≈ 67”, “bap. …”, “–”. The marks of findings and the colours are not exported.
+  after the filter, search and sort. The values are as the table writes them: dates in the app's notation,
+  “abt. …”, “≈ 67”, “bap. …”, “–”.
+- **Rows:** without a filter and search all rows go out (“Everything shown · 120 people”). With a filter or search
+  there is a choice:
+  - **Shown** (default): only the rows the table shows, with the count and a reminder of the filter (“Shown · 28 of
+    866 people (filter: …)”);
+  - **All … without the filter** (“All people without the filter · 866”): all rows of that type in the order of the
+    sort, without the filter and the search.
+
+  A row with the label “no longer matches” ([A6.7.8](#A6.7.8)) does not belong among those shown.
 - A person with two or more unions: the first union that matches the filter is in their row, each further one in a
   continuation row with the person's facts empty. After the name is the column **Union** (“1 of 3”).
-- **File:** UTF-8 with a BOM mark, the separator a semicolon, line ends CRLF; a cell that a spreadsheet program would
-  run as a formula is neutralised. The name `{tree}_{view}_{YYYY-MM-DD}.csv` without diacritics.
-- **Controls:** **Export ▾** in the table's bar (on a phone in **⋯**) → “CSV · for Excel and Google Sheets” →
-  **Download CSV**; the notice “Downloaded: …” with the number of people, rows and columns.
+- **CSV:** text, UTF-8 with a BOM mark, the separator a semicolon, line ends CRLF; a cell that a spreadsheet program
+  would run as a formula is neutralised. The marks of findings and the colours are not exported.
+- **XLSX:** one sheet named after the view.
+  - Row 1 holds the groups of columns (merged cells), row 2 the header, row 3 the coverage row ([A6.7.4](#A6.7.4)).
+    The table's pinned columns and these three rows are frozen in the sheet.
+  - Each group of columns is an outline: it can be collapsed, its first column stays. The continuation rows of
+    unions are one level lower under the person's row (level 2 of the row outline).
+  - A cell with a finding **error** or **to check** is shaded and has the findings in a comment. A lead and unusual
+    have neither colour nor comment.
+  - Counts, ages in whole years and completeness are numbers (completeness and coverage as a percentage); the rest is
+    text as the table writes it (also “≈ 67”, “28–29”, dates). Text never becomes a formula. A source's link is a
+    link in the cell.
+- **File:** `{tree}_{view}_{YYYY-MM-DD}.csv` or `.xlsx`, without diacritics.
+- **Controls:** **Export ▾** in the table's bar (on a phone in **⋯**): **Format** “CSV · for Excel and Google Sheets”
+  or “XLSX · groups, frozen panes, check colours”, **Rows**, **Download CSV** / **Download XLSX**; the notice
+  “Downloaded: …” with the number of people, rows and columns.
 - **Limits:** the export from the tree menu (**Person table (CSV)**, [A7](A7-book-pages-and-export.md)) is a different
   file with fixed columns.
+- **Since:** app 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-export.ts tableCsvField (neutralizace vzorců), buildTableCsv (BOM, ;, CRLF, pokračovací řádky, sloupec Svazek), fileNamePart, tableCsvFileName · table-viewbar.ts exportForm · strings.ts table.export, exportCsv, exportAll, exportFile, exportWhat, exportDownload, csvUnionCol, csvUnionOf, exportedToast · commit 2368683b -->
+<!-- zdroj: app:src/ui/table-view/table-export.ts tableCsvField (neutralizace vzorců), buildExportTable, buildTableCsv (BOM, ;, CRLF, pokračovací řádky, sloupec Svazek), fileNamePart, tableCsvFileName (csv | xlsx) · table-xlsx.ts buildTableXlsx (řádky 1–3, merges, outline sloupců za ukotvenou částí, pokračovací řádky outline 1, freeze, errorFill/warningFill + findingsComment jen chyba a k ověření, href), xlsxNumber (COUNT_COLUMNS, věk ^\d+$, procento) · src/xlsx.ts (ignoredErrors numberStoredAsText, styl @ pro text) · table-viewbar.ts exportForm (Formát, Řádky: Zobrazené / Všechny bez filtru jen s filtrem nebo hledáním) · table-ui.ts tableExportNow (unfiltered: všechny řádky typu v řazení, stale ven) · strings.ts table.export, exportFormat, exportRows, exportCsv, exportXlsx, exportAll, exportShown, exportFilterNote, exportUnfiltered.*, exportWhat.*, exportWhatAll.*, exportFile, exportDownload, exportDownloadXlsx, csvUnionCol, csvUnionOf, exportedToast · commity 2368683b, 5a67797b, 4308633b, e0ce4ec2, ebc1542f, e5b97725 · dirigent:prace/1110-app-tabulka-p2, 1110-app-tabulka-opravy -->
+
+<a id="A6.7.10"></a>
+### A6.7.10 Events in rows
+
+The Events table has a row for each event of the tree: who, when, where, at what age and who was present.
+
+- **What a row is:**
+  - each event of a person (baptism, occupation, residence, military service …) and each event of a couple;
+  - birth and death from the person's facts, when something is recorded for them (date, place, address, source; for
+    a death also the cause or the age);
+  - the marriage of a union: for a marriage always, for another relationship (“Start of the relationship”) only with
+    a recorded fact; the divorce (“End of the relationship”), when the union is divorced or its end is recorded.
+- **A shared event** (residence, military service, emigration, immigration, naturalization, a custom event) recorded
+  the same way at several people is one row with all those people. The same way means the same type, date, place,
+  address, note and sources; the date must be recorded, and with it a place or a source. A baptism, occupation or
+  title always belongs to one person only.
+- **Columns** in the groups **Event** · **Participants** · **Source**:
+  - **Type**, **Person or couple** (for a couple the blood relative of the home person first), **Date**, **Place**;
+  - **Age at the event** as elsewhere ([A6.7.3](#A6.7.3)); up to one year, from exact dates, in days (“12 d”); for
+    several people the age of each in the order of the names (“–” unknown); for a birth **Does not apply**;
+  - **Value**: the value of the event (occupation, title), otherwise the cause; for a death the cause of death;
+  - **Godparents**, **Witnesses**, **Officiant**, **Others present**: the participants by role; a person of the tree
+    is a link;
+  - **Source**: the cited sources “title, reference”, several separated by a semicolon; **Reliability** of the fact.
+- **Chips:** **Births and baptisms** (also births from the person's facts), **Marriages** (also engagements, banns,
+  licences, a contract), **Deaths and burials** (also cremations), **Other events**, **No source**.
+- **Filter by participant:** a click on a participant's name offers “Filter: godparent …” (for a person of the tree
+  also **Open person**). The filter is the chip “Godparent: … ×” (Witness, Officiant, Present) and replaces the
+  previous participant filter. A person of the tree is looked for by the person, a written name by its letters
+  regardless of case, diacritics and spaces.
+- **A godparent who keeps turning up** ([A5.5](A5-tree-check.md#A5.5)) is in the participant's cell as a **lead**.
+- **Controls:** the built-in view **All events**; the row actions ([A6.7.8](#A6.7.8)) concern the first person of
+  the row. **Edit…** opens, for an event of a person, editing of the person at that event (for a shared one at the
+  first copy), for a birth and death editing of the person, for an event of a couple its dialog, for a marriage and
+  divorce the person's relationships on that union.
+- **Limits:** placeholder persons have no rows; a birth and death without a recorded fact have no row.
+- **Since:** app 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES, shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 -->
+
+<a id="A6.7.11"></a>
+### A6.7.11 Sources in rows
+
+The Sources table has a row for each source of the tree (**Actions → Sources**, [A3.1](A3-evidence-in-the-app.md#A3.1))
+and tells how much the source documents in the tree.
+
+- **Columns** in the groups **Source** · **Use**:
+  - **Title**, **Archive**, **Book, reference, folio**, **Online** (the address without `https://`; a web address is a
+    link ↗ into a new window);
+  - **People**: how many people have a fact that cites the source; a fact of a union documents both partners;
+  - **Facts**: how many facts cite the source. A fact is one list of citations: the person's citation, birth, death,
+    each event of the person, marriage, divorce and each event of the couple;
+  - **Read by the research**: how many readers read the transcript (“1 reader”, “2 readers”: a person in the app and
+    the research), otherwise “no”;
+  - **Transcript**: yes / no; the catalogue of columns also has **Record date**.
+- Citations of placeholder persons and sources of a story are not counted.
+- **Chips:** **No person** (no person cites it), **Unread**, **With transcript**, **Online**.
+- **Controls:** the built-in view **All sources**. At a row **Open source** and **Edit…**: both open the source
+  manager at that source; **Show in tree** is not here.
+- **Limits:** in a locked tree the source is only shown, without edits.
+- **Since:** app 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 -->
+
+<a id="A6.7.12"></a>
+### A6.7.12 Citations and godparents in the People table
+
+The People table has columns that show from which source the birth, marriage and death come, and who was a
+godparent.
+
+- **Citations** (group **Sources**): **Birth: archive**, **Birth: reference**, **Birth: link** and the same for
+  **Marriage** and **Death**. The cell shows the archive, reference or web address of the first cited source; further
+  sources are in the button “+N”.
+  - Birth takes the citations of the birth, then of the events of birth and baptism; death the citations of the
+    death, then of the events of death, burial and cremation; marriage the citations of the union (at a union sub-row
+    of that union). Each source once.
+  - Sources from the origin of a fact in the research are not counted, only citations in the data.
+  - For a living person the death columns have **Does not apply**.
+  - Sorting and filtering go by the first source.
+- **Godparents** (group **Birth and baptism**): the godparents of the events of birth and baptism, each once; a person
+  of the tree is a link. A godparent who keeps turning up ([A5.5](A5-tree-check.md#A5.5)) has the mark **lead** in the
+  cell.
+- **Controls:** the columns are switched on one by one in the panel **Columns** ([A6.7.2](#A6.7.2)). A click on “+N”
+  opens the bubble **Other citations** (on a phone a bottom panel); a click on a source opens it in the source
+  manager.
+- **Since:** app 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
