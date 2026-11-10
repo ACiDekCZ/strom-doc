@@ -276,6 +276,11 @@ images itself, one at a time: it opens the image in Chrome and saves what the ar
   - the image's address passes the check of the agent's browser ([R9.4](#R9.4));
   - only an image that the tab shows at its own address is saved. A viewer moved to another image is refused and
     nothing is saved. Never more than the archive's viewer gives, never larger than the original;
+  - saving waits until the archive's viewer shows the whole image, 30 s at most. Since research 1.31.0 only the time
+    while the browser draws the tab counts (it does not draw a tab behind another tab or in a covered or minimized
+    window). A tab not drawn for 30 s is reported as such ("the browser did not draw the tab with the viewer for 30 s
+    …": the tab in front, its window uncovered, then the script again); a viewer that meanwhile pages to another
+    image saves nothing;
   - the command sets the task to waiting for that image. The file is saved into the downloads folder
     (`strom-T…-<number>.jpg`), and `strom media add --inbox --waiting` moves it into the task's folder under the
     image's number ([R9.6](#R9.6)).
@@ -290,9 +295,9 @@ images itself, one at a time: it opens the image in Chrome and saves what the ar
 - **Why:** the permission "through the browser" allows what a person would do in their own browser, at their pace.
 - **Controls:** terminal (agent): `strom media save T… --image <number> --at <address> [--recordset B…]`, then
   `strom media add --inbox --waiting`.
-- **Since:** research 1.27.0. A held-back image is reported since research 1.30.0.
+- **Since:** research 1.27.0. A held-back image is reported since research 1.30.0, a tab not drawn since 1.31.0.
 
-<!-- zdroj: research:a4a2f6c0 src/core/browser.ts SaveRecord, HELD_AFTER_MS 5000 · src/commands/media.ts heldSaves, heldLine (media add --inbox --waiting) · assets/lang/cs.json browser.wait.held · research:src/commands/media.ts:1206-1294 media save (browserGate, guarded browser, permission browser, Downloads strom-T…-n.jpg) · commit dadd91e7 (viewer paged on) · src/core/browserhelp.ts agentBrowserAdvice · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 -->
+<!-- zdroj: research:a4a2f6c0 src/core/browser.ts SaveRecord, HELD_AFTER_MS 5000 · src/commands/media.ts heldSaves, heldLine (media add --inbox --waiting) · assets/lang/cs.json browser.wait.held · research:src/commands/media.ts:1206-1294 media save (browserGate, guarded browser, permission browser, Downloads strom-T…-n.jpg) · commit dadd91e7 (viewer paged on) · src/core/browserhelp.ts agentBrowserAdvice · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · research:c6b6444d, dee0bb03 src/core/browser.ts VIEWER_HIDDEN_MS = 30_000, CAPTURE_JS (čekání jen na snímky kreslené karty, NOT_SHOWN, „the viewer's tiles did not all come in 30 s“, „the viewer was paged to another image … nothing saved“) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R9.6"></a>
 ## R9.6 Waiting for images and the task's return

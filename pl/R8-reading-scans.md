@@ -134,6 +134,11 @@ nigdy nie pobiera sam: ani poleceniem, ani skryptem, ani swoją przeglądarką.
 - **Od badania 1.30.0:** `strom connector test --fetch` ostrzega, gdy jeden skan kosztuje więcej niż 10 zapytań
   (najpewniej kafelki), mówi, jak długo w tempie archiwum potrwa skan i księga, i kieruje agenta najpierw do szukania
   odnośnika portalu do całego skanu, pobrania całej księgi albo całego skanu przez IIIF; kafelki dopiero na końcu.
+- **Od badania 1.31.0:** to samo raz na przebieg mówi też `strom fetch`, także z pobieraczem zbudowanym wcześniej:
+  według własnego liczenia pobierania (archiwum nie jest o nic więcej pytane) podaje, ile zapytań kosztuje jeden
+  skan, jak długo w tempie archiwum potrwa skan i księga (jej liczba skanów, inaczej księga z 200 skanami), że
+  pobieranie idzie dalej w tym tempie, przy pobieraniu w tle jak je zatrzymać (`strom fetch --stop B…`) i czego
+  szukać najpierw. Komunikat pokazuje też wynik `--json`, `strom fetch --status` i brief.
 - Skany, których archiwum nie pozwala pobrać automatycznie, człowiek zapisuje do przygotowanego folderu
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); zgoda archiwum: [R6.3.1](R6-awaiting-action.md#R6.3.1).
   Archiwa tylko przez przeglądarkę, przeglądarka agenta i cały przebieg: [R9](R9-archives.md).
@@ -142,9 +147,10 @@ nigdy nie pobiera sam: ani poleceniem, ani skryptem, ani swoją przeglądarką.
   tylko tam, gdzie wymaga ich wpis.
 - **Obsługa:** terminal: `strom fetch <stahovač> … --images 40-69 --recordset B…`, `strom allow archive` (tylko
   człowiek). Aplikacja: Czeka na decyzję.
-- **Obowiązuje od:** badanie 1.0.0 (pobieranie tylko przez strom); poziomy warunków i tempo człowieka 1.14.0
+- **Obowiązuje od:** badanie 1.0.0 (pobieranie tylko przez strom); poziomy warunków i tempo człowieka 1.14.0; skan
+  z kafelków zgłasza `strom connector test` od 1.30.0, `strom fetch` od 1.31.0
 
-<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 · research:773c475a src/commands/connectors.ts HEAVY_IMAGE = 10 -->
+<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 · research:773c475a src/commands/connectors.ts HEAVY_IMAGE = 10 · research:a7a9e196 src/commands/connectors.ts heavyFetch (jednou za běh, od 2. snímku, „this fetch goes on at that pace“, --stop B… na pozadí), src/core/fetching.ts HEAVY_IMAGE, BOOK_GUESS = 200, heavySaid (--status, brief), data heavy v --json · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R8.3"></a>
 ## R8.3 Czytelnicy: kto czyta skany

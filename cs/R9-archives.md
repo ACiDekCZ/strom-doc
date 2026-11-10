@@ -256,6 +256,10 @@ snímek v Chrome a uloží to, co ukazuje prohlížeč snímků archivu.
   - adresa snímku projde kontrolou prohlížeče agenta ([R9.4](#R9.4));
   - uloží se jen snímek, který karta ukazuje na své vlastní adrese. Prohlížeč posunutý na jiný snímek se odmítne a
     nic se neuloží. Nikdy víc, než prohlížeč archivu dává, nikdy větší než originál;
+  - ukládání čeká, až prohlížeč archivu ukáže celý snímek, nejvýš 30 s. Od výzkumu 1.31.0 se počítá jen čas, kdy
+    prohlížeč kartu kreslí (nekreslí kartu za jinou kartou ani v zakrytém či minimalizovaném okně). Karta nekreslená
+    30 s se ohlásí jako taková („the browser did not draw the tab with the viewer for 30 s …“: karta dopředu, okno
+    odkryté, pak skript znovu); prohlížeč archivu, který mezitím přestránkuje na jiný snímek, neuloží nic;
   - příkaz nastaví úkol na čekání na ten snímek. Soubor se uloží do složky stažených souborů (`strom-T…-<číslo>.jpg`)
     a `strom media add --inbox --waiting` ho přesune do složky úkolu pod číslem snímku ([R9.6](#R9.6)).
 - **Hranice:** Chrome uloží z jedné stránky jen jeden soubor. Další stažení z téže stránky musí dovolit člověk v
@@ -268,9 +272,9 @@ snímek v Chrome a uloží to, co ukazuje prohlížeč snímků archivu.
 - **Proč:** svolení „přes prohlížeč“ dovoluje to, co by udělal člověk ve svém prohlížeči, jeho tempem.
 - **Ovládání:** terminál (agent): `strom media save T… --image <číslo> --at <adresa> [--recordset B…]`, potom
   `strom media add --inbox --waiting`.
-- **Platí od:** výzkum 1.27.0. Zadržený snímek se ohlásí od výzkumu 1.30.0.
+- **Platí od:** výzkum 1.27.0. Zadržený snímek se ohlásí od výzkumu 1.30.0, nekreslená karta od 1.31.0.
 
-<!-- zdroj: research:a4a2f6c0 src/core/browser.ts SaveRecord, HELD_AFTER_MS 5000 · src/commands/media.ts heldSaves, heldLine (media add --inbox --waiting) · assets/lang/cs.json browser.wait.held · research:src/commands/media.ts:1206-1294 media save (browserGate, guarded browser, permission browser, Downloads strom-T…-n.jpg) · commit dadd91e7 (viewer paged on) · src/core/browserhelp.ts agentBrowserAdvice · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 -->
+<!-- zdroj: research:a4a2f6c0 src/core/browser.ts SaveRecord, HELD_AFTER_MS 5000 · src/commands/media.ts heldSaves, heldLine (media add --inbox --waiting) · assets/lang/cs.json browser.wait.held · research:src/commands/media.ts:1206-1294 media save (browserGate, guarded browser, permission browser, Downloads strom-T…-n.jpg) · commit dadd91e7 (viewer paged on) · src/core/browserhelp.ts agentBrowserAdvice · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · research:c6b6444d, dee0bb03 src/core/browser.ts VIEWER_HIDDEN_MS = 30_000, CAPTURE_JS (čekání jen na snímky kreslené karty, NOT_SHOWN, „the viewer's tiles did not all come in 30 s“, „the viewer was paged to another image … nothing saved“) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R9.6"></a>
 ## R9.6 Čekání na snímky a návrat úkolu

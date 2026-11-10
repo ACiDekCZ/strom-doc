@@ -140,6 +140,12 @@ Agent lädt selbst nie herunter: weder mit einem Befehl noch mit einem Skript no
   (wahrscheinlich Kacheln), sagt, wie lange Bild und Buch im Tempo des Archivs dauern, und schickt den Agenten zuerst
   auf die Suche nach einem Link des Portals auf das ganze Bild, nach dem Herunterladen des ganzen Buches oder nach dem
   ganzen Bild über IIIF; Kacheln erst zuletzt.
+- **Ab Forschung 1.31.0:** dasselbe sagt einmal je Lauf auch `strom fetch`, auch mit einem früher gebauten
+  Downloader: nach der eigenen Zählung des Herunterladens (das Archiv wird dafür nach nichts weiter gefragt) sagt es,
+  wie viele Anfragen ein Bild kostet, wie lange Bild und Buch im Tempo des Archivs dauern (seine Zahl der Bilder,
+  sonst ein Buch mit 200 Bildern), dass das Herunterladen in diesem Tempo weitergeht, bei einem Herunterladen im
+  Hintergrund, wie es sich anhalten lässt (`strom fetch --stop B…`), und wonach zuerst zu suchen ist. Die Meldung
+  zeigen auch die Ausgabe von `--json`, `strom fetch --status` und der Brief.
 - Bilder, die das Archiv nicht automatisch herunterladen lässt, speichert der Mensch in einen vorbereiteten Ordner
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); Erlaubnis eines Archivs: [R6.3.1](R6-awaiting-action.md#R6.3.1).
   Archive nur über den Browser, der Browser des Agenten und der ganze Ablauf: [R9](R9-archives.md).
@@ -148,9 +154,10 @@ Agent lädt selbst nie herunter: weder mit einem Befehl noch mit einem Skript no
   und Teile nur dort, wo der Eintrag sie braucht.
 - **Bedienung:** Terminal: `strom fetch <stahovač> … --images 40-69 --recordset B…`, `strom allow archive` (nur der
   Mensch). App: Wartet auf Bearbeitung.
-- **Gilt seit:** Forschung 1.0.0 (Herunterladen nur über strom); Stufen der Bedingungen und Tempo eines Menschen 1.14.0
+- **Gilt seit:** Forschung 1.0.0 (Herunterladen nur über strom); Stufen der Bedingungen und Tempo eines Menschen 1.14.0; ein Bild aus Kacheln
+  meldet `strom connector test` seit 1.30.0, `strom fetch` seit 1.31.0
 
-<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 · research:773c475a src/commands/connectors.ts HEAVY_IMAGE = 10 -->
+<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 · research:773c475a src/commands/connectors.ts HEAVY_IMAGE = 10 · research:a7a9e196 src/commands/connectors.ts heavyFetch (jednou za běh, od 2. snímku, „this fetch goes on at that pace“, --stop B… na pozadí), src/core/fetching.ts HEAVY_IMAGE, BOOK_GUESS = 200, heavySaid (--status, brief), data heavy v --json · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R8.3"></a>
 ## R8.3 Leser: wer die Bilder liest

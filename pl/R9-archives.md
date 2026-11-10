@@ -278,6 +278,11 @@ jednym: otwiera skan w Chrome i zapisuje to, co pokazuje przeglądarka skanów a
   - zapisuje się tylko skan, który karta pokazuje pod swoim własnym adresem. Przeglądarka przesunięta na inny skan
     zostaje odrzucona i nic się nie zapisuje. Nigdy więcej, niż daje przeglądarka archiwum, nigdy większy niż
     oryginał;
+  - zapisywanie czeka, aż przeglądarka archiwum pokaże cały skan, najwyżej 30 s. Od badania 1.31.0 liczy się tylko
+    czas, gdy przeglądarka rysuje kartę (nie rysuje karty za inną kartą ani w zakrytym lub zminimalizowanym oknie).
+    Karta nierysowana przez 30 s zostaje zgłoszona jako taka („the browser did not draw the tab with the viewer for
+    30 s …”: karta na wierzch, okno odkryte, potem skrypt jeszcze raz); przeglądarka archiwum, która w tym czasie
+    przejdzie na inny skan, nie zapisuje nic;
   - polecenie ustawia zadanie na oczekiwanie na ten skan. Plik zapisuje się do folderu pobranych plików
     (`strom-T…-<číslo>.jpg`), a `strom media add --inbox --waiting` przenosi go do folderu zadania pod numerem skanu
     ([R9.6](#R9.6)).
@@ -292,9 +297,9 @@ jednym: otwiera skan w Chrome i zapisuje to, co pokazuje przeglądarka skanów a
 - **Dlaczego:** zgoda „przez przeglądarkę” pozwala na to, co zrobiłby człowiek w swojej przeglądarce, w jego tempie.
 - **Obsługa:** terminal (agent): `strom media save T… --image <číslo> --at <adresa> [--recordset B…]`, potem
   `strom media add --inbox --waiting`.
-- **Obowiązuje od:** badanie 1.27.0. Wstrzymany skan jest zgłaszany od badania 1.30.0.
+- **Obowiązuje od:** badanie 1.27.0. Wstrzymany skan jest zgłaszany od badania 1.30.0, nierysowana karta od 1.31.0.
 
-<!-- zdroj: research:a4a2f6c0 src/core/browser.ts SaveRecord, HELD_AFTER_MS 5000 · src/commands/media.ts heldSaves, heldLine (media add --inbox --waiting) · assets/lang/cs.json browser.wait.held · research:src/commands/media.ts:1206-1294 media save (browserGate, guarded browser, permission browser, Downloads strom-T…-n.jpg) · commit dadd91e7 (viewer paged on) · src/core/browserhelp.ts agentBrowserAdvice · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 -->
+<!-- zdroj: research:a4a2f6c0 src/core/browser.ts SaveRecord, HELD_AFTER_MS 5000 · src/commands/media.ts heldSaves, heldLine (media add --inbox --waiting) · assets/lang/cs.json browser.wait.held · research:src/commands/media.ts:1206-1294 media save (browserGate, guarded browser, permission browser, Downloads strom-T…-n.jpg) · commit dadd91e7 (viewer paged on) · src/core/browserhelp.ts agentBrowserAdvice · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · research:c6b6444d, dee0bb03 src/core/browser.ts VIEWER_HIDDEN_MS = 30_000, CAPTURE_JS (čekání jen na snímky kreslené karty, NOT_SHOWN, „the viewer's tiles did not all come in 30 s“, „the viewer was paged to another image … nothing saved“) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R9.6"></a>
 ## R9.6 Oczekiwanie na skany i powrót zadania

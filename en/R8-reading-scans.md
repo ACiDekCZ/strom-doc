@@ -138,6 +138,11 @@ The agent never downloads by itself: not by a command, a script or its own brows
   most likely), says how long an image and a book take at the archive's pace, and sends the agent to look first for
   the portal's link to the full image, a download of the whole book or the full image through IIIF; tiles only as a
   last resort.
+- **From research 1.31.0:** `strom fetch` says the same once a run, also with a downloader built earlier: from the
+  download's own count (the archive is asked nothing more for it) it says how many requests one image costs, how long
+  an image and the book take at the archive's pace (its number of images, otherwise a book of 200 images), that the
+  download goes on at that pace, for a download in the background how to stop it (`strom fetch --stop B…`), and what
+  to look for first. The output of `--json`, `strom fetch --status` and the brief show it too.
 - Images that the archive does not allow to download automatically are saved by a person into a prepared folder
   ([R6.2.1](R6-awaiting-action.md#R6.2.1)); an archive's permission: [R6.3.1](R6-awaiting-action.md#R6.3.1).
   Browser-only archives, the agent's browser and the whole course: [R9](R9-archives.md).
@@ -146,9 +151,10 @@ The agent never downloads by itself: not by a command, a script or its own brows
   entry needs them.
 - **Controls:** terminal: `strom fetch <downloader> … --images 40-69 --recordset B…`, `strom allow archive` (a person
   only). App: Awaiting action.
-- **Since:** research 1.0.0 (downloading only through strom); the levels of terms and a person's pace 1.14.0
+- **Since:** research 1.0.0 (downloading only through strom); the levels of terms and a person's pace 1.14.0;
+  an image of tiles reported by `strom connector test` since 1.30.0, by `strom fetch` since 1.31.0
 
-<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 · research:773c475a src/commands/connectors.ts HEAVY_IMAGE = 10 -->
+<!-- zdroj: research:src/core/terms.ts:1-30 (úrovně), :52-59 LEVELS, WAYS · src/core/net.ts:39 DEFAULT_PACE, :45 HUMAN_PACE · assets/method/reading.md:44-49, :89-104 · assets/method/locate.md:15-21 · cs.json ui.archive.level.* · CHANGELOG.cs.md 1.14.0, 1.15.0 · research:773c475a src/commands/connectors.ts HEAVY_IMAGE = 10 · research:a7a9e196 src/commands/connectors.ts heavyFetch (jednou za běh, od 2. snímku, „this fetch goes on at that pace“, --stop B… na pozadí), src/core/fetching.ts HEAVY_IMAGE, BOOK_GUESS = 200, heavySaid (--status, brief), data heavy v --json · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R8.3"></a>
 ## R8.3 Readers: who reads the images
