@@ -47,8 +47,10 @@ Die App sucht zu jeder Person aus der zusammengeführten Quelle eine Person im Z
   globale ID; sonst ist sie ein Vorschlag mit einem Wert von höchstens 79. Datensatzkennung und `RIN` geben einer
   Übereinstimmung der Namen 25 Punkte dazu, nur bei Dateien desselben Programms. Familien werden nicht nach der ID
   abgeglichen ([S6.7](S6-tree-from-another-program.md#S6.7)).
+- **Ab App 3.27.0:** eine ID des Programms (`_UID`, `UID`, `_FSFTID`, `AFN`, `EXID`), die im Stammbaum mehr
+  als eine Person trägt, sagt nicht, welche es ist: Sie begründet allein keine Übereinstimmung, sie bietet sie nur an.
 
-<!-- zdroj: app:src/merge/matching.ts:318 findMatches, :781 (85 high, 55 medium), :790 calculateMatchScore, :618 UNKNOWN_NAME_MATCH_SCORE · strings.ts merge.highConfidence, merge.mediumConfidence, merge.lowConfidence, merge.matchReasons -->
+<!-- zdroj: app:src/merge/matching.ts:318 findMatches, :781 (85 high, 55 medium), :790 calculateMatchScore, :618 UNKNOWN_NAME_MATCH_SCORE · strings.ts merge.highConfidence, merge.mediumConfidence, merge.lowConfidence, merge.matchReasons · 3.27.0: app:b5595ca1 src/merge/matching.ts idNamesSeveral (víc osob stromu se stejným silným ID → jen idCandidate), findDirectMatches · src/merge/id-match.ts STRONG_TAGS · CHANGELOG.cs.md 3.27.0 · spec 066 K3.2 -->
 
 <a id="A8.3"></a>
 ## A8.3 Was der Mensch entscheidet

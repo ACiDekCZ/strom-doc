@@ -109,8 +109,12 @@ Wachlarz pokazuje przodków osoby w centrum w wycinkach koła, pokolenie po poko
   **Rody** ([A4](A4-surnames-and-families.md)).
 - **Osoba wyjściowa** wraca wachlarzem do osoby, od której się zaczęło.
 - **Obowiązuje od:** wachlarz aplikacja 1.8.0; nowy wachlarz z kształtami, kolorami i implexem aplikacja 3.20.0
+- **Od aplikacji 3.27.0:** związek bez daty ślubu jest ustawiany według najpóźniejszej możliwej daty ślubu:
+  wcześniejszej z końca związku (rozwodu) i urodzenia pierwszego dziecka związku. Ślub „przed 1982” stoi przed ślubem
+  w roku 1982. Związek bez tych dat idzie za pozostałymi. Tę samą kolejność mają partnerzy obok osoby i oznaczenia
+  kolejności małżeństw („1. ∞”) na kartach.
 
-<!-- zdroj: app:src/fan-chart.ts FAN_MIN_GENERATIONS, FAN_MAX_GENERATIONS, FAN_DEFAULT_GENERATIONS, parentSlots, repeatOf · strings.ts fan.shapeHalf, fan.shapeFull, fan.shapeTwo, fan.colorGender, fan.colorLine, fan.colorRod, fan.legendRepeats, fan.originPerson, fan.showFirst, fanChart.kekuleHint · settings fanKekule (výchozí false) · spec 029 · CHANGELOG.cs.md 3.20.0 -->
+<!-- zdroj: app:src/fan-chart.ts FAN_MIN_GENERATIONS, FAN_MAX_GENERATIONS, FAN_DEFAULT_GENERATIONS, parentSlots, repeatOf · strings.ts fan.shapeHalf, fan.shapeFull, fan.shapeTwo, fan.colorGender, fan.colorLine, fan.colorRod, fan.legendRepeats, fan.originPerson, fan.showFirst, fanChart.kekuleHint · settings fanKekule (výchozí false) · spec 029 · CHANGELOG.cs.md 3.20.0 · 3.27.0: app:ad1ca16c src/marriage-order.ts marriageKey (BOUND 0.5, qualifier „<“; bez sňatku min(endDate, narození dětí)), marriageDates, compareMarriages, marriagesInOrder (partneři vedle osoby, značka „1. ∞“) · src/fan-chart.ts familiesOf · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T50, T13) -->
 
 <a id="A6.5"></a>
 ## A6.5 Mapa

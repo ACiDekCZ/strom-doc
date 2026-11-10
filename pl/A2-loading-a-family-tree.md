@@ -96,8 +96,13 @@ Aplikacja czyta GEDCOM 5.5.1 i GEDCOM 7, a kodowanie rozpoznaje sama. Eksportuje
     kodowanie. **Obsługa:** wybór w wierszu **Kodowanie tekstu**;
   - samodzielne rekordy mediów `0 @O1@ OBJE` czyta się przez odsyłacze do nich; zdjęcie rodziny wskazane w ten sposób
     tylko się liczy.
+- **Od aplikacji 3.27.0:** zdjęcie rodziny (`1 OBJE` przy rodzinie, zapisane na miejscu albo odsyłaczem `@O1@`)
+  nie jest pokazywane w aplikacji, ale zostaje zachowane tak, jak zapisał je plik, do eksportu **Z powrotem do
+  {program}** ([S6.6](S6-tree-from-another-program.md#S6.6)). Rekord medium, do którego odsyła rodzina, wraca jako
+  zdjęcie zapisane bezpośrednio przy rodzinie. Podsumowanie importu podaje je w wierszu „Zachowano do eksportu „Z
+  powrotem do {program}”…”, nie w **Nieobsługiwane**. Nie dotyczy pliku badania.
 
-<!-- zdroj: app:src/ged-parser.ts:1262 decodeGedcomFile, :1236 decodeAnsel, :1290–1380 předzpracování CONC/CONT, :1683 parseGedcom · app:src/ged-exporter.ts:508 exportToGedcom · index.html input accept=".ged" -->
+<!-- zdroj: app:src/ged-parser.ts:1262 decodeGedcomFile, :1236 decodeAnsel, :1290–1380 předzpracování CONC/CONT, :1683 parseGedcom · app:src/ged-exporter.ts:508 exportToGedcom · index.html input accept=".ged" · 3.27.0: app:a5fc9656 src/ged-parser.ts fam.mediaLinks, keptMedia (řádky záznamu média pod rodinu o úroveň níž), extraBlock OBJE na místě, keepsExtra (ne soubor výzkumu), convertToStrom usedMedia · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-drobnosti-ged Výsledek bod 5 -->
 
 <a id="A2.3"></a>
 ## A2.3 Imiona i nazwiska
@@ -134,8 +139,12 @@ Co nie mieści się w formie, zostaje w notatce osoby, nic nie przepada.
   `CAL`), pamięta się przy osobie i relacji. Eksport zwraca ją w pierwotnej postaci, dopóki data się nie zmieni.
 - **Obsługa:** Brak.
 - **Obowiązuje od:** aplikacja 3.0.0 (notatki do dat), 3.7.0 (słowa języków), 3.17.0 (zachowane formy).
+- **Od aplikacji 3.27.0:** miesiąc i rok cyframi (`07/1987`, `7/1987`, `07.1987`, `7.1987`) czyta się jako ten
+  miesiąc, także ze znacznikiem lub słowem przed nimi (`ABT`, „cca”, „kolem”, „před”, „po”). Liczy się tylko miesiąc
+  1–12: `13/1987` nie czyta się jako miesiąca. Podwójny rok (1699/00) i data z dniem (12.03.1919) nie czytają się
+  w ten sposób.
 
-<!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase -->
+<!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase · 3.27.0: app:655212fd src/gedcom-date-read.ts readGedcomDate numericMonth (/^(\d{1,2})[./](\d{3,4})$/, měsíc 1–12), bareDate · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T42) -->
 
 <a id="A2.5"></a>
 ## A2.5 Relacje i stan pary

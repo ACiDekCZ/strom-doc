@@ -110,8 +110,12 @@ The Fan shows the central person's ancestors in circular segments, generation by
   father, mother's mother) · **Family lines** ([A4](A4-surnames-and-families.md)).
 - **Original person** returns the fan to the person it started from.
 - **Since:** fan app 1.8.0; the new fan with shapes, colours and pedigree collapse app 3.20.0
+- **From app 3.27.0:** a union without a date of marriage is ordered by the latest date the marriage can have
+  been: the earlier of the end of the union (a divorce) and the birth of the union's first child. A marriage “before
+  1982” comes before a marriage in 1982. A union without these dates comes after the others. The partners next to a
+  person and the marriage-order marks (“1. ∞”) on the cards follow the same order.
 
-<!-- zdroj: app:src/fan-chart.ts FAN_MIN_GENERATIONS, FAN_MAX_GENERATIONS, FAN_DEFAULT_GENERATIONS, parentSlots, repeatOf · strings.ts fan.shapeHalf, fan.shapeFull, fan.shapeTwo, fan.colorGender, fan.colorLine, fan.colorRod, fan.legendRepeats, fan.originPerson, fan.showFirst, fanChart.kekuleHint · settings fanKekule (výchozí false) · spec 029 · CHANGELOG.cs.md 3.20.0 -->
+<!-- zdroj: app:src/fan-chart.ts FAN_MIN_GENERATIONS, FAN_MAX_GENERATIONS, FAN_DEFAULT_GENERATIONS, parentSlots, repeatOf · strings.ts fan.shapeHalf, fan.shapeFull, fan.shapeTwo, fan.colorGender, fan.colorLine, fan.colorRod, fan.legendRepeats, fan.originPerson, fan.showFirst, fanChart.kekuleHint · settings fanKekule (výchozí false) · spec 029 · CHANGELOG.cs.md 3.20.0 · 3.27.0: app:ad1ca16c src/marriage-order.ts marriageKey (BOUND 0.5, qualifier „<“; bez sňatku min(endDate, narození dětí)), marriageDates, compareMarriages, marriagesInOrder (partneři vedle osoby, značka „1. ∞“) · src/fan-chart.ts familiesOf · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T50, T13) -->
 
 <a id="A6.5"></a>
 ## A6.5 Map

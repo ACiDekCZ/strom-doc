@@ -41,8 +41,10 @@ score.
   not man against woman, years of birth at most 3 apart and no differing global ID; otherwise it is a proposal with a
   score of at most 79. The record identifier and `RIN` add 25 points to a name match only for files of the same
   program. Families are not paired by ID ([S6.7](S6-tree-from-another-program.md#S6.7)).
+- **From app 3.27.0:** a program's ID (`_UID`, `UID`, `_FSFTID`, `AFN`, `EXID`) that more than one person in
+  the tree carries does not say which of them it is: it does not make a match by itself, it only offers it.
 
-<!-- zdroj: app:src/merge/matching.ts:318 findMatches, :781 (85 high, 55 medium), :790 calculateMatchScore, :618 UNKNOWN_NAME_MATCH_SCORE · strings.ts merge.highConfidence, merge.mediumConfidence, merge.lowConfidence, merge.matchReasons -->
+<!-- zdroj: app:src/merge/matching.ts:318 findMatches, :781 (85 high, 55 medium), :790 calculateMatchScore, :618 UNKNOWN_NAME_MATCH_SCORE · strings.ts merge.highConfidence, merge.mediumConfidence, merge.lowConfidence, merge.matchReasons · 3.27.0: app:b5595ca1 src/merge/matching.ts idNamesSeveral (víc osob stromu se stejným silným ID → jen idCandidate), findDirectMatches · src/merge/id-match.ts STRONG_TAGS · CHANGELOG.cs.md 3.27.0 · spec 066 K3.2 -->
 
 <a id="A8.3"></a>
 ## A8.3 What a person decides

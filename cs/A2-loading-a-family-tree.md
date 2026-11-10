@@ -89,8 +89,12 @@ Aplikace čte GEDCOM 5.5.1 i GEDCOM 7 a kódování pozná sama. Exportuje vždy
     **Windows-1252 (západní Evropa)**, **ISO-8859-2 (Latin-2)**, **ANSEL (starší GEDCOM)**). Zkomolené znaky ve
     jménech (è místo č, ø místo ř) znamenají, že sedí jiné kódování. **Ovládání:** volba v řádku **Kódování textu**;
   - samostatné záznamy médií `0 @O1@ OBJE` se čtou přes odkazy na ně; fotka rodiny odkázaná takto se jen spočítá.
+- **Od aplikace 3.27.0:** fotka rodiny (`1 OBJE` u rodiny, zapsaná na místě i odkazem `@O1@`) se v aplikaci neukáže,
+  ale uchová se tak, jak ji soubor zapsal, pro export **Zpět do {program}** ([S6.6](S6-tree-from-another-program.md#S6.6)).
+  Záznam média, na který rodina odkazuje, jde zpět jako fotka zapsaná přímo u rodiny. Souhrn importu ji uvádí
+  v řádku „Uchováno pro export „Zpět do {program}“…“, ne v **Nepodporováno**. Neplatí pro soubor výzkumu.
 
-<!-- zdroj: app:src/ged-parser.ts:1262 decodeGedcomFile, :1236 decodeAnsel, :1290–1380 předzpracování CONC/CONT, :1683 parseGedcom · app:src/ged-exporter.ts:508 exportToGedcom · index.html input accept=".ged" -->
+<!-- zdroj: app:src/ged-parser.ts:1262 decodeGedcomFile, :1236 decodeAnsel, :1290–1380 předzpracování CONC/CONT, :1683 parseGedcom · app:src/ged-exporter.ts:508 exportToGedcom · index.html input accept=".ged" · 3.27.0: app:a5fc9656 src/ged-parser.ts fam.mediaLinks, keptMedia (řádky záznamu média pod rodinu o úroveň níž), extraBlock OBJE na místě, keepsExtra (ne soubor výzkumu), convertToStrom usedMedia · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-drobnosti-ged Výsledek bod 5 -->
 
 <a id="A2.3"></a>
 ## A2.3 Jména a příjmení
@@ -126,8 +130,11 @@ nevejde, zůstane v poznámce osoby, nic se nezahodí.
   původní podobě, dokud se datum nezmění.
 - **Ovládání:** Žádné.
 - **Platí od:** aplikace 3.0.0 (poznámky k datům), 3.7.0 (slova jazyků), 3.17.0 (zachované tvary).
+- **Od aplikace 3.27.0:** měsíc a rok číslicemi (`07/1987`, `7/1987`, `07.1987`, `7.1987`) se čtou jako ten měsíc,
+  i se značkou nebo slovem před nimi (`ABT`, „cca“, „kolem“, „před“, „po“). Platí jen měsíc 1–12: `13/1987` se jako měsíc
+  nečte. Dvojí rok (1699/00) a datum s dnem (12.03.1919) se tak nečtou.
 
-<!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase -->
+<!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase · 3.27.0: app:655212fd src/gedcom-date-read.ts readGedcomDate numericMonth (/^(\d{1,2})[./](\d{3,4})$/, měsíc 1–12), bareDate · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T42) -->
 
 <a id="A2.5"></a>
 ## A2.5 Vztahy a stav páru

@@ -105,8 +105,13 @@ Die App liest GEDCOM 5.5.1 und GEDCOM 7 und erkennt die Kodierung selbst. Sie ex
     Kodierung passt. **Bedienung:** die Wahl in der Zeile **Textkodierung**;
   - eigenständige Mediendatensätze `0 @O1@ OBJE` werden über die Verweise auf sie gelesen; ein so verwiesenes Foto
     einer Familie wird nur gezählt.
+- **Ab App 3.27.0:** ein Foto der Familie (`1 OBJE` bei einer Familie, an Ort und Stelle geschrieben oder als
+  Verweis `@O1@`) wird in der App nicht gezeigt, aber so aufbewahrt, wie die Datei es geschrieben hat, für den Export
+  **Zurück zu {program}** ([S6.6](S6-tree-from-another-program.md#S6.6)). Ein Medieneintrag, auf den die Familie
+  verweist, geht als Foto zurück, das direkt bei der Familie steht. Die Importübersicht nennt es in der Zeile „Für den
+  Export „Zurück zu {program}“ aufbewahrt…“, nicht in **Nicht unterstützt**. Gilt nicht für eine Datei der Forschung.
 
-<!-- zdroj: app:src/ged-parser.ts:1262 decodeGedcomFile, :1236 decodeAnsel, :1290–1380 předzpracování CONC/CONT, :1683 parseGedcom · app:src/ged-exporter.ts:508 exportToGedcom · index.html input accept=".ged" -->
+<!-- zdroj: app:src/ged-parser.ts:1262 decodeGedcomFile, :1236 decodeAnsel, :1290–1380 předzpracování CONC/CONT, :1683 parseGedcom · app:src/ged-exporter.ts:508 exportToGedcom · index.html input accept=".ged" · 3.27.0: app:a5fc9656 src/ged-parser.ts fam.mediaLinks, keptMedia (řádky záznamu média pod rodinu o úroveň níž), extraBlock OBJE na místě, keepsExtra (ne soubor výzkumu), convertToStrom usedMedia · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-drobnosti-ged Výsledek bod 5 -->
 
 <a id="A2.3"></a>
 ## A2.3 Vornamen und Nachnamen
@@ -145,8 +150,12 @@ ein Jahr. Eine Schätzung (`ABT`, `EST`, `CAL`, `INT`) ist „ungefähr“, `BEF
   Beziehung gemerkt. Der Export gibt sie in der ursprünglichen Gestalt zurück, solange sich das Datum nicht ändert.
 - **Bedienung:** Keine.
 - **Gilt seit:** App 3.0.0 (Notizen zu Daten), 3.7.0 (Wörter der Sprachen), 3.17.0 (erhaltene Formen).
+- **Ab App 3.27.0:** Monat und Jahr in Ziffern (`07/1987`, `7/1987`, `07.1987`, `7.1987`) werden als dieser
+  Monat gelesen, auch mit einer Marke oder einem Wort davor (`ABT`, „cca“, „kolem“, „před“, „po“). Es zählt nur ein
+  Monat 1–12: `13/1987` wird nicht als Monat gelesen. Ein Doppeljahr (1699/00) und ein Datum mit Tag (12.03.1919)
+  werden so nicht gelesen.
 
-<!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase -->
+<!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase · 3.27.0: app:655212fd src/gedcom-date-read.ts readGedcomDate numericMonth (/^(\d{1,2})[./](\d{3,4})$/, měsíc 1–12), bareDate · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T42) -->
 
 <a id="A2.5"></a>
 ## A2.5 Beziehungen und Stand des Paares

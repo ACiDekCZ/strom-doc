@@ -104,8 +104,11 @@ Vějíř ukazuje předky ústřední osoby v kruhových výsečích, generaci po
   **Rody** ([A4](A4-surnames-and-families.md)).
 - **Původní osoba** vrátí vějíř na osobu, ze které se vyšlo.
 - **Platí od:** vějíř aplikace 1.8.0; nový vějíř s tvary, barvami a implexem aplikace 3.20.0
+- **Od aplikace 3.27.0:** svazek bez data sňatku se řadí podle nejpozdějšího možného data sňatku: dřívějšího z konce
+  svazku (rozvodu) a narození prvního dítěte svazku. Sňatek „před 1982“ jde před sňatek v roce 1982. Svazek bez
+  těchto dat jde za ostatní. Stejné pořadí mají partneři vedle osoby a značky pořadí manželství („1. ∞“) na kartách.
 
-<!-- zdroj: app:src/fan-chart.ts FAN_MIN_GENERATIONS, FAN_MAX_GENERATIONS, FAN_DEFAULT_GENERATIONS, parentSlots, repeatOf · strings.ts fan.shapeHalf, fan.shapeFull, fan.shapeTwo, fan.colorGender, fan.colorLine, fan.colorRod, fan.legendRepeats, fan.originPerson, fan.showFirst, fanChart.kekuleHint · settings fanKekule (výchozí false) · spec 029 · CHANGELOG.cs.md 3.20.0 -->
+<!-- zdroj: app:src/fan-chart.ts FAN_MIN_GENERATIONS, FAN_MAX_GENERATIONS, FAN_DEFAULT_GENERATIONS, parentSlots, repeatOf · strings.ts fan.shapeHalf, fan.shapeFull, fan.shapeTwo, fan.colorGender, fan.colorLine, fan.colorRod, fan.legendRepeats, fan.originPerson, fan.showFirst, fanChart.kekuleHint · settings fanKekule (výchozí false) · spec 029 · CHANGELOG.cs.md 3.20.0 · 3.27.0: app:ad1ca16c src/marriage-order.ts marriageKey (BOUND 0.5, qualifier „<“; bez sňatku min(endDate, narození dětí)), marriageDates, compareMarriages, marriagesInOrder (partneři vedle osoby, značka „1. ∞“) · src/fan-chart.ts familiesOf · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T50, T13) -->
 
 <a id="A6.5"></a>
 ## A6.5 Mapa

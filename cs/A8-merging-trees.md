@@ -39,8 +39,10 @@ Aplikace ke každé osobě ze slučovaného zdroje hledá osobu v cílovém stro
   proti ženě, roky narození nejvýš 3 od sebe a bez rozdílného globálního ID; jinak je to návrh se skóre nejvýš 79.
   Označení záznamu a `RIN` přidají ke shodě jmen 25 bodů jen u souborů téhož programu. Rodiny se podle ID nepárují
   ([S6.7](S6-tree-from-another-program.md#S6.7)).
+- **Od aplikace 3.27.0:** ID programu (`_UID`, `UID`, `_FSFTID`, `AFN`, `EXID`), které ve stromu nese víc osob,
+  neříká, která z nich to je: shodu samo nezaloží, jen ji nabídne.
 
-<!-- zdroj: app:src/merge/matching.ts:318 findMatches, :781 (85 high, 55 medium), :790 calculateMatchScore, :618 UNKNOWN_NAME_MATCH_SCORE · strings.ts merge.highConfidence, merge.mediumConfidence, merge.lowConfidence, merge.matchReasons -->
+<!-- zdroj: app:src/merge/matching.ts:318 findMatches, :781 (85 high, 55 medium), :790 calculateMatchScore, :618 UNKNOWN_NAME_MATCH_SCORE · strings.ts merge.highConfidence, merge.mediumConfidence, merge.lowConfidence, merge.matchReasons · 3.27.0: app:b5595ca1 src/merge/matching.ts idNamesSeveral (víc osob stromu se stejným silným ID → jen idCandidate), findDirectMatches · src/merge/id-match.ts STRONG_TAGS · CHANGELOG.cs.md 3.27.0 · spec 066 K3.2 -->
 
 <a id="A8.3"></a>
 ## A8.3 Co rozhoduje člověk

@@ -453,8 +453,11 @@ nic nezapíše bez potvrzení.
 - **Platí od:** aplikace 3.14.0, výzkum 1.18.0
 - **Od aplikace 3.25.0 a výzkumu 1.29.0:** volba čtenářů (**Upřesnit čtení**, [R8.8.1](#R8.8.1)), kdo četl,
   **Přečíst znovu…** u pramene ([R8.8.2](#R8.8.2)) a nastavení **Úkol z nového čtení** ([R8.8.3](#R8.8.3)).
+- **Od aplikace 3.27.0:** v okně **Navrhnout do stromu** je osoba, jejíž shoda s osobou stromu stojí jen na jménu
+  nebo příjmení přečteném nejistě (označeném „?“), předvybraná na **Ne**; **Spojit** zůstává na výběr. Shoda, kterou
+  nese i datum, rodiče, partner nebo dítě, a osoba zapsaná dřív z téhož zápisu zůstávají na **Spojit**.
 
-<!-- zdroj: app:src/ui/read-document-ui.ts · strings.ts read.* (menu, menuPerson, r1/r1Sub, r2/r2Sub, agree, differ, oneReader, variantNote, scanHint, whyText, advice, cancelled, closeNote, limit, propose, historyRow) · research:src/core/document.ts DOC_PAGES=10, SMALL_PX=800 · src/core/live-read.ts READ_MAX_BYTES=50 MB, READ_QUEUE_MAX=3, read.app (20/h, 60/den) · src/commands/document.ts:463 · config model.vision · spec 059 K1.1 · 3.25.0/1.29.0: spec 059 K2.1, K3.1, K6, K7; app:6bd8609e strings.ts read.refine, read.sourceAgain · research:c2a690ea CHANGELOG.cs.md 1.29.0 -->
+<!-- zdroj: app:src/ui/read-document-ui.ts · strings.ts read.* (menu, menuPerson, r1/r1Sub, r2/r2Sub, agree, differ, oneReader, variantNote, scanHint, whyText, advice, cancelled, closeNote, limit, propose, historyRow) · research:src/core/document.ts DOC_PAGES=10, SMALL_PX=800 · src/core/live-read.ts READ_MAX_BYTES=50 MB, READ_QUEUE_MAX=3, read.app (20/h, 60/den) · src/commands/document.ts:463 · config model.vision · spec 059 K1.1 · 3.25.0/1.29.0: spec 059 K2.1, K3.1, K6, K7; app:6bd8609e strings.ts read.refine, read.sourceAgain · research:c2a690ea CHANGELOG.cs.md 1.29.0 · 3.27.0: app:2f3cc0c4 src/read-propose.ts matchRestsOnUncertain (reasons jen name, uncertain given/surname, ne fromEntry), initialPropose (skip) · strings.ts read.proposeTitle, choiceLink, choiceSkip · CHANGELOG.cs.md 3.27.0 · dirigent:prace/_drobnosti/app.md ř. 73 -->
 
 <a id="R8.8.1"></a>
 ### R8.8.1 Čtenáři: program, model a důkladnost

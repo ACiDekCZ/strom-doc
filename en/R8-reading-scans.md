@@ -498,8 +498,12 @@ shows the places where they differ. Nothing read goes into the tree without conf
 
 - **From app 3.25.0 and research 1.29.0:** the choice of readers (**Adjust reading**, [R8.8.1](#R8.8.1)), who read,
   **Read again…** at a source ([R8.8.2](#R8.8.2)) and the setting **Task from a new reading** ([R8.8.3](#R8.8.3)).
+- **From app 3.27.0:** in the window **Suggest for the tree** a person whose match with a person of the tree
+  rests only on a given name or surname read uncertainly (marked “?”) is preselected on **No**; **Link** stays to
+  choose. A match also carried by a date, parents, a partner or a child, and a person written earlier from the same
+  entry, stay on **Link**.
 
-<!-- zdroj: app:src/ui/read-document-ui.ts · strings.ts read.* (menu, menuPerson, r1/r1Sub, r2/r2Sub, agree, differ, oneReader, variantNote, scanHint, whyText, advice, cancelled, closeNote, limit, propose, historyRow) · research:src/core/document.ts DOC_PAGES=10, SMALL_PX=800 · src/core/live-read.ts READ_MAX_BYTES=50 MB, READ_QUEUE_MAX=3, read.app (20/h, 60/den) · src/commands/document.ts:463 · config model.vision · spec 059 K1.1 · 3.25.0/1.29.0: spec 059 K2.1, K3.1, K6, K7; app:6bd8609e strings.ts read.refine, read.sourceAgain · research:c2a690ea CHANGELOG.cs.md 1.29.0 -->
+<!-- zdroj: app:src/ui/read-document-ui.ts · strings.ts read.* (menu, menuPerson, r1/r1Sub, r2/r2Sub, agree, differ, oneReader, variantNote, scanHint, whyText, advice, cancelled, closeNote, limit, propose, historyRow) · research:src/core/document.ts DOC_PAGES=10, SMALL_PX=800 · src/core/live-read.ts READ_MAX_BYTES=50 MB, READ_QUEUE_MAX=3, read.app (20/h, 60/den) · src/commands/document.ts:463 · config model.vision · spec 059 K1.1 · 3.25.0/1.29.0: spec 059 K2.1, K3.1, K6, K7; app:6bd8609e strings.ts read.refine, read.sourceAgain · research:c2a690ea CHANGELOG.cs.md 1.29.0 · 3.27.0: app:2f3cc0c4 src/read-propose.ts matchRestsOnUncertain (reasons jen name, uncertain given/surname, ne fromEntry), initialPropose (skip) · strings.ts read.proposeTitle, choiceLink, choiceSkip · CHANGELOG.cs.md 3.27.0 · dirigent:prace/_drobnosti/app.md ř. 73 -->
 
 <a id="R8.8.1"></a>
 ### R8.8.1 Readers: program, model and thoroughness

@@ -96,8 +96,13 @@ UTF-8.
     in the row **Text encoding**;
   - standalone media records `0 @O1@ OBJE` are read through the references to them; a family photo referenced this
     way is only counted.
+- **From app 3.27.0:** a family's photo (`1 OBJE` at a family, written in place or as a reference `@O1@`) is not
+  shown in the app, but is kept as the file wrote it for the export **Back to {program}**
+  ([S6.6](S6-tree-from-another-program.md#S6.6)). A media record the family refers to goes back as a photo written
+  directly at the family. The import summary lists it in the row “Kept for the export “Back to {program}”…”, not in
+  **Unsupported**. Not for a research file.
 
-<!-- zdroj: app:src/ged-parser.ts:1262 decodeGedcomFile, :1236 decodeAnsel, :1290–1380 předzpracování CONC/CONT, :1683 parseGedcom · app:src/ged-exporter.ts:508 exportToGedcom · index.html input accept=".ged" -->
+<!-- zdroj: app:src/ged-parser.ts:1262 decodeGedcomFile, :1236 decodeAnsel, :1290–1380 předzpracování CONC/CONT, :1683 parseGedcom · app:src/ged-exporter.ts:508 exportToGedcom · index.html input accept=".ged" · 3.27.0: app:a5fc9656 src/ged-parser.ts fam.mediaLinks, keptMedia (řádky záznamu média pod rodinu o úroveň níž), extraBlock OBJE na místě, keepsExtra (ne soubor výzkumu), convertToStrom usedMedia · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-drobnosti-ged Výsledek bod 5 -->
 
 <a id="A2.3"></a>
 ## A2.3 Given names and surnames
@@ -135,8 +140,11 @@ What does not fit the form stays in the person's note; nothing is thrown away.
   relationship. The export returns it in its original form as long as the date does not change.
 - **Controls:** none.
 - **Since:** app 3.0.0 (notes on dates), 3.7.0 (words of languages), 3.17.0 (kept forms).
+- **From app 3.27.0:** a month and year in figures (`07/1987`, `7/1987`, `07.1987`, `7.1987`) are read as that
+  month, also with a mark or a word before them (`ABT`, “cca”, “kolem”, “před”, “po”). Only a month 1–12 counts:
+  `13/1987` is not read as a month. A double year (1699/00) and a date with a day (12.03.1919) are not read this way.
 
-<!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase -->
+<!-- zdroj: app:src/gedcom-date-read.ts:22 parseGedcomDate, :33 gedcomDatePhrase, :55 readGedcomDate · app:src/date-words.ts · app:src/ged-parser.ts:702 kalendář, :1157 gedcomDates · app:src/gedcom-date-form.ts · strings.ts gedcomNotes.datePhrase · 3.27.0: app:655212fd src/gedcom-date-read.ts readGedcomDate numericMonth (/^(\d{1,2})[./](\d{3,4})$/, měsíc 1–12), bareDate · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T42) -->
 
 <a id="A2.5"></a>
 ## A2.5 Relationships and the status of a couple
