@@ -754,7 +754,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | zu prüfen · ungewöhnlich (Tabelle) | Die Schwere eines Befunds der Prüfung: ein ungewöhnlicher Wert, unwahrscheinlich, aber möglich, der eine Prüfung wert ist (vor App 3.27.0 „Warnung“). Die Ansicht Tabelle zeigt einen als Kein Fehler markierten Befund als ungewöhnlich. |
 | pl | do sprawdzenia · nietypowe (Tabela) | Waga wyniku kontroli: nietypowa wartość, mało prawdopodobna, ale możliwa, warta sprawdzenia (przed aplikacją 3.27.0 „ostrzeżenie”). Widok Tabela pokazuje wynik oznaczony To nie błąd jako nietypowy. |
 
-- **Čísla:** [A5.1](cs/A5-tree-check.md#A5.1), A5.3, A6.7.5
+- **Čísla:** [A5.1](cs/A5-tree-check.md#A5.1), A5.3, A6.7.5, A6.7.13
 
 <a id="where-evidence-is-missing"></a>
 ### Kde chybí doklady
@@ -1270,7 +1270,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Tabelle (Ansicht) · Personen · Verbindungen · Ereignisse · Quellen (Zeilen) | Die Ansicht der App auf den ganzen Stammbaum in Zeilen von Personen, Verbindungen, Ereignissen oder Quellen: Angaben, berechnete Werte, Vollständigkeit, Quellenangaben und Befunde der Prüfung in Spalten, mit Filter, Sortierung, gespeicherten Ansichten und CSV- und XLSX-Export. |
 | pl | Tabela (widok) · Osoby · Związki · Wydarzenia · Źródła (wiersze) | Widok aplikacji na całe drzewo w wierszach osób, związków, wydarzeń lub źródeł: dane, wartości obliczone, kompletność, cytowania i wyniki kontroli w kolumnach, z filtrem, sortowaniem, zapisanymi widokami i eksportem CSV i XLSX. |
 
-- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12
+- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12, A6.7.13
 
 <a id="surname-spellings"></a>
 ### Tvary příjmení

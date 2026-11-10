@@ -149,7 +149,9 @@ událost, svazek), pro import GEDCOM a pro text, který už v datech stromu je (
 | `před 1850`, `před 14.6.1850` | před (`BEF`) |
 | `po 1850`, `po roce 1850`, `po 6/1850` | po (`AFT`) |
 | `14/6/1850`, `cca 14/6/1850` | den, měsíc a rok |
-| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852`, `1850-11/1851` | rozmezí (`BET … AND`) |
+| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852` | rozmezí (`BET … AND`) |
+| `mezi 1850-11/1851` | rozmezí od 1850 do listopadu 1851 (`BET 1850 AND NOV 1851`) |
+| `1850-11/1851`; v poli data i `1850/1851` | období od–do (`FROM … TO`): od listopadu 1850 do 1851, od 1850 do 1851 |
 | `5-7/1850`, `14-15/6/1850` | rozmezí v roce (květen až červenec 1850) nebo v měsíci (14. až 15. 6. 1850) |
 | `cca 1850-1852`, `asi 1850-1852` | rozmezí; rozsah sám říká „někdy mezi“, „cca“ se vynechá |
 
@@ -162,17 +164,18 @@ událost, svazek), pro import GEDCOM a pro text, který už v datech stromu je (
 - **Text v datech** se ukáže, řadí, počítá z něj věk a do GEDCOM jde jako datum (`ABT`, `BEF`, `AFT`, `BET … AND`).
   Sám text se nemění; uložení formuláře osoby, události nebo svazku ho zapíše v zápisu aplikace.
 - **Hranice:**
-  - textem zůstane: dva roky jako alternativa (`1850/1851` v importu), otazník (`1850?`), neznámé číslice (`18XX`),
-    čtvrtletí (`Q4/1850`), roční období, „nebo“, „cca po“ a „cca před“ a slovní hodnoty. Pole data je odmítne jako
-    neplatné datum; import je nechá v poznámce „Datum v záznamu: …“ (`Cca po 1850` a `Cca podzim 1850` čte jako
-    „přibližně 1850“ s poznámkou);
+  - lomítko mezi dvěma roky (`1850/1851`) čte pole data jako období od 1850 do 1851; import GEDCOM ho nechá textem
+    (dva roky jako alternativa);
+  - textem zůstane: otazník (`1850?`), neznámé číslice (`18XX`), čtvrtletí (`Q4/1850`), roční období, „nebo“,
+    „cca po“ a „cca před“ a slovní hodnoty. Pole data je odmítne jako neplatné datum; import je nechá v poznámce
+    „Datum v záznamu: …“ (`Cca po 1850` a `Cca podzim 1850` čte jako „přibližně 1850“ s poznámkou);
   - textem zůstane i datum, které neexistuje (`31/4/1850`), rok s pěti číslicemi a rozsah, jehož začátek je po
     konci;
   - stromy importované dřív se samy neopraví; opraví je nový import GEDCOM.
 - **Ovládání:** pole data ve formuláři; import GEDCOM ([A2.1](#A2.1)).
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
+<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.); lomítko: normalizeDateInput('1850/1851') → FROM 1850 TO 1851, '1850-11/1851' → FROM NOV 1850 TO 1851, 'mezi 1850-11/1851' → BET 1850 AND NOV 1851, parseGedcomDate('1850/1851') → text (dirigent:test/vysledek-1110-doc-tabulka-p2.md nález 1, sonda 10. 11. na app f34d41e1) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
 
 <a id="A2.5"></a>
 ## A2.5 Vztahy a stav páru

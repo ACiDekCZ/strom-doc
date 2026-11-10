@@ -9,14 +9,7 @@ Eine Ansicht ist eine andere Lesart **derselben Auswahl der Personen**. Die Ausw
 dasselbe Umfeld der zentralen Person. Der Fächer berechnet Vorfahren und Nachkommen selbst nach der Zahl der
 Generationen ([A6.4](#A6.4)). Die Tabelle zeigt den ganzen Stammbaum ([A6.7](#A6.7)).
 
-| Ansicht (cs) | en | de | pl |
-|---|---|---|---|
-| **Rodina** | Family | Familie | Rodzina |
-| **Potomci** | Descendants | Nachkommen | Potomkowie |
-| **Časová osa** | Timeline | Zeitleiste | Oś czasu |
-| **Vějíř** | Fan | Fächer | Wachlarz |
-| **Mapa** | Map | Karte | Mapa |
-| **Tabulka** | Table | Tabelle | Tabela |
+Ansichten: **Familie**, **Nachkommen**, **Zeitleiste**, **Fächer**, **Karte**, **Tabelle**.
 
 <!-- zdroj: app:src/types.ts:1237 ViewMode · strings.ts viewModeSwitch.* · Tabulka od aplikace 3.27.0 (viewModeSwitch.table) -->
 
@@ -266,9 +259,8 @@ Tabelle von Ondřej Chrpa.
     Chip **Stamm** ([A6.7.6](#A6.7.6));
   - einen schreibgeschützten Stammbaum (verfolgter Stammbaum, von einer neueren Version der App gespeicherter
     Stammbaum, gesperrter Stammbaum) zeigt die Tabelle nur an: „Nur lesen: Bearbeiten und „Kein Fehler“ gibt es hier
-    nicht.“ Ansehen, Filter, Sortierung und CSV-Export funktionieren; eine Ansicht lässt sich weder speichern noch
-    umbenennen noch löschen;
-  - die Tabelle bewältigt einen Stammbaum mit 5 000 Personen (auch ihre Ereignisse und 2 000 Quellen).
+    nicht.“ Ansehen, Filter, Sortierung und CSV- und XLSX-Export funktionieren; eine Ansicht lässt sich weder
+    speichern noch umbenennen noch löschen.
 - **Bedienung:** in der Leiste der Ansichten **Tabelle** (nach **Karte**); im schmalen Fenster und auf dem Telefon
   **Mehr → Ansicht → Tabelle**. Die Ansicht wird wie die anderen gespeichert ([A6.1.1](#A6.1.1)).
 - **Gilt seit:** App 3.27.0
@@ -282,12 +274,15 @@ Eine Person mit zwei und mehr Verbindungen hat in der Personentabelle eine eigen
 für jede Verbindung („Verbindung 2 von 3“). Die Zeile der Person hat in der Spalte **Partner** die Anzahl
 („3 Verbindungen“) und die übrigen Spalten der Verbindung leer.
 
-- Die Verbindungen folgen nach dem Heiratsdatum; Verbindungen ohne Datum stehen am Ende in der Reihenfolge der
-  Erfassung.
+- Die Verbindungen folgen in der Reihenfolge der Hochzeiten wie im Stammbaum ([A6.4](#A6.4)): **Verbindung 1** ist
+  die, die auf der Karte die Marke „1. ∞“ hat. Eine Verbindung ohne Datum der Hochzeit wird nach dem spätesten
+  möglichen Datum der Hochzeit geordnet (dem früheren aus der Scheidung und der Geburt des ersten Kindes); eine
+  Verbindung ohne diese Daten kommt nach den anderen. Bei Gleichstand entscheidet die Reihenfolge der Verbindungen der
+  Person in den Daten. Eine leere Platzhalterfamilie („?“) kommt ans Ende in der Reihenfolge der Erfassung.
 - **Zugeklappt:** die Zeile der Person zeigt die erste Verbindung und die Zahl der übrigen. Standard ist
   aufgeklappt; die vorgegebene Ansicht **Lücken** hat die Verbindungen zugeklappt.
 - **Ein Filter in einer Spalte der Verbindung** wird bei jeder Verbindung einzeln beurteilt. Die Person bleibt, wenn
-  mindestens eine Verbindung passt; die übrigen verschwinden unter der Zeile „2 außerhalb des Filters · zeigen“.
+  mindestens eine Verbindung passt; die übrigen verschwinden unter der Zeile „2 Verbindungen außerhalb des Filters · zeigen“.
   Gezeigte sind bis zur nächsten Änderung des Filters abgeschwächt.
 - **Die Sortierung nach einer Spalte der Verbindung** nimmt die erste Verbindung, die dem Filter entspricht.
 - Eine Person mit einer Verbindung hat deren Angaben direkt in ihrer Zeile.
@@ -295,7 +290,7 @@ für jede Verbindung („Verbindung 2 von 3“). Die Zeile der Person hat in der
   Tasten → und ← in der Spalte **Name**, * für alle Personen; das Zeilenmenü. Der Zustand wird mit der Ansicht
   gespeichert ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsByDate (datum sňatku, bez data na konci v pořadí zápisu) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
+<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
 
 <a id="A6.7.2"></a>
 ### A6.7.2 Spalten
@@ -347,7 +342,7 @@ sie nichts in den Stammbaum.
   einer lebenden Person **Trifft nicht zu** (bei **Vollständigkeit Sterbefall** „lebt“). **Alter des Vaters/der
   Mutter bei der Geburt** ohne erfassten Elternteil ist **Trifft nicht zu**.
 - **Bedienung:** Hinweis an der Zelle („Taufe, Geburt unbekannt“, „Begräbnis, Tod unbekannt“); bei einer berechneten
-  Spalte im Menü des Spaltenkopfs „Berechnet aus: …“; die Legende **Zeichen** ([A6.7.5](#A6.7.5)).
+  Spalte im Menü des Spaltenkopfs „Berechnet aus: …“; die Legende **Zeichen** ([A6.7.13](#A6.7.13)).
 
 <!-- zdroj: app:src/ui/table-view/table-columns.ts ageCell (přesně / rozsah ageRangeBetween / ≈ approxAgeBetween; nic, když konec před začátkem), dateCell, qualifierWord, birthOrBaptism, deathOrBurial (náhrada, ≈), gapCell (recordedAgeGap), unionLength, naCell, parentsOf · src/dates.ts:448 ageRangeBetween, recordedAgeGap · table-model.ts dateNumber (začátek rozsahu) · strings.ts table.na, living, subst.*, qual.*, computedFrom, from.* · commit 8833da14 -->
 
@@ -409,7 +404,7 @@ wenn die App frei ist.
     bei der Liste der markierten.
 
   Die Legende **Zeichen** („Zeichen in den Zellen“) erklärt auch das unsichere Datum, die Verlässlichkeit, den
-  Ersatzwert, den berechneten Wert und **Trifft nicht zu**.
+  Ersatzwert, den berechneten Wert und **Trifft nicht zu**. Wie welches Zeichen aussieht: [A6.7.13](#A6.7.13).
 
 <!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 -->
 
@@ -644,3 +639,67 @@ Die Personentabelle hat Spalten, die zeigen, aus welcher Quelle Geburt, Heirat u
 - **Gilt seit:** App 3.27.0
 
 <!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+
+<a id="A6.7.13"></a>
+### A6.7.13 Zeichen in den Zellen
+
+Übersicht über alles, womit die Tabelle eine Zelle oder eine Zeile kennzeichnet. Die Legende **Zeichen ⓘ** rechts
+über der Tabelle (Blase „Zeichen in den Zellen“, auf dem Telefon ein Panel von unten) zeigt die ersten zwei Tabellen:
+vier Stufen eines Befunds und fünf Arten eines Werts.
+
+**Befunde der Prüfung** ([A6.7.5](#A6.7.5)). Das Zeichen steht am Ende der Zelle hinter dem Wert; ein Klick auf eine
+Zelle mit Befund öffnet die Blase des Befunds.
+
+| Zeichen | Wie es aussieht | Was es bedeutet (Legende) | Wo es erscheint |
+|---|---|---|---|
+| **Fehler** | ein voller roter Kreis mit weißem „!“; die Zelle rötlich hinterlegt | „Die Angaben widersprechen sich.“ | die Zelle der Angabe, die der Befund betrifft; **Befunde**, **Höchste Stufe**; eine eingeklappte Gruppe |
+| **zu prüfen** | ein volles bernsteinfarbenes Quadrat mit abgerundeten Ecken und „?“; die Zelle bernsteinfarben hinterlegt | „Ein ungewöhnlicher Wert, der geprüft werden sollte.“ | wie Fehler |
+| **Spur** | ein kleiner leerer grauer Ring; die Zelle nicht hinterlegt | „Eine Spur für die Forschung, kein Fehler.“ | wie Fehler; ein Pate, der immer wieder auftaucht ([A6.7.10](#A6.7.10), [A6.7.12](#A6.7.12)) |
+| **ungewöhnlich** | ein grauer leerer Stern „☆“; die Zelle nicht hinterlegt | „Ein als „Kein Fehler“ markierter Befund.“ | die Zelle der Angabe; **Ungewöhnlich, geprüft**; **Höchste Stufe**, wenn alle Befunde der Person markiert sind |
+
+- Kreis und Quadrat unterscheiden sich in Form und Zeichen, nicht nur in der Farbe. Ein Bildschirmleser liest das
+  Zeichen als Stufe und Text des Befunds vor.
+- **Befunde** hat das Zeichen der höchsten Stufe hinter der Anzahl; **Höchste Stufe** hat es vor dem Wort. Eine Person
+  ohne Befund hat in der Spalte **Befunde** eine blasse „0“.
+- Eine eingeklappte Gruppe von Spalten (schmaler Streifen) zeigt das höchste Zeichen aus ihren Zellen.
+
+**Arten eines Werts.** Keine davon ist ein Befund.
+
+| Zeichen | Wie es aussieht | Was es bedeutet (Legende) | Wo es erscheint |
+|---|---|---|---|
+| **unsicheres Datum** | das Datum gepunktet unterstrichen; das Wort **um**, **vor** oder **nach** in kleinerer grauer Schrift vor dem Datum | „Etwa, vor, nach oder ein Zeitraum; kein Befund.“ | Spalten der Daten ([A6.7.3](#A6.7.3)) |
+| **Verlässlichkeit** | in der Legende ein Ring mit „✓“; in der Zelle der Name der Stufe in Grau: **Bestätigt**, **Belegt**, **Wahrscheinlich**, **Möglich**, **Hinweis**, **Aus dem Stammbaum**, **Ohne Quelle** | „Nur in den Spalten Verlässlichkeit und Forschung.“ | **Verlässlichkeit Name**, **Verlässlichkeit Geburt**, **Verlässlichkeit Tod**, **Verlässlichkeit Heirat** (Personen, Verbindungen), **Verlässlichkeit** (Ereignisse); Stufen: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **Ersatzwert** | die Abkürzung **get.** oder **begr.** in einem kleinen Rahmen vor dem Wert, der Wert kursiv; Hinweis „Taufe, Geburt unbekannt“, „Begräbnis, Tod unbekannt“ | „Taufe statt Geburt, Begräbnis statt Tod.“ | Datum und Ort von Geburt und Tod ([A6.7.3](#A6.7.3)) |
+| **berechnet** | graue Schrift; „≈ 67“ eine Schätzung, „28–29“ ein Bereich | „Ein Bereich aus ungenauem Datum, ≈ aus einer Schätzung.“ | Alter, Abweichung des angegebenen Alters, Dauer der Verbindung, Anzahlen, Generation, Vollständigkeit; am Spaltenkopf „Berechnet aus: …“ |
+| **entfällt** | „–“ in grauer Kursivschrift; Hinweis „Trifft nicht zu“ | „Betrifft die Person nicht.“ | der Tod bei einer lebenden Person (bei **Vollständigkeit Sterbefall** „lebt“), das Alter des Vaters oder der Mutter ohne erfassten Elternteil, die Spalten der Verbindung bei einer Person ohne Verbindung, **Alter beim Ereignis** bei der Geburt |
+
+- In den Spalten **Verlässlichkeit …** wird von **Bestätigt** bis **Ohne Quelle** in der Reihenfolge aus der Tabelle
+  sortiert.
+
+**Weitere Zeichen** (die Legende zeigt sie nicht):
+
+| Zeichen | Wie es aussieht | Was es bedeutet | Wo es erscheint |
+|---|---|---|---|
+| „…“ | drei blasse Punkte; Hinweis „Prüfungen laufen…“ | die Prüfung des Stammbaums läuft noch | **Befunde**, **Höchste Stufe**, **Ungewöhnlich, geprüft** |
+| „◌ Prüfungen laufen…“ | ein leerer Ring und Text rechts über der Tabelle | dasselbe für die ganze Tabelle; die Chips der Befunde warten noch | über der Tabelle, neben **Zeichen ⓘ** |
+| Prozent mit Balken | eine Zahl und ein kurzer Balken, dessen gefüllter Teil der Wert ist | Vollständigkeit ([A6.7.4](#A6.7.4)) | Spalten **Vollständigkeit …** |
+| fette Zahl, „–“ | in der Abdeckungszeile | Abdeckung unter 50 %; „–“ eine Spalte ohne eine Zelle, die sie betreffen würde | **Abdeckungszeile** ([A6.7.4](#A6.7.4)) |
+| „+2“ | eine Zahl in einem ovalen Rahmen hinter dem ersten Zitat | weitere zitierte Quellen; ein Klick öffnet **Weitere Quellenangaben** | Quellenangaben zu Geburt, Heirat, Tod ([A6.7.12](#A6.7.12)) |
+| „↗“ | hinter einer unterstrichenen Webadresse | ein Link in ein neues Fenster | **Online**, Quellenangaben „… Link“ ([A6.7.11](#A6.7.11)) |
+| ●○, ●● | ein oder zwei volle Punkte vor „1 Leser“, „2 Leser“; Hinweis, wer die Abschrift gelesen hat | wie viele Leser die Abschrift gelesen haben | **Von der Forschung gelesen** ([A6.7.11](#A6.7.11)) |
+| „12 T.“ | eine Zahl mit „T.“ | ein Alter bis zu einem Jahr in Tagen | **Alter beim Ereignis** ([A6.7.10](#A6.7.10)) |
+| ▾, ▸ | ein Dreieck vor dem Namen | die Verbindungen der Person aufgeklappt, zugeklappt ([A6.7.1](#A6.7.1)) | **Name** einer Person mit zwei und mehr Verbindungen |
+| „3 Verbindungen“ | bei einer zugeklappten Person in einem ovalen Rahmen hinter dem Namen; bei einer aufgeklappten in der Spalte **Partner** in grauer Kursivschrift | die Zahl der Verbindungen der Person | Zeile der Person |
+| „└ Verbindung 2 von 3“ | eine eingerückte Unterzeile | eine Verbindung der Person | Unterzeile der Verbindung |
+| „2 Verbindungen außerhalb des Filters · zeigen“ | eine Schaltfläche in einer eingerückten Zeile | Verbindungen, die dem Filter nicht entsprechen; gezeigte sind abgeschwächt | unter den Unterzeilen der Verbindungen |
+| „passt nicht mehr“ | die ganze Zeile blass, Text kursiv am Ende | die Zeile entspricht nach einer Bearbeitung dem Filter nicht mehr ([A6.7.8](#A6.7.8)) | bis zur nächsten Änderung der Sortierung, des Filters oder der Ansicht |
+| Hervorhebung | hinterlegte Schrift des Treffers | ein Treffer der Suche ([A6.7.6](#A6.7.6)) | sichtbare Spalten |
+| ↑, ↓ (↑1, ↓2) | ein Pfeil im Spaltenkopf, mit Nummer bei mehreren Schlüsseln | Richtung und Reihenfolge des Schlüssels der Sortierung ([A6.7.6](#A6.7.6)) | Spaltenkopf |
+| −, + | ein Zeichen beim Namen der Gruppe | eine Gruppe von Spalten einklappen, ausklappen ([A6.7.2](#A6.7.2)) | Zeile der Gruppen über dem Spaltenkopf |
+
+- **Grenzen:** der CSV-Export trägt weder Zeichen noch Farben; XLSX trägt nur die Hinterlegung und den Kommentar bei
+  Fehler und zu prüfen ([A6.7.9](#A6.7.9)).
+- **Bedienung:** **Zeichen ⓘ** rechts über der Tabelle.
+- **Gilt seit:** App 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) -->

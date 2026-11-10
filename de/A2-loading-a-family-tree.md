@@ -172,7 +172,9 @@ Text, der schon in den Daten des Stammbaums steht (z. B. aus einem von Hand bear
 | `před 1850`, `před 14.6.1850` | vor (`BEF`) |
 | `po 1850`, `po roce 1850`, `po 6/1850` | nach (`AFT`) |
 | `14/6/1850`, `cca 14/6/1850` | Tag, Monat und Jahr |
-| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852`, `1850-11/1851` | Zeitraum (`BET … AND`) |
+| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852` | Zeitraum (`BET … AND`) |
+| `mezi 1850-11/1851` | Zeitraum von 1850 bis November 1851 (`BET 1850 AND NOV 1851`) |
+| `1850-11/1851`; im Datumsfeld auch `1850/1851` | Zeitspanne von–bis (`FROM … TO`): von November 1850 bis 1851, von 1850 bis 1851 |
 | `5-7/1850`, `14-15/6/1850` | Zeitraum innerhalb eines Jahres (Mai bis Juli 1850) oder eines Monats (14. bis 15.6.1850) |
 | `cca 1850-1852`, `asi 1850-1852` | Zeitraum; der Zeitraum sagt selbst „irgendwann zwischen“, „cca“ entfällt |
 
@@ -189,17 +191,19 @@ Text, der schon in den Daten des Stammbaums steht (z. B. aus einem von Hand bear
   (`ABT`, `BEF`, `AFT`, `BET … AND`). Der Text selbst ändert sich nicht; das Speichern des Formulars der Person, des
   Ereignisses oder der Verbindung schreibt ihn in der Schreibweise der App.
 - **Grenzen:**
-  - Text bleiben: zwei Jahre als Alternative (`1850/1851` im Import), ein Fragezeichen (`1850?`), unbekannte Ziffern
-    (`18XX`), ein Quartal (`Q4/1850`), eine Jahreszeit, „nebo“, „cca po“ und „cca před“ und Werte in Worten. Das
-    Datumsfeld lehnt sie als ungültiges Datum ab; der Import lässt sie in der Notiz „Datum laut Eintrag: …“
-    (`Cca po 1850` und `Cca podzim 1850` liest er als „ungefähr 1850“ mit Notiz);
+  - einen Schrägstrich zwischen zwei Jahren (`1850/1851`) liest das Datumsfeld als Zeitspanne von 1850 bis 1851; der
+    GEDCOM-Import lässt ihn als Text (zwei Jahre als Alternative);
+  - Text bleiben: ein Fragezeichen (`1850?`), unbekannte Ziffern (`18XX`), ein Quartal (`Q4/1850`), eine Jahreszeit,
+    „nebo“, „cca po“ und „cca před“ und Werte in Worten. Das Datumsfeld lehnt sie als ungültiges Datum ab; der Import
+    lässt sie in der Notiz „Datum laut Eintrag: …“ (`Cca po 1850` und `Cca podzim 1850` liest er als „ungefähr 1850“
+    mit Notiz);
   - Text bleiben auch ein Datum, das es nicht gibt (`31/4/1850`), ein Jahr mit fünf Ziffern und ein Zeitraum, dessen
     Anfang nach dem Ende liegt;
   - früher importierte Stammbäume werden nicht von selbst korrigiert; ein neuer GEDCOM-Import korrigiert sie.
 - **Bedienung:** das Datumsfeld im Formular; der GEDCOM-Import ([A2.1](#A2.1)).
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
+<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.); lomítko: normalizeDateInput('1850/1851') → FROM 1850 TO 1851, '1850-11/1851' → FROM NOV 1850 TO 1851, 'mezi 1850-11/1851' → BET 1850 AND NOV 1851, parseGedcomDate('1850/1851') → text (dirigent:test/vysledek-1110-doc-tabulka-p2.md nález 1, sonda 10. 11. na app f34d41e1) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
 
 <a id="A2.5"></a>
 ## A2.5 Beziehungen und Stand des Paares

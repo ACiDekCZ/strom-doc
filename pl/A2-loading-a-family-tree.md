@@ -160,7 +160,9 @@ JSON).
 | `před 1850`, `před 14.6.1850` | przed (`BEF`) |
 | `po 1850`, `po roce 1850`, `po 6/1850` | po (`AFT`) |
 | `14/6/1850`, `cca 14/6/1850` | dzień, miesiąc i rok |
-| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852`, `1850-11/1851` | przedział (`BET … AND`) |
+| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852` | przedział (`BET … AND`) |
+| `mezi 1850-11/1851` | przedział od 1850 do listopada 1851 (`BET 1850 AND NOV 1851`) |
+| `1850-11/1851`; w polu daty także `1850/1851` | okres od–do (`FROM … TO`): od listopada 1850 do 1851, od 1850 do 1851 |
 | `5-7/1850`, `14-15/6/1850` | przedział w roku (maj do lipca 1850) lub w miesiącu (14. do 15. 6. 1850) |
 | `cca 1850-1852`, `asi 1850-1852` | przedział; zakres sam mówi „kiedyś między”, „cca” się pomija |
 
@@ -174,17 +176,18 @@ JSON).
   `BET … AND`). Sam tekst się nie zmienia; zapisanie formularza osoby, wydarzenia lub związku zapisze go w zapisie
   aplikacji.
 - **Granice:**
-  - tekstem zostaje: dwa lata jako alternatywa (`1850/1851` w imporcie), znak zapytania (`1850?`), nieznane cyfry
-    (`18XX`), kwartał (`Q4/1850`), pora roku, „nebo”, „cca po” i „cca před” oraz wartości słowne. Pole daty odrzuca
-    je jako nieprawidłową datę; import zostawia je w notatce „Data w zapisie: …” (`Cca po 1850` i `Cca podzim 1850`
-    czyta jako „około 1850” z notatką);
+  - ukośnik między dwoma latami (`1850/1851`) pole daty czyta jako okres od 1850 do 1851; import GEDCOM zostawia go
+    tekstem (dwa lata jako alternatywa);
+  - tekstem zostaje: znak zapytania (`1850?`), nieznane cyfry (`18XX`), kwartał (`Q4/1850`), pora roku, „nebo”,
+    „cca po” i „cca před” oraz wartości słowne. Pole daty odrzuca je jako nieprawidłową datę; import zostawia je
+    w notatce „Data w zapisie: …” (`Cca po 1850` i `Cca podzim 1850` czyta jako „około 1850” z notatką);
   - tekstem zostaje też data, która nie istnieje (`31/4/1850`), rok z pięcioma cyframi i zakres, którego początek
     jest po końcu;
   - drzewa zaimportowane wcześniej same się nie poprawią; poprawi je nowy import GEDCOM.
 - **Obsługa:** pole daty w formularzu; import GEDCOM ([A2.1](#A2.1)).
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
+<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.); lomítko: normalizeDateInput('1850/1851') → FROM 1850 TO 1851, '1850-11/1851' → FROM NOV 1850 TO 1851, 'mezi 1850-11/1851' → BET 1850 AND NOV 1851, parseGedcomDate('1850/1851') → text (dirigent:test/vysledek-1110-doc-tabulka-p2.md nález 1, sonda 10. 11. na app f34d41e1) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
 
 <a id="A2.5"></a>
 ## A2.5 Relacje i stan pary

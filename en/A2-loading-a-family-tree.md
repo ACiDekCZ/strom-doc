@@ -160,7 +160,9 @@ edited by hand).
 | `před 1850`, `před 14.6.1850` | before (`BEF`) |
 | `po 1850`, `po roce 1850`, `po 6/1850` | after (`AFT`) |
 | `14/6/1850`, `cca 14/6/1850` | day, month and year |
-| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852`, `1850-11/1851` | a range (`BET … AND`) |
+| `1850-1852`, `mezi 1850-1852`, `mezi 1850 - 1852` | a range (`BET … AND`) |
+| `mezi 1850-11/1851` | a range from 1850 to November 1851 (`BET 1850 AND NOV 1851`) |
+| `1850-11/1851`; in the date field also `1850/1851` | a period from–to (`FROM … TO`): from November 1850 to 1851, from 1850 to 1851 |
 | `5-7/1850`, `14-15/6/1850` | a range within a year (May to July 1850) or within a month (14 to 15 June 1850) |
 | `cca 1850-1852`, `asi 1850-1852` | a range; the range itself says “some time between”, “cca” is left out |
 
@@ -177,9 +179,10 @@ edited by hand).
   `AFT`, `BET … AND`). The text itself does not change; saving the form of the person, event or union writes it in the
   app's notation.
 - **Limits:**
-  - text remains: two years as an alternative (`1850/1851` in the import), a question mark (`1850?`), unknown digits
-    (`18XX`), a quarter (`Q4/1850`), a season, “nebo”, “cca po” and “cca před” and values in words. The date field
-    refuses them as an invalid date; the import leaves them in the note “Date as written: …” (it reads `Cca po 1850`
+  - a slash between two years (`1850/1851`) is read by the date field as a period from 1850 to 1851; the GEDCOM
+    import leaves it as text (two years as an alternative);
+  - text remains: a question mark (`1850?`), unknown digits (`18XX`), a quarter (`Q4/1850`), a season, “nebo”,
+    “cca po” and “cca před” and values in words. The date field refuses them as an invalid date; the import leaves them in the note “Date as written: …” (it reads `Cca po 1850`
     and `Cca podzim 1850` as “about 1850” with a note);
   - a date that does not exist (`31/4/1850`), a year with five digits and a range whose start is after its end also
     remain text;
@@ -187,7 +190,7 @@ edited by hand).
 - **Controls:** the date field in the form; the GEDCOM import ([A2.1](#A2.1)).
 - **Since:** app 3.27.0
 
-<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.) · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
+<!-- zdroj: app:src/dates.ts normalizeDateInput → normalizeDateForm ?? readWrittenForms (readDateWords, readHyphenRange: slovo „mezi“, „cca“ před rozsahem → rozmezí, začátek po konci → null), readWrittenDate (lomítkové datum, zaměnitelné ≤ 12 a různé → assumed), parseFlexDate → parseCanonical ?? readStoredText (text v datech čten v jazyce UI, nemění se), canonicalDate · src/date-words.ts isAboutWord, isBetweenWord · src/gedcom-date-read.ts readGedcomDate (readWrittenDate, lossy → poznámka gedcomDatePhrase) · src/ged-exporter.ts canonicalDate · strings.ts gedcomNotes.datePhrase · commit 7ed8123c · ověřeno voláním normalizeDateInput a parseGedcomDate v cs a en (10. 11.); lomítko: normalizeDateInput('1850/1851') · dirigent:prace/1110-app-tabulka-opravy/t42-tabulka.md (Pravidla opravy, Bez opravy, Rizika); vzory smyšlené -->
 
 <a id="A2.5"></a>
 ## A2.5 Relationships and the status of a couple

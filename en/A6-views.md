@@ -8,14 +8,7 @@ clicked) and the depth **Ancestors** and **Descendants**. Family, Descendants, T
 surroundings of the central person. The Fan counts ancestors and descendants on its own by the number of generations
 ([A6.4](#A6.4)). The Table shows the whole tree ([A6.7](#A6.7)).
 
-| View (cs) | en | de | pl |
-|---|---|---|---|
-| **Rodina** | Family | Familie | Rodzina |
-| **Potomci** | Descendants | Nachkommen | Potomkowie |
-| **Časová osa** | Timeline | Zeitleiste | Oś czasu |
-| **Vějíř** | Fan | Fächer | Wachlarz |
-| **Mapa** | Map | Karte | Mapa |
-| **Tabulka** | Table | Tabelle | Tabela |
+Views: **Family**, **Descendants**, **Timeline**, **Fan**, **Map**, **Table**.
 
 <!-- zdroj: app:src/types.ts:1237 ViewMode · strings.ts viewModeSwitch.* · Tabulka od aplikace 3.27.0 (viewModeSwitch.table) -->
 
@@ -251,9 +244,8 @@ the depth **Ancestors** and **Descendants**. The Table view is based on a table 
   - highlighting a family line ([A6.6](#A6.6)) is not used in the table; a family line can be chosen with the chip
     **Family line** ([A6.7.6](#A6.7.6));
   - a read-only tree (a followed tree, a tree saved by a newer version of the app, a locked tree) the table only
-    shows: “Read only: edits and “Not an error” are not available here.” Browsing, filter, sort and CSV export work;
-    a view cannot be saved, renamed or deleted;
-  - the table handles a tree with 5,000 people (their events too, and 2,000 sources).
+    shows: “Read only: edits and “Not an error” are not available here.” Browsing, filter, sort and CSV and XLSX
+    export work; a view cannot be saved, renamed or deleted.
 - **Controls:** **Table** in the view bar (after **Map**); in a narrow window and on a phone **More → View → Table**.
   The view is remembered like the others ([A6.1.1](#A6.1.1)).
 - **Since:** app 3.27.0
@@ -267,18 +259,21 @@ A person with two or more unions has a row of their own in the People table and 
 (“Union 2 of 3”). The person's row has a count in the column **Partner** (“3 unions”) and the other union columns
 empty.
 
-- Unions follow each other by the date of marriage; unions without a date are at the end in the order of entry.
+- Unions follow the order of marriages as in the tree ([A6.4](#A6.4)): **Union 1** is the one with the mark “1. ∞”
+  on the card. A union without a wedding date is placed by the latest the wedding can have been (the earlier of a
+  divorce and the birth of the first child); a union without these dates comes after the others. On a tie, the order
+  of the person's unions in the data decides. An empty stand-in family (“?”) goes last in the order of entry.
 - **Collapsed:** the person's row shows the first union and the number of the others. The default is expanded; the
   built-in view **Gaps** has the unions collapsed.
 - **A filter in a union column** is judged for each union separately. The person stays when at least one union
-  matches; the others are hidden under the row “2 outside the filter · show”. Those shown are dimmed until the next
+  matches; the others are hidden under the row “2 unions outside the filter · show”. Those shown are dimmed until the next
   change of the filter.
 - **Sorting by a union column** takes the first union that matches the filter.
 - A person with one union has its facts directly in their own row.
 - **Controls:** **Expand unions** / **Collapse unions** (on a phone in the menu **⋯**); the keys → and ← in the
   column **Name**, * for all people; the row menu. The state is saved with the view ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsByDate (datum sňatku, bez data na konci v pořadí zápisu) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
+<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
 
 <a id="A6.7.2"></a>
 ### A6.7.2 Columns
@@ -328,7 +323,7 @@ What is not written in the tree but can be counted from the data, the table comp
   for a living person (for **Death completeness** “living”). **Father’s/Mother’s age at birth** without a recorded
   parent is **Does not apply**.
 - **Controls:** the hint at a cell (“Baptism, birth unknown”, “Burial, death unknown”); at a computed column in the
-  header menu “Computed from: …”; the legend **Marks** ([A6.7.5](#A6.7.5)).
+  header menu “Computed from: …”; the legend **Marks** ([A6.7.13](#A6.7.13)).
 
 <!-- zdroj: app:src/ui/table-view/table-columns.ts ageCell (přesně / rozsah ageRangeBetween / ≈ approxAgeBetween; nic, když konec před začátkem), dateCell, qualifierWord, birthOrBaptism, deathOrBurial (náhrada, ≈), gapCell (recordedAgeGap), unionLength, naCell, parentsOf · src/dates.ts:448 ageRangeBetween, recordedAgeGap · table-model.ts dateNumber (začátek rozsahu) · strings.ts table.na, living, subst.*, qual.*, computedFrom, from.* · commit 8833da14 -->
 
@@ -385,7 +380,7 @@ shaded and has a mark of the level. The check runs over the whole tree in the ba
     marked findings.
 
   The legend **Marks** (“Marks in the cells”) also explains the uncertain date, reliability, a substitute value, a
-  computed value and **Does not apply**.
+  computed value and **Does not apply**. What each mark looks like: [A6.7.13](#A6.7.13).
 
 <!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 -->
 
@@ -605,3 +600,66 @@ godparent.
 - **Since:** app 3.27.0
 
 <!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+
+<a id="A6.7.13"></a>
+### A6.7.13 Marks in the cells
+
+An overview of everything the table uses to mark a cell or a row. The legend **Marks ⓘ** at the top right of the
+table (the bubble “Marks in the cells”, on a phone a panel from below) shows the first two tables: the four levels
+of a finding and the five kinds of value.
+
+**Findings of the check** ([A6.7.5](#A6.7.5)). The mark stands at the end of the cell after the value; a click on a
+cell with a finding opens the finding's bubble.
+
+| Mark | What it looks like | What it means (legend) | Where it appears |
+|---|---|---|---|
+| **error** | a solid red circle with a white “!”; the cell tinted red | “The facts contradict each other.” | the cell of the fact the finding is about; **Findings**, **Highest level**; a collapsed group |
+| **to check** | a solid amber square with rounded corners and “?”; the cell tinted amber | “An unusual value worth checking.” | as for error |
+| **lead** | a small hollow grey ring; the cell not tinted | “A lead for the research, not an error.” | as for error; a godparent who recurs ([A6.7.10](#A6.7.10), [A6.7.12](#A6.7.12)) |
+| **unusual** | a grey hollow star “☆”; the cell not tinted | “A finding marked “Not an error”.” | the cell of the fact; **Unusual, checked**; **Highest level** when all the person's findings are marked |
+
+- The circle and the square differ in shape and sign, not only in colour. A screen reader reads the mark as the level
+  and the text of the finding.
+- **Findings** has the mark of the highest level after the number; **Highest level** has it before the word. A person
+  without a finding has a faint “0” in the column **Findings**.
+- A collapsed group of columns (a narrow band) shows the highest mark of its cells.
+
+**Kinds of value.** None of them is a finding.
+
+| Mark | What it looks like | What it means (legend) | Where it appears |
+|---|---|---|---|
+| **uncertain date** | the date underlined with dots; the word **abt.**, **bef.** or **aft.** in smaller grey type before the date | “About, before, after or a range; not a finding.” | date columns ([A6.7.3](#A6.7.3)) |
+| **reliability** | in the legend a ring with “✓”; in the cell the step's name in grey: **Confirmed**, **Proven**, **Probable**, **Possible**, **Lead**, **From family tree**, **No source** | “Only in the Reliability and research columns.” | **Name reliability**, **Birth reliability**, **Death reliability**, **Marriage reliability** (people, unions), **Reliability** (events); the steps: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **substitute** | the abbreviation **bap.** or **bur.** in a small frame before the value, the value in italics; the tooltip “Baptism, birth unknown”, “Burial, death unknown” | “A baptism for the birth, a burial for the death.” | date and place of birth and death ([A6.7.3](#A6.7.3)) |
+| **computed** | grey type; “≈ 67” an estimate, “28–29” a range | “A range from an inexact date, ≈ from an estimate.” | ages, the difference of the recorded age, length of the union, counts, generation, completeness; in the header “Computed from: …” |
+| **does not apply** | “–” in grey italics; the tooltip “Does not apply” | “Does not apply to the person.” | death for a living person (in **Death completeness** “living”), the father's or mother's age without a recorded parent, union columns of a person without a union, **Age at the event** for a birth |
+
+- The columns **… reliability** sort from **Confirmed** to **No source** in the order of the table.
+
+**Other marks** (the legend does not show them):
+
+| Mark | What it looks like | What it means | Where it appears |
+|---|---|---|---|
+| “…” | three faint dots; the tooltip “Checks are running…” | the check of the tree is still running | **Findings**, **Highest level**, **Unusual, checked** |
+| “◌ Checks are running…” | a hollow ring and text at the top right of the table | the same for the whole table; the finding chips wait for now | above the table, next to **Marks ⓘ** |
+| a percentage with a bar | a number and a short bar whose filled part is the value | completeness ([A6.7.4](#A6.7.4)) | the columns **… completeness** |
+| a bold number, “–” | in the coverage row | coverage under 50 %; “–” a column with no cell it would apply to | **Coverage row** ([A6.7.4](#A6.7.4)) |
+| “+2” | a number in an oval frame after the first citation | further cited sources; a click opens **Other citations** | citations of birth, marriage, death ([A6.7.12](#A6.7.12)) |
+| “↗” | after an underlined web address | a link into a new window | **Online**, the citations “… link” ([A6.7.11](#A6.7.11)) |
+| ●○, ●● | one or two solid dots before “1 reader”, “2 readers”; the tooltip says who read the transcript | how many readers read the transcript | **Read by the research** ([A6.7.11](#A6.7.11)) |
+| “12 d” | a number with “d” | an age under one year in days | **Age at the event** ([A6.7.10](#A6.7.10)) |
+| ▾, ▸ | a triangle before the name | the person's unions expanded, collapsed ([A6.7.1](#A6.7.1)) | **Name** of a person with two or more unions |
+| “3 unions” | for a collapsed person in an oval frame after the name; for an expanded one in the column **Partner** in grey italics | the person's number of unions | the person's row |
+| “└ Union 2 of 3” | an indented sub-row | one union of the person | the union sub-row |
+| “2 unions outside the filter · show” | a button in an indented row | unions that do not match the filter; those shown are dimmed | under the union sub-rows |
+| “no longer matches” | the whole row faint, the text in italics at the end | the row no longer matches the filter after an edit ([A6.7.8](#A6.7.8)) | until the next change of sort, filter or view |
+| highlight | the matching text with a background | a match of the search ([A6.7.6](#A6.7.6)) | visible columns |
+| ↑, ↓ (↑1, ↓2) | an arrow in the header, with a number for several keys | the direction and order of a sort key ([A6.7.6](#A6.7.6)) | the column header |
+| −, + | a sign by the group's name | collapse, expand a group of columns ([A6.7.2](#A6.7.2)) | the row of groups above the header |
+
+- **Limits:** the CSV export carries neither marks nor colours; XLSX carries only the tint and a comment for error and
+  to check ([A6.7.9](#A6.7.9)).
+- **Controls:** **Marks ⓘ** at the top right of the table.
+- **Since:** app 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) -->

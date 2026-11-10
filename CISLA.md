@@ -277,6 +277,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.7.10 | A6-views.md | aplikace 3.27.0 | platí | Události v řádcích | Events in rows | Ereignisse in Zeilen | Wydarzenia w wierszach |
 | A6.7.11 | A6-views.md | aplikace 3.27.0 | platí | Prameny v řádcích | Sources in rows | Quellen in Zeilen | Źródła w wierszach |
 | A6.7.12 | A6-views.md | aplikace 3.27.0 | platí | Citace a kmotři v tabulce osob | Citations and godparents in the People table | Quellenangaben und Paten in der Personentabelle | Cytowania i chrzestni w tabeli osób |
+| A6.7.13 | A6-views.md | aplikace 3.27.0 | platí | Značky v buňkách | Marks in the cells | Zeichen in den Zellen | Oznaczenia w komórkach |
 | A7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Kniha, stránky a export | Book, pages and export | Buch, Seiten und Export | Księga, strony i eksport |
 | A7.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Kdo je žijící osoba | Who is a living person | Wer eine lebende Person ist | Kto jest osobą żyjącą |
 | A7.2 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Ochrana žijících | Privacy of living people | Schutz lebender Personen | Ochrona osób żyjących |

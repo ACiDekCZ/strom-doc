@@ -7,14 +7,7 @@ Pohled je jiné čtení **téhož výběru osob**. Výběr určuje ústřední o
 **Předci** a **Potomci**. Rodina, Potomci, Časová osa a Mapa ukazují stejné okolí ústřední osoby. Vějíř si
 předky a potomky počítá sám podle počtu generací ([A6.4](#A6.4)). Tabulka ukazuje celý strom ([A6.7](#A6.7)).
 
-| Pohled (cs) | en | de | pl |
-|---|---|---|---|
-| **Rodina** | Family | Familie | Rodzina |
-| **Potomci** | Descendants | Nachkommen | Potomkowie |
-| **Časová osa** | Timeline | Zeitleiste | Oś czasu |
-| **Vějíř** | Fan | Fächer | Wachlarz |
-| **Mapa** | Map | Karte | Mapa |
-| **Tabulka** | Table | Tabelle | Tabela |
+Pohledy: **Rodina**, **Potomci**, **Časová osa**, **Vějíř**, **Mapa**, **Tabulka**.
 
 <!-- zdroj: app:src/types.ts:1237 ViewMode · strings.ts viewModeSwitch.* · Tabulka od aplikace 3.27.0 (viewModeSwitch.table) -->
 
@@ -237,9 +230,8 @@ Pohled Tabulka vychází z tabulky od Ondřeje Chrpy.
 - **Hranice:**
   - zvýraznění rodu ([A6.6](#A6.6)) se v tabulce nepoužije; rod jde vybrat čipem **Rod** ([A6.7.6](#A6.7.6));
   - strom jen ke čtení (sledovaný strom, strom uložený novější verzí aplikace, zamčený strom) tabulka jen
-    ukazuje: „Jen ke čtení: úpravy a „Není chyba“ tu nejsou.“ Prohlížení, filtr, řazení a export CSV fungují;
-    pohled uložit, přejmenovat ani smazat nejde;
-  - tabulka zvládne strom s 5 000 osobami (i jejich události a 2 000 pramenů).
+    ukazuje: „Jen ke čtení: úpravy a „Není chyba“ tu nejsou.“ Prohlížení, filtr, řazení a export CSV a XLSX
+    fungují; pohled uložit, přejmenovat ani smazat nejde.
 - **Ovládání:** v liště pohledů **Tabulka** (za **Mapa**); v úzkém okně a na telefonu **Více → Pohled → Tabulka**.
   Pohled se pamatuje jako ostatní ([A6.1.1](#A6.1.1)).
 - **Platí od:** aplikace 3.27.0
@@ -252,7 +244,10 @@ Pohled Tabulka vychází z tabulky od Ondřeje Chrpy.
 Osoba se dvěma a více svazky má v tabulce osob vlastní řádek a pod ním podřádek pro každý svazek („Svazek 2 z 3“).
 Řádek osoby má ve sloupci **Partner** počet („3 svazky“) a ostatní sloupce svazku prázdné.
 
-- Svazky jdou po sobě podle data sňatku; svazky bez data jsou na konci v pořadí zápisu.
+- Svazky jdou v pořadí sňatků jako ve stromu ([A6.4](#A6.4)): **Svazek 1** je ten, který má na kartě značku „1. ∞“.
+  Svazek bez data sňatku se řadí podle nejpozdějšího možného data sňatku (dřívější z rozvodu a narození prvního
+  dítěte); svazek bez těchto dat jde za ostatní. Při shodě rozhoduje pořadí svazků u osoby v datech. Prázdná
+  zástupná rodina („?“) jde na konec v pořadí zápisu.
 - **Sbaleno:** řádek osoby ukáže první svazek a počet ostatních. Výchozí je rozbaleno; vestavěný pohled **Mezery**
   má svazky sbalené.
 - **Filtr ve sloupci svazku** se posuzuje u každého svazku zvlášť. Osoba zůstane, když vyhoví aspoň jeden svazek;
@@ -262,7 +257,7 @@ Osoba se dvěma a více svazky má v tabulce osob vlastní řádek a pod ním po
 - **Ovládání:** **Rozbalit svazky** / **Sbalit svazky** (na telefonu v nabídce **⋯**); klávesy → a ← ve sloupci
   **Jméno**, * pro všechny osoby; nabídka řádku. Stav se ukládá s pohledem ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsByDate (datum sňatku, bez data na konci v pořadí zápisu) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
+<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
 
 <a id="A6.7.2"></a>
 ### A6.7.2 Sloupce
@@ -311,7 +306,7 @@ Co ve stromu zapsané není, ale jde z dat spočítat, tabulka dopočte. Nic př
 - **Hranice:** věk se nepočítá, když konec předchází začátek. Sloupce úmrtí mají u žijící osoby **Nevztahuje se**
   (u **Úplnost úmrtí** „žije“). **Věk otce/matky při narození** bez zapsaného rodiče je **Nevztahuje se**.
 - **Ovládání:** nápověda u buňky („Křest, narození neznámé“, „Pohřeb, úmrtí neznámé“); u dopočteného sloupce
-  v nabídce hlavičky „Vypočteno z: …“; legenda **Značky** ([A6.7.5](#A6.7.5)).
+  v nabídce hlavičky „Vypočteno z: …“; legenda **Značky** ([A6.7.13](#A6.7.13)).
 
 <!-- zdroj: app:src/ui/table-view/table-columns.ts ageCell (přesně / rozsah ageRangeBetween / ≈ approxAgeBetween; nic, když konec před začátkem), dateCell, qualifierWord, birthOrBaptism, deathOrBurial (náhrada, ≈), gapCell (recordedAgeGap), unionLength, naCell, parentsOf · src/dates.ts:448 ageRangeBetween, recordedAgeGap · table-model.ts dateNumber (začátek rozsahu) · strings.ts table.na, living, subst.*, qual.*, computedFrom, from.* · commit 8833da14 -->
 
@@ -364,7 +359,7 @@ podbarvená a má značku úrovně. Kontrola běží nad celým stromem na pozad
   - **Kvalita dat ›** otevře dialog Kvality dat na skupině tohoto nálezu; u neobvyklého na seznamu označených.
 
   Legenda **Značky** („Značky v buňkách“) vysvětluje i nejisté datum, spolehlivost, náhradní hodnotu, dopočet
-  a **Nevztahuje se**.
+  a **Nevztahuje se**. Jak která značka vypadá: [A6.7.13](#A6.7.13).
 
 <!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 -->
 
@@ -567,3 +562,63 @@ Tabulka osob má sloupce, které ukážou, z jakého pramene je narození, sňat
 - **Platí od:** aplikace 3.27.0
 
 <!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+
+<a id="A6.7.13"></a>
+### A6.7.13 Značky v buňkách
+
+Přehled všeho, čím tabulka označí buňku nebo řádek. Legenda **Značky ⓘ** vpravo nad tabulkou (bublina „Značky
+v buňkách“, na telefonu panel zdola) ukazuje první dvě tabulky: čtyři úrovně nálezu a pět druhů hodnoty.
+
+**Nálezy kontroly** ([A6.7.5](#A6.7.5)). Značka stojí na konci buňky za hodnotou; klik na buňku s nálezem otevře
+bublinu nálezu.
+
+| Značka | Jak vypadá | Co znamená (legenda) | Kde se objeví |
+|---|---|---|---|
+| **chyba** | plné červené kolečko s bílým „!“; buňka podbarvená do červena | „Údaje si odporují.“ | buňka údaje, kterého se nález týká; **Nálezy**, **Nejvyšší úroveň**; sbalená skupina |
+| **k ověření** | plný jantarový čtvereček se zaoblenými rohy a „?“; buňka podbarvená do jantarova | „Neobvyklá hodnota, stojí za ověření.“ | jako chyba |
+| **stopa** | malý prázdný šedý kroužek; buňka bez podbarvení | „Stopa pro pátrání, není to chyba.“ | jako chyba; kmotr, který se opakuje ([A6.7.10](#A6.7.10), [A6.7.12](#A6.7.12)) |
+| **neobvyklé** | šedá prázdná hvězdička „☆“; buňka bez podbarvení | „Nález označený „Není chyba“.“ | buňka údaje; **Neobvyklé, ověřené**; **Nejvyšší úroveň**, když jsou všechny nálezy osoby označené |
+
+- Kolečko a čtverec se liší tvarem i znakem, nejen barvou. Čtečka obrazovky značku přečte jako úroveň a text nálezu.
+- **Nálezy** má značku nejvyšší úrovně za počtem; **Nejvyšší úroveň** ji má před slovem. Osoba bez nálezu má ve
+  sloupci **Nálezy** bledou „0“.
+- Sbalená skupina sloupců (úzký pruh) ukazuje nejvyšší značku ze svých buněk.
+
+**Druhy hodnoty.** Žádná z nich není nález.
+
+| Značka | Jak vypadá | Co znamená (legenda) | Kde se objeví |
+|---|---|---|---|
+| **nejisté datum** | datum podtržené tečkami; slovo **cca**, **před** nebo **po** menším šedým písmem před datem | „Cca, před, po nebo rozsah; není to nález.“ | sloupce dat ([A6.7.3](#A6.7.3)) |
+| **spolehlivost** | v legendě kroužek s „✓“; v buňce šedý název stupně: **Potvrzeno**, **Doloženo**, **Pravděpodobné**, **Možné**, **Vodítko**, **Z rodokmenu**, **Bez pramene** | „Jen ve sloupcích Spolehlivost a výzkum.“ | **Spolehlivost jména**, **narození**, **úmrtí**, **sňatku** (osoby, svazky), **Spolehlivost** (události); stupně: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **náhradní hodnota** | zkratka **křt.** nebo **pohř.** v malém rámečku před hodnotou, hodnota kurzívou; nápověda „Křest, narození neznámé“, „Pohřeb, úmrtí neznámé“ | „Křest místo narození, pohřeb místo úmrtí.“ | datum a místo narození a úmrtí ([A6.7.3](#A6.7.3)) |
+| **dopočteno** | šedé písmo; „≈ 67“ odhad, „28–29“ rozsah | „Rozsah z nepřesného data, ≈ z odhadu.“ | věky, rozdíl zapsaného věku, délka svazku, počty, generace, úplnost; u hlavičky „Vypočteno z: …“ |
+| **nevztahuje se** | „–“ šedou kurzívou; nápověda „Nevztahuje se“ | „Údaj se osoby netýká.“ | úmrtí u žijící osoby (u **Úplnost úmrtí** „žije“), věk otce nebo matky bez zapsaného rodiče, sloupce svazku u osoby bez svazku, **Věk při události** u narození |
+
+- Ve sloupcích **Spolehlivost …** se řadí od **Potvrzeno** po **Bez pramene** v pořadí z tabulky.
+
+**Další značky** (legenda je neukazuje):
+
+| Značka | Jak vypadá | Co znamená | Kde se objeví |
+|---|---|---|---|
+| „…“ | bledé tři tečky; nápověda „Kontroly se počítají…“ | kontrola stromu ještě běží | **Nálezy**, **Nejvyšší úroveň**, **Neobvyklé, ověřené** |
+| „◌ Kontroly se počítají…“ | prázdný kroužek a text vpravo nad tabulkou | totéž pro celou tabulku; čipy nálezů zatím čekají | nad tabulkou, vedle **Značky ⓘ** |
+| procento s proužkem | číslo a krátký proužek, jehož vyplněná část je hodnota | úplnost ([A6.7.4](#A6.7.4)) | sloupce **Úplnost …** |
+| tučné číslo, „–“ | v řádku pokrytí | pokrytí pod 50 %; „–“ sloupec bez buňky, které by se týkal | **Řádek pokrytí** ([A6.7.4](#A6.7.4)) |
+| „+2“ | číslo v oválném rámečku za první citací | další citované prameny; klik otevře **Další citace** | citace narození, sňatku, úmrtí ([A6.7.12](#A6.7.12)) |
+| „↗“ | za podtrženou webovou adresou | odkaz do nového okna | **Online**, citace „… odkaz“ ([A6.7.11](#A6.7.11)) |
+| ●○, ●● | jedna nebo dvě plné tečky před „1 čtenář“, „2 čtenáři“; nápověda, kdo přepis četl | kolik čtenářů přepis četlo | **Přečteno výzkumem** ([A6.7.11](#A6.7.11)) |
+| „12 d.“ | číslo s „d.“ | věk do jednoho roku ve dnech | **Věk při události** ([A6.7.10](#A6.7.10)) |
+| ▾, ▸ | trojúhelník před jménem | svazky osoby rozbalené, sbalené ([A6.7.1](#A6.7.1)) | **Jméno** osoby se dvěma a více svazky |
+| „3 svazky“ | u sbalené osoby v oválném rámečku za jménem; u rozbalené ve sloupci **Partner** šedou kurzívou | počet svazků osoby | řádek osoby |
+| „└ Svazek 2 z 3“ | odsazený podřádek | jeden svazek osoby | podřádek svazku |
+| „2 svazky mimo filtr · ukázat“ | tlačítko v odsazeném řádku | svazky, které nevyhoví filtru; ukázané jsou znevýrazněné | pod podřádky svazků |
+| „nevyhovuje filtru“ | celý řádek bledý, text kurzívou na konci | řádek po úpravě už filtru nevyhovuje ([A6.7.8](#A6.7.8)) | do další změny řazení, filtru nebo pohledu |
+| zvýraznění | podbarvené písmo shody | shoda hledání ([A6.7.6](#A6.7.6)) | viditelné sloupce |
+| ↑, ↓ (↑1, ↓2) | šipka v hlavičce, s číslem při více klíčích | směr a pořadí klíče řazení ([A6.7.6](#A6.7.6)) | hlavička sloupce |
+| −, + | znak u názvu skupiny | sbalit, rozbalit skupinu sloupců ([A6.7.2](#A6.7.2)) | řádek skupin nad hlavičkou |
+
+- **Hranice:** export CSV značky ani barvy nenese; XLSX nese jen podbarvení a komentář u chyby a k ověření ([A6.7.9](#A6.7.9)).
+- **Ovládání:** **Značky ⓘ** vpravo nad tabulkou.
+- **Platí od:** aplikace 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) -->

@@ -9,14 +9,7 @@ i głębokość **Przodkowie** oraz **Potomkowie**. Rodzina, Potomkowie, Oś cza
 osoby w centrum. Wachlarz liczy przodków i potomków sam według liczby pokoleń ([A6.4](#A6.4)). Tabela pokazuje
 całe drzewo ([A6.7](#A6.7)).
 
-| Widok (cs) | en | de | pl |
-|---|---|---|---|
-| **Rodina** | Family | Familie | Rodzina |
-| **Potomci** | Descendants | Nachkommen | Potomkowie |
-| **Časová osa** | Timeline | Zeitleiste | Oś czasu |
-| **Vějíř** | Fan | Fächer | Wachlarz |
-| **Mapa** | Map | Karte | Mapa |
-| **Tabulka** | Table | Tabelle | Tabela |
+Widoki: **Rodzina**, **Potomkowie**, **Oś czasu**, **Wachlarz**, **Mapa**, **Tabela**.
 
 <!-- zdroj: app:src/types.ts:1237 ViewMode · strings.ts viewModeSwitch.* · Tabulka od aplikace 3.27.0 (viewModeSwitch.table) -->
 
@@ -251,8 +244,7 @@ Widok Tabela opiera się na tabeli Ondřeja Chrpy.
   - wyróżnienie rodu ([A6.6](#A6.6)) w tabeli się nie stosuje; ród można wybrać chipem **Ród** ([A6.7.6](#A6.7.6));
   - drzewo tylko do odczytu (śledzone drzewo, drzewo zapisane nowszą wersją aplikacji, zablokowane drzewo) tabela
     tylko pokazuje: „Tylko do odczytu: edycji i „To nie błąd” tu nie ma.” Przeglądanie, filtr, sortowanie i eksport
-    CSV działają; widoku nie można zapisać, przemianować ani usunąć;
-  - tabela obsłuży drzewo z 5 000 osób (także ich wydarzenia i 2 000 źródeł).
+    CSV i XLSX działają; widoku nie można zapisać, przemianować ani usunąć.
 - **Obsługa:** w przełączniku widoków **Tabela** (za **Mapa**); w wąskim oknie i na telefonie **Więcej → Widok →
   Tabela**. Widok jest zapamiętywany jak pozostałe ([A6.1.1](#A6.1.1)).
 - **Obowiązuje od:** aplikacja 3.27.0
@@ -265,18 +257,21 @@ Widok Tabela opiera się na tabeli Ondřeja Chrpy.
 Osoba z dwoma i więcej związkami ma w tabeli osób własny wiersz, a pod nim podwiersz dla każdego związku („Związek 2
 z 3”). Wiersz osoby ma w kolumnie **Partner** liczbę („3 związki”), a pozostałe kolumny związku puste.
 
-- Związki idą po kolei według daty ślubu; związki bez daty są na końcu w kolejności zapisu.
+- Związki idą w kolejności ślubów jak w drzewie ([A6.4](#A6.4)): **Związek 1** to ten, który ma na karcie oznaczenie
+  „1. ∞”. Związek bez daty ślubu jest ustawiany według najpóźniejszej możliwej daty ślubu (wcześniejszej z rozwodu
+  i urodzenia pierwszego dziecka); związek bez tych dat idzie za pozostałymi. Przy remisie decyduje kolejność związków
+  osoby w danych. Pusta rodzina zastępcza („?”) idzie na koniec w kolejności zapisu.
 - **Zwinięte:** wiersz osoby pokazuje pierwszy związek i liczbę pozostałych. Domyślnie jest rozwinięte; wbudowany
   widok **Luki** ma związki zwinięte.
 - **Filtr w kolumnie związku** ocenia się przy każdym związku osobno. Osoba zostaje, gdy spełnia go co najmniej jeden
-  związek; pozostałe chowają się pod wiersz „2 poza filtrem · pokaż”. Pokazane są przygaszone do następnej zmiany
+  związek; pozostałe chowają się pod wiersz „2 związki poza filtrem · pokaż”. Pokazane są przygaszone do następnej zmiany
   filtru.
 - **Sortowanie według kolumny związku** bierze pierwszy związek, który spełnia filtr.
 - Osoba z jednym związkiem ma jego dane bezpośrednio w swoim wierszu.
 - **Obsługa:** **Rozwiń związki** / **Zwiń związki** (na telefonie w menu **⋯**); klawisze → i ← w kolumnie **Imię
   i nazwisko**, * dla wszystkich osób; menu wiersza. Stan zapisuje się z widokiem ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsByDate (datum sňatku, bez data na konci v pořadí zápisu) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
+<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
 
 <a id="A6.7.2"></a>
 ### A6.7.2 Kolumny
@@ -327,7 +322,7 @@ zapisuje.
   dotyczy** (przy **Kompletność zgonu** „żyje”). **Wiek ojca/matki przy urodzeniu** bez zapisanego rodzica to **Nie
   dotyczy**.
 - **Obsługa:** podpowiedź przy komórce („Chrzest, urodzenie nieznane”, „Pochówek, zgon nieznany”); przy kolumnie
-  obliczonej w menu nagłówka „Obliczono z: …”; legenda **Oznaczenia** ([A6.7.5](#A6.7.5)).
+  obliczonej w menu nagłówka „Obliczono z: …”; legenda **Oznaczenia** ([A6.7.13](#A6.7.13)).
 
 <!-- zdroj: app:src/ui/table-view/table-columns.ts ageCell (přesně / rozsah ageRangeBetween / ≈ approxAgeBetween; nic, když konec před začátkem), dateCell, qualifierWord, birthOrBaptism, deathOrBurial (náhrada, ≈), gapCell (recordedAgeGap), unionLength, naCell, parentsOf · src/dates.ts:448 ageRangeBetween, recordedAgeGap · table-model.ts dateNumber (začátek rozsahu) · strings.ts table.na, living, subst.*, qual.*, computedFrom, from.* · commit 8833da14 -->
 
@@ -383,7 +378,7 @@ jest podbarwiona i ma oznaczenie poziomu. Kontrola działa nad całym drzewem w 
   - **Jakość danych ›** otwiera okno Jakości danych na grupie tego ustalenia; przy nietypowym na liście oznaczonych.
 
   Legenda **Oznaczenia** („Oznaczenia w komórkach”) objaśnia też niepewną datę, wiarygodność, wartość zastępczą,
-  obliczenie i **Nie dotyczy**.
+  obliczenie i **Nie dotyczy**. Jak które oznaczenie wygląda: [A6.7.13](#A6.7.13).
 
 <!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 -->
 
@@ -597,3 +592,66 @@ Tabela osób ma kolumny, które pokazują, z jakiego źródła jest urodzenie, �
 - **Obowiązuje od:** aplikacja 3.27.0
 
 <!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+
+<a id="A6.7.13"></a>
+### A6.7.13 Oznaczenia w komórkach
+
+Przegląd wszystkiego, czym tabela oznacza komórkę lub wiersz. Legenda **Oznaczenia ⓘ** po prawej nad tabelą (dymek
+„Oznaczenia w komórkach”, na telefonie panel od dołu) pokazuje dwie pierwsze tabele: cztery poziomy ustalenia i pięć
+rodzajów wartości.
+
+**Ustalenia kontroli** ([A6.7.5](#A6.7.5)). Oznaczenie stoi na końcu komórki za wartością; kliknięcie komórki
+z ustaleniem otwiera dymek ustalenia.
+
+| Oznaczenie | Jak wygląda | Co znaczy (legenda) | Gdzie się pojawia |
+|---|---|---|---|
+| **błąd** | pełne czerwone kółko z białym „!”; komórka podbarwiona na czerwono | „Dane są ze sobą sprzeczne.” | komórka danej, której dotyczy ustalenie; **Ustalenia**, **Najwyższy poziom**; zwinięta grupa |
+| **do sprawdzenia** | pełny bursztynowy kwadracik z zaokrąglonymi rogami i „?”; komórka podbarwiona na bursztynowo | „Nietypowa wartość warta sprawdzenia.” | jak błąd |
+| **trop** | mały pusty szary okrąg; komórka bez podbarwienia | „Trop do poszukiwań, nie błąd.” | jak błąd; chrzestny, który się powtarza ([A6.7.10](#A6.7.10), [A6.7.12](#A6.7.12)) |
+| **nietypowe** | szara pusta gwiazdka „☆”; komórka bez podbarwienia | „Ustalenie oznaczone „To nie błąd”.” | komórka danej; **Nietypowe, sprawdzone**; **Najwyższy poziom**, gdy wszystkie ustalenia osoby są oznaczone |
+
+- Kółko i kwadrat różnią się kształtem i znakiem, nie tylko kolorem. Czytnik ekranu odczyta oznaczenie jako poziom
+  i tekst ustalenia.
+- **Ustalenia** ma oznaczenie najwyższego poziomu za liczbą; **Najwyższy poziom** ma je przed słowem. Osoba bez
+  ustalenia ma w kolumnie **Ustalenia** blade „0”.
+- Zwinięta grupa kolumn (wąski pasek) pokazuje najwyższe oznaczenie ze swoich komórek.
+
+**Rodzaje wartości.** Żaden z nich nie jest ustaleniem.
+
+| Oznaczenie | Jak wygląda | Co znaczy (legenda) | Gdzie się pojawia |
+|---|---|---|---|
+| **niepewna data** | data podkreślona kropkami; słowo **ok.**, **przed** lub **po** mniejszym szarym pismem przed datą | „Około, przed, po lub zakres; nie jest to ustalenie.” | kolumny dat ([A6.7.3](#A6.7.3)) |
+| **wiarygodność** | w legendzie kółko z „✓”; w komórce szara nazwa stopnia: **Potwierdzone**, **Udokumentowane**, **Prawdopodobne**, **Możliwe**, **Wskazówka**, **Z drzewa**, **Bez źródła** | „Tylko w kolumnach Wiarygodność i badania.” | **Wiarygodność imienia**, **urodzenia**, **zgonu**, **ślubu** (osoby, związki), **Wiarygodność** (wydarzenia); stopnie: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **wartość zastępcza** | skrót **chrz.** lub **poch.** w małej ramce przed wartością, wartość kursywą; podpowiedź „Chrzest, urodzenie nieznane”, „Pochówek, zgon nieznany” | „Chrzest zamiast urodzenia, pochówek zamiast zgonu.” | data i miejsce urodzenia i zgonu ([A6.7.3](#A6.7.3)) |
+| **obliczone** | szare pismo; „≈ 67” szacunek, „28–29” zakres | „Zakres z niedokładnej daty, ≈ z szacunku.” | wiek, różnica wieku zapisanego, długość związku, liczby, pokolenie, kompletność; przy nagłówku „Obliczono z: …” |
+| **nie dotyczy** | „–” szarą kursywą; podpowiedź „Nie dotyczy” | „Nie dotyczy osoby.” | zgon przy osobie żyjącej (przy **Kompletność zgonu** „żyje”), wiek ojca lub matki bez zapisanego rodzica, kolumny związku przy osobie bez związku, **Wiek w chwili wydarzenia** przy urodzeniu |
+
+- W kolumnach **Wiarygodność …** sortuje się od **Potwierdzone** do **Bez źródła** w kolejności z tabeli.
+
+**Inne oznaczenia** (legenda ich nie pokazuje):
+
+| Oznaczenie | Jak wygląda | Co znaczy | Gdzie się pojawia |
+|---|---|---|---|
+| „…” | blade trzy kropki; podpowiedź „Trwają kontrole…” | kontrola drzewa jeszcze trwa | **Ustalenia**, **Najwyższy poziom**, **Nietypowe, sprawdzone** |
+| „◌ Trwają kontrole…” | pusty okrąg i tekst po prawej nad tabelą | to samo dla całej tabeli; chipy ustaleń na razie czekają | nad tabelą, obok **Oznaczenia ⓘ** |
+| procent z paskiem | liczba i krótki pasek, którego wypełniona część to wartość | kompletność ([A6.7.4](#A6.7.4)) | kolumny **Kompletność …** |
+| pogrubiona liczba, „–” | w wierszu pokrycia | pokrycie poniżej 50 %; „–” kolumna bez komórki, której by dotyczyła | **Wiersz pokrycia** ([A6.7.4](#A6.7.4)) |
+| „+2” | liczba w owalnej ramce za pierwszym cytowaniem | kolejne cytowane źródła; kliknięcie otwiera **Pozostałe cytowania** | cytowania urodzenia, ślubu, zgonu ([A6.7.12](#A6.7.12)) |
+| „↗” | za podkreślonym adresem internetowym | link do nowego okna | **Online**, cytowania „… link” ([A6.7.11](#A6.7.11)) |
+| ●○, ●● | jedna lub dwie pełne kropki przed „1 czytelnik”, „2 czytelników”; podpowiedź, kto transkrypcję przeczytał | ilu czytelników przeczytało transkrypcję | **Przeczytane w badaniach** ([A6.7.11](#A6.7.11)) |
+| „12 dn.” | liczba z „dn.” | wiek do jednego roku w dniach | **Wiek w chwili wydarzenia** ([A6.7.10](#A6.7.10)) |
+| ▾, ▸ | trójkąt przed imieniem | związki osoby rozwinięte, zwinięte ([A6.7.1](#A6.7.1)) | **Imię i nazwisko** osoby z dwoma i więcej związkami |
+| „3 związki” | przy zwiniętej osobie w owalnej ramce za imieniem; przy rozwiniętej w kolumnie **Partner** szarą kursywą | liczba związków osoby | wiersz osoby |
+| „└ Związek 2 z 3” | wcięty podwiersz | jeden związek osoby | podwiersz związku |
+| „2 związki poza filtrem · pokaż” | przycisk we wciętym wierszu | związki, które nie spełniają filtru; pokazane są przygaszone | pod podwierszami związków |
+| „nie pasuje do filtru” | cały wiersz blady, tekst kursywą na końcu | wiersz po edycji nie spełnia filtru ([A6.7.8](#A6.7.8)) | do następnej zmiany sortowania, filtru lub widoku |
+| wyróżnienie | podbarwione pismo trafienia | trafienie wyszukiwania ([A6.7.6](#A6.7.6)) | widoczne kolumny |
+| ↑, ↓ (↑1, ↓2) | strzałka w nagłówku, z numerem przy kilku kluczach | kierunek i kolejność klucza sortowania ([A6.7.6](#A6.7.6)) | nagłówek kolumny |
+| −, + | znak przy nazwie grupy | zwinięcie, rozwinięcie grupy kolumn ([A6.7.2](#A6.7.2)) | wiersz grup nad nagłówkiem |
+
+- **Granice:** eksport CSV nie niesie oznaczeń ani kolorów; XLSX niesie tylko podbarwienie i komentarz przy błędzie
+  i do sprawdzenia ([A6.7.9](#A6.7.9)).
+- **Obsługa:** **Oznaczenia ⓘ** po prawej nad tabelą.
+- **Obowiązuje od:** aplikacja 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) -->
