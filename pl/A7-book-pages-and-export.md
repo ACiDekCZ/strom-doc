@@ -12,7 +12,7 @@ przy tym chroni osoby żyjące. Opisuje aplikację 3.21.2.
 | **Aplikacja z danymi (HTML)** | samodzielny plik z aplikacją i drzewem ([A7.7](#A7.7)) |
 | **Wyślij rodzinie** | jeden plik e-mailem do otwarcia, uzupełnienia i odesłania |
 | **Plakat** | bieżący widok jako SVG, PNG lub wielostronicowy PDF |
-| **Kopia zapasowa danych (JSON)**, **GEDCOM**, **Tabela osób (CSV)** | dane do przywrócenia i dla innych programów ([A2](A2-loading-a-family-tree.md)) |
+| **Kopia zapasowa danych (JSON)**, **GEDCOM**, **Tabela osób (CSV)** | dane do przywrócenia i dla innych programów ([A2](A2-loading-a-family-tree.md)); własne kolumny, filtr i sortowanie: eksport z widoku Tabela ([A6.7.9](A6-views.md#A6.7.9)) |
 
 <!-- zdroj: app:strings.ts importExport.app, importExport.share, importExport.poster, importExport.book, importExport.backup, importExport.gedcom, importExport.csv · src/ui/import-export.ts -->
 

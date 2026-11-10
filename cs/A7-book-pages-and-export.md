@@ -12,7 +12,7 @@ chrání žijící osoby. Popisuje aplikaci 3.21.2.
 | **Aplikace i s daty (HTML)** | samostatný soubor s aplikací a stromem ([A7.7](#A7.7)) |
 | **Poslat rodině** | jeden soubor e-mailem k otevření, doplnění a poslání zpět |
 | **Plakát** | aktuální pohled jako SVG, PNG nebo vícestránkové PDF |
-| **Záloha dat (JSON)**, **GEDCOM**, **Tabulka osob (CSV)** | data pro obnovení a pro jiné programy ([A2](A2-loading-a-family-tree.md)) |
+| **Záloha dat (JSON)**, **GEDCOM**, **Tabulka osob (CSV)** | data pro obnovení a pro jiné programy ([A2](A2-loading-a-family-tree.md)); vlastní sloupce, filtr a řazení: export z pohledu Tabulka ([A6.7.9](A6-views.md#A6.7.9)) |
 
 <!-- zdroj: app:strings.ts importExport.app, importExport.share, importExport.poster, importExport.book, importExport.backup, importExport.gedcom, importExport.csv · src/ui/import-export.ts -->
 

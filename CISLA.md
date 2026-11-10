@@ -263,6 +263,16 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.5.1 | A6-views.md | aplikace 1.10.0 | platí | Odkud mapa bere polohu místa | Where the map gets a place's location | Woher die Karte die Lage eines Ortes nimmt | Skąd mapa bierze położenie miejsca |
 | A6.5.2 | A6-views.md | aplikace 3.25.0 | platí | Místa mimo mapu dohledat ve výzkumu | Looking up places off the map in the research | Orte ohne Karte in der Forschung suchen | Odszukanie miejsc poza mapą w badaniu |
 | A6.6 | A6-views.md | aplikace 3.21.0 | platí | Rod v pohledu | A family line in the view | Stammlinie in der Ansicht | Ród w widoku |
+| A6.7 | A6-views.md | aplikace 3.27.0 | platí | Tabulka | Table | Tabelle | Tabela |
+| A6.7.1 | A6-views.md | aplikace 3.27.0 | platí | Svazky v tabulce osob | Unions in the People table | Verbindungen in der Personentabelle | Związki w tabeli osób |
+| A6.7.2 | A6-views.md | aplikace 3.27.0 | platí | Sloupce | Columns | Spalten | Kolumny |
+| A6.7.3 | A6-views.md | aplikace 3.27.0 | platí | Dopočtené a náhradní hodnoty | Computed and substitute values | Berechnete und Ersatzwerte | Wartości obliczone i zastępcze |
+| A6.7.4 | A6-views.md | aplikace 3.27.0 | platí | Úplnost a řádek pokrytí | Completeness and the coverage row | Vollständigkeit und Abdeckungszeile | Kompletność i wiersz pokrycia |
+| A6.7.5 | A6-views.md | aplikace 3.27.0 | platí | Nálezy kontroly v buňkách | Findings of the check in the cells | Befunde der Prüfung in den Zellen | Ustalenia kontroli w komórkach |
+| A6.7.6 | A6-views.md | aplikace 3.27.0 | platí | Filtr, hledání a řazení | Filter, search and sort | Filter, Suche und Sortierung | Filtr, wyszukiwanie i sortowanie |
+| A6.7.7 | A6-views.md | aplikace 3.27.0 | platí | Pohledy tabulky | Table views | Tabellenansichten | Widoki tabeli |
+| A6.7.8 | A6-views.md | aplikace 3.27.0 | platí | Akce u řádku a úpravy | Row actions and edits | Zeilenaktionen und Bearbeitung | Akcje wiersza i edycja |
+| A6.7.9 | A6-views.md | aplikace 3.27.0 | platí | Export CSV | CSV export | CSV-Export | Eksport CSV |
 | A7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Kniha, stránky a export | Book, pages and export | Buch, Seiten und Export | Księga, strony i eksport |
 | A7.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Kdo je žijící osoba | Who is a living person | Wer eine lebende Person ist | Kto jest osobą żyjącą |
 | A7.2 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Ochrana žijících | Privacy of living people | Schutz lebender Personen | Ochrona osób żyjących |

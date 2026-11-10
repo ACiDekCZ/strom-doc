@@ -6,7 +6,8 @@ Jak aplikacja Strom wybiera, które osoby pokaże, i jak pokazują je poszczegó
 
 Widok to inne odczytanie **tego samego wyboru osób**. Wybór określa osoba w centrum (ta, którą się kliknie)
 i głębokość **Przodkowie** oraz **Potomkowie**. Rodzina, Potomkowie, Oś czasu i Mapa pokazują to samo otoczenie
-osoby w centrum. Wachlarz liczy przodków i potomków sam według liczby pokoleń ([A6.4](#A6.4)).
+osoby w centrum. Wachlarz liczy przodków i potomków sam według liczby pokoleń ([A6.4](#A6.4)). Tabela pokazuje
+całe drzewo ([A6.7](#A6.7)).
 
 | Widok (cs) | en | de | pl |
 |---|---|---|---|
@@ -15,8 +16,9 @@ osoby w centrum. Wachlarz liczy przodków i potomków sam według liczby pokole�
 | **Časová osa** | Timeline | Zeitleiste | Oś czasu |
 | **Vějíř** | Fan | Fächer | Wachlarz |
 | **Mapa** | Map | Karte | Mapa |
+| **Tabulka** | Table | Tabelle | Tabela |
 
-<!-- zdroj: app:src/types.ts:1237 ViewMode · strings.ts viewModeSwitch.* -->
+<!-- zdroj: app:src/types.ts:1237 ViewMode · strings.ts viewModeSwitch.* · Tabulka od aplikace 3.27.0 (viewModeSwitch.table) -->
 
 <a id="A6.1"></a>
 ## A6.1 Otoczenie osoby w centrum w widoku Rodzina
@@ -222,3 +224,265 @@ i Wachlarz.
 - **Obowiązuje od:** aplikacja 3.21.0
 
 <!-- zdroj: app:src/ui/rod-view.ts · src/rod-focus.ts (BFS přes rodiče, děti, partnery) · strings.ts rodView.only, rodView.whole, rodView.moved · spec 039 · CHANGELOG.cs.md 3.21.0 -->
+
+<a id="A6.7"></a>
+## A6.7 Tabela
+
+Tabela pokazuje całe drzewo w wierszach: każdą osobę albo każdy związek, z danymi w kolumnach. Służy do szukania luk,
+sprzeczności i ustaleń kontroli w całym drzewie. Nie zależy od głębokości **Przodkowie** i **Potomkowie**.
+Widok Tabela opiera się na tabeli Ondřeja Chrpy.
+
+- **Wiersze:** przełącznik **Wiersze**: **Osoby** · **Związki**. Każdy typ wierszy ma własne kolumny, filtr
+  i sortowanie.
+  - **Osoby:** jeden wiersz na osobę drzewa; osoby zastępcze (puste miejsce dla nieznanego rodzica) się pomija.
+  - **Związki:** jeden wiersz na związek, który ma co najmniej jednego rzeczywistego partnera. **Partner 1** to ten
+    z pary, kto jest krewnym osoby głównej; w przeciwnym razie pierwszy partner związku.
+- **Osoba główna** to osoba w centrum drzewa ([A6.1](#A6.1)). Według niej liczy się kolumnę **Pokrewieństwo z osobą
+  główną** i chip **Krewni**: przodkowie osoby głównej (także ona sama) i wszyscy ich potomkowie. Partnerzy, którzy
+  weszli do rodziny przez małżeństwo, do nich nie należą.
+- **Pokolenie** 1 to najstarsze pokolenie drzewa; partner ma pokolenie swojego partnera.
+- **Żyje** liczy się jak ochrona osób żyjących ([A7.1](A7-book-pages-and-export.md#A7.1)).
+- Nad tabelą jest liczba („42 z 120 osób”) i sortowanie („Sortowanie: …”). Pole **Szukaj osoby...** na pasku
+  narzędzi w tabeli wybiera wiersz osoby i przewija do niego; osoba w centrum się nie zmienia.
+- **Granice:**
+  - wyróżnienie rodu ([A6.6](#A6.6)) w tabeli się nie stosuje; ród można wybrać chipem **Ród** ([A6.7.6](#A6.7.6));
+  - drzewo tylko do odczytu (śledzone drzewo, drzewo zapisane nowszą wersją aplikacji, zablokowane drzewo) tabela
+    tylko pokazuje: „Tylko do odczytu: edycji i „To nie błąd” tu nie ma.” Przeglądanie, filtr, sortowanie i eksport
+    CSV działają; widoku nie można zapisać, przemianować ani usunąć;
+  - tabela obsłuży drzewo z 5 000 osób.
+- **Obsługa:** w przełączniku widoków **Tabela** (za **Mapa**); w wąskim oknie i na telefonie **Więcej → Widok →
+  Tabela**. Widok jest zapamiętywany jak pozostałe ([A6.1.1](#A6.1.1)).
+- **Obowiązuje od:** aplikacja 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 -->
+
+<a id="A6.7.1"></a>
+### A6.7.1 Związki w tabeli osób
+
+Osoba z dwoma i więcej związkami ma w tabeli osób własny wiersz, a pod nim podwiersz dla każdego związku („Związek 2
+z 3”). Wiersz osoby ma w kolumnie **Partner** liczbę („3 związki”), a pozostałe kolumny związku puste.
+
+- Związki idą po kolei według daty ślubu; związki bez daty są na końcu w kolejności zapisu.
+- **Zwinięte:** wiersz osoby pokazuje pierwszy związek i liczbę pozostałych. Domyślnie jest rozwinięte; wbudowany
+  widok **Luki** ma związki zwinięte.
+- **Filtr w kolumnie związku** ocenia się przy każdym związku osobno. Osoba zostaje, gdy spełnia go co najmniej jeden
+  związek; pozostałe chowają się pod wiersz „2 poza filtrem · pokaż”. Pokazane są przygaszone do następnej zmiany
+  filtru.
+- **Sortowanie według kolumny związku** bierze pierwszy związek, który spełnia filtr.
+- Osoba z jednym związkiem ma jego dane bezpośrednio w swoim wierszu.
+- **Obsługa:** **Rozwiń związki** / **Zwiń związki** (na telefonie w menu **⋯**); klawisze → i ← w kolumnie **Imię
+  i nazwisko**, * dla wszystkich osób; menu wiersza. Stan zapisuje się z widokiem ([A6.7.7](#A6.7.7)).
+
+<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsByDate (datum sňatku, bez data na konci v pořadí zápisu) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
+
+<a id="A6.7.2"></a>
+### A6.7.2 Kolumny
+
+Kolumny są w grupach. Które są widoczne i w jakiej kolejności, jest częścią widoku ([A6.7.7](#A6.7.7)).
+
+| Wiersze | Grupy kolumn |
+|---|---|
+| **Osoby** | **Osoba** · **Urodzenie i chrzest** · **Rodzice** · **Związki** · **Rozwód** · **Zgon i pochówek** · **Wydarzenia** · **Źródła** · **Wiarygodność i badania** · **Kontrole** |
+| **Związki** | **Para** · **Ślub** · **Rozwód** · **Dzieci i źródła** |
+
+- **Imię i nazwisko** (przy związkach **Partner 1**) jest przypięte po lewej i sortuje się według nazwiska, potem
+  imienia. **Nazwisko** to nazwisko po ślubie, w przeciwnym razie rodowe; **Nazwisko rodowe** to zapisane nazwisko.
+- **ID badań** pokazuje tylko numer osoby z badania (P…).
+- **Wydarzenia** (**Zawód**, **Miejsce zamieszkania**, **Wyznanie**, **Służba wojskowa**, **Emigracja**,
+  **Wykształcenie**) pokazują każdą wartość raz, najnowszą pierwszą.
+- Kolumny **Wiarygodność …** i **Pewność z badań** mają wartość tylko w drzewie z badania
+  ([S7](S7-reliability-and-verification.md)).
+- **Granice:** zwinięta grupa to wąski pasek; pokazuje najwyższy poziom ustalenia w swoich komórkach. Na telefonie
+  przypięte imię i nazwisko jest węższe, a nagłówek można tylko czytać, nie zmieniać.
+- **Obsługa:**
+  - panel **Kolumny** („12 z 58”): **Szukaj kolumny**, grupy z polem wyboru **wszystkie**, przeciąganie kolejności,
+    **Wiersz pokrycia**, **Przywróć domyślne**, **Gotowe**;
+  - menu w nagłówku kolumny: **Sortuj rosnąco**, **Sortuj malejąco**, **Dodaj do sortowania** (Shift + kliknięcie),
+    **Filtr…**, **Przypnij do lewej** / **Odepnij**, **Przesuń w lewo** / **Przesuń w prawo**, **Ukryj kolumnę**,
+    **Zwiń grupę …** / **Rozwiń grupę …**; przy kolumnie obliczonej „Obliczono z: …”;
+  - szerokość kolumny przez przeciągnięcie krawędzi nagłówka.
+
+<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 -->
+
+<a id="A6.7.3"></a>
+### A6.7.3 Wartości obliczone i zastępcze
+
+Czego w drzewie nie zapisano, ale da się to policzyć z danych, tabela oblicza. Niczego przy tym do drzewa nie
+zapisuje.
+
+| Wartość | Jak się liczy |
+|---|---|
+| wiek (przy urodzeniu dziecka, ślubie, zgonie) | z dat z dokładnym dniem („67”); z roku, miesiąca lub zakresu jako zakres („28–29”); z daty z ok., przed lub po jako szacunek („≈ 67”) |
+| zastępcza data i miejsce | bez urodzenia chrzest („chrz. 3.5.1850”), bez zgonu pochówek („poch. …”); wiek z nich to szacunek (≈) |
+| **Różnica wieku zapisanego** | o ile lat zapisany wiek wychodzi poza zakres wieku z dat („+3”, „−2”); wieku słownego i wieku z ok., przed, po się nie porównuje |
+| **Długość związku** | od ślubu do rozwodu, w przeciwnym razie do pierwszego zgonu z pary |
+| **Kolejność wśród rodzeństwa**, **Liczba rodzeństwa**, **Liczba dzieci**, **Liczba związków**, **Liczba źródeł** | z powiązań i źródeł drzewa |
+
+- Daty mają przed sobą słowo dokładności (**ok.**, **przed**, **po**). Niepewna data jest podkreślona kropkami; nie
+  jest to ustalenie. Datę sortuje się według jej początku.
+- **Granice:** wieku się nie liczy, gdy koniec poprzedza początek. Kolumny zgonu mają przy osobie żyjącej **Nie
+  dotyczy** (przy **Kompletność zgonu** „żyje”). **Wiek ojca/matki przy urodzeniu** bez zapisanego rodzica to **Nie
+  dotyczy**.
+- **Obsługa:** podpowiedź przy komórce („Chrzest, urodzenie nieznane”, „Pochówek, zgon nieznany”); przy kolumnie
+  obliczonej w menu nagłówka „Obliczono z: …”; legenda **Oznaczenia** ([A6.7.5](#A6.7.5)).
+
+<!-- zdroj: app:src/ui/table-view/table-columns.ts ageCell (přesně / rozsah ageRangeBetween / ≈ approxAgeBetween; nic, když konec před začátkem), dateCell, qualifierWord, birthOrBaptism, deathOrBurial (náhrada, ≈), gapCell (recordedAgeGap), unionLength, naCell, parentsOf · src/dates.ts:448 ageRangeBetween, recordedAgeGap · table-model.ts dateNumber (začátek rozsahu) · strings.ts table.na, living, subst.*, qual.*, computedFrom, from.* · commit 8833da14 -->
+
+<a id="A6.7.4"></a>
+### A6.7.4 Kompletność i wiersz pokrycia
+
+Kolumny **Kompletność …** mówią, ile śledzonych pól jest wypełnionych, w procentach.
+
+| Kolumna | Liczy się z |
+|---|---|
+| **Kompletność urodzenia** | data, miejsce, ojciec, matka, źródło |
+| **Kompletność związku** | data, miejsce, partner, źródło ślubu |
+| **Kompletność zgonu** | data, miejsce, źródło (nie przy osobie żyjącej) |
+| **Kompletność ogółem** | urodzenie, każdy związek i zgon, ważone liczbą pól |
+
+- Wartość zastępcza (chrzest, pochówek) pola nie wypełnia. Podpowiedź przy komórce wypisuje, czego brakuje („brak:
+  miejsce urodzenia, źródło urodzenia”).
+- **Wiersz pokrycia** pod nagłówkiem pokazuje przy każdej kolumnie, ile procent wierszy ma wartość („wypełniono
+  64 %”, podpowiedź „77 z 120”). Liczy tylko wiersze, które są właśnie widoczne (po filtrze i wyszukiwaniu). Komórek
+  **Nie dotyczy** się nie liczy; przy kolumnach związku liczą się związki, które spełniają filtr. Poniżej 50 % liczba
+  jest pogrubiona; bez komórki, której by dotyczyła, jest „–”.
+- **Obsługa:** **Wiersz pokrycia** w panelu **Kolumny** (na telefonie w **⋯**); zapisuje się z widokiem.
+
+<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 -->
+
+<a id="A6.7.5"></a>
+### A6.7.5 Ustalenia kontroli w komórkach
+
+Tabela pokazuje ustalenia Jakości danych ([A5](A5-tree-check.md)) bezpośrednio przy danej, której dotyczą: komórka
+jest podbarwiona i ma oznaczenie poziomu. Kontrola działa nad całym drzewem w tle, gdy aplikacja jest wolna.
+
+| Poziom | Oznaczenie w legendzie |
+|---|---|
+| **błąd** | „Dane są ze sobą sprzeczne.” |
+| **do sprawdzenia** | „Nietypowa wartość warta sprawdzenia.” |
+| **trop** | „Trop do poszukiwań, nie błąd.” |
+| **nietypowe** (☆) | „Ustalenie oznaczone „To nie błąd”.” |
+
+- Ustalenie trafia do komórki danej: wiek rodzica przy urodzeniu do **Wiek ojca/matki przy urodzeniu** przy dziecku,
+  ustalenie dotyczące ślubu do wieku i daty ślubu, zapisany wiek do zapisanego wieku i jego różnicy, zgon przed
+  urodzeniem do obu dat i wieku, zdarzenie do kolumny zdarzenia, różnica wieku partnerów do partnera, możliwy
+  duplikat do imienia i nazwiska, zapis miejsca do komórek z tym miejscem. Ustalenie bez własnej komórki jest tylko
+  w kolumnach kontroli.
+- Kolumny grupy **Kontrole**: **Ustalenia** (liczba; „…”, dopóki kontrola trwa), **Najwyższy poziom**, **Nietypowe,
+  sprawdzone** (liczba ustaleń oznaczonych **To nie błąd**).
+- Ustalenie oznaczone **To nie błąd** ([A5.7](A5-tree-check.md#A5.7)) zostaje w komórce jako **nietypowe**
+  („Nietypowe, ale sprawdzone”) i nie liczy się do ustaleń.
+- **Granice:** drzewo tylko do odczytu nie pozwala oznaczyć ustalenia („Drzewo tylko do odczytu: nie można oznaczać
+  ustaleń.”).
+- **Obsługa:** kliknięcie oznaczenia otwiera dymek (na telefonie panel od dołu): poziom, tekst ustalenia, „Ustalenie
+  1 z 2” i
+  - **To nie błąd** (powiadomienie „Oznaczono: to nie błąd” z **Cofnij**); przy nietypowym **Zgłaszaj ponownie**;
+  - **Jakość danych ›** otwiera okno Jakości danych na grupie tego ustalenia; przy nietypowym na liście oznaczonych.
+
+  Legenda **Oznaczenia** („Oznaczenia w komórkach”) objaśnia też niepewną datę, wiarygodność, wartość zastępczą,
+  obliczenie i **Nie dotyczy**.
+
+<!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 -->
+
+<a id="A6.7.6"></a>
+### A6.7.6 Filtr, wyszukiwanie i sortowanie
+
+Filtr wybiera wiersze, wyszukiwanie zawęża je dalej, sortowanie ustala kolejność.
+
+- **Chipy** (tylko tabela osób): **Żyjący**, **Zmarli** (wykluczają się), **Krewni**, **Ród** (wybór rodów),
+  **Pokolenie** (zakres), **Kilka związków**, **Bez daty urodzenia**, **Niepewna data** (urodzenia lub zgonu),
+  **Bez źródła**, **Z ustaleniami** (błąd lub do sprawdzenia; trop nie), **Nietypowe**, **Niepotwierdzone z badań**
+  (tylko drzewo z badania). Chipy ustaleń czekają na kontrolę („Gdy sprawdzanie się skończy”). Co się nie zmieści,
+  jest w **Więcej (n)**.
+- **Filtr w kolumnie** (**Filtr…** w nagłówku) według rodzaju kolumny:
+  - wartości z listy (płeć, stan związku, poziom ustalenia, ród …);
+  - zakres **od**–**do** (przy dacie **Rok**, przy wieku, liczbie i procentach liczba);
+  - tekst: **zawiera** · **zaczyna się od**;
+  - przy każdym **Tylko puste** · **Tylko wypełnione**.
+- Obowiązują wszystkie filtry naraz. Liczba filtrów jest na **Filtry (n)**, wszystko anuluje **Wyczyść filtry**. Bez
+  wiersza: „Nic nie pasuje do filtru”.
+- **Szukaj w tabeli:** od 2 znaków, bez względu na wielkość liter i znaki diakrytyczne, w widocznych kolumnach
+  i w podwierszach związków; trafienia są wyróżnione, nad tabelą jest ich liczba.
+- **Sortowanie:** kliknięcie nagłówka sortuje rosnąco, kolejne kliknięcie malejąco, trzecie sortowanie anuluje;
+  sortuje się tylko według tej kolumny. Shift + kliknięcie dodaje kolumnę jako kolejny klucz (kolejne kliknięcie go
+  odwraca, trzecie usuwa). Strzałka ↑ ↓ przy nagłówku ma numer kolejności klucza. Puste wartości są zawsze na końcu,
+  w obu kierunkach. Liczby w tekście sortują się jak liczby.
+- **Granice:** wyszukiwanie nie zapisuje się w widoku ([A6.7.7](#A6.7.7)).
+
+<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 -->
+
+<a id="A6.7.7"></a>
+### A6.7.7 Widoki tabeli
+
+Widok to zapisane pod nazwą ustawienie tabeli. Wbudowane widoki to gotowe odczytania drzewa; własny widok zapisuje
+sobie człowiek.
+
+| Widok wbudowany | Wiersze | Co pokazuje |
+|---|---|---|
+| **Przegląd** (domyślny dla osób) | osoby | imię i nazwisko, data i miejsce urodzenia, data zgonu, wiek w chwili zgonu, partner, data ślubu i wiek przy nim, ustalenia, kompletność ogółem; sortowanie według daty urodzenia |
+| **Urodzenia i rodzice** | osoby | urodzenie i chrzest, rodzice, ich wiek przy urodzeniu, kompletność urodzenia; sortowanie według daty urodzenia |
+| **Śluby** (domyślny dla związków) | związki | para, data i miejsce ślubu, wiek i zapisany wiek obojga, stan, świadkowie, rozwód, dzieci, długość, źródła, kompletność; sortowanie według daty ślubu |
+| **Zgony** | osoby | zgon, przyczyna, pochówek, wiek i zapisany wiek w chwili zgonu, kompletność zgonu; chip **Zmarli**; sortowanie według daty zgonu |
+| **Źródła i cytaty** | osoby | liczba źródeł, udokumentowanie, wiarygodność urodzenia i zgonu; od najmniejszej liczby źródeł |
+| **Luki** | osoby | kompletność ogółem i według części, urodzenie, rodzice, źródła; od najmniej kompletnych; związki zwinięte |
+| **Kontrole** | osoby | poziom i liczba ustaleń, daty, wiek rodziców, ślub; chip **Z ustaleniami**; od najwyższego poziomu, potem liczby ustaleń |
+
+- **Widok zapisuje:** typ wierszy, kolumny (kolejność, szerokości, przypięcie, zwinięte grupy), wiersz pokrycia, filtr,
+  sortowanie i rozwinięcie związków. Nie zapisuje wyszukiwania, wyboru wiersza ani przewinięcia.
+- Zmieniony widok ma etykietę **zmieniono** i opcje **Zapisz**, **Zapisz jako nowy**, **Odrzuć zmiany**. Widok
+  wbudowany się nie zmienia ani nie można go przemianować czy usunąć; jego zmiany można tylko **Zapisz jako nowy**.
+  Własny widok: **Zmień nazwę…**, **Usuń** (z potwierdzeniem). Własne widoki są uporządkowane według nazwy.
+- Bieżący stan tabeli (także niezapisane zmiany) aplikacja pamięta dla każdego drzewa na tym urządzeniu; po
+  odświeżeniu strony tabela jest taka, jaka została.
+- **Zapisane widoki są częścią drzewa** (wersja danych 17): zapisanie, zmiana nazwy i usunięcie mają krok wstecz
+  i wpis w historii zmian. Idą z drzewem do kopii zapasowej (JSON), a przy wydzieleniu części drzewa także do nowego
+  drzewa. GEDCOM ich nie niesie; drzewo z badania zachowuje je przy wczytaniu nowej wersji. Uszkodzony widok przy
+  wczytaniu się pomija.
+- **Granice:** starsza aplikacja (od 3.19.0) otwiera drzewo zapisane aplikacją 3.27.0 tylko do odczytu i nigdy go nie
+  zapisuje; po aktualizacji aplikacji drzewo można znowu zmieniać.
+- **Obsługa:** menu **Widok** na pasku tabeli (**Wbudowane**, **Własne**, **Zapisz jako nowy…**, **Zmień nazwę…**,
+  **Usuń**).
+
+<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (7: overview, births, marriages, deaths, sources, gaps, checks), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.*, changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff -->
+
+<a id="A6.7.8"></a>
+### A6.7.8 Akcje wiersza i edycja
+
+Kliknięcie wybiera wiersz (także podwiersz związku); strzałki, Page Up/Down i Ctrl+Home/End przesuwają wybór, Esc go
+anuluje.
+
+| Akcja | Co zrobi |
+|---|---|
+| **Pokaż w drzewie** | przełącza na widok Rodzina z osobą jako osobą w centrum, wyśrodkowaną i wyróżnioną |
+| **Otwórz osobę** (Enter) | otwiera stronę osoby |
+| **Edytuj…** (dwuklik) | otwiera edycję osoby; przy podwierszu związku i w tabeli związków relacje osoby w tym związku |
+
+- W tabeli związków akcje dotyczą osoby **Partner 1**.
+- Po edycji powiadomienie „Zapisano: …”, wiersz krótko mignie, a wiersze zostają w kolejności. Wiersz, który już nie
+  spełnia filtru, zostaje z etykietą „nie pasuje do filtra” do następnej zmiany sortowania, filtru lub widoku. Zmianę
+  z badania zgłasza „Badania zmieniły 3 dane: …”.
+- **Granice:** w drzewie tylko do odczytu **Edytuj…** nie ma.
+- **Obsługa:** przyciski przy wybranym wierszu, menu wiersza (prawy przycisk; także rozwinięcie związków). Na
+  telefonie stuknięcie wiersza otwiera panel z akcjami i ze związkami („Związek 1: … · Edytuj ›”).
+
+<!-- zdroj: app:src/ui/table-view/table-ui.ts tableMethods (tableRowAction: tree → Rodina, focus, highlight; open; edit → dialog osoby / panel vztahů na svazku), personOfRow (Partner 1), keepWork · table-refresh.ts keepOrder, watchEdit, changedKeys, bridgeChanges, namesList · table-grid.ts FLASH_MS · strings.ts table.act.*, dblClickHint, actionsOf, unionWith, editMore, staleRow, savedToast, bridgeToast · commity da6b9786, de46ae30, e4a35406 -->
+
+<a id="A6.7.9"></a>
+### A6.7.9 Eksport CSV
+
+Eksport zapisuje tabelę tak, jak jest widoczna, do pliku CSV dla programów arkuszy kalkulacyjnych.
+
+- **Co trafia do pliku:** widoczne kolumny w kolejności tabeli (kolumny zwiniętej grupy w całości) i wiersze po
+  filtrze, wyszukiwaniu i sortowaniu. Wartości to tekst, tak jak pisze go tabela: daty w zapisie aplikacji, „ok. …”,
+  „≈ 67”, „chrz. …”, „–”. Oznaczenia ustaleń i kolory się nie eksportują.
+- Osoba z dwoma i więcej związkami: pierwszy związek, który spełnia filtr, jest w jej wierszu, każdy kolejny
+  w wierszu kontynuacji z pustymi danymi osoby. Za imieniem i nazwiskiem jest kolumna **Związek** („1 z 3”).
+- **Plik:** UTF-8 ze znacznikiem BOM, separator średnik, końce wierszy CRLF; komórka, która w arkuszu kalkulacyjnym
+  uruchomiłaby się jako formuła, jest unieszkodliwiana. Nazwa `{drzewo}_{widok}_{RRRR-MM-DD}.csv` bez znaków
+  diakrytycznych.
+- **Obsługa:** **Eksport ▾** na pasku tabeli (na telefonie w **⋯**) → „CSV · dla Excela i Arkuszy Google” →
+  **Pobierz CSV**; powiadomienie „Pobrano: …” z liczbą osób, wierszy i kolumn.
+- **Granice:** eksport z menu drzewa (**Tabela osób (CSV)**, [A7](A7-book-pages-and-export.md)) to inny plik
+  ze stałymi kolumnami.
+
+<!-- zdroj: app:src/ui/table-view/table-export.ts tableCsvField (neutralizace vzorců), buildTableCsv (BOM, ;, CRLF, pokračovací řádky, sloupec Svazek), fileNamePart, tableCsvFileName · table-viewbar.ts exportForm · strings.ts table.export, exportCsv, exportAll, exportFile, exportWhat, exportDownload, csvUnionCol, csvUnionOf, exportedToast · commit 2368683b -->

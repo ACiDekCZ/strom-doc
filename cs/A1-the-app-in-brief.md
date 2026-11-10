@@ -29,7 +29,8 @@ přiženili. Příjmení zná v ženském i mužském tvaru (Horák a Horáková
 ## A1.3 Pohledy: okolí jedné osoby
 
 Aplikace ukazuje vždy okolí jedné **ústřední osoby**, ne celý strom najednou. Pohledy **Rodina**, **Potomci**,
-**Časová osa**, **Vějíř** a **Mapa** čtou totéž okolí různě. Pohled může zvýraznit jeden rod.
+**Časová osa**, **Vějíř** a **Mapa** čtou totéž okolí různě. Pohled může zvýraznit jeden rod. Od aplikace 3.27.0
+ukazuje pohled **Tabulka** celý strom po řádcích osob nebo svazků, s dopočty, úplností a nálezy kontroly.
 
 - Podrobně: [A6](A6-views.md).
 

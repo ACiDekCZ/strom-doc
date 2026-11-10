@@ -744,6 +744,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A1.7](cs/A1-the-app-in-brief.md#A1.7), R1.8
 
+<a id="to-check"></a>
+### K ověření
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | k ověření · neobvyklé (Tabulka) | Závažnost nálezu kontroly: neobvyklá hodnota, nepravděpodobná, ale možná, která stojí za ověření (do aplikace 3.27.0 „varování“). Nález označený Není chyba ukazuje pohled Tabulka jako neobvyklé. |
+| en | to check · unusual (Table) | The severity of a finding of the check: an unusual value, unlikely but possible, worth checking (called "warning" before app 3.27.0). The Table view shows a finding marked Not an error as unusual. |
+| de | zu prüfen · ungewöhnlich (Tabelle) | Die Schwere eines Befunds der Prüfung: ein ungewöhnlicher Wert, unwahrscheinlich, aber möglich, der eine Prüfung wert ist (vor App 3.27.0 „Warnung“). Die Ansicht Tabelle zeigt einen als Kein Fehler markierten Befund als ungewöhnlich. |
+| pl | do sprawdzenia · nietypowe (Tabela) | Waga wyniku kontroli: nietypowa wartość, mało prawdopodobna, ale możliwa, warta sprawdzenia (przed aplikacją 3.27.0 „ostrzeżenie”). Widok Tabela pokazuje wynik oznaczony To nie błąd jako nietypowy. |
+
+- **Čísla:** [A5.1](cs/A5-tree-check.md#A5.1), A5.3, A6.7.5
+
 <a id="where-evidence-is-missing"></a>
 ### Kde chybí doklady
 
@@ -1025,12 +1037,12 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Problémy · Stopy | Problémy jsou chyby a varování kontroly. Stopy nejsou chyby: kmotr, který se opakuje, různé zápisy místa, možná duplicita, velký věkový rozdíl partnerů. |
-| en | Problems · Leads | Problems are the check's errors and warnings. Leads are not errors: a godparent who keeps turning up, different spellings of a place, a possible duplicate, a large age gap between partners. |
-| de | Probleme · Hinweise | Probleme sind Fehler und Warnungen der Prüfung. Hinweise sind keine Fehler: ein Pate, der immer wieder auftaucht, verschiedene Schreibweisen eines Ortes, eine mögliche doppelte Person, ein großer Altersunterschied der Partner. |
-| pl | Problemy · Wskazówki | Problemy to błędy i ostrzeżenia kontroli. Wskazówki nie są błędami: powtarzający się chrzestny, różne zapisy miejsca, możliwy duplikat, duża różnica wieku partnerów. |
+| cs | Problémy · Stopy | Problémy jsou chyby a nálezy k ověření. Stopy nejsou chyby: kmotr, který se opakuje, různé zápisy místa, možná duplicita, velký věkový rozdíl partnerů. |
+| en | Problems · Leads | Problems are the check's errors and findings to check. Leads are not errors: a godparent who keeps turning up, different spellings of a place, a possible duplicate, a large age gap between partners. |
+| de | Probleme · Hinweise | Probleme sind Fehler und Befunde „zu prüfen“ der Prüfung. Hinweise sind keine Fehler: ein Pate, der immer wieder auftaucht, verschiedene Schreibweisen eines Ortes, eine mögliche doppelte Person, ein großer Altersunterschied der Partner. |
+| pl | Problemy · Wskazówki | Problemy to błędy i wyniki kontroli do sprawdzenia. Wskazówki nie są błędami: powtarzający się chrzestny, różne zapisy miejsca, możliwy duplikat, duża różnica wieku partnerów. |
 
-- **Čísla:** [A5.1](cs/A5-tree-check.md#A5.1), A5.5, A5.6, A5.8
+- **Čísla:** [A5.1](cs/A5-tree-check.md#A5.1), A5.5, A5.6, A5.8, A6.7.5
 
 <a id="searched"></a>
 ### Prohledáno
@@ -1247,6 +1259,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Badanie (w przełączniku drzew) | Drzewo w aplikacji połączone z badaniem na tym komputerze; nosi numer badania i wersję, z której powstało. |
 
 - **Čísla:** [S1.3](cs/S1-connecting-app-and-research.md#S1.3), S1.7
+
+<a id="table-view"></a>
+### Tabulka
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Tabulka (pohled) · Osoby · Svazky (řádky) | Pohled aplikace na celý strom po řádcích osob nebo svazků: údaje, dopočty, úplnost a nálezy kontroly ve sloupcích, s filtrem, řazením, uloženými pohledy a exportem CSV. |
+| en | Table (view) · People · Unions (rows) | The app's view of the whole tree in rows of people or unions: facts, computed values, completeness and the check's findings in columns, with a filter, sorting, saved views and a CSV export. |
+| de | Tabelle (Ansicht) · Personen · Verbindungen (Zeilen) | Die Ansicht der App auf den ganzen Stammbaum in Zeilen von Personen oder Verbindungen: Angaben, berechnete Werte, Vollständigkeit und Befunde der Prüfung in Spalten, mit Filter, Sortierung, gespeicherten Ansichten und CSV-Export. |
+| pl | Tabela (widok) · Osoby · Związki (wiersze) | Widok aplikacji na całe drzewo w wierszach osób lub związków: dane, wartości obliczone, kompletność i wyniki kontroli w kolumnach, z filtrem, sortowaniem, zapisanymi widokami i eksportem CSV. |
+
+- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9
 
 <a id="surname-spellings"></a>
 ### Tvary příjmení

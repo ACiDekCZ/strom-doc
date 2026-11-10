@@ -30,7 +30,8 @@ rodu przez małżeństwo. Nazwiska zna w formie żeńskiej i męskiej (Horák i 
 
 Aplikacja pokazuje zawsze otoczenie jednej **osoby w centrum**, nie całe drzewo naraz. Widoki **Rodzina**,
 **Potomkowie**, **Oś czasu**, **Wachlarz** i **Mapa** czytają to samo otoczenie na różne sposoby. Widok może
-wyróżnić jeden ród.
+wyróżnić jeden ród. Od aplikacji 3.27.0 widok **Tabela** pokazuje całe drzewo w wierszach osób lub związków,
+z wartościami obliczonymi, kompletnością i ustaleniami kontroli.
 
 - Szczegółowo: [A6](A6-views.md).
 

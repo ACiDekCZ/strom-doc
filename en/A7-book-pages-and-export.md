@@ -12,7 +12,7 @@ it protects living people in them. Describes the app 3.21.2.
 | **App with data (HTML)** | a standalone file with the app and the tree ([A7.7](#A7.7)) |
 | **Send to a relative** | one file by e-mail to open, complete and send back |
 | **Poster** | the current view as SVG, PNG or a multi-page PDF |
-| **Data backup (JSON)**, **GEDCOM**, **Person table (CSV)** | data for restoring and for other programs ([A2](A2-loading-a-family-tree.md)) |
+| **Data backup (JSON)**, **GEDCOM**, **Person table (CSV)** | data for restoring and for other programs ([A2](A2-loading-a-family-tree.md)); custom columns, filter and sort: the export from the Table view ([A6.7.9](A6-views.md#A6.7.9)) |
 
 <!-- zdroj: app:strings.ts importExport.app, importExport.share, importExport.poster, importExport.book, importExport.backup, importExport.gedcom, importExport.csv · src/ui/import-export.ts -->
 

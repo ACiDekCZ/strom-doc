@@ -31,7 +31,8 @@ Horáková, Jaworski and Jaworska).
 
 The app always shows the surroundings of one **central person**, not the whole tree at once. The views **Family**,
 **Descendants**, **Timeline**, **Fan** and **Map** read the same surroundings in different ways. A view can highlight
-one family line.
+one family line. From app 3.27.0 the **Table** view shows the whole tree in rows of people or unions, with computed
+values, completeness and the findings of the check.
 
 - In detail: [A6](A6-views.md).
 

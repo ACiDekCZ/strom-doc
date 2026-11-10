@@ -32,7 +32,8 @@ haben. Nachnamen kennt sie in weiblicher und männlicher Form (Horák und Horák
 
 Die App zeigt immer das Umfeld einer **zentralen Person**, nicht den ganzen Stammbaum auf einmal. Die Ansichten
 **Familie**, **Nachkommen**, **Zeitleiste**, **Fächer** und **Karte** lesen dasselbe Umfeld unterschiedlich. Eine
-Ansicht kann eine Stammlinie hervorheben.
+Ansicht kann eine Stammlinie hervorheben. Ab App 3.27.0 zeigt die Ansicht **Tabelle** den ganzen Stammbaum in Zeilen
+von Personen oder Verbindungen, mit berechneten Werten, Vollständigkeit und den Befunden der Prüfung.
 
 - Ausführlich: [A6](A6-views.md).
 

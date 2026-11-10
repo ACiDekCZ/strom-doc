@@ -12,7 +12,7 @@ Programme) und wie sie dabei lebende Personen schützt. Beschrieben wird die App
 | **App mit den Daten (HTML)** | eine eigenständige Datei mit der App und dem Stammbaum ([A7.7](#A7.7)) |
 | **An Verwandte senden** | eine Datei per E-Mail zum Öffnen, Ergänzen und Zurücksenden |
 | **Poster** | die aktuelle Ansicht als SVG, PNG oder mehrseitiges PDF |
-| **Datensicherung (JSON)**, **GEDCOM**, **Personentabelle (CSV)** | Daten zum Wiederherstellen und für andere Programme ([A2](A2-loading-a-family-tree.md)) |
+| **Datensicherung (JSON)**, **GEDCOM**, **Personentabelle (CSV)** | Daten zum Wiederherstellen und für andere Programme ([A2](A2-loading-a-family-tree.md)); eigene Spalten, Filter und Sortierung: Export aus der Ansicht Tabelle ([A6.7.9](A6-views.md#A6.7.9)) |
 
 <!-- zdroj: app:strings.ts importExport.app, importExport.share, importExport.poster, importExport.book, importExport.backup, importExport.gedcom, importExport.csv · src/ui/import-export.ts -->
 
