@@ -182,9 +182,10 @@ sám, jakmile citovaný záznam ukazuje na jednu verzi; jeho rozhodnutí je ozna
 <a id="R10.3.3"></a>
 ### R10.3.3 Hypotéza rozhodnutá v aplikaci Strom
 
-Hypotézu, jejíž verze spojují jen dítě s rodinou nebo dva lidi jako pár, jde rozhodnout i v aplikaci Strom
-([S3.5.2](S3-what-the-research-knows.md#S3.5.2)). Aplikace sama nic nezapisuje: volba otevře terminál výzkumu, ten se
-jednou větou zeptá a rozhodnutí zapíše jako rozhodnutí člověka. Vazby zvolené verze jsou ve stromu hned.
+Hypotézu, jejíž verze spojují jen dítě s rodinou nebo dva lidi jako pár, nebo nikoho ke stromu nepřipojují (třeba
+odkud osoba přišla), jde rozhodnout i v aplikaci Strom ([S3.5.2](S3-what-the-research-knows.md#S3.5.2)). Aplikace
+sama nic nezapisuje: volba otevře terminál výzkumu, ten se jednou větou zeptá a rozhodnutí zapíše jako rozhodnutí
+člověka. Vazby zvolené verze jsou ve stromu hned.
 
 - **Hlídá kód:**
   - odkaz z aplikace nese jen číslo hypotézy, co se má stát (rozhodnout pro verzi, žádná verze neplatí, nechat
@@ -198,6 +199,8 @@ jednou větou zeptá a rozhodnutí zapíše jako rozhodnutí člověka. Vazby zv
     hned: …“. Co strom nepřijme, řekne „Do stromu nezapsáno: …“ s důvodem (už má rodiče narozením v rodině …; stará
     vazba zůstává, stojí na ní další práce; vznikl by kruh v předcích) a „Co se do stromu nezapsalo, zapíše agent při
     své příští práci.“ Totéž platí pro rozhodnutí v terminálu a v Co čeká;
+  - verze, která nikoho nepřipojí, zapíše jen rozhodnutí; potvrzení to řekne předem („Strom se nezmění.“). Větu
+    terminál vynechá, když by volba ze stromu odebrala vazbu dřívějšího rozhodnutí;
   - **změna** na jinou verzi a **žádná verze neplatí** u rozhodnuté hypotézy odeberou, co zapsalo předchozí
     rozhodnutí; **vrátit na otevřenou** (`--reopen`) zápis odebere a hypotézu otevře („Ze stromu odebráno: …“);
   - **další práce** na vazbě je změna rodiny vazby po zápisu (dítě, údaj, citace, partneři), sloučení rodiny nebo
@@ -206,8 +209,13 @@ jednou větou zeptá a rozhodnutí zapíše jako rozhodnutí člověka. Vazby zv
     práce (vazby: 2); odkazem ho vrátit nejde. Změní ho volba jiné varianty.“ Při změně taková vazba zůstane a nová
     se nezapíše; terminál to řekne předem („Stará vazba zůstane ve stromu, stojí na ní další práce: …; nová se
     nezapíše: …“) a výchozí odpověď je ne;
-  - dva záznamy jedné osoby (`same`) a sourozenci bez rodičů (`siblings`) se z aplikace nerozhodují: „H0001 nejde
-    rozhodnout volbou v aplikaci; rozhoduje se tady, na celé obrazovce.“;
+  - vrátit nejde ani rozhodnutí, jehož vazby strom vede, ale nezapsalo je toto rozhodnutí (třeba je zapsal agent):
+    „Rozhodnutí hypotézy H0001 už je zapsané ve stromu (vazby: 2); odkazem ho vrátit nejde. Změní ho volba jiné
+    varianty.“ Aplikace místo **Vrátit na otevřenou** řekne „Vrátit nejde: spojení už je zapsané ve stromu výzkumu
+    (2 vazby). Jde Změnit.“;
+  - dva záznamy jedné osoby (`same`) a sourozenci bez rodičů (`siblings`) se z aplikace nerozhodují, ani když je
+    taková jen jedna verze hypotézy: „H0001 nejde rozhodnout volbou v aplikaci; rozhoduje se tady, na celé
+    obrazovce.“;
   - verze, která ke stromu připojí 50 a více osob, řekne v potvrzení počet („Tím se ke stromu připojí 214 osob.“);
   - návrhy agenta jde přijmout najednou, nejvýš 50 hypotéz jedním potvrzením: terminál je vypíše („Návrhy agenta
     k přijetí:“), vynechané jmenuje („Vynechané:“: návrh už není, rozhoduje se tady) a řekne „✓ Rozhodnuto podle
@@ -220,7 +228,7 @@ jednou větou zeptá a rozhodnutí zapíše jako rozhodnutí člověka. Vazby zv
   s otázkou; `strom hypothesis decide H… --reopen --reason "…"` vrátí rozhodnutí na otevřenou.
 - **Platí od:** výzkum 1.31.0 s aplikací 3.27.0
 
-<!-- zdroj: research:src/core/links.ts (hypothesis do=decide|abandon|keep-open|reopen, variant; hypotheses do=accept, ids ≤ 50) · assets/lang/cs.json ui.link.asks, ui.link.what.hypothesis.pick/repick, ui.link.hypothesis.why, pick.default, repick.default, isDecided, notInApp, joins, recorded, work, ui.hypothesis.tree.now/off/notNow/stays, ui.hypothesis.why.parents/kept/ancestor/merge/siblings, ui.hypothesis.decided.links, ui.link.accept.list/skipped/skip.*/done · src/core/hypolinks.ts writeDecision, undoDecision, workOnLink (rodina vazby po zápisu, sloučení, nová rodina; ne vlastní údaje osob), reopenBlock, changeKeeps, pickableInApp (jen child a partners) · src/commands/analysis.ts hypothesis decide --from-app (rozhodnutí člověka, ne agenta), --reopen, decidedIn app · ui.link.go · src/core/live.ts /status features hypothesis.decide.link, hypotheses.accept.link · src/core/stromapp.ts APP_DECIDES_HYPOTHESES · assets/method/core.md (rozhodnutí člověka je ve stromu hned) · commity 7a8f4b53, 8e27fa5c, 06cca755, d4c6da07 · CHANGELOG.cs.md 1.31.0 „Hypotéza rozhodnutá v aplikaci Strom“ · spec 074 K1.5 -->
+<!-- zdroj: research:src/core/links.ts (hypothesis do=decide|abandon|keep-open|reopen, variant; hypotheses do=accept, ids ≤ 50) · assets/lang/cs.json ui.link.asks, ui.link.what.hypothesis.pick/repick, ui.link.hypothesis.why, pick.default, repick.default, isDecided, notInApp, joins, recorded, work, treeSame, ui.hypothesis.tree.now/off/notNow/stays, ui.hypothesis.why.parents/kept/ancestor/merge/siblings, ui.hypothesis.decided.links, ui.link.accept.list/skipped/skip.*/done · src/core/hypolinks.ts writeDecision, undoDecision, workOnLink (rodina vazby po zápisu, sloučení, nová rodina; ne vlastní údaje osob), reopenBlock (tree: vazby zvolené verze ve stromu, které rozhodnutí nezapsalo; work), changeKeeps, pickableInApp (každá vazba každé verze child nebo partners, i verze bez vazby; c769f2eb, spec 074 K1.6) · src/cli/menu-links.ts (treeSame: verze bez vazby a nic z dřívějšího zápisu ve stromu; menu-links.ts:784 recorded) · src/gedcom/export.ts (rozhodnuté a zrušené pickableInApp pro aplikaci s hypothesisPick) · app:strings.ts research.hypoCannotReopenTree · src/commands/analysis.ts hypothesis decide --from-app (rozhodnutí člověka, ne agenta), --reopen, decidedIn app · ui.link.go · src/core/live.ts /status features hypothesis.decide.link, hypotheses.accept.link · src/core/stromapp.ts APP_DECIDES_HYPOTHESES · assets/method/core.md (rozhodnutí člověka je ve stromu hned) · commity 7a8f4b53, 8e27fa5c, 06cca755, d4c6da07 · CHANGELOG.cs.md 1.31.0 „Hypotéza rozhodnutá v aplikaci Strom“ · spec 074 K1.5 -->
 
 <a id="R10.4"></a>
 ## R10.4 Rodina mimo strom čeká na doloženou vazbu

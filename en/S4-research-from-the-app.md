@@ -31,8 +31,14 @@ through the bridge.
 - **Since:** app 3.5.0
 - **From app 3.22.0:** each section can be expanded, collapsed or hidden, and the choice holds for the panel and the
   overview ([S4.1.2](#S4.1.2)). **Awaiting action** does not expand by itself, not even with a new item.
+- **From app 3.27.0:** with research 1.31.0 the row in **Now** shows, at a task of no direction, why it is being
+  worked on: at a task that only helps a direction, which one and how ("helps the direction Ancestors: Jan Horák ·
+  connects people to the tree"; also "a question of the direction", "as the agent says", "spouse of an ancestor",
+  "branch …"), at a task outside the directions its branch ("outside the directions · branch Josef Horák", under the
+  heading **Outside the directions** only "branch Josef Horák"). What helps a direction is in
+  [R2.3](R2-lines-and-queue.md#R2.3). The small panel does not show the reason.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · dirigent:prace/1111-app-hypotezy-bez-vazby (malý panel důvod neukazuje) · spec 036 K1.8 -->
 
 <a id="S4.1.1"></a>
 ### S4.1.1 Follow the agent in the tree
@@ -259,12 +265,15 @@ With two or more directions, the overview shows the work outside the directions 
     do not research. Without an answer the branch goes on being taken as before.
   - The window **Research for this tree…**, the group **Work outside the directions**: the choice for the whole
     research (**Now and then**: “About 1 task outside the directions per K tasks of the directions.”), **Suggest
-    directions for growing branches**, **Branches with their own choice** and tasks with a manual order.
+    directions for growing branches**, **Branches with their own choice** and tasks with a manual order. From app
+    3.27.0 the group's introduction says what helps a direction and always goes with it: "a question of the
+    direction, connecting people to someone in it or to their spouse, a reason the agent gives"
+    ([R2.3](R2-lines-and-queue.md#R2.3)).
 - **Controls:** app: **Research overview**, the section of work outside the directions, at a branch **⋯** (**Branch
   options**); **Research for this tree…**.
 - **Since:** app 3.22.0 (research 1.26.0)
 
-<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 -->
+<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 · 3.27.0: strings.ts live.setOutIntro (app 4e4f6d8c, spec 036 K1.8) -->
 
 <a id="S4.4"></a>
 ## S4.4 Awaiting action in the app

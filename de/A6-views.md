@@ -732,10 +732,10 @@ Zelle mit Befund öffnet die Blase des Befunds.
 | Zeichen | Wie es aussieht | Was es bedeutet (Legende) | Wo es erscheint |
 |---|---|---|---|
 | **unsicheres Datum** | das Datum gepunktet unterstrichen; das Wort **um**, **vor** oder **nach** in kleinerer grauer Schrift vor dem Datum | „Etwa, vor, nach oder ein Zeitraum; kein Befund.“ | Spalten der Daten ([A6.7.3](#A6.7.3)) |
-| **Verlässlichkeit** | in der Legende ein Ring mit „✓“; in der Zelle der Name der Stufe in Grau: **Bestätigt**, **Belegt**, **Wahrscheinlich**, **Möglich**, **Aus dem Stammbaum**, **Hinweis**, **Ohne Quelle** | „Nur in den Spalten Verlässlichkeit und Forschung.“ | **Verlässlichkeit Name**, **Verlässlichkeit Geburt**, **Verlässlichkeit Tod**, **Verlässlichkeit Heirat** (Personen, Verbindungen), **Verlässlichkeit** (Ereignisse); Stufen: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **Verlässlichkeit** | der Name der Stufe in Grau (in der Legende **Bestätigt**): **Bestätigt**, **Belegt**, **Wahrscheinlich**, **Möglich**, **Aus dem Stammbaum**, **Hinweis**, **Ohne Quelle** | „In den Spalten Verlässlichkeit und Forschung; bei Verbindungen in der Gruppe Heirat, bei Ereignissen in der Gruppe Quelle.“ | **Verlässlichkeit Name**, **Verlässlichkeit Geburt**, **Verlässlichkeit Tod**, **Verlässlichkeit Heirat** (Personen, Verbindungen), **Verlässlichkeit** (Ereignisse); Stufen: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **Ersatzwert** | die Abkürzung **get.** oder **begr.** in einem kleinen Rahmen vor dem Wert, der Wert kursiv; Hinweis „Taufe, Geburt unbekannt“, „Begräbnis, Tod unbekannt“ | „Taufe statt Geburt, Begräbnis statt Tod.“ | Datum und Ort von Geburt und Tod ([A6.7.3](#A6.7.3)) |
 | **berechnet** | graue Schrift; „≈ 67“ eine Schätzung, „28–29“ ein Bereich | „Ein Bereich aus ungenauem Datum, ≈ aus einer Schätzung.“ | Alter, Abweichung des angegebenen Alters, Dauer der Verbindung, Anzahlen, Generation, Vollständigkeit; am Spaltenkopf „Berechnet aus: …“ |
-| **entfällt** | „–“ in grauer Kursivschrift; Hinweis „Trifft nicht zu“ | „Betrifft die Person nicht.“ | der Tod bei einer lebenden Person (bei **Vollständigkeit Sterbefall** „lebt“), das Alter des Vaters oder der Mutter ohne erfassten Elternteil, die Spalten der Verbindung bei einer Person ohne Verbindung, **Alter beim Ereignis** bei der Geburt |
+| **trifft nicht zu** | „–“ in grauer Kursivschrift, in der Legende ebenso; Hinweis „Trifft nicht zu“ | „Betrifft die Person nicht.“ | der Tod bei einer lebenden Person (bei **Vollständigkeit Sterbefall** „lebt“), das Alter des Vaters oder der Mutter ohne erfassten Elternteil, die Spalten der Verbindung bei einer Person ohne Verbindung, **Alter beim Ereignis** bei der Geburt |
 
 - In den Spalten **Verlässlichkeit …** wird von **Bestätigt** bis **Ohne Quelle** in der Reihenfolge aus der Tabelle
   sortiert.
@@ -846,7 +846,7 @@ Agenten, die Linien und den Austausch mit dem Stammbaum. In den Stammbaum schrei
   Forschung braucht gerade nichts“ oder „Baum und Forschung sind abgeglichen“.
 - **Blase der Forschung:** ein Klick auf eine Zelle der Forschung öffnet eine Blase (auf dem Telefon ein Panel von
   unten) mit Abschnitten danach, was die Person hat: **Wartet auf Entscheidung · n** (**Versionen vergleichen ›**,
-  **Wartet auf Entscheidung ›**), **Wartet auf andere**, **Widersprüche der Quellen · n** (**Entscheiden ›**),
+  **Wartet auf Bearbeitung ›**), **Wartet auf andere**, **Widersprüche der Quellen · n** (**Entscheiden ›**),
   **Hypothesen** oder **Offene Frage** (**Was die Forschung weiß ›**, [S3.5](S3-what-the-research-knows.md#S3.5)),
   **Agent arbeitet** (**Forschung verfolgen ›**), **Forschungsaufgaben in der Warteschlange** (**Aufgabe in der
   Forschung öffnen**), **Materialien ›**, **Linie** oder **Außerhalb der Linien** (**Linie im Baum zeigen**, **In der

@@ -162,7 +162,8 @@ B*, *abandoned*, the number of versions and a note. Open ones are expanded.
   "shown · + 2 people · Find", "+ 2 people", "The tree records this already", "Text only, cannot be shown.", "no link
   to people in the tree", for a decided one *chosen*, "Now linked for real", "No longer valid: …".
 - **Which hypotheses the research sends:** open ones; decided and abandoned ones only those whose versions carry
-  links. Withdrawn ones never.
+  links, and to an app that decides hypotheses ([S3.5.2](#S3.5.2)) also those that can be decided in the app, without
+  a link too (so that they can be changed and reopened). Withdrawn ones never.
 - **Who decided:** a hypothesis the agent decided ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)) carries *decided
   by the agent* with the day and **Reason** (the text of the decision in the research's language; a long one expands).
 - **Limits:** a hypothesis can be decided from the app by choosing a version that the research terminal confirms
@@ -213,15 +214,19 @@ until it is confirmed nothing changes in the app.
   people"). At a version there can be what it does with the tree: "Nothing is linked in the tree; the research only
   records the decision.", "The tree stays as it is; the research only records the decision.", "The tree stays as it
   is: the old link remains, further work stands on it."
+- **A hypothesis without a link:** a hypothesis whose versions connect no one to the tree (where a person came from,
+  say) is decided the same way. The tree does not change; the research only records the decision.
 - **Waiting:** "Waiting for confirmation in the research" and "To be confirmed in the research terminal (Enter = yes):
   decide H0001 for version B. Then the terminal optionally asks for a reason. Nothing changes here until confirmed."
-  After 10 minutes "Not confirmed by the research yet": "Waiting for over 10 minutes. The terminal may have been
+  At a version that connects no one and takes no link of an earlier decision off the tree it adds "The tree
+  does not change; only the decision is recorded." After 10 minutes "Not confirmed by the research yet": "Waiting for over 10 minutes. The terminal may have been
   closed; “Open again” asks once more." with **Open again** and **Stop waiting**. When the research meanwhile decided
   otherwise: "Already decided in the research: A".
 - **After the confirmation** the app loads the new version of the research (the research wrote the links) and the
   tree refreshes; the message "Hypothesis H0001 decided: B", on the card "decided in the app". When the research's
   version has other changes too, the app asks (**Load**, or **Later**: "the tree stays as it is for now"); before
-  loading it saves a backup.
+  loading it saves a backup. After a decision the app turns **Show** ([S3.5.1](#S3.5.1)) off at the other hypotheses
+  of the same person; after choosing a version that connects no one they stay shown.
 - **A decided hypothesis:** "Holds since {day}: B" and earlier decisions ("before: A, …"). **Change** shows the
   versions again with **Choose** (**Cancel the change**; the terminal asks for the reason of the change). **Reopen**
   says what changes in the tree ("The link of 2 people leaves the tree.", "Nothing changes in the tree."). Where
@@ -232,7 +237,9 @@ until it is confirmed nothing changes in the app.
   **Choose**; **More ›** opens the card at the person. With a research that accepts proposals at once: a checkbox at a
   hypothesis with a proposal, **Select all with a proposal**, "n selected." (at a large link "Large link: H0001 → B links 214 people.") and **Accept proposals
   (n)**, at most 50 at once ("At most 50 at once."). The terminal confirms once; the message says how many proposals
-  were accepted. At a hypothesis that cannot be decided here: "Only the research decides this one."
+  were accepted. At a hypothesis that cannot be decided here: "Only the research decides this one." When no choice of
+  a row changes the tree, "The tree does not change; only the decision is recorded." stands under it once; when only
+  some versions keep the tree, it stands at each of them.
 - **Edge of the tree:** the bubble "?" at an edge with a hypothesis also has **Choose** at the versions.
 - **Limits:**
   - the choices are only with a research on this computer that can do them; on a phone, a tablet and in a browser
@@ -244,7 +251,7 @@ until it is confirmed nothing changes in the app.
   carry its mark ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
 - **Since:** app 3.27.0 with research 1.31.0
 
-<!-- zdroj: app:src/research-hypothesis-pick.ts hypothesisPickable (pick | old | remote | readonly | merge; HYPOTHESIS_DECIDE_LINK_FEATURE), HYPOTHESIS_BIG_JOIN = 50, hypothesisLinkUrl, hypothesesAcceptUrl, hypothesisChoiceStays, hypothesisCannotReopen · src/ui/person-research-ui.ts (verze s Vybrat, Pro/Proti, Zdroje, návrh, Žádná verze neplatí, Nechat otevřenou, Změnit, Zrušit změnu, Vrátit na otevřenou, nejde vrátit → Rozhodnout ve výzkumu, hypoRemote, hypoMerge) · src/ui/hypothesis-wait-ui.ts, src/research-hypothesis-wait.ts (čekání, 10 min, Otevřít znovu, Zrušit čekání; Načíst / Později se zálohou) · src/ui/hypothesis-waiting-ui.ts (Co čeká: Rozhodnout, Přijmout návrh, Nechat otevřenou, Vybrat, Víc ›, Vybrat vše s návrhem, Přijmout návrhy (n), ≤ 50, Tady rozhoduje jen výzkum.) · src/ui/research-edge-ui.ts (bublina kraje, Vybrat) · strings.ts research.hypoPick, hypoPickAria, hypoNone, hypoLeave, hypoProposal, hypoAccept, hypoAcceptNone, hypoFor, hypoAgainst, hypoSources, hypoWait, hypoWaitAsk, hypoWaitLong, hypoWaitLongText, hypoWaitAgain, hypoWaitStop, hypoChangeReason, hypoDecidedToast, hypoElsewhere, hypoByApp, hypoLoadLater, hypoLoad, hypoChangeHere, hypoChangeCancel, hypoHoldsSince, hypoBefore, hypoReopen, hypoReopenLoss, hypoReopenNone, hypoCannotReopenWork, hypoStaysNote, hypoBig, hypoNoLinkNote, hypoInTreeNote, hypoMerge, hypoRemote, hypoAcceptMany, hypoSelectAll, hypoOnlyResearch, hypoAcceptMax, hypoSelected, decide · commity b6cd39f2, 92383f57, 4ed3251a, 8d7f1597, 364df0cd · spec 074 -->
+<!-- zdroj: app:src/research-hypothesis-pick.ts hypothesisPickable (pick | old | remote | readonly | merge; HYPOTHESIS_DECIDE_LINK_FEATURE), HYPOTHESIS_BIG_JOIN = 50, hypothesisLinkUrl, hypothesesAcceptUrl, hypothesisChoiceStays, hypothesisCannotReopen · src/ui/person-research-ui.ts (verze s Vybrat, Pro/Proti, Zdroje, návrh, Žádná verze neplatí, Nechat otevřenou, Změnit, Zrušit změnu, Vrátit na otevřenou, nejde vrátit → Rozhodnout ve výzkumu, hypoRemote, hypoMerge) · src/ui/hypothesis-wait-ui.ts, src/research-hypothesis-wait.ts (čekání, 10 min, Otevřít znovu, Zrušit čekání; Načíst / Později se zálohou) · src/ui/hypothesis-waiting-ui.ts (Co čeká: Rozhodnout, Přijmout návrh, Nechat otevřenou, Vybrat, Víc ›, Vybrat vše s návrhem, Přijmout návrhy (n), ≤ 50, Tady rozhoduje jen výzkum.) · src/ui/research-edge-ui.ts (bublina kraje, Vybrat) · strings.ts research.hypoPick, hypoPickAria, hypoNone, hypoLeave, hypoProposal, hypoAccept, hypoAcceptNone, hypoFor, hypoAgainst, hypoSources, hypoWait, hypoWaitAsk, hypoWaitLong, hypoWaitLongText, hypoWaitAgain, hypoWaitStop, hypoChangeReason, hypoDecidedToast, hypoElsewhere, hypoByApp, hypoLoadLater, hypoLoad, hypoChangeHere, hypoChangeCancel, hypoHoldsSince, hypoBefore, hypoReopen, hypoReopenLoss, hypoReopenNone, hypoCannotReopenWork, hypoStaysNote, hypoBig, hypoNoLinkNote, hypoInTreeNote, hypoKeepsTree, hypoMerge, hypoRemote, hypoAcceptMany, hypoSelectAll, hypoOnlyResearch, hypoAcceptMax, hypoSelected, decide · commity b6cd39f2, 92383f57, 4ed3251a, 8d7f1597, 364df0cd · spec 074 · K1.6 (verze bez vazby): app 91b16655 research-hypothesis-pick.ts hypothesisVariantLinksNobody, hypothesisChoiceKeepsTree (otevřená, zrušená, dřív zvolená verze také bez vazby, _STAYS) · src/research-hypotheses.ts (čekací text + hypoKeepsTree) · src/research-hypothesis-waiting.ts plan.keepsTree, versions[].keepsTree · src/ui/hypothesis-waiting-ui.ts hwr-keeps, hwr-version-note · src/ui/hypothesis-wait-ui.ts researchHypothesisUnlinkOthers (ne u verze bez vazby) · research c769f2eb export.ts (rozhodnuté/zrušené pickableInApp s hypothesisPick) · CHANGELOG.cs.md 3.27.0 -->
 
 <a id="S3.6"></a>
 ## S3.6 Searched

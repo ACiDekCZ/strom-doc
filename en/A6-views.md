@@ -685,10 +685,10 @@ cell with a finding opens the finding's bubble.
 | Mark | What it looks like | What it means (legend) | Where it appears |
 |---|---|---|---|
 | **uncertain date** | the date underlined with dots; the word **abt.**, **bef.** or **aft.** in smaller grey type before the date | “About, before, after or a range; not a finding.” | date columns ([A6.7.3](#A6.7.3)) |
-| **reliability** | in the legend a ring with “✓”; in the cell the step's name in grey: **Confirmed**, **Proven**, **Probable**, **Possible**, **From family tree**, **Lead**, **No source** | “Only in the Reliability and research columns.” | **Name reliability**, **Birth reliability**, **Death reliability**, **Marriage reliability** (people, unions), **Reliability** (events); the steps: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **reliability** | the step's name in grey (in the legend **Confirmed**): **Confirmed**, **Proven**, **Probable**, **Possible**, **From family tree**, **Lead**, **No source** | “In the Reliability and research columns; for unions in the Marriage group, for events in the Source group.” | **Name reliability**, **Birth reliability**, **Death reliability**, **Marriage reliability** (people, unions), **Reliability** (events); the steps: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **substitute** | the abbreviation **bap.** or **bur.** in a small frame before the value, the value in italics; the tooltip “Baptism, birth unknown”, “Burial, death unknown” | “A baptism for the birth, a burial for the death.” | date and place of birth and death ([A6.7.3](#A6.7.3)) |
 | **computed** | grey type; “≈ 67” an estimate, “28–29” a range | “A range from an inexact date, ≈ from an estimate.” | ages, the difference of the recorded age, length of the union, counts, generation, completeness; in the header “Computed from: …” |
-| **does not apply** | “–” in grey italics; the tooltip “Does not apply” | “Does not apply to the person.” | death for a living person (in **Death completeness** “living”), the father's or mother's age without a recorded parent, union columns of a person without a union, **Age at the event** for a birth |
+| **does not apply** | “–” in grey italics, the same in the legend; the tooltip “Does not apply” | “Does not apply to the person.” | death for a living person (in **Death completeness** “living”), the father's or mother's age without a recorded parent, union columns of a person without a union, **Age at the event** for a birth |
 
 - The columns **… reliability** sort from **Confirmed** to **No source** in the order of the table.
 
@@ -792,7 +792,7 @@ exchange with the tree. It writes nothing into the tree.
   The unions are collapsed in them and the coverage row is on. An empty view says “The research needs nothing right
   now” or “The tree and the research are in sync”.
 - **Research bubble:** a click on a research cell opens a bubble (on a phone a bottom panel) with sections according
-  to what the person has: **Awaiting decision · n** (**Compare versions ›**, **Awaiting decision ›**), **Waiting on
+  to what the person has: **Awaiting decision · n** (**Compare versions ›**, **Awaiting action ›**), **Waiting on
   others**, **Source conflicts · n** (**Decide ›**), **Hypotheses** or **Open question** (**What the research knows ›**,
   [S3.5](S3-what-the-research-knows.md#S3.5)), **Agent working** (**Follow the research ›**), **Research tasks in the
   queue** (**Open the task in the research**), **Materials ›**, **Line** or **Off the lines** (**Show the line in the

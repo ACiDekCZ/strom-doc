@@ -158,8 +158,9 @@ liczba wersji i uwaga. Otwarte są rozwinięte.
 - **Wiersz wersji:** litera i twierdzenie (długie się rozwija) i co wersja robi z drzewem: „pokazano · + 2 osoby ·
   Znajdź”, „+ 2 osoby”, „Drzewo już tak to zapisuje”, „Tylko tekst, nie można pokazać.”, „bez powiązania z osobami
   drzewa”, przy rozstrzygniętej *wybrana*, „Teraz połączone naprawdę”, „Już nieważne: …”.
-- **Które hipotezy badanie wysyła:** otwarte; rozstrzygnięte i porzucone tylko te, których wersje niosą powiązania.
-  Odwołane nigdy.
+- **Które hipotezy badanie wysyła:** otwarte; rozstrzygnięte i porzucone tylko te, których wersje niosą powiązania,
+  a aplikacji, która rozstrzyga hipotezy ([S3.5.2](#S3.5.2)), także te, które można rozstrzygnąć w aplikacji, również
+  bez powiązania (aby dało się je zmienić i przywrócić). Odwołane nigdy.
 - **Kto rozstrzygnął:** hipoteza, którą rozstrzygnął agent ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)), niesie
   *rozstrzygnął agent* z dniem i **Uzasadnienie** (tekst rozstrzygnięcia w języku badania; długi się rozwija).
 - **Granice:** hipotezę można rozstrzygnąć z aplikacji wyborem wersji, który potwierdzi terminal badania
@@ -210,15 +211,19 @@ w aplikacji nic się nie zmienia.
   etykietę („połączy 214 osób”). Przy wersji może stać, co zrobi z drzewem: „W drzewie nic się nie połączy, badanie
   zapisze tylko rozstrzygnięcie.”, „Drzewo się nie zmieni, badanie zapisze tylko rozstrzygnięcie.”, „Drzewo się nie
   zmieni: stare powiązanie zostanie, opiera się na nim dalsza praca.”
+- **Hipoteza bez powiązania:** hipotezę, której wersje nikogo nie łączą z drzewem (na przykład skąd osoba przybyła),
+  rozstrzyga się tak samo. Drzewo się nie zmieni, badanie zapisze tylko rozstrzygnięcie.
 - **Oczekiwanie:** „Czeka na potwierdzenie w badaniu” i „Potwierdzenie w terminalu badania (Enter = tak): rozstrzygnąć
   H0001 na rzecz wersji B. Potem terminal opcjonalnie zapyta o uzasadnienie. Do potwierdzenia nic się tu nie
-  zmienia.” Po 10 minutach „Badanie jeszcze nie potwierdziło”: „Oczekiwanie trwa ponad 10 minut. Terminal mógł
+  zmienia.” Przy wersji, która nikogo nie łączy i nie usuwa z drzewa powiązania wcześniejszego
+  rozstrzygnięcia, dodaje „Drzewo się nie zmieni, zapisze się tylko rozstrzygnięcie.” Po 10 minutach „Badanie jeszcze nie potwierdziło”: „Oczekiwanie trwa ponad 10 minut. Terminal mógł
   pozostać zamknięty; „Otwórz ponownie” zapyta jeszcze raz.” z **Otwórz ponownie** i **Przerwij oczekiwanie**. Gdy
   badanie w międzyczasie rozstrzygnęło inaczej: „W badaniu już rozstrzygnięto: A”.
 - **Po potwierdzeniu** aplikacja wczyta nową wersję badania (powiązania zapisało badanie) i drzewo się odświeży;
   komunikat „Hipoteza H0001 rozstrzygnięta: B”, na karcie „rozstrzygnięto w aplikacji”. Gdy wersja badania ma też inne
   zmiany, aplikacja zapyta (**Wczytaj** albo **Później**: „drzewo na razie pozostaje bez zmian”); przed wczytaniem
-  zapisze kopię zapasową.
+  zapisze kopię zapasową. Po rozstrzygnięciu aplikacja wyłączy **Pokaż** ([S3.5.1](#S3.5.1)) przy innych hipotezach
+  tej samej osoby; po wyborze wersji, która nikogo nie łączy, pozostaną pokazane.
 - **Rozstrzygnięta hipoteza:** „Obowiązuje od {dzień}: B” i wcześniejsze rozstrzygnięcia („wcześniej: A, …”).
   **Zmień** pokaże wersje znowu z **Wybierz** (**Anuluj zmianę**; o uzasadnienie zmiany zapyta terminal). **Przywróć
   jako otwartą** mówi, co się zmieni w drzewie („Z drzewa zniknie połączenie 2 osób.”, „W drzewie nic się nie
@@ -231,7 +236,8 @@ w aplikacji nic się nie zmienia.
   przyjmuje propozycje naraz: pole wyboru przy hipotezie z propozycją, **Zaznacz wszystkie z propozycją**, „Zaznaczono
   n.” (przy dużym połączeniu „Duże połączenie: H0001 → B połączy 214 osób.”) i **Przyjmij propozycje (n)**, naraz najwyżej 50 („Najwyżej 50 naraz.”). Terminal
   potwierdza raz; komunikat mówi, ile propozycji przyjęto. Przy hipotezie, której tu rozstrzygnąć nie można: „Tu
-  rozstrzyga tylko badanie.”
+  rozstrzyga tylko badanie.” Gdy żaden wybór wiersza nie zmieni drzewa, stoi pod nim raz „Drzewo się nie zmieni,
+  zapisze się tylko rozstrzygnięcie.”; gdy drzewa nie zmienią tylko niektóre wersje, stoi to przy każdej z nich.
 - **Krawędź drzewa:** dymek „?” przy krawędzi z hipotezą ma przy wersjach także **Wybierz**.
 - **Granice:**
   - wybory są tylko z badaniem na tym komputerze, które je umie; na telefonie, tablecie i w przeglądarce gdzie indziej
@@ -243,7 +249,7 @@ w aplikacji nic się nie zmienia.
   Wybory, które otwierają terminal, mają jego oznaczenie ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
 - **Obowiązuje od:** aplikacja 3.27.0 z badaniem 1.31.0
 
-<!-- zdroj: app:src/research-hypothesis-pick.ts hypothesisPickable (pick | old | remote | readonly | merge; HYPOTHESIS_DECIDE_LINK_FEATURE), HYPOTHESIS_BIG_JOIN = 50, hypothesisLinkUrl, hypothesesAcceptUrl, hypothesisChoiceStays, hypothesisCannotReopen · src/ui/person-research-ui.ts (verze s Vybrat, Pro/Proti, Zdroje, návrh, Žádná verze neplatí, Nechat otevřenou, Změnit, Zrušit změnu, Vrátit na otevřenou, nejde vrátit → Rozhodnout ve výzkumu, hypoRemote, hypoMerge) · src/ui/hypothesis-wait-ui.ts, src/research-hypothesis-wait.ts (čekání, 10 min, Otevřít znovu, Zrušit čekání; Načíst / Později se zálohou) · src/ui/hypothesis-waiting-ui.ts (Co čeká: Rozhodnout, Přijmout návrh, Nechat otevřenou, Vybrat, Víc ›, Vybrat vše s návrhem, Přijmout návrhy (n), ≤ 50, Tady rozhoduje jen výzkum.) · src/ui/research-edge-ui.ts (bublina kraje, Vybrat) · strings.ts research.hypoPick, hypoPickAria, hypoNone, hypoLeave, hypoProposal, hypoAccept, hypoAcceptNone, hypoFor, hypoAgainst, hypoSources, hypoWait, hypoWaitAsk, hypoWaitLong, hypoWaitLongText, hypoWaitAgain, hypoWaitStop, hypoChangeReason, hypoDecidedToast, hypoElsewhere, hypoByApp, hypoLoadLater, hypoLoad, hypoChangeHere, hypoChangeCancel, hypoHoldsSince, hypoBefore, hypoReopen, hypoReopenLoss, hypoReopenNone, hypoCannotReopenWork, hypoStaysNote, hypoBig, hypoNoLinkNote, hypoInTreeNote, hypoMerge, hypoRemote, hypoAcceptMany, hypoSelectAll, hypoOnlyResearch, hypoAcceptMax, hypoSelected, decide · commity b6cd39f2, 92383f57, 4ed3251a, 8d7f1597, 364df0cd · spec 074 -->
+<!-- zdroj: app:src/research-hypothesis-pick.ts hypothesisPickable (pick | old | remote | readonly | merge; HYPOTHESIS_DECIDE_LINK_FEATURE), HYPOTHESIS_BIG_JOIN = 50, hypothesisLinkUrl, hypothesesAcceptUrl, hypothesisChoiceStays, hypothesisCannotReopen · src/ui/person-research-ui.ts (verze s Vybrat, Pro/Proti, Zdroje, návrh, Žádná verze neplatí, Nechat otevřenou, Změnit, Zrušit změnu, Vrátit na otevřenou, nejde vrátit → Rozhodnout ve výzkumu, hypoRemote, hypoMerge) · src/ui/hypothesis-wait-ui.ts, src/research-hypothesis-wait.ts (čekání, 10 min, Otevřít znovu, Zrušit čekání; Načíst / Později se zálohou) · src/ui/hypothesis-waiting-ui.ts (Co čeká: Rozhodnout, Přijmout návrh, Nechat otevřenou, Vybrat, Víc ›, Vybrat vše s návrhem, Přijmout návrhy (n), ≤ 50, Tady rozhoduje jen výzkum.) · src/ui/research-edge-ui.ts (bublina kraje, Vybrat) · strings.ts research.hypoPick, hypoPickAria, hypoNone, hypoLeave, hypoProposal, hypoAccept, hypoAcceptNone, hypoFor, hypoAgainst, hypoSources, hypoWait, hypoWaitAsk, hypoWaitLong, hypoWaitLongText, hypoWaitAgain, hypoWaitStop, hypoChangeReason, hypoDecidedToast, hypoElsewhere, hypoByApp, hypoLoadLater, hypoLoad, hypoChangeHere, hypoChangeCancel, hypoHoldsSince, hypoBefore, hypoReopen, hypoReopenLoss, hypoReopenNone, hypoCannotReopenWork, hypoStaysNote, hypoBig, hypoNoLinkNote, hypoInTreeNote, hypoKeepsTree, hypoMerge, hypoRemote, hypoAcceptMany, hypoSelectAll, hypoOnlyResearch, hypoAcceptMax, hypoSelected, decide · commity b6cd39f2, 92383f57, 4ed3251a, 8d7f1597, 364df0cd · spec 074 · K1.6 (verze bez vazby): app 91b16655 research-hypothesis-pick.ts hypothesisVariantLinksNobody, hypothesisChoiceKeepsTree (otevřená, zrušená, dřív zvolená verze také bez vazby, _STAYS) · src/research-hypotheses.ts (čekací text + hypoKeepsTree) · src/research-hypothesis-waiting.ts plan.keepsTree, versions[].keepsTree · src/ui/hypothesis-waiting-ui.ts hwr-keeps, hwr-version-note · src/ui/hypothesis-wait-ui.ts researchHypothesisUnlinkOthers (ne u verze bez vazby) · research c769f2eb export.ts (rozhodnuté/zrušené pickableInApp s hypothesisPick) · CHANGELOG.cs.md 3.27.0 -->
 
 <a id="S3.6"></a>
 ## S3.6 Przeszukano

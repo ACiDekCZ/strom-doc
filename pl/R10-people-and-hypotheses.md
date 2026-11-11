@@ -197,8 +197,9 @@ Powrót do rozstrzygania przez człowieka: `strom config set hypotheses.decide p
 <a id="R10.3.3"></a>
 ### R10.3.3 Hipoteza rozstrzygnięta w aplikacji Strom
 
-Hipotezę, której wersje łączą tylko dziecko z rodziną albo dwie osoby jako parę, można rozstrzygnąć także
-w aplikacji Strom ([S3.5.2](S3-what-the-research-knows.md#S3.5.2)). Sama aplikacja niczego nie zapisuje: wybór
+Hipotezę, której wersje łączą tylko dziecko z rodziną albo dwie osoby jako parę albo nikogo nie łączą z drzewem
+(na przykład skąd osoba przybyła), można rozstrzygnąć także w aplikacji Strom
+([S3.5.2](S3-what-the-research-knows.md#S3.5.2)). Sama aplikacja niczego nie zapisuje: wybór
 otwiera terminal badania, który zapyta jednym zdaniem i zapisze rozstrzygnięcie jako rozstrzygnięcie człowieka.
 Powiązania wybranej wersji są w drzewie od razu.
 
@@ -216,6 +217,8 @@ Powiązania wybranej wersji są w drzewie od razu.
     rodziców biologicznych w rodzinie …; dotychczasowe powiązanie zostaje, opiera się na nim dalsza praca; powstałoby
     koło wśród przodków) i „To, czego nie zapisano w drzewie, agent wpisze podczas swojej następnej pracy.” To samo
     dotyczy rozstrzygnięcia w terminalu i w Co czeka;
+  - wersja, która nikogo nie łączy, zapisuje tylko rozstrzygnięcie; potwierdzenie powie to z góry („Drzewo się nie
+    zmieni.”). Terminal pominie to zdanie, gdy wybór usunąłby z drzewa powiązanie wcześniejszego rozstrzygnięcia;
   - **zmiana** na inną wersję i **żadna wersja nie obowiązuje** przy rozstrzygniętej hipotezie usuwają to, co zapisało
     poprzednie rozstrzygnięcie; **przywrócenie jako otwartej** (`--reopen`) usuwa zapis i otwiera hipotezę („Usunięto
     z drzewa: …”);
@@ -226,8 +229,13 @@ Powiązania wybranej wersji są w drzewie od razu.
     wybór innego wariantu.” Przy zmianie takie powiązanie zostaje, a nowe się nie zapisuje; terminal powie to
     z góry („Dotychczasowe powiązanie zostaje w drzewie, opiera się na nim dalsza praca: …; nowe nie zostanie
     zapisane: …”), a domyślna odpowiedź to nie;
-  - dwóch zapisów jednej osoby (`same`) i rodzeństwa bez rodziców (`siblings`) nie rozstrzyga się z aplikacji: „H0001
-    nie da się rozstrzygnąć wyborem w aplikacji; rozstrzyga się tutaj, na pełnym ekranie.”;
+  - nie można cofnąć także rozstrzygnięcia, którego powiązania drzewo ma, ale nie zapisało ich to rozstrzygnięcie
+    (na przykład zapisał je agent): „Rozstrzygnięcie hipotezy H0001 jest już zapisane w drzewie (powiązania: 2);
+    odnośnik go nie cofnie. Zmieni je wybór innego wariantu.” Zamiast **Przywróć jako otwartą** aplikacja powie
+    „Przywrócić się nie da: połączenie jest już zapisane w drzewie badania (2 powiązania). Można zmienić.”;
+  - dwóch zapisów jednej osoby (`same`) i rodzeństwa bez rodziców (`siblings`) nie rozstrzyga się z aplikacji, nawet
+    gdy taka jest tylko jedna wersja hipotezy: „H0001 nie da się rozstrzygnąć wyborem w aplikacji; rozstrzyga się
+    tutaj, na pełnym ekranie.”;
   - wersja, która dołączy do drzewa 50 i więcej osób, poda w potwierdzeniu liczbę („Tym samym do drzewa dołącza 214
     osób.”);
   - propozycje agenta można przyjąć naraz, najwyżej 50 hipotez jednym potwierdzeniem: terminal je wypisze
@@ -242,7 +250,7 @@ Powiązania wybranej wersji są w drzewie od razu.
   z pytaniem; `strom hypothesis decide H… --reopen --reason "…"` przywróci rozstrzygnięcie jako otwarte.
 - **Obowiązuje od:** badanie 1.31.0 z aplikacją 3.27.0
 
-<!-- zdroj: research:src/core/links.ts (hypothesis do=decide|abandon|keep-open|reopen, variant; hypotheses do=accept, ids ≤ 50) · assets/lang/cs.json ui.link.asks, ui.link.what.hypothesis.pick/repick, ui.link.hypothesis.why, pick.default, repick.default, isDecided, notInApp, joins, recorded, work, ui.hypothesis.tree.now/off/notNow/stays, ui.hypothesis.why.parents/kept/ancestor/merge/siblings, ui.hypothesis.decided.links, ui.link.accept.list/skipped/skip.*/done · src/core/hypolinks.ts writeDecision, undoDecision, workOnLink (rodina vazby po zápisu, sloučení, nová rodina; ne vlastní údaje osob), reopenBlock, changeKeeps, pickableInApp (jen child a partners) · src/commands/analysis.ts hypothesis decide --from-app (rozhodnutí člověka, ne agenta), --reopen, decidedIn app · ui.link.go · src/core/live.ts /status features hypothesis.decide.link, hypotheses.accept.link · src/core/stromapp.ts APP_DECIDES_HYPOTHESES · assets/method/core.md (rozhodnutí člověka je ve stromu hned) · commity 7a8f4b53, 8e27fa5c, 06cca755, d4c6da07 · CHANGELOG.cs.md 1.31.0 „Hypotéza rozhodnutá v aplikaci Strom“ · spec 074 K1.5 -->
+<!-- zdroj: research:src/core/links.ts (hypothesis do=decide|abandon|keep-open|reopen, variant; hypotheses do=accept, ids ≤ 50) · assets/lang/cs.json ui.link.asks, ui.link.what.hypothesis.pick/repick, ui.link.hypothesis.why, pick.default, repick.default, isDecided, notInApp, joins, recorded, work, treeSame, ui.hypothesis.tree.now/off/notNow/stays, ui.hypothesis.why.parents/kept/ancestor/merge/siblings, ui.hypothesis.decided.links, ui.link.accept.list/skipped/skip.*/done · src/core/hypolinks.ts writeDecision, undoDecision, workOnLink (rodina vazby po zápisu, sloučení, nová rodina; ne vlastní údaje osob), reopenBlock (tree: vazby zvolené verze ve stromu, které rozhodnutí nezapsalo; work), changeKeeps, pickableInApp (každá vazba každé verze child nebo partners, i verze bez vazby; c769f2eb, spec 074 K1.6) · src/cli/menu-links.ts (treeSame: verze bez vazby a nic z dřívějšího zápisu ve stromu; menu-links.ts:784 recorded) · src/gedcom/export.ts (rozhodnuté a zrušené pickableInApp pro aplikaci s hypothesisPick) · app:strings.ts research.hypoCannotReopenTree · src/commands/analysis.ts hypothesis decide --from-app (rozhodnutí člověka, ne agenta), --reopen, decidedIn app · ui.link.go · src/core/live.ts /status features hypothesis.decide.link, hypotheses.accept.link · src/core/stromapp.ts APP_DECIDES_HYPOTHESES · assets/method/core.md (rozhodnutí člověka je ve stromu hned) · commity 7a8f4b53, 8e27fa5c, 06cca755, d4c6da07 · CHANGELOG.cs.md 1.31.0 „Hypotéza rozhodnutá v aplikaci Strom“ · spec 074 K1.5 -->
 
 <a id="R10.4"></a>
 ## R10.4 Rodzina poza drzewem czeka na udokumentowane powiązanie

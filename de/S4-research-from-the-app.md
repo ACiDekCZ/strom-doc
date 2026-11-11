@@ -35,8 +35,15 @@ zeigen, sendet die Forschung über die Brücke.
 - **Ab App 3.22.0:** jeder Abschnitt lässt sich aufklappen, zuklappen oder ausblenden, und die Wahl gilt für das Panel
   und die Übersicht ([S4.1.2](#S4.1.2)). **Wartet auf Bearbeitung** klappt sich auch bei einem neuen Eintrag nicht
   von selbst auf.
+- **Ab App 3.27.0:** mit Forschung 1.31.0 zeigt die Zeile in **Jetzt** bei einer Aufgabe, die zu keiner Richtung
+  gehört, warum an ihr gearbeitet wird: bei einer Aufgabe, die einer Richtung nur hilft, welcher und wie („hilft der
+  Richtung Vorfahren: Jan Horák · verbindet Personen mit dem Baum“; außerdem „eine Frage der Richtung“, „wie der
+  Agent angibt“, „Ehepartner eines Vorfahren“, „Zweig …“), bei einer Aufgabe außerhalb der Richtungen ihren Zweig
+  („außerhalb der Richtungen · Zweig Josef Horák“, unter der Überschrift **Außerhalb der Richtungen** nur „Zweig
+  Josef Horák“). Was einer Richtung hilft, steht in [R2.3](R2-lines-and-queue.md#R2.3). Das kleine Panel zeigt den
+  Grund nicht.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · dirigent:prace/1111-app-hypotezy-bez-vazby (malý panel důvod neukazuje) · spec 036 K1.8 -->
 
 <a id="S4.1.1"></a>
 ### S4.1.1 Agenten im Stammbaum folgen
@@ -277,12 +284,14 @@ einstellen.
   - Fenster **Forschung für diesen Stammbaum…**, Gruppe **Arbeit außerhalb der Richtungen**: die Wahl für die ganze
     Forschung (**Ab und zu**: „Etwa 1 Aufgabe außerhalb der Richtungen auf K Aufgaben der Richtungen.“),
     **Richtungen für wachsende Zweige vorschlagen**, **Zweige mit eigener Wahl** und Aufgaben mit manueller
-    Reihenfolge.
+    Reihenfolge. Ab App 3.27.0 sagt die Einleitung der Gruppe, was einer Richtung hilft und immer mit ihr geht: „eine
+    Frage der Richtung, Personen an jemanden in ihr oder an dessen Partner anbinden, ein vom Agenten genannter
+    Grund“ ([R2.3](R2-lines-and-queue.md#R2.3)).
 - **Bedienung:** App: **Forschungsübersicht**, Abschnitt der Arbeit außerhalb der Linien, beim Zweig **⋯** (**Optionen
   des Zweigs**); **Forschung für diesen Stammbaum…**.
 - **Gilt seit:** App 3.22.0 (Forschung 1.26.0)
 
-<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 -->
+<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 · 3.27.0: strings.ts live.setOutIntro (app 4e4f6d8c, spec 036 K1.8) -->
 
 <a id="S4.4"></a>
 ## S4.4 Wartet auf Bearbeitung in der App

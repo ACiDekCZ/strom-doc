@@ -641,10 +641,10 @@ bublinu nálezu.
 | Značka | Jak vypadá | Co znamená (legenda) | Kde se objeví |
 |---|---|---|---|
 | **nejisté datum** | datum podtržené tečkami; slovo **cca**, **před** nebo **po** menším šedým písmem před datem | „Cca, před, po nebo rozsah; není to nález.“ | sloupce dat ([A6.7.3](#A6.7.3)) |
-| **spolehlivost** | v legendě kroužek s „✓“; v buňce šedý název stupně: **Potvrzeno**, **Doloženo**, **Pravděpodobné**, **Možné**, **Z rodokmenu**, **Vodítko**, **Bez pramene** | „Jen ve sloupcích Spolehlivost a výzkum.“ | **Spolehlivost jména**, **narození**, **úmrtí**, **sňatku** (osoby, svazky), **Spolehlivost** (události); stupně: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **spolehlivost** | šedý název stupně (v legendě **Potvrzeno**): **Potvrzeno**, **Doloženo**, **Pravděpodobné**, **Možné**, **Z rodokmenu**, **Vodítko**, **Bez pramene** | „Ve sloupcích Spolehlivost a výzkum; u svazků ve skupině Sňatek, u událostí ve skupině Pramen.“ | **Spolehlivost jména**, **narození**, **úmrtí**, **sňatku** (osoby, svazky), **Spolehlivost** (události); stupně: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **náhradní hodnota** | zkratka **křt.** nebo **pohř.** v malém rámečku před hodnotou, hodnota kurzívou; nápověda „Křest, narození neznámé“, „Pohřeb, úmrtí neznámé“ | „Křest místo narození, pohřeb místo úmrtí.“ | datum a místo narození a úmrtí ([A6.7.3](#A6.7.3)) |
 | **dopočteno** | šedé písmo; „≈ 67“ odhad, „28–29“ rozsah | „Rozsah z nepřesného data, ≈ z odhadu.“ | věky, rozdíl zapsaného věku, délka svazku, počty, generace, úplnost; u hlavičky „Vypočteno z: …“ |
-| **nevztahuje se** | „–“ šedou kurzívou; nápověda „Nevztahuje se“ | „Údaj se osoby netýká.“ | úmrtí u žijící osoby (u **Úplnost úmrtí** „žije“), věk otce nebo matky bez zapsaného rodiče, sloupce svazku u osoby bez svazku, **Věk při události** u narození |
+| **nevztahuje se** | „–“ šedou kurzívou, v legendě stejně; nápověda „Nevztahuje se“ | „Údaj se osoby netýká.“ | úmrtí u žijící osoby (u **Úplnost úmrtí** „žije“), věk otce nebo matky bez zapsaného rodiče, sloupce svazku u osoby bez svazku, **Věk při události** u narození |
 
 - Ve sloupcích **Spolehlivost …** se řadí od **Potvrzeno** po **Bez pramene** v pořadí z tabulky.
 

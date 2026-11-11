@@ -151,7 +151,9 @@ a poznámka. Otevřené jsou rozbalené.
 - **Řádek verze:** písmeno a tvrzení (dlouhé se rozbalí) a co verze dělá se stromem: „ukázáno · + 2 lidí · Najít“,
   „+ 2 lidí“, „Tak to strom už vede“, „Jen text, nedá se ukázat.“, „bez vazby k osobám stromu“,
   u rozhodnuté *zvolená*, „Teď spojeno doopravdy“, „Už neplatí: …“.
-- **Které hypotézy výzkum pošle:** otevřené; rozhodnuté a zrušené jen ty, jejichž verze nesou vazby. Odvolané nikdy.
+- **Které hypotézy výzkum pošle:** otevřené; rozhodnuté a zrušené jen ty, jejichž verze nesou vazby, a aplikaci,
+  která hypotézy rozhoduje ([S3.5.2](#S3.5.2)), i ty, které jde v aplikaci rozhodnout, také bez vazby (aby šly
+  změnit a vrátit). Odvolané nikdy.
 - **Kdo rozhodl:** hypotéza, kterou rozhodl agent ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)), nese
   *rozhodl agent* se dnem a **Důvod** (text rozhodnutí v jazyce výzkumu; dlouhý se rozbalí).
 - **Hranice:** hypotézu jde rozhodnout z aplikace volbou verze, kterou potvrdí terminál výzkumu
@@ -199,13 +201,19 @@ nemění.
   neplatí** a **Nechat otevřenou**. Verze, která připojí 50 a více osob, má pilulku („připojí 214 osob“). U verze
   může stát, co udělá se stromem: „Ve stromu se nic nepřipojí, výzkum zapíše jen rozhodnutí.“, „Strom se nezmění,
   výzkum zapíše jen rozhodnutí.“, „Strom se nezmění: stará vazba zůstane, stojí na ní další práce.“
+- **Hypotéza bez vazby:** hypotéza, jejíž verze nikoho ke stromu nepřipojují (třeba odkud osoba přišla), se
+  rozhoduje stejně. Strom se nezmění, výzkum zapíše jen rozhodnutí.
 - **Čekání:** „Čeká na potvrzení ve výzkumu“ a „V terminálu výzkumu se potvrzuje (Enter = ano): rozhodnout H0001 pro
-  verzi B. Pak se terminál nepovinně zeptá na důvod. Do potvrzení se tu nic nemění.“ Po 10 minutách „Výzkum zatím
+  verzi B. Pak se terminál nepovinně zeptá na důvod. Do potvrzení se tu nic nemění.“ U verze, která nikoho
+  nepřipojí a neodebere ze stromu vazbu dřívějšího rozhodnutí, dodá „Strom se nezmění, zapíše se jen
+  rozhodnutí.“ Po 10 minutách „Výzkum zatím
   nepotvrdil“: „Čeká se přes 10 minut. Terminál mohl zůstat zavřený; „Otevřít znovu“ se zeptá ještě jednou.“
   s **Otevřít znovu** a **Zrušit čekání**. Rozhodl-li mezitím výzkum jinak: „Ve výzkumu už rozhodnuto: A“.
 - **Po potvrzení** aplikace načte novou verzi výzkumu (vazby zapsal výzkum) a strom se obnoví; oznámení „Hypotéza
   H0001 rozhodnuta: B“, na kartě „rozhodl člověk v aplikaci“. Má-li verze výzkumu i jiné změny, aplikace se zeptá
-  (**Načíst**, nebo **Později**: „strom zatím zůstává beze změny“); před načtením uloží zálohu.
+  (**Načíst**, nebo **Později**: „strom zatím zůstává beze změny“); před načtením uloží zálohu. Po rozhodnutí
+  vypne aplikace **Ukázat** ([S3.5.1](#S3.5.1)) u jiných hypotéz téže osoby; po volbě verze, která nikoho
+  nepřipojí, zůstanou zobrazené.
 - **Rozhodnutá hypotéza:** „Platí od {den}: B“ a dřívější rozhodnutí („dřív: A, …“). **Změnit** ukáže verze znovu
   s **Vybrat** (**Zrušit změnu**; důvod změny se zeptá terminál). **Vrátit na otevřenou** řekne, co se ve stromu
   změní („Ze stromu zmizí spojení 2 osob.“, „Ve stromu se nic nezmění.“). Kde vrátit nejde, stojí místo tlačítka
@@ -216,7 +224,8 @@ nemění.
   otevře kartu u osoby. S výzkumem, který přijímá návrhy najednou: zaškrtávátko u hypotézy s návrhem, **Vybrat vše
   s návrhem**, „Vybráno n.“ (u velkého spojení „Velké spojení: H0001 → B připojí 214 osob.“) a **Přijmout návrhy (n)**, najednou nejvýš 50 („Najednou nejvýš
   50.“). Terminál potvrdí jednou; oznámení řekne, kolik návrhů se přijalo. U hypotézy, kterou tu rozhodnout nejde:
-  „Tady rozhoduje jen výzkum.“
+  „Tady rozhoduje jen výzkum.“ Když žádná volba řádku strom nezmění, stojí pod ním jednou „Strom se nezmění, zapíše
+  se jen rozhodnutí.“; když strom nezmění jen některé verze, stojí to u každé z nich.
 - **Kraj stromu:** bublina „?“ u kraje s hypotézou má u verzí také **Vybrat**.
 - **Hranice:**
   - volby jsou jen s výzkumem na tomto počítači, který je umí; na telefonu, tabletu a v prohlížeči jinde karta jen
@@ -228,7 +237,7 @@ nemění.
   terminál, mají jeho značku ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
 - **Platí od:** aplikace 3.27.0 s výzkumem 1.31.0
 
-<!-- zdroj: app:src/research-hypothesis-pick.ts hypothesisPickable (pick | old | remote | readonly | merge; HYPOTHESIS_DECIDE_LINK_FEATURE), HYPOTHESIS_BIG_JOIN = 50, hypothesisLinkUrl, hypothesesAcceptUrl, hypothesisChoiceStays, hypothesisCannotReopen · src/ui/person-research-ui.ts (verze s Vybrat, Pro/Proti, Zdroje, návrh, Žádná verze neplatí, Nechat otevřenou, Změnit, Zrušit změnu, Vrátit na otevřenou, nejde vrátit → Rozhodnout ve výzkumu, hypoRemote, hypoMerge) · src/ui/hypothesis-wait-ui.ts, src/research-hypothesis-wait.ts (čekání, 10 min, Otevřít znovu, Zrušit čekání; Načíst / Později se zálohou) · src/ui/hypothesis-waiting-ui.ts (Co čeká: Rozhodnout, Přijmout návrh, Nechat otevřenou, Vybrat, Víc ›, Vybrat vše s návrhem, Přijmout návrhy (n), ≤ 50, Tady rozhoduje jen výzkum.) · src/ui/research-edge-ui.ts (bublina kraje, Vybrat) · strings.ts research.hypoPick, hypoPickAria, hypoNone, hypoLeave, hypoProposal, hypoAccept, hypoAcceptNone, hypoFor, hypoAgainst, hypoSources, hypoWait, hypoWaitAsk, hypoWaitLong, hypoWaitLongText, hypoWaitAgain, hypoWaitStop, hypoChangeReason, hypoDecidedToast, hypoElsewhere, hypoByApp, hypoLoadLater, hypoLoad, hypoChangeHere, hypoChangeCancel, hypoHoldsSince, hypoBefore, hypoReopen, hypoReopenLoss, hypoReopenNone, hypoCannotReopenWork, hypoStaysNote, hypoBig, hypoNoLinkNote, hypoInTreeNote, hypoMerge, hypoRemote, hypoAcceptMany, hypoSelectAll, hypoOnlyResearch, hypoAcceptMax, hypoSelected, decide · commity b6cd39f2, 92383f57, 4ed3251a, 8d7f1597, 364df0cd · spec 074 -->
+<!-- zdroj: app:src/research-hypothesis-pick.ts hypothesisPickable (pick | old | remote | readonly | merge; HYPOTHESIS_DECIDE_LINK_FEATURE), HYPOTHESIS_BIG_JOIN = 50, hypothesisLinkUrl, hypothesesAcceptUrl, hypothesisChoiceStays, hypothesisCannotReopen · src/ui/person-research-ui.ts (verze s Vybrat, Pro/Proti, Zdroje, návrh, Žádná verze neplatí, Nechat otevřenou, Změnit, Zrušit změnu, Vrátit na otevřenou, nejde vrátit → Rozhodnout ve výzkumu, hypoRemote, hypoMerge) · src/ui/hypothesis-wait-ui.ts, src/research-hypothesis-wait.ts (čekání, 10 min, Otevřít znovu, Zrušit čekání; Načíst / Později se zálohou) · src/ui/hypothesis-waiting-ui.ts (Co čeká: Rozhodnout, Přijmout návrh, Nechat otevřenou, Vybrat, Víc ›, Vybrat vše s návrhem, Přijmout návrhy (n), ≤ 50, Tady rozhoduje jen výzkum.) · src/ui/research-edge-ui.ts (bublina kraje, Vybrat) · strings.ts research.hypoPick, hypoPickAria, hypoNone, hypoLeave, hypoProposal, hypoAccept, hypoAcceptNone, hypoFor, hypoAgainst, hypoSources, hypoWait, hypoWaitAsk, hypoWaitLong, hypoWaitLongText, hypoWaitAgain, hypoWaitStop, hypoChangeReason, hypoDecidedToast, hypoElsewhere, hypoByApp, hypoLoadLater, hypoLoad, hypoChangeHere, hypoChangeCancel, hypoHoldsSince, hypoBefore, hypoReopen, hypoReopenLoss, hypoReopenNone, hypoCannotReopenWork, hypoStaysNote, hypoBig, hypoNoLinkNote, hypoInTreeNote, hypoKeepsTree, hypoMerge, hypoRemote, hypoAcceptMany, hypoSelectAll, hypoOnlyResearch, hypoAcceptMax, hypoSelected, decide · commity b6cd39f2, 92383f57, 4ed3251a, 8d7f1597, 364df0cd · spec 074 · K1.6 (verze bez vazby): app 91b16655 research-hypothesis-pick.ts hypothesisVariantLinksNobody, hypothesisChoiceKeepsTree (otevřená, zrušená, dřív zvolená verze také bez vazby, _STAYS) · src/research-hypotheses.ts (čekací text + hypoKeepsTree) · src/research-hypothesis-waiting.ts plan.keepsTree, versions[].keepsTree · src/ui/hypothesis-waiting-ui.ts hwr-keeps, hwr-version-note · src/ui/hypothesis-wait-ui.ts researchHypothesisUnlinkOthers (ne u verze bez vazby) · research c769f2eb export.ts (rozhodnuté/zrušené pickableInApp s hypothesisPick) · CHANGELOG.cs.md 3.27.0 -->
 
 <a id="S3.6"></a>
 ## S3.6 Prohledáno

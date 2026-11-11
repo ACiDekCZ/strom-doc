@@ -31,8 +31,13 @@ most.
 - **Obowiązuje od:** aplikacja 3.5.0
 - **Od aplikacji 3.22.0:** każdą sekcję można rozwinąć, zwinąć lub ukryć, a wybór obowiązuje dla panelu i przeglądu
   ([S4.1.2](#S4.1.2)). **Czeka na decyzję** nie rozwija się samo nawet przy nowej pozycji.
+- **Od aplikacji 3.27.0:** z badaniem 1.31.0 wiersz w **Teraz** pokazuje przy zadaniu, które nie należy do żadnej
+  linii, dlaczego się nad nim pracuje: przy zadaniu, które linii tylko pomaga, której i jak („pomaga linii Przodkowie:
+  Jan Horák · łączy ludzi z drzewem”; dalej „pytanie linii”, „według agenta”, „małżonek przodka”, „gałąź …”), przy
+  zadaniu poza liniami jego gałąź („poza liniami · gałąź Josef Horák”, pod nagłówkiem **Poza liniami** tylko „gałąź
+  Josef Horák”). Co pomaga linii, mówi [R2.3](R2-lines-and-queue.md#R2.3). Mały panel powodu nie pokazuje.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · dirigent:prace/1111-app-hypotezy-bez-vazby (malý panel důvod neukazuje) · spec 036 K1.8 -->
 
 <a id="S4.1.1"></a>
 ### S4.1.1 Śledź agenta w drzewie
@@ -254,12 +259,14 @@ z [R2.3](R2-lines-and-queue.md#R2.3) i [R2.3.1](R2-lines-and-queue.md#R2.3.1) mo
     odpowiedzi gałąź jest podejmowana dalej jak dotąd.
   - Okno **Badanie dla tego drzewa…**, grupa **Praca poza liniami**: wybór dla całego badania (**Od czasu do czasu**:
     „Około 1 zadanie poza liniami na K zadań linii.”), **Proponuj linie dla rosnących gałęzi**, **Gałęzie
-    z własnym wyborem** i zadania z ręczną kolejnością.
+    z własnym wyborem** i zadania z ręczną kolejnością. Od aplikacji 3.27.0 wstęp grupy mówi, co pomaga linii
+    i zawsze idzie z nią: „pytanie linii, dołączenie osób do kogoś z linii lub do jego partnera, powód podany przez
+    agenta” ([R2.3](R2-lines-and-queue.md#R2.3)).
 - **Obsługa:** aplikacja: **Przegląd badania**, sekcja pracy poza liniami, przy gałęzi **⋯** (**Opcje gałęzi**);
   **Badanie dla tego drzewa…**.
 - **Obowiązuje od:** aplikacja 3.22.0 (badanie 1.26.0)
 
-<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 -->
+<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 · 3.27.0: strings.ts live.setOutIntro (app 4e4f6d8c, spec 036 K1.8) -->
 
 <a id="S4.4"></a>
 ## S4.4 Czeka na decyzję w aplikacji

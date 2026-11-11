@@ -29,8 +29,13 @@ Research** a z něj větší **Přehled výzkumu**. Oba jen čtou. Co ukazují, 
 - **Platí od:** aplikace 3.5.0
 - **Od aplikace 3.22.0:** každý oddíl jde rozbalit, sbalit nebo skrýt a volba platí pro panel i Přehled
   ([S4.1.2](#S4.1.2)). **Čeká na vyřízení** se sám nerozbalí ani při nové položce.
+- **Od aplikace 3.27.0:** s výzkumem 1.31.0 řádek v **Teď** ukáže u úkolu, který nepatří žádné linii, proč se na
+  něm pracuje: u úkolu, který linii jen pomáhá, kterou linii a jak („pomáhá linii Předci: Jan Horák · připojuje lidi
+  ke stromu“; dál „otázka linie“, „jak uvádí agent“, „manžel nebo manželka předka“, „větev …“), u úkolu mimo linie
+  jeho větev („mimo linie · větev Josef Horák“, pod nadpisem **Mimo linie** jen „větev Josef Horák“). Co linii
+  pomáhá, říká [R2.3](R2-lines-and-queue.md#R2.3). Malý panel důvod neukazuje.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · dirigent:prace/1111-app-hypotezy-bez-vazby (malý panel důvod neukazuje) · spec 036 K1.8 -->
 
 <a id="S4.1.1"></a>
 ### S4.1.1 Sledovat agenta ve stromu
@@ -234,12 +239,14 @@ Při dvou a více liniích ukazuje přehled práci mimo linie po větvích. Volb
     odpovědi se větev bere dál jako dosud.
   - Okno **Výzkum u tohoto stromu…**, skupina **Práce mimo linie**: volba pro celý výzkum (**Občas**: „Zhruba 1 úkol
     mimo linie na K úkolů linií.“), **Navrhovat linie u rostoucích větví**, **Větve s vlastní volbou**
-    a úkoly s ručním pořadím.
+    a úkoly s ručním pořadím. Od aplikace 3.27.0 úvod skupiny řekne, co linii pomáhá a jde s ní vždy: „otázka
+    linie, připojení lidí k člověku linie nebo k jeho partnerovi, důvod uvedený agentem“
+    ([R2.3](R2-lines-and-queue.md#R2.3)).
 - **Ovládání:** aplikace: **Přehled výzkumu**, oddíl práce mimo linie, u větve **⋯** (**Možnosti větve**);
   **Výzkum u tohoto stromu…**.
 - **Platí od:** aplikace 3.22.0 (výzkum 1.26.0)
 
-<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 -->
+<!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 · 3.27.0: strings.ts live.setOutIntro (app 4e4f6d8c, spec 036 K1.8) -->
 
 <a id="S4.4"></a>
 ## S4.4 Čeká na vyřízení v aplikaci

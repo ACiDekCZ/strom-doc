@@ -676,10 +676,10 @@ z ustaleniem otwiera dymek ustalenia.
 | Oznaczenie | Jak wygląda | Co znaczy (legenda) | Gdzie się pojawia |
 |---|---|---|---|
 | **niepewna data** | data podkreślona kropkami; słowo **ok.**, **przed** lub **po** mniejszym szarym pismem przed datą | „Około, przed, po lub zakres; nie jest to ustalenie.” | kolumny dat ([A6.7.3](#A6.7.3)) |
-| **wiarygodność** | w legendzie kółko z „✓”; w komórce szara nazwa stopnia: **Potwierdzone**, **Udokumentowane**, **Prawdopodobne**, **Możliwe**, **Z drzewa**, **Wskazówka**, **Bez źródła** | „Tylko w kolumnach Wiarygodność i badania.” | **Wiarygodność imienia**, **urodzenia**, **zgonu**, **ślubu** (osoby, związki), **Wiarygodność** (wydarzenia); stopnie: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **wiarygodność** | szara nazwa stopnia (w legendzie **Potwierdzone**): **Potwierdzone**, **Udokumentowane**, **Prawdopodobne**, **Możliwe**, **Z drzewa**, **Wskazówka**, **Bez źródła** | „W kolumnach Wiarygodność i badania; przy związkach w grupie Ślub, przy wydarzeniach w grupie Źródło.” | **Wiarygodność imienia**, **urodzenia**, **zgonu**, **ślubu** (osoby, związki), **Wiarygodność** (wydarzenia); stopnie: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **wartość zastępcza** | skrót **chrz.** lub **poch.** w małej ramce przed wartością, wartość kursywą; podpowiedź „Chrzest, urodzenie nieznane”, „Pochówek, zgon nieznany” | „Chrzest zamiast urodzenia, pochówek zamiast zgonu.” | data i miejsce urodzenia i zgonu ([A6.7.3](#A6.7.3)) |
 | **obliczone** | szare pismo; „≈ 67” szacunek, „28–29” zakres | „Zakres z niedokładnej daty, ≈ z szacunku.” | wiek, różnica wieku zapisanego, długość związku, liczby, pokolenie, kompletność; przy nagłówku „Obliczono z: …” |
-| **nie dotyczy** | „–” szarą kursywą; podpowiedź „Nie dotyczy” | „Nie dotyczy osoby.” | zgon przy osobie żyjącej (przy **Kompletność zgonu** „żyje”), wiek ojca lub matki bez zapisanego rodzica, kolumny związku przy osobie bez związku, **Wiek w chwili wydarzenia** przy urodzeniu |
+| **nie dotyczy** | „–” szarą kursywą, w legendzie tak samo; podpowiedź „Nie dotyczy” | „Nie dotyczy osoby.” | zgon przy osobie żyjącej (przy **Kompletność zgonu** „żyje”), wiek ojca lub matki bez zapisanego rodzica, kolumny związku przy osobie bez związku, **Wiek w chwili wydarzenia** przy urodzeniu |
 
 - W kolumnach **Wiarygodność …** sortuje się od **Potwierdzone** do **Bez źródła** w kolejności z tabeli.
 

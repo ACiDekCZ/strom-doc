@@ -213,8 +213,9 @@ schlägt nur vor, und die Entscheidung wartet in **Was wartet**. Zurück zur Ent
 <a id="R10.3.3"></a>
 ### R10.3.3 Eine in der App Strom entschiedene Hypothese
 
-Eine Hypothese, deren Versionen nur ein Kind mit einer Familie oder zwei Personen als Paar verbinden, lässt sich auch
-in der App Strom entscheiden ([S3.5.2](S3-what-the-research-knows.md#S3.5.2)). Die App selbst schreibt nichts: die
+Eine Hypothese, deren Versionen nur ein Kind mit einer Familie oder zwei Personen als Paar verbinden oder niemanden
+mit dem Stammbaum verbinden (etwa woher eine Person kam), lässt sich auch in der App Strom entscheiden
+([S3.5.2](S3-what-the-research-knows.md#S3.5.2)). Die App selbst schreibt nichts: die
 Wahl öffnet das Terminal der Forschung, das in einem Satz fragt und die Entscheidung als Entscheidung des Menschen
 erfasst. Die Verbindungen der gewählten Version stehen sofort im Stammbaum.
 
@@ -233,6 +234,9 @@ erfasst. Die Verbindungen der gewählten Version stehen sofort im Stammbaum.
     Verbindung bleibt, auf ihr baut weitere Arbeit auf; es entstünde ein Kreis unter den Vorfahren) und „Was nicht im
     Stammbaum steht, trägt der Agent bei seiner nächsten Arbeit ein.“ Dasselbe gilt für eine Entscheidung im Terminal
     und in Was wartet;
+  - eine Version, die niemanden verbindet, trägt nur die Entscheidung ein; die Bestätigung sagt es vorher („Der
+    Stammbaum ändert sich nicht.“). Das Terminal lässt den Satz weg, wenn die Wahl eine Verbindung einer früheren
+    Entscheidung aus dem Stammbaum nähme;
   - eine **Änderung** auf eine andere Version und **keine Version trifft zu** bei einer entschiedenen Hypothese
     nehmen heraus, was die vorige Entscheidung geschrieben hat; **wieder öffnen** (`--reopen`) nimmt das Geschriebene
     heraus und öffnet die Hypothese („Aus dem Stammbaum genommen: …“);
@@ -244,7 +248,13 @@ erfasst. Die Verbindungen der gewählten Version stehen sofort im Stammbaum.
     sie nicht zurück. Die Wahl einer anderen Variante ändert sie.“ Bei einer Änderung bleibt eine solche Verbindung,
     und die neue wird nicht geschrieben; das Terminal sagt es vorher („Die bisherige Verbindung bleibt im Stammbaum,
     auf ihr baut weitere Arbeit auf: …; die neue wird nicht eingetragen: …“), und die Standardantwort ist nein;
-  - zwei Einträge einer Person (`same`) und Geschwister ohne Eltern (`siblings`) werden nicht aus der App entschieden:
+  - ebenso wenig lässt sich eine Entscheidung zurücknehmen, deren Verbindungen der Stammbaum hat, die aber nicht diese
+    Entscheidung geschrieben hat (etwa der Agent): „Die Entscheidung der Hypothese H0001 steht schon im Baum
+    (Verbindungen: 2); ein Link nimmt sie nicht zurück. Die Wahl einer anderen Variante ändert sie.“ Statt **Wieder
+    öffnen** sagt die App „Wieder öffnen geht nicht: Die Verbindung steht bereits im Stammbaum der Forschung
+    (2 Verknüpfungen). Ändern ist möglich.“;
+  - zwei Einträge einer Person (`same`) und Geschwister ohne Eltern (`siblings`) werden nicht aus der App entschieden,
+    auch wenn nur eine Version der Hypothese so ist:
     „H0001 lässt sich nicht durch eine Auswahl in der App entscheiden; entschieden wird hier, auf dem ganzen
     Bildschirm.“;
   - eine Version, die 50 und mehr Personen mit dem Stammbaum verbindet, nennt in der Bestätigung die Zahl („Damit
@@ -261,7 +271,7 @@ erfasst. Die Verbindungen der gewählten Version stehen sofort im Stammbaum.
   Forschung mit der Frage; `strom hypothesis decide H… --reopen --reason "…"` setzt die Entscheidung wieder auf offen.
 - **Gilt seit:** Forschung 1.31.0 mit App 3.27.0
 
-<!-- zdroj: research:src/core/links.ts (hypothesis do=decide|abandon|keep-open|reopen, variant; hypotheses do=accept, ids ≤ 50) · assets/lang/cs.json ui.link.asks, ui.link.what.hypothesis.pick/repick, ui.link.hypothesis.why, pick.default, repick.default, isDecided, notInApp, joins, recorded, work, ui.hypothesis.tree.now/off/notNow/stays, ui.hypothesis.why.parents/kept/ancestor/merge/siblings, ui.hypothesis.decided.links, ui.link.accept.list/skipped/skip.*/done · src/core/hypolinks.ts writeDecision, undoDecision, workOnLink (rodina vazby po zápisu, sloučení, nová rodina; ne vlastní údaje osob), reopenBlock, changeKeeps, pickableInApp (jen child a partners) · src/commands/analysis.ts hypothesis decide --from-app (rozhodnutí člověka, ne agenta), --reopen, decidedIn app · ui.link.go · src/core/live.ts /status features hypothesis.decide.link, hypotheses.accept.link · src/core/stromapp.ts APP_DECIDES_HYPOTHESES · assets/method/core.md (rozhodnutí člověka je ve stromu hned) · commity 7a8f4b53, 8e27fa5c, 06cca755, d4c6da07 · CHANGELOG.cs.md 1.31.0 „Hypotéza rozhodnutá v aplikaci Strom“ · spec 074 K1.5 -->
+<!-- zdroj: research:src/core/links.ts (hypothesis do=decide|abandon|keep-open|reopen, variant; hypotheses do=accept, ids ≤ 50) · assets/lang/cs.json ui.link.asks, ui.link.what.hypothesis.pick/repick, ui.link.hypothesis.why, pick.default, repick.default, isDecided, notInApp, joins, recorded, work, treeSame, ui.hypothesis.tree.now/off/notNow/stays, ui.hypothesis.why.parents/kept/ancestor/merge/siblings, ui.hypothesis.decided.links, ui.link.accept.list/skipped/skip.*/done · src/core/hypolinks.ts writeDecision, undoDecision, workOnLink (rodina vazby po zápisu, sloučení, nová rodina; ne vlastní údaje osob), reopenBlock (tree: vazby zvolené verze ve stromu, které rozhodnutí nezapsalo; work), changeKeeps, pickableInApp (každá vazba každé verze child nebo partners, i verze bez vazby; c769f2eb, spec 074 K1.6) · src/cli/menu-links.ts (treeSame: verze bez vazby a nic z dřívějšího zápisu ve stromu; menu-links.ts:784 recorded) · src/gedcom/export.ts (rozhodnuté a zrušené pickableInApp pro aplikaci s hypothesisPick) · app:strings.ts research.hypoCannotReopenTree · src/commands/analysis.ts hypothesis decide --from-app (rozhodnutí člověka, ne agenta), --reopen, decidedIn app · ui.link.go · src/core/live.ts /status features hypothesis.decide.link, hypotheses.accept.link · src/core/stromapp.ts APP_DECIDES_HYPOTHESES · assets/method/core.md (rozhodnutí člověka je ve stromu hned) · commity 7a8f4b53, 8e27fa5c, 06cca755, d4c6da07 · CHANGELOG.cs.md 1.31.0 „Hypotéza rozhodnutá v aplikaci Strom“ · spec 074 K1.5 -->
 
 <a id="R10.4"></a>
 ## R10.4 Eine Familie außerhalb des Stammbaums wartet auf eine belegte Verbindung

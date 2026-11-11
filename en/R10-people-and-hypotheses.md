@@ -197,8 +197,9 @@ the user deciding: `strom config set hypotheses.decide person`.
 <a id="R10.3.3"></a>
 ### R10.3.3 A hypothesis decided in the Strom app
 
-A hypothesis whose versions connect only a child to a family or two people as a couple can also be decided in the
-Strom app ([S3.5.2](S3-what-the-research-knows.md#S3.5.2)). The app itself writes nothing: the choice opens the
+A hypothesis whose versions connect only a child to a family or two people as a couple, or connect no one to the
+tree (where a person came from, say), can also be decided in the Strom app
+([S3.5.2](S3-what-the-research-knows.md#S3.5.2)). The app itself writes nothing: the choice opens the
 research terminal, which asks in one sentence and writes the decision as a person's decision. The links of the chosen
 version are on the tree at once.
 
@@ -215,6 +216,9 @@ version are on the tree at once.
     (has birth parents in the family …; the earlier link stays, other work stands on it; it would make a circle among
     the ancestors) and "What is not on the tree, the agent writes in its next work." The same holds for a decision in
     the terminal and in What waits;
+  - a version that connects no one writes only the decision; the confirmation says so first ("The tree does not
+    change."). The terminal leaves the sentence out when the choice would take a link of an earlier decision off the
+    tree;
   - a **change** to another version and **no version holds** at a decided hypothesis remove what the previous
     decision wrote; **reopen** (`--reopen`) removes the record and opens the hypothesis ("Taken off the tree: …");
   - **other work** on a link is a change of the link's family after it was written (a child, a fact, a citation, the
@@ -224,8 +228,13 @@ version are on the tree at once.
     Another variant picked changes it." On a change such a link stays and the new one is not written; the terminal
     says so first ("The earlier link stays on the tree, other work stands on it: …; the new one is not written: …")
     and the default answer is no;
-  - two records of one person (`same`) and siblings without parents (`siblings`) are not decided from the app: "H0001
-    cannot be decided by a pick in the app; it is decided here, on its whole screen.";
+  - nor can a decision be reopened whose links the tree has but this decision did not write (the agent wrote them,
+    say): "The decision of hypothesis H0001 is on the tree already (links: 2); a link cannot take it back. Another
+    variant picked changes it." In place of **Reopen** the app says "Cannot be reopened: the link is already written
+    in the research tree (2 links). Change is possible.";
+  - two records of one person (`same`) and siblings without parents (`siblings`) are not decided from the app, even
+    when only one version of the hypothesis is such: "H0001 cannot be decided by a pick in the app; it is decided here,
+    on its whole screen.";
   - a version that joins 50 or more people to the tree says the number in the confirmation ("This joins 214 people to
     the tree.");
   - the agent's proposals can be accepted at once, at most 50 hypotheses with one confirmation: the terminal lists them
@@ -240,7 +249,7 @@ version are on the tree at once.
   research with the question; `strom hypothesis decide H… --reopen --reason "…"` returns the decision to open.
 - **Since:** research 1.31.0 with app 3.27.0
 
-<!-- zdroj: research:src/core/links.ts (hypothesis do=decide|abandon|keep-open|reopen, variant; hypotheses do=accept, ids ≤ 50) · assets/lang/cs.json ui.link.asks, ui.link.what.hypothesis.pick/repick, ui.link.hypothesis.why, pick.default, repick.default, isDecided, notInApp, joins, recorded, work, ui.hypothesis.tree.now/off/notNow/stays, ui.hypothesis.why.parents/kept/ancestor/merge/siblings, ui.hypothesis.decided.links, ui.link.accept.list/skipped/skip.*/done · src/core/hypolinks.ts writeDecision, undoDecision, workOnLink (rodina vazby po zápisu, sloučení, nová rodina; ne vlastní údaje osob), reopenBlock, changeKeeps, pickableInApp (jen child a partners) · src/commands/analysis.ts hypothesis decide --from-app (rozhodnutí člověka, ne agenta), --reopen, decidedIn app · ui.link.go · src/core/live.ts /status features hypothesis.decide.link, hypotheses.accept.link · src/core/stromapp.ts APP_DECIDES_HYPOTHESES · assets/method/core.md (rozhodnutí člověka je ve stromu hned) · commity 7a8f4b53, 8e27fa5c, 06cca755, d4c6da07 · CHANGELOG.cs.md 1.31.0 „Hypotéza rozhodnutá v aplikaci Strom“ · spec 074 K1.5 -->
+<!-- zdroj: research:src/core/links.ts (hypothesis do=decide|abandon|keep-open|reopen, variant; hypotheses do=accept, ids ≤ 50) · assets/lang/cs.json ui.link.asks, ui.link.what.hypothesis.pick/repick, ui.link.hypothesis.why, pick.default, repick.default, isDecided, notInApp, joins, recorded, work, treeSame, ui.hypothesis.tree.now/off/notNow/stays, ui.hypothesis.why.parents/kept/ancestor/merge/siblings, ui.hypothesis.decided.links, ui.link.accept.list/skipped/skip.*/done · src/core/hypolinks.ts writeDecision, undoDecision, workOnLink (rodina vazby po zápisu, sloučení, nová rodina; ne vlastní údaje osob), reopenBlock (tree: vazby zvolené verze ve stromu, které rozhodnutí nezapsalo; work), changeKeeps, pickableInApp (každá vazba každé verze child nebo partners, i verze bez vazby; c769f2eb, spec 074 K1.6) · src/cli/menu-links.ts (treeSame: verze bez vazby a nic z dřívějšího zápisu ve stromu; menu-links.ts:784 recorded) · src/gedcom/export.ts (rozhodnuté a zrušené pickableInApp pro aplikaci s hypothesisPick) · app:strings.ts research.hypoCannotReopenTree · src/commands/analysis.ts hypothesis decide --from-app (rozhodnutí člověka, ne agenta), --reopen, decidedIn app · ui.link.go · src/core/live.ts /status features hypothesis.decide.link, hypotheses.accept.link · src/core/stromapp.ts APP_DECIDES_HYPOTHESES · assets/method/core.md (rozhodnutí člověka je ve stromu hned) · commity 7a8f4b53, 8e27fa5c, 06cca755, d4c6da07 · CHANGELOG.cs.md 1.31.0 „Hypotéza rozhodnutá v aplikaci Strom“ · spec 074 K1.5 -->
 
 <a id="R10.4"></a>
 ## R10.4 A family outside the tree waits for a proven link

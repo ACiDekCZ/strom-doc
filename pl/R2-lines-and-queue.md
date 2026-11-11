@@ -167,7 +167,10 @@ przodka i jej rodzina), które nie pomaga żadnej linii. Taka praca idzie **dopi
   ([R2.1.3](#R2.1.3)).
 - **Od badania 1.31.0:** linii pomaga tylko łączenie ludzi z osobą linii albo z jej partnerem; wcześniej wystarczało
   połączenie z kimkolwiek z drzewa, także z rodzeństwem przodka. Most w `/status` mówi przy zadaniu, nad którym trwa
-  praca, jak pomaga linii (funkcja `working.helps`).
+  praca, jak pomaga linii (funkcja `working.helps`). Aplikacja 3.27.0 pokazuje to w **Przeglądzie badania** w wierszu
+  **Teraz** („pomaga linii … · łączy ludzi z drzewem”, „poza liniami · gałąź …”,
+  [S4.1](S4-research-from-the-app.md#S4.1)) i we wstępie wyboru pracy poza liniami
+  ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 
 <!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast · výzkum 1.31.0: src/core/offline.ts (b: joins jen k osobě linie nebo partnerovi, jinak větev; a, c mají přednost), HelpsBy, /status working[].helps, branch · commity 576cf7e5, 2e54c8d5 · CHANGELOG.cs.md 1.31.0 „Připojení rodiny k vedlejší větvi je práce mimo linie“ · spec 036 K1.7 -->
 

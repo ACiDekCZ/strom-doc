@@ -164,7 +164,10 @@ and her family) that helps no line. Such work comes **after the work on the line
   ([R2.1.3](#R2.1.3)).
 - **From research 1.31.0:** only joining people to a person of the line or to that person's partner helps the line;
   before, joining them to anyone in the tree was enough, also to an ancestor's sibling. The bridge in `/status` says
-  at the task being worked on how it helps the line (the feature `working.helps`).
+  at the task being worked on how it helps the line (the feature `working.helps`). App 3.27.0 shows it in the
+  **Research overview** in the row **Now** ("helps the direction … · connects people to the tree", "outside the
+  directions · branch …", [S4.1](S4-research-from-the-app.md#S4.1)) and in the introduction of the choice of work
+  outside the directions ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 
 <!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast · výzkum 1.31.0: src/core/offline.ts (b: joins jen k osobě linie nebo partnerovi, jinak větev; a, c mají přednost), HelpsBy, /status working[].helps, branch · commity 576cf7e5, 2e54c8d5 · CHANGELOG.cs.md 1.31.0 „Připojení rodiny k vedlejší větvi je práce mimo linie“ · spec 036 K1.7 -->
 

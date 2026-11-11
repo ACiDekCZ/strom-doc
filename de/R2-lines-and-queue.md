@@ -178,6 +178,9 @@ Linie erreicht (die Schwester eines Vorfahren und ihre Familie), und die keiner 
 - **Ab Forschung 1.31.0:** der Linie hilft nur das Verbinden von Personen mit einer Person der Linie oder mit deren
   Partner; früher genügte das Verbinden mit irgendwem im Stammbaum, auch mit einem Geschwister eines Vorfahren. Die
   Brücke sagt in `/status` bei der Aufgabe, an der gearbeitet wird, wie sie der Linie hilft (Funktion `working.helps`).
+  Die App 3.27.0 zeigt es in der **Forschungsübersicht** in der Zeile **Jetzt** („hilft der Richtung … · verbindet
+  Personen mit dem Baum“, „außerhalb der Richtungen · Zweig …“, [S4.1](S4-research-from-the-app.md#S4.1)) und in der
+  Einleitung der Wahl der Arbeit außerhalb der Richtungen ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 
 <!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast · výzkum 1.31.0: src/core/offline.ts (b: joins jen k osobě linie nebo partnerovi, jinak větev; a, c mají přednost), HelpsBy, /status working[].helps, branch · commity 576cf7e5, 2e54c8d5 · CHANGELOG.cs.md 1.31.0 „Připojení rodiny k vedlejší větvi je práce mimo linie“ · spec 036 K1.7 -->
 

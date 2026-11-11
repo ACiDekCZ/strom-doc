@@ -157,7 +157,9 @@ který žádné linii nepomáhá. Taková práce jde **až po práci na liniích
   (`queue.offLineShare`), z nejbližší větve. Do práce mimo linie patří i manžel nebo manželka předka ([R2.1.3](#R2.1.3)).
 - **Od výzkumu 1.31.0:** linii pomáhá jen připojení lidí k člověku linie nebo k jeho partnerovi; dřív stačilo
   připojení ke komukoli ze stromu, i k sourozenci předka. Most v `/status` říká u úkolu, na kterém se pracuje, jak
-  linii pomáhá (funkce `working.helps`).
+  linii pomáhá (funkce `working.helps`). Aplikace 3.27.0 to ukáže v **Přehledu výzkumu** v řádku **Teď**
+  („pomáhá linii … · připojuje lidi ke stromu“, „mimo linie · větev …“, [S4.1](S4-research-from-the-app.md#S4.1))
+  a v úvodu volby práce mimo linie ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 
 <!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast · výzkum 1.31.0: src/core/offline.ts (b: joins jen k osobě linie nebo partnerovi, jinak větev; a, c mají přednost), HelpsBy, /status working[].helps, branch · commity 576cf7e5, 2e54c8d5 · CHANGELOG.cs.md 1.31.0 „Připojení rodiny k vedlejší větvi je práce mimo linie“ · spec 036 K1.7 -->
 
