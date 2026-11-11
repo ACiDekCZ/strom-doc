@@ -163,6 +163,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R10.3 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Hypotéza: soupeřící vysvětlení | A hypothesis: competing explanations | Eine Hypothese: konkurrierende Erklärungen | Hipoteza: konkurujące wyjaśnienia |
 | R10.3.1 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Rozhodnutí hypotézy | Deciding a hypothesis | Entscheidung einer Hypothese | Rozstrzygnięcie hipotezy |
 | R10.3.2 | R10-people-and-hypotheses.md | výzkum 1.29.0, aplikace 3.25.0 | platí | Kdo rozhoduje hypotézy: člověk, nebo AI | Who decides the hypotheses: the user or the AI | Wer die Hypothesen entscheidet: der Mensch oder die KI | Kto rozstrzyga hipotezy: człowiek czy AI |
+| R10.3.3 | R10-people-and-hypotheses.md | výzkum 1.31.0, aplikace 3.27.0 | platí | Hypotéza rozhodnutá v aplikaci Strom | A hypothesis decided in the Strom app | Eine in der App Strom entschiedene Hypothese | Hipoteza rozstrzygnięta w aplikacji Strom |
 | R10.4 | R10-people-and-hypotheses.md | výzkum 1.9.0 | platí | Rodina mimo strom čeká na doloženou vazbu | A family outside the tree waits for a proven link | Eine Familie außerhalb des Stammbaums wartet auf eine belegte Verbindung | Rodzina poza drzewem czeka na udokumentowane powiązanie |
 | R10.5 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Jména osoby | A person's names | Die Namen einer Person | Imiona i nazwiska osoby |
 | R10.5.1 | R10-people-and-hypotheses.md | výzkum 1.18.0 | platí | Chybné jméno a poznámka se odvolají | A wrong name and a note are retracted | Ein falscher Name und eine Notiz werden zurückgezogen | Błędne imię i notatka zostają wycofane |
@@ -331,6 +332,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S3.4 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Rozpory | Conflicts | Widersprüche | Sprzeczności |
 | S3.5 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Hypotézy | Hypotheses | Hypothesen | Hipotezy |
 | S3.5.1 | S3-what-the-research-knows.md | aplikace 3.11.0 | platí | Ukázat: připojeno jen v zobrazení | Show: linked in the view only | Zeigen: nur in der Ansicht verbunden | Pokaż: połączone tylko w widoku |
+| S3.5.2 | S3-what-the-research-knows.md | aplikace 3.27.0 | platí | Rozhodnout hypotézu v aplikaci | Deciding a hypothesis in the app | Eine Hypothese in der App entscheiden | Rozstrzygnięcie hipotezy w aplikacji |
 | S3.6 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Prohledáno | Searched | Durchsucht | Przeszukano |
 | S3.7 | S3-what-the-research-knows.md | aplikace 3.5.0 | platí | Oddíl Co ví výzkum v panelu výzkumu | The section What the research knows in the research panel | Abschnitt Was die Forschung weiß im Panel der Forschung | Sekcja Co wie badanie w panelu badania |
 | S4 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Výzkum řízený z aplikace | Research run from the app | Forschung aus der App gesteuert | Badanie sterowane z aplikacji |

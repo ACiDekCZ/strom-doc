@@ -165,19 +165,21 @@ B*, *abandoned*, the number of versions and a note. Open ones are expanded.
   links. Withdrawn ones never.
 - **Who decided:** a hypothesis the agent decided ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)) carries *decided
   by the agent* with the day and **Reason** (the text of the decision in the research's language; a long one expands).
-- **Limits:** a hypothesis cannot be decided from the app; it is decided in the research, in the terminal
-  ([R10.3.1](R10-people-and-hypotheses.md#R10.3.1)). Who decides, a person or the agent, is a choice of the research
-  ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)).
+- **Limits:** a hypothesis can be decided from the app by choosing a version that the research terminal confirms
+  ([S3.5.2](#S3.5.2)); otherwise it is decided in the research ([R10.3.1](R10-people-and-hypotheses.md#R10.3.1)). Who
+  decides, a person or the agent, is a choice of the research ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)).
 - **The offer The AI decides:** with **The user decides** saved and 10 or more open hypotheses in the tree, the
   sentence "N open hypotheses wait for a person to decide; with "The AI decides" the agent decides them itself, each
   with its reason." stands above the hypotheses. The switch is confirmed in the research; the app does not turn the AI
   on ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)).
-- **Controls:** app: the switch **Show** at a version ([S3.5.1](#S3.5.1)); **Decide in the research**, at a decided
-  one **Change in the research**, opens the hypothesis in the research on this computer; **Switch to "The AI
-  decides"** opens the research in the terminal, **Hide** hides the offer for this research.
+- **Controls:** app: the switch **Show** at a version ([S3.5.1](#S3.5.1)); **Choose** at a version and the other choices
+  ([S3.5.2](#S3.5.2)); **Decide in the research**, at a decided one **Change in the research**, opens the hypothesis in
+  the research on this computer; **Switch to "The AI decides"** opens the research in the terminal, **Hide** hides the
+  offer for this research.
 - **Since:** app 3.11.0 with research 1.14.0 (versions, state, **Show**); the list of hypotheses from app 3.4.0
 - **From app 3.25.0:** *decided by the agent* with the reason (with research 1.29.0), **Decide in the research**,
   **Change in the research** and the offer **The AI decides**.
+- **From app 3.27.0:** with research 1.31.0 a decision by choosing a version right on the card ([S3.5.2](#S3.5.2)).
 
 <!-- zdroj: app:src/ui/person-research-ui.ts researchHypothesesHtml · strings.ts research.hypo*, hypoByAgent, hypoReason, hypoChange, decideInResearch, viewLinks.*, hypoOfferAgent, hypoOfferSwitch, hypoOfferHide · person-research-ui.ts researchHypothesesOffer (HYPOTHESES_OFFER_MIN = 10) · research:src/gedcom/export.ts:309-325 hypothesisPeople, _BY agent / DECI / _AT (brána APP_SHOWS_HYPOTHESIS_DECIDER) · CHANGELOG 3.11.0, 3.25.0 -->
 
@@ -197,6 +199,52 @@ do not change. The versions of one hypothesis exclude each other; at most one ca
 - **Since:** app 3.11.0 with research 1.14.0
 
 <!-- zdroj: app:src/view-links.ts strom-view-links:{treeId}, strom-view-links-master:{treeId}, viewLinksAvailable (HYPOTHESIS_LINKS) · src/ui/view-links-ui.ts:326 · strings.ts viewLinks.state -->
+
+<a id="S3.5.2"></a>
+### S3.5.2 Deciding a hypothesis in the app
+
+The card of a hypothesis in **What the research knows** lets the hypothesis be decided: each version has **Choose**.
+Each choice opens the research terminal, where it is confirmed ([R10.3.3](R10-people-and-hypotheses.md#R10.3.3));
+until it is confirmed nothing changes in the app.
+
+- **Card:** versions with **For:** and **Against:** and **Sources (n)** (the sources the version names); the agent's
+  proposal ("proposed by the agent: B") with **Accept proposal B**, for abandoning **Accept: no version holds**; under
+  the versions **No version holds** and **Leave open**. A version that links 50 or more people has a pill ("links 214
+  people"). At a version there can be what it does with the tree: "Nothing is linked in the tree; the research only
+  records the decision.", "The tree stays as it is; the research only records the decision.", "The tree stays as it
+  is: the old link remains, further work stands on it."
+- **Waiting:** "Waiting for confirmation in the research" and "To be confirmed in the research terminal (Enter = yes):
+  decide H0001 for version B. Then the terminal optionally asks for a reason. Nothing changes here until confirmed."
+  After 10 minutes "Not confirmed by the research yet": "Waiting for over 10 minutes. The terminal may have been
+  closed; “Open again” asks once more." with **Open again** and **Stop waiting**. When the research meanwhile decided
+  otherwise: "Already decided in the research: A".
+- **After the confirmation** the app loads the new version of the research (the research wrote the links) and the
+  tree refreshes; the message "Hypothesis H0001 decided: B", on the card "decided in the app". When the research's
+  version has other changes too, the app asks (**Load**, or **Later**: "the tree stays as it is for now"); before
+  loading it saves a backup.
+- **A decided hypothesis:** "Holds since {day}: B" and earlier decisions ("before: A, …"). **Change** shows the
+  versions again with **Choose** (**Cancel the change**; the terminal asks for the reason of the change). **Reopen**
+  says what changes in the tree ("The link of 2 people leaves the tree.", "Nothing changes in the tree."). Where
+  reopening is not possible, the reason stands instead of the button ("Cannot be reopened: further work stands on the
+  link the decision wrote (2 links). Change is possible.") with the link **Decide in the research**.
+- **Awaiting action:** hypotheses to decide are in the group **Hypotheses to decide** (chip **Decisions**, [S4.4](S4-research-from-the-app.md#S4.4)):
+  "H0022 · question", the agent's proposal with **Accept proposal B** and **Leave open**, or the versions with
+  **Choose**; **More ›** opens the card at the person. With a research that accepts proposals at once: a checkbox at a
+  hypothesis with a proposal, **Select all with a proposal**, "n selected." (at a large link "Large link: H0001 → B links 214 people.") and **Accept proposals
+  (n)**, at most 50 at once ("At most 50 at once."). The terminal confirms once; the message says how many proposals
+  were accepted. At a hypothesis that cannot be decided here: "Only the research decides this one."
+- **Edge of the tree:** the bubble "?" at an edge with a hypothesis also has **Choose** at the versions.
+- **Limits:**
+  - the choices are only with a research on this computer that can do them; on a phone, a tablet and in a browser
+    elsewhere the card only reads ("Decided on the computer with the research."), a read-only copy too;
+  - a version that merges people or makes siblings: "Merging people is decided in the research.";
+  - with an older research the card stays as before, with **Decide in the research** ([S3.5](#S3.5)).
+- **Controls:** **What the research knows** → **Hypotheses**: **Choose**, **Accept proposal …**, **No version
+  holds**, **Leave open**, **Change**, **Reopen**; **Awaiting action** → **Hypotheses to decide**. Choices that open the terminal
+  carry its mark ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
+- **Since:** app 3.27.0 with research 1.31.0
+
+<!-- zdroj: app:src/research-hypothesis-pick.ts hypothesisPickable (pick | old | remote | readonly | merge; HYPOTHESIS_DECIDE_LINK_FEATURE), HYPOTHESIS_BIG_JOIN = 50, hypothesisLinkUrl, hypothesesAcceptUrl, hypothesisChoiceStays, hypothesisCannotReopen · src/ui/person-research-ui.ts (verze s Vybrat, Pro/Proti, Zdroje, návrh, Žádná verze neplatí, Nechat otevřenou, Změnit, Zrušit změnu, Vrátit na otevřenou, nejde vrátit → Rozhodnout ve výzkumu, hypoRemote, hypoMerge) · src/ui/hypothesis-wait-ui.ts, src/research-hypothesis-wait.ts (čekání, 10 min, Otevřít znovu, Zrušit čekání; Načíst / Později se zálohou) · src/ui/hypothesis-waiting-ui.ts (Co čeká: Rozhodnout, Přijmout návrh, Nechat otevřenou, Vybrat, Víc ›, Vybrat vše s návrhem, Přijmout návrhy (n), ≤ 50, Tady rozhoduje jen výzkum.) · src/ui/research-edge-ui.ts (bublina kraje, Vybrat) · strings.ts research.hypoPick, hypoPickAria, hypoNone, hypoLeave, hypoProposal, hypoAccept, hypoAcceptNone, hypoFor, hypoAgainst, hypoSources, hypoWait, hypoWaitAsk, hypoWaitLong, hypoWaitLongText, hypoWaitAgain, hypoWaitStop, hypoChangeReason, hypoDecidedToast, hypoElsewhere, hypoByApp, hypoLoadLater, hypoLoad, hypoChangeHere, hypoChangeCancel, hypoHoldsSince, hypoBefore, hypoReopen, hypoReopenLoss, hypoReopenNone, hypoCannotReopenWork, hypoStaysNote, hypoBig, hypoNoLinkNote, hypoInTreeNote, hypoMerge, hypoRemote, hypoAcceptMany, hypoSelectAll, hypoOnlyResearch, hypoAcceptMax, hypoSelected, decide · commity b6cd39f2, 92383f57, 4ed3251a, 8d7f1597, 364df0cd · spec 074 -->
 
 <a id="S3.6"></a>
 ## S3.6 Searched

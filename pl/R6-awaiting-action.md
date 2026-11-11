@@ -26,7 +26,8 @@ tylko w nim. Lista jest za każdym razem obliczana z badania, nic się do niej n
   Liczba w aplikacji to N bez pozycji tylko dla terminala i bez wysłanych zapytań.
 - Tylko w terminalu są drzewa wysłane z aplikacji (**Aplikacja Strom**), pytania do odczytu skanów (**Odczyt
   skanów**), sprzeczności (**Do rozstrzygnięcia – sprzeczności**, zob. [R5](R5-conflicts.md)), hipotezy do
-  rozstrzygnięcia (od badania 1.28.0) i łagodniejsze warunki archiwum. W przeglądzie **Co czeka** idą najpierw pod nagłówkiem **Tylko tutaj w terminalu (nie ma ich w aplikacji
+  rozstrzygnięcia (od badania 1.28.0; od 1.31.0 dostaje je też aplikacja Strom, która umie je rozstrzygnąć,
+  [R6.3.4](#R6.3.4)) i łagodniejsze warunki archiwum. W przeglądzie **Co czeka** idą najpierw pod nagłówkiem **Tylko tutaj w terminalu (nie ma ich w aplikacji
   Strom)**, za nimi **Także w aplikacji Strom**.
 - Strona na telefon tylko czyta: bez pozycji tylko dla terminala, z opowieściami, najpierw 20 pozycji, najwyżej 200
   naraz. Podaje **Decyzje podejmuje się na komputerze w Przeglądzie badania.**
@@ -150,7 +151,8 @@ transkrypcje**, zob. [R3.4.1](R3-verification-and-citation.md#R3.4.1)). Decyzje 
   Gdy czeka 10 lub więcej otwartych hipotez, aplikacja w **Co wie badanie** proponuje przełączenie na **Rozstrzyga
   AI** (potwierdza się w badaniu). Przy **Rozstrzyga AI**
   agent rozstrzyga sam to, co potwierdza cytowany akt, i czekają tylko jego propozycje (rozstrzygnięcia, których sam
-  podjąć nie może). Grupa jest tylko w terminalu, aplikacja Strom jej nie pokazuje ([R6.1.1](#R6.1.1)). W Archiwum
+  podjąć nie może). Aplikacja Strom, która umie rozstrzygać hipotezy, też pokazuje tę grupę
+  ([S3.5.2](S3-what-the-research-knows.md#S3.5.2)); starsza aplikacja jej nie dostaje ([R6.1.1](#R6.1.1)). W Archiwum
   Strom tej grupy nie ma.
 - **Obsługa:** terminal: **Co czeka** → pozycja, `strom hypothesis decide H… --proposed | --keep-open`. Te same wybory
   są w przeglądzie osoby: **Rozszerz badanie** → **Przegląd osoby** → **Hipotezy o osobie (n)**.

@@ -148,8 +148,11 @@ In a research with several lines, **work off the lines** is a task about people 
 and her family) that helps no line. Such work comes **after the work on the lines**.
 
 - **Limits:** a task helps a line, and so is not off the lines, when it names a hypothesis or conflict of the line,
-  joins people to the tree, or the agent wrote how it helps the line (an ancestor's sibling as godparent or witness,
-  the same house, an ancestor's surname). The sibling's own family does not help the line.
+  joins people to the tree through a person of the line or that person's partner, or the agent wrote how it helps
+  the line (an ancestor's sibling as godparent or witness, the same house, an ancestor's surname). The sibling's own
+  family does not help the line: joining people to a side branch (for example to an ancestor's sibling) belongs to that
+  branch and comes in turn by its choice ([R2.3.1](#R2.3.1)). A hypothesis of the line and a reason the agent wrote
+  still count.
 - **Choices:** **at the end, after the lines** (default) · **as the lines' work** · **never** (the tasks are not taken,
   nothing is deleted).
 - **Controls:** terminal: **Settings → The agent working alone → Work off the lines**,
@@ -159,8 +162,11 @@ and her family) that helps no line. Such work comes **after the work on the line
 - **From research 1.26.0:** a new default choice **occasionally, one in a while**: one task off the lines per 10 sessions
   (`queue.offLineShare`), from the nearest branch. The spouse of an ancestor also belongs to work off the lines
   ([R2.1.3](#R2.1.3)).
+- **From research 1.31.0:** only joining people to a person of the line or to that person's partner helps the line;
+  before, joining them to anyone in the tree was enough, also to an ancestor's sibling. The bridge in `/status` says
+  at the task being worked on how it helps the line (the feature `working.helps`).
 
-<!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast -->
+<!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast · výzkum 1.31.0: src/core/offline.ts (b: joins jen k osobě linie nebo partnerovi, jinak větev; a, c mají přednost), HelpsBy, /status working[].helps, branch · commity 576cf7e5, 2e54c8d5 · CHANGELOG.cs.md 1.31.0 „Připojení rodiny k vedlejší větvi je práce mimo linie“ · spec 036 K1.7 -->
 
 <a id="R2.3.1"></a>
 ### R2.3.1 A choice for one branch and one task

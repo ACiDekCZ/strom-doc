@@ -162,19 +162,21 @@ liczba wersji i uwaga. Otwarte są rozwinięte.
   Odwołane nigdy.
 - **Kto rozstrzygnął:** hipoteza, którą rozstrzygnął agent ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)), niesie
   *rozstrzygnął agent* z dniem i **Uzasadnienie** (tekst rozstrzygnięcia w języku badania; długi się rozwija).
-- **Granice:** rozstrzygnąć hipotezy z aplikacji nie można; rozstrzyga się ją w badaniu, w terminalu
-  ([R10.3.1](R10-people-and-hypotheses.md#R10.3.1)). Kto rozstrzyga, człowiek czy agent, jest wyborem badania
-  ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)).
+- **Granice:** hipotezę można rozstrzygnąć z aplikacji wyborem wersji, który potwierdzi terminal badania
+  ([S3.5.2](#S3.5.2)); inaczej rozstrzyga się ją w badaniu ([R10.3.1](R10-people-and-hypotheses.md#R10.3.1)). Kto
+  rozstrzyga, człowiek czy agent, jest wyborem badania ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)).
 - **Propozycja Rozstrzyga AI:** przy zapisanym **Rozstrzyga człowiek** i 10 lub więcej otwartych hipotezach drzewa
   nad hipotezami stoi zdanie „N otwartych hipotez czeka na rozstrzygnięcie człowieka; przy „Rozstrzyga AI” agent
   rozstrzyga je sam, każdą z uzasadnieniem.” Przełączenie potwierdza się w badaniu, w aplikacji AI się nie włącza
   ([R10.3.2](R10-people-and-hypotheses.md#R10.3.2)).
-- **Obsługa:** aplikacja: przełącznik **Pokaż** przy wersji ([S3.5.1](#S3.5.1)); **Rozstrzygnij w badaniu**, przy
-  rozstrzygniętej **Zmień w badaniu**, otwiera hipotezę w badaniu na tym komputerze; **Przełącz na „Rozstrzyga AI”**
-  otwiera badanie w terminalu, **Ukryj** ukrywa propozycję dla tego badania.
+- **Obsługa:** aplikacja: przełącznik **Pokaż** przy wersji ([S3.5.1](#S3.5.1)); **Wybierz** przy wersji i dalsze wybory
+  ([S3.5.2](#S3.5.2)); **Rozstrzygnij w badaniu**, przy rozstrzygniętej **Zmień w badaniu**, otwiera hipotezę w badaniu
+  na tym komputerze; **Przełącz na „Rozstrzyga AI”** otwiera badanie w terminalu, **Ukryj** ukrywa propozycję dla tego
+  badania.
 - **Obowiązuje od:** aplikacja 3.11.0 z badaniem 1.14.0 (wersje, stan, **Pokaż**); lista hipotez od aplikacji 3.4.0
 - **Od aplikacji 3.25.0:** *rozstrzygnął agent* z uzasadnieniem (z badaniem 1.29.0), **Rozstrzygnij w badaniu**,
   **Zmień w badaniu** i propozycja **Rozstrzyga AI**.
+- **Od aplikacji 3.27.0:** z badaniem 1.31.0 rozstrzygnięcie wyborem wersji wprost na karcie ([S3.5.2](#S3.5.2)).
 
 <!-- zdroj: app:src/ui/person-research-ui.ts researchHypothesesHtml · strings.ts research.hypo*, hypoByAgent, hypoReason, hypoChange, decideInResearch, viewLinks.*, hypoOfferAgent, hypoOfferSwitch, hypoOfferHide · person-research-ui.ts researchHypothesesOffer (HYPOTHESES_OFFER_MIN = 10) · research:src/gedcom/export.ts:309-325 hypothesisPeople, _BY agent / DECI / _AT (brána APP_SHOWS_HYPOTHESIS_DECIDER) · CHANGELOG 3.11.0, 3.25.0 -->
 
@@ -194,6 +196,54 @@ się przez to nie zmieniają. Wersje jednej hipotezy się wykluczają; włączon
 - **Obowiązuje od:** aplikacja 3.11.0 z badaniem 1.14.0
 
 <!-- zdroj: app:src/view-links.ts strom-view-links:{treeId}, strom-view-links-master:{treeId}, viewLinksAvailable (HYPOTHESIS_LINKS) · src/ui/view-links-ui.ts:326 · strings.ts viewLinks.state -->
+
+<a id="S3.5.2"></a>
+### S3.5.2 Rozstrzygnięcie hipotezy w aplikacji
+
+Karta hipotezy w **Co wie badanie** pozwala hipotezę rozstrzygnąć: przy każdej wersji jest **Wybierz**. Każdy wybór
+otwiera terminal badania, gdzie się go potwierdza ([R10.3.3](R10-people-and-hypotheses.md#R10.3.3)); do potwierdzenia
+w aplikacji nic się nie zmienia.
+
+- **Karta:** wersje z **Za:** i **Przeciw:** oraz **Źródła (n)** (źródła, które wersja wymienia); propozycja agenta
+  („propozycja agenta: B”) z **Przyjmij propozycję B**, przy porzuceniu **Przyjmij: żadna wersja nie obowiązuje**; pod
+  wersjami **Żadna wersja nie obowiązuje** i **Pozostaw otwartą**. Wersja, która połączy 50 i więcej osób, ma
+  etykietę („połączy 214 osób”). Przy wersji może stać, co zrobi z drzewem: „W drzewie nic się nie połączy, badanie
+  zapisze tylko rozstrzygnięcie.”, „Drzewo się nie zmieni, badanie zapisze tylko rozstrzygnięcie.”, „Drzewo się nie
+  zmieni: stare powiązanie zostanie, opiera się na nim dalsza praca.”
+- **Oczekiwanie:** „Czeka na potwierdzenie w badaniu” i „Potwierdzenie w terminalu badania (Enter = tak): rozstrzygnąć
+  H0001 na rzecz wersji B. Potem terminal opcjonalnie zapyta o uzasadnienie. Do potwierdzenia nic się tu nie
+  zmienia.” Po 10 minutach „Badanie jeszcze nie potwierdziło”: „Oczekiwanie trwa ponad 10 minut. Terminal mógł
+  pozostać zamknięty; „Otwórz ponownie” zapyta jeszcze raz.” z **Otwórz ponownie** i **Przerwij oczekiwanie**. Gdy
+  badanie w międzyczasie rozstrzygnęło inaczej: „W badaniu już rozstrzygnięto: A”.
+- **Po potwierdzeniu** aplikacja wczyta nową wersję badania (powiązania zapisało badanie) i drzewo się odświeży;
+  komunikat „Hipoteza H0001 rozstrzygnięta: B”, na karcie „rozstrzygnięto w aplikacji”. Gdy wersja badania ma też inne
+  zmiany, aplikacja zapyta (**Wczytaj** albo **Później**: „drzewo na razie pozostaje bez zmian”); przed wczytaniem
+  zapisze kopię zapasową.
+- **Rozstrzygnięta hipoteza:** „Obowiązuje od {dzień}: B” i wcześniejsze rozstrzygnięcia („wcześniej: A, …”).
+  **Zmień** pokaże wersje znowu z **Wybierz** (**Anuluj zmianę**; o uzasadnienie zmiany zapyta terminal). **Przywróć
+  jako otwartą** mówi, co się zmieni w drzewie („Z drzewa zniknie połączenie 2 osób.”, „W drzewie nic się nie
+  zmieni.”). Gdzie przywrócić się nie da, zamiast przycisku stoi powód („Przywrócić się nie da: na połączeniu
+  zapisanym przez rozstrzygnięcie opiera się dalsza praca (2 powiązania). Można zmienić.”) i odnośnik **Rozstrzygnij
+  w badaniu**.
+- **Czeka na decyzję:** hipotezy do rozstrzygnięcia są w grupie **Hipotezy do rozstrzygnięcia**
+  (chip **Decyzje**, [S4.4](S4-research-from-the-app.md#S4.4)): „H0022 · pytanie”, propozycja agenta z **Przyjmij propozycję B**
+  i **Pozostaw otwartą** albo wersje z **Wybierz**; **Więcej ›** otwiera kartę przy osobie. Z badaniem, które
+  przyjmuje propozycje naraz: pole wyboru przy hipotezie z propozycją, **Zaznacz wszystkie z propozycją**, „Zaznaczono
+  n.” (przy dużym połączeniu „Duże połączenie: H0001 → B połączy 214 osób.”) i **Przyjmij propozycje (n)**, naraz najwyżej 50 („Najwyżej 50 naraz.”). Terminal
+  potwierdza raz; komunikat mówi, ile propozycji przyjęto. Przy hipotezie, której tu rozstrzygnąć nie można: „Tu
+  rozstrzyga tylko badanie.”
+- **Krawędź drzewa:** dymek „?” przy krawędzi z hipotezą ma przy wersjach także **Wybierz**.
+- **Granice:**
+  - wybory są tylko z badaniem na tym komputerze, które je umie; na telefonie, tablecie i w przeglądarce gdzie indziej
+    karta tylko czyta („Rozstrzyga się na komputerze z badaniem.”), kopia tylko do odczytu także;
+  - wersja, która scala osoby albo tworzy rodzeństwo: „O scaleniu osób rozstrzyga się w badaniu.”;
+  - ze starszym badaniem karta zostaje jak dotąd, z **Rozstrzygnij w badaniu** ([S3.5](#S3.5)).
+- **Obsługa:** **Co wie badanie** → **Hipotezy**: **Wybierz**, **Przyjmij propozycję …**, **Żadna wersja nie
+  obowiązuje**, **Pozostaw otwartą**, **Zmień**, **Przywróć jako otwartą**; **Czeka na decyzję** → **Hipotezy do rozstrzygnięcia**.
+  Wybory, które otwierają terminal, mają jego oznaczenie ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
+- **Obowiązuje od:** aplikacja 3.27.0 z badaniem 1.31.0
+
+<!-- zdroj: app:src/research-hypothesis-pick.ts hypothesisPickable (pick | old | remote | readonly | merge; HYPOTHESIS_DECIDE_LINK_FEATURE), HYPOTHESIS_BIG_JOIN = 50, hypothesisLinkUrl, hypothesesAcceptUrl, hypothesisChoiceStays, hypothesisCannotReopen · src/ui/person-research-ui.ts (verze s Vybrat, Pro/Proti, Zdroje, návrh, Žádná verze neplatí, Nechat otevřenou, Změnit, Zrušit změnu, Vrátit na otevřenou, nejde vrátit → Rozhodnout ve výzkumu, hypoRemote, hypoMerge) · src/ui/hypothesis-wait-ui.ts, src/research-hypothesis-wait.ts (čekání, 10 min, Otevřít znovu, Zrušit čekání; Načíst / Později se zálohou) · src/ui/hypothesis-waiting-ui.ts (Co čeká: Rozhodnout, Přijmout návrh, Nechat otevřenou, Vybrat, Víc ›, Vybrat vše s návrhem, Přijmout návrhy (n), ≤ 50, Tady rozhoduje jen výzkum.) · src/ui/research-edge-ui.ts (bublina kraje, Vybrat) · strings.ts research.hypoPick, hypoPickAria, hypoNone, hypoLeave, hypoProposal, hypoAccept, hypoAcceptNone, hypoFor, hypoAgainst, hypoSources, hypoWait, hypoWaitAsk, hypoWaitLong, hypoWaitLongText, hypoWaitAgain, hypoWaitStop, hypoChangeReason, hypoDecidedToast, hypoElsewhere, hypoByApp, hypoLoadLater, hypoLoad, hypoChangeHere, hypoChangeCancel, hypoHoldsSince, hypoBefore, hypoReopen, hypoReopenLoss, hypoReopenNone, hypoCannotReopenWork, hypoStaysNote, hypoBig, hypoNoLinkNote, hypoInTreeNote, hypoMerge, hypoRemote, hypoAcceptMany, hypoSelectAll, hypoOnlyResearch, hypoAcceptMax, hypoSelected, decide · commity b6cd39f2, 92383f57, 4ed3251a, 8d7f1597, 364df0cd · spec 074 -->
 
 <a id="S3.6"></a>
 ## S3.6 Przeszukano

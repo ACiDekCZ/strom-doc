@@ -718,7 +718,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Hypothesen · Hypothesen zu entscheiden (terminal) | Eine Frage, die die Forschung zu einer Person oder Verbindung führt, mit Versionen der Antwort; sie ist offen, für eine Version entschieden oder verworfen. Entscheiden darf sie nur der Mensch; der Agent schlägt die Entscheidung vor. |
 | pl | Hipotezy · Hipotezy do rozstrzygnięcia (terminal) | Pytanie, które badanie prowadzi o osobie lub powiązaniu, z wersjami odpowiedzi; jest otwarte, rozstrzygnięte na rzecz jednej wersji albo anulowane. Rozstrzyga je tylko człowiek; agent proponuje rozstrzygnięcie. |
 
-- **Čísla:** [R10.3](cs/R10-people-and-hypotheses.md#R10.3), R10.3.1, R6.3.4, S3.5, S3.5.1
+- **Čísla:** [R10.3](cs/R10-people-and-hypotheses.md#R10.3), R10.3.1, R10.3.3, R6.3.4, S3.5, S3.5.1, S3.5.2
 
 <a id="pedigree-collapse"></a>
 ### Implex

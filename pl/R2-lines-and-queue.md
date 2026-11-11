@@ -152,8 +152,10 @@ W badaniu z wieloma liniami **praca poza liniami** to zadanie o ludziach, do kt�
 przodka i jej rodzina), które nie pomaga żadnej linii. Taka praca idzie **dopiero po pracy nad liniami**.
 
 - **Granice:** zadanie pomaga linii, a więc nie jest poza liniami, gdy wymienia hipotezę lub sprzeczność linii,
-  łączy ludzi z drzewem albo agent zapisał, jak pomaga linii (rodzeństwo przodka jako chrzestny lub świadek, ten sam
-  dom, nazwisko przodka). Własna rodzina rodzeństwa linii nie pomaga.
+  łączy ludzi z drzewem przez osobę linii albo jej partnera, albo agent zapisał, jak pomaga linii (rodzeństwo przodka
+  jako chrzestny lub świadek, ten sam dom, nazwisko przodka). Własna rodzina rodzeństwa linii nie pomaga: łączenie
+  ludzi z boczną gałęzią (na przykład z rodzeństwem przodka) należy do tej gałęzi i przychodzi na nie kolej według jej
+  wyboru ([R2.3.1](#R2.3.1)). Hipoteza linii i powód zapisany przez agenta obowiązują dalej.
 - **Opcje:** **na końcu, dopiero po liniach** (domyślnie) · **normalnie, jak praca linii** · **nigdy** (zadań się nie
   bierze, nic nie jest usuwane).
 - **Obsługa:** terminal: **Ustawienia → Samodzielna praca agenta → Praca poza liniami**,
@@ -163,8 +165,11 @@ przodka i jej rodzina), które nie pomaga żadnej linii. Taka praca idzie **dopi
 - **Od badania 1.26.0:** nowa opcja domyślna **czasem, raz na jakiś czas**: jedno zadanie poza liniami na 10 sesji
   (`queue.offLineShare`), z najbliższej gałęzi. Do pracy poza liniami należy też mąż lub żona przodka
   ([R2.1.3](#R2.1.3)).
+- **Od badania 1.31.0:** linii pomaga tylko łączenie ludzi z osobą linii albo z jej partnerem; wcześniej wystarczało
+  połączenie z kimkolwiek z drzewa, także z rodzeństwem przodka. Most w `/status` mówi przy zadaniu, nad którym trwa
+  praca, jak pomaga linii (funkcja `working.helps`).
 
-<!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast -->
+<!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast · výzkum 1.31.0: src/core/offline.ts (b: joins jen k osobě linie nebo partnerovi, jinak větev; a, c mají přednost), HelpsBy, /status working[].helps, branch · commity 576cf7e5, 2e54c8d5 · CHANGELOG.cs.md 1.31.0 „Připojení rodiny k vedlejší větvi je práce mimo linie“ · spec 036 K1.7 -->
 
 <a id="R2.3.1"></a>
 ### R2.3.1 Wybór dla jednej gałęzi i jednego zadania

@@ -288,12 +288,14 @@ with in the app and what only in the research is said in [R6.5](R6-awaiting-acti
   - a new version of a story opens the comparison;
   - on a touch device the person's menu has the item **Waiting · N ›** instead of **Answer · N waiting**: it
     highlights the person's items, and they are answered from their rows.
+- **Hypotheses:** with a research that can decide them in the app, hypotheses to decide are in the group
+  **Hypotheses to decide** (chip **Decisions**), also with accepting the agent's proposals at once ([S3.5.2](S3-what-the-research-knows.md#S3.5.2)).
 - **Controls:** app: the panel, section **Awaiting action**; menu **Research → Awaiting action**; the mark **!** on
   the card and **Answer · N waiting** in the person's menu.
 - **Since:** app 3.4.0. Questions about places from research 1.25.0. The mark **!** and **Answer · N waiting** work
-  this way since app 3.26.0.
+  this way since app 3.26.0. Hypotheses from app 3.27.0 with research 1.31.0.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
 <a id="S4.5"></a>
 ## S4.5 Actions that open the research

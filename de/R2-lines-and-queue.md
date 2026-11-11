@@ -160,9 +160,12 @@ Linie erreicht (die Schwester eines Vorfahren und ihre Familie), und die keiner 
 **erst nach der Arbeit an den Linien**.
 
 - **Grenzen:** eine Aufgabe hilft einer Linie und liegt also nicht außerhalb der Linien, wenn sie eine Hypothese oder
-  einen Widerspruch der Linie nennt, Personen mit dem Stammbaum verbindet oder der Agent erfasst hat, wie sie der
-  Linie hilft (ein Geschwister eines Vorfahren als Pate oder Zeuge, dasselbe Haus, der Familienname eines Vorfahren).
-  Die eigene Familie des Geschwisters hilft der Linie nicht.
+  einen Widerspruch der Linie nennt, Personen über eine Person der Linie oder deren Partner mit dem Stammbaum verbindet
+  oder der Agent erfasst hat, wie sie der Linie hilft (ein Geschwister eines Vorfahren als Pate oder Zeuge, dasselbe
+  Haus, der Familienname eines Vorfahren). Die eigene Familie des Geschwisters hilft der Linie nicht: das Verbinden von
+  Personen mit einem Nebenzweig (etwa mit einem Geschwister eines Vorfahren) gehört zu diesem Zweig und kommt nach
+  dessen Wahl an die Reihe ([R2.3.1](#R2.3.1)). Eine Hypothese der Linie und ein vom Agenten erfasster Grund gelten
+  weiter.
 - **Optionen:** **am Ende, nach den Linien** (Standard) · **wie die Arbeit der Linien** · **nie** (die Aufgaben werden
   nicht genommen, nichts wird gelöscht).
 - **Bedienung:** Terminal: **Einstellungen → Der Agent allein → Arbeit außerhalb der Linien**,
@@ -172,8 +175,11 @@ Linie erreicht (die Schwester eines Vorfahren und ihre Familie), und die keiner 
 - **Ab Forschung 1.26.0:** neue Standardwahl **gelegentlich, ab und zu eine**: eine Aufgabe außerhalb der Linien auf 10
   Sitzungen (`queue.offLineShare`), aus dem nächsten Zweig. Zur Arbeit außerhalb der Linien gehört auch Ehemann oder
   Ehefrau eines Vorfahren ([R2.1.3](#R2.1.3)).
+- **Ab Forschung 1.31.0:** der Linie hilft nur das Verbinden von Personen mit einer Person der Linie oder mit deren
+  Partner; früher genügte das Verbinden mit irgendwem im Stammbaum, auch mit einem Geschwister eines Vorfahren. Die
+  Brücke sagt in `/status` bei der Aufgabe, an der gearbeitet wird, wie sie der Linie hilft (Funktion `working.helps`).
 
-<!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast -->
+<!-- zdroj: research:v1.25.2 src/core/config.ts:278 queue.offLine (popis), :715 výchozí last · HEAD model.ts OFF_LINE_CHOICES, config.ts OFF_LINE_SHARE=10 · assets/method/core.md „The lines first“ · app:strings.ts research.queueOffLast · výzkum 1.31.0: src/core/offline.ts (b: joins jen k osobě linie nebo partnerovi, jinak větev; a, c mají přednost), HelpsBy, /status working[].helps, branch · commity 576cf7e5, 2e54c8d5 · CHANGELOG.cs.md 1.31.0 „Připojení rodiny k vedlejší větvi je práce mimo linie“ · spec 036 K1.7 -->
 
 <a id="R2.3.1"></a>
 ### R2.3.1 Wahl für einen Zweig und eine Aufgabe
