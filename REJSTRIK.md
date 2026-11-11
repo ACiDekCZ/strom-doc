@@ -1085,12 +1085,12 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Přehled výzkumu (`live.overviewTitle`) | Velký pohled aplikace na sledovaný výzkum: co se teď děje, co čeká, linie, průběh, fronta a co výzkum ví. Jen čte. |
-| en | Research overview (`live.overviewTitle`) | The app's large view of the followed research: what is happening now, what waits, directions, progress, the queue and what the research knows. It only reads. |
-| de | Forschungsübersicht (`live.overviewTitle`) | Die große Ansicht der App auf die verfolgte Forschung: was gerade geschieht, was wartet, Linien, Verlauf, Warteschlange und was die Forschung weiß. Sie liest nur. |
-| pl | Przegląd badania (`live.overviewTitle`) | Duży widok aplikacji na śledzone badanie: co się teraz dzieje, co czeka, linie, przebieg, kolejka i co wie badanie. Tylko czyta. |
+| cs | Přehled výzkumu (`live.overviewTitle`) | Velký pohled aplikace na výzkum otevřeného stromu, sledovaný i bez sledování: co se teď děje, co čeká, linie, průběh, fronta a co výzkum ví. Jen čte. |
+| en | Research overview (`live.overviewTitle`) | The app's large view of the open tree's research, followed or not: what is happening now, what waits, directions, progress, the queue and what the research knows. It only reads. |
+| de | Forschungsübersicht (`live.overviewTitle`) | Die große Ansicht der App auf die Forschung des offenen Stammbaums, verfolgt oder nicht: was gerade geschieht, was wartet, Linien, Verlauf, Warteschlange und was die Forschung weiß. Sie liest nur. |
+| pl | Przegląd badania (`live.overviewTitle`) | Duży widok aplikacji na badanie otwartego drzewa, śledzone lub nie: co się teraz dzieje, co czeka, linie, przebieg, kolejka i co wie badanie. Tylko czyta. |
 
-- **Čísla:** [S4.1](cs/S4-research-from-the-app.md#S4.1), S4.1.2, S4.2, S4.3, S4.5.2
+- **Čísla:** [S4.1](cs/S4-research-from-the-app.md#S4.1), S4.1.2, S4.1.5, S4.2, S4.3, S4.5.2
 
 <a id="load-images-on-import"></a>
 ### Při importu načítat obrázky

@@ -124,8 +124,13 @@ opowieść przychodzi jednak na kolej jako pierwsza (przy samodzielnej pracy age
 obowiązuje.
 
 - **Obowiązuje od:** badanie 1.1.0
+- **Od badania 1.31.0:** przy kolei opowieści idzie naprzód tylko pierwsza opowieść w kolejności, pozostałe zostają za
+  badaniem. Kolejność, w jakiej zadania bierze `strom run` (z koleją opowieści i z zadaniami historii, gdy są na
+  kolei), pokazuje też menu przed `strom run` („Teraz kolej na te zadania, w kolejności, w jakiej weźmie je agent:”)
+  i kolejka w aplikacji Strom ([S4.2](S4-research-from-the-app.md#S4.2)); kolejka mostu niesie przy zadaniu, czy to
+  opowieść, czy historia. `strom task next` i `strom task list` mają kolejność rozmowy: bez kolei opowieści.
 
-<!-- zdroj: research:src/core/queue.ts STORY_EVERY=5 :61 -->
+<!-- zdroj: research:src/core/queue.ts STORY_EVERY=5 :61 · 1.31.0: research 5f48cdaf src/core/queue.ts rankTasks (turnStory: jen první vyprávění tahu), RUN_TURNS, runOrder; src/cli/menu.ts (ui.run.next), src/core/live.ts (/status queue[], GET /queue, kind story|history), src/commands/tasks.ts CONVERSATION_ORDER (task next, task list) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R2.2.3"></a>
 ### R2.2.3 Zadania, które czekają poza kolejką

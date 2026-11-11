@@ -129,8 +129,15 @@ wartende Erzählung als erste an die Reihe (wenn der Agent allein arbeitet). Mit
 nicht.
 
 - **Gilt seit:** Forschung 1.1.0
+- **Ab Forschung 1.31.0:** ist die Erzählung an der Reihe, geht nur die erste Erzählung der Reihenfolge voran, die
+  übrigen bleiben hinter der Forschung. Die Reihenfolge, in der `strom run` die Aufgaben nimmt (mit der Erzählung an
+  der Reihe und mit Aufgaben der Ortsgeschichte, wenn sie an der Reihe sind), zeigt auch das Menü vor `strom run`
+  („Als Nächstes in der Warteschlange, in der Reihenfolge, in der der Agent sie nimmt:“) und die Warteschlange in der
+  Strom-App ([S4.2](S4-research-from-the-app.md#S4.2)); die Warteschlange der Brücke gibt bei einer Aufgabe an, ob es
+  eine Erzählung oder Geschichte ist. `strom task next` und `strom task list` haben die Reihenfolge des Gesprächs:
+  ohne die Erzählung an der Reihe.
 
-<!-- zdroj: research:src/core/queue.ts STORY_EVERY=5 :61 -->
+<!-- zdroj: research:src/core/queue.ts STORY_EVERY=5 :61 · 1.31.0: research 5f48cdaf src/core/queue.ts rankTasks (turnStory: jen první vyprávění tahu), RUN_TURNS, runOrder; src/cli/menu.ts (ui.run.next), src/core/live.ts (/status queue[], GET /queue, kind story|history), src/commands/tasks.ts CONVERSATION_ORDER (task next, task list) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R2.2.3"></a>
 ### R2.2.3 Aufgaben, die außerhalb der Warteschlange warten

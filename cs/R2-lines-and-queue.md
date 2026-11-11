@@ -115,8 +115,13 @@ Vyprávění jinak čeká, až výzkum nemá co dělat. Po 5 sezeních bez vypr�
 na řadu jako první (při samostatné práci agenta). Se strategií priority to neplatí.
 
 - **Platí od:** výzkum 1.1.0
+- **Od výzkumu 1.31.0:** při tahu vyprávění jde napřed jen první vyprávění v pořadí, ostatní zůstanou za výzkumem.
+  Pořadí, v jakém úkoly bere `strom run` (s tahem vyprávění a s úkoly dějin, když jsou na řadě), ukazuje i menu
+  před `strom run` („Na řadě jsou tyto úkoly, v pořadí, v jakém je agent vezme:“) a fronta v aplikaci Strom
+  ([S4.2](S4-research-from-the-app.md#S4.2)); fronta mostu nese u úkolu, jestli je to vyprávění, nebo dějiny.
+  `strom task next` a `strom task list` mají pořadí rozhovoru: bez tahu vyprávění.
 
-<!-- zdroj: research:src/core/queue.ts STORY_EVERY=5 :61 -->
+<!-- zdroj: research:src/core/queue.ts STORY_EVERY=5 :61 · 1.31.0: research 5f48cdaf src/core/queue.ts rankTasks (turnStory: jen první vyprávění tahu), RUN_TURNS, runOrder; src/cli/menu.ts (ui.run.next), src/core/live.ts (/status queue[], GET /queue, kind story|history), src/commands/tasks.ts CONVERSATION_ORDER (task next, task list) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R2.2.3"></a>
 ### R2.2.3 Úkoly, které čekají mimo frontu

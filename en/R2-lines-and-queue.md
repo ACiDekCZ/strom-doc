@@ -120,8 +120,14 @@ Otherwise a story waits until the research has nothing to do. After 5 sessions w
 story comes up first (when the agent works alone). This does not apply with the priority strategy.
 
 - **Since:** research 1.1.0
+- **From research 1.31.0:** in a story turn only the first story in the order goes first, the others stay behind the
+  research. The order in which `strom run` takes the tasks (with the story turn and with history tasks when they are
+  due) is shown also by the menu before `strom run` ("Next in the queue, in the order the agent takes them:") and by
+  the queue in the Strom app ([S4.2](S4-research-from-the-app.md#S4.2)); the bridge's queue says at a task whether it
+  is a story or history. `strom task next` and `strom task list` have the conversation's order: without the story
+  turn.
 
-<!-- zdroj: research:src/core/queue.ts STORY_EVERY=5 :61 -->
+<!-- zdroj: research:src/core/queue.ts STORY_EVERY=5 :61 · 1.31.0: research 5f48cdaf src/core/queue.ts rankTasks (turnStory: jen první vyprávění tahu), RUN_TURNS, runOrder; src/cli/menu.ts (ui.run.next), src/core/live.ts (/status queue[], GET /queue, kind story|history), src/commands/tasks.ts CONVERSATION_ORDER (task next, task list) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="R2.2.3"></a>
 ### R2.2.3 Tasks that wait outside the queue

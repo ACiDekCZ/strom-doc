@@ -699,7 +699,8 @@ badania. ! i ? badań są tylko w kolumnach Badania, przy danej może być tylko
 - W kolumnie **Badania** osoba w kolejce agenta ma szarą kropkę „·” z „w kolejce”; „+2” za oznaczeniem to kolejne
   rodzaje sygnału. Nowe z badań ma w swojej kolumnie kropkę „•”.
 - Kolumna, która ma wartość tylko podczas śledzenia badań, ma bez śledzenia „–” z etykietą „na żywo” (podpowiedź
-  „Tylko podczas śledzenia badań”).
+  „Tylko podczas śledzenia badań”). Od aplikacji 3.27.0 tylko wtedy, gdy nie odpowiada też most badania
+  ([A6.7.14](#A6.7.14)).
 
 **Inne oznaczenia** (legenda ich nie pokazuje):
 
@@ -792,20 +793,27 @@ zapisuje.
   zostaje. Przy imieniu osoby, nad którą agent pracuje, biegnie pionowy pasek. Nad tabelą jest „● Badania śledzone na
   żywo”, w przeciwnym razie „Badania: stan z {kiedy}”.
 - **Eksport:** CSV i XLSX niosą teksty i liczby („czeka; sprzeczność (1)”, „1: urodzenie”, bez sprzeczności „0”), bez
-  oznaczeń. Bez śledzenia **Agent** i **Zadania badań** są puste, a powiadomienie powie „Agent i Zadania badań są
-  puste: badania nie są śledzone.” Wiersz pokrycia ma przy kolumnach badań „–”.
+  oznaczeń. Bez śledzenia (od aplikacji 3.27.0 tylko bez odpowiedzi mostu) **Agent** i **Zadania badań** są puste,
+  a powiadomienie powie „Agent i Zadania badań są puste: badania nie są śledzone.” Wiersz pokrycia ma przy kolumnach
+  badań „–”.
 - **Granice:**
   - bez agenta (Archiwum Strom) i w drzewie tylko do odczytu nie ma **Czeka na decyzję**, **Zadania badań**
     i **Agent** ani chipów **Niewysłane** i **Do rozstrzygnięcia tutaj**; widok **Wymiana z badaniami** jest tylko
     w badaniu z agentem, które można zmieniać;
   - **Agent** i **Zadania badań** mają wartość tylko podczas śledzenia badania, w przeciwnym razie „–” z etykietą „na
-    żywo”; chip **Agent pracuje / w kolejce** bez śledzenia nie filtruje;
+    żywo”; chip **Agent pracuje / w kolejce** bez śledzenia nie filtruje. Od aplikacji 3.27.0 oba obowiązują tylko
+    bez odpowiedzi mostu (niżej);
   - w drzewie tylko do odczytu dymek nie ma akcji: „Tylko do odczytu: sprzeczności nie można tu rozstrzygnąć.”
+- **Bez śledzenia z mostem:** gdy most badania na tym komputerze odpowiada, **Agent** i **Zadania badań** (także pasek
+  przy imieniu, chip **Agent** i eksport) biorą pracę agenta i kolejkę z regularnego zapytania do mostu i wyglądają
+  jak podczas śledzenia. Pusta kolejka mostu zostawia komórki puste. Tabela przerysowuje się, gdy odpowiedź mostu się
+  zmieni. Telefon nie pyta mostu. Tak samo działa Przegląd badania bez śledzenia
+  ([S4.1.5](S4-research-from-the-app.md#S4.1.5)).
 - **Obsługa:** panel **Kolumny** → grupa **Badania**; chip **Badania ▾**; **Widok** → sekcja **Badania**;
   **Oznaczenia ⓘ**.
 - **Obowiązuje od:** aplikacja 3.27.0 z badaniem 1.31.0
 
-<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 -->
+<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 · bez sledování s mostem: app 8d564b35 src/ui/research-ui.ts unfollowedAgentNow (onComputer, researchStatusNow, status.working a queue), src/ui/table-view/table-ui.ts tableResearchAgentChanged · spec 057 K1.12 -->
 
 <a id="A6.7.15"></a>
 ### A6.7.15 Aktywna komórka, menu komórki i edycja w miejscu

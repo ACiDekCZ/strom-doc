@@ -758,7 +758,8 @@ den Spalten Forschung, an einer Angabe nur ≠.“
   Warteschlange“; „+2“ hinter dem Zeichen sind weitere Arten von Signalen. Neu aus der Forschung hat in seiner Spalte
   den Punkt „•“.
 - Eine Spalte, die nur beim Verfolgen der Forschung einen Wert hat, hat ohne Verfolgen „–“ mit dem Etikett „live“
-  (Hinweis „Nur beim Verfolgen der Forschung“).
+  (Hinweis „Nur beim Verfolgen der Forschung“). Ab App 3.27.0 nur dann, wenn auch die Brücke der Forschung nicht
+  antwortet ([A6.7.14](#A6.7.14)).
 
 **Weitere Zeichen** (die Legende zeigt sie nicht):
 
@@ -857,22 +858,29 @@ Agenten, die Linien und den Austausch mit dem Stammbaum. In den Stammbaum schrei
   Zeilen bleibt. Am Namen der Person, an der der Agent arbeitet, läuft ein senkrechter Balken. Über der Tabelle steht
   „● Forschung live verfolgt“, sonst „Forschung: Stand vom {wann}“.
 - **Export:** CSV und XLSX tragen Texte und Anzahlen („wartet; Widerspruch (1)“, „1: Geburt“, ohne Widerspruch „0“),
-  ohne Zeichen. Ohne Verfolgen sind **Agent** und **Forschungsaufgaben** leer, und die Meldung sagt „Agent und
-  Forschungsaufgaben sind leer: Die Forschung wird nicht verfolgt.“ Die Abdeckungszeile hat bei den Spalten der
-  Forschung „–“.
+  ohne Zeichen. Ohne Verfolgen (ab App 3.27.0 nur ohne Antwort der Brücke) sind **Agent** und **Forschungsaufgaben**
+  leer, und die Meldung sagt „Agent und Forschungsaufgaben sind leer: Die Forschung wird nicht verfolgt.“ Die
+  Abdeckungszeile hat bei den Spalten der Forschung „–“.
 - **Grenzen:**
   - ohne Agenten (Strom-Archiv) und in einem schreibgeschützten Stammbaum gibt es weder **Wartet auf Entscheidung**,
     **Forschungsaufgaben** und **Agent** noch die Chips **Nicht gesendet** und **Hier zu entscheiden**; die Ansicht
     **Austausch mit der Forschung** gibt es nur in einer Forschung mit Agenten, die sich ändern lässt;
   - **Agent** und **Forschungsaufgaben** haben nur beim Verfolgen der Forschung einen Wert, sonst „–“ mit dem Etikett
-    „live“; der Chip **Agent arbeitet / wartet** filtert ohne Verfolgen nicht;
+    „live“; der Chip **Agent arbeitet / wartet** filtert ohne Verfolgen nicht. Ab App 3.27.0 gilt beides nur ohne
+    Antwort der Brücke (unten);
   - in einem schreibgeschützten Stammbaum hat die Blase keine Aktionen: „Schreibgeschützt: Widersprüche lassen sich
     hier nicht entscheiden.“
+- **Ohne Verfolgen mit Brücke:** antwortet die Brücke der Forschung auf diesem Computer, nehmen **Agent** und
+  **Forschungsaufgaben** (auch der Balken am Namen, der Chip **Agent arbeitet / wartet** und der Export) die Arbeit
+  des Agenten und die Warteschlange aus der regelmäßigen Abfrage der Brücke und sehen aus wie beim Verfolgen. Eine
+  leere Warteschlange der Brücke lässt die Zellen leer. Die Tabelle wird neu gezeichnet, wenn sich die Antwort der
+  Brücke ändert. Das Telefon fragt die Brücke nicht. Genauso funktioniert die Forschungsübersicht ohne Verfolgen
+  ([S4.1.5](S4-research-from-the-app.md#S4.1.5)).
 - **Bedienung:** Panel **Spalten** → Gruppe **Forschung**; Chip **Forschung ▾**; **Ansicht** → Abschnitt
   **Forschung**; **Zeichen ⓘ**.
 - **Gilt seit:** App 3.27.0 mit Forschung 1.31.0
 
-<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 -->
+<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 · bez sledování s mostem: app 8d564b35 src/ui/research-ui.ts unfollowedAgentNow (onComputer, researchStatusNow, status.working a queue), src/ui/table-view/table-ui.ts tableResearchAgentChanged · spec 057 K1.12 -->
 
 <a id="A6.7.15"></a>
 ### A6.7.15 Aktive Zelle, Zellenmenü und Bearbeiten an Ort und Stelle

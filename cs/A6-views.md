@@ -664,7 +664,7 @@ výzkumu jsou jen ve sloupcích Výzkum, na údaji smí být jen ≠.“
 - Ve sloupci **Výzkum** je u osoby ve frontě agenta šedá tečka „·“ s „ve frontě“; „+2“ za značkou jsou další druhy
   signálu. Nové od výzkumu má ve svém sloupci tečku „•“.
 - Sloupec, který má hodnotu jen při sledování výzkumu, má bez sledování „–“ se štítkem „živě“ (nápověda „Jen při
-  sledování výzkumu“).
+  sledování výzkumu“). Od aplikace 3.27.0 jen tehdy, když neodpovídá ani most výzkumu ([A6.7.14](#A6.7.14)).
 
 **Další značky** (legenda je neukazuje):
 
@@ -753,19 +753,23 @@ rozhodnutí, rozpory pramenů, hypotézy, práci agenta, linie a výměnu se str
   na které agent pracuje, běží svislý pruh. Nad tabulkou stojí „● Výzkum sledován naživo“, jinak „Výzkum: stav z
   {kdy}“.
 - **Export:** CSV a XLSX nesou texty a počty („čeká; rozpor (1)“, „1: narození“, bez rozporu „0“), bez značek.
-  Bez sledování jsou **Agent** a **Úkoly výzkumu** prázdné a oznámení řekne „Agent a Úkoly výzkumu jsou prázdné:
+  Bez sledování (od aplikace 3.27.0 jen bez odpovědi mostu) jsou **Agent** a **Úkoly výzkumu** prázdné a oznámení řekne „Agent a Úkoly výzkumu jsou prázdné:
   výzkum se nesleduje.“ Řádek pokrytí má u sloupců výzkumu „–“.
 - **Hranice:**
   - bez agenta (Archiv Stromu) a ve stromu jen ke čtení nejsou **Čeká na rozhodnutí**, **Úkoly výzkumu** a **Agent**
     ani čipy **Neodesláno** a **Rozhodnout tady**; pohled **Výměna s výzkumem** je jen ve výzkumu s agentem, který
     jde měnit;
   - **Agent** a **Úkoly výzkumu** mají hodnotu jen při sledování výzkumu, jinak „–“ se štítkem „živě“; čip **Agent
-    pracuje / ve frontě** bez sledování nefiltruje;
+    pracuje / ve frontě** bez sledování nefiltruje. Od aplikace 3.27.0 platí obojí jen bez odpovědi mostu (níž);
   - ve stromu jen ke čtení bublina nemá akce: „Jen ke čtení: rozpory tu nejde rozhodnout.“
+- **Bez sledování s mostem:** když most výzkumu na tomto počítači odpovídá, berou **Agent** a **Úkoly výzkumu** (i pruh
+  u jména, čip **Agent** a export) práci agenta a frontu z pravidelného dotazu na most a vypadají jako při
+  sledování. Prázdná fronta mostu nechá buňky prázdné. Tabulka se překreslí, když se odpověď mostu změní. Telefon se
+  mostu neptá. Stejně funguje Přehled výzkumu bez sledování ([S4.1.5](S4-research-from-the-app.md#S4.1.5)).
 - **Ovládání:** panel **Sloupce** → skupina **Výzkum**; čip **Výzkum ▾**; **Pohled** → oddíl **Výzkum**; **Značky ⓘ**.
 - **Platí od:** aplikace 3.27.0 s výzkumem 1.31.0
 
-<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 -->
+<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 · bez sledování s mostem: app 8d564b35 src/ui/research-ui.ts unfollowedAgentNow (onComputer, researchStatusNow, status.working a queue), src/ui/table-view/table-ui.ts tableResearchAgentChanged · spec 057 K1.12 -->
 
 <a id="A6.7.15"></a>
 ### A6.7.15 Aktivní buňka, nabídka buňky a úprava na místě

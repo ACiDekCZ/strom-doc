@@ -708,7 +708,8 @@ with a rim means research. The research’s ! and ? stand only in the Research c
 - In the column **Research** a person in the agent's queue has a grey dot “·” with “in the queue”; “+2” after the mark
   are further kinds of signal. New from research has the dot “•” in its column.
 - A column that has a value only while following the research has, without following, “–” with the label “live”
-  (the tooltip “Only while following the research”).
+  (the tooltip “Only while following the research”). From app 3.27.0 only when the research bridge does not
+  answer either ([A6.7.14](#A6.7.14)).
 
 **Other marks** (the legend does not show them):
 
@@ -803,20 +804,27 @@ exchange with the tree. It writes nothing into the tree.
   the name of a person the agent is working on a vertical bar runs. Above the table stands “● Following the research
   live”, otherwise “Research: as of {when}”.
 - **Export:** CSV and XLSX carry texts and counts (“waiting; conflict (1)”, “1: birth”, without a conflict “0”),
-  without marks. Without following, **Agent** and **Research tasks** are empty and the notice says “Agent and Research
+  without marks. Without following (from app 3.27.0 only without an answer from the bridge), **Agent** and
+  **Research tasks** are empty and the notice says “Agent and Research
   tasks are empty: the research is not being followed.” The coverage row has “–” for the research columns.
 - **Limits:**
   - without an agent (Strom archive) and in a read-only tree there are no **Awaiting decision**, **Research tasks**
     and **Agent**, nor the chips **Not sent** and **To decide here**; the view **Exchange with research** is only in a
     research with an agent that can be changed;
   - **Agent** and **Research tasks** have a value only while the research is followed, otherwise “–” with the label
-    “live”; the chip **Agent working / queued** does not filter without following;
+    “live”; the chip **Agent working / queued** does not filter without following. From app 3.27.0 both hold only
+    without an answer from the bridge (below);
   - in a read-only tree the bubble has no actions: “Read-only: conflicts cannot be decided here.”
+- **Without following, with the bridge:** when the research bridge on this computer answers, **Agent** and
+  **Research tasks** (also the bar by the name, the chip **Agent** and the export) take the agent's work and the
+  queue from a regular ask of the bridge and look as while following. An empty bridge queue leaves the cells empty.
+  The table redraws when the bridge's answer changes. A phone does not ask the bridge. The Research overview without
+  following works the same way ([S4.1.5](S4-research-from-the-app.md#S4.1.5)).
 - **Controls:** the panel **Columns** → the group **Research**; the chip **Research ▾**; **View** → the section
   **Research**; **Marks ⓘ**.
 - **Since:** app 3.27.0 with research 1.31.0
 
-<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 -->
+<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 · bez sledování s mostem: app 8d564b35 src/ui/research-ui.ts unfollowedAgentNow (onComputer, researchStatusNow, status.working a queue), src/ui/table-view/table-ui.ts tableResearchAgentChanged · spec 057 K1.12 -->
 
 <a id="A6.7.15"></a>
 ### A6.7.15 The active cell, the cell menu and editing in place
