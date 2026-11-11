@@ -1033,14 +1033,14 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 - **Čísla:** [A3.1](cs/A3-evidence-in-the-app.md#A3.1), A3.2, A3.2.1, A3.6
 
 <a id="problems-and-leads"></a>
-### Problémy a stopy
+### K ověření a stopy
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Problémy · Stopy | Problémy jsou chyby a nálezy k ověření. Stopy nejsou chyby: kmotr, který se opakuje, různé zápisy místa, možná duplicita, velký věkový rozdíl partnerů. |
-| en | Problems · Leads | Problems are the check's errors and findings to check. Leads are not errors: a godparent who keeps turning up, different spellings of a place, a possible duplicate, a large age gap between partners. |
-| de | Probleme · Hinweise | Probleme sind Fehler und Befunde „zu prüfen“ der Prüfung. Hinweise sind keine Fehler: ein Pate, der immer wieder auftaucht, verschiedene Schreibweisen eines Ortes, eine mögliche doppelte Person, ein großer Altersunterschied der Partner. |
-| pl | Problemy · Wskazówki | Problemy to błędy i wyniki kontroli do sprawdzenia. Wskazówki nie są błędami: powtarzający się chrzestny, różne zapisy miejsca, możliwy duplikat, duża różnica wieku partnerów. |
+| cs | K ověření · Stopy | Oddíl K ověření (před aplikací 3.27.0 Problémy) má chyby a nálezy k ověření. Stopy nejsou chyby: kmotr, který se opakuje, různé zápisy místa, možná duplicita, velký věkový rozdíl partnerů. |
+| en | To check · Leads | The section To check (Problems before app 3.27.0) holds the check's errors and findings to check. Leads are not errors: a godparent who keeps turning up, different spellings of a place, a possible duplicate, a large age gap between partners. |
+| de | Zu prüfen · Hinweise | Der Abschnitt Zu prüfen (vor App 3.27.0 Probleme) enthält die Fehler und Befunde „zu prüfen“ der Prüfung. Hinweise sind keine Fehler: ein Pate, der immer wieder auftaucht, verschiedene Schreibweisen eines Ortes, eine mögliche doppelte Person, ein großer Altersunterschied der Partner. |
+| pl | Do sprawdzenia · Wskazówki | Sekcja Do sprawdzenia (przed aplikacją 3.27.0 Problemy) zawiera błędy i wyniki kontroli do sprawdzenia. Wskazówki nie są błędami: powtarzający się chrzestny, różne zapisy miejsca, możliwy duplikat, duża różnica wieku partnerów. |
 
 - **Čísla:** [A5.1](cs/A5-tree-check.md#A5.1), A5.5, A5.6, A5.8, A6.7.5
 

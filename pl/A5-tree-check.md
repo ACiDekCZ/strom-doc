@@ -15,15 +15,17 @@ Każdy wynik ma wagę:
 
 | Waga | Sekcja w oknie | Znaczenie |
 |---|---|---|
-| błąd | **Problemy** | dane sobie przeczą albo są uszkodzone ([A5.2](#A5.2), [A5.3](#A5.3), [A5.4](#A5.4)) |
-| do sprawdzenia | **Problemy** | nietypowa wartość, mało prawdopodobna, ale możliwa; warto ją sprawdzić |
+| błąd | **Do sprawdzenia** | dane sobie przeczą albo są uszkodzone ([A5.2](#A5.2), [A5.3](#A5.3), [A5.4](#A5.4)) |
+| do sprawdzenia | **Do sprawdzenia** | nietypowa wartość, mało prawdopodobna, ale możliwa; warto ją sprawdzić |
 | info | **Wskazówki** | „To nie są błędy. Wskazówki, które mogą pomóc w poszukiwaniach.” ([A5.5](#A5.5), [A5.6](#A5.6)) |
 
 - **Granice:**
   - Wyniki tego samego rodzaju tworzą grupę, uporządkowaną według wagi, wielkości i nazwy. Otwarta jest tylko grupa
     z błędem.
-    Powyżej 50 wyników kolejne pokazują się po 20. Na telefonie (do 640 px) **Wskazówki** są zwinięte, jeśli są też
-    **Problemy**.
+    Powyżej 50 wyników kolejne pokazują się po 20. Na telefonie (do 640 px) **Wskazówki** są zwinięte, jeśli jest też
+    sekcja **Do sprawdzenia**.
+  - **Od aplikacji 3.27.0:** sekcja błędów i wyników do sprawdzenia nazywa się **Do sprawdzenia** (wcześniej
+    **Problemy**). Drzewo bez nich ma „Nic do sprawdzenia”, ze wskazówkami „Nic do sprawdzenia. 3 wskazówki.”
   - Osób zastępczych się nie zgłasza. Wynik oznaczony **To nie błąd** ([A5.7](#A5.7)) nie jest liczony ani
     pokazywany.
   - Drzewo tylko do odczytu wyniki tylko pokazuje. Przy innym niż otwarte drzewie naprawa lub oznaczenie najpierw
@@ -40,15 +42,21 @@ Każdy wynik ma wagę:
   ([A2](A2-loading-a-family-tree.md)).
   To samo po scaleniu z innym drzewem, dla nowych wyników. Własnej pozycji w menu kontrola nie ma.
 - **Obowiązuje od:** aplikacja 1.0.0; sekcje **Problemy** i **Wskazówki** aplikacja 3.17.0; nazwa **do sprawdzenia**
-  i odnośnik z widoku Tabela aplikacja 3.27.0
+  i odnośnik z widoku Tabela aplikacja 3.27.0; sekcja **Do sprawdzenia** i „Nic do sprawdzenia” aplikacja 3.27.0
 
-<!-- zdroj: app:src/validation.ts:83 validateTreeData, :1370 groupValidationIssues · src/ui/tree-stats.ts:101 LONG_GROUP, :148 showTreeValidationDialog · src/ui/import-export.ts:1341 offerPostImportValidation · src/ui/merge/ui.ts:1515 · strings.ts treeManager.validationTitle, valProblems, valLeads, leadsIntro, valReadOnly, valShowMore, postImportCheck · 3.27.0: app:59a8eed0 strings.ts treeManager.validationWarnings „k ověření“, summaryErrors, summaryNoErrors, treeOverview.countWarnings · src/ui/table-view/table-bubble.ts (Kvalita dat ›) → src/ui/tree-stats.ts showTreeValidationDialog focus · table.sev.* · commit e530019b -->
+<!-- zdroj: app:src/validation.ts:83 validateTreeData, :1370 groupValidationIssues · src/ui/tree-stats.ts:101 LONG_GROUP, :148 showTreeValidationDialog · src/ui/import-export.ts:1341 offerPostImportValidation · src/ui/merge/ui.ts:1515 · strings.ts treeManager.validationTitle, valProblems, valLeads, leadsIntro, valReadOnly, valShowMore, postImportCheck · 3.27.0: app:59a8eed0 strings.ts treeManager.validationWarnings „k ověření“, summaryErrors, summaryNoErrors, treeOverview.countWarnings · src/ui/table-view/table-bubble.ts (Kvalita dat ›) → src/ui/tree-stats.ts showTreeValidationDialog focus · table.sev.* · commit e530019b · „K ověření“: strings.ts treeManager.valProblems, commit 79764eba; „Nic k ověření“: validationPassed, summaryLeadsOnly, commit b1cbe546 (T54 G15) -->
 
 <a id="A5.1.1"></a>
 ### A5.1.1 Naprawa jednym kliknięciem
 
-Niektóre wyniki mają przycisk **Napraw**, a grupa **Napraw wszystko (n)**. Naprawa to jeden krok wstecz
-(„naprawa z walidacji”) i zapisuje się w historii zmian.
+Niektóre wyniki mają przycisk **Napraw**; podsumowanie nad wynikami ma **Napraw wszystko (n)** dla wszystkich wyników,
+które da się naprawić. Naprawa to jeden krok wstecz („naprawa z walidacji”) i zapisuje się w historii zmian.
+
+- Pod **Napraw wszystko (n)** jest, co zostanie naprawione, z liczbami, tylko dla rodzajów, które drzewo ma: „Do
+  naprawy: uszkodzone powiązania między osobami a związkami (2); związek osoby z samą sobą – zostanie usunięty (1);
+  zduplikowany związek – zostanie połączony z pierwszym, dzieci zostają (1); miejsce zapisane na kilka sposobów –
+  zostanie ujednolicone do najczęstszego zapisu (3). Pozostałe wyniki pozostaną bez zmian.” W drzewie tylko do
+  odczytu nie ma ani przycisku, ani tego wiersza.
 
 | Wynik | Co zrobi naprawa |
 |---|---|
@@ -58,9 +66,9 @@ Niektóre wyniki mają przycisk **Napraw**, a grupa **Napraw wszystko (n)**. Nap
 | Zduplikowany związek | zostawi pierwszy, dzieci przeniesie do niego |
 | Jedno miejsce zapisane na kilka sposobów | przepisze wszystkie zapisy na najczęstszy |
 
-- **Obowiązuje od:** aplikacja 1.1.0; naprawa miejsc 1.10.0
+- **Obowiązuje od:** aplikacja 1.1.0; naprawa miejsc 1.10.0; wiersz pod **Napraw wszystko (n)** aplikacja 3.27.0
 
-<!-- zdroj: app:src/data.ts:4071 FIXABLE_TYPES, :4097 repairValidationIssue · strings.ts treeManager.valFix, valFixAll -->
+<!-- zdroj: app:src/data.ts:4071 FIXABLE_TYPES, :4097 repairValidationIssue · strings.ts treeManager.valFix, valFixAll · řádek: src/ui/tree-stats.ts fixAllNoteText (orphaned*/missing* → links, selfPartnership, duplicatePartnership, placeSpelling), strings.ts treeManager.valFixAllNote, jen bez ro, commit 79764eba (T54 G15) -->
 
 <a id="A5.2"></a>
 ## A5.2 Relacje w rodzinie
@@ -289,7 +297,7 @@ badanie rozróżniło.
 
 | Blok | Co pokazuje |
 |---|---|
-| **Spójność** | podsumowanie („2 błędy, 1 do sprawdzenia, 3 wskazówki.”), 5 najpoważniejszych **Problemów**, „i jeszcze n…”, wiersz „n wskazówek ›” |
+| **Spójność** | podsumowanie („2 błędy, 1 do sprawdzenia, 3 wskazówki.”), 5 najpoważniejszych błędów i wyników do sprawdzenia, „i jeszcze n…”, wiersz „n wskazówek ›” |
 | **Kompletność danych** | udział osób z **Data urodzenia**, **Data zgonu (u zmarłych)**, **Miejsce urodzenia**, **Zdjęcie**; poniżej 50 % wyróżnione; „Zawartość drzewa:” (zdjęcia, zdarzenia, źródła, załączniki) |
 | **Pewność danych z badania**, **Gdzie brakuje dowodów** | udokumentowanie, zob. [R3.8](R3-verification-and-citation.md#R3.8) i [A3](A3-evidence-in-the-app.md) |
 | **Struktura** | liczba związków; niepołączone części albo „Wszystkie osoby są połączone w jedną rodzinę.” |

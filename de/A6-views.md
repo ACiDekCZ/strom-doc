@@ -303,12 +303,14 @@ Tabelle von Ondřej Chrpa.
   - einen schreibgeschützten Stammbaum (verfolgter Stammbaum, von einer neueren Version der App gespeicherter
     Stammbaum, gesperrter Stammbaum) zeigt die Tabelle nur an: „Nur lesen: Bearbeiten und „Kein Fehler“ gibt es hier
     nicht.“ Ansehen, Filter, Sortierung und CSV- und XLSX-Export funktionieren; eine Ansicht lässt sich weder
-    speichern noch umbenennen noch löschen.
+    speichern noch umbenennen noch löschen;
+  - die Pfeile **↩ ↪** unten links (die vorige und die nächste zentrale Person) und Alt+← / Alt+→ gibt es in der
+    Tabelle nicht: die Tabelle zeigt die zentrale Person nicht und ändert sie bei der Arbeit nicht.
 - **Bedienung:** in der Leiste der Ansichten **Tabelle** (nach **Karte**); im schmalen Fenster und auf dem Telefon
   **Mehr → Ansicht → Tabelle**. Die Ansicht wird wie die anderen gespeichert ([A6.1.1](#A6.1.1)).
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) · ↩ ↪ a Alt+šipky v Tabulce skryté: commity 79764eba, b1cbe546 (T54 G14) -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Verbindungen in der Personentabelle
@@ -332,7 +334,7 @@ für jede Verbindung („Verbindung 2 von 3“). Die Zeile der Person hat in der
 - Eine Unterzeile einer Verbindung trägt nur die Befunde ihrer Verbindung. Die Befunde der Person (etwa das Alter der
   Mutter bei der Geburt) und die Streifen eingeklappter Gruppen bleiben in der Zeile der Person.
 - **Bedienung:** **Verbindungen aufklappen** / **Verbindungen zuklappen** (auf dem Telefon im Menü **⋯**); die
-  Tasten → und ← in der Spalte **Name**, * für alle Personen; das Zeilenmenü. Der Zustand wird mit der Ansicht
+  Tasten → und ← in der Spalte **Vollständiger Name**, * für alle Personen; das Zeilenmenü. Der Zustand wird mit der Ansicht
   gespeichert ([A6.7.7](#A6.7.7)).
 
 <!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d · nálezy podřádku: commit 75de3a9b (T54 F6) -->
@@ -348,10 +350,11 @@ Die Spalten stehen in Gruppen. Welche sichtbar sind und in welcher Reihenfolge, 
 | **Personen** | **Person** · **Geburt und Taufe** · **Eltern** · **Verbindungen** · **Scheidung** · **Tod und Begräbnis** · **Ereignisse** · **Quellen** · **Verlässlichkeit und Forschung** · **Prüfungen** |
 | **Verbindungen** | **Paar** · **Heirat** · **Scheidung** · **Kinder und Quellen** |
 
-- **Name** (bei Verbindungen **Partner 1**) ist links fixiert und wird nach dem Nachnamen, dann nach dem Vornamen
-  sortiert. **Nachname** ist der Ehename, sonst der Geburtsname; **Geburtsname** ist der erfasste Nachname.
-- **Forschungs-ID** zeigt nur die Nummer der Person aus der Forschung (P…). **Ref.-Nummer (REFN)** ist die
-  Referenznummer der Person, wie sie die GEDCOM-Datei gebracht hat (und wie sie in eine zurückgeht); sie wird als Text
+- **Vollständiger Name** (bei Verbindungen **Partner 1**) ist links fixiert und wird nach dem Nachnamen, dann nach
+  dem Vornamen sortiert. Er setzt sich aus den Teilen des Namens zusammen, deshalb gibt es eine eigene Spalte
+  **Vorname** (standardmäßig ausgeblendet), die sich in der Zelle bearbeiten lässt ([A6.7.15](#A6.7.15)). **Nachname** ist der Ehename, sonst der Geburtsname; **Geburtsname** ist der erfasste Nachname.
+- **Forschungs-ID** zeigt nur die Nummer der Person aus der Forschung (P…). **Ref.-Nummer** ist die
+  Referenznummer der Person (REFN), wie sie die GEDCOM-Datei gebracht hat (und wie sie in eine zurückgeht); sie wird als Text
   sortiert und gefiltert.
 - **Offene Frage**, **⇄ In anderem Baum** (die Stammbäume auf diesem Gerät, in denen die Person ist) und **Status der
   Person** (das Zeichen der Belegung und Verlässlichkeit von der Karte, in Worten; von der stärksten an sortiert; ab App 3.27.0 nach der Zuverlässigkeit
@@ -362,7 +365,7 @@ Die Spalten stehen in Gruppen. Welche sichtbar sind und in welcher Reihenfolge, 
   jeden Wert einmal, den neuesten zuerst.
 - Die Spalten **Verlässlichkeit …** und **Sicherheit aus der Forschung** haben nur in einem Stammbaum aus der
   Forschung einen Wert ([S7](S7-reliability-and-verification.md)).
-- Die Spalten **Ref.-Nummer (REFN)**, **Offene Frage**, **⇄ In anderem Baum** und **Status der Person** sind
+- Die Spalten **Vorname**, **Ref.-Nummer**, **Offene Frage**, **⇄ In anderem Baum** und **Status der Person** sind
   standardmäßig ausgeblendet.
 - **Grenzen:** eine eingeklappte Gruppe ist ein schmaler Streifen; er zeigt die höchste Stufe eines Befunds in seinen
   Zellen. Auf dem Telefon ist der fixierte Name schmaler, und die Kopfzeile lässt sich nur lesen, nicht ändern.
@@ -374,7 +377,7 @@ Die Spalten stehen in Gruppen. Welche sichtbar sind und in welcher Reihenfolge, 
     ausblenden**, **Gruppe … einklappen** / **Gruppe … ausklappen**; bei einer berechneten Spalte „Berechnet aus: …“;
   - Breite der Spalte durch Ziehen am Rand des Spaltenkopfs.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) -->
 
 <a id="A6.7.3"></a>
 ### A6.7.3 Berechnete und Ersatzwerte
@@ -408,21 +411,27 @@ Die Spalten **Vollständigkeit …** sagen, wie viele der beobachteten Felder au
 | Spalte | Gezählt aus |
 |---|---|
 | **Vollständigkeit Geburt** | Datum, Ort, Vater, Mutter, Quelle |
-| **Vollständigkeit Verbindung** | Datum, Ort, Partner, Quelle zur Heirat |
+| **Vollständigkeit Verbindung** | Datum, Ort, Partner, Quelle zur Heirat; bei einer Verbindung ohne Heirat (**Partner**, **Getrennt**) nur der Partner |
 | **Vollständigkeit Sterbefall** | Datum, Ort, Quelle (nicht bei einer lebenden Person) |
 | **Vollständigkeit gesamt** | Geburt, jede Verbindung und Tod, gewichtet nach der Zahl der Felder |
 
 - Ein Ersatzwert (Taufe, Begräbnis) füllt kein Feld aus. Der Hinweis an der Zelle nennt, was fehlt („fehlt:
   Geburtsort, Quelle zur Geburt“).
 - Die **Abdeckungszeile** unter dem Spaltenkopf zeigt bei jeder Spalte, wie viel Prozent der Zeilen einen Wert haben
-  („ausgefüllt 64 %“, Hinweis „77 von 120“). Sie zählt nur die Zeilen, die gerade zu sehen sind (nach Filter und
+  („ausgefüllt 64 %“, Hinweis „77 von 120“). Bei den Spalten **Vollständigkeit …** zeigt sie die durchschnittliche
+  Vollständigkeit der Zeilen (Hinweis „Durchschnitt von 120“). Sie zählt nur die Zeilen, die gerade zu sehen sind (nach Filter und
   Suche). Zellen **Trifft nicht zu** werden nicht gezählt; bei Spalten der Verbindung werden die Verbindungen
   gezählt, die dem Filter entsprechen. Unter 50 % ist die Zahl fett; ohne eine Zelle, die sie betreffen würde, steht
   „–“.
+- **Verbindung ohne Heirat** (Art **Partner** oder **Getrennt**): die leeren Zellen der Heirat (Datum, Ort, Alter und
+  eingetragenes Alter beider, Abweichung des eingetragenen Alters, Trauzeugen, **Verlässlichkeit Heirat**) haben „–“
+  mit dem Hinweis „Trifft nicht zu: Verbindung ohne Heirat“ und zählen weder in der Abdeckungszeile noch in der
+  Vollständigkeit. Ein Wert, der dort trotzdem steht (der Beginn der Beziehung aus dem Formular der Verbindung), wird
+  wie bisher gezeigt.
 - **Bedienung:** **Abdeckungszeile** im Panel **Spalten** (auf dem Telefon in **⋯**); sie wird mit der Ansicht
   gespeichert.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 · průměr u sloupců úplnosti (kind percent): table-coverage.ts columnCoverage average, strings.ts table.coverageAverage, i XLSX, commit 56f3418c (T54 G12) · svazek bez sňatku: table-columns.ts unionWithoutWedding (partners, separated), weddingCell, oneUnionFields (jen partner), strings.ts table.naNoWedding, compList.unionNoWedding, commit 8fdf52ca (T54 G5, MILAN.md rozhodnutí 21) -->
 
 <a id="A6.7.5"></a>
 ### A6.7.5 Befunde der Prüfung in den Zellen
@@ -523,8 +532,11 @@ Lesarten des Stammbaums; eine eigene Ansicht speichert der Mensch.
   **Änderungen verwerfen**. Eine vorgegebene Ansicht ändert sich nicht und lässt sich weder umbenennen noch löschen;
   ihre Änderungen gehen nur über **Als neue speichern**. Eigene Ansicht: **Umbenennen…**, **Löschen** (mit
   Bestätigung). Eigene Ansichten sind nach dem Namen geordnet.
-- Den Arbeitsstand der Tabelle (auch ungespeicherte Änderungen) merkt sich die App für jeden Stammbaum auf diesem
-  Gerät; nach dem Neuladen der Seite ist die Tabelle so, wie sie geblieben ist.
+- Den Arbeitsstand der Tabelle merkt sich die App für jeden Stammbaum auf diesem Gerät; nach dem Neuladen der Seite
+  oder einer Aktualisierung der App ist die Tabelle so, wie sie geblieben ist. Dazu gehören die ungespeicherten
+  Änderungen jeder Ansicht, auch einer, aus der weggeschaltet wurde: zurück in ihr hat die Ansicht weiter das Etikett
+  **geändert**. **Speichern**, **Als neue speichern** und **Änderungen verwerfen** erledigen sie. Ein beschädigter Teil
+  des Arbeitsstands wird ausgelassen.
 - **Gespeicherte Ansichten sind Teil des Stammbaums** (Datenversion 17): Speichern, Umbenennen und Löschen haben
   einen Schritt zurück und einen Eintrag im Änderungsverlauf. Sie gehen mit dem Stammbaum in die Sicherung (JSON) und
   beim Abtrennen eines Teils des Stammbaums auch in den neuen Stammbaum. GEDCOM trägt sie nicht; ein Stammbaum aus der
@@ -534,7 +546,7 @@ Lesarten des Stammbaums; eine eigene Ansicht speichert der Mensch.
 - **Bedienung:** Menü **Ansicht** in der Leiste der Tabelle (**Vorgegeben**, **Eigene**, **Als neue speichern…**,
   **Umbenennen…**, **Löschen**).
 
-<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (9: overview, births, marriages, deaths, sources, gaps, checks, events, allSources), defaultViewId (události → Všechny události, prameny → Všechny prameny), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky, DEFAULT_VIEWS.events, .sources) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.* (events, allSources), changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff -->
+<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (9: overview, births, marriages, deaths, sources, gaps, checks, events, allSources), defaultViewId (události → Všechny události, prameny → Všechny prameny), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky, DEFAULT_VIEWS.events, .sources) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.* (events, allSources), changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff · neuložené změny všech pohledů v pracovním stavu (localStorage) se sanitizací: commit b1cbe546 (T54 G9, varianta c) -->
 
 <a id="A6.7.8"></a>
 ### A6.7.8 Zeilenaktionen und Bearbeitung
@@ -750,7 +762,7 @@ Zelle mit Befund öffnet die Blase des Befunds.
 | **Verlässlichkeit** | der Name der Stufe in Grau (in der Legende **Bestätigt**): **Bestätigt**, **Belegt**, **Wahrscheinlich**, **Möglich**, **Aus dem Stammbaum**, **Hinweis**, **Ohne Quelle** | „In den Spalten Verlässlichkeit und Forschung; bei Verbindungen in der Gruppe Heirat, bei Ereignissen in der Gruppe Quelle.“ | **Verlässlichkeit Name**, **Verlässlichkeit Geburt**, **Verlässlichkeit Tod**, **Verlässlichkeit Heirat** (Personen, Verbindungen), **Verlässlichkeit** (Ereignisse); Stufen: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **Ersatzwert** | die Abkürzung **get.** oder **begr.** in einem kleinen Rahmen vor dem Wert, der Wert kursiv; Hinweis „Taufe, Geburt unbekannt“, „Begräbnis, Tod unbekannt“ | „Taufe statt Geburt, Begräbnis statt Tod.“ | Datum und Ort von Geburt und Tod ([A6.7.3](#A6.7.3)) |
 | **berechnet** | graue Schrift; „≈ 67“ eine Schätzung, „28–29“ ein Bereich | „Ein Bereich aus ungenauem Datum, ≈ aus einer Schätzung.“ | Alter, Abweichung des angegebenen Alters, Dauer der Verbindung, Anzahlen, Generation, Vollständigkeit; am Spaltenkopf „Berechnet aus: …“ |
-| **trifft nicht zu** | „–“ in grauer Kursivschrift, in der Legende ebenso; Hinweis „Trifft nicht zu“ | „Betrifft die Person nicht.“ | der Tod bei einer lebenden Person (bei **Vollständigkeit Sterbefall** „lebt“), das Alter des Vaters oder der Mutter ohne erfassten Elternteil, die Spalten der Verbindung bei einer Person ohne Verbindung, **Alter beim Ereignis** bei der Geburt |
+| **trifft nicht zu** | „–“ in grauer Kursivschrift, in der Legende ebenso; Hinweis „Trifft nicht zu“ | „Betrifft die Person nicht.“ | der Tod bei einer lebenden Person (bei **Vollständigkeit Sterbefall** „lebt“), das Alter des Vaters oder der Mutter ohne erfassten Elternteil, die Spalten der Verbindung bei einer Person ohne Verbindung, die Zellen der Heirat bei einer Verbindung ohne Heirat (Hinweis „Trifft nicht zu: Verbindung ohne Heirat“, [A6.7.4](#A6.7.4)), **Alter beim Ereignis** bei der Geburt |
 
 - In den Spalten **Verlässlichkeit …** wird von **Bestätigt** bis **Ohne Quelle** in der Reihenfolge aus der Tabelle
   sortiert.
@@ -783,14 +795,14 @@ den Spalten Forschung, an einer Angabe nur ≠.“
 | „…“ | drei blasse Punkte; Hinweis „Prüfungen laufen…“ | die Prüfung des Stammbaums läuft noch | **Befunde**, **Höchste Stufe**, **Ungewöhnlich, geprüft** |
 | „◌ Prüfungen laufen…“ | ein leerer Ring und Text rechts über der Tabelle | dasselbe für die ganze Tabelle; die Chips der Befunde warten noch | über der Tabelle, neben **Zeichen ⓘ** |
 | Prozent mit Balken | eine Zahl und ein kurzer Balken, dessen gefüllter Teil der Wert ist | Vollständigkeit ([A6.7.4](#A6.7.4)) | Spalten **Vollständigkeit …** |
-| fette Zahl, „–“ | in der Abdeckungszeile | Abdeckung unter 50 %; „–“ eine Spalte ohne eine Zelle, die sie betreffen würde | **Abdeckungszeile** ([A6.7.4](#A6.7.4)) |
+| fette Zahl, „–“ | in der Abdeckungszeile | Abdeckung unter 50 % (bei den Spalten der Vollständigkeit ein Durchschnitt unter 50 %); „–“ eine Spalte ohne eine Zelle, die sie betreffen würde | **Abdeckungszeile** ([A6.7.4](#A6.7.4)) |
 | „+2“ | eine Zahl in einem ovalen Rahmen hinter dem ersten Zitat | weitere zitierte Quellen; ein Klick öffnet **Weitere Quellenangaben** | Quellenangaben zu Geburt, Heirat, Tod ([A6.7.12](#A6.7.12)) |
 | „↗“ | hinter einer unterstrichenen Webadresse | ein Link in ein neues Fenster | **Online**, Quellenangaben „… URL“ ([A6.7.11](#A6.7.11), [A6.7.12](#A6.7.12)) |
 | Umriss der Zelle | ein dünner Umriss von 1 px | die aktive Zelle ([A6.7.15](#A6.7.15)) | eine Zelle der ausgewählten Zeile |
 | Textcursor | beim Überfahren mit der Maus | die Zelle lässt sich an Ort und Stelle bearbeiten ([A6.7.15](#A6.7.15)) | bearbeitbare Zellen |
 | ●○, ●● | ein oder zwei volle Punkte vor „1 Leser“, „2 Leser“; Hinweis, wer die Abschrift gelesen hat | wie viele Leser die Abschrift gelesen haben | **Von der Forschung gelesen** ([A6.7.11](#A6.7.11)) |
 | „12 T.“ | eine Zahl mit „T.“ | ein Alter bis zu einem Jahr in Tagen | **Alter beim Ereignis** ([A6.7.10](#A6.7.10)) |
-| ▾, ▸ | ein Dreieck vor dem Namen | die Verbindungen der Person aufgeklappt, zugeklappt ([A6.7.1](#A6.7.1)) | **Name** einer Person mit zwei und mehr Verbindungen |
+| ▾, ▸ | ein Dreieck vor dem Namen | die Verbindungen der Person aufgeklappt, zugeklappt ([A6.7.1](#A6.7.1)) | **Vollständiger Name** einer Person mit zwei und mehr Verbindungen |
 | „3 Verbindungen“ | bei einer zugeklappten Person in einem ovalen Rahmen hinter dem Namen; bei einer aufgeklappten in der Spalte **Partner** in grauer Kursivschrift | die Zahl der Verbindungen der Person | Zeile der Person |
 | „└ Verbindung 2 von 3“ | eine eingerückte Unterzeile | eine Verbindung der Person | Unterzeile der Verbindung |
 | „2 Verbindungen außerhalb des Filters · zeigen“ | eine Schaltfläche in einer eingerückten Zeile | Verbindungen, die dem Filter nicht entsprechen; gezeigte sind abgeschwächt | unter den Unterzeilen der Verbindungen |
@@ -908,7 +920,8 @@ Tabelle bearbeiten.
   und Marken. Von Hand ausgewählter Text wird wie gewohnt kopiert.
 - **Zellenmenü:** das Zeilenmenü (rechte Maustaste, Umschalt+F10) und auf dem Telefon das Panel der Zeile (Tippen auf
   die Zelle) beginnen mit den Möglichkeiten der Zelle **Kopieren**, **Nur „{Wert}“** und **Ohne „{Wert}“** (der Wert
-  auf etwa 24 Zeichen gekürzt, mit „…“); darunter stehen die Zeilenaktionen ([A6.7.8](#A6.7.8)).
+  auf etwa 24 Zeichen gekürzt, mit „…“); darunter stehen die Zeilenaktionen ([A6.7.8](#A6.7.8)). Das Menü öffnet sich
+  an der Zelle, auch wenn eine andere Zeile ausgewählt war.
   - **Nur** und **Ohne** setzen den Filter der Spalte **ist** / **ist nicht** ([A6.7.6](#A6.7.6)), Chip „{Spalte} =
     {Wert} ×“ oder „{Spalte} ≠ {Wert} ×“; verglichen wird ohne Rücksicht auf Groß- und Kleinschreibung und
     diakritische Zeichen. Eine Zelle mit dem Namen einer Person vergleicht die Person: **Nur „{Vater}“** in der Spalte
@@ -919,20 +932,29 @@ Tabelle bearbeiten.
     Zeilenaktionen.
   - Der Filter wird mit der Ansicht gespeichert ([A6.7.7](#A6.7.7)).
 - **Bearbeiten an Ort und Stelle:** bearbeiten lässt sich eine Zelle, die für eine Angabe des Stammbaums steht:
-  - **Nachname** (zeigt er den Ehenamen, wird dieser bearbeitet), **Geburtsname**, **Ehename**;
-  - Datum und Ort von Geburt, Taufe, Tod und Begräbnis;
+  - **Vorname**, **Nachname** (zeigt er den Ehenamen, wird dieser bearbeitet), **Geburtsname**, **Ehename**;
+  - **Geschlecht** durch Auswahl (**Männlich**, **Weiblich**, **Unbekannt**) und **Ref.-Nummer**;
+  - Datum und Ort von Geburt, Taufe, Tod und Begräbnis, **Todesursache** und **Eingetragenes Sterbealter**;
   - **Beruf**, solange die Person höchstens einen hat;
-  - Datum und Ort der Heirat (Verbindungstabelle, Unterzeile der Verbindung, Zeile einer Person mit einer
-    Verbindung).
+  - die Angaben der Verbindung (Verbindungstabelle, Unterzeile der Verbindung, Zeile einer Person mit einer
+    Verbindung): **Stand der Verbindung** durch Auswahl (**Verheiratet**, **Partner**, **Geschieden**, **Getrennt**, wie
+    im Formular der Verbindung), Datum und Ort der Heirat, das eingetragene Alter jedes Partners bei der Heirat
+    (**Eingetragenes Heiratsalter**, **Eingetragenes Alter des Partners**, **Eingetragen 1** und **2**),
+    **Scheidungsdatum** und **Scheidungsort**. Eine leere Zelle legt die Angabe der Verbindung an, wie sie das Formular
+    der Verbindung anlegt. Bei einer Verbindung ohne Heirat ([A6.7.4](#A6.7.4)) werden die Zellen der Heirat nicht
+    bearbeitet.
 
-  **Name** wird in der Zelle nicht bearbeitet (er besteht aus mehreren Teilen), ebenso wenig berechnete Zellen,
+  **Vollständiger Name** wird in der Zelle nicht bearbeitet (er besteht aus mehreren Teilen), ebenso wenig berechnete Zellen,
   Prüfungen, Forschung, Quellenangaben, Anzahlen und Beziehungen; ein Doppelklick darauf öffnet **Bearbeiten…**.
 - **Das Feld** überdeckt die Zelle. **Enter** speichert, **Esc** bricht ab, **Tab** und **Umschalt+Tab** speichern und
-  gehen zur nächsten oder vorigen bearbeitbaren Zelle der Zeile, ein Klick anderswohin speichert. Das Datum wird wie im
+  gehen zur nächsten oder vorigen bearbeitbaren Zelle der Zeile, ein Klick anderswohin speichert. In einer Auswahl speichert ein
+  Mausklick den Wert sofort; nach der Wahl mit den Pfeilen speichern ihn Enter, Tab oder ein Klick anderswohin. Das
+  Datum wird wie im
   Formular der Person gelesen; ein unlesbares bleibt im Feld mit dem Fehler „Das Datum ist nicht lesbar (z. B.
   15.5.1880, 1880, um 1880)“. Der Ort bietet die Orte des Stammbaums an. Ohne Vor- und Nachname wird nichts
   gespeichert: „Vor- oder Nachname muss bleiben“.
-- **Das Speichern** geht denselben Weg wie das Formular der Person und ist ein Schritt zurück (Strg/Cmd+Z). Taufe und
+- **Das Speichern** geht denselben Weg wie das Formular der Person (die Angaben der Verbindung wie das Formular der
+  Verbindung) und ist ein Schritt zurück (Strg/Cmd+Z), auch wenn eine leere Zelle die Angabe angelegt hat. Taufe und
   Begräbnis bearbeiten das erste solche Ereignis (seine übrigen Angaben und Zitate bleiben) oder fügen eines hinzu;
   ein leeres Feld löscht nur diese Angabe. Dann blinkt die Zeile, bleibt an ihrem Platz, und die Meldung sagt
   „Gespeichert: {Name}“.
@@ -944,4 +966,4 @@ Tabelle bearbeiten.
   Maus einen Textcursor.
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->

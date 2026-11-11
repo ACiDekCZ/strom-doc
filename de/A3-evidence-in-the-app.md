@@ -389,7 +389,8 @@ Schritt lässt es sich auch zurücknehmen.
   sich in Felder aufteilen.“ mit **Nach Vorschlag aufteilen…**. Das Fenster **Fundstellen in Felder aufteilen** zeigt
   eine Vorschau: **Quelle**, **Fundstelle bisher**, **Folio/Seite**, **Bild**, **Weitere Fundstelle**; zuerst
   6 Quellen, **Alle anzeigen (n)** lädt beim Scrollen weitere. Wie viele Fundstellen nicht erkannt wurden („…
-  bleiben unverändert“), steht unter der Vorschau.
+  bleiben unverändert“), steht unter der Vorschau, darunter bis zu drei Beispiele („Z. B. „Buch N 7, Eintrag ohne
+  Nummer“.“), jedes einmal und höchstens 60 Zeichen lang („…“).
 - **Regel:** „Ein bereits ausgefülltes Feld wird nicht überschrieben. Ein Teil, den das Feld anders angibt, bleibt in
   der Fundstelle.“ Ein Wert, der bleibt, hat in der Vorschau „· unverändert“. Die Notizzeile „Signatur: …“ aus einem
   früheren GEDCOM-Import kommt ins leere Feld **Signatur** (Spalte **Signatur** mit „· aus Notiz“).
@@ -414,11 +415,13 @@ Schritt lässt es sich auch zurücknehmen.
   - das Zurücknehmen wird ganz abgelehnt, wenn sich eine Quelle nach der Aufteilung geändert hat: es sagt, wie viele,
     und die ersten drei, zurückgenommen wird nichts. In der App ohne Forschung nach einer späteren Änderung des
     Stammbaums: „Zurücknehmen geht nicht mehr: der Stammbaum hat sich seit der Aufteilung geändert.“;
-  - eine nicht erkannte Fundstelle bleibt, wie sie ist. Beispiele nicht erkannter zeigt die Vorschau nur bei einem
-    Stammbaum ohne Forschung.
+  - eine nicht erkannte Fundstelle bleibt, wie sie ist. Eine Quelle, die schon ein Folio oder ein Bild im Feld hat,
+    zählt nicht zu den nicht erkannten: der Rest ihrer Fundstelle („Nr. 5“) ist nichts zum Aufteilen. In einem
+    Stammbaum der Forschung liefert die Beispiele nicht erkannter die Forschung; schickt sie keine, zeigt die Vorschau
+    nur die Anzahl.
 - **Bedienung:** **Aktionen → Quellen → Nach Vorschlag aufteilen…**; Tabelle › Quellen, die Zeile über der Tabelle;
   **Aufteilen (n)**, **Rückgängig**, **Zurücknehmen…**. Die Forschung im Terminal: `strom source split`
   ([R3.4.4](R3-verification-and-citation.md#R3.4.4)).
 - **Gilt seit:** App 3.27.0; Stammbaum aus der Forschung mit Forschung 1.31.0
 
-<!-- zdroj: app:8dd21adf src/source-split.ts SplitSourceKind (local/bridge/needsResearch/archive/none), localSplitPlan (řádek poznámky „Signatura:“ v každém jazyce importu), splitOffer (needsResearch jen v Prameny) · src/ui/source-split-ui.ts:37 TOAST_MS 8000, sourceSplitKind (read-only/zamčený → none, archiv → archive, most + feature sources.split → bridge) · 5a59f01d src/source-split-bridge.ts (GET/POST sources/split, undo), náhled přes most bez příkladů nerozpoznaných (dirigent:prace/1111-app-citace-pole Navazuje) · src/ui/misc.ts:1352 Ctrl/⌘+Z · strings.ts sources.split.* (offer, open, needsResearch, doneLine, undoOpen, title, lead, rule, sigNote, col*, kept, fromNote, all, shown, unrec, go, progress, toast, undo, undoRow, nothingLeft, errPlan, errBusy, retry, errUndoLater, errUndo) · spec 075 K4.2 · research:c4fe4fac -->
+<!-- zdroj: app:8dd21adf src/source-split.ts SplitSourceKind (local/bridge/needsResearch/archive/none), localSplitPlan (řádek poznámky „Signatura:“ v každém jazyce importu), splitOffer (needsResearch jen v Prameny) · src/ui/source-split-ui.ts:37 TOAST_MS 8000, sourceSplitKind (read-only/zamčený → none, archiv → archive, most + feature sources.split → bridge) · 5a59f01d src/source-split-bridge.ts (GET/POST sources/split, undo), příklady nerozpoznaných přes most (unrecognizedExamples, výzkum ff760309) a lokální plán jako výzkum (zbytek u pole folia/snímku = nic, NFC, bez duplicit, nejvýš 3, ořez 60 znaků po grafémech): app:34cb5996 src/source-split.ts localSplitPlan, SPLIT_UNRECOGNIZED_EXAMPLES, src/source-split-bridge.ts examplesOf, src/ui/source-split-ui.ts:614, strings.ts sources.split.unrecEx · src/ui/misc.ts:1352 Ctrl/⌘+Z · strings.ts sources.split.* (offer, open, needsResearch, doneLine, undoOpen, title, lead, rule, sigNote, col*, kept, fromNote, all, shown, unrec, go, progress, toast, undo, undoRow, nothingLeft, errPlan, errBusy, retry, errUndoLater, errUndo) · spec 075 K4.2 · research:c4fe4fac -->

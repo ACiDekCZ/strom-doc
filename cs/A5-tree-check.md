@@ -13,19 +13,21 @@ Každý nález má závažnost:
 
 | Závažnost | Oddíl v dialogu | Význam |
 |---|---|---|
-| chyba | **Problémy** | data si odporují nebo jsou porušená ([A5.2](#A5.2), [A5.3](#A5.3), [A5.4](#A5.4)) |
-| k ověření | **Problémy** | neobvyklá hodnota, nepravděpodobná, ale možná; stojí za ověření |
+| chyba | **K ověření** | data si odporují nebo jsou porušená ([A5.2](#A5.2), [A5.3](#A5.3), [A5.4](#A5.4)) |
+| k ověření | **K ověření** | neobvyklá hodnota, nepravděpodobná, ale možná; stojí za ověření |
 | info | **Stopy** | „Nejsou to chyby. Stopy, které mohou pomoct při pátrání.“ ([A5.5](#A5.5), [A5.6](#A5.6)) |
 
 - **Hranice:**
   - Nálezy stejného druhu tvoří skupinu, řazenou podle závažnosti, velikosti a názvu. Otevřená je jen skupina s
     chybou.
-    Nad 50 nálezů se další ukazují po 20. Na telefonu (do 640 px) jsou **Stopy** sbalené, jsou-li i **Problémy**.
+    Nad 50 nálezů se další ukazují po 20. Na telefonu (do 640 px) jsou **Stopy** sbalené, je-li i oddíl **K ověření**.
   - Zástupné osoby se nehlásí. Nález označený **Není chyba** ([A5.7](#A5.7)) se nepočítá ani neukazuje.
   - Strom jen ke čtení nálezy jen ukazuje. U jiného než otevřeného stromu oprava nebo značka nejdřív strom otevře.
   - **Od aplikace 3.27.0:** závažnost, která se dřív jmenovala „varování“, se jmenuje **k ověření**, i v souhrnech
     a počtech („2 chyby, 1 k ověření, 3 stopy.“). Pohled Tabulka ukazuje nálezy přímo v buňkách a nález označený
     **Není chyba** jako **neobvyklé** ([A6.7.5](A6-views.md#A6.7.5)).
+  - **Od aplikace 3.27.0:** oddíl chyb a nálezů k ověření se jmenuje **K ověření** (dřív **Problémy**). Strom bez
+    nich má „Nic k ověření“, se stopami „Nic k ověření. 3 stopy.“
 - **Ovládání:** dialog **Validace stromu**: **Přehled stromu → Kvalita dat → Rychlé akce → Detaily validace**,
   řádek „n stop ›“ v **Konzistence** (otevře rovnou **Stopy**), karta s chybami v **Na co se zaměřit**.
   Od aplikace 3.27.0 i **Kvalita dat ›** v bublině nálezu v pohledu Tabulka: otevře dialog na skupině toho nálezu
@@ -34,15 +36,20 @@ Každý nález má závažnost:
   ([A2](A2-loading-a-family-tree.md)).
   Totéž po sloučení s jiným stromem, pro nové nálezy. Vlastní položku v menu kontrola nemá.
 - **Platí od:** aplikace 1.0.0; oddíly **Problémy** a **Stopy** aplikace 3.17.0; název **k ověření** a odkaz z pohledu
-  Tabulka aplikace 3.27.0
+  Tabulka aplikace 3.27.0; oddíl **K ověření** a „Nic k ověření“ aplikace 3.27.0
 
-<!-- zdroj: app:src/validation.ts:83 validateTreeData, :1370 groupValidationIssues · src/ui/tree-stats.ts:101 LONG_GROUP, :148 showTreeValidationDialog · src/ui/import-export.ts:1341 offerPostImportValidation · src/ui/merge/ui.ts:1515 · strings.ts treeManager.validationTitle, valProblems, valLeads, leadsIntro, valReadOnly, valShowMore, postImportCheck · 3.27.0: app:59a8eed0 strings.ts treeManager.validationWarnings „k ověření“, summaryErrors, summaryNoErrors, treeOverview.countWarnings · src/ui/table-view/table-bubble.ts (Kvalita dat ›) → src/ui/tree-stats.ts showTreeValidationDialog focus · table.sev.* · commit e530019b -->
+<!-- zdroj: app:src/validation.ts:83 validateTreeData, :1370 groupValidationIssues · src/ui/tree-stats.ts:101 LONG_GROUP, :148 showTreeValidationDialog · src/ui/import-export.ts:1341 offerPostImportValidation · src/ui/merge/ui.ts:1515 · strings.ts treeManager.validationTitle, valProblems, valLeads, leadsIntro, valReadOnly, valShowMore, postImportCheck · 3.27.0: app:59a8eed0 strings.ts treeManager.validationWarnings „k ověření“, summaryErrors, summaryNoErrors, treeOverview.countWarnings · src/ui/table-view/table-bubble.ts (Kvalita dat ›) → src/ui/tree-stats.ts showTreeValidationDialog focus · table.sev.* · commit e530019b · „K ověření“: strings.ts treeManager.valProblems, commit 79764eba; „Nic k ověření“: validationPassed, summaryLeadsOnly, commit b1cbe546 (T54 G15) -->
 
 <a id="A5.1.1"></a>
 ### A5.1.1 Oprava jedním klikem
 
-Některé nálezy mají tlačítko **Opravit** a skupina **Opravit vše (n)**. Oprava je jeden krok zpět
-(„oprava z validace“) a zapíše se do historie změn.
+Některé nálezy mají tlačítko **Opravit**; souhrn nad nálezy má **Opravit vše (n)** pro všechny opravitelné nálezy.
+Oprava je jeden krok zpět („oprava z validace“) a zapíše se do historie změn.
+
+- Pod **Opravit vše (n)** stojí, co se opraví, s počty, jen u druhů, které strom má: „Opraví se: poškozené vazby mezi
+  osobami a svazky (2); svazek osoby se sebou samou – smaže se (1); duplicitní svazek – sloučí se s prvním, děti
+  zůstanou (1); místo zapsané víckrát jinak – sjednotí se na nejčastější zápis (3). Ostatní nálezy zůstanou beze
+  změny.“ Ve stromu jen ke čtení tlačítko ani řádek nejsou.
 
 | Nález | Co oprava udělá |
 |---|---|
@@ -52,9 +59,9 @@ Některé nálezy mají tlačítko **Opravit** a skupina **Opravit vše (n)**. O
 | Duplicitní partnerství | ponechá první, děti převede na něj |
 | Jedno místo zapsané víckrát jinak | přepíše všechny zápisy na nejčastější |
 
-- **Platí od:** aplikace 1.1.0; oprava míst 1.10.0
+- **Platí od:** aplikace 1.1.0; oprava míst 1.10.0; řádek pod **Opravit vše (n)** aplikace 3.27.0
 
-<!-- zdroj: app:src/data.ts:4071 FIXABLE_TYPES, :4097 repairValidationIssue · strings.ts treeManager.valFix, valFixAll -->
+<!-- zdroj: app:src/data.ts:4071 FIXABLE_TYPES, :4097 repairValidationIssue · strings.ts treeManager.valFix, valFixAll · řádek: src/ui/tree-stats.ts fixAllNoteText (orphaned*/missing* → links, selfPartnership, duplicatePartnership, placeSpelling), strings.ts treeManager.valFixAllNote, jen bez ro, commit 79764eba (T54 G15) -->
 
 <a id="A5.2"></a>
 ## A5.2 Vazby v rodině
@@ -268,7 +275,7 @@ rozlišil.
 
 | Blok | Co ukazuje |
 |---|---|
-| **Konzistence** | souhrn („2 chyby, 1 k ověření, 3 stopy.“), 5 nejzávažnějších **Problémů**, „a dalších n…“, řádek „n stop ›“ |
+| **Konzistence** | souhrn („2 chyby, 1 k ověření, 3 stopy.“), 5 nejzávažnějších chyb a nálezů k ověření, „a dalších n…“, řádek „n stop ›“ |
 | **Úplnost dat** | podíl osob s **Datum narození**, **Datum úmrtí (u zemřelých)**, **Místo narození**, **Fotografie**; pod 50 % zvýrazněno; „Obsah stromu:“ (fotky, události, prameny, přílohy) |
 | **Jistota údajů z výzkumu**, **Kde chybí doklady** | doložení, viz [R3.8](R3-verification-and-citation.md#R3.8) a [A3](A3-evidence-in-the-app.md) |
 | **Struktura** | počet svazků; nespojené části, nebo „Všechny osoby jsou propojeny do jedné rodiny.“ |

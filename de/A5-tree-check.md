@@ -16,15 +16,15 @@ Jeder Befund hat einen Schweregrad:
 
 | Schweregrad | Abschnitt im Dialog | Bedeutung |
 |---|---|---|
-| Fehler | **Probleme** | die Daten widersprechen sich oder sind beschädigt ([A5.2](#A5.2), [A5.3](#A5.3), [A5.4](#A5.4)) |
-| zu prüfen | **Probleme** | ein ungewöhnlicher Wert, unwahrscheinlich, aber möglich; eine Prüfung wert |
+| Fehler | **Zu prüfen** | die Daten widersprechen sich oder sind beschädigt ([A5.2](#A5.2), [A5.3](#A5.3), [A5.4](#A5.4)) |
+| zu prüfen | **Zu prüfen** | ein ungewöhnlicher Wert, unwahrscheinlich, aber möglich; eine Prüfung wert |
 | Info | **Hinweise** | „Keine Fehler. Hinweise, die bei der Forschung helfen können.“ ([A5.5](#A5.5), [A5.6](#A5.6)) |
 
 - **Grenzen:**
   - Befunde derselben Art bilden eine Gruppe, geordnet nach Schweregrad, Größe und Name. Offen ist nur eine Gruppe
     mit einem Fehler.
     Über 50 Befunden werden weitere in Schritten von 20 gezeigt. Auf dem Telefon (bis 640 px) sind die **Hinweise**
-    zugeklappt, wenn es auch **Probleme** gibt.
+    zugeklappt, wenn es auch den Abschnitt **Zu prüfen** gibt.
   - Platzhalterpersonen werden nicht gemeldet. Ein als **Kein Fehler** markierter Befund ([A5.7](#A5.7)) wird weder
     gezählt noch gezeigt.
   - Ein schreibgeschützter Stammbaum zeigt Befunde nur an. Bei einem anderen als dem geöffneten Stammbaum öffnet eine
@@ -32,6 +32,8 @@ Jeder Befund hat einen Schweregrad:
   - **Ab App 3.27.0:** der Schweregrad, der früher „Warnung“ hieß, heißt **zu prüfen**, auch in Zusammenfassungen
     und Zählungen („2 Fehler, 1 zu prüfen, 3 Hinweise.“). Die Ansicht Tabelle zeigt Befunde direkt in den Zellen und
     einen als **Kein Fehler** markierten Befund als **ungewöhnlich** ([A6.7.5](A6-views.md#A6.7.5)).
+  - **Ab App 3.27.0:** der Abschnitt der Fehler und Befunde zu prüfen heißt **Zu prüfen** (früher **Probleme**). Ein
+    Stammbaum ohne sie hat „Nichts zu prüfen“, mit Hinweisen „Nichts zu prüfen. 3 Hinweise.“
 - **Bedienung:** Dialog **Stammbaum-Prüfung**: **Stammbaum-Überblick → Datenqualität → Schnellaktionen →
   Validierungsdetails**, die Zeile „n Hinweise ›“ in **Konsistenz** (öffnet direkt **Hinweise**), die Karte mit
   Fehlern in **Worauf achten**.
@@ -42,15 +44,22 @@ Jeder Befund hat einen Schweregrad:
   Dasselbe nach dem Zusammenführen mit einem anderen Stammbaum, für neue Befunde. Einen eigenen Menüpunkt hat die
   Prüfung nicht.
 - **Gilt seit:** App 1.0.0; Abschnitte **Probleme** und **Hinweise** App 3.17.0; Bezeichnung **zu prüfen** und
-  Verweis aus der Ansicht Tabelle App 3.27.0
+  Verweis aus der Ansicht Tabelle App 3.27.0; Abschnitt **Zu prüfen** und „Nichts zu prüfen“ App 3.27.0
 
-<!-- zdroj: app:src/validation.ts:83 validateTreeData, :1370 groupValidationIssues · src/ui/tree-stats.ts:101 LONG_GROUP, :148 showTreeValidationDialog · src/ui/import-export.ts:1341 offerPostImportValidation · src/ui/merge/ui.ts:1515 · strings.ts treeManager.validationTitle, valProblems, valLeads, leadsIntro, valReadOnly, valShowMore, postImportCheck · 3.27.0: app:59a8eed0 strings.ts treeManager.validationWarnings „k ověření“, summaryErrors, summaryNoErrors, treeOverview.countWarnings · src/ui/table-view/table-bubble.ts (Kvalita dat ›) → src/ui/tree-stats.ts showTreeValidationDialog focus · table.sev.* · commit e530019b -->
+<!-- zdroj: app:src/validation.ts:83 validateTreeData, :1370 groupValidationIssues · src/ui/tree-stats.ts:101 LONG_GROUP, :148 showTreeValidationDialog · src/ui/import-export.ts:1341 offerPostImportValidation · src/ui/merge/ui.ts:1515 · strings.ts treeManager.validationTitle, valProblems, valLeads, leadsIntro, valReadOnly, valShowMore, postImportCheck · 3.27.0: app:59a8eed0 strings.ts treeManager.validationWarnings „k ověření“, summaryErrors, summaryNoErrors, treeOverview.countWarnings · src/ui/table-view/table-bubble.ts (Kvalita dat ›) → src/ui/tree-stats.ts showTreeValidationDialog focus · table.sev.* · commit e530019b · „K ověření“: strings.ts treeManager.valProblems, commit 79764eba; „Nic k ověření“: validationPassed, summaryLeadsOnly, commit b1cbe546 (T54 G15) -->
 
 <a id="A5.1.1"></a>
 ### A5.1.1 Behebung mit einem Klick
 
-Manche Befunde haben die Schaltfläche **Beheben** und die Gruppe **Alle beheben (n)**. Eine Behebung ist ein
-Schritt zurück („eine Prüfungsreparatur“) und wird im Änderungsverlauf erfasst.
+Manche Befunde haben die Schaltfläche **Beheben**; die Zusammenfassung über den Befunden hat **Alle beheben (n)** für
+alle Befunde, die sich beheben lassen. Eine Behebung ist ein Schritt zurück („eine Prüfungsreparatur“) und wird im
+Änderungsverlauf erfasst.
+
+- Unter **Alle beheben (n)** steht, was behoben wird, mit Anzahlen, nur für die Arten, die der Stammbaum hat:
+  „Behoben wird: beschädigte Verknüpfungen zwischen Personen und Partnerschaften (2); Partnerschaft einer Person mit
+  sich selbst – wird gelöscht (1); doppelte Partnerschaft – wird mit der ersten zusammengeführt, Kinder bleiben (1);
+  ein Ort, verschieden geschrieben – wird auf die häufigste Schreibweise vereinheitlicht (3). Andere Befunde bleiben
+  unverändert.“ In einem schreibgeschützten Stammbaum gibt es weder die Schaltfläche noch die Zeile.
 
 | Befund | Was die Behebung tut |
 |---|---|
@@ -60,9 +69,9 @@ Schritt zurück („eine Prüfungsreparatur“) und wird im Änderungsverlauf er
 | Doppelte Partnerschaft | behält die erste, überträgt die Kinder auf sie |
 | Ein Ort auf mehrere Arten geschrieben | schreibt alle Schreibungen auf die häufigste um |
 
-- **Gilt seit:** App 1.1.0; Behebung von Orten 1.10.0
+- **Gilt seit:** App 1.1.0; Behebung von Orten 1.10.0; die Zeile unter **Alle beheben (n)** App 3.27.0
 
-<!-- zdroj: app:src/data.ts:4071 FIXABLE_TYPES, :4097 repairValidationIssue · strings.ts treeManager.valFix, valFixAll -->
+<!-- zdroj: app:src/data.ts:4071 FIXABLE_TYPES, :4097 repairValidationIssue · strings.ts treeManager.valFix, valFixAll · řádek: src/ui/tree-stats.ts fixAllNoteText (orphaned*/missing* → links, selfPartnership, duplicatePartnership, placeSpelling), strings.ts treeManager.valFixAllNote, jen bez ro, commit 79764eba (T54 G15) -->
 
 <a id="A5.2"></a>
 ## A5.2 Verbindungen in der Familie
@@ -301,7 +310,7 @@ markierte Befunde und ohne Paare, die die Forschung unterschieden hat.
 
 | Block | Was er zeigt |
 |---|---|
-| **Konsistenz** | Zusammenfassung („2 Fehler, 1 zu prüfen, 3 Hinweise.“), die 5 schwersten **Probleme**, „und n weitere…“, die Zeile „n Hinweise ›“ |
+| **Konsistenz** | Zusammenfassung („2 Fehler, 1 zu prüfen, 3 Hinweise.“), die 5 schwersten Fehler und Befunde zu prüfen, „und n weitere…“, die Zeile „n Hinweise ›“ |
 | **Vollständigkeit** | Anteil der Personen mit **Geburtsdatum**, **Sterbedatum (Verstorbene)**, **Geburtsort**, **Foto**; unter 50 % hervorgehoben; „Inhalt:“ (Fotos, Ereignisse, Quellen, Anhänge) |
 | **Sicherheit der Forschungsangaben**, **Wo Belege fehlen** | Belege, siehe [R3.8](R3-verification-and-citation.md#R3.8) und [A3](A3-evidence-in-the-app.md) |
 | **Struktur** | Zahl der Verbindungen; unverbundene Teile oder „Alle Personen sind zu einer Familie verbunden.“ |

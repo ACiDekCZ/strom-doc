@@ -284,12 +284,14 @@ the depth **Ancestors** and **Descendants**. The Table view is based on a table 
   - the research's columns, chips and views are only in a tree from the research ([A6.7.14](#A6.7.14));
   - a read-only tree (a followed tree, a tree saved by a newer version of the app, a locked tree) the table only
     shows: “Read only: edits and “Not an error” are not available here.” Browsing, filter, sort and CSV and XLSX
-    export work; a view cannot be saved, renamed or deleted.
+    export work; a view cannot be saved, renamed or deleted;
+  - the arrows **↩ ↪** in the bottom left corner (the previous and the next central person) and Alt+← / Alt+→ are not
+    in the Table: the table neither shows the central person nor changes it while working.
 - **Controls:** **Table** in the view bar (after **Map**); in a narrow window and on a phone **More → View → Table**.
   The view is remembered like the others ([A6.1.1](#A6.1.1)).
 - **Since:** app 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) · ↩ ↪ a Alt+šipky v Tabulce skryté: commity 79764eba, b1cbe546 (T54 G14) -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Unions in the People table
@@ -312,7 +314,7 @@ empty.
 - A union sub-row carries only the findings of its union. The person's findings (such as the mother's age at the
   birth) and the strips of collapsed groups stay in the person's row.
 - **Controls:** **Expand unions** / **Collapse unions** (on a phone in the menu **⋯**); the keys → and ← in the
-  column **Name**, * for all people; the row menu. The state is saved with the view ([A6.7.7](#A6.7.7)).
+  column **Full name**, * for all people; the row menu. The state is saved with the view ([A6.7.7](#A6.7.7)).
 
 <!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d · nálezy podřádku: commit 75de3a9b (T54 F6) -->
 
@@ -326,10 +328,12 @@ The columns are in groups. Which are visible and in what order is part of the vi
 | **People** | **Person** · **Birth and baptism** · **Parents** · **Unions** · **Divorce** · **Death and burial** · **Events** · **Sources** · **Reliability and research** · **Checks** |
 | **Unions** | **Couple** · **Marriage** · **Divorce** · **Children and sources** |
 
-- **Name** (for unions **Partner 1**) is pinned on the left and sorts by surname, then by given name.
+- **Full name** (for unions **Partner 1**) is pinned on the left and sorts by surname, then by given name.
+  It is made of the parts of the name, so there is a separate column **First name** (hidden by default) that can be
+  edited in the cell ([A6.7.15](#A6.7.15)).
   **Surname** is the married surname, otherwise the birth surname; **Birth surname** is the recorded surname.
-- **Research ID** shows only the person's number from the research (P…). **Ref. number (REFN)** is the person's
-  reference number as the GEDCOM file brought it (and as it goes back into one); it sorts and filters as text.
+- **Research ID** shows only the person's number from the research (P…). **Ref. number** is the person's
+  reference number (REFN) as the GEDCOM file brought it (and as it goes back into one); it sorts and filters as text.
 - **Open question**, **⇄ In another tree** (the trees on this device the person is in) and **Person status** (the mark
   of documentation and reliability from the card, in words; sorted from the strongest; from app 3.27.0 by the reliability of the
   citations, [S7.2](S7-reliability-and-verification.md#S7.2)) are in every tree. The group
@@ -338,7 +342,7 @@ The columns are in groups. Which are visible and in what order is part of the vi
   each value once, the newest first.
 - The columns **… reliability** and **Research certainty** have a value only in a tree from the research
   ([S7](S7-reliability-and-verification.md)).
-- The columns **Ref. number (REFN)**, **Open question**, **⇄ In another tree** and **Person status** are hidden by
+- The columns **First name**, **Ref. number**, **Open question**, **⇄ In another tree** and **Person status** are hidden by
   default.
 - **Limits:** a collapsed group is a narrow strip; it shows the highest level of a finding in its cells. On a phone
   the pinned name is narrower and the header can only be read, not changed.
@@ -350,7 +354,7 @@ The columns are in groups. Which are visible and in what order is part of the vi
     **Collapse group …** / **Expand group …**; at a computed column “Computed from: …”;
   - the column width by dragging the edge of the header.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) -->
 
 <a id="A6.7.3"></a>
 ### A6.7.3 Computed and substitute values
@@ -383,19 +387,24 @@ The columns **… completeness** say how many of the tracked fields are filled i
 | Column | Counted from |
 |---|---|
 | **Birth completeness** | date, place, father, mother, source |
-| **Union completeness** | date, place, partner, marriage source |
+| **Union completeness** | date, place, partner, marriage source; for a union without a wedding (**Partners**, **Separated**) only the partner |
 | **Death completeness** | date, place, source (not for a living person) |
 | **Overall completeness** | birth, each union and death, weighted by the number of fields |
 
 - A substitute value (baptism, burial) does not fill a field. The hint at a cell lists what is missing (“missing:
   birth place, birth source”).
 - The **Coverage row** under the header shows for each column what percentage of the rows has a value (“filled
-  64 %”, hint “77 of 120”). It counts only the rows visible at the moment (after the filter and the search). Cells
+  64 %”, hint “77 of 120”). Under the columns **… completeness** it shows the average completeness of the rows (hint
+  “average of 120”). It counts only the rows visible at the moment (after the filter and the search). Cells
   **Does not apply** are not counted; for union columns the unions that match the filter are counted. Under 50 % the
   number is bold; without a cell it would concern, it is “–”.
+- **A union without a wedding** (type **Partners** or **Separated**): the empty cells of the wedding (date, place, the
+  age and recorded age of both, the recorded age difference, witnesses, **Marriage reliability**) have “–” with the hint
+  “Does not apply: a union without a wedding” and are counted neither in the coverage row nor in the completeness. A
+  value that is there anyway (the start of the relationship from the union form) is shown as before.
 - **Controls:** **Coverage row** in the panel **Columns** (on a phone in **⋯**); it is saved with the view.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 · průměr u sloupců úplnosti (kind percent): table-coverage.ts columnCoverage average, strings.ts table.coverageAverage, i XLSX, commit 56f3418c (T54 G12) · svazek bez sňatku: table-columns.ts unionWithoutWedding (partners, separated), weddingCell, oneUnionFields (jen partner), strings.ts table.naNoWedding, compList.unionNoWedding, commit 8fdf52ca (T54 G5, MILAN.md rozhodnutí 21) -->
 
 <a id="A6.7.5"></a>
 ### A6.7.5 Findings of the check in the cells
@@ -488,8 +497,10 @@ saves a custom view.
 - A changed view has the label **changed** and the options **Save**, **Save as new**, **Discard changes**. A built-in
   view does not change and cannot be renamed or deleted; its changes can only go **Save as new**. A custom view:
   **Rename…**, **Delete** (with a confirmation). Custom views are sorted by name.
-- The table's work in progress (unsaved changes too) is remembered by the app for each tree on this device; after
-  the page is reloaded the table is as it was left.
+- The table's work in progress is remembered by the app for each tree on this device; after the page is reloaded or
+  the app is updated, the table is as it was left. It includes the unsaved changes of every view, also of one switched
+  away from: back in it, the view still has the label **changed**. **Save**, **Save as new** and **Discard changes**
+  settle them. A damaged part of the work in progress is left out.
 - **Saved views are part of the tree** (data version 17): saving, renaming and deleting have a step back and an entry
   in the change history. They go with the tree into the backup (JSON) and, when a part of the tree is separated, into
   the new tree too. GEDCOM does not carry them; a tree from the research keeps them when a new version is loaded.
@@ -499,7 +510,7 @@ saves a custom view.
 - **Controls:** the menu **View** in the table's bar (**Built-in**, **Custom**, **Save as new…**, **Rename…**,
   **Delete**).
 
-<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (9: overview, births, marriages, deaths, sources, gaps, checks, events, allSources), defaultViewId (události → Všechny události, prameny → Všechny prameny), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky, DEFAULT_VIEWS.events, .sources) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.* (events, allSources), changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff -->
+<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (9: overview, births, marriages, deaths, sources, gaps, checks, events, allSources), defaultViewId (události → Všechny události, prameny → Všechny prameny), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky, DEFAULT_VIEWS.events, .sources) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.* (events, allSources), changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff · neuložené změny všech pohledů v pracovním stavu (localStorage) se sanitizací: commit b1cbe546 (T54 G9, varianta c) -->
 
 <a id="A6.7.8"></a>
 ### A6.7.8 Row actions and edits
@@ -701,7 +712,7 @@ cell with a finding opens the finding's bubble.
 | **reliability** | the step's name in grey (in the legend **Confirmed**): **Confirmed**, **Proven**, **Probable**, **Possible**, **From family tree**, **Lead**, **No source** | “In the Reliability and research columns; for unions in the Marriage group, for events in the Source group.” | **Name reliability**, **Birth reliability**, **Death reliability**, **Marriage reliability** (people, unions), **Reliability** (events); the steps: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **substitute** | the abbreviation **bap.** or **bur.** in a small frame before the value, the value in italics; the tooltip “Baptism, birth unknown”, “Burial, death unknown” | “A baptism for the birth, a burial for the death.” | date and place of birth and death ([A6.7.3](#A6.7.3)) |
 | **computed** | grey type; “≈ 67” an estimate, “28–29” a range | “A range from an inexact date, ≈ from an estimate.” | ages, the difference of the recorded age, length of the union, counts, generation, completeness; in the header “Computed from: …” |
-| **does not apply** | “–” in grey italics, the same in the legend; the tooltip “Does not apply” | “Does not apply to the person.” | death for a living person (in **Death completeness** “living”), the father's or mother's age without a recorded parent, union columns of a person without a union, **Age at the event** for a birth |
+| **does not apply** | “–” in grey italics, the same in the legend; the tooltip “Does not apply” | “Does not apply to the person.” | death for a living person (in **Death completeness** “living”), the father's or mother's age without a recorded parent, union columns of a person without a union, the wedding's cells of a union without a wedding (hint “Does not apply: a union without a wedding”, [A6.7.4](#A6.7.4)), **Age at the event** for a birth |
 
 - The columns **… reliability** sort from **Confirmed** to **No source** in the order of the table.
 
@@ -731,14 +742,14 @@ with a rim means research. The research’s ! and ? stand only in the Research c
 | “…” | three faint dots; the tooltip “Checks are running…” | the check of the tree is still running | **Findings**, **Highest level**, **Unusual, checked** |
 | “◌ Checks are running…” | a hollow ring and text at the top right of the table | the same for the whole table; the finding chips wait for now | above the table, next to **Marks ⓘ** |
 | a percentage with a bar | a number and a short bar whose filled part is the value | completeness ([A6.7.4](#A6.7.4)) | the columns **… completeness** |
-| a bold number, “–” | in the coverage row | coverage under 50 %; “–” a column with no cell it would apply to | **Coverage row** ([A6.7.4](#A6.7.4)) |
+| a bold number, “–” | in the coverage row | coverage under 50 % (under the completeness columns an average under 50 %); “–” a column with no cell it would apply to | **Coverage row** ([A6.7.4](#A6.7.4)) |
 | “+2” | a number in an oval frame after the first citation | further cited sources; a click opens **Other citations** | citations of birth, marriage, death ([A6.7.12](#A6.7.12)) |
 | “↗” | after an underlined web address | a link into a new window | **Online**, the citations “… URL” ([A6.7.11](#A6.7.11), [A6.7.12](#A6.7.12)) |
 | cell outline | a thin outline of 1 px | the active cell ([A6.7.15](#A6.7.15)) | a cell of the selected row |
 | text cursor | on hovering with the mouse | the cell can be edited in place ([A6.7.15](#A6.7.15)) | editable cells |
 | ●○, ●● | one or two solid dots before “1 reader”, “2 readers”; the tooltip says who read the transcript | how many readers read the transcript | **Read by the research** ([A6.7.11](#A6.7.11)) |
 | “12 d” | a number with “d” | an age under one year in days | **Age at the event** ([A6.7.10](#A6.7.10)) |
-| ▾, ▸ | a triangle before the name | the person's unions expanded, collapsed ([A6.7.1](#A6.7.1)) | **Name** of a person with two or more unions |
+| ▾, ▸ | a triangle before the name | the person's unions expanded, collapsed ([A6.7.1](#A6.7.1)) | **Full name** of a person with two or more unions |
 | “3 unions” | for a collapsed person in an oval frame after the name; for an expanded one in the column **Partner** in grey italics | the person's number of unions | the person's row |
 | “└ Union 2 of 3” | an indented sub-row | one union of the person | the union sub-row |
 | “2 unions outside the filter · show” | a button in an indented row | unions that do not match the filter; those shown are dimmed | under the union sub-rows |
@@ -849,7 +860,8 @@ cell can be copied, the table filtered by its value and the fact in it edited ri
   Text selected by hand is copied as usual.
 - **Cell menu:** the row menu (right button, Shift+F10) and on a phone the row panel (a tap on the cell) begin with
   the cell's choices **Copy**, **Only “{value}”** and **Without “{value}”** (the value shortened to about 24 characters
-  with “…”); under them are the row actions ([A6.7.8](#A6.7.8)).
+  with “…”); under them are the row actions ([A6.7.8](#A6.7.8)). The menu opens at the cell, also when another row was
+  selected.
   - **Only** and **Without** set the column filter **is** / **is not** ([A6.7.6](#A6.7.6)), the chip “{Column} =
     {value} ×” or “{Column} ≠ {value} ×”; the comparison ignores letter case and diacritics. A cell with a person's
     name compares the person: **Only “{father}”** in the column **Father** shows the siblings, not the children of a
@@ -859,19 +871,27 @@ cell can be copied, the table filtered by its value and the fact in it edited ri
     **Copy**; the row's own name or title has only the row actions.
   - The filter is saved with the view ([A6.7.7](#A6.7.7)).
 - **Editing in place:** a cell can be edited when it stands for one fact of the tree:
-  - **Surname** (when it shows the married surname, it edits that), **Birth surname**, **Married surname**;
-  - the date and place of birth, baptism, death and burial;
+  - **First name**, **Surname** (when it shows the married surname, it edits that), **Birth surname**, **Married
+    surname**;
+  - **Sex** by a choice (**Male**, **Female**, **Unknown**) and **Ref. number**;
+  - the date and place of birth, baptism, death and burial, **Cause of death** and **Recorded age at death**;
   - **Occupation**, as long as the person has at most one;
-  - the date and place of the marriage (the Unions table, a union sub-row, the row of a person with one union).
+  - the union's facts (the Unions table, a union sub-row, the row of a person with one union): **Union status** by a
+    choice (**Married**, **Partners**, **Divorced**, **Separated**, as in the union form), the date and place of the
+    marriage, each partner's recorded age at the marriage (**Recorded age at marriage**, **Partner’s recorded age**,
+    **Recorded age 1** and **2**), **Divorce date** and **Divorce place**. An empty cell creates the union's fact as the
+    union form creates it. In a union without a wedding ([A6.7.4](#A6.7.4)) the wedding's cells are not edited.
 
-  **Name** is not edited in the cell (it is made of several parts), nor are computed cells, checks, research,
+  **Full name** is not edited in the cell (it is made of several parts), nor are computed cells, checks, research,
   citations, counts and relationships; a double click on them opens **Edit…**.
 - **The field** covers the cell. **Enter** saves, **Esc** cancels, **Tab** and **Shift+Tab** save and go to the next
-  or previous editable cell of the row, a click elsewhere saves. The date is read as in the person form; an unreadable
+  or previous editable cell of the row, a click elsewhere saves. In a choice a click with the mouse saves the value at
+  once; after choosing with the arrows, Enter, Tab or a click elsewhere saves it. The date is read as in the person form; an unreadable
   one stays in the field with the error “The date cannot be read (e.g. 1880-05-15, 1880, about 1880)”. The place
   offers the places of the tree. Without a first name and a surname nothing is saved: “A first name or a surname has
   to stay”.
-- **Saving** goes the same way as the person form and is one step back (Ctrl/Cmd+Z). Baptism and burial edit the first
+- **Saving** goes the same way as the person form (the union's facts as the union form) and is one step back
+  (Ctrl/Cmd+Z), also when an empty cell created the fact. Baptism and burial edit the first
   such event (its other facts and citations stay), or add one; an empty field deletes only that fact. Then the row
   flashes, stays in place and the notice says “Saved: {name}”.
 - **Limits:** editing in place is not possible in a read-only or locked tree, in the Strom archive, on a phone and for
@@ -880,4 +900,4 @@ cell can be copied, the table filtered by its value and the fact in it edited ri
   finding's bubble), in the row menu **Edit cell** (F2). An editable cell has a text cursor on hovering with the mouse.
 - **Since:** app 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->

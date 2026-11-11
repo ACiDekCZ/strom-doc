@@ -253,11 +253,12 @@ fields at once: code, without an agent and free of charge.
 
 - **Enforced by the code:**
   - without an option it is only a **preview**: how many sources would be split, the first 10 "before → after"
-    (`--all` all of them), how many were not recognised. Nothing is written. The agent may run the preview too;
+    (`--all` all of them), how many were not recognised, with up to three examples as they are written. Nothing is written. The agent may run the preview too;
   - `--apply` writes the split in one step and prints `undo: strom source split --undo <id>`; `--undo <id>` returns
     all the sources as they were. Both only by a person in their own terminal; strom refuses them to the agent;
   - a filled folio or image stays. An image given by registered scans is not taken. A part the field states
-    differently stays in the locator. A locator in which nothing is recognised stays as it is;
+    differently stays in the locator. A locator in which nothing is recognised stays as it is. A source that already
+    has a folio or an image is not counted among the unrecognised: the rest of its locator is nothing to split;
   - the last 5 splits can be undone, each by its id. A source changed after the split makes the undo refuse whole.
 - **Method only:** the agent offers the split to the person and never confirms it itself.
 - **From the Strom app:** the research offers the same split to the app too, while it runs: a preview with the count,
@@ -267,7 +268,7 @@ fields at once: code, without an agent and free of charge.
   split --undo <id>` (the preview prints the id for undoing).
 - **Since:** research 1.31.0
 
-<!-- zdroj: research:c6260e50 src/commands/sourcesplit.ts (SHOWN 10, PERSON, agentMay jen bez --apply a --undo), src/core/sourcesplit.ts splitOf, UNDO_KEPT 5, SOURCE_SPLIT_FILE quality/source-split.json, undoSplit (po změně odmítne celé) · c4fe4fac most GET/POST <token>/sources/split, /sources/split/undo, feature sources.split, 409 plan/changed/archive, 503 busy · assets/method/recording.md:30-31 · CHANGELOG.cs.md 1.31.0 · spec 075 K4.1, K4.3 -->
+<!-- zdroj: research:c6260e50 src/commands/sourcesplit.ts (SHOWN 10, PERSON, agentMay jen bez --apply a --undo), src/core/sourcesplit.ts splitOf, UNDO_KEPT 5, SOURCE_SPLIT_FILE quality/source-split.json, undoSplit (po změně odmítne celé) · c4fe4fac most GET/POST <token>/sources/split, /sources/split/undo, feature sources.split, 409 plan/changed/archive, 503 busy · assets/method/recording.md:30-31 · CHANGELOG.cs.md 1.31.0 · spec 075 K4.1, K4.3 · příklady nerozpoznaných a nic u zbytku vedle pole: research:ff760309 src/core/sourcesplit.ts splitPlan (unrecognizedExamples, EXAMPLES 3, nothing), src/commands/sourcesplit.ts:67 -->
 
 <a id="R3.5"></a>
 ## R3.5 A blind second reading

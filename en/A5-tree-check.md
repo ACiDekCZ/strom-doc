@@ -14,20 +14,22 @@ Each finding has a severity:
 
 | Severity | Section in the dialog | Meaning |
 |---|---|---|
-| error | **Problems** | the data contradict each other or are broken ([A5.2](#A5.2), [A5.3](#A5.3), [A5.4](#A5.4)) |
-| to check | **Problems** | an unusual value, unlikely but possible; worth checking |
+| error | **To check** | the data contradict each other or are broken ([A5.2](#A5.2), [A5.3](#A5.3), [A5.4](#A5.4)) |
+| to check | **To check** | an unusual value, unlikely but possible; worth checking |
 | info | **Leads** | "Not errors. Leads that may help the research." ([A5.5](#A5.5), [A5.6](#A5.6)) |
 
 - **Limits:**
   - Findings of the same kind form a group, sorted by severity, size and name. Only a group with an error is open.
-    Over 50 findings, more are shown 20 at a time. On a phone (up to 640 px) **Leads** are collapsed when there are
-    **Problems** too.
+    Over 50 findings, more are shown 20 at a time. On a phone (up to 640 px) **Leads** are collapsed when there is
+    the section **To check** too.
   - Placeholder persons are not reported. A finding marked **Not an error** ([A5.7](#A5.7)) is neither counted nor
     shown.
   - A read-only tree only shows findings. For a tree other than the open one, a fix or a mark opens the tree first.
   - **From app 3.27.0:** the severity formerly called "warning" is called **to check**, in summaries and counts too
     ("2 errors, 1 to check, 3 leads."). The Table view shows findings right in the cells, and a finding marked
     **Not an error** as **unusual** ([A6.7.5](A6-views.md#A6.7.5)).
+  - **From app 3.27.0:** the section of errors and findings to check is called **To check** (formerly **Problems**).
+    A tree without them has "Nothing to check", with leads "Nothing to check. 3 leads."
 - **Controls:** the dialog **Tree validation**: **Tree overview → Data quality → Quick actions → Validation details**,
   the row "n leads ›" in **Consistency** (opens **Leads** directly), the card with errors in **Where to focus**.
   From app 3.27.0 also **Data quality ›** in a finding's bubble in the Table view: it opens the dialog at that
@@ -36,15 +38,20 @@ Each finding has a severity:
   ([A2](A2-loading-a-family-tree.md)).
   The same after a merge with another tree, for new findings. The check has no menu item of its own.
 - **Since:** app 1.0.0; the sections **Problems** and **Leads** app 3.17.0; the name **to check** and the link from the
-  Table view app 3.27.0
+  Table view app 3.27.0; the section **To check** and "Nothing to check" app 3.27.0
 
-<!-- zdroj: app:src/validation.ts:83 validateTreeData, :1370 groupValidationIssues · src/ui/tree-stats.ts:101 LONG_GROUP, :148 showTreeValidationDialog · src/ui/import-export.ts:1341 offerPostImportValidation · src/ui/merge/ui.ts:1515 · strings.ts treeManager.validationTitle, valProblems, valLeads, leadsIntro, valReadOnly, valShowMore, postImportCheck · 3.27.0: app:59a8eed0 strings.ts treeManager.validationWarnings „k ověření“, summaryErrors, summaryNoErrors, treeOverview.countWarnings · src/ui/table-view/table-bubble.ts (Kvalita dat ›) → src/ui/tree-stats.ts showTreeValidationDialog focus · table.sev.* · commit e530019b -->
+<!-- zdroj: app:src/validation.ts:83 validateTreeData, :1370 groupValidationIssues · src/ui/tree-stats.ts:101 LONG_GROUP, :148 showTreeValidationDialog · src/ui/import-export.ts:1341 offerPostImportValidation · src/ui/merge/ui.ts:1515 · strings.ts treeManager.validationTitle, valProblems, valLeads, leadsIntro, valReadOnly, valShowMore, postImportCheck · 3.27.0: app:59a8eed0 strings.ts treeManager.validationWarnings „k ověření“, summaryErrors, summaryNoErrors, treeOverview.countWarnings · src/ui/table-view/table-bubble.ts (Kvalita dat ›) → src/ui/tree-stats.ts showTreeValidationDialog focus · table.sev.* · commit e530019b · „K ověření“: strings.ts treeManager.valProblems, commit 79764eba; „Nic k ověření“: validationPassed, summaryLeadsOnly, commit b1cbe546 (T54 G15) -->
 
 <a id="A5.1.1"></a>
 ### A5.1.1 One-click fix
 
-Some findings have a button **Fix** and the group **Fix all (n)**. A fix is one step back ("fix from validation") and
-is written into the change history.
+Some findings have a button **Fix**; the summary above the findings has **Fix all (n)** for all findings that can be
+fixed. A fix is one step back ("fix from validation") and is written into the change history.
+
+- Under **Fix all (n)** stands what is fixed, with counts, only for the kinds the tree has: "Fixes: broken links
+  between people and unions (2); a union of a person with themselves – removed (1); a duplicate union – merged into
+  the first, children kept (1); a place written several ways – unified to the most used spelling (3). Other findings
+  stay unchanged." In a read-only tree neither the button nor the line is there.
 
 | Finding | What the fix does |
 |---|---|
@@ -54,9 +61,9 @@ is written into the change history.
 | Duplicate partnership | keeps the first, moves the children to it |
 | One place written several ways | rewrites all spellings to the most frequent one |
 
-- **Since:** app 1.1.0; fixing places 1.10.0
+- **Since:** app 1.1.0; fixing places 1.10.0; the line under **Fix all (n)** app 3.27.0
 
-<!-- zdroj: app:src/data.ts:4071 FIXABLE_TYPES, :4097 repairValidationIssue · strings.ts treeManager.valFix, valFixAll -->
+<!-- zdroj: app:src/data.ts:4071 FIXABLE_TYPES, :4097 repairValidationIssue · strings.ts treeManager.valFix, valFixAll · řádek: src/ui/tree-stats.ts fixAllNoteText (orphaned*/missing* → links, selfPartnership, duplicatePartnership, placeSpelling), strings.ts treeManager.valFixAllNote, jen bez ro, commit 79764eba (T54 G15) -->
 
 <a id="A5.2"></a>
 ## A5.2 Family links
@@ -287,7 +294,7 @@ findings and without pairs the research told apart.
 
 | Block | What it shows |
 |---|---|
-| **Consistency** | a summary ("2 errors, 1 to check, 3 leads."), the 5 most serious **Problems**, "and n more…", the row "n leads ›" |
+| **Consistency** | a summary ("2 errors, 1 to check, 3 leads."), the 5 most serious errors and findings to check, "and n more…", the row "n leads ›" |
 | **Data completeness** | the share of people with **Birth date**, **Date of death (deceased)**, **Birthplace**, **Photo**; under 50 % highlighted; "Tree content:" (photos, events, sources, attachments) |
 | **Certainty of research facts**, **Where evidence is missing** | evidence, see [R3.8](R3-verification-and-citation.md#R3.8) and [A3](A3-evidence-in-the-app.md) |
 | **Structure** | the number of unions; unconnected parts, or "All people are connected into one family." |

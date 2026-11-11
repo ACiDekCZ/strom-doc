@@ -360,7 +360,8 @@ reszta zostaje w **Dalsza lokalizacja**. Dzieli kod, bez agenta, i jednym krokie
 - **Oferta:** w **Akcje → Źródła** i nad Tabelą › Źródła wiersz „Lokalizacje 12 źródeł można podzielić na pola.”
   z **Podziel według propozycji…**. Okno **Podziel lokalizacje na pola** pokazuje podgląd: **Źródło**, **Lokalizacja
   dotąd**, **Folio/strona**, **Skan**, **Dalsza lokalizacja**; najpierw 6 źródeł, **Pokaż wszystkie (n)** wczytuje
-  kolejne przy przewijaniu. Ile lokalizacji nie rozpoznano („… pozostaną bez zmian”), stoi pod podglądem.
+  kolejne przy przewijaniu. Ile lokalizacji nie rozpoznano („… pozostaną bez zmian”), stoi pod podglądem, a pod tym
+  najwyżej trzy przykłady („Np. „Księga N 7, wpis bez numeru”.”), każdy raz i najwyżej 60 znaków („…”).
 - **Zasada:** „Pole, które jest już wypełnione, nie zostanie nadpisane. Część, którą pole podaje inaczej, zostaje
   w lokalizacji.” Wartość, która zostaje, ma w podglądzie „· bez zmian”. Wiersz notatki „Sygnatura: …” z wcześniejszego
   importu GEDCOM przenosi się do pustego pola **Sygnatura** (kolumna **Sygnatura** z „· z notatki”).
@@ -381,10 +382,11 @@ reszta zostaje w **Dalsza lokalizacja**. Dzieli kod, bez agenta, i jednym krokie
   - cofnięcie odmawia w całości, gdy źródło zmieniło się po podziale: mówi ile i podaje pierwsze trzy, nic się nie
     cofa. W aplikacji bez badania po późniejszej zmianie drzewa „Cofnięcie nie jest już możliwe: drzewo zmieniło się od
     podziału.”;
-  - nierozpoznana lokalizacja zostaje, jaka jest. Przykłady nierozpoznanych podgląd pokazuje tylko przy drzewie bez
-    badania.
+  - nierozpoznana lokalizacja zostaje, jaka jest. Źródło, które ma już folio lub skan w polu, nie liczy się do
+    nierozpoznanych: reszta jego lokalizacji („nr 5”) nie jest niczym do podziału. W drzewie badania przykłady
+    nierozpoznanych pochodzą z badania; gdy ich nie przyśle, podgląd pokazuje tylko liczbę.
 - **Obsługa:** **Akcje → Źródła → Podziel według propozycji…**; Tabela › Źródła, wiersz nad tabelą; **Podziel (n)**,
   **Cofnij**, **Cofnij…**. Badanie w terminalu: `strom source split` ([R3.4.4](R3-verification-and-citation.md#R3.4.4)).
 - **Obowiązuje od:** aplikacja 3.27.0; drzewo badania z badaniem 1.31.0
 
-<!-- zdroj: app:8dd21adf src/source-split.ts SplitSourceKind (local/bridge/needsResearch/archive/none), localSplitPlan (řádek poznámky „Signatura:“ v každém jazyce importu), splitOffer (needsResearch jen v Prameny) · src/ui/source-split-ui.ts:37 TOAST_MS 8000, sourceSplitKind (read-only/zamčený → none, archiv → archive, most + feature sources.split → bridge) · 5a59f01d src/source-split-bridge.ts (GET/POST sources/split, undo), náhled přes most bez příkladů nerozpoznaných (dirigent:prace/1111-app-citace-pole Navazuje) · src/ui/misc.ts:1352 Ctrl/⌘+Z · strings.ts sources.split.* (offer, open, needsResearch, doneLine, undoOpen, title, lead, rule, sigNote, col*, kept, fromNote, all, shown, unrec, go, progress, toast, undo, undoRow, nothingLeft, errPlan, errBusy, retry, errUndoLater, errUndo) · spec 075 K4.2 · research:c4fe4fac -->
+<!-- zdroj: app:8dd21adf src/source-split.ts SplitSourceKind (local/bridge/needsResearch/archive/none), localSplitPlan (řádek poznámky „Signatura:“ v každém jazyce importu), splitOffer (needsResearch jen v Prameny) · src/ui/source-split-ui.ts:37 TOAST_MS 8000, sourceSplitKind (read-only/zamčený → none, archiv → archive, most + feature sources.split → bridge) · 5a59f01d src/source-split-bridge.ts (GET/POST sources/split, undo), příklady nerozpoznaných přes most (unrecognizedExamples, výzkum ff760309) a lokální plán jako výzkum (zbytek u pole folia/snímku = nic, NFC, bez duplicit, nejvýš 3, ořez 60 znaků po grafémech): app:34cb5996 src/source-split.ts localSplitPlan, SPLIT_UNRECOGNIZED_EXAMPLES, src/source-split-bridge.ts examplesOf, src/ui/source-split-ui.ts:614, strings.ts sources.split.unrecEx · src/ui/misc.ts:1352 Ctrl/⌘+Z · strings.ts sources.split.* (offer, open, needsResearch, doneLine, undoOpen, title, lead, rule, sigNote, col*, kept, fromNote, all, shown, unrec, go, progress, toast, undo, undoRow, nothingLeft, errPlan, errBusy, retry, errUndoLater, errUndo) · spec 075 K4.2 · research:c4fe4fac -->

@@ -365,7 +365,8 @@ the rest stays in **Other location**. The code splits them, without an agent, an
 - **Offer:** in **Actions → Sources** and above Table › Sources the line "The locations of 12 sources can be split into
   fields." with **Split as suggested…**. The window **Split locations into fields** shows a preview: **Source**,
   **Location before**, **Folio/page**, **Image**, **Other location**; first 6 sources, **Show all (n)** loads more on
-  scroll. How many locations were not recognised ("… stay unchanged") stands under the preview.
+  scroll. How many locations were not recognised ("… stay unchanged") stands under the preview, and under it up to
+  three examples ("E.g. “Book N 7, entry without number”."), each once and at most 60 characters ("…").
 - **Rule:** "A field that is already filled is not overwritten. A part the field states differently stays in the
   location." A value that stays has "· unchanged" in the preview. The note line "Call number: …" from an earlier GEDCOM
   import moves into the empty field **Call number** (the column **Call number** with "· from note").
@@ -388,10 +389,11 @@ the rest stays in **Other location**. The code splits them, without an agent, an
   - undoing is refused whole when a source changed after the split: it says how many and the first three, nothing is
     undone. In the app without the research, after a later change of the tree: "Undo is no longer possible: the tree
     changed since the split.";
-  - an unrecognised location stays as it is. The preview shows examples of unrecognised ones only for a tree without
-    the research.
+  - an unrecognised location stays as it is. A source that already has a folio or an image in a field is not counted
+    among the unrecognised: the rest of its location ("No. 5") is nothing to split. In a research tree the examples of
+    unrecognised ones come from the research; when it sends none, the preview shows only the count.
 - **Controls:** **Actions → Sources → Split as suggested…**; Table › Sources, the line above the table; **Split (n)**,
   **Undo**, **Undo…**. The research in the terminal: `strom source split` ([R3.4.4](R3-verification-and-citation.md#R3.4.4)).
 - **Since:** app 3.27.0; a tree from the research with research 1.31.0
 
-<!-- zdroj: app:8dd21adf src/source-split.ts SplitSourceKind (local/bridge/needsResearch/archive/none), localSplitPlan (řádek poznámky „Signatura:“ v každém jazyce importu), splitOffer (needsResearch jen v Prameny) · src/ui/source-split-ui.ts:37 TOAST_MS 8000, sourceSplitKind (read-only/zamčený → none, archiv → archive, most + feature sources.split → bridge) · 5a59f01d src/source-split-bridge.ts (GET/POST sources/split, undo), náhled přes most bez příkladů nerozpoznaných (dirigent:prace/1111-app-citace-pole Navazuje) · src/ui/misc.ts:1352 Ctrl/⌘+Z · strings.ts sources.split.* (offer, open, needsResearch, doneLine, undoOpen, title, lead, rule, sigNote, col*, kept, fromNote, all, shown, unrec, go, progress, toast, undo, undoRow, nothingLeft, errPlan, errBusy, retry, errUndoLater, errUndo) · spec 075 K4.2 · research:c4fe4fac -->
+<!-- zdroj: app:8dd21adf src/source-split.ts SplitSourceKind (local/bridge/needsResearch/archive/none), localSplitPlan (řádek poznámky „Signatura:“ v každém jazyce importu), splitOffer (needsResearch jen v Prameny) · src/ui/source-split-ui.ts:37 TOAST_MS 8000, sourceSplitKind (read-only/zamčený → none, archiv → archive, most + feature sources.split → bridge) · 5a59f01d src/source-split-bridge.ts (GET/POST sources/split, undo), příklady nerozpoznaných přes most (unrecognizedExamples, výzkum ff760309) a lokální plán jako výzkum (zbytek u pole folia/snímku = nic, NFC, bez duplicit, nejvýš 3, ořez 60 znaků po grafémech): app:34cb5996 src/source-split.ts localSplitPlan, SPLIT_UNRECOGNIZED_EXAMPLES, src/source-split-bridge.ts examplesOf, src/ui/source-split-ui.ts:614, strings.ts sources.split.unrecEx · src/ui/misc.ts:1352 Ctrl/⌘+Z · strings.ts sources.split.* (offer, open, needsResearch, doneLine, undoOpen, title, lead, rule, sigNote, col*, kept, fromNote, all, shown, unrec, go, progress, toast, undo, undoRow, nothingLeft, errPlan, errBusy, retry, errUndoLater, errUndo) · spec 075 K4.2 · research:c4fe4fac -->

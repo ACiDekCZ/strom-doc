@@ -279,15 +279,17 @@ Widok Tabela opiera się na tabeli Ondřeja Chrpy.
   w centrum, gdy jest wśród jego osób, w przeciwnym razie pierwsza osoba; wiersz źródła osoby w centrum nie zmienia.
 - **Granice:**
   - wyróżnienie rodu ([A6.6](#A6.6)) w tabeli się nie stosuje; ród można wybrać chipem **Ród** ([A6.7.6](#A6.7.6));
-  - kolumny, chipy i widoki badań są tylko w drzewie z badania ([A6.7.14](#A6.7.14));
+  - kolumny, chipy i widoki badania są tylko w drzewie z badania ([A6.7.14](#A6.7.14));
   - drzewo tylko do odczytu (śledzone drzewo, drzewo zapisane nowszą wersją aplikacji, zablokowane drzewo) tabela
     tylko pokazuje: „Tylko do odczytu: edycji i „To nie błąd” tu nie ma.” Przeglądanie, filtr, sortowanie i eksport
-    CSV i XLSX działają; widoku nie można zapisać, przemianować ani usunąć.
+    CSV i XLSX działają; widoku nie można zapisać, przemianować ani usunąć;
+  - strzałek **↩ ↪** w lewym dolnym rogu (poprzednia i następna osoba centralna) ani Alt+← / Alt+→ w Tabeli nie ma:
+    tabela nie pokazuje osoby centralnej i nie zmienia jej podczas pracy.
 - **Obsługa:** w przełączniku widoków **Tabela** (za **Mapa**); w wąskim oknie i na telefonie **Więcej → Widok →
   Tabela**. Widok jest zapamiętywany jak pozostałe ([A6.1.1](#A6.1.1)).
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) · ↩ ↪ a Alt+šipky v Tabulce skryté: commity 79764eba, b1cbe546 (T54 G14) -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Związki w tabeli osób
@@ -320,22 +322,23 @@ Kolumny są w grupach. Które są widoczne i w jakiej kolejności, jest części
 
 | Wiersze | Grupy kolumn |
 |---|---|
-| **Osoby** | **Osoba** · **Urodzenie i chrzest** · **Rodzice** · **Związki** · **Rozwód** · **Zgon i pochówek** · **Wydarzenia** · **Źródła** · **Wiarygodność i badania** · **Kontrole** |
+| **Osoby** | **Osoba** · **Urodzenie i chrzest** · **Rodzice** · **Związki** · **Rozwód** · **Zgon i pochówek** · **Wydarzenia** · **Źródła** · **Wiarygodność i badanie** · **Kontrole** |
 | **Związki** | **Para** · **Ślub** · **Rozwód** · **Dzieci i źródła** |
 
 - **Imię i nazwisko** (przy związkach **Partner 1**) jest przypięte po lewej i sortuje się według nazwiska, potem
-  imienia. **Nazwisko** to nazwisko po ślubie, w przeciwnym razie rodowe; **Nazwisko rodowe** to zapisane nazwisko.
-- **ID badań** pokazuje tylko numer osoby z badania (P…). **Nr ref. (REFN)** to numer referencyjny osoby, tak jak
+  imienia. Składa się z części imienia i nazwiska, dlatego jest osobna kolumna **Imię** (domyślnie ukryta), którą
+  można edytować w komórce ([A6.7.15](#A6.7.15)). **Nazwisko** to nazwisko po ślubie, w przeciwnym razie rodowe; **Nazwisko rodowe** to zapisane nazwisko.
+- **ID badania** pokazuje tylko numer osoby z badania (P…). **Nr ref.** to numer referencyjny osoby (REFN), tak jak
   przyniósł go plik GEDCOM (i jak wraca do niego); sortuje się i filtruje jako tekst.
 - **Otwarte pytanie**, **⇄ W innym drzewie** (drzewa na tym urządzeniu, w których osoba jest) i **Stan osoby**
   (oznaczenie udokumentowania i wiarygodności z karty, słowami; sortowane od najsilniejszego; od aplikacji 3.27.0 według wiarygodności
   cytatów, [S7.2](S7-reliability-and-verification.md#S7.2)) są w każdym drzewie.
-  Grupa **Badania** jest tylko w drzewie z badania ([A6.7.14](#A6.7.14)).
+  Grupa **Badanie** jest tylko w drzewie z badania ([A6.7.14](#A6.7.14)).
 - **Wydarzenia** (**Zawód**, **Miejsce zamieszkania**, **Wyznanie**, **Służba wojskowa**, **Emigracja**,
   **Wykształcenie**) pokazują każdą wartość raz, najnowszą pierwszą.
-- Kolumny **Wiarygodność …** i **Pewność z badań** mają wartość tylko w drzewie z badania
+- Kolumny **Wiarygodność …** i **Pewność z badania** mają wartość tylko w drzewie z badania
   ([S7](S7-reliability-and-verification.md)).
-- Kolumny **Nr ref. (REFN)**, **Otwarte pytanie**, **⇄ W innym drzewie** i **Stan osoby** są domyślnie ukryte.
+- Kolumny **Imię**, **Nr ref.**, **Otwarte pytanie**, **⇄ W innym drzewie** i **Stan osoby** są domyślnie ukryte.
 - **Granice:** zwinięta grupa to wąski pasek; pokazuje najwyższy poziom ustalenia w swoich komórkach. Na telefonie
   przypięte imię i nazwisko jest węższe, a nagłówek można tylko czytać, nie zmieniać.
 - **Obsługa:**
@@ -346,7 +349,7 @@ Kolumny są w grupach. Które są widoczne i w jakiej kolejności, jest części
     **Zwiń grupę …** / **Rozwiń grupę …**; przy kolumnie obliczonej „Obliczono z: …”;
   - szerokość kolumny przez przeciągnięcie krawędzi nagłówka.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) -->
 
 <a id="A6.7.3"></a>
 ### A6.7.3 Wartości obliczone i zastępcze
@@ -380,19 +383,24 @@ Kolumny **Kompletność …** mówią, ile śledzonych pól jest wypełnionych, 
 | Kolumna | Liczy się z |
 |---|---|
 | **Kompletność urodzenia** | data, miejsce, ojciec, matka, źródło |
-| **Kompletność związku** | data, miejsce, partner, źródło ślubu |
+| **Kompletność związku** | data, miejsce, partner, źródło ślubu; przy związku bez ślubu (**Partnerzy**, **W separacji**) tylko partner |
 | **Kompletność zgonu** | data, miejsce, źródło (nie przy osobie żyjącej) |
 | **Kompletność ogółem** | urodzenie, każdy związek i zgon, ważone liczbą pól |
 
 - Wartość zastępcza (chrzest, pochówek) pola nie wypełnia. Podpowiedź przy komórce wypisuje, czego brakuje („brak:
   miejsce urodzenia, źródło urodzenia”).
 - **Wiersz pokrycia** pod nagłówkiem pokazuje przy każdej kolumnie, ile procent wierszy ma wartość („wypełniono
-  64 %”, podpowiedź „77 z 120”). Liczy tylko wiersze, które są właśnie widoczne (po filtrze i wyszukiwaniu). Komórek
+  64 %”, podpowiedź „77 z 120”). Przy kolumnach **Kompletność …** pokazuje średnią kompletność wierszy (podpowiedź
+  „średnia z 120”). Liczy tylko wiersze, które są właśnie widoczne (po filtrze i wyszukiwaniu). Komórek
   **Nie dotyczy** się nie liczy; przy kolumnach związku liczą się związki, które spełniają filtr. Poniżej 50 % liczba
   jest pogrubiona; bez komórki, której by dotyczyła, jest „–”.
+- **Związek bez ślubu** (typ **Partnerzy** lub **W separacji**): puste komórki ślubu (data, miejsce, wiek i wiek
+  zapisany obojga, różnica wieku zapisanego, świadkowie, **Wiarygodność ślubu**) mają „–” z podpowiedzią „Nie dotyczy:
+  związek bez ślubu” i nie liczą się ani do wiersza pokrycia, ani do kompletności. Wartość, która mimo to tam jest
+  (początek związku z formularza związku), pokazuje się jak dotąd.
 - **Obsługa:** **Wiersz pokrycia** w panelu **Kolumny** (na telefonie w **⋯**); zapisuje się z widokiem.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 · průměr u sloupců úplnosti (kind percent): table-coverage.ts columnCoverage average, strings.ts table.coverageAverage, i XLSX, commit 56f3418c (T54 G12) · svazek bez sňatku: table-columns.ts unionWithoutWedding (partners, separated), weddingCell, oneUnionFields (jen partner), strings.ts table.naNoWedding, compList.unionNoWedding, commit 8fdf52ca (T54 G5, MILAN.md rozhodnutí 21) -->
 
 <a id="A6.7.5"></a>
 ### A6.7.5 Ustalenia kontroli w komórkach
@@ -439,7 +447,7 @@ Filtr wybiera wiersze, wyszukiwanie zawęża je dalej, sortowanie ustala kolejno
 
 - **Chipy** tabeli osób (związki chipów nie mają, wydarzenia i źródła mają własne, [A6.7.10](#A6.7.10), [A6.7.11](#A6.7.11)): **Żyjący**, **Zmarli** (wykluczają się), **Krewni**, **Ród** (wybór rodów),
   **Pokolenie** (zakres), **Kilka związków**, **Bez daty urodzenia**, **Niepewna data** (urodzenia lub zgonu),
-  **Bez źródła**, **Z ustaleniami** (błąd lub do sprawdzenia; trop nie), **Nietypowe**, **Niepotwierdzone z badań**
+  **Bez źródła**, **Z ustaleniami** (błąd lub do sprawdzenia; trop nie), **Nietypowe**, **Niepotwierdzone z badania**
   (tylko drzewo z badania). Chipy ustaleń czekają na kontrolę („Gdy sprawdzanie się skończy”). Co się nie zmieści,
   jest w **Więcej (n)**.
 - **Filtr w kolumnie** (**Filtr…** w nagłówku) według rodzaju kolumny:
@@ -477,15 +485,17 @@ sobie człowiek.
 | **Luki** | osoby | kompletność ogółem i według części, urodzenie, rodzice, źródła; od najmniej kompletnych; związki zwinięte |
 | **Kontrole** | osoby | poziom i liczba ustaleń, daty, wiek rodziców, ślub; chip **Z ustaleniami**; od najwyższego poziomu, potem liczby ustaleń |
 | **Wszystkie wydarzenia** (domyślny dla wydarzeń) | wydarzenia | typ, osoba lub para, data, miejsce, wiek w chwili wydarzenia, chrzestni, świadkowie, celebrans, źródło; sortowanie według daty |
-| **Wszystkie źródła** (domyślny dla źródeł) | źródła | tytuł, archiwum, księga i sygnatura, online, osób, faktów, przeczytane w badaniach, transkrypcja; sortowanie według tytułu |
+| **Wszystkie źródła** (domyślny dla źródeł) | źródła | tytuł, archiwum, księga i sygnatura, online, osób, faktów, przeczytane w badaniu, transkrypcja; sortowanie według tytułu |
 
 - **Widok zapisuje:** typ wierszy, kolumny (kolejność, szerokości, przypięcie, zwinięte grupy), wiersz pokrycia, filtr,
   sortowanie i rozwinięcie związków. Nie zapisuje wyszukiwania, wyboru wiersza ani przewinięcia.
 - Zmieniony widok ma etykietę **zmieniono** i opcje **Zapisz**, **Zapisz jako nowy**, **Odrzuć zmiany**. Widok
   wbudowany się nie zmienia ani nie można go przemianować czy usunąć; jego zmiany można tylko **Zapisz jako nowy**.
   Własny widok: **Zmień nazwę…**, **Usuń** (z potwierdzeniem). Własne widoki są uporządkowane według nazwy.
-- Bieżący stan tabeli (także niezapisane zmiany) aplikacja pamięta dla każdego drzewa na tym urządzeniu; po
-  odświeżeniu strony tabela jest taka, jaka została.
+- Bieżący stan tabeli aplikacja pamięta dla każdego drzewa na tym urządzeniu; po odświeżeniu strony lub aktualizacji
+  aplikacji tabela jest taka, jaka została. Należą do niego niezapisane zmiany każdego widoku, także tego, z którego
+  się przełączono: po powrocie widok nadal ma etykietę **zmieniono**. **Zapisz**, **Zapisz jako nowy** i **Odrzuć
+  zmiany** je załatwiają. Uszkodzona część bieżącego stanu zostaje pominięta.
 - **Zapisane widoki są częścią drzewa** (wersja danych 17): zapisanie, zmiana nazwy i usunięcie mają krok wstecz
   i wpis w historii zmian. Idą z drzewem do kopii zapasowej (JSON), a przy wydzieleniu części drzewa także do nowego
   drzewa. GEDCOM ich nie niesie; drzewo z badania zachowuje je przy wczytaniu nowej wersji. Uszkodzony widok przy
@@ -495,7 +505,7 @@ sobie człowiek.
 - **Obsługa:** menu **Widok** na pasku tabeli (**Wbudowane**, **Własne**, **Zapisz jako nowy…**, **Zmień nazwę…**,
   **Usuń**).
 
-<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (9: overview, births, marriages, deaths, sources, gaps, checks, events, allSources), defaultViewId (události → Všechny události, prameny → Všechny prameny), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky, DEFAULT_VIEWS.events, .sources) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.* (events, allSources), changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff -->
+<!-- zdroj: app:src/ui/table-view/table-views.ts BUILTIN_VIEWS (9: overview, births, marriages, deaths, sources, gaps, checks, events, allSources), defaultViewId (události → Všechny události, prameny → Všechny prameny), defaultViewId, viewFromState, viewChanged, uniqueViewName, customViews (podle jména), workStorageKey strom.table.{treeId}, readTableWork, writeTableWork · table-columns.ts výchozí sloupce pohledů (:683 Sňatky, DEFAULT_VIEWS.events, .sources) · src/table-views-data.ts sanitizeTableView, keepTableViews (verze z výzkumu ponechá pohledy) · src/data.ts:298 sanitizeTableViews při načtení, :1720 saveTableView, deleteTableView (krok zpět, historie změn) · src/subtree.ts:148 · src/types.ts STROM_DATA_VERSION 17, StromData.tableViews · src/tree-manager.ts:630 isTreeNewer, src/data.ts:649 isNewerData (jen ke čtení, od aplikace 3.19.0) · src/ui/research-ui.ts, conflict-decide-ui.ts keepTableViews · strings.ts table.view, views.*, viewName.* (events, allSources), changed, save, saveAs, discard, builtinNote, saveAsMenu, renameMenu, deleteMenu, builtinLocked, viewWhat, deleteConfirm · commity d19a5942, c2d48747, 8ca649ff · neuložené změny všech pohledů v pracovním stavu (localStorage) se sanitizací: commit b1cbe546 (T54 G9, varianta c) -->
 
 <a id="A6.7.8"></a>
 ### A6.7.8 Akcje wiersza i edycja
@@ -514,7 +524,7 @@ anuluje.
   w tabeli źródeł jest **Otwórz źródło** ([A6.7.11](#A6.7.11)).
 - Po edycji powiadomienie „Zapisano: …”, wiersz krótko mignie, a wiersze zostają w kolejności. Wiersz, który już nie
   spełnia filtru, zostaje z etykietą „nie pasuje do filtru” do następnej zmiany sortowania, filtru lub widoku. Zmianę
-  z badania zgłasza „Badania zmieniły 3 dane: …”.
+  z badania zgłasza „Badanie zmieniło 3 dane: …”.
 - Jedną daną można edytować także bezpośrednio w komórce ([A6.7.15](#A6.7.15)).
 - **Granice:** w drzewie tylko do odczytu **Edytuj…** nie ma.
 - **Obsługa:** przyciski przy wybranym wierszu, menu wiersza (prawy przycisk; także rozwinięcie związków). Na
@@ -614,11 +624,11 @@ i mówi, ile źródło w drzewie dokumentuje.
   - **Osób**: ile osób ma daną, która cytuje to źródło; dana związku dokumentuje obu partnerów;
   - **Faktów**: ile faktów cytuje źródło. Fakt to jedna lista cytowań: cytowania osoby, urodzenia, zgonu, każdego
     wydarzenia osoby, ślubu, rozwodu i każdego wydarzenia pary;
-  - **Przeczytane w badaniach**: ilu czytelników przeczytało transkrypcję („1 czytelnik”, „2 czytelników”: człowiek
+  - **Przeczytane w badaniu**: ilu czytelników przeczytało transkrypcję („1 czytelnik”, „2 czytelników”: człowiek
     w aplikacji i badanie), w przeciwnym razie „nie”;
   - **Transkrypcja**: tak / nie; w katalogu kolumn jest też **Data wpisu**.
 - Kolumny domyślne: **Tytuł**, **Archiwum**, **Sygnatura**, **Folio/strona**, **Skan**, **Dalsza lokalizacja**,
-  **Online**, **Osób**, **Faktów**. **Przeczytane w badaniach** i **Transkrypcja** są tylko w panelu **Kolumny**.
+  **Online**, **Osób**, **Faktów**. **Przeczytane w badaniu** i **Transkrypcja** są tylko w panelu **Kolumny**.
 - Starsze źródło ma całą lokalizację w **Dalsza lokalizacja**, a nowe komórki puste. **Sygnatura**, **Folio/strona**
   i **Skan** sortują się naturalnie (9 przed 10, 57–58 za 34), puste na końcu w obu kierunkach; filtrują się jak tekst.
 - Nad tabelą może stać oferta **Podziel według propozycji…** ([A3.9.1](A3-evidence-in-the-app.md#A3.9.1)).
@@ -664,7 +674,7 @@ Tabela osób ma kolumny, które pokazują, z jakiego źródła jest urodzenie, �
 
 Przegląd wszystkiego, czym tabela oznacza komórkę lub wiersz. Legenda **Oznaczenia ⓘ** po prawej nad tabelą (dymek
 „Oznaczenia w komórkach”, na telefonie panel od dołu) pokazuje dwie pierwsze tabele: cztery poziomy ustalenia i pięć
-rodzajów wartości; w drzewie z badania także trzecią, oznaczenia badań.
+rodzajów wartości; w drzewie z badania także trzecią, oznaczenia badania.
 
 **Ustalenia kontroli** ([A6.7.5](#A6.7.5)). Oznaczenie stoi na końcu komórki za wartością; kliknięcie komórki
 z ustaleniem otwiera dymek ustalenia.
@@ -687,30 +697,30 @@ z ustaleniem otwiera dymek ustalenia.
 | Oznaczenie | Jak wygląda | Co znaczy (legenda) | Gdzie się pojawia |
 |---|---|---|---|
 | **niepewna data** | data podkreślona kropkami; słowo **ok.**, **przed** lub **po** mniejszym szarym pismem przed datą | „Około, przed, po lub zakres; nie jest to ustalenie.” | kolumny dat ([A6.7.3](#A6.7.3)) |
-| **wiarygodność** | szara nazwa stopnia (w legendzie **Potwierdzone**): **Potwierdzone**, **Udokumentowane**, **Prawdopodobne**, **Możliwe**, **Z drzewa**, **Wskazówka**, **Bez źródła** | „W kolumnach Wiarygodność i badania; przy związkach w grupie Ślub, przy wydarzeniach w grupie Źródło.” | **Wiarygodność imienia**, **urodzenia**, **zgonu**, **ślubu** (osoby, związki), **Wiarygodność** (wydarzenia); stopnie: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **wiarygodność** | szara nazwa stopnia (w legendzie **Potwierdzone**): **Potwierdzone**, **Udokumentowane**, **Prawdopodobne**, **Możliwe**, **Z drzewa**, **Wskazówka**, **Bez źródła** | „W kolumnach Wiarygodność i badanie; przy związkach w grupie Ślub, przy wydarzeniach w grupie Źródło.” | **Wiarygodność imienia**, **urodzenia**, **zgonu**, **ślubu** (osoby, związki), **Wiarygodność** (wydarzenia); stopnie: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **wartość zastępcza** | skrót **chrz.** lub **poch.** w małej ramce przed wartością, wartość kursywą; podpowiedź „Chrzest, urodzenie nieznane”, „Pochówek, zgon nieznany” | „Chrzest zamiast urodzenia, pochówek zamiast zgonu.” | data i miejsce urodzenia i zgonu ([A6.7.3](#A6.7.3)) |
 | **obliczone** | szare pismo; „≈ 67” szacunek, „28–29” zakres | „Zakres z niedokładnej daty, ≈ z szacunku.” | wiek, różnica wieku zapisanego, długość związku, liczby, pokolenie, kompletność; przy nagłówku „Obliczono z: …” |
-| **nie dotyczy** | „–” szarą kursywą, w legendzie tak samo; podpowiedź „Nie dotyczy” | „Nie dotyczy osoby.” | zgon przy osobie żyjącej (przy **Kompletność zgonu** „żyje”), wiek ojca lub matki bez zapisanego rodzica, kolumny związku przy osobie bez związku, **Wiek w chwili wydarzenia** przy urodzeniu |
+| **nie dotyczy** | „–” szarą kursywą, w legendzie tak samo; podpowiedź „Nie dotyczy” | „Nie dotyczy osoby.” | zgon przy osobie żyjącej (przy **Kompletność zgonu** „żyje”), wiek ojca lub matki bez zapisanego rodzica, kolumny związku przy osobie bez związku, komórki ślubu przy związku bez ślubu (podpowiedź „Nie dotyczy: związek bez ślubu”, [A6.7.4](#A6.7.4)), **Wiek w chwili wydarzenia** przy urodzeniu |
 
 - W kolumnach **Wiarygodność …** sortuje się od **Potwierdzone** do **Bez źródła** w kolejności z tabeli.
 
-**Oznaczenia badań** ([A6.7.14](#A6.7.14)), tylko w drzewie z badania. Kółko badań ma wokół siebie obwódkę, więc także
+**Oznaczenia badania** ([A6.7.14](#A6.7.14)), tylko w drzewie z badania. Kółko badania ma wokół siebie obwódkę, więc także
 bez koloru różni się od kółka błędu (bez obwódki) i kwadracika do sprawdzenia. Legenda dodaje: „Koło z obwódką oznacza
-badania. ! i ? badań są tylko w kolumnach Badania, przy danej może być tylko ≠.”
+badanie. ! i ? badania są tylko w kolumnach Badanie, przy danej może być tylko ≠.”
 
 | Oznaczenie | Jak wygląda | Co znaczy (legenda) | Gdzie się pojawia |
 |---|---|---|---|
-| **czeka** | pełne bursztynowe kółko z obwódką i „!” | „Badania czekają na decyzję.” | **Badania**, **Czeka na decyzję** |
-| **czeka na innych** | pusty bursztynowy okrąg z „!” | „Oczekuje się odpowiedzi z zewnątrz (list, archiwum); nie ma czego rozstrzygać.” | **Badania**, **Czeka na decyzję** |
-| **sprzeczność** | pełne bursztynowe kółko z obwódką i „≠” | „Źródła się nie zgadzają. To nie błąd w danych: chodzi o to, któremu źródłu zaufać.” | przed wartością w komórce danej (bez podbarwienia, kliknięcie otwiera sprzeczności); **Badania**, **Sprzeczności** |
-| **pytanie** | pełne bursztynowe kółko z obwódką i „?” | „Otwarte pytanie lub hipoteza.” | **Badania**, **Hipotezy** |
-| **agent** | obracający się łuk (przy ograniczonym ruchu stoi) | „Agent pracuje teraz nad osobą (tylko podczas śledzenia).” | **Badania**, **Agent**; przy imieniu osoby pionowy pasek 3 px |
+| **czeka** | pełne bursztynowe kółko z obwódką i „!” | „Badanie czeka na decyzję.” | **Badanie**, **Czeka na decyzję** |
+| **czeka na innych** | pusty bursztynowy okrąg z „!” | „Oczekuje się odpowiedzi z zewnątrz (list, archiwum); nie ma czego rozstrzygać.” | **Badanie**, **Czeka na decyzję** |
+| **sprzeczność** | pełne bursztynowe kółko z obwódką i „≠” | „Źródła się nie zgadzają. To nie błąd w danych: chodzi o to, któremu źródłu zaufać.” | przed wartością w komórce danej (bez podbarwienia, kliknięcie otwiera sprzeczności); **Badanie**, **Sprzeczności** |
+| **pytanie** | pełne bursztynowe kółko z obwódką i „?” | „Otwarte pytanie lub hipoteza.” | **Badanie**, **Hipotezy** |
+| **agent** | obracający się łuk (przy ograniczonym ruchu stoi) | „Agent pracuje teraz nad osobą (tylko podczas śledzenia).” | **Badanie**, **Agent**; przy imieniu osoby pionowy pasek 3 px |
 | **gotowe** | „✓” | „Agent zakończył pracę (przez 4 s).” | za imieniem, **Agent** |
 
-- W kolumnie **Badania** osoba w kolejce agenta ma szarą kropkę „·” z „w kolejce”; „+2” za oznaczeniem to kolejne
-  rodzaje sygnału. Nowe z badań ma w swojej kolumnie kropkę „•”.
-- Kolumna, która ma wartość tylko podczas śledzenia badań, ma bez śledzenia „–” z etykietą „na żywo” (podpowiedź
-  „Tylko podczas śledzenia badań”). Od aplikacji 3.27.0 tylko wtedy, gdy nie odpowiada też most badania
+- W kolumnie **Badanie** osoba w kolejce agenta ma szarą kropkę „·” z „w kolejce”; „+2” za oznaczeniem to kolejne
+  rodzaje sygnału. Nowe z badania ma w swojej kolumnie kropkę „•”.
+- Kolumna, która ma wartość tylko podczas śledzenia badania, ma bez śledzenia „–” z etykietą „na żywo” (podpowiedź
+  „Tylko podczas śledzenia badania”). Od aplikacji 3.27.0 tylko wtedy, gdy nie odpowiada też most badania
   ([A6.7.14](#A6.7.14)).
 
 **Inne oznaczenia** (legenda ich nie pokazuje):
@@ -720,12 +730,12 @@ badania. ! i ? badań są tylko w kolumnach Badania, przy danej może być tylko
 | „…” | blade trzy kropki; podpowiedź „Trwają kontrole…” | kontrola drzewa jeszcze trwa | **Ustalenia**, **Najwyższy poziom**, **Nietypowe, sprawdzone** |
 | „◌ Trwają kontrole…” | pusty okrąg i tekst po prawej nad tabelą | to samo dla całej tabeli; chipy ustaleń na razie czekają | nad tabelą, obok **Oznaczenia ⓘ** |
 | procent z paskiem | liczba i krótki pasek, którego wypełniona część to wartość | kompletność ([A6.7.4](#A6.7.4)) | kolumny **Kompletność …** |
-| pogrubiona liczba, „–” | w wierszu pokrycia | pokrycie poniżej 50 %; „–” kolumna bez komórki, której by dotyczyła | **Wiersz pokrycia** ([A6.7.4](#A6.7.4)) |
+| pogrubiona liczba, „–” | w wierszu pokrycia | pokrycie poniżej 50 % (przy kolumnach kompletności średnia poniżej 50 %); „–” kolumna bez komórki, której by dotyczyła | **Wiersz pokrycia** ([A6.7.4](#A6.7.4)) |
 | „+2” | liczba w owalnej ramce za pierwszym cytowaniem | kolejne cytowane źródła; kliknięcie otwiera **Pozostałe cytowania** | cytowania urodzenia, ślubu, zgonu ([A6.7.12](#A6.7.12)) |
 | „↗” | za podkreślonym adresem internetowym | link do nowego okna | **Online**, cytowania „… URL” ([A6.7.11](#A6.7.11), [A6.7.12](#A6.7.12)) |
 | obrys komórki | cienki obrys 1 px | aktywna komórka ([A6.7.15](#A6.7.15)) | komórka wybranego wiersza |
 | kursor tekstowy | po najechaniu myszą | komórkę można edytować w miejscu ([A6.7.15](#A6.7.15)) | edytowalne komórki |
-| ●○, ●● | jedna lub dwie pełne kropki przed „1 czytelnik”, „2 czytelników”; podpowiedź, kto transkrypcję przeczytał | ilu czytelników przeczytało transkrypcję | **Przeczytane w badaniach** ([A6.7.11](#A6.7.11)) |
+| ●○, ●● | jedna lub dwie pełne kropki przed „1 czytelnik”, „2 czytelników”; podpowiedź, kto transkrypcję przeczytał | ilu czytelników przeczytało transkrypcję | **Przeczytane w badaniu** ([A6.7.11](#A6.7.11)) |
 | „12 dn.” | liczba z „dn.” | wiek do jednego roku w dniach | **Wiek w chwili wydarzenia** ([A6.7.10](#A6.7.10)) |
 | ▾, ▸ | trójkąt przed imieniem | związki osoby rozwinięte, zwinięte ([A6.7.1](#A6.7.1)) | **Imię i nazwisko** osoby z dwoma i więcej związkami |
 | „3 związki” | przy zwiniętej osobie w owalnej ramce za imieniem; przy rozwiniętej w kolumnie **Partner** szarą kursywą | liczba związków osoby | wiersz osoby |
@@ -750,23 +760,23 @@ W drzewie z badania ([S1](S1-connecting-app-and-research.md)) tabela pokazuje ta
 czeka na decyzję, sprzeczności źródeł, hipotezy, pracę agenta, linie i wymianę z drzewem. Do drzewa niczego nie
 zapisuje.
 
-- **Kolumny osób** (grupa **Badania**, domyślnie ukryta; pole wyboru **wszystkie** włącza **Badania**, **Czeka na
+- **Kolumny osób** (grupa **Badanie**, domyślnie ukryta; pole wyboru **wszystkie** włącza **Badanie**, **Czeka na
   decyzję**, **Sprzeczności**, **Hipotezy** i **Agent**):
 
   | Kolumna | Co pokazuje |
   |---|---|
-  | **Badania** | najpilniejszy sygnał osoby w kolejności czeka › sprzeczność › pytanie lub hipoteza › agent › w kolejce; „+n” kolejne rodzaje |
+  | **Badanie** | najpilniejszy sygnał osoby w kolejności czeka › sprzeczność › pytanie lub hipoteza › agent › w kolejce; „+n” kolejne rodzaje |
   | **Czeka na decyzję** | liczba i pierwsza pozycja; przy czekaniu na innych „z zewnątrz: …” (list wysłano, pytanie w rodzinie …) |
   | **Sprzeczności** | liczba otwartych sprzeczności i dane („· urodzenie, …”); „· można rozstrzygnąć w aplikacji”, gdzie się da ([S2](S2-edits-from-the-app.md)) |
   | **Hipotezy** | liczba otwartych hipotez; „rozstrzygnął agent” |
-  | **Zadania badań** | zadania osoby w kolejce („2 · najbliższe 3. w kolejce”, „1 · trwa teraz”) |
+  | **Zadania badania** | zadania osoby w kolejce („2 · najbliższe 3. w kolejce”, „1 · trwa teraz”) |
   | **Agent** | „pracuje: {zadanie}”, „w kolejce”, „gotowe” |
   | **Linia** | miejsce osoby wśród linii (niżej) |
-  | **Materiały**, **Drzewo kończy się tu**, **Szukano bez wyniku**, **Wymiana z badaniami**, **Pierwotnie w drzewie**, **Opowieść**, **Gdzie się załatwia**, **Nowe z badań**, **Dostępność źródeł**, **Parafia (badania)**, **Szacowane urodzenie** | co badanie wie o materiałach osoby, o krawędzi drzewa, o wymianie z drzewem, o źródłach i miejscach |
+  | **Materiały**, **Drzewo kończy się tu**, **Szukano bez wyniku**, **Wymiana z badaniem**, **Pierwotnie w drzewie**, **Opowieść**, **Gdzie się załatwia**, **Nowe z badania**, **Dostępność źródeł**, **Parafia (badanie)**, **Szacowane urodzenie** | co badanie wie o materiałach osoby, o krawędzi drzewa, o wymianie z drzewem, o źródłach i miejscach |
 
-- **Związki:** **ID badań** (F…), **Linia** (według partnera z linii), **Agent** („pracuje nad parą: …”)
-  i **Sprzeczności** (sprzeczności dotyczące ślubu i rozwodu u obu partnerów). **Źródła:** **ID badań** (S…)
-  i **Obraz**: „na komputerze badań”, „brak skanu na komputerze badań” (wyróżnione), „online (archiwum)”.
+- **Związki:** **ID badania** (F…), **Linia** (według partnera z linii), **Agent** („pracuje nad parą: …”)
+  i **Sprzeczności** (sprzeczności dotyczące ślubu i rozwodu u obu partnerów). **Źródła:** **ID badania** (S…)
+  i **Obraz**: „na komputerze badania”, „brak skanu na komputerze badania” (wyróżnione), „online (archiwum)”.
 - **Linia:** w linii (partner osoby z linii „· partner”; boczna gałąź dodana do linii należy do tej linii), „boczna
   gałąź: {imię}”, „wyspa”, „poza liniami”. **Poza liniami** są boczne gałęzie niedodane do linii, wyspy i pozostali
   ([R2.3](R2-lines-and-queue.md#R2.3)). Linie tabela bierze na żywo z badania, w przeciwnym razie z pliku badania;
@@ -774,53 +784,53 @@ zapisuje.
   i chipy linii są tylko przy badaniu z liniami.
 - **Sprzeczność przy danej:** komórka danej z otwartą sprzecznością źródeł ma przed wartością „≠”, bez podbarwienia.
   Kliknięcie „≠” otwiera dymek ze sprzecznościami; czytnik ekranu odczyta „{wartość}, sprzeczność źródeł: {dana}”.
-  Oznaczenia „!” i „?” badań są tylko w kolumnach badań ([A6.7.13](#A6.7.13)).
-- **Chip Badania ▾:** jeden chip z menu w sekcjach **Sygnały**, **Linie**, **Wymiana, źródła i miejsca**, **Więcej
-  filtrów badań** i **Nowe z badań**; „Wybór rozwija blok Badania w wierszu.” Chipy: **Czeka na decyzję**, **Ze
+  Oznaczenia „!” i „?” badania są tylko w kolumnach badania ([A6.7.13](#A6.7.13)).
+- **Chip Badanie ▾:** jeden chip z menu w sekcjach **Sygnały**, **Linie**, **Wymiana, źródła i miejsca**, **Więcej
+  filtrów badania** i **Nowe z badania**; „Wybór rozwija blok Badanie w wierszu.” Chipy: **Czeka na decyzję**, **Ze
   sprzecznością**, **Z pytaniem**, **Agent pracuje / w kolejce**, po jednym na każdą linię i **Poza liniami**
-  (z liczbami), **Niewysłane**, **Zmienione przez badania**, **Do rozstrzygnięcia tutaj**, **Czeka na innych**, **Nowe
-  z badań** (ostatnie 24 h, ostatnie 7 dni, od ostatniego otwarcia), **Tylko w czytelni**, **Miejsce nieokreślone**,
-  **Rozstrzygnął agent**, **Wstrzymane / odłożone**, **Drzewo kończy się tu**. Na telefonie sekcja **Badania** jest
-  w panelu **Filtry**, rzadsze chipy pod **Więcej badań (n)**.
-- **Wbudowane widoki** (sekcja **Badania** w menu **Widok**; jak inne wbudowane się nie zmieniają, [A6.7.7](#A6.7.7)):
+  (z liczbami), **Niewysłane**, **Zmienione przez badanie**, **Do rozstrzygnięcia tutaj**, **Czeka na innych**, **Nowe
+  z badania** (ostatnie 24 h, ostatnie 7 dni, od ostatniego otwarcia), **Tylko w czytelni**, **Miejsce nieokreślone**,
+  **Rozstrzygnął agent**, **Wstrzymane / odłożone**, **Drzewo kończy się tu**. Na telefonie sekcja **Badanie** jest
+  w panelu **Filtry**, rzadsze chipy pod **Więcej filtrów badania (n)**.
+- **Wbudowane widoki** (sekcja **Badanie** w menu **Widok**; jak inne wbudowane się nie zmieniają, [A6.7.7](#A6.7.7)):
 
   | Widok | Co pokazuje |
   |---|---|
-  | **Badania** | osoby z sygnałem: imię i nazwisko, Badania, Czeka na decyzję, Sprzeczności, Hipotezy, Agent, Zadania badań, urodzenie, zgon; sortowane od najpilniejszego, potem według imienia i nazwiska |
-  | **Linia: {linia}** (dla każdej linii) i **Poza liniami** | imię i nazwisko, Linia, pokolenie, Badania, urodzenie, zgon, Sprzeczności, Agent; chip linii; sortowane według linii |
-  | **Wymiana z badaniami** | osoby z wymianą: imię i nazwisko, Wymiana z badaniami, Pierwotnie w drzewie, Nowe z badań, Sprzeczności, urodzenie |
+  | **Badanie** | osoby z sygnałem: imię i nazwisko, Badanie, Czeka na decyzję, Sprzeczności, Hipotezy, Agent, Zadania badania, urodzenie, zgon; sortowane od najpilniejszego, potem według imienia i nazwiska |
+  | **Linia: {linia}** (dla każdej linii) i **Poza liniami** | imię i nazwisko, Linia, pokolenie, Badanie, urodzenie, zgon, Sprzeczności, Agent; chip linii; sortowane według linii |
+  | **Wymiana z badaniem** | osoby z wymianą: imię i nazwisko, Wymiana z badaniem, Pierwotnie w drzewie, Nowe z badania, Sprzeczności, urodzenie |
 
-  Związki są w nich zwinięte, a wiersz pokrycia włączony. Pusty widok powie „Badania niczego teraz nie potrzebują”
-  lub „Drzewo i badania są zgodne”.
-- **Dymek badań:** kliknięcie komórki badań otwiera dymek (na telefonie panel od dołu) z sekcjami według tego, co
+  Związki są w nich zwinięte, a wiersz pokrycia włączony. Pusty widok powie „Badanie niczego teraz nie potrzebuje”
+  lub „Drzewo i badanie są zgodne”.
+- **Dymek badania:** kliknięcie komórki badania otwiera dymek (na telefonie panel od dołu) z sekcjami według tego, co
   osoba ma: **Czeka na decyzję · n** (**Porównaj wersje ›**, **Czeka na załatwienie ›**), **Czeka na innych**,
-  **Sprzeczności źródeł · n** (**Rozstrzygnij ›**), **Hipotezy** lub **Otwarte pytanie** (**Co wiedzą badania ›**,
-  [S3.5](S3-what-the-research-knows.md#S3.5)), **Agent pracuje** (**Śledź badania ›**), **Zadania badań w kolejce**
-  (**Otwórz zadanie w badaniach**), **Materiały ›**, **Linia** lub **Poza liniami** (**Pokaż linię w drzewie**,
-  **Zmień w badaniach**), **Pierwotnie w drzewie** (**Przywróć wartość z drzewa**, tylko z badaniem na tym
+  **Sprzeczności źródeł · n** (**Rozstrzygnij ›**), **Hipotezy** lub **Otwarte pytanie** (**Co wie badanie ›**,
+  [S3.5](S3-what-the-research-knows.md#S3.5)), **Agent pracuje** (**Śledź badanie ›**), **Zadania badania w kolejce**
+  (**Otwórz zadanie w badaniu**), **Materiały ›**, **Linia** lub **Poza liniami** (**Pokaż linię w drzewie**,
+  **Zmień w badaniu**), **Pierwotnie w drzewie** (**Przywróć wartość z drzewa**, tylko z badaniem na tym
   komputerze) i **Dostępność źródeł**. Akcja, którą potwierdza się w badaniu, ma oznaczenie jak gdzie indziej
   ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
 - **Na żywo:** podczas śledzenia badania zmieniają się tylko komórki, których zmiana dotyczy, kolejność wierszy
-  zostaje. Przy imieniu osoby, nad którą agent pracuje, biegnie pionowy pasek. Nad tabelą jest „● Badania śledzone na
-  żywo”, w przeciwnym razie „Badania: stan z {kiedy}”.
+  zostaje. Przy imieniu osoby, nad którą agent pracuje, biegnie pionowy pasek. Nad tabelą jest „● Badanie śledzone na
+  żywo”, w przeciwnym razie „Badanie: stan z {kiedy}”.
 - **Eksport:** CSV i XLSX niosą teksty i liczby („czeka; sprzeczność (1)”, „1: urodzenie”, bez sprzeczności „0”), bez
-  oznaczeń. Bez śledzenia (od aplikacji 3.27.0 tylko bez odpowiedzi mostu) **Agent** i **Zadania badań** są puste,
-  a powiadomienie powie „Agent i Zadania badań są puste: badania nie są śledzone.” Wiersz pokrycia ma przy kolumnach
-  badań „–”.
+  oznaczeń. Bez śledzenia (od aplikacji 3.27.0 tylko bez odpowiedzi mostu) **Agent** i **Zadania badania** są puste,
+  a powiadomienie powie „Agent i Zadania badania są puste: badanie nie jest śledzone.” Wiersz pokrycia ma przy kolumnach
+  badania „–”.
 - **Granice:**
-  - bez agenta (Archiwum Strom) i w drzewie tylko do odczytu nie ma **Czeka na decyzję**, **Zadania badań**
-    i **Agent** ani chipów **Niewysłane** i **Do rozstrzygnięcia tutaj**; widok **Wymiana z badaniami** jest tylko
+  - bez agenta (Archiwum Strom) i w drzewie tylko do odczytu nie ma **Czeka na decyzję**, **Zadania badania**
+    i **Agent** ani chipów **Niewysłane** i **Do rozstrzygnięcia tutaj**; widok **Wymiana z badaniem** jest tylko
     w badaniu z agentem, które można zmieniać;
-  - **Agent** i **Zadania badań** mają wartość tylko podczas śledzenia badania, w przeciwnym razie „–” z etykietą „na
+  - **Agent** i **Zadania badania** mają wartość tylko podczas śledzenia badania, w przeciwnym razie „–” z etykietą „na
     żywo”; chip **Agent pracuje / w kolejce** bez śledzenia nie filtruje. Od aplikacji 3.27.0 oba obowiązują tylko
     bez odpowiedzi mostu (niżej);
   - w drzewie tylko do odczytu dymek nie ma akcji: „Tylko do odczytu: sprzeczności nie można tu rozstrzygnąć.”
-- **Bez śledzenia z mostem:** gdy most badania na tym komputerze odpowiada, **Agent** i **Zadania badań** (także pasek
+- **Bez śledzenia z mostem:** gdy most badania na tym komputerze odpowiada, **Agent** i **Zadania badania** (także pasek
   przy imieniu, chip **Agent** i eksport) biorą pracę agenta i kolejkę z regularnego zapytania do mostu i wyglądają
   jak podczas śledzenia. Pusta kolejka mostu zostawia komórki puste. Tabela przerysowuje się, gdy odpowiedź mostu się
   zmieni. Telefon nie pyta mostu. Tak samo działa Przegląd badania bez śledzenia
   ([S4.1.5](S4-research-from-the-app.md#S4.1.5)).
-- **Obsługa:** panel **Kolumny** → grupa **Badania**; chip **Badania ▾**; **Widok** → sekcja **Badania**;
+- **Obsługa:** panel **Kolumny** → grupa **Badanie**; chip **Badanie ▾**; **Widok** → sekcja **Badanie**;
   **Oznaczenia ⓘ**.
 - **Obowiązuje od:** aplikacja 3.27.0 z badaniem 1.31.0
 
@@ -836,7 +846,8 @@ komórkę można skopiować, filtrować według jej wartości i edytować daną 
   ikon i pigułek. Ręcznie zaznaczony tekst kopiuje się jak zwykle.
 - **Menu komórki:** menu wiersza (prawy przycisk, Shift+F10) i na telefonie panel wiersza (stuknięcie komórki)
   zaczynają się od opcji komórki **Kopiuj**, **Tylko „{wartość}”** i **Bez „{wartość}”** (wartość skrócona do około
-  24 znaków z „…”); pod nimi są akcje wiersza ([A6.7.8](#A6.7.8)).
+  24 znaków z „…”); pod nimi są akcje wiersza ([A6.7.8](#A6.7.8)). Menu otwiera się przy komórce, także gdy wybrany
+  był inny wiersz.
   - **Tylko** i **Bez** ustawiają filtr kolumny **jest** / **nie jest** ([A6.7.6](#A6.7.6)), chip „{Kolumna} =
     {wartość} ×” lub „{Kolumna} ≠ {wartość} ×”; porównuje się bez względu na wielkość liter i znaki diakrytyczne.
     Komórka z imieniem i nazwiskiem osoby porównuje osobę: **Tylko „{ojciec}”** w kolumnie **Ojciec** pokaże
@@ -846,18 +857,27 @@ komórkę można skopiować, filtrować według jej wartości i edytować daną 
     tylko **Kopiuj**; własne imię i nazwisko lub tytuł wiersza ma tylko akcje wiersza.
   - Filtr zapisuje się z widokiem ([A6.7.7](#A6.7.7)).
 - **Edycja w miejscu:** edytować można komórkę, która odpowiada jednej danej drzewa:
-  - **Nazwisko** (gdy pokazuje nazwisko po ślubie, edytuje je), **Nazwisko rodowe**, **Nazwisko po ślubie**;
-  - data i miejsce urodzenia, chrztu, zgonu i pochówku;
+  - **Imię**, **Nazwisko** (gdy pokazuje nazwisko po ślubie, edytuje je), **Nazwisko rodowe**, **Nazwisko po
+    ślubie**;
+  - **Płeć** przez wybór (**Mężczyzna**, **Kobieta**, **Nieznana**) i **Nr ref.**;
+  - data i miejsce urodzenia, chrztu, zgonu i pochówku, **Przyczyna zgonu** i **Wiek zapisany przy zgonie**;
   - **Zawód**, dopóki osoba ma najwyżej jeden;
-  - data i miejsce ślubu (tabela związków, podwiersz związku, wiersz osoby z jednym związkiem).
+  - dane związku (tabela związków, podwiersz związku, wiersz osoby z jednym związkiem): **Stan związku** przez wybór
+    (**Małżeństwo**, **Partnerzy**, **Rozwiedzeni**, **W separacji**, jak w formularzu związku), data i miejsce ślubu,
+    wiek zapisany każdego z partnerów przy ślubie (**Wiek zapisany przy ślubie**, **Wiek zapisany partnera**, **Wiek
+    zapisany 1** i **2**), **Data rozwodu** i **Miejsce rozwodu**. Pusta komórka zakłada daną związku tak, jak zakłada
+    ją formularz związku. Przy związku bez ślubu ([A6.7.4](#A6.7.4)) komórek ślubu się nie edytuje.
 
   **Imię i nazwisko** nie edytuje się w komórce (składa się z kilku części), tak samo jak komórki obliczone,
-  kontrole, badania, cytowania, liczby i relacje; dwuklik na nich otwiera **Edytuj…**.
+  kontrole, badanie, cytowania, liczby i relacje; dwuklik na nich otwiera **Edytuj…**.
 - **Pole** zakrywa komórkę. **Enter** zapisuje, **Esc** anuluje, **Tab** i **Shift+Tab** zapisują i przechodzą do
-  następnej lub poprzedniej edytowalnej komórki wiersza, kliknięcie gdzie indziej zapisuje. Datę odczytuje się jak
+  następnej lub poprzedniej edytowalnej komórki wiersza, kliknięcie gdzie indziej zapisuje. W wyborze kliknięcie myszą
+  zapisuje wartość od razu; po wyborze strzałkami zapisuje ją Enter, Tab lub kliknięcie gdzie indziej. Datę odczytuje
+  się jak
   w formularzu osoby; nieczytelna zostaje w polu z błędem „Nie można odczytać daty (np. 15.5.1880, 1880, ok. 1880)”.
   Miejsce podpowiada miejsca drzewa. Bez imienia i nazwiska nic się nie zapisze: „Imię lub nazwisko musi pozostać”.
-- **Zapisanie** idzie tą samą drogą co formularz osoby i jest jednym krokiem wstecz (Ctrl/Cmd+Z). Chrzest i pochówek
+- **Zapisanie** idzie tą samą drogą co formularz osoby (dane związku jak formularz związku) i jest jednym krokiem
+  wstecz (Ctrl/Cmd+Z), także gdy pusta komórka daną założyła. Chrzest i pochówek
   edytują pierwsze takie wydarzenie (jego pozostałe dane i cytowania zostają) albo je dodają; puste pole usuwa tylko
   tę daną. Potem wiersz mignie, zostanie na miejscu, a powiadomienie powie „Zapisano: {imię}”.
 - **Granice:** w miejscu nie można edytować w drzewie tylko do odczytu ani zablokowanym, w Archiwum Strom, na
@@ -866,4 +886,4 @@ komórkę można skopiować, filtrować według jej wartości i edytować daną 
   ustalenia), w menu wiersza **Edytuj komórkę** (F2). Edytowalna komórka ma po najechaniu myszą kursor tekstowy.
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->

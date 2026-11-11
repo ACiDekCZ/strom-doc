@@ -340,7 +340,8 @@ zbytek zůstane v **Další umístění**. Rozdělí to kód, bez agenta, a jedn
 - **Nabídka:** v **Akce → Prameny** a nad Tabulkou › Prameny řádek „Umístění 12 pramenů jde rozdělit do polí.“
   s **Rozdělit podle návrhu…**. Okno **Rozdělit umístění do polí** ukáže náhled: **Pramen**, **Umístění dříve**,
   **Folium/strana**, **Snímek**, **Další umístění**; nejdřív 6 pramenů, **Zobrazit všechny (n)** načte další při
-  posunu. Kolik umístění se nerozpoznalo („… zůstanou beze změny“), stojí pod náhledem.
+  posunu. Kolik umístění se nerozpoznalo („… zůstanou beze změny“), stojí pod náhledem, a pod tím až tři příklady
+  („Např. „Kniha N 7, zápis bez čísla“.“), každý jednou a nejvýš 60 znaků („…“).
 - **Pravidlo:** „Pole, které už je vyplněné, se nepřepíše. Část, kterou pole říká jinak, v umístění zůstane.“ Hodnota,
   která zůstává, má v náhledu „· beze změny“. Řádek poznámky „Signatura: …“ z dřívějšího importu GEDCOM se přesune
   do prázdného pole **Signatura** (sloupec **Signatura** s „· z poznámky“).
@@ -359,9 +360,11 @@ zbytek zůstane v **Další umístění**. Rozdělí to kód, bez agenta, a jedn
     úlohou: „Výzkum teď pracuje na jiné úloze. Rozdělení jde za chvíli.“ se **Zkusit znovu**;
   - vrácení odmítne celé, když se pramen po rozdělení změnil: řekne kolik a první tři, nevrátí se nic. V aplikaci
     bez výzkumu po pozdější změně stromu „Vrátit už nejde: strom se od rozdělení změnil.“;
-  - nerozpoznané umístění zůstane, jak je. Příklady nerozpoznaných ukáže náhled jen u stromu bez výzkumu.
+  - nerozpoznané umístění zůstane, jak je. Pramen, který už má folium nebo snímek v poli, se mezi nerozpoznané
+    nepočítá: zbytek jeho umístění („č. 5“) není co rozdělit. Ve stromu výzkumu dává příklady nerozpoznaných výzkum;
+    když je nepošle, náhled ukáže jen počet.
 - **Ovládání:** **Akce → Prameny → Rozdělit podle návrhu…**; Tabulka › Prameny, řádek nad tabulkou; **Rozdělit (n)**,
   **Zpět**, **Vrátit…**. Výzkum v terminálu: `strom source split` ([R3.4.4](R3-verification-and-citation.md#R3.4.4)).
 - **Platí od:** aplikace 3.27.0; strom výzkumu s výzkumem 1.31.0
 
-<!-- zdroj: app:8dd21adf src/source-split.ts SplitSourceKind (local/bridge/needsResearch/archive/none), localSplitPlan (řádek poznámky „Signatura:“ v každém jazyce importu), splitOffer (needsResearch jen v Prameny) · src/ui/source-split-ui.ts:37 TOAST_MS 8000, sourceSplitKind (read-only/zamčený → none, archiv → archive, most + feature sources.split → bridge) · 5a59f01d src/source-split-bridge.ts (GET/POST sources/split, undo), náhled přes most bez příkladů nerozpoznaných (dirigent:prace/1111-app-citace-pole Navazuje) · src/ui/misc.ts:1352 Ctrl/⌘+Z · strings.ts sources.split.* (offer, open, needsResearch, doneLine, undoOpen, title, lead, rule, sigNote, col*, kept, fromNote, all, shown, unrec, go, progress, toast, undo, undoRow, nothingLeft, errPlan, errBusy, retry, errUndoLater, errUndo) · spec 075 K4.2 · research:c4fe4fac -->
+<!-- zdroj: app:8dd21adf src/source-split.ts SplitSourceKind (local/bridge/needsResearch/archive/none), localSplitPlan (řádek poznámky „Signatura:“ v každém jazyce importu), splitOffer (needsResearch jen v Prameny) · src/ui/source-split-ui.ts:37 TOAST_MS 8000, sourceSplitKind (read-only/zamčený → none, archiv → archive, most + feature sources.split → bridge) · 5a59f01d src/source-split-bridge.ts (GET/POST sources/split, undo), příklady nerozpoznaných přes most (unrecognizedExamples, výzkum ff760309) a lokální plán jako výzkum (zbytek u pole folia/snímku = nic, NFC, bez duplicit, nejvýš 3, ořez 60 znaků po grafémech): app:34cb5996 src/source-split.ts localSplitPlan, SPLIT_UNRECOGNIZED_EXAMPLES, src/source-split-bridge.ts examplesOf, src/ui/source-split-ui.ts:614, strings.ts sources.split.unrecEx · src/ui/misc.ts:1352 Ctrl/⌘+Z · strings.ts sources.split.* (offer, open, needsResearch, doneLine, undoOpen, title, lead, rule, sigNote, col*, kept, fromNote, all, shown, unrec, go, progress, toast, undo, undoRow, nothingLeft, errPlan, errBusy, retry, errUndoLater, errUndo) · spec 075 K4.2 · research:c4fe4fac -->

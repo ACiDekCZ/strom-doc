@@ -234,11 +234,12 @@ najednou: kód, bez agenta a zdarma.
 
 - **Hlídá kód:**
   - bez přepínače je to jen **náhled**: kolik pramenů by se rozdělilo, prvních 10 „před → po“ (`--all` všechny),
-    kolik se nerozpoznalo. Nic se nezapíše. Náhled smí spustit i agent;
+    kolik se nerozpoznalo, s až třemi příklady, jak jsou zapsané. Nic se nezapíše. Náhled smí spustit i agent;
   - `--apply` zapíše rozdělení jedním krokem a vypíše `undo: strom source split --undo <id>`; `--undo <id>` vrátí
     všechny prameny, jak byly. Obojí jen člověk ve svém terminálu, agentovi to strom odmítne;
   - vyplněné folio nebo snímek zůstane. Snímek, který dávají evidované skeny, se nebere. Část, kterou pole říká
-    jinak, zůstane v umístění. Umístění, ve kterém se nic nerozpozná, zůstane, jak je;
+    jinak, zůstane v umístění. Umístění, ve kterém se nic nerozpozná, zůstane, jak je. Pramen, který už má folio nebo
+    snímek, se mezi nerozpoznané nepočítá: zbytek jeho umístění není co rozdělit;
   - vrátit jde posledních 5 rozdělení, každé svým id. Pramen změněný po rozdělení vrácení odmítne celé.
 - **Jen metodika:** agent rozdělení člověku nabídne, nikdy ho sám nepotvrdí.
 - **Z aplikace Strom:** výzkum nabízí stejné rozdělení i aplikaci, když běží: náhled s počtem, rozdělení na kliknutí
@@ -248,7 +249,7 @@ najednou: kód, bez agenta a zdarma.
   split --undo <id>` (náhled vypisuje id k vrácení).
 - **Platí od:** výzkum 1.31.0
 
-<!-- zdroj: research:c6260e50 src/commands/sourcesplit.ts (SHOWN 10, PERSON, agentMay jen bez --apply a --undo), src/core/sourcesplit.ts splitOf, UNDO_KEPT 5, SOURCE_SPLIT_FILE quality/source-split.json, undoSplit (po změně odmítne celé) · c4fe4fac most GET/POST <token>/sources/split, /sources/split/undo, feature sources.split, 409 plan/changed/archive, 503 busy · assets/method/recording.md:30-31 · CHANGELOG.cs.md 1.31.0 · spec 075 K4.1, K4.3 -->
+<!-- zdroj: research:c6260e50 src/commands/sourcesplit.ts (SHOWN 10, PERSON, agentMay jen bez --apply a --undo), src/core/sourcesplit.ts splitOf, UNDO_KEPT 5, SOURCE_SPLIT_FILE quality/source-split.json, undoSplit (po změně odmítne celé) · c4fe4fac most GET/POST <token>/sources/split, /sources/split/undo, feature sources.split, 409 plan/changed/archive, 503 busy · assets/method/recording.md:30-31 · CHANGELOG.cs.md 1.31.0 · spec 075 K4.1, K4.3 · příklady nerozpoznaných a nic u zbytku vedle pole: research:ff760309 src/core/sourcesplit.ts splitPlan (unrecognizedExamples, EXAMPLES 3, nothing), src/commands/sourcesplit.ts:67 -->
 
 <a id="R3.5"></a>
 ## R3.5 Slepé druhé čtení
