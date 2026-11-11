@@ -91,6 +91,10 @@ Außer Personen und Beziehungen werden auch die Listen zusammengeführt, die dem
 
 - **Quellen:** dieselbe Quelle (dieselbe Signatur, sonst dieselbe Beschreibung) wird nicht verdoppelt; Zitationen
   gehen auf die behaltene Quelle über, und fehlende Abschrift und fehlendes Datum werden ergänzt.
+- **Ab App 3.27.0:** Eine Quelle, die sich von der behaltenen nur in der Standard-Zuverlässigkeit unterscheidet, ist
+  dieselbe Quelle und wird nicht verdoppelt; die übertragenen Zitationen behalten ihre Zuverlässigkeit
+  ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)). Ein anderes Eintragsdatum oder andere Zeilen der Zitation ergeben
+  weiter eine eigene Quelle.
 - **Orte:** Koordinaten, Ortsdatensätze und andere Namen von Orten werden vereinheitlicht; wo beide Stammbäume
   denselben Ort kennen, gilt der Zielstammbaum.
 - **Namensschreibweisen** ([A4.5](A4-surnames-and-families.md#A4.5)) werden vereinheitlicht; Gruppen, die sich
@@ -107,4 +111,4 @@ Außer Personen und Beziehungen werden auch die Listen zusammengeführt, die dem
   ([S6.4](S6-tree-from-another-program.md#S6.4)). Das manuelle Zusammenführen zweier Personen
   ([A5.6](A5-tree-check.md#A5.6)) verbindet die Notizen nicht.
 
-<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) -->
+<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations -->

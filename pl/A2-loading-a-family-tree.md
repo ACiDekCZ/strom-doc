@@ -222,8 +222,8 @@ rodzinie parę. Ocena `QUAY` pokazuje się jako **Wiarygodność źródła**: 3 
 
 - **Granice:** Bez `TITL` bierze się skrót `ABBR`, w przeciwnym razie „?”. Wydawca, autor i sygnatura w archiwum
   trafiają do notatki źródła. Cytat ze stroną (`PAGE`) inną niż przy źródle tworzy pochodne źródło dla tej strony
-  z tym samym tytułem i archiwum; transkrypcja i wycinki na nie nie przechodzą. `QUAY` rekordu ma pierwszeństwo przed
-  `QUAY` cytatu, a dla każdego źródła obowiązuje pierwszy cytat. `DATA` i `TEXT` wewnątrz cytatu się nie czyta. Każdy
+  z tym samym tytułem i archiwum; transkrypcja i wycinki na nie nie przechodzą. Od aplikacji 3.26.0 to samo robi cytat tej samej strony z inną datą zapisu (`DATA` › `DATE`). Wiarygodność
+  należy do cytatu ([A2.6.1](#A2.6.1)). `DATA` i `TEXT` wewnątrz cytatu się nie czyta. Każdy
   obraz przy źródle to wycinek. Pewności z obcego programu aplikacja nie zmienia. Jak badanie przejmuje `QUAY` jako
   formę i informację źródła, mówi [R3.2.1](R3-verification-and-citation.md#R3.2.1); kiedy dana jest udokumentowana,
   [R3.8](R3-verification-and-citation.md#R3.8). Źródła w aplikacji opisuje [A3](A3-evidence-in-the-app.md).
@@ -236,7 +236,37 @@ rodzinie parę. Ocena `QUAY` pokazuje się jako **Wiarygodność źródła**: 3 
   aplikacji). Numer, który dalsza lokalizacja już wymienia, się nie powtarza. Źródło bez folio i skanu eksportuje się
   dokładnie jak dotąd. Pola źródła opisuje [A3.9](A3-evidence-in-the-app.md#A3.9).
 
-<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord -->
+<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord · datum zápisu: app:fcfc71d2 (v3.26.0) pageSources klíč s datem, spec 066 K3.1 -->
+
+<a id="A2.6.1"></a>
+### A2.6.1 Wiarygodność przy cytacie
+
+Ten sam zapis bywa dla jednej danej oryginałem, a dla innej informacją wtórną: spis ludności podaje zawód z pierwszej
+ręki, wiek z drugiej. Dlatego `QUAY` należy do cytatu, nie do źródła. Źródło ma domyślną wiarygodność, a cytat z inną
+wartością zachowuje własną.
+
+- **Pilnuje kod:**
+  - cytaty tego samego zapisu z tą samą stroną, tą samą datą zapisu i tymi samymi dalszymi wierszami cytatu, które
+    różnią się tylko `QUAY`, są cytatami jednego źródła. Źródło jest w **Źródła** raz, ze swoimi obrazami (`OBJE`);
+  - inna strona albo inna data zapisu nadal tworzy osobne źródło dla tego zapisu ([A2.6](#A2.6));
+  - domyślna wiarygodność źródła to `QUAY` jego pierwszego cytatu (cytat bez `QUAY` bierze `QUAY` rekordu, jeśli go
+    ma); cytat z innym `QUAY` go zachowuje, cytat bez `QUAY` przy źródle z domyślną wiarygodnością zostaje bez niej;
+  - eksport (do badania, **Z powrotem do {program}** i **Do udostępnienia innym**) pisze przy każdym cytacie jego
+    `QUAY`: własne, w przeciwnym razie domyślne źródła. Drzewo bez cytatów z własną wiarygodnością eksportuje się
+    dokładnie jak dotąd. Wczytanie i ponowny eksport nie zmieniają więc `QUAY` żadnego cytatu.
+- **Drzewo zapisane starszą wersją:** przy otwarciu źródła, które wczytanie w aplikacji 3.26.0 utworzyło tylko z powodu
+  innego `QUAY` tej samej strony, łączą się z powrotem ze swoim źródłem. Ich cytaty przechodzą na to źródło,
+  a wiarygodność przechodzi na cytat. Przedtem aplikacja zapisuje kopię zapasową **Przed dostosowaniem danych do nowej
+  wersji** ([S6.5](S6-tree-from-another-program.md#S6.5)). Łączy się tylko źródło, które różni się od swojego
+  jedynie wiarygodnością; źródło z własną notatką, transkrypcją, wycinkiem albo innym tekstem zostaje. Badanie,
+  z którym drzewo jest połączone, nie dostaje przez to żadnej zmiany (źródło i strona są te same), a etykieta **Obraz
+  tylko w badaniu** przy połączonym źródle znika ([A3.8](A3-evidence-in-the-app.md#A3.8)).
+- **Granice:** wiarygodność pojedynczego cytatu aplikacja tylko pokazuje ([A3.6](A3-evidence-in-the-app.md#A3.6),
+  [S7.1](S7-reliability-and-verification.md#S7.1)); zmienić można tylko domyślną **Wiarygodność źródła** w edytorze
+  źródła ([A3.1](A3-evidence-in-the-app.md#A3.1)).
+- **Obowiązuje od:** aplikacja 3.27.0 (w 3.26.0 cytat z innym `QUAY` tworzył drugie źródło bez obrazów)
+
+<!-- zdroj: dirigent:spec/077-spolehlivost-u-citace/spec.md K1.1–K1.7 · app:5721b016 src/ged-parser.ts pageSources (klíč bez quay), citedQuay, citationQuay (null = citace bez QUAY), src/citation-quality.ts citationQuality, setCitationQuality, qualityOnlySources (DERIVED_FIELDS, entryKey), joinQualityOnlySources, src/ged-exporter.ts pushCitation(cited), src/data.ts v19, src/tree-manager.ts joinQualityOnlySourcesOf (createSnapshot pre-migration, fingerprint, rebaseResearchCopies), strings.ts snapshots pre-migration · app:dde0151a src/research-changes.ts citedKey · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (import 1 pramen s obrázkem, round trip QUAY 2/3, migrace v18) -->
 
 <a id="A2.7"></a>
 ## A2.7 Własne znaczniki Stromu i co wraca

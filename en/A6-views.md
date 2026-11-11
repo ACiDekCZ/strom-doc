@@ -331,7 +331,8 @@ The columns are in groups. Which are visible and in what order is part of the vi
 - **Research ID** shows only the person's number from the research (P…). **Ref. number (REFN)** is the person's
   reference number as the GEDCOM file brought it (and as it goes back into one); it sorts and filters as text.
 - **Open question**, **⇄ In another tree** (the trees on this device the person is in) and **Person status** (the mark
-  of documentation and reliability from the card, in words; sorted from the strongest) are in every tree. The group
+  of documentation and reliability from the card, in words; sorted from the strongest; from app 3.27.0 by the reliability of the
+  citations, [S7.2](S7-reliability-and-verification.md#S7.2)) are in every tree. The group
   **Research** is only in a tree from the research ([A6.7.14](#A6.7.14)).
 - **Events** (**Occupation**, **Residence**, **Religion**, **Military service**, **Emigration**, **Education**) show
   each value once, the newest first.

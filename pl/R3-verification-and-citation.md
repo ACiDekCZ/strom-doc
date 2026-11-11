@@ -85,8 +85,12 @@ Stopień nie może twierdzić więcej, niż dają cytaty danej. Kod sprawdza to 
 - Aplikacja: **Wiarygodność** źródła trafia do badania jako **Oryginał** = źródło oryginalne z informacją pierwotną,
   **Odpis / indeks** = źródło oryginalne z informacją wtórną, **Niepewne** = odpis z nieznaną informacją.
 - **Obowiązuje od:** badanie 1.0.0; Wiarygodność z aplikacji badanie 1.12.0
+- **Od aplikacji 3.27.0:** aplikacja trzyma wiarygodność także przy każdym cytacie i zapisuje ją w pliku dla badania
+  jako `QUAY` tego cytatu ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)). Badanie bierze z niej tylko formę
+  i informację nowego źródła (domyślną wiarygodność źródła, w przeciwnym razie `QUAY` jego pierwszego cytatu); `QUAY`
+  cytatu, który badanie zapisało samo, nie zmienia się po drodze przez aplikację.
 
-<!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 -->
+<!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 · 3.27.0: research:ff760309 src/core/sync.ts:1095 (zdroj aplikace a.quality), :963 citedDetails (s.quay z první citace), :4361 QUAY_EVIDENCE · app:5721b016 export QUAY citace · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (round trip QUAY 2/3, sync --dry-run nic nového) -->
 
 <a id="R3.3"></a>
 ## R3.3 Źródło czy wskazówka

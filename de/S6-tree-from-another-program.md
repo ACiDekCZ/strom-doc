@@ -195,8 +195,11 @@ Zustand vor dem Import lässt sich so zurückkehren.
 - **Bedienung:** App: Angebot des Stammbaums → **Sicherungen** → Fenster **Sicherungsverlauf**: **Jetzt Sicherung
   erstellen**, **Wiederherstellen**, **Herunterladen**; der Schalter **Automatische Sicherungen dieses Stammbaums**.
 - **Gilt seit:** App 3.26.0 (Sicherung vor **In Stammbaum einfügen**)
+- **Ab App 3.27.0:** Die Sicherung **Vor der Anpassung der Daten an eine neue Version** entsteht, bevor die App beim
+  Öffnen einen mit einer älteren Version gespeicherten Stammbaum anpasst; derzeit nur, um Quellen zusammenzuführen,
+  die sich nur in der Zuverlässigkeit unterschieden ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)).
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration -->
 
 <a id="S6.6"></a>
 ## S6.6 Export zurück ins Programm oder zum Teilen

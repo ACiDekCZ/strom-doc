@@ -90,8 +90,13 @@ eines Grades: `event add`, `cite`, `event edit` und auch bei Angaben, die aus de
   Primärinformation, **Abschrift / Index** = Originalquelle mit Sekundärinformation, **Unsicher** = Kopie mit
   unbekannter Information.
 - **Gilt seit:** Forschung 1.0.0; Verlässlichkeit aus der App Forschung 1.12.0
+- **Ab App 3.27.0:** Die App hält die Zuverlässigkeit auch bei jeder einzelnen Zitation und schreibt sie in die Datei
+  für die Forschung als `QUAY` dieser Zitation ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)). Die Forschung nimmt
+  daraus nur Form und Information einer neuen Quelle (die Standard-Zuverlässigkeit der Quelle, sonst das `QUAY` ihrer
+  ersten Zitation); das `QUAY` einer Zitation, die die Forschung selbst geschrieben hat, ändert sich auf dem Weg durch
+  die App nicht.
 
-<!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 -->
+<!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 · 3.27.0: research:ff760309 src/core/sync.ts:1095 (zdroj aplikace a.quality), :963 citedDetails (s.quay z první citace), :4361 QUAY_EVIDENCE · app:5721b016 export QUAY citace · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (round trip QUAY 2/3, sync --dry-run nic nového) -->
 
 <a id="R3.3"></a>
 ## R3.3 Quelle oder Hinweis

@@ -14,21 +14,24 @@ odkazují, takže jeden zápis může dokládat víc lidí i víc údajů.
 
 - Pole: **Název** (povinné), **Archiv**, **Signatura**, **Folium/strana**, **Snímek**, **Další umístění**, **URL**,
   **Poznámka**. Kde zápis v knize stojí, popisuje [A3.9](#A3.9). Pod **Více: přepis, datum zápisu, spolehlivost** jsou
-  **Přepis zápisu**, **Datum zápisu** a **Spolehlivost**. Sekce je otevřená, když je některé z nich vyplněné.
+  **Přepis zápisu**, **Datum zápisu** a **Spolehlivost pramene**. Sekce je otevřená, když je některé z nich vyplněné.
 - **Datum zápisu** říká, kdy byl zápis pořízen. Může se lišit od data události, např. křest zapsaný dodatečně.
-- **Spolehlivost** má tři stupně: **Originál**, **Opis / index**, **Nejisté**. Druhé klepnutí na zvolený stupeň ho
-  zruší. Hodnotí jeden pramen, ne údaj. Jak ji bere výzkum, popisuje
-  [R3.2.1](R3-verification-and-citation.md#R3.2.1).
+- **Spolehlivost pramene** má tři stupně: **Originál**, **Opis / index**, **Nejisté**. Druhé klepnutí na zvolený stupeň
+  ho zruší. Jak ji bere výzkum, popisuje [R3.2.1](R3-verification-and-citation.md#R3.2.1).
 - **Hranice:** bez názvu pramen nejde uložit („Chybí název pramene“). Neplatné **Datum zápisu** se neuloží.
   Hodnota spolehlivosti 0 z importu GEDCOM se ukazuje jako **Nejisté** a zůstane, dokud se nevybere jiný stupeň.
   Smazání pramene odebere všechny jeho citace; aplikace se předem zeptá a řekne, na kolika místech je citován.
 - **Ovládání:** **Akce → Prameny** (seznam pramenů stromu s počtem citací „n×“, hledání od 11 pramenů, řazení podle
   názvu); **Upravit pramen**, **Přidat pramen**. Položka **Prameny** v menu **Akce** je jen u stromu, který jde
   upravovat, a jen když už nějaký pramen existuje nebo je zapnuté **Nastavení → Karta osoby → Pokročilá pole**.
-- **Platí od:** aplikace 1.4.0; **Spolehlivost** a **Datum zápisu** 3.1.0; **Signatura**, **Folium/strana**,
+- **Platí od:** aplikace 1.4.0; **Spolehlivost pramene** a **Datum zápisu** 3.1.0; **Signatura**, **Folium/strana**,
   **Snímek** a **Další umístění** 3.27.0 (dřív **Archiv / instituce** a **Signatura / strana**)
+- **Od aplikace 3.27.0:** **Spolehlivost pramene** je výchozí spolehlivost jeho citací. Citace, která má vlastní
+  spolehlivost (z importu GEDCOM, [A2.6.1](A2-loading-a-family-tree.md#A2.6.1)), si ji nechá, i když se výchozí
+  změní; ostatní citace se změnou řídí. Údaj ukazuje spolehlivost své citace ([A3.6](#A3.6),
+  [S7.1](S7-reliability-and-verification.md#S7.1)). Dřív spolehlivost hodnotila jen celý pramen.
 
-<!-- zdroj: app:src/types.ts Source · od 3.27.0: app:9732853b strings.ts sources.fieldRepository/fieldCallNumber/fieldFolio/fieldImage/fieldReference · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/fieldQuality/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel -->
+<!-- zdroj: app:src/types.ts Source · od 3.27.0: app:9732853b strings.ts sources.fieldRepository/fieldCallNumber/fieldFolio/fieldImage/fieldReference · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/reliabilityLabel (index.html source-quality-label)/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel · 3.27.0 výchozí spolehlivost: app:dde0151a src/citation-quality.ts setCitationQuality, citation-quality-shown.test.ts (formulář = výchozí) -->
 
 <a id="A3.1.1"></a>
 ### A3.1.1 Přepis a Přepis ověřen
@@ -195,6 +198,8 @@ Menu osoby **Prameny** ukáže všechny prameny osoby na jednom místě, bez ote
 k narození a úmrtí, k událostem, ke sňatkům a ke společným událostem párů.
 
 - Jeden řádek na pramen, pod ním co dokládá: „Osoba“, „Narození 1865“, „Sňatek 1890“… Řádek ukazuje i spolehlivost.
+  Od aplikace 3.27.0 je to spolehlivost citací: když se citace pramene ve spolehlivosti shodnou, je u řádku jednou;
+  když se liší, stojí za každým údajem jeho vlastní („Narození 1865 Opis / index · Povolání Originál“).
 - Pořadí: podle nejstaršího roku toho, co pramen dokládá, jinak podle **Datum zápisu**; bez data na konci, pak
   podle názvu.
 - **Citovat pramen** otevře výběr s **Dokládá** ([A3.2](#A3.2)).
@@ -217,7 +222,7 @@ k narození a úmrtí, k událostem, ke sňatkům a ke společným událostem p�
   pramenů. Jak výzkum prameny vyprávění drží: [R3.9](R3-verification-and-citation.md#R3.9).
 - **Platí od:** aplikace 3.3.0; **Najít pramen ve výzkumu** 3.19.0; **Z čeho text vychází** 3.22.0
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 · 3.27.0: app:dde0151a src/person-sources.ts rowQuality, PersonSourceCite.quality, src/ui/person-sources-ui.ts source-quality-tag · app:66fc3f7f (údaj a štítek se nezalomí) -->
 
 <a id="A3.7"></a>
 ## A3.7 Kde chybí doklady

@@ -1217,12 +1217,12 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Spolehlivost: Originál · Opis / index · Nejisté (app) | Hodnocení jednoho pramene uživatelem (GEDCOM QUAY 3/2/1). Není to stupeň jistoty údaje. |
-| en | Reliability: Original · Copy / index · Uncertain (app) | A user's rating of one source (GEDCOM QUAY 3/2/1). It is not the degree of certainty of a fact. |
-| de | Verlässlichkeit: Original · Abschrift / Index · Unsicher (app) | Die Bewertung einer Quelle durch den Nutzer (GEDCOM QUAY 3/2/1). Sie ist nicht der Grad der Sicherheit einer Angabe. |
-| pl | Wiarygodność: Oryginał · Odpis / indeks · Niepewne (app) | Ocena jednego źródła przez użytkownika (GEDCOM QUAY 3/2/1). Nie jest to stopień pewności danej. |
+| cs | Spolehlivost pramene: Originál · Opis / index · Nejisté (app) | Hodnocení pramene (GEDCOM QUAY 3/2/1). Od aplikace 3.27.0 je to výchozí spolehlivost jeho citací; citace může mít vlastní. Není to stupeň jistoty údaje. |
+| en | Source reliability: Original · Copy / index · Uncertain (app) | The rating of a source (GEDCOM QUAY 3/2/1). From app 3.27.0 it is the default reliability of its citations; a citation may have its own. It is not the degree of certainty of a fact. |
+| de | Zuverlässigkeit der Quelle: Original · Abschrift / Index · Unsicher (app) | Die Bewertung einer Quelle (GEDCOM QUAY 3/2/1). Ab App 3.27.0 ist sie die Standard-Zuverlässigkeit ihrer Zitationen; eine Zitation kann eine eigene haben. Sie ist nicht der Grad der Sicherheit einer Angabe. |
+| pl | Wiarygodność źródła: Oryginał · Odpis / indeks · Niepewne (app) | Ocena źródła (GEDCOM QUAY 3/2/1). Od aplikacji 3.27.0 to domyślna wiarygodność jego cytatów; cytat może mieć własną. Nie jest to stopień pewności danej. |
 
-- **Čísla:** [A3.1](cs/A3-evidence-in-the-app.md#A3.1), [R3.2.1](cs/R3-verification-and-citation.md#R3.2.1)
+- **Čísla:** [A3.1](cs/A3-evidence-in-the-app.md#A3.1), [A2.6.1](cs/A2-loading-a-family-tree.md#A2.6.1), [R3.2.1](cs/R3-verification-and-citation.md#R3.2.1)
 
 <a id="same-id-in-the-file"></a>
 ### Stejné ID v souboru

@@ -14,12 +14,12 @@ Personen und Angaben verweisen nur auf sie, sodass ein Eintrag mehrere Menschen 
 
 - Felder: **Titel** (Pflicht), **Archiv**, **Signatur**, **Folio/Seite**, **Bild**, **Weitere Fundstelle**, **URL**,
   **Notiz**. Wo der Eintrag im Buch steht, beschreibt [A3.9](#A3.9). Unter **Mehr: Transkription, Eintragsdatum,
-  Verlässlichkeit** liegen **Transkription des Eintrags**, **Eintragsdatum** und **Verlässlichkeit**. Der Abschnitt
+  Verlässlichkeit** liegen **Transkription des Eintrags**, **Eintragsdatum** und **Zuverlässigkeit der Quelle**. Der Abschnitt
   ist offen, wenn eines davon ausgefüllt ist.
 - **Eintragsdatum** sagt, wann der Eintrag angelegt wurde. Es kann vom Datum des Ereignisses abweichen, z. B. eine
   nachträglich eingetragene Taufe.
-- **Verlässlichkeit** hat drei Stufen: **Original**, **Abschrift / Index**, **Unsicher**. Ein zweites Tippen auf die
-  gewählte Stufe hebt sie auf. Sie bewertet eine Quelle, nicht eine Angabe. Wie die Forschung sie nimmt, beschreibt
+- **Zuverlässigkeit der Quelle** hat drei Stufen: **Original**, **Abschrift / Index**, **Unsicher**. Ein zweites
+  Tippen auf die gewählte Stufe hebt sie auf. Wie die Forschung sie nimmt, beschreibt
   [R3.2.1](R3-verification-and-citation.md#R3.2.1).
 - **Grenzen:** ohne Titel lässt sich eine Quelle nicht speichern („Quellentitel eingeben“). Ein ungültiges
   **Eintragsdatum** wird nicht gespeichert. Der Wert 0 der Verlässlichkeit aus einem GEDCOM-Import erscheint als
@@ -29,10 +29,15 @@ Personen und Angaben verweisen nur auf sie, sodass ein Eintrag mehrere Menschen 
   11 Quellen, Sortierung nach Titel); **Quelle bearbeiten**, **Quelle hinzufügen**. Den Punkt **Quellen** im Menü
   **Aktionen** gibt es nur bei einem bearbeitbaren Stammbaum und nur, wenn schon eine Quelle existiert oder
   **Einstellungen → Personenkarte → Erweiterte Felder** eingeschaltet ist.
-- **Gilt seit:** App 1.4.0; **Verlässlichkeit** und **Eintragsdatum** 3.1.0; **Signatur**, **Folio/Seite**, **Bild**
+- **Gilt seit:** App 1.4.0; **Zuverlässigkeit der Quelle** und **Eintragsdatum** 3.1.0; **Signatur**, **Folio/Seite**, **Bild**
   und **Weitere Fundstelle** 3.27.0 (früher **Archiv / Einrichtung** und **Signatur / Fundstelle**)
+- **Ab App 3.27.0:** **Zuverlässigkeit der Quelle** ist die Standard-Zuverlässigkeit ihrer Zitationen. Eine Zitation
+  mit eigener Zuverlässigkeit (aus einem GEDCOM-Import, [A2.6.1](A2-loading-a-family-tree.md#A2.6.1)) behält sie, auch
+  wenn sich der Standard ändert; die übrigen Zitationen folgen der Änderung. Eine Angabe zeigt die Zuverlässigkeit
+  ihrer Zitation ([A3.6](#A3.6), [S7.1](S7-reliability-and-verification.md#S7.1)). Früher bewertete die
+  Zuverlässigkeit nur die ganze Quelle.
 
-<!-- zdroj: app:src/types.ts Source · od 3.27.0: app:9732853b strings.ts sources.fieldRepository/fieldCallNumber/fieldFolio/fieldImage/fieldReference · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/fieldQuality/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel -->
+<!-- zdroj: app:src/types.ts Source · od 3.27.0: app:9732853b strings.ts sources.fieldRepository/fieldCallNumber/fieldFolio/fieldImage/fieldReference · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/reliabilityLabel (index.html source-quality-label)/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel · 3.27.0 výchozí spolehlivost: app:dde0151a src/citation-quality.ts setCitationQuality, citation-quality-shown.test.ts (formulář = výchozí) -->
 
 <a id="A3.1.1"></a>
 ### A3.1.1 Transkription und Abschrift geprüft
@@ -227,6 +232,9 @@ zur Person, zu Geburt und Tod, zu Ereignissen, zu Heiraten und zu gemeinsamen Er
 
 - Eine Zeile je Quelle, darunter, was sie belegt: „Person“, „Geburt 1865“, „Trauung 1890“… Die Zeile zeigt auch
   die Verlässlichkeit.
+  Ab App 3.27.0 ist es die Zuverlässigkeit der Zitationen: Stimmen die Zitationen der Quelle in der Zuverlässigkeit
+  überein, steht sie einmal an der Zeile; unterscheiden sie sich, folgt jeder Angabe ihre eigene („Geburt 1865
+  Abschrift / Index · Beruf Original“).
 - Reihenfolge: nach dem ältesten Jahr dessen, was die Quelle belegt, sonst nach **Eintragsdatum**; ohne Datum am
   Ende, dann nach Titel.
 - **Quelle zitieren** öffnet die Auswahl mit **Belegt** ([A3.2](#A3.2)).
@@ -252,7 +260,7 @@ zur Person, zu Geburt und Tod, zu Ereignissen, zu Heiraten und zu gemeinsamen Er
   [R3.9](R3-verification-and-citation.md#R3.9).
 - **Gilt seit:** App 3.3.0; **Quelle in der Forschung finden** 3.19.0; **Grundlage des Textes** 3.22.0
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 · 3.27.0: app:dde0151a src/person-sources.ts rowQuality, PersonSourceCite.quality, src/ui/person-sources-ui.ts source-quality-tag · app:66fc3f7f (údaj a štítek se nezalomí) -->
 
 <a id="A3.7"></a>
 ## A3.7 Wo Belege fehlen

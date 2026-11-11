@@ -207,8 +207,8 @@ jako **Spolehlivost pramene**: 3 je **Originál**, 2 **Opis / index**, 1 a 0 **N
 
 - **Hranice:** Bez `TITL` se vezme zkratka `ABBR`, jinak „?“. Vydavatel, autor a signatura v archivu jdou do poznámky
   pramene. Citace se stranou (`PAGE`) jinou než u pramene vytvoří odvozený pramen pro tu stranu se stejným názvem a
-  archivem; přepis a výřezy na něj nepřejdou. `QUAY` záznamu má přednost před `QUAY` citace a u každého pramene platí
-  první citace. `DATA` a `TEXT` uvnitř citace se nečtou. Každý obrázek u pramene je výřez. Jistotu z cizího programu
+  archivem; přepis a výřezy na něj nepřejdou. Od aplikace 3.26.0 totéž udělá citace téže strany s jiným datem zápisu
+  (`DATA` › `DATE`). Spolehlivost patří citaci ([A2.6.1](#A2.6.1)). `DATA` a `TEXT` uvnitř citace se nečtou. Každý obrázek u pramene je výřez. Jistotu z cizího programu
   aplikace nemění. Jak výzkum `QUAY` převezme jako formu a informaci pramene, říká
   [R3.2.1](R3-verification-and-citation.md#R3.2.1); kdy je údaj doložený,
   [R3.8](R3-verification-and-citation.md#R3.8). Prameny v aplikaci popisuje [A3](A3-evidence-in-the-app.md).
@@ -221,7 +221,36 @@ jako **Spolehlivost pramene**: 3 je **Originál**, 2 **Opis / index**, 1 a 0 **N
   aplikace). Číslo, které už další umístění jmenuje, se neopakuje. Pramen bez folia a snímku se exportuje přesně jako
   dřív. Pole pramene popisuje [A3.9](A3-evidence-in-the-app.md#A3.9).
 
-<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord -->
+<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord · datum zápisu: app:fcfc71d2 (v3.26.0) pageSources klíč s datem, spec 066 K3.1 -->
+
+<a id="A2.6.1"></a>
+### A2.6.1 Spolehlivost u citace
+
+Tentýž zápis bývá pro jeden údaj originálem a pro jiný druhotnou informací: sčítání lidu uvádí povolání z první
+ruky, věk z druhé. Proto `QUAY` patří citaci, ne prameni. Pramen má výchozí spolehlivost a citace s jinou hodnotou si
+nechá svou.
+
+- **Hlídá kód:**
+  - citace téhož zápisu se stejnou stranou, stejným datem zápisu a stejnými dalšími řádky citace, které se liší jen
+    `QUAY`, jsou citace jednoho pramene. Pramen je v **Prameny** jednou, i se svými obrázky (`OBJE`);
+  - jiná strana nebo jiné datum zápisu dál dělá samostatný pramen pro ten zápis ([A2.6](#A2.6));
+  - výchozí spolehlivost pramene je `QUAY` jeho první citace (citace bez `QUAY` bere `QUAY` záznamu, když ho má);
+    citace s jiným `QUAY` si ho nechá, citace bez `QUAY` u pramene s výchozí spolehlivostí zůstane bez ní;
+  - export (do výzkumu, **Zpět do {program}** i **Ke sdílení s ostatními**) píše u každé citace její `QUAY`:
+    vlastní, jinak výchozí pramene. Strom bez citací s vlastní spolehlivostí se exportuje přesně jako dřív. Načtení a nový export proto
+    `QUAY` žádné citace nezmění.
+- **Strom uložený starší verzí:** při otevření se prameny, které načtení v aplikaci 3.26.0 udělalo jen kvůli jinému
+  `QUAY` téže strany, sloučí zpět do svého pramene. Jejich citace se převedou na ten pramen a spolehlivost přejde na
+  citaci. Předtím aplikace uloží zálohu **Před úpravou dat pro novou verzi** ([S6.5](S6-tree-from-another-program.md#S6.5)).
+  Slučuje se jen pramen, který se od svého liší jedině spolehlivostí; pramen s vlastní poznámkou, přepisem, výřezem
+  nebo jiným textem zůstane. Výzkum, se kterým je strom propojený, tím nedostane žádnou změnu (pramen i strana jsou
+  stejné) a štítek **Obraz jen ve výzkumu** u sloučeného pramene zmizí ([A3.8](A3-evidence-in-the-app.md#A3.8)).
+- **Hranice:** spolehlivost jednotlivé citace se v aplikaci jen ukazuje ([A3.6](A3-evidence-in-the-app.md#A3.6),
+  [S7.1](S7-reliability-and-verification.md#S7.1)); měnit jde jen výchozí **Spolehlivost pramene** v editoru
+  pramene ([A3.1](A3-evidence-in-the-app.md#A3.1)).
+- **Platí od:** aplikace 3.27.0 (ve 3.26.0 udělala citace s jiným `QUAY` druhý pramen bez obrázků)
+
+<!-- zdroj: dirigent:spec/077-spolehlivost-u-citace/spec.md K1.1–K1.7 · app:5721b016 src/ged-parser.ts pageSources (klíč bez quay), citedQuay, citationQuay (null = citace bez QUAY), src/citation-quality.ts citationQuality, setCitationQuality, qualityOnlySources (DERIVED_FIELDS, entryKey), joinQualityOnlySources, src/ged-exporter.ts pushCitation(cited), src/data.ts v19, src/tree-manager.ts joinQualityOnlySourcesOf (createSnapshot pre-migration, fingerprint, rebaseResearchCopies), strings.ts snapshots pre-migration · app:dde0151a src/research-changes.ts citedKey · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (import 1 pramen s obrázkem, round trip QUAY 2/3, migrace v18) -->
 
 <a id="A2.7"></a>
 ## A2.7 Vlastní značky Stromu a co se vrací

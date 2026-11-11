@@ -14,11 +14,11 @@ odwołują, więc jeden zapis może dokumentować wiele osób i wiele danych.
 
 - Pola: **Tytuł** (obowiązkowe), **Archiwum**, **Sygnatura**, **Folio/strona**, **Skan**, **Dalsza lokalizacja**,
   **URL**, **Notatka**. Gdzie wpis stoi w księdze, opisuje [A3.9](#A3.9). Pod **Więcej: transkrypcja, data zapisu,
-  wiarygodność** są **Transkrypcja zapisu**, **Data zapisu** i **Wiarygodność**. Sekcja jest otwarta, gdy któreś z nich
+  wiarygodność** są **Transkrypcja zapisu**, **Data zapisu** i **Wiarygodność źródła**. Sekcja jest otwarta, gdy któreś z nich
   jest wypełnione.
 - **Data zapisu** mówi, kiedy zapis sporządzono. Może się różnić od daty zdarzenia, np. chrzest zapisany później.
-- **Wiarygodność** ma trzy stopnie: **Oryginał**, **Odpis / indeks**, **Niepewne**. Drugie kliknięcie wybranego
-  stopnia go anuluje. Ocenia jedno źródło, nie daną. Jak traktuje ją badanie, opisuje
+- **Wiarygodność źródła** ma trzy stopnie: **Oryginał**, **Odpis / indeks**, **Niepewne**. Drugie kliknięcie
+  wybranego stopnia go anuluje. Jak traktuje ją badanie, opisuje
   [R3.2.1](R3-verification-and-citation.md#R3.2.1).
 - **Granice:** bez tytułu źródła nie da się zapisać („Brak tytułu źródła”). Nieprawidłowa **Data zapisu** się nie
   zapisze. Wartość wiarygodności 0 z importu GEDCOM pokazuje się jako **Niepewne** i zostaje, dopóki nie wybierze się
@@ -28,10 +28,14 @@ odwołują, więc jeden zapis może dokumentować wiele osób i wiele danych.
   według tytułu); **Edycja źródła**, **Dodaj źródło**. Pozycja **Źródła** w menu **Akcje** jest tylko przy drzewie,
   które można edytować, i tylko wtedy, gdy jakieś źródło już istnieje lub włączone jest **Ustawienia → Karta osoby →
   Pola zaawansowane**.
-- **Obowiązuje od:** aplikacja 1.4.0; **Wiarygodność** i **Data zapisu** 3.1.0; **Sygnatura**, **Folio/strona**,
+- **Obowiązuje od:** aplikacja 1.4.0; **Wiarygodność źródła** i **Data zapisu** 3.1.0; **Sygnatura**, **Folio/strona**,
   **Skan** i **Dalsza lokalizacja** 3.27.0 (wcześniej **Archiwum / instytucja** i **Sygnatura / strona**)
+- **Od aplikacji 3.27.0:** **Wiarygodność źródła** to domyślna wiarygodność jego cytatów. Cytat, który ma własną
+  wiarygodność (z importu GEDCOM, [A2.6.1](A2-loading-a-family-tree.md#A2.6.1)), zachowuje ją, nawet gdy domyślna się
+  zmieni; pozostałe cytaty idą za zmianą. Dana pokazuje wiarygodność swojego cytatu ([A3.6](#A3.6),
+  [S7.1](S7-reliability-and-verification.md#S7.1)). Wcześniej wiarygodność oceniała tylko całe źródło.
 
-<!-- zdroj: app:src/types.ts Source · od 3.27.0: app:9732853b strings.ts sources.fieldRepository/fieldCallNumber/fieldFolio/fieldImage/fieldReference · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/fieldQuality/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel -->
+<!-- zdroj: app:src/types.ts Source · od 3.27.0: app:9732853b strings.ts sources.fieldRepository/fieldCallNumber/fieldFolio/fieldImage/fieldReference · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/reliabilityLabel (index.html source-quality-label)/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel · 3.27.0 výchozí spolehlivost: app:dde0151a src/citation-quality.ts setCitationQuality, citation-quality-shown.test.ts (formulář = výchozí) -->
 
 <a id="A3.1.1"></a>
 ### A3.1.1 Transkrypcja i Transkrypcja zweryfikowana
@@ -209,6 +213,8 @@ do urodzenia i zgonu, do zdarzeń, do ślubów i do wspólnych zdarzeń par.
 
 - Jeden wiersz na źródło, pod nim to, co dokumentuje: „Osoba”, „Urodzenie 1865”, „Ślub 1890”… Wiersz pokazuje też
   wiarygodność.
+  Od aplikacji 3.27.0 to wiarygodność cytatów: gdy cytaty źródła zgadzają się co do wiarygodności, jest przy
+  wierszu raz; gdy się różnią, po każdej danej stoi jej własna („Urodzenie 1865 Odpis / indeks · Zawód Oryginał”).
 - Kolejność: według najstarszego roku tego, co źródło dokumentuje, w przeciwnym razie według **Data zapisu**; bez
   daty na końcu, potem według tytułu.
 - **Cytuj źródło** otwiera wybór z **Dokumentuje** ([A3.2](#A3.2)).
@@ -231,7 +237,7 @@ do urodzenia i zgonu, do zdarzeń, do ślubów i do wspólnych zdarzeń par.
   źródeł. Jak badanie zachowuje źródła opowieści: [R3.9](R3-verification-and-citation.md#R3.9).
 - **Obowiązuje od:** aplikacja 3.3.0; **Znajdź źródło w badaniu** 3.19.0; **Na czym opiera się tekst** 3.22.0
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 · 3.27.0: app:dde0151a src/person-sources.ts rowQuality, PersonSourceCite.quality, src/ui/person-sources-ui.ts source-quality-tag · app:66fc3f7f (údaj a štítek se nezalomí) -->
 
 <a id="A3.7"></a>
 ## A3.7 Gdzie brakuje dowodów

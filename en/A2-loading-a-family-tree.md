@@ -225,8 +225,8 @@ index**, 1 and 0 **Uncertain**.
 
 - **Limits:** without `TITL` the abbreviation `ABBR` is taken, otherwise "?". Publisher, author and the call number in
   the archive go into the source's note. A citation with a page (`PAGE`) other than the source's creates a derived
-  source for that page with the same title and archive; transcription and excerpts do not pass to it. The record's
-  `QUAY` takes precedence over the citation's `QUAY`, and for each source the first citation holds. `DATA` and `TEXT`
+  source for that page with the same title and archive; transcription and excerpts do not pass to it. From app 3.26.0 a citation of the same page with another record date (`DATA` › `DATE`) does the same. The
+  reliability belongs to the citation ([A2.6.1](#A2.6.1)). `DATA` and `TEXT`
   inside a citation are not read. Every image at a source is an excerpt. The app does not change certainty from
   another program. How the research takes `QUAY` over as the form and information of a source is said by
   [R3.2.1](R3-verification-and-citation.md#R3.2.1); when a fact is proven, by
@@ -241,7 +241,39 @@ index**, 1 and 0 **Uncertain**.
   repeated. A source without a folio and an image is exported exactly as before. The source's fields are described in
   [A3.9](A3-evidence-in-the-app.md#A3.9).
 
-<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord -->
+<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord · datum zápisu: app:fcfc71d2 (v3.26.0) pageSources klíč s datem, spec 066 K3.1 -->
+
+<a id="A2.6.1"></a>
+### A2.6.1 Reliability at the citation
+
+The same entry is often an original for one fact and secondary information for another: a census gives the
+occupation first hand, the age second hand. So `QUAY` belongs to the citation, not to the source. A source has a
+default reliability, and a citation with another value keeps its own.
+
+- **Enforced by the code:**
+  - citations of the same entry with the same page, the same record date and the same other lines of the citation
+    that differ only in `QUAY` are citations of one source. The source is in **Sources** once, with its images
+    (`OBJE`);
+  - another page or another record date still makes a source of its own for that entry ([A2.6](#A2.6));
+  - the source's default reliability is the `QUAY` of its first citation (a citation without `QUAY` takes the
+    record's `QUAY` when it has one); a citation with another `QUAY` keeps it, a citation without `QUAY` at a source
+    with a default reliability stays without one;
+  - the export (to the research, **Back to {program}** and **To share with others**) writes each citation's `QUAY`:
+    its own, otherwise the source's default. A tree without citations with their own reliability is exported exactly
+    as before. Loading and exporting again therefore changes the `QUAY` of no citation.
+- **A tree saved by an older version:** on opening, the sources that loading in app 3.26.0 made only for another
+  `QUAY` of the same page are joined back into their source. Their citations are moved to that source and the
+  reliability passes to the citation. Before that the app saves the backup **Before the data update of a new
+  version** ([S6.5](S6-tree-from-another-program.md#S6.5)). Only a source that differs from its own only in
+  reliability is joined; a source with its own note, transcript, excerpt or other text stays. The research the tree
+  is connected to gets no change from this (the source and the page are the same), and the tag **Image only in the
+  research** at the joined source disappears ([A3.8](A3-evidence-in-the-app.md#A3.8)).
+- **Limits:** the reliability of a single citation is only shown in the app ([A3.6](A3-evidence-in-the-app.md#A3.6),
+  [S7.1](S7-reliability-and-verification.md#S7.1)); only the default **Source reliability** can be changed, in the
+  source editor ([A3.1](A3-evidence-in-the-app.md#A3.1)).
+- **Since:** app 3.27.0 (in 3.26.0 a citation with another `QUAY` made a second source without images)
+
+<!-- zdroj: dirigent:spec/077-spolehlivost-u-citace/spec.md K1.1–K1.7 · app:5721b016 src/ged-parser.ts pageSources (klíč bez quay), citedQuay, citationQuay (null = citace bez QUAY), src/citation-quality.ts citationQuality, setCitationQuality, qualityOnlySources (DERIVED_FIELDS, entryKey), joinQualityOnlySources, src/ged-exporter.ts pushCitation(cited), src/data.ts v19, src/tree-manager.ts joinQualityOnlySourcesOf (createSnapshot pre-migration, fingerprint, rebaseResearchCopies), strings.ts snapshots pre-migration · app:dde0151a src/research-changes.ts citedKey · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (import 1 pramen s obrázkem, round trip QUAY 2/3, migrace v18) -->
 
 <a id="A2.7"></a>
 ## A2.7 Strom's own tags and what comes back

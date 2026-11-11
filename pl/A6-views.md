@@ -328,7 +328,8 @@ Kolumny są w grupach. Które są widoczne i w jakiej kolejności, jest części
 - **ID badań** pokazuje tylko numer osoby z badania (P…). **Nr ref. (REFN)** to numer referencyjny osoby, tak jak
   przyniósł go plik GEDCOM (i jak wraca do niego); sortuje się i filtruje jako tekst.
 - **Otwarte pytanie**, **⇄ W innym drzewie** (drzewa na tym urządzeniu, w których osoba jest) i **Stan osoby**
-  (oznaczenie udokumentowania i wiarygodności z karty, słowami; sortowane od najsilniejszego) są w każdym drzewie.
+  (oznaczenie udokumentowania i wiarygodności z karty, słowami; sortowane od najsilniejszego; od aplikacji 3.27.0 według wiarygodności
+  cytatów, [S7.2](S7-reliability-and-verification.md#S7.2)) są w każdym drzewie.
   Grupa **Badania** jest tylko w drzewie z badania ([A6.7.14](#A6.7.14)).
 - **Wydarzenia** (**Zawód**, **Miejsce zamieszkania**, **Wyznanie**, **Służba wojskowa**, **Emigracja**,
   **Wykształcenie**) pokazują każdą wartość raz, najnowszą pierwszą.

@@ -78,6 +78,9 @@ Kromě osob a vztahů se sloučí i seznamy, které patří celému stromu.
 
 - **Prameny:** stejný pramen (stejná signatura, jinak stejný popis) se nezdvojí; citace se převedou na ponechaný
   pramen a chybějící přepis a datum se doplní.
+- **Od aplikace 3.27.0:** pramen, který se od ponechaného liší jen výchozí spolehlivostí, je týž pramen a nezdvojí se;
+  převedené citace si nechají svou spolehlivost ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)). Jiné datum zápisu
+  nebo jiné řádky citace dál dávají samostatný pramen.
 - **Místa:** souřadnice, záznamy míst a jiné názvy míst se sjednotí; kde oba stromy znají totéž místo, platí cílový
   strom.
 - **Tvary příjmení** ([A4.5](A4-surnames-and-families.md#A4.5)) se sjednotí; skupiny, které se překrývají, se spojí.
@@ -91,4 +94,4 @@ Kromě osob a vztahů se sloučí i seznamy, které patří celému stromu.
   **Co teď** ([S6.4](S6-tree-from-another-program.md#S6.4)). Ruční sloučení dvou osob
   ([A5.6](A5-tree-check.md#A5.6)) poznámky nespojuje.
 
-<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) -->
+<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations -->

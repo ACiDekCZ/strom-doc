@@ -14,12 +14,12 @@ only refer to it, so one entry can support several people and several facts.
 
 - Fields: **Title** (required), **Archive**, **Call number**, **Folio/page**, **Image**, **Other location**, **URL**,
   **Note**. Where the entry stands in the book is described in [A3.9](#A3.9). Under **More: transcript, record date,
-  reliability** are **Transcript of the entry**, **Record date** and **Reliability**. The section is open when one of
+  reliability** are **Transcript of the entry**, **Record date** and **Source reliability**. The section is open when one of
   them is filled in.
 - **Record date** says when the entry was made. It can differ from the date of the event, e.g. a baptism recorded
   later.
-- **Reliability** has three levels: **Original**, **Copy / index**, **Uncertain**. A second click on the chosen level
-  cancels it. It rates one source, not a fact. How the research takes it is described in
+- **Source reliability** has three levels: **Original**, **Copy / index**, **Uncertain**. A second click on the
+  chosen level cancels it. How the research takes it is described in
   [R3.2.1](R3-verification-and-citation.md#R3.2.1).
 - **Limits:** a source without a title cannot be saved ("Enter a source title"). An invalid **Record date** is not
   saved. The reliability value 0 from a GEDCOM import is shown as **Uncertain** and stays until another level is
@@ -28,10 +28,14 @@ only refer to it, so one entry can support several people and several facts.
   sources, sorting by title); **Edit source**, **Add source**. The item **Sources** in the **Actions** menu is only in
   a tree that can be edited, and only when some source already exists or **Settings → Person card → Advanced fields**
   is on.
-- **Since:** app 1.4.0; **Reliability** and **Record date** 3.1.0; **Call number**, **Folio/page**, **Image** and
+- **Since:** app 1.4.0; **Source reliability** and **Record date** 3.1.0; **Call number**, **Folio/page**, **Image** and
   **Other location** 3.27.0 (before, **Repository** and **Reference**)
+- **From app 3.27.0:** **Source reliability** is the default reliability of its citations. A citation that has its
+  own reliability (from a GEDCOM import, [A2.6.1](A2-loading-a-family-tree.md#A2.6.1)) keeps it even when the
+  default changes; the other citations follow the change. A fact shows the reliability of its citation ([A3.6](#A3.6),
+  [S7.1](S7-reliability-and-verification.md#S7.1)). Before, the reliability rated only the whole source.
 
-<!-- zdroj: app:src/types.ts Source · od 3.27.0: app:9732853b strings.ts sources.fieldRepository/fieldCallNumber/fieldFolio/fieldImage/fieldReference · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/fieldQuality/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel -->
+<!-- zdroj: app:src/types.ts Source · od 3.27.0: app:9732853b strings.ts sources.fieldRepository/fieldCallNumber/fieldFolio/fieldImage/fieldReference · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/reliabilityLabel (index.html source-quality-label)/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel · 3.27.0 výchozí spolehlivost: app:dde0151a src/citation-quality.ts setCitationQuality, citation-quality-shown.test.ts (formulář = výchozí) -->
 
 <a id="A3.1.1"></a>
 ### A3.1.1 Transcript and Transcription verified
@@ -210,6 +214,9 @@ person, for birth and death, for events, for marriages and for couples' shared e
 
 - One row per source, under it what it supports: "Person", "Birth 1865", "Marriage 1890"… The row also shows the
   reliability.
+  From app 3.27.0 it is the reliability of the citations: when the citations of the source agree in reliability, it
+  is at the row once; when they differ, each fact is followed by its own ("Birth 1865 Copy / index · Occupation
+  Original").
 - Order: by the oldest year of what the source supports, otherwise by **Record date**; without a date at the end, then
   by title.
 - **Cite a source** opens the picker with **Supports** ([A3.2](#A3.2)).
@@ -232,7 +239,7 @@ person, for birth and death, for events, for marriages and for couples' shared e
   numbered in the list of sources. How the research keeps a story's sources: [R3.9](R3-verification-and-citation.md#R3.9).
 - **Since:** app 3.3.0; **Find a source in the research** 3.19.0; **What the text is based on** 3.22.0
 
-<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 -->
+<!-- zdroj: app:src/person-sources.ts:54 personSourceRows · src/ui/person-sources-ui.ts:114 canCiteOnPerson, :120 showPersonSourcesDialog, :187 find hidden · src/ui/context-menu.ts:191-203 readItems · src/ui/research-actions-ui.ts:1173 personFindSourceUrl · strings.ts personSources.*, research.findSource · src/story-sources.ts storyBasisSourceIds, storyFactText, storyBasisDetailsHtml · src/ui/person-page.ts:1738 storyBasisHtml · strings.ts storyBasis, basisSources, basisFacts, authorNote · CHANGELOG.cs.md 3.22.0 · 3.27.0: app:dde0151a src/person-sources.ts rowQuality, PersonSourceCite.quality, src/ui/person-sources-ui.ts source-quality-tag · app:66fc3f7f (údaj a štítek se nezalomí) -->
 
 <a id="A3.7"></a>
 ## A3.7 Where evidence is missing

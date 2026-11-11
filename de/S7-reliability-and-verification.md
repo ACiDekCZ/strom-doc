@@ -32,6 +32,9 @@ Häkchen, Punkte und Rahmen, nie nur durch die Farbe.
   anhand des Scans bestätigt“; bei einer Angabe aus dem Stammbaum, die der Stammbaum zitiert, **im
   Stammbaum zitiert, in Strom nicht geprüft**. Im Popup sind auch die Aktionen **Prüfen** ([S7.3](#S7.3)), **Anhand des
   Scans bestätigen** und **Zurücknehmen** ([S7.8](#S7.8)), wo sie gelten.
+  Ab App 3.27.0 hat jede Quelle in der Sprechblase die Zuverlässigkeit der Zitation bei dieser Angabe (**Original**,
+  **Abschrift / Index**, **Unsicher**), nicht die Standard-Zuverlässigkeit der Quelle
+  ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)).
 - **Prüft der Code:**
   - zwei Punkte bekommt nur eine Angabe, bei der sich bei der Prüfung durch die Forschung zwei Leser des Eintrags
     einig waren ([R8.8.1](R8-reading-scans.md#R8.8.1)); eine anders belegte hat einen;
@@ -48,7 +51,7 @@ Häkchen, Punkte und Rahmen, nie nur durch die Farbe.
   Personenkarte → Verlässlichkeit bei Angaben in der Personenkarte** (standardmäßig ein).
 - **Gilt seit:** App 3.26.0, Forschung 1.30.0
 
-<!-- zdroj: app:7b0471f8 src/reliability.ts (RELIABILITY_ORDER, reliabilityStep: readers ≥ 2 → dvě tečky; noSource se z aplikace nekrmí, verifyLocalEvidence dává jen confirmedByHuman) · src/verify.ts factVerifyReaders (_STROM_CHECKED proven, readers) · src/ui/fact-status.ts titleProven2/titleProven1 · src/ui/status-tip.ts readersAgree · src/settings.ts display.reliabilityCard (ON) · index.html settings-group-card · strings.ts reliability.*, verify.reasonHead, verify.confirmedAt · app:669c08f0 src/reliability.ts userTreeOrigin (_STROM_ORIGIN tree → import, nikdy human), treeOriginWords, reliabilityOptionsOf (původ z dat stromu, ne z mostu) · research:94d75934 src/core/model.ts ValueOrigin.tree, src/core/import.ts (soubor aplikace Strom → user + tree) -->
+<!-- zdroj: app:7b0471f8 src/reliability.ts (RELIABILITY_ORDER, reliabilityStep: readers ≥ 2 → dvě tečky; noSource se z aplikace nekrmí, verifyLocalEvidence dává jen confirmedByHuman) · src/verify.ts factVerifyReaders (_STROM_CHECKED proven, readers) · src/ui/fact-status.ts titleProven2/titleProven1 · src/ui/status-tip.ts readersAgree · 3.27.0: app:dde0151a src/ui/status-tip.ts factSourcesModel, sourceSub(quality citace) · src/settings.ts display.reliabilityCard (ON) · index.html settings-group-card · strings.ts reliability.*, verify.reasonHead, verify.confirmedAt · app:669c08f0 src/reliability.ts userTreeOrigin (_STROM_ORIGIN tree → import, nikdy human), treeOriginWords, reliabilityOptionsOf (původ z dat stromu, ne z mostu) · research:94d75934 src/core/model.ts ValueOrigin.tree, src/core/import.ts (soubor aplikace Strom → user + tree) -->
 
 <a id="S7.2"></a>
 ## S7.2 Eine Marke auf der Karte im Baum
@@ -70,6 +73,10 @@ Angaben steht. Sie nimmt die schwächste der drei Angaben des Kärtchens: Name, 
     übrigen Angaben der Person und ihrer Familien (Wohnort, Beruf, Heirat): eine bestätigte oder belegte Angabe oder
     eine Zitation der Qualität 2 oder 3 genügt, und die Marke ist ●○ (die Person ist aus einem Eintrag bekannt, etwa
     als Vater in der Taufe eines Kindes);
+  - ab App 3.27.0 ist die Qualität einer Zitation ihre eigene Zuverlässigkeit, sonst die Standard-Zuverlässigkeit der
+    Quelle ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)): dieselbe Quelle kann beim Beruf eine Zitation der Qualität
+    3 und bei der Geburt der Qualität 2 sein. Ein Änderungsdatensatz der Forschung, der bei der Angabe nicht zitiert
+    ist, zählt nach seiner Quelle;
   - ein Forschungsbaum, dessen gespeicherte Daten die Herkunft der Angaben von der Forschung tragen, hat die Marke
     nach Stufen gleich nach dem Laden der Seite, mit der Brücke und ohne sie gleich; das gilt auch für früher
     gespeicherte Stammbäume;
@@ -82,7 +89,7 @@ Angaben steht. Sie nimmt die schwächste der drei Angaben des Kärtchens: Name, 
   ein).
 - **Gilt seit:** App 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/reliability.ts CARD_STATUS_FACTS, CardStatusClass, cardStatusClassOfFact, otherFactsClass, card status bez původu (full/partial/none) · src/ui/card-signals-ui.ts (signál status, CARD_SIGNAL_DEFAULTS vše zapnuto) · strings.ts cardDensity.cardShow, cardStatus, cardStatusSub, cardShowHint, reliability.cardFacts, cardMark.* · CHANGELOG.cs.md 3.26.0 (Jedna značka na kartičce) · app:669c08f0 src/reliability.ts reliabilityOptionsOf, treeOriginWords (strom výzkumu s původem v datech: stejně s mostem i bez) -->
+<!-- zdroj: app:7b0471f8 src/reliability.ts CARD_STATUS_FACTS, CardStatusClass, cardStatusClassOfFact, otherFactsClass, card status bez původu (full/partial/none) · src/ui/card-signals-ui.ts (signál status, CARD_SIGNAL_DEFAULTS vše zapnuto) · 3.27.0: app:dde0151a src/reliability.ts citesSourceRead (FactCitationRef, citationQuality; holé id = záznam změny výzkumu podle pramene), cardFactCitations, withChangeRecord · strings.ts cardDensity.cardShow, cardStatus, cardStatusSub, cardShowHint, reliability.cardFacts, cardMark.* · CHANGELOG.cs.md 3.26.0 (Jedna značka na kartičce) · app:669c08f0 src/reliability.ts reliabilityOptionsOf, treeOriginWords (strom výzkumu s původem v datech: stejně s mostem i bez) -->
 
 <a id="S7.3"></a>
 ## S7.3 Prüfen an einer Angabe

@@ -84,6 +84,9 @@ Poza osobami i relacjami scala się też listy, które należą do całego drzew
 
 - **Źródła:** to samo źródło (ta sama sygnatura, w przeciwnym razie ten sam opis) się nie podwaja; cytaty przechodzą
   na zachowane źródło, a brakująca transkrypcja i data zostają uzupełnione.
+- **Od aplikacji 3.27.0:** źródło, które od zachowanego różni się tylko domyślną wiarygodnością, jest tym samym
+  źródłem i się nie podwaja; przeniesione cytaty zachowują swoją wiarygodność
+  ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)). Inna data zapisu albo inne wiersze cytatu nadal dają osobne źródło.
 - **Miejsca:** współrzędne, rekordy miejsc i inne nazwy miejsc się ujednolica; gdzie oba drzewa znają to samo
   miejsce, obowiązuje drzewo docelowe.
 - **Formy nazwiska** ([A4.5](A4-surnames-and-families.md#A4.5)) się ujednolica; grupy, które się nakładają, się łączy.
@@ -97,4 +100,4 @@ Poza osobami i relacjami scala się też listy, które należą do całego drzew
   pokazuje kartę **Co dalej** ([S6.4](S6-tree-from-another-program.md#S6.4)). Ręczne scalenie dwóch osób
   ([A5.6](A5-tree-check.md#A5.6)) notatek nie łączy.
 
-<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) -->
+<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations -->

@@ -28,6 +28,8 @@ jiného programu a nikdo ho neověřil. Stupně se liší fajfkou, tečkami a r�
   nedal; u potvrzeného „✓ Potvrzeno podle skenu {datum}“; u údaje z rodokmenu, který rodokmen cituje,
   **citováno v rodokmenu, ve Stromu neověřeno**. V bublině jsou i akce **Ověřit** ([S7.3](#S7.3)), **Potvrdit podle
   skenu** a **Vzít zpět** ([S7.8](#S7.8)), kde platí.
+  Od aplikace 3.27.0 je u každého pramene v bublině spolehlivost citace u tohoto údaje (**Originál**, **Opis /
+  index**, **Nejisté**), ne výchozí spolehlivost pramene ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)).
 - **Hlídá kód:**
   - dvě tečky dostane jen údaj, u kterého se při ověření výzkumem shodli dva čtenáři záznamu
     ([R8.8.1](R8-reading-scans.md#R8.8.1)); doložený jinak má jednu;
@@ -43,7 +45,7 @@ jiného programu a nikdo ho neověřil. Stupně se liší fajfkou, tečkami a r�
   Spolehlivost u údajů v kartě osoby** (výchozí zapnuto).
 - **Platí od:** aplikace 3.26.0, výzkum 1.30.0
 
-<!-- zdroj: app:7b0471f8 src/reliability.ts (RELIABILITY_ORDER, reliabilityStep: readers ≥ 2 → dvě tečky; noSource se z aplikace nekrmí, verifyLocalEvidence dává jen confirmedByHuman) · src/verify.ts factVerifyReaders (_STROM_CHECKED proven, readers) · src/ui/fact-status.ts titleProven2/titleProven1 · src/ui/status-tip.ts readersAgree · src/settings.ts display.reliabilityCard (ON) · index.html settings-group-card · strings.ts reliability.*, verify.reasonHead, verify.confirmedAt · app:669c08f0 src/reliability.ts userTreeOrigin (_STROM_ORIGIN tree → import, nikdy human), treeOriginWords, reliabilityOptionsOf (původ z dat stromu, ne z mostu) · research:94d75934 src/core/model.ts ValueOrigin.tree, src/core/import.ts (soubor aplikace Strom → user + tree) -->
+<!-- zdroj: app:7b0471f8 src/reliability.ts (RELIABILITY_ORDER, reliabilityStep: readers ≥ 2 → dvě tečky; noSource se z aplikace nekrmí, verifyLocalEvidence dává jen confirmedByHuman) · src/verify.ts factVerifyReaders (_STROM_CHECKED proven, readers) · src/ui/fact-status.ts titleProven2/titleProven1 · src/ui/status-tip.ts readersAgree · 3.27.0: app:dde0151a src/ui/status-tip.ts factSourcesModel, sourceSub(quality citace) · src/settings.ts display.reliabilityCard (ON) · index.html settings-group-card · strings.ts reliability.*, verify.reasonHead, verify.confirmedAt · app:669c08f0 src/reliability.ts userTreeOrigin (_STROM_ORIGIN tree → import, nikdy human), treeOriginWords, reliabilityOptionsOf (původ z dat stromu, ne z mostu) · research:94d75934 src/core/model.ts ValueOrigin.tree, src/core/import.ts (soubor aplikace Strom → user + tree) -->
 
 <a id="S7.2"></a>
 ## S7.2 Jedna značka na kartičce ve stromu
@@ -64,6 +66,9 @@ nejslabší ze tří údajů kartičky: jméno, narození a úmrtí.
   - počítají se jen údaje, které mají stupeň; když ho nemá ani jméno, ani narození, ani úmrtí, rozhodnou ostatní údaje
     osoby a jejích rodin (bydliště, povolání, sňatek): stačí jeden potvrzený nebo doložený údaj, nebo citace kvality
     2 nebo 3, a značka je ●○ (osoba je známá ze záznamu, třeba jako otec v křtu dítěte);
+  - od aplikace 3.27.0 je kvalita citace její vlastní spolehlivost, jinak výchozí spolehlivost pramene
+    ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)): tentýž pramen může být u povolání citací kvality 3 a u narození
+    kvality 2. Záznam změny od výzkumu, který u údaje citovaný není, se počítá podle pramene;
   - strom výzkumu, jehož uložená data nesou původ údajů od výzkumu, má značku podle stupňů hned po načtení stránky,
     stejnou s mostem i bez něj; platí i pro stromy uložené dřív;
   - strom, který původ údajů nezná (bez výzkumu a bez importu z jiného programu), ukáže značku podle citací osoby:
@@ -73,7 +78,7 @@ nejslabší ze tří údajů kartičky: jméno, narození a úmrtí.
 - **Ovládání:** **Nastavení → Karta osoby → Na kartě ukázat → Doložení a spolehlivost** (výchozí zapnuto).
 - **Platí od:** aplikace 3.26.0
 
-<!-- zdroj: app:7b0471f8 src/reliability.ts CARD_STATUS_FACTS, CardStatusClass, cardStatusClassOfFact, otherFactsClass, card status bez původu (full/partial/none) · src/ui/card-signals-ui.ts (signál status, CARD_SIGNAL_DEFAULTS vše zapnuto) · strings.ts cardDensity.cardShow, cardStatus, cardStatusSub, cardShowHint, reliability.cardFacts, cardMark.* · CHANGELOG.cs.md 3.26.0 (Jedna značka na kartičce) · app:669c08f0 src/reliability.ts reliabilityOptionsOf, treeOriginWords (strom výzkumu s původem v datech: stejně s mostem i bez) -->
+<!-- zdroj: app:7b0471f8 src/reliability.ts CARD_STATUS_FACTS, CardStatusClass, cardStatusClassOfFact, otherFactsClass, card status bez původu (full/partial/none) · src/ui/card-signals-ui.ts (signál status, CARD_SIGNAL_DEFAULTS vše zapnuto) · 3.27.0: app:dde0151a src/reliability.ts citesSourceRead (FactCitationRef, citationQuality; holé id = záznam změny výzkumu podle pramene), cardFactCitations, withChangeRecord · strings.ts cardDensity.cardShow, cardStatus, cardStatusSub, cardShowHint, reliability.cardFacts, cardMark.* · CHANGELOG.cs.md 3.26.0 (Jedna značka na kartičce) · app:669c08f0 src/reliability.ts reliabilityOptionsOf, treeOriginWords (strom výzkumu s původem v datech: stejně s mostem i bez) -->
 
 <a id="S7.3"></a>
 ## S7.3 Ověřit u údaje

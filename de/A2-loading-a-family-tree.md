@@ -240,8 +240,8 @@ ist **Original**, 2 **Abschrift / Index**, 1 und 0 **Unsicher**.
 
 - **Grenzen:** Ohne `TITL` wird die Abkürzung `ABBR` genommen, sonst „?“. Verlag, Autor und Signatur im Archiv kommen
   in die Notiz der Quelle. Eine Zitation mit einer anderen Seite (`PAGE`) als bei der Quelle erzeugt eine abgeleitete
-  Quelle für diese Seite mit demselben Titel und Archiv; Abschrift und Ausschnitte gehen nicht auf sie über. `QUAY`
-  des Datensatzes hat Vorrang vor `QUAY` der Zitation, und bei jeder Quelle gilt die erste Zitation. `DATA` und
+  Quelle für diese Seite mit demselben Titel und Archiv; Abschrift und Ausschnitte gehen nicht auf sie über. Ab App 3.26.0 tut eine Zitation derselben Seite mit einem anderen Eintragsdatum (`DATA` › `DATE`) dasselbe. Die
+  Zuverlässigkeit gehört der Zitation ([A2.6.1](#A2.6.1)). `DATA` und
   `TEXT` innerhalb einer Zitation werden nicht gelesen. Jedes Bild bei einer Quelle ist ein Ausschnitt. Die
   Sicherheit aus einem fremden Programm ändert die App nicht. Wie die Forschung `QUAY` als Form und Information der
   Quelle übernimmt, sagt [R3.2.1](R3-verification-and-citation.md#R3.2.1); wann eine Angabe belegt ist,
@@ -257,7 +257,42 @@ ist **Original**, 2 **Abschrift / Index**, 1 und 0 **Unsicher**.
   wird nicht wiederholt. Eine Quelle ohne Folio und Bild wird genau wie bisher exportiert. Die Felder der Quelle
   beschreibt [A3.9](A3-evidence-in-the-app.md#A3.9).
 
-<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord -->
+<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord · datum zápisu: app:fcfc71d2 (v3.26.0) pageSources klíč s datem, spec 066 K3.1 -->
+
+<a id="A2.6.1"></a>
+### A2.6.1 Zuverlässigkeit bei der Zitation
+
+Derselbe Eintrag ist für eine Angabe oft ein Original und für eine andere eine Sekundärinformation: eine
+Volkszählung nennt den Beruf aus erster Hand, das Alter aus zweiter. Deshalb gehört `QUAY` der Zitation, nicht der
+Quelle. Eine Quelle hat eine Standard-Zuverlässigkeit, und eine Zitation mit einem anderen Wert behält ihren eigenen.
+
+- **Prüft der Code:**
+  - Zitationen desselben Eintrags mit derselben Seite, demselben Eintragsdatum und denselben weiteren Zeilen der
+    Zitation, die sich nur in `QUAY` unterscheiden, sind Zitationen einer Quelle. Die Quelle steht in **Quellen**
+    einmal, mit ihren Bildern (`OBJE`);
+  - eine andere Seite oder ein anderes Eintragsdatum ergibt weiter eine eigene Quelle für diesen Eintrag
+    ([A2.6](#A2.6));
+  - die Standard-Zuverlässigkeit der Quelle ist das `QUAY` ihrer ersten Zitation (eine Zitation ohne `QUAY` nimmt das
+    `QUAY` des Datensatzes, wenn er eines hat); eine Zitation mit einem anderen `QUAY` behält es, eine Zitation ohne
+    `QUAY` bei einer Quelle mit Standard-Zuverlässigkeit bleibt ohne;
+  - der Export (in die Forschung, **Zurück zu {program}** und **Zum Teilen mit anderen**) schreibt bei jeder Zitation
+    ihr `QUAY`: das eigene, sonst das Standard-`QUAY` der Quelle. Ein Stammbaum ohne Zitationen mit eigener
+    Zuverlässigkeit wird genau wie bisher exportiert. Laden und erneuter Export ändern daher das `QUAY` keiner
+    Zitation.
+- **Ein mit einer älteren Version gespeicherter Stammbaum:** Beim Öffnen werden die Quellen, die das Laden in App
+  3.26.0 nur wegen eines anderen `QUAY` derselben Seite angelegt hat, wieder in ihre Quelle zusammengeführt. Ihre
+  Zitationen gehen auf diese Quelle über, und die Zuverlässigkeit geht auf die Zitation über. Vorher speichert die App
+  die Sicherung **Vor der Anpassung der Daten an eine neue Version** ([S6.5](S6-tree-from-another-program.md#S6.5)).
+  Zusammengeführt wird nur eine Quelle, die sich von ihrer allein in der Zuverlässigkeit unterscheidet; eine Quelle
+  mit eigener Notiz, Transkription, eigenem Ausschnitt oder anderem Text bleibt. Die Forschung, mit der der Stammbaum
+  verbunden ist, bekommt dadurch keine Änderung (Quelle und Seite sind dieselben), und das Etikett **Bild nur in der
+  Forschung** an der zusammengeführten Quelle verschwindet ([A3.8](A3-evidence-in-the-app.md#A3.8)).
+- **Grenzen:** Die Zuverlässigkeit einer einzelnen Zitation wird in der App nur gezeigt
+  ([A3.6](A3-evidence-in-the-app.md#A3.6), [S7.1](S7-reliability-and-verification.md#S7.1)); ändern lässt sich nur die
+  Standard-**Zuverlässigkeit der Quelle** im Editor der Quelle ([A3.1](A3-evidence-in-the-app.md#A3.1)).
+- **Gilt seit:** App 3.27.0 (in 3.26.0 machte eine Zitation mit einem anderen `QUAY` eine zweite Quelle ohne Bilder)
+
+<!-- zdroj: dirigent:spec/077-spolehlivost-u-citace/spec.md K1.1–K1.7 · app:5721b016 src/ged-parser.ts pageSources (klíč bez quay), citedQuay, citationQuay (null = citace bez QUAY), src/citation-quality.ts citationQuality, setCitationQuality, qualityOnlySources (DERIVED_FIELDS, entryKey), joinQualityOnlySources, src/ged-exporter.ts pushCitation(cited), src/data.ts v19, src/tree-manager.ts joinQualityOnlySourcesOf (createSnapshot pre-migration, fingerprint, rebaseResearchCopies), strings.ts snapshots pre-migration · app:dde0151a src/research-changes.ts citedKey · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (import 1 pramen s obrázkem, round trip QUAY 2/3, migrace v18) -->
 
 <a id="A2.7"></a>
 ## A2.7 Eigene Tags von Strom und was zurückkommt

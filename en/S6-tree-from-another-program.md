@@ -182,8 +182,11 @@ thus be restored.
 - **Controls:** app: the tree menu → **Backups** → the window **Backup history**: **Create backup now**, **Restore**,
   **Download**; the switch **Automatic backups of this tree**.
 - **Since:** app 3.26.0 (the backup before **Insert into tree**)
+- **From app 3.27.0:** the backup **Before the data update of a new version** is made before the app, on opening,
+  adjusts a tree saved by an older version; today only to join sources that differed only in reliability
+  ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)).
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration -->
 
 <a id="S6.6"></a>
 ## S6.6 Export back to the program, or to share

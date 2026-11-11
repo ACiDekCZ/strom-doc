@@ -87,8 +87,12 @@ A degree must not claim more than the fact's citations give. The code checks thi
   information, **Copy / index** = an original with secondary information, **Uncertain** = a copy with unknown
   information.
 - **Since:** research 1.0.0; Reliability from the app research 1.12.0
+- **From app 3.27.0:** the app keeps the reliability at each citation too and writes it into the file for the research
+  as that citation's `QUAY` ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)). The research takes from it only the form
+  and information of a new source (the source's default reliability, otherwise the `QUAY` of its first citation); the
+  `QUAY` of a citation the research wrote itself does not change on the way through the app.
 
-<!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 -->
+<!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 · 3.27.0: research:ff760309 src/core/sync.ts:1095 (zdroj aplikace a.quality), :963 citedDetails (s.quay z první citace), :4361 QUAY_EVIDENCE · app:5721b016 export QUAY citace · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (round trip QUAY 2/3, sync --dry-run nic nového) -->
 
 <a id="R3.3"></a>
 ## R3.3 A source, or a lead

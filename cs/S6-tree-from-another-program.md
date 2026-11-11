@@ -167,8 +167,11 @@ vrátit.
 - **Ovládání:** aplikace: nabídka stromu → **Zálohy** → okno **Historie záloh**: **Vytvořit zálohu teď**,
   **Obnovit**, **Stáhnout**; přepínač **Automatické zálohy tohoto stromu**.
 - **Platí od:** aplikace 3.26.0 (záloha před **Vložit do stromu**)
+- **Od aplikace 3.27.0:** záloha **Před úpravou dat pro novou verzi** vznikne, než aplikace při otevření upraví strom
+  uložený starší verzí; dnes jen kvůli sloučení pramenů, které se lišily jen spolehlivostí
+  ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)).
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration -->
 
 <a id="S6.6"></a>
 ## S6.6 Export zpět do programu, nebo ke sdílení

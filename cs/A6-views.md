@@ -312,7 +312,8 @@ Sloupce jsou ve skupinách. Které jsou vidět a v jakém pořadí, je část po
 - **ID výzkumu** ukazuje jen číslo osoby z výzkumu (P…). **Ref. číslo (REFN)** je referenční číslo osoby, jak ho
   přinesl soubor GEDCOM (a jak do něj zase jde); řadí a filtruje se jako text.
 - **Otevřená otázka**, **⇄ V jiném stromu** (stromy na tomto zařízení, ve kterých osoba je) a **Stav osoby** (značka
-  doložení a spolehlivosti z karty, slovy; řadí se od nejsilnější) jsou v každém stromu. Skupina **Výzkum** je jen ve
+  doložení a spolehlivosti z karty, slovy; řadí se od nejsilnější; od aplikace 3.27.0 podle spolehlivosti citací,
+  [S7.2](S7-reliability-and-verification.md#S7.2)) jsou v každém stromu. Skupina **Výzkum** je jen ve
   stromu z výzkumu ([A6.7.14](#A6.7.14)).
 - **Události** (**Povolání**, **Bydliště**, **Vyznání**, **Vojsko**, **Vystěhování**, **Vzdělání**) ukazují
   každou hodnotu jednou, nejnovější první.

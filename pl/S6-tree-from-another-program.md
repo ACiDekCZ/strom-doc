@@ -179,8 +179,11 @@ można więc wrócić.
 - **Obsługa:** aplikacja: menu drzewa → **Kopie zapasowe** → okno **Historia kopii zapasowych**: **Utwórz kopię
   zapasową teraz**, **Przywróć**, **Pobierz**; przełącznik **Automatyczne kopie zapasowe tego drzewa**.
 - **Obowiązuje od:** aplikacja 3.26.0 (kopia zapasowa przed **Wstaw do drzewa**)
+- **Od aplikacji 3.27.0:** kopia zapasowa **Przed dostosowaniem danych do nowej wersji** powstaje, zanim aplikacja przy
+  otwarciu dostosuje drzewo zapisane starszą wersją; obecnie tylko po to, by połączyć źródła różniące się tylko
+  wiarygodnością ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)).
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration -->
 
 <a id="S6.6"></a>
 ## S6.6 Eksport z powrotem do programu lub do udostępnienia

@@ -79,8 +79,12 @@ Stupeň nesmí tvrdit víc, než dávají citace údaje. Kód to kontroluje při
 - Aplikace: **Spolehlivost** pramene přijde do výzkumu jako **Originál** = originál s primární informací,
   **Opis / index** = originál se sekundární informací, **Nejisté** = opis s neznámou informací.
 - **Platí od:** výzkum 1.0.0; Spolehlivost z aplikace výzkum 1.12.0
+- **Od aplikace 3.27.0:** aplikace drží spolehlivost i u jednotlivé citace a do souboru pro výzkum ji píše jako `QUAY`
+  té citace ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)). Výzkum z ní bere jen formu a informaci nového pramene
+  (výchozí spolehlivost pramene, jinak `QUAY` jeho první citace); `QUAY` citace, kterou zapsal výzkum sám, se cestou
+  přes aplikaci nemění.
 
-<!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 -->
+<!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 · 3.27.0: research:ff760309 src/core/sync.ts:1095 (zdroj aplikace a.quality), :963 citedDetails (s.quay z první citace), :4361 QUAY_EVIDENCE · app:5721b016 export QUAY citace · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (round trip QUAY 2/3, sync --dry-run nic nového) -->
 
 <a id="R3.3"></a>
 ## R3.3 Pramen, nebo vodítko

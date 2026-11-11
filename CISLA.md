@@ -220,6 +220,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A2.4.1 | A2-loading-a-family-tree.md | aplikace 3.27.0 | platí | Data psaná lidsky | Dates written the way people write them | Daten, wie Menschen sie schreiben | Daty zapisane tak, jak piszą je ludzie |
 | A2.5 | A2-loading-a-family-tree.md | aplikace 3.0.0 | platí | Vztahy a stav páru | Relationships and the status of a couple | Beziehungen und Stand des Paares | Relacje i stan pary |
 | A2.6 | A2-loading-a-family-tree.md | aplikace 1.9.4 | platí | Prameny, citace a QUAY | Sources, citations and QUAY | Quellen, Zitationen und QUAY | Źródła, cytaty i QUAY |
+| A2.6.1 | A2-loading-a-family-tree.md | aplikace 3.27.0 | platí | Spolehlivost u citace | Reliability at the citation | Zuverlässigkeit bei der Zitation | Wiarygodność przy cytacie |
 | A2.7 | A2-loading-a-family-tree.md | aplikace 3.9.0 | platí | Vlastní značky Stromu a co se vrací | Strom's own tags and what comes back | Eigene Tags von Strom und was zurückkommt | Własne znaczniki Stromu i co wraca |
 | A2.8 | A2-loading-a-family-tree.md | aplikace 1.0.0 | platí | Opakovaný import a sloučení | Repeated import and merging | Wiederholter Import und Zusammenführen | Ponowny import i scalanie |
 | A3 | A3-evidence-in-the-app.md | aplikace 1.4.0 | platí | Doložení v aplikaci | Evidence in the app | Belege in der App | Udokumentowanie w aplikacji |

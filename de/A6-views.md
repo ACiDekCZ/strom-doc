@@ -354,7 +354,8 @@ Die Spalten stehen in Gruppen. Welche sichtbar sind und in welcher Reihenfolge, 
   Referenznummer der Person, wie sie die GEDCOM-Datei gebracht hat (und wie sie in eine zurückgeht); sie wird als Text
   sortiert und gefiltert.
 - **Offene Frage**, **⇄ In anderem Baum** (die Stammbäume auf diesem Gerät, in denen die Person ist) und **Status der
-  Person** (das Zeichen der Belegung und Verlässlichkeit von der Karte, in Worten; von der stärksten an sortiert) gibt
+  Person** (das Zeichen der Belegung und Verlässlichkeit von der Karte, in Worten; von der stärksten an sortiert; ab App 3.27.0 nach der Zuverlässigkeit
+  der Zitationen, [S7.2](S7-reliability-and-verification.md#S7.2)) gibt
   es in jedem Stammbaum. Die Gruppe **Forschung** gibt es nur in einem Stammbaum aus der Forschung
   ([A6.7.14](#A6.7.14)).
 - **Ereignisse** (**Beruf**, **Wohnort**, **Konfession**, **Militärdienst**, **Auswanderung**, **Bildung**) zeigen
