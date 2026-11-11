@@ -280,8 +280,8 @@ Quelle. Eine Quelle hat eine Standard-Zuverlässigkeit, und eine Zitation mit ei
     Zuverlässigkeit wird genau wie bisher exportiert. Laden und erneuter Export ändern daher das `QUAY` keiner
     Zitation.
 - **Ein mit einer älteren Version gespeicherter Stammbaum:** Beim Öffnen werden die Quellen, die das Laden in App
-  3.26.0 nur wegen eines anderen `QUAY` derselben Seite angelegt hat, wieder in ihre Quelle zusammengeführt. Ihre
-  Zitationen gehen auf diese Quelle über, und die Zuverlässigkeit geht auf die Zitation über. Vorher speichert die App
+  3.26.0 nur wegen eines anderen `QUAY` derselben Seite angelegt hat, wieder in ihre Quelle zusammengeführt. Die
+  Zitationen der zusammengeführten Quellen gehen auf diese Quelle über, und die Zuverlässigkeit geht auf die Zitation über. Vorher speichert die App
   die Sicherung **Vor der Anpassung der Daten an eine neue Version** ([S6.5](S6-tree-from-another-program.md#S6.5)).
   Zusammengeführt wird nur eine Quelle, die sich von ihrer allein in der Zuverlässigkeit unterscheidet; eine Quelle
   mit eigener Notiz, Transkription, eigenem Ausschnitt oder anderem Text bleibt. Die Forschung, mit der der Stammbaum
