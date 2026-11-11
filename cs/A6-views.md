@@ -574,7 +574,8 @@ Tabulka pramenů má řádek na každý pramen stromu (**Akce → Prameny**, [A3
 kolik toho pramen ve stromu dokládá.
 
 - **Sloupce** ve skupinách **Pramen** · **Použití**:
-  - **Titul**, **Archiv**, **Kniha, signatura, folio**, **Online** (adresa pramene, jinak stránka jeho prvního výpisu,
+  - **Titul**, **Archiv**, **Signatura**, **Folium/strana**, **Snímek**, **Další umístění** ([A3.9](A3-evidence-in-the-app.md#A3.9)),
+    **Online** (adresa pramene, jinak stránka jeho prvního výpisu,
     bez `https://`; webová adresa je odkaz ↗ do nového okna, jen http a https, zapsaná bez schématu („www.…“) se
     otevře přes https; klik na odkaz výběr řádku nezmění);
   - **Osob**: kolik osob má údaj, který pramen cituje; údaj svazku dokládá oba partnery;
@@ -582,37 +583,47 @@ kolik toho pramen ve stromu dokládá.
     osoby, sňatek, rozvod a každá událost páru;
   - **Přečteno výzkumem**: kolik čtenářů přepis četlo („1 čtenář“, „2 čtenáři“: člověk v aplikaci a výzkum), jinak „ne“;
   - **Přepis**: ano / ne; v katalogu sloupců je i **Datum záznamu**.
+- Výchozí sloupce: **Titul**, **Archiv**, **Signatura**, **Folium/strana**, **Snímek**, **Další umístění**, **Online**,
+  **Osob**, **Údajů**. **Přečteno výzkumem** a **Přepis** jsou jen v panelu **Sloupce**.
+- Starší pramen má celé umístění v **Další umístění** a nové buňky prázdné. **Signatura**, **Folium/strana** a
+  **Snímek** se řadí přirozeně (9 před 10, 57–58 za 34), prázdné na konci v obou směrech; filtrují se jako text.
+- Nad tabulkou může stát nabídka **Rozdělit podle návrhu…** ([A3.9.1](A3-evidence-in-the-app.md#A3.9.1)).
 - Citace zástupných osob a pramenů příběhu se nepočítají.
 - **Čipy:** **Bez osoby** (žádná osoba ho necituje), **Nepřečteno**, **S přepisem**, **Online** (stejně jako sloupec
   **Online**, i s adresou bez `https://`).
 - **Ovládání:** vestavěný pohled **Všechny prameny**. U řádku **Otevřít pramen** a **Upravit…**: obojí otevře správce
   pramenů na tom pramenu; **Ukázat ve stromu** tu není.
 - **Hranice:** v zamčeném stromu se pramen jen ukáže, bez úprav.
-- **Platí od:** aplikace 3.27.0
+- **Platí od:** aplikace 3.27.0; **Signatura**, **Folium/strana**, **Snímek** a **Další umístění** (dřív **Kniha,
+  signatura, folio**) také 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
+<!-- zdroj: app:a97de984 table-columns.ts:898-901 srcSig/srcFolio/srcImageNo, :1026 DEFAULT_VIEWS.sources, přirozené řazení · 8dd21adf table-bar.ts nabídka rozdělení · app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
 
 <a id="A6.7.12"></a>
 ### A6.7.12 Citace a kmotři v tabulce osob
 
 Tabulka osob má sloupce, které ukážou, z jakého pramene je narození, sňatek a úmrtí, a kdo byl kmotrem.
 
-- **Citace** (skupina **Prameny**): **Narození: archiv**, **Narození: signatura**, **Narození: URL** a totéž pro
-  **Sňatek** a **Úmrtí**. Buňka ukáže archiv, signaturu nebo webovou adresu prvního citovaného pramene; další prameny
-  jsou v tlačítku „+N“. Webová adresa ve sloupci **… URL** je odkaz do nového okna, jako ve sloupci **Online**
+- **Citace** (skupina **Prameny**): **Narození: archiv**, **Narození: signatura**, **Narození: folium/strana**,
+  **Narození: snímek**, **Narození: další umístění**, **Narození: URL** a totéž pro **Sňatek** a **Úmrtí**, v tomto
+  pořadí; výchozí nejsou. Buňka ukáže hodnotu prvního citovaného pramene; další prameny jsou v tlačítku „+N“. Starší
+  pramen má celé umístění v **… další umístění**. Bublina **Další citace**, list řádku pramene na telefonu a sloupec
+  pramene v tabulce událostí uvádějí i signaturu, folium a snímek. Webová adresa ve sloupci **… URL** je odkaz do nového okna, jako ve sloupci **Online**
   ([A6.7.11](#A6.7.11)).
   - Narození bere citace narození, pak událostí narození a křtu; úmrtí citace úmrtí, pak událostí úmrtí, pohřbu a
     kremace; sňatek citace svazku (u podřádku svazku toho svazku). Každý pramen jednou.
   - Prameny z původu údaje ve výzkumu se nepočítají, jen citace v datech.
   - U žijící osoby mají sloupce úmrtí **Nevztahuje se**.
   - Řadí a filtruje se podle prvního pramene.
+- **Od aplikace 3.27.0:** sloupce signatury, folia/strany, snímku a dalšího umístění (**… signatura** dřív ukazovala
+  celé umístění).
 - **Kmotři** (skupina **Narození a křest**): kmotři událostí narození a křtu, každý jednou; osoba stromu je odkaz.
   Kmotr, který se opakuje ([A5.5](A5-tree-check.md#A5.5)), má v buňce značku **stopa**.
 - **Ovládání:** sloupce se zapínají po jednom v panelu **Sloupce** ([A6.7.2](#A6.7.2)). Klik na „+N“ otevře bublinu
   **Další citace** (na telefonu panel zdola); klik na pramen ho otevře ve správci pramenů.
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10), godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10); 3.27.0: a97de984 bSig/bFolio/bImage/bRef…dRef, table-bubble.ts, table-events source text, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
 
 <a id="A6.7.13"></a>
 ### A6.7.13 Značky v buňkách

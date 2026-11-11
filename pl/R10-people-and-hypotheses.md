@@ -245,7 +245,7 @@ Powiązania wybranej wersji są w drzewie od razu.
   i `hypotheses.accept.link` w `/status` mostu); inaczej zostaje **Rozstrzygnij w badaniu**. Kto rozstrzyga hipotezy,
   określa dalej wybór badania ([R10.3.2](#R10.3.2)). Powiązania rozstrzygnięcia człowieka strom zapisuje od razu także
   w Archiwum Strom.
-- **Obsługa:** aplikacja: **Co wie badanie** → **Hipotezy** i **Czeka na decyzję** → **Hipotezy do rozstrzygnięcia**
+- **Obsługa:** aplikacja: **Co wie badanie** → **Hipotezy** i **Czeka na załatwienie** → **Hipotezy do rozstrzygnięcia**
   ([S3.5.2](S3-what-the-research-knows.md#S3.5.2)). Terminal: odnośnik `strom-research://hypothesis?…` otworzy badanie
   z pytaniem; `strom hypothesis decide H… --reopen --reason "…"` przywróci rozstrzygnięcie jako otwarte.
 - **Obowiązuje od:** badanie 1.31.0 z aplikacją 3.27.0

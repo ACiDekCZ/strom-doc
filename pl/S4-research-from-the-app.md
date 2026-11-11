@@ -12,25 +12,25 @@ Strom Research**, a z niego większy **Przegląd badania**. Oba tylko czytają. 
 most.
 
 - **Granice:**
-  - Panel: **Trwa praca**, **Czeka na decyzję**, **Ostatnie zmiany** (5 najnowszych, link **Wszystkie zmiany
+  - Panel: **Trwa praca**, **Czeka na załatwienie**, **Ostatnie zmiany** (5 najnowszych, link **Wszystkie zmiany
     w przeglądzie ›**), **W kolejce** (3 zadania), a pod tym liczba sesji agenta w tym miesiącu.
   - Gdy panel jest wyższy niż okno, zwija się sam najpierw **W kolejce**, potem zmiany, potem **Trwa praca**.
-    **Czeka na decyzję** nigdy nie zwija się sam. Sekcja, którą zwinął lub rozwinął człowiek, zostaje taka, jaka
+    **Czeka na załatwienie** nigdy nie zwija się sam. Sekcja, którą zwinął lub rozwinął człowiek, zostaje taka, jaka
     jest.
   - Przegląd, sekcje w tej kolejności: podsumowanie (**Stan**, **Ostatnie 24 h**, **Ten miesiąc** z liczbą sesji),
-    **Teraz**, **Czeka na decyzję** (tylko gdy coś czeka), **Linie** ([S4.3](#S4.3)), **Przebieg**, **Kolejka**
+    **Teraz**, **Czeka na załatwienie** (tylko gdy coś czeka), **Linie** ([S4.3](#S4.3)), **Przebieg**, **Kolejka**
     ([S4.2](#S4.2)), **Co wie badanie** ([S3](S3-what-the-research-knows.md)). **Kolejka** i **Co wie badanie** są
     na początku zwinięte.
   - **Przebieg** łączy kroki po 15 minut, pokazuje najwyżej 20 kroków.
   - Przegląd jest na szerokim oknie (od 1280 px) panelem bocznym obok drzewa, na tablecie warstwą nad drzewem, na
     telefonie całym ekranem. Na telefonie panel staje się paskiem, a stuknięcie otwiera przegląd.
-  - Bez śledzenia panel pokazuje ostatnie znane **Czeka na decyzję** ze zdaniem **Stan na …. Badanie teraz nie
+  - Bez śledzenia panel pokazuje ostatnie znane **Czeka na załatwienie** ze zdaniem **Stan na …. Badanie teraz nie
     działa.**
 - **Obsługa:** aplikacja: panel, przyciski **⤢ Otwórz przegląd** i **Zakończ śledzenie**; menu **Badanie → Przegląd
   badania**.
 - **Obowiązuje od:** aplikacja 3.5.0
 - **Od aplikacji 3.22.0:** każdą sekcję można rozwinąć, zwinąć lub ukryć, a wybór obowiązuje dla panelu i przeglądu
-  ([S4.1.2](#S4.1.2)). **Czeka na decyzję** nie rozwija się samo nawet przy nowej pozycji.
+  ([S4.1.2](#S4.1.2)). **Czeka na załatwienie** nie rozwija się samo nawet przy nowej pozycji.
 - **Od aplikacji 3.27.0:** z badaniem 1.31.0 wiersz w **Teraz** pokazuje przy zadaniu, które nie należy do żadnej
   linii, dlaczego się nad nim pracuje: przy zadaniu, które linii tylko pomaga, której i jak („pomaga linii Przodkowie:
   Jan Horák · łączy ludzi z drzewem”; dalej „pytanie linii”, „według agenta”, „małżonek przodka”, „gałąź …”), przy
@@ -39,7 +39,7 @@ most.
   mówią to samo; pod nagłówkiem linii tylko jak, bez jej nazwy.
 - **Od aplikacji 3.27.0:** **Przegląd badania** otwiera się także bez śledzenia ([S4.1.5](#S4.1.5)): w menu
   **Badanie** jest zawsze pierwszy, drugie jest **Śledź na żywo**, podczas śledzenia na jego miejscu **Zakończ
-  śledzenie**; w Archiwum Strom **Śledź na żywo** nie ma. Z **Przeglądu drzewa** otwiera go **Badania ›** w nagłówku
+  śledzenie**; w Archiwum Strom **Śledź na żywo** nie ma. Z **Przeglądu drzewa** otwiera go **Badanie ›** w nagłówku
   **Na czym się skupić**. Przycisk **⤢ Otwórz przegląd** w małym panelu jest tylko podczas śledzenia.
   - Podsumowanie pokazuje tylko włączone części ([S4.1.2](#S4.1.2)): **Ostatnie 24 h** osoby i źródła, **Ten miesiąc**
     liczbę sesji. Koszt (kwotę i odczyt skanów) pokaże dopiero po włączeniu, inaczej nawet w tekście po najechaniu.
@@ -72,7 +72,7 @@ Każda sekcja śledzenia badania ma jeden wybór: **Rozwinięta**, **Zwinięta**
 panelu i przeglądu.
 
 - **Granice:**
-  - sekcje: **Trwa praca** (w przeglądzie **Teraz**), **Czeka na decyzję**, **Ostatnie zmiany** (w przeglądzie
+  - sekcje: **Trwa praca** (w przeglądzie **Teraz**), **Czeka na załatwienie**, **Ostatnie zmiany** (w przeglądzie
     **Przebieg**), **W kolejce** (w przeglądzie **Kolejka**) i tylko w przeglądzie **Linie** oraz **Co wie badanie**;
   - sekcja bez wyboru (**domyślna**) pokazuje się jak wcześniej: panel zwija, co się nie mieści (**zwinięta, brak
     miejsca**), przegląd ma zwinięte sekcje **Kolejka** i **Co wie badanie**. Sekcji z wyborem panel sam nie zwija;
@@ -81,7 +81,7 @@ panelu i przeglądu.
     zwinięcie sekcji przejmuje się jeden raz;
   - **Przywróć domyślne** usuwa wszystkie wybory. Przywrócenie domyślnych i ukrycie sekcji z jej menu można przez
     chwilę cofnąć (**Cofnij**). Gdy ukryte są wszystkie sekcje, panel mówi **Wszystkie sekcje są ukryte.**
-- **Czeka na decyzję zwinięte lub ukryte:**
+- **Czeka na załatwienie zwinięte lub ukryte:**
   - nowa pozycja sekcji nie rozwija. Nagłówek pokazuje liczbę i **N nowych**; wyróżnione, gdy jest wśród nich
     decyzja lub zgoda (**w tym decyzja lub zgoda**);
   - ukryte zostawia etykietę **Czeka N** w nagłówku panelu, w podsumowaniu zwiniętego panelu, w pasku na telefonie
@@ -98,7 +98,7 @@ panelu i przeglądu.
     (ukryty wiersz „ukryta”). Wiersz przesuwa się strzałkami ↑ ↓ (na skrajach nie działają), Alt+↑ / Alt+↓,
     przeciąganiem za ⠿ (Esc anuluje przeciąganie; na telefonie uchwytu nie ma) albo w menu sekcji **Przesuń w górę**
     / **Przesuń w dół**. Czytnik ekranu powie nowe miejsce („… przeniesiono na pozycję 2 z 6.”). Domyślna kolejność:
-    **Trwa praca** (**Teraz**), **Czeka na decyzję**, **Linie**, **Ostatnie zmiany** (**Przebieg**), **W kolejce**
+    **Trwa praca** (**Teraz**), **Czeka na załatwienie**, **Linie**, **Ostatnie zmiany** (**Przebieg**), **W kolejce**
     (**Kolejka**), **Co wie badanie**. Gdy panel się nie mieści, zwija sekcje od dołu tej kolejności;
   - **Na górze:** **Stan** jest zawsze widoczny („zawsze widoczny”). **Ostatnie 24 h** (części **osoby**,
     **źródła**) i **Ten miesiąc** (części **sesje**, **koszt**) mają każdy przełącznik i swoje części; kafelek
@@ -187,25 +187,25 @@ tym na wersję badania, nie blokuje się i można je dalej edytować. Co Przegl�
 badania odpowiada.
 
 - **Most odpowiada** (badanie na tym komputerze działa): Przegląd pokaże to samo co podczas śledzenia (kafelki
-  i wszystkie sekcje) z regularnego zapytania do mostu; pod **Stan** „odświeżono …”. **Czeka na decyzję** i zarządzanie
-  liniami działają przez most. Pod nagłówkiem stoi „Drzewo przełączy się na wersję badań i nie będzie można go
+  i wszystkie sekcje) z regularnego zapytania do mostu; pod **Stan** „odświeżono …”. **Czeka na załatwienie** i zarządzanie
+  liniami działają przez most. Pod nagłówkiem stoi „Drzewo przełączy się na wersję badania i nie będzie można go
   edytować.” z przyciskiem **Śledź na żywo**. Gdy agent w międzyczasie zacznie pracować, nad tym stoi „Agent zaczął”,
   a przycisk jest wyraźniejszy; samo nic się nie przełącza. W Archiwum Strom tego paska nie ma.
 - **Most nie odpowiada:**
-  - **Stan** „Badania nie działają” z **Włącz** (gdzie badania nie da się włączyć z aplikacji, stoi tam, jak je
+  - **Stan** „Badanie nie działa” z **Włącz** (gdzie badania nie da się włączyć z aplikacji, stoi tam, jak je
     uruchomić);
-  - **Czeka na decyzję** tak, jak badanie ostatnio podało je na tym urządzeniu, ze „stan na …”; starsze niż 7 dni się
+  - **Czeka na załatwienie** tak, jak badanie ostatnio podało je na tym urządzeniu, ze „stan na …”; starsze niż 7 dni się
     nie pokazuje;
   - **Linie** z pliku drzewa: nazwa i liczba osób, nic o pracy nad nimi; **Co wie badanie** i w stopce **Gdzie brakuje
     dowodów: N osób ›**;
   - sekcji **Teraz**, **Przebieg** i **Kolejka** nie ma; jeden wiersz je wymienia, np. „Teraz, Przebieg i Kolejka:
-    po włączeniu badań.” (ukryte sekcje pomija; gdy ukryte są wszystkie trzy, wiersza nie ma). Gdy tylko most odpowie,
+    po włączeniu badania.” (ukryte sekcje pomija; gdy ukryte są wszystkie trzy, wiersza nie ma). Gdy tylko most odpowie,
     Przegląd przerysuje się sam.
-- **Telefon** nie pyta mostu: **Stan** „Tylko z drzewa” i „Pracę agenta widać na komputerze z badaniami.” W poziomie
+- **Telefon** nie pyta mostu: **Stan** „Tylko z drzewa” i „Pracę agenta widać na komputerze z badaniem.” W poziomie
   stan zostaje na górze, a sekcje przewijają się pod nim.
 - **Gdzie indziej w aplikacji:** bez śledzenia pracę agenta i kolejkę, gdy most odpowiada, pokazuje też widok Tabela
   ([A6.7.14](A6-views.md#A6.7.14)).
-- **Obsługa:** aplikacja: **Badanie → Przegląd badania**; **Przegląd drzewa → Na czym się skupić → Badania ›** (przy
+- **Obsługa:** aplikacja: **Badanie → Przegląd badania**; **Przegląd drzewa → Na czym się skupić → Badanie ›** (przy
   drzewie bez osób w nagłówku okna); na telefonie i tablecie w działaniach drzewa, grupa **Badanie**; w Przeglądzie
   **Śledź na żywo**.
 - **Obowiązuje od:** aplikacja 3.27.0
@@ -255,7 +255,7 @@ Przegląd pokazuje linie badania ([R2.1](R2-lines-and-queue.md#R2.1)): co na kt�
   - Sekcja **Linie · aktywne: N** jest tylko przy dwóch i więcej liniach albo przy jednej linii, gdy działa też
     praca poza nią (wiersz **Poza liniami**). Wstrzymane i zakończone linie są zwinięte pod **Wstrzymane
     i zakończone · N**.
-  - Wiersz linii: rodzaj (↑ przodkowie, ↓ potomkowie, ⌕ pytanie), nazwa, osoba, liczba zadań i co czeka na decyzję.
+  - Wiersz linii: rodzaj (↑ przodkowie, ↓ potomkowie, ⌕ pytanie), nazwa, osoba, liczba zadań i co czeka na załatwienie.
     Linia bez pracy ma **Nic nie czeka, można ją zakończyć.**
   - Szczegóły linii: znani przodkowie według pokoleń, kiedy ostatnio nad nią pracowano, **Pracuj nad tą linią**
     (rozmowa z agentem, nie w Archiwum Strom) i **Pokaż w drzewie**.
@@ -323,7 +323,7 @@ z [R2.3](R2-lines-and-queue.md#R2.3) i [R2.3.1](R2-lines-and-queue.md#R2.3.1) mo
     **(domyślne)**), **Dodaj do linii …** (najbliższa linia pierwsza), **Załóż linię z tej gałęzi**, **Nie badaj**
     (zadania opuszczają kolejkę, nic nie jest usuwane), **Przywróć domyślne**. Gałęzie niebadane są razem
     (**Nie jest badana · N gałęzi**).
-  - Pytania o rosnące gałęzie ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) są w **Czeka na decyzję**: dodać do linii
+  - Pytania o rosnące gałęzie ([R2.3.2](R2-lines-and-queue.md#R2.3.2)) są w **Czeka na załatwienie**: dodać do linii
     (przy linii wstrzymanej **Dodaj do linii … (wstrzymana)**), założyć linię, **Zostaw bez zmian**, nie badać. Bez
     odpowiedzi gałąź jest podejmowana dalej jak dotąd.
   - Okno **Badanie dla tego drzewa…**, grupa **Praca poza liniami**: wybór dla całego badania (**Od czasu do czasu**:
@@ -338,7 +338,7 @@ z [R2.3](R2-lines-and-queue.md#R2.3) i [R2.3.1](R2-lines-and-queue.md#R2.3.1) mo
 <!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 · 3.27.0: strings.ts live.setOutIntro (app 4e4f6d8c, spec 036 K1.8) -->
 
 <a id="S4.4"></a>
-## S4.4 Czeka na decyzję w aplikacji
+## S4.4 Czeka na załatwienie w aplikacji
 
 Panel i przegląd pokazują tę samą listę co badanie ([R6.1](R6-awaiting-action.md#R6.1)). Co można załatwić
 w aplikacji, a co tylko w badaniu, mówi [R6.5](R6-awaiting-action.md#R6.5).
@@ -350,7 +350,7 @@ w aplikacji, a co tylko w badaniu, mówi [R6.5](R6-awaiting-action.md#R6.5).
 - **Z drzewa:** karta osoby, na którą coś czeka, ma znacznik **!** (podpowiedź: **Kliknięcie: odpowiedz**).
   Kliknięcie w niego i pozycja **Odpowiedz · N czeka** w menu osoby robią to samo:
   - gdy na osobę czeka jedna pozycja, otworzy się jej odpowiedź tak samo jak przyciskiem w jej wierszu w panelu;
-  - gdy czeka ich więcej, otworzy się panel w sekcji **Czeka na decyzję** z pozycjami osoby na górze, wyróżnionymi.
+  - gdy czeka ich więcej, otworzy się panel w sekcji **Czeka na załatwienie** z pozycjami osoby na górze, wyróżnionymi.
     Na telefonie, przy zwiniętej lub ukrytej sekcji i przy otwartym przeglądzie zostaną wyróżnione w **Przeglądzie
     badania**;
   - gdy na żadną pozycję osoby (nawet na jedyną) nie można tu odpowiedzieć, panel otworzy się tak samo, a pod każdą
@@ -362,10 +362,11 @@ w aplikacji, a co tylko w badaniu, mówi [R6.5](R6-awaiting-action.md#R6.5).
   - gdy karta ma dwa lub trzy oznaczenia, kliknięcie zaproponuje, co otworzyć ([S4.4.1](#S4.4.1)).
 - **Hipotezy:** z badaniem, które umie je rozstrzygać w aplikacji, hipotezy do rozstrzygnięcia są w grupie
   **Hipotezy do rozstrzygnięcia** (chip **Decyzje**), także z przyjęciem propozycji agenta naraz ([S3.5.2](S3-what-the-research-knows.md#S3.5.2)).
-- **Obsługa:** aplikacja: panel, sekcja **Czeka na decyzję**; menu **Badanie → Czeka na decyzję**; znacznik **!** na
+- **Obsługa:** aplikacja: panel, sekcja **Czeka na załatwienie**; menu **Badanie → Czeka na załatwienie**; znacznik **!** na
   karcie i **Odpowiedz · N czeka** w menu osoby.
 - **Obowiązuje od:** aplikacja 3.4.0. Pytania o miejsca od badania 1.25.0. Znacznik **!** i **Odpowiedz · N czeka**
-  działają tak od aplikacji 3.26.0. Hipotezy od aplikacji 3.27.0 z badaniem 1.31.0.
+  działają tak od aplikacji 3.26.0. Hipotezy od aplikacji 3.27.0 z badaniem 1.31.0. Kilka oznaczeń na karcie od
+  aplikacji 3.27.0 ([S4.4.1](#S4.4.1)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
@@ -379,7 +380,7 @@ oznaczeniem karta zachowuje się jak wcześniej. Dwa lub trzy oznaczenia stoją 
 - **Granice:**
   - kolejność oznaczeń: czeka › sprzeczność › pytanie; z przodu, gdzie stoi pojedyncze oznaczenie, jest najpilniejsze,
     tylne są bez znaku. Pokazują się tylko rodzaje włączone w **Ustawienia → Karta osoby → Na karcie pokazuj**
-    (**Czeka na decyzję**, **Sprzeczności w źródłach**, **Otwarte pytania**);
+    (**Czeka na załatwienie**, **Sprzeczności w źródłach**, **Otwarte pytania**);
   - podpowiedź po najechaniu ma wiersz na każde oznaczenie (co czeka z tekstem pierwszego zadania, sprzeczności
     i hipotezy, pytanie), a pod nimi „Kliknięcie: wybór, co otworzyć”. Czytnik ekranu słyszy, co czeka („Czeka 3,
     2 sprzeczności, 1 hipoteza, 1 pytanie”);
@@ -397,12 +398,13 @@ oznaczeniem karta zachowuje się jak wcześniej. Dwa lub trzy oznaczenia stoją 
     i telefonie w poziomie okno z wierszami 44 px;
   - klawiatura: Enter, spacja lub strzałka w dół na oznaczeniach otwiera okno na pierwszym wyborze, strzałki chodzą
     w kółko, Home i End, Enter wybiera, Esc wraca na oznaczenia, Tab idzie dalej;
-  - karta bez portretu (**Szczegóły kart → Kompaktowe**) ma zamiast oznaczeń dwie kropki, przy oddaleniu drzewa
-    poniżej 0,55 jedną kropkę. Wydruk drzewa nie ma oznaczeń.
+  - karta bez portretu (**Szczegóły kart → Kompaktowe**) ma zamiast oznaczeń dwie kropki. Przy oddaleniu drzewa
+    poniżej 0,55 każda karta, w każdych **Szczegółach kart**, ma zamiast oznaczeń jedną kropkę. Wydruk drzewa nie ma
+    oznaczeń.
 - **Obsługa:** aplikacja: kliknięcie w oznaczenia w rogu portretu; **Ustawienia → Karta osoby → Na karcie pokazuj**.
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:16461aca, 85c1f704, abf7620f src/card-signals.ts ACTION_ORDER (waiting, conflict, question), presentActions (zapnuté v Na kartě ukázat), stackChoices (waiting, story, knows, agent), ACTION_GLYPH · src/card-signal-marks.ts cardActionMarksHtml (stoh n2/n3, tečky), stackAriaLabel, stackTipHtml (tipClickChoose / tipClickKnows), stackMenuItemsHtml (menuAnswer / dotyk menuWaiting, story.compare, menuKnows, menuAgent; bez značky výzkumu), placeStackMenu · index.html .card-signal-stack, #tree-canvas.zoom-far (src/zoom.ts ZOOM_FAR = 0.55), body.view-mode-print bez značek, compact dvě tečky · strings.ts card.stackLabel, stackWaiting, stackMenuLabel, tipClickChoose, cardDensity.cardWaiting, cardConflict, cardQuestion, compact · CHANGELOG.cs.md 3.27.0 „Více značek na kartě“ · dirigent:prace/1111-app-karta-vice-znacek -->
+<!-- zdroj: app:16461aca, 85c1f704, abf7620f src/card-signals.ts ACTION_ORDER (waiting, conflict, question), presentActions (zapnuté v Na kartě ukázat), stackChoices (waiting, story, knows, agent), ACTION_GLYPH · src/card-signal-marks.ts cardActionMarksHtml (stoh n2/n3, tečky), stackAriaLabel, stackTipHtml (tipClickChoose / tipClickKnows), stackMenuItemsHtml (menuAnswer / dotyk menuWaiting, story.compare, menuKnows, menuAgent; bez značky výzkumu), placeStackMenu · index.html .card-signal-stack, #tree-canvas.zoom-far (src/zoom.ts ZOOM_FAR = 0.55; index.html:13732-13741 jedna tečka u všech Detailů karet, e2e/card-signals.spec.ts:353), body.view-mode-print bez značek, compact dvě tečky · strings.ts card.stackLabel, stackWaiting, stackMenuLabel, tipClickChoose, cardDensity.cardWaiting, cardConflict, cardQuestion, compact · CHANGELOG.cs.md 3.27.0 „Více značek na kartě“ · dirigent:prace/1111-app-karta-vice-znacek -->
 
 <a id="S4.5"></a>
 ## S4.5 Działania, które otwierają badanie
@@ -452,7 +454,7 @@ Każde działanie badania ma jedno z trzech oznaczeń według tego, co otwiera.
 ### S4.5.2 Gdzie są działania
 
 - **Menu Badanie** (tylko na komputerze, nie przy zablokowanym drzewie): na górze najwyżej 6 pozycji: **Czeka na
-  decyzję**, **Kontynuuj z agentem**, **Przegląd badania** lub **Śledź na żywo**, **Otwórz badanie**, wysłanie
+  załatwienie**, **Kontynuuj z agentem**, **Przegląd badania** lub **Śledź na żywo**, **Otwórz badanie**, wysłanie
   zmian. Pod tym **Wczytaj nową wersję**, **Narzędzia badania**, **Cofnij ostatnie wysłanie** (najwyżej sprzed 7 dni)
   i ustawienia badania. Na dole jest **kontynuacja w badaniu na tym komputerze. Nic nie zostanie zapisane ani
   opłacone bez potwierdzenia w nim.**

@@ -146,7 +146,7 @@ nigdy nie pobiera sam: ani poleceniem, ani skryptem, ani swoją przeglądarką.
   przegląda się automatycznie. Godzinowy limit archiwum zatrzymuje resztę pracy, dlatego najpierw całe skany, a części
   tylko tam, gdzie wymaga ich wpis.
 - **Obsługa:** terminal: `strom fetch <stahovač> … --images 40-69 --recordset B…`, `strom allow archive` (tylko
-  człowiek). Aplikacja: Czeka na decyzję.
+  człowiek). Aplikacja: Czeka na załatwienie.
 - **Obowiązuje od:** badanie 1.0.0 (pobieranie tylko przez strom); poziomy warunków i tempo człowieka 1.14.0; skan
   z kafelków zgłasza `strom connector test` od 1.30.0, `strom fetch` od 1.31.0
 

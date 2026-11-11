@@ -612,7 +612,8 @@ The Sources table has a row for each source of the tree (**Actions → Sources**
 and tells how much the source documents in the tree.
 
 - **Columns** in the groups **Source** · **Use**:
-  - **Title**, **Archive**, **Book, reference, folio**, **Online** (the address of the source, otherwise the page of its
+  - **Title**, **Archive**, **Call number**, **Folio/page**, **Image**, **Other location**
+    ([A3.9](A3-evidence-in-the-app.md#A3.9)), **Online** (the address of the source, otherwise the page of its
     first excerpt, without `https://`; a web address is a link ↗ into a new window, only http and https; one written
     without a scheme (“www.…”) opens via https; a click on the link does not change the row selection);
   - **People**: how many people have a fact that cites the source; a fact of a union documents both partners;
@@ -621,15 +622,22 @@ and tells how much the source documents in the tree.
   - **Read by the research**: how many readers read the transcript (“1 reader”, “2 readers”: a person in the app and
     the research), otherwise “no”;
   - **Transcript**: yes / no; the catalogue of columns also has **Record date**.
+- Default columns: **Title**, **Archive**, **Call number**, **Folio/page**, **Image**, **Other location**, **Online**,
+  **People**, **Facts**. **Read by the research** and **Transcript** are only in the panel **Columns**.
+- An older source has its whole location in **Other location** and the new cells empty. **Call number**,
+  **Folio/page** and **Image** sort naturally (9 before 10, 57–58 after 34), empty ones last in both directions; they
+  filter as text.
+- Above the table there can be the offer **Split as suggested…** ([A3.9.1](A3-evidence-in-the-app.md#A3.9.1)).
 - Citations of placeholder persons and sources of a story are not counted.
 - **Chips:** **No person** (no person cites it), **Unread**, **With transcript**, **Online** (the same as the column
   **Online**, also with an address without `https://`).
 - **Controls:** the built-in view **All sources**. At a row **Open source** and **Edit…**: both open the source
   manager at that source; **Show in tree** is not here.
 - **Limits:** in a locked tree the source is only shown, without edits.
-- **Since:** app 3.27.0
+- **Since:** app 3.27.0; **Call number**, **Folio/page**, **Image** and **Other location** (before, **Book, reference,
+  folio**) also 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
+<!-- zdroj: app:a97de984 table-columns.ts:898-901 srcSig/srcFolio/srcImageNo, :1026 DEFAULT_VIEWS.sources, přirozené řazení · 8dd21adf table-bar.ts nabídka rozdělení · app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
 
 <a id="A6.7.12"></a>
 ### A6.7.12 Citations and godparents in the People table
@@ -637,16 +645,20 @@ and tells how much the source documents in the tree.
 The People table has columns that show from which source the birth, marriage and death come, and who was a
 godparent.
 
-- **Citations** (group **Sources**): **Birth: archive**, **Birth: reference**, **Birth: URL** and the same for
-  **Marriage** and **Death**. The cell shows the archive, reference or web address of the first cited source; further
-  sources are in the button “+N”. A web address in the column **… URL** is a link into a new window, as in the column
-  **Online** ([A6.7.11](#A6.7.11)).
+- **Citations** (group **Sources**): **Birth: archive**, **Birth: call number**, **Birth: folio/page**,
+  **Birth: image**, **Birth: other location**, **Birth: URL** and the same for **Marriage** and **Death**, in this
+  order; they are not default. The cell shows the value of the first cited source; further sources are in the button
+  “+N”. An older source has its whole location in **… other location**. The bubble **Other citations**, the row panel of a
+  source on a phone and the source column in the Events table also give the call number, folio and image. A web
+  address in the column **… URL** is a link into a new window, as in the column **Online** ([A6.7.11](#A6.7.11)).
   - Birth takes the citations of the birth, then of the events of birth and baptism; death the citations of the
     death, then of the events of death, burial and cremation; marriage the citations of the union (at a union sub-row
     of that union). Each source once.
   - Sources from the origin of a fact in the research are not counted, only citations in the data.
   - For a living person the death columns have **Does not apply**.
   - Sorting and filtering go by the first source.
+- **From app 3.27.0:** columns of the call number, folio/page, image and other location (**… reference** showed the
+  whole location before).
 - **Godparents** (group **Birth and baptism**): the godparents of the events of birth and baptism, each once; a person
   of the tree is a link. A godparent who keeps turning up ([A5.5](A5-tree-check.md#A5.5)) has the mark **lead** in the
   cell.
@@ -655,7 +667,7 @@ godparent.
   manager.
 - **Since:** app 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10), godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10); 3.27.0: a97de984 bSig/bFolio/bImage/bRef…dRef, table-bubble.ts, table-events source text, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
 
 <a id="A6.7.13"></a>
 ### A6.7.13 Marks in the cells
@@ -764,7 +776,7 @@ exchange with the tree. It writes nothing into the tree.
 
 - **Unions:** **Research ID** (F…), **Line** (by the partner from the line), **Agent** (“working on the couple: …”) and
   **Conflicts** (conflicts about the marriage and the divorce for both partners). **Sources:** **Research ID** (S…)
-  and **Image**: “on the research’s computer”, “scan missing on the research’s computer” (highlighted), “online
+  and **Scan**: “on the research’s computer”, “scan missing on the research’s computer” (highlighted), “online
   (archive)”.
 - **Line:** in a line (the partner of a person from the line “· partner”; a side branch added to a line belongs to
   that line), “side branch: {name}”, “island”, “off the lines”. **Off the lines** are side branches not added to a

@@ -398,7 +398,8 @@ erledigen lässt und was nur in der Forschung, sagt [R6.5](R6-awaiting-action.md
 - **Bedienung:** App: Panel, Abschnitt **Wartet auf Bearbeitung**; Menü **Forschung → Wartet auf Bearbeitung**; die
   Marke **!** auf dem Kärtchen und **Antworten · N wartend** im Menü der Person.
 - **Gilt seit:** App 3.4.0. Fragen zu Orten seit Forschung 1.25.0. Die Marke **!** und **Antworten · N wartend** so
-  seit App 3.26.0. Hypothesen seit App 3.27.0 mit Forschung 1.31.0.
+  seit App 3.26.0. Hypothesen seit App 3.27.0 mit Forschung 1.31.0. Mehrere Marken auf dem Kärtchen seit App 3.27.0
+  ([S4.4.1](#S4.4.1)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
@@ -431,13 +432,14 @@ Schaltfläche.
     daneben oder Ziehen nach unten; auf dem Tablet und dem quer gehaltenen Telefon ein Fenster mit Zeilen von 44 px;
   - Tastatur: Enter, Leertaste oder Pfeil nach unten auf den Marken öffnet das Fenster auf der ersten Wahl, die Pfeile
     laufen im Kreis, Pos1 und Ende, Enter wählt, Esc kehrt zu den Marken zurück, Tab geht weiter;
-  - ein Kärtchen ohne Porträt (**Kartendetail → Kompakt**) hat statt der Marken zwei Punkte, wenn der Stammbaum unter
-    0,55 verkleinert ist, einen Punkt. Der Druck des Stammbaums hat keine Marken.
+  - ein Kärtchen ohne Porträt (**Kartendetail → Kompakt**) hat statt der Marken zwei Punkte. Ist der Stammbaum unter
+    0,55 verkleinert, hat jedes Kärtchen, in jedem **Kartendetail**, statt der Marken einen Punkt. Der Druck des
+    Stammbaums hat keine Marken.
 - **Bedienung:** App: Klick auf die Marken in der Ecke des Porträts; **Einstellungen → Personenkarte → Auf der Karte
   zeigen**.
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:16461aca, 85c1f704, abf7620f src/card-signals.ts ACTION_ORDER (waiting, conflict, question), presentActions (zapnuté v Na kartě ukázat), stackChoices (waiting, story, knows, agent), ACTION_GLYPH · src/card-signal-marks.ts cardActionMarksHtml (stoh n2/n3, tečky), stackAriaLabel, stackTipHtml (tipClickChoose / tipClickKnows), stackMenuItemsHtml (menuAnswer / dotyk menuWaiting, story.compare, menuKnows, menuAgent; bez značky výzkumu), placeStackMenu · index.html .card-signal-stack, #tree-canvas.zoom-far (src/zoom.ts ZOOM_FAR = 0.55), body.view-mode-print bez značek, compact dvě tečky · strings.ts card.stackLabel, stackWaiting, stackMenuLabel, tipClickChoose, cardDensity.cardWaiting, cardConflict, cardQuestion, compact · CHANGELOG.cs.md 3.27.0 „Více značek na kartě“ · dirigent:prace/1111-app-karta-vice-znacek -->
+<!-- zdroj: app:16461aca, 85c1f704, abf7620f src/card-signals.ts ACTION_ORDER (waiting, conflict, question), presentActions (zapnuté v Na kartě ukázat), stackChoices (waiting, story, knows, agent), ACTION_GLYPH · src/card-signal-marks.ts cardActionMarksHtml (stoh n2/n3, tečky), stackAriaLabel, stackTipHtml (tipClickChoose / tipClickKnows), stackMenuItemsHtml (menuAnswer / dotyk menuWaiting, story.compare, menuKnows, menuAgent; bez značky výzkumu), placeStackMenu · index.html .card-signal-stack, #tree-canvas.zoom-far (src/zoom.ts ZOOM_FAR = 0.55; index.html:13732-13741 jedna tečka u všech Detailů karet, e2e/card-signals.spec.ts:353), body.view-mode-print bez značek, compact dvě tečky · strings.ts card.stackLabel, stackWaiting, stackMenuLabel, tipClickChoose, cardDensity.cardWaiting, cardConflict, cardQuestion, compact · CHANGELOG.cs.md 3.27.0 „Více značek na kartě“ · dirigent:prace/1111-app-karta-vice-znacek -->
 
 <a id="S4.5"></a>
 ## S4.5 Aktionen, die die Forschung öffnen

@@ -658,7 +658,8 @@ Die Quellentabelle hat eine Zeile für jede Quelle des Stammbaums (**Aktionen �
 [A3.1](A3-evidence-in-the-app.md#A3.1)) und sagt, wie viel die Quelle im Stammbaum belegt.
 
 - **Spalten** in den Gruppen **Quelle** · **Verwendung**:
-  - **Titel**, **Archiv**, **Buch, Signatur, Folio**, **Online** (die Adresse der Quelle, sonst die Seite ihres ersten
+  - **Titel**, **Archiv**, **Signatur**, **Folio/Seite**, **Bild**, **Weitere Fundstelle**
+    ([A3.9](A3-evidence-in-the-app.md#A3.9)), **Online** (die Adresse der Quelle, sonst die Seite ihres ersten
     Auszugs, ohne `https://`; eine Webadresse ist ein Link ↗ in ein neues Fenster, nur http und https; eine ohne
     Schema geschriebene („www.…“) öffnet sich über https; ein Klick auf den Link ändert die Auswahl der Zeile nicht);
   - **Personen**: wie viele Personen eine Angabe haben, die die Quelle zitiert; eine Angabe der Verbindung belegt
@@ -668,24 +669,35 @@ Die Quellentabelle hat eine Zeile für jede Quelle des Stammbaums (**Aktionen �
   - **Von der Forschung gelesen**: wie viele Leser die Abschrift gelesen haben („1 Leser“, „2 Leser“: ein Mensch in
     der App und die Forschung), sonst „nein“;
   - **Abschrift**: ja / nein; im Katalog der Spalten gibt es auch **Datum des Eintrags**.
+- Vorgegebene Spalten: **Titel**, **Archiv**, **Signatur**, **Folio/Seite**, **Bild**, **Weitere Fundstelle**,
+  **Online**, **Personen**, **Angaben**. **Von der Forschung gelesen** und **Abschrift** gibt es nur im Panel
+  **Spalten**.
+- Eine ältere Quelle hat die ganze Fundstelle in **Weitere Fundstelle** und die neuen Zellen leer. **Signatur**,
+  **Folio/Seite** und **Bild** werden natürlich sortiert (9 vor 10, 57–58 nach 34), leere in beiden Richtungen am
+  Ende; gefiltert werden sie als Text.
+- Über der Tabelle kann das Angebot **Nach Vorschlag aufteilen…** stehen ([A3.9.1](A3-evidence-in-the-app.md#A3.9.1)).
 - Zitate von Platzhalterpersonen und Quellen einer Geschichte werden nicht gezählt.
 - **Chips:** **Ohne Person** (keine Person zitiert sie), **Ungelesen**, **Mit Abschrift**, **Online** (wie die Spalte
   **Online**, auch mit einer Adresse ohne `https://`).
 - **Bedienung:** die vorgegebene Ansicht **Alle Quellen**. An der Zeile **Quelle öffnen** und **Bearbeiten…**: beide
   öffnen die Quellenverwaltung bei dieser Quelle; **Im Baum zeigen** gibt es hier nicht.
 - **Grenzen:** in einem gesperrten Stammbaum wird die Quelle nur angezeigt, ohne Bearbeitung.
-- **Gilt seit:** App 3.27.0
+- **Gilt seit:** App 3.27.0; **Signatur**, **Folio/Seite**, **Bild** und **Weitere Fundstelle** (früher **Buch,
+  Signatur, Folio**) ebenfalls 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
+<!-- zdroj: app:a97de984 table-columns.ts:898-901 srcSig/srcFolio/srcImageNo, :1026 DEFAULT_VIEWS.sources, přirozené řazení · 8dd21adf table-bar.ts nabídka rozdělení · app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
 
 <a id="A6.7.12"></a>
 ### A6.7.12 Quellenangaben und Paten in der Personentabelle
 
 Die Personentabelle hat Spalten, die zeigen, aus welcher Quelle Geburt, Heirat und Tod stammen und wer Pate war.
 
-- **Quellenangaben** (Gruppe **Quellen**): **Geburt: Archiv**, **Geburt: Signatur**, **Geburt: URL** und dasselbe
-  für **Heirat** und **Tod**. Die Zelle zeigt Archiv, Signatur oder Webadresse der ersten zitierten Quelle; weitere
-  Quellen stehen in der Schaltfläche „+N“. Eine Webadresse in der Spalte **… URL** ist ein Link in ein neues Fenster,
+- **Quellenangaben** (Gruppe **Quellen**): **Geburt: Archiv**, **Geburt: Signatur**, **Geburt: Folio/Seite**,
+  **Geburt: Bild**, **Geburt: weitere Fundstelle**, **Geburt: URL** und dasselbe für **Heirat** und **Tod**, in dieser
+  Reihenfolge; vorgegeben sind sie nicht. Die Zelle zeigt den Wert der ersten zitierten Quelle; weitere Quellen stehen
+  in der Schaltfläche „+N“. Eine ältere Quelle hat die ganze Fundstelle in **… weitere Fundstelle**. Die Blase
+  **Weitere Quellenangaben**, das Panel einer Quellenzeile auf dem Telefon und die Spalte der Quelle in der
+  Ereignistabelle nennen auch Signatur, Folio und Bild. Eine Webadresse in der Spalte **… URL** ist ein Link in ein neues Fenster,
   wie in der Spalte **Online** ([A6.7.11](#A6.7.11)).
   - Geburt nimmt die Zitate der Geburt, dann der Ereignisse Geburt und Taufe; Tod die Zitate des Todes, dann der
     Ereignisse Tod, Begräbnis und Einäscherung; Heirat die Zitate der Verbindung (bei einer Unterzeile der
@@ -693,6 +705,8 @@ Die Personentabelle hat Spalten, die zeigen, aus welcher Quelle Geburt, Heirat u
   - Quellen aus der Herkunft einer Angabe in der Forschung werden nicht gezählt, nur Zitate in den Daten.
   - Bei einer lebenden Person haben die Spalten des Todes **Trifft nicht zu**.
   - Sortiert und gefiltert wird nach der ersten Quelle.
+- **Ab App 3.27.0:** Spalten für Signatur, Folio/Seite, Bild und weitere Fundstelle (**… Signatur** zeigte früher die
+  ganze Fundstelle).
 - **Paten** (Gruppe **Geburt und Taufe**): die Paten der Ereignisse Geburt und Taufe, jeder einmal; eine Person des
   Stammbaums ist ein Link. Ein Pate, der immer wieder auftaucht ([A5.5](A5-tree-check.md#A5.5)), hat in der Zelle
   das Zeichen **Spur**.
@@ -701,7 +715,7 @@ Die Personentabelle hat Spalten, die zeigen, aus welcher Quelle Geburt, Heirat u
   öffnet sie in der Quellenverwaltung.
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10), godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10); 3.27.0: a97de984 bSig/bFolio/bImage/bRef…dRef, table-bubble.ts, table-events source text, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
 
 <a id="A6.7.13"></a>
 ### A6.7.13 Zeichen in den Zellen
@@ -814,7 +828,7 @@ Agenten, die Linien und den Austausch mit dem Stammbaum. In den Stammbaum schrei
 
 - **Verbindungen:** **Forschungs-ID** (F…), **Linie** (nach dem Partner aus der Linie), **Agent** („arbeitet am Paar:
   …“) und **Widersprüche** (Widersprüche zu Heirat und Scheidung bei beiden Partnern). **Quellen:** **Forschungs-ID**
-  (S…) und **Bild**: „auf dem Rechner der Forschung“, „Scan fehlt auf dem Rechner der Forschung“ (hervorgehoben),
+  (S…) und **Scan**: „auf dem Rechner der Forschung“, „Scan fehlt auf dem Rechner der Forschung“ (hervorgehoben),
   „online (Archiv)“.
 - **Linie:** in einer Linie (der Partner einer Person aus der Linie „· Partner“; ein zur Linie hinzugefügter
   Seitenzweig gehört zu dieser Linie), „Seitenzweig: {Name}“, „Insel“, „außerhalb der Linien“. **Außerhalb der

@@ -230,8 +230,13 @@ rodzinie parę. Ocena `QUAY` pokazuje się jako **Wiarygodność źródła**: 3 
 - **Obsługa:** **Wiarygodność źródła** w szczegółach źródła (**Oryginał**, **Odpis / indeks**, **Niepewne**).
 - **Obowiązuje od:** aplikacja 1.9.4 (`QUAY`), 3.9.0 (pochodne źródło dla strony).
 - **Od aplikacji 3.22.0:** Opowieść osoby (`_STORY`) czyta i eksportuje także odnośniki do źródeł.
+- **Od aplikacji 3.27.0:** sygnatura z `REPO` › `CALN` trafia do pola **Sygnatura** (pierwszy `CALN`), nie do
+  notatki; wydawca i autor zostają w notatce. Eksport pisze księgę jako `1 REPO` z `2 CALN` i jedną
+  czytelną `PAGE` złożoną z pól: folio, dalsza lokalizacja, skan („fol. 12v, nr 5, skan 34”; słowo dla skanu w języku
+  aplikacji). Numer, który dalsza lokalizacja już wymienia, się nie powtarza. Źródło bez folio i skanu eksportuje się
+  dokładnie jak dotąd. Pola źródła opisuje [A3.9](A3-evidence-in-the-app.md#A3.9).
 
-<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE -->
+<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord -->
 
 <a id="A2.7"></a>
 ## A2.7 Własne znaczniki Stromu i co wraca
@@ -252,8 +257,12 @@ GEDCOM 5.5.1 nie potrafi. Nagłówek `1 SOUR STROM` mówi, że plik napisał Str
 - **Od aplikacji 3.26.0:** identyfikatory programów wracają pod `_STROM_IMPORT` i `_STROM_XID`; przy ponownym
   wczytaniu plik paruje się według nich ([S6.7](S6-tree-from-another-program.md#S6.7)). Plik z nagłówkiem Stromu nie jest
   drzewem z innego programu: nie ma znacznika **Z drzewa** ani karty **Co dalej**.
+- **Od aplikacji 3.27.0:** folio, skan i dalsza lokalizacja źródła wracają pod `_STROM_FOLIO`, `_STROM_IMAGE`
+  i `_STROM_LOCATOR` obok złożonej `PAGE`; ze znacznikami obowiązują pola, nie `PAGE`. Eksport **Z powrotem do
+  {program}** ([S6.6](S6-tree-from-another-program.md#S6.6)) dla programu, z którego drzewo przyszło, ich nie pisze.
+  Badaniu aplikacja wysyła je tylko wtedy, gdy badanie mówi, że je czyta.
 
-<!-- zdroj: app:src/ged-exporter.ts:506 STROM_SEX_U_LINE, :508 exportToGedcom, :680 TYPE married · app:src/ged-parser.ts:2174 _STROM_VERIFIED/_STROM_READ, :2324 výzkumné bloky, :2574 _DRAFT, :2654 _STROM_STATUS, :1914 _STROM_PLACE · app:src/research-link.ts:2936 researchHeaderLines -->
+<!-- zdroj: app:src/ged-exporter.ts:506 STROM_SEX_U_LINE, :508 exportToGedcom, :680 TYPE married · app:src/ged-parser.ts:2174 _STROM_VERIFIED/_STROM_READ, :2324 výzkumné bloky, :2574 _DRAFT, :2654 _STROM_STATUS, :1914 _STROM_PLACE · app:src/research-link.ts:2936 researchHeaderLines · 3.27.0: app:c3278633 src/ged-exporter.ts sourceFields (false pro výzkum bez sources.fields, nikdy u backTo), src/ged-parser.ts placeFields (s _STROM_* platí pole) -->
 
 <a id="A2.8"></a>
 ## A2.8 Ponowny import i scalanie

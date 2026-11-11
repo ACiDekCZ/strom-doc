@@ -202,7 +202,7 @@ Oprócz wyboru dla całego badania własny wybór może mieć jedna gałąź (ta
 <a id="R2.3.2"></a>
 ### R2.3.2 Rosnąca gałąź dostaje propozycję linii
 
-Gdy gałąź poza liniami urośnie do 10 otwartych zadań lub 5 osób, w **Czeka na decyzję** pojawia się pytanie: dodać
+Gdy gałąź poza liniami urośnie do 10 otwartych zadań lub 5 osób, w **Czeka na załatwienie** pojawia się pytanie: dodać
 do linii, założyć linię, zostawić bez zmian albo nie badać. Po odpowiedzi „zostawić” propozycja wraca dopiero przy
 dwukrotnej wielkości. Gałąź z własnym wyborem i wybór **nigdy** propozycji nie dostają.
 
@@ -210,7 +210,7 @@ dwukrotnej wielkości. Gałąź z własnym wyborem i wybór **nigdy** propozycji
   przy gałęzi jest wstrzymana lub zakończona, aplikacja proponuje najwęższą trwającą linię, do której należy osoba
   gałęzi; gdy takiej nie ma, linię wstrzymaną z uwagą **(wstrzymana)**.
 - **Obsługa:** terminal: **Proponować linie dla rosnących gałęzi** (włączyć/wyłączyć), `strom offline answer B-P…
-  line|keep|never`, `strom config set queue.suggestTasks|queue.suggestPersons <n>`. Aplikacja: **Czeka na decyzję**,
+  line|keep|never`, `strom config set queue.suggestTasks|queue.suggestPersons <n>`. Aplikacja: **Czeka na załatwienie**,
   ustawienie **Proponuj linie dla rosnących gałęzi** ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
 - **Obowiązuje od:** badanie 1.26.0
 

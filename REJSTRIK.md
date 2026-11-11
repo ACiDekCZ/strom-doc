@@ -51,7 +51,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | cs | Čeká na vyřízení (app, `research.waiting`) · Co čeká (terminal, `ui.menu.waitlist`) | Jeden seřazený seznam všeho, na co výzkum čeká od člověka: čekající úkoly, otázky archivů, nové verze vyprávění, otázky k místům a v terminálu i rozhodnutí, která jdou jen tam. |
 | en | Awaiting action (app) · What waits (terminal) | One ordered list of everything the research waits for from a person: waiting tasks, questions of archives, new versions of stories, questions about places, and in the terminal also the decisions made only there. |
 | de | Wartet auf Bearbeitung (app) · Was wartet (terminal) | Eine einzige geordnete Liste von allem, worauf die Forschung vom Menschen wartet: wartende Aufgaben, Fragen der Archive, neue Fassungen von Erzählungen, Fragen zu Orten und im Terminal auch Entscheidungen, die nur dort gehen. |
-| pl | Czeka na decyzję (app) · Co czeka (terminal) | Jedna uporządkowana lista wszystkiego, na co badanie czeka od człowieka: czekające zadania, pytania archiwów, nowe wersje opowieści, pytania o miejsca, a w terminalu także decyzje, które załatwia się tylko tam. |
+| pl | Czeka na załatwienie (app) · Co czeka (terminal) | Jedna uporządkowana lista wszystkiego, na co badanie czeka od człowieka: czekające zadania, pytania archiwów, nowe wersje opowieści, pytania o miejsca, a w terminalu także decyzje, które załatwia się tylko tam. |
 
 - **Čísla:** [R6.1](cs/R6-awaiting-action.md#R6.1), R6.1.1, R6.4, R6.5, S2.3
 
@@ -285,7 +285,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | cs | odložený (`ui.review.state.parked`) · Odložit (app) | Úkol stranou fronty i seznamu Čeká na vyřízení. S datem se vrátí sám v ten den, bez data až po probuzení. |
 | en | parked (terminal) · Park (app) | A task set aside from the queue and from the list Awaiting action. With a date it returns by itself on that day, without a date only when woken. |
 | de | zurückgestellt (terminal) · Zurückstellen (app) | Eine Aufgabe außerhalb der Warteschlange und der Liste Wartet auf Bearbeitung. Mit einem Datum kehrt sie an diesem Tag von selbst zurück, ohne Datum erst, wenn sie geweckt wird. |
-| pl | odłożone (terminal) · Odłóż (app) | Zadanie poza kolejką i poza listą Czeka na decyzję. Z datą wraca samo w tym dniu, bez daty dopiero po obudzeniu. |
+| pl | odłożone (terminal) · Odłóż (app) | Zadanie poza kolejką i poza listą Czeka na załatwienie. Z datą wraca samo w tym dniu, bez daty dopiero po obudzeniu. |
 
 - **Čísla:** [R6.7.2](cs/R6-awaiting-action.md#R6.7.2)
 
@@ -443,7 +443,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | cs | poloha na mapě proti záznamům (terminal) · Rozpor polohy (app) | Otázka v Čeká na vyřízení: poloha na mapě nesouhlasí s tím, co říkají záznamy. Rozhodne člověk. |
 | en | Location conflict (app) | A question in Awaiting action: the position on the map disagrees with what the records say. A person decides. |
 | de | Widerspruch der Lage (app) | Eine Frage in Wartet auf Bearbeitung: die Lage auf der Karte stimmt nicht mit dem überein, was die Einträge sagen. Es entscheidet der Mensch. |
-| pl | Sprzeczne położenie (app) | Pytanie w Czeka na decyzję: położenie na mapie nie zgadza się z tym, co mówią akty. Rozstrzyga człowiek. |
+| pl | Sprzeczne położenie (app) | Pytanie w Czeka na załatwienie: położenie na mapie nie zgadza się z tym, co mówią akty. Rozstrzyga człowiek. |
 
 - **Čísla:** [R4.3](cs/R4-places.md#R4.3), R4.5
 

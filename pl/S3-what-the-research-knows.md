@@ -18,7 +18,7 @@ i aplikacja ich nie odsyła; żyją w badaniu. Nagłówek okna niesie datę bada
 - **Czego okno nie pokazuje:**
   - stopni pewności danych ([R3.1](R3-verification-and-citation.md#R3.1)) i udokumentowania
     ([R3.8](R3-verification-and-citation.md#R3.8));
-  - **Czeka na decyzję** ([R6](R6-awaiting-action.md));
+  - **Czeka na załatwienie** ([R6](R6-awaiting-action.md));
   - linii i kolejki jako całości ([S4](S4-research-from-the-app.md)); linie i zadania osoby są tylko w sekcji
     **Nad osobą** ([S3.3](#S3.3)).
 - **Granice:**
@@ -210,7 +210,7 @@ w aplikacji nic się nie zmienia.
   wersjami **Żadna wersja nie obowiązuje** i **Pozostaw otwartą**. Wersja, która połączy 50 i więcej osób, ma
   etykietę („połączy 214 osób”). Przy wersji może stać, co zrobi z drzewem: przy wersji, która nikogo nie połączy,
   „Drzewo się nie zmieni, zapisze się tylko rozstrzygnięcie.” (to samo zdanie co podczas oczekiwania i w **Czeka na
-  decyzję**; przy zmianie z wersji z powiązaniem się nie pokazuje, powiązanie zniknie z drzewa), przy wersji, której
+  załatwienie**; przy zmianie z wersji z powiązaniem się nie pokazuje, powiązanie zniknie z drzewa), przy wersji, której
   powiązania drzewo już ma, „Drzewo się nie zmieni, badanie zapisze tylko rozstrzygnięcie.”, a przy wersji, przy której
   stare powiązanie zostanie, „Drzewo się nie zmieni: stare powiązanie zostanie, opiera się na nim dalsza praca.”
 - **Hipoteza bez powiązania:** hipotezę, której wersje nikogo nie łączą z drzewem (na przykład skąd osoba przybyła),
@@ -232,7 +232,7 @@ w aplikacji nic się nie zmienia.
   zmieni.”). Gdzie przywrócić się nie da, zamiast przycisku stoi powód („Przywrócić się nie da: na połączeniu
   zapisanym przez rozstrzygnięcie opiera się dalsza praca (2 powiązania). Można zmienić.”) i odnośnik **Rozstrzygnij
   w badaniu**.
-- **Czeka na decyzję:** hipotezy do rozstrzygnięcia są w grupie **Hipotezy do rozstrzygnięcia**
+- **Czeka na załatwienie:** hipotezy do rozstrzygnięcia są w grupie **Hipotezy do rozstrzygnięcia**
   (chip **Decyzje**, [S4.4](S4-research-from-the-app.md#S4.4)): „H0022 · pytanie”, propozycja agenta z **Przyjmij propozycję B**
   i **Pozostaw otwartą** albo wersje z **Wybierz**; **Więcej ›** otwiera kartę przy osobie. Z badaniem, które
   przyjmuje propozycje naraz: pole wyboru przy hipotezie z propozycją, **Zaznacz wszystkie z propozycją**, „Zaznaczono
@@ -247,7 +247,7 @@ w aplikacji nic się nie zmienia.
   - wersja, która scala osoby albo tworzy rodzeństwo: „O scaleniu osób rozstrzyga się w badaniu.”;
   - ze starszym badaniem karta zostaje jak dotąd, z **Rozstrzygnij w badaniu** ([S3.5](#S3.5)).
 - **Obsługa:** **Co wie badanie** → **Hipotezy**: **Wybierz**, **Przyjmij propozycję …**, **Żadna wersja nie
-  obowiązuje**, **Pozostaw otwartą**, **Zmień**, **Przywróć jako otwartą**; **Czeka na decyzję** → **Hipotezy do rozstrzygnięcia**.
+  obowiązuje**, **Pozostaw otwartą**, **Zmień**, **Przywróć jako otwartą**; **Czeka na załatwienie** → **Hipotezy do rozstrzygnięcia**.
   Wybory, które otwierają terminal, mają jego oznaczenie ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
 - **Obowiązuje od:** aplikacja 3.27.0 z badaniem 1.31.0
 

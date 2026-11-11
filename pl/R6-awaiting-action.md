@@ -1,5 +1,5 @@
 <a id="R6"></a>
-# R6 Czeka na decyzję
+# R6 Czeka na załatwienie
 
 Czego badanie potrzebuje od człowieka, gdzie to się pokazuje i jak zadanie po załatwieniu wraca do kolejki. Opisuje
 badanie 1.25.2 i aplikację Strom 3.21.2. Zmiany z nowszej wersji mają przy sobie jej numer.
@@ -13,7 +13,7 @@ tylko w nim. Lista jest za każdym razem obliczana z badania, nic się do niej n
 
 - **Granice:** zadanie, które czeka tylko na zgodę archiwum i nie ma skanów, należy do pytania archiwum. Badanie, które
   służy jako archiwum, nie ma na liście zadań ani miejsc.
-- **Obsługa:** aplikacja: sekcja **Czeka na decyzję** · terminal: menu **Co czeka (n)**, wiersz stanu **Czeka: N** ·
+- **Obsługa:** aplikacja: sekcja **Czeka na załatwienie** · terminal: menu **Co czeka (n)**, wiersz stanu **Czeka: N** ·
   strona na telefon: **Co czeka · N**.
 - **Obowiązuje od:** badanie 1.3.0. Lista według miejsc załatwienia i w aplikacji od 1.14.0 (aplikacja 3.11.0).
 
@@ -195,7 +195,7 @@ Decyzje i zgody przyjmuje tylko terminal; przyciski, które ich wymagają, otwie
 
 - **Granice:**
   - Aplikacja załatwia sama: **Wysłano** (także za grupę), **Przywróć do załatwienia**, **Dodaj plik** (tylko obrazy
-    i PDF), **Treść wszystkich zapytań** i odpowiedź na pytanie o miejsce (okno **Czeka na decyzję · Miejsca**).
+    i PDF), **Treść wszystkich zapytań** i odpowiedź na pytanie o miejsce (okno **Czeka na załatwienie · Miejsca**).
   - Odnośnikiem do terminala: **Odpowiedz**, **Czat**, **Treść zapytania**, **Folder**, opowieść, zgoda archiwum.
   - Na wąskim ekranie aplikacja nie ma odnośników i podaje **odpowiedź w badaniu na komputerze**; na pytania
     o miejsca można odpowiedzieć także tam.

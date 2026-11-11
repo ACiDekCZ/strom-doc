@@ -339,7 +339,8 @@ a co jen ve výzkumu, říká [R6.5](R6-awaiting-action.md#R6.5).
 - **Ovládání:** aplikace: panel, oddíl **Čeká na vyřízení**; menu **Výzkum → Čeká na vyřízení**; značka **!** na
   kartičce a **Odpovědět · N čeká** v nabídce osoby.
 - **Platí od:** aplikace 3.4.0. Otázky k místům od výzkumu 1.25.0. Značka **!** a **Odpovědět · N čeká** takto od
-  aplikace 3.26.0. Hypotézy od aplikace 3.27.0 s výzkumem 1.31.0.
+  aplikace 3.26.0. Hypotézy od aplikace 3.27.0 s výzkumem 1.31.0. Více značek na kartičce od aplikace 3.27.0
+  ([S4.4.1](#S4.4.1)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
@@ -367,12 +368,12 @@ značky stojí v zákrytu jako jedno tlačítko.
     klepnutí vedle nebo tažení dolů; na tabletu a telefonu na šířku okno s řádky 44 px;
   - klávesnice: Enter, mezerník nebo šipka dolů na značkách okno otevře na první volbě, šipky jdou dokola, Home
     a End, Enter vybere, Esc vrátí na značky, Tab jde dál;
-  - kartička bez portrétu (**Detail karet → Kompaktní**) má místo značek dvě tečky, při oddálení stromu pod 0,55 jedna
-    tečka. Tisk stromu značky nemá.
+  - kartička bez portrétu (**Detail karet → Kompaktní**) má místo značek dvě tečky. Při oddálení stromu pod 0,55 má
+    každá kartička, v každém **Detailu karet**, místo značek jednu tečku. Tisk stromu značky nemá.
 - **Ovládání:** aplikace: klik na značky v rohu portrétu; **Nastavení → Karta osoby → Na kartě ukázat**.
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:16461aca, 85c1f704, abf7620f src/card-signals.ts ACTION_ORDER (waiting, conflict, question), presentActions (zapnuté v Na kartě ukázat), stackChoices (waiting, story, knows, agent), ACTION_GLYPH · src/card-signal-marks.ts cardActionMarksHtml (stoh n2/n3, tečky), stackAriaLabel, stackTipHtml (tipClickChoose / tipClickKnows), stackMenuItemsHtml (menuAnswer / dotyk menuWaiting, story.compare, menuKnows, menuAgent; bez značky výzkumu), placeStackMenu · index.html .card-signal-stack, #tree-canvas.zoom-far (src/zoom.ts ZOOM_FAR = 0.55), body.view-mode-print bez značek, compact dvě tečky · strings.ts card.stackLabel, stackWaiting, stackMenuLabel, tipClickChoose, cardDensity.cardWaiting, cardConflict, cardQuestion, compact · CHANGELOG.cs.md 3.27.0 „Více značek na kartě“ · dirigent:prace/1111-app-karta-vice-znacek -->
+<!-- zdroj: app:16461aca, 85c1f704, abf7620f src/card-signals.ts ACTION_ORDER (waiting, conflict, question), presentActions (zapnuté v Na kartě ukázat), stackChoices (waiting, story, knows, agent), ACTION_GLYPH · src/card-signal-marks.ts cardActionMarksHtml (stoh n2/n3, tečky), stackAriaLabel, stackTipHtml (tipClickChoose / tipClickKnows), stackMenuItemsHtml (menuAnswer / dotyk menuWaiting, story.compare, menuKnows, menuAgent; bez značky výzkumu), placeStackMenu · index.html .card-signal-stack, #tree-canvas.zoom-far (src/zoom.ts ZOOM_FAR = 0.55; index.html:13732-13741 jedna tečka u všech Detailů karet, e2e/card-signals.spec.ts:353), body.view-mode-print bez značek, compact dvě tečky · strings.ts card.stackLabel, stackWaiting, stackMenuLabel, tipClickChoose, cardDensity.cardWaiting, cardConflict, cardQuestion, compact · CHANGELOG.cs.md 3.27.0 „Více značek na kartě“ · dirigent:prace/1111-app-karta-vice-znacek -->
 
 <a id="S4.5"></a>
 ## S4.5 Akce, které otevřou výzkum

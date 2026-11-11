@@ -607,8 +607,8 @@ Tabela źródeł ma wiersz dla każdego źródła drzewa (**Akcje → Źródła*
 i mówi, ile źródło w drzewie dokumentuje.
 
 - **Kolumny** w grupach **Źródło** · **Użycie**:
-  - **Tytuł**, **Archiwum**, **Księga, sygnatura, folio**, **Online** (adres źródła, w przeciwnym razie strona jego
-    pierwszego wypisu, bez `https://`; adres internetowy jest linkiem ↗ do nowego okna, tylko http i https; zapisany
+  - **Tytuł**, **Archiwum**, **Sygnatura**, **Folio/strona**, **Skan**, **Dalsza lokalizacja**
+    ([A3.9](A3-evidence-in-the-app.md#A3.9)), **Online** (adres źródła, w przeciwnym razie strona jego pierwszego wypisu, bez `https://`; adres internetowy jest linkiem ↗ do nowego okna, tylko http i https; zapisany
     bez schematu („www.…”) otwiera się przez https; kliknięcie linku nie zmienia wyboru wiersza);
   - **Osób**: ile osób ma daną, która cytuje to źródło; dana związku dokumentuje obu partnerów;
   - **Faktów**: ile faktów cytuje źródło. Fakt to jedna lista cytowań: cytowania osoby, urodzenia, zgonu, każdego
@@ -616,37 +616,47 @@ i mówi, ile źródło w drzewie dokumentuje.
   - **Przeczytane w badaniach**: ilu czytelników przeczytało transkrypcję („1 czytelnik”, „2 czytelników”: człowiek
     w aplikacji i badanie), w przeciwnym razie „nie”;
   - **Transkrypcja**: tak / nie; w katalogu kolumn jest też **Data wpisu**.
+- Kolumny domyślne: **Tytuł**, **Archiwum**, **Sygnatura**, **Folio/strona**, **Skan**, **Dalsza lokalizacja**,
+  **Online**, **Osób**, **Faktów**. **Przeczytane w badaniach** i **Transkrypcja** są tylko w panelu **Kolumny**.
+- Starsze źródło ma całą lokalizację w **Dalsza lokalizacja**, a nowe komórki puste. **Sygnatura**, **Folio/strona**
+  i **Skan** sortują się naturalnie (9 przed 10, 57–58 za 34), puste na końcu w obu kierunkach; filtrują się jak tekst.
+- Nad tabelą może stać oferta **Podziel według propozycji…** ([A3.9.1](A3-evidence-in-the-app.md#A3.9.1)).
 - Cytowania osób zastępczych i źródeł opowieści się nie liczą.
 - **Chipy:** **Bez osoby** (żadna osoba go nie cytuje), **Nieprzeczytane**, **Z transkrypcją**, **Online** (tak samo jak
   kolumna **Online**, także z adresem bez `https://`).
 - **Obsługa:** wbudowany widok **Wszystkie źródła**. Przy wierszu **Otwórz źródło** i **Edytuj…**: oba otwierają
   menedżera źródeł na tym źródle; **Pokaż w drzewie** tu nie ma.
 - **Granice:** w zablokowanym drzewie źródło tylko się pokazuje, bez edycji.
-- **Obowiązuje od:** aplikacja 3.27.0
+- **Obowiązuje od:** aplikacja 3.27.0; **Sygnatura**, **Folio/strona**, **Skan** i **Dalsza lokalizacja** (wcześniej
+  **Księga, sygnatura, folio**) także 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
+<!-- zdroj: app:a97de984 table-columns.ts:898-901 srcSig/srcFolio/srcImageNo, :1026 DEFAULT_VIEWS.sources, přirozené řazení · 8dd21adf table-bar.ts nabídka rozdělení · app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
 
 <a id="A6.7.12"></a>
 ### A6.7.12 Cytowania i chrzestni w tabeli osób
 
 Tabela osób ma kolumny, które pokazują, z jakiego źródła jest urodzenie, ślub i zgon, i kto był chrzestnym.
 
-- **Cytowania** (grupa **Źródła**): **Urodzenie: archiwum**, **Urodzenie: sygnatura**, **Urodzenie: URL** i to samo
-  dla **Ślub** i **Zgon**. Komórka pokazuje archiwum, sygnaturę lub adres internetowy pierwszego cytowanego źródła;
-  kolejne źródła są w przycisku „+N”. Adres internetowy w kolumnie **… URL** jest linkiem do nowego okna, jak
-  w kolumnie **Online** ([A6.7.11](#A6.7.11)).
+- **Cytowania** (grupa **Źródła**): **Urodzenie: archiwum**, **Urodzenie: sygnatura**, **Urodzenie: folio/strona**,
+  **Urodzenie: skan**, **Urodzenie: dalsza lokalizacja**, **Urodzenie: URL** i to samo dla **Ślub** i **Zgon**, w tej
+  kolejności; nie są domyślne. Komórka pokazuje wartość pierwszego cytowanego źródła; kolejne źródła są w przycisku
+  „+N”. Starsze źródło ma całą lokalizację w **… dalsza lokalizacja**. Dymek **Pozostałe cytowania**, arkusz wiersza
+  źródła na telefonie i kolumna źródła w tabeli wydarzeń podają także sygnaturę, folio i skan. Adres internetowy
+  w kolumnie **… URL** jest linkiem do nowego okna, jak w kolumnie **Online** ([A6.7.11](#A6.7.11)).
   - Urodzenie bierze cytowania urodzenia, potem wydarzeń urodzenia i chrztu; zgon cytowania zgonu, potem wydarzeń
     zgonu, pochówku i kremacji; ślub cytowania związku (przy podwierszu związku tego związku). Każde źródło raz.
   - Źródła z pochodzenia danej w badaniu się nie liczą, tylko cytowania w danych.
   - Przy osobie żyjącej kolumny zgonu mają **Nie dotyczy**.
   - Sortuje się i filtruje według pierwszego źródła.
+- **Od aplikacji 3.27.0:** kolumny sygnatury, folio/strony, skanu i dalszej lokalizacji (**… sygnatura** wcześniej
+  pokazywała całą lokalizację).
 - **Chrzestni** (grupa **Urodzenie i chrzest**): chrzestni wydarzeń urodzenia i chrztu, każdy raz; osoba drzewa jest
   linkiem. Chrzestny, który się powtarza ([A5.5](A5-tree-check.md#A5.5)), ma w komórce oznaczenie **trop**.
 - **Obsługa:** kolumny włącza się pojedynczo w panelu **Kolumny** ([A6.7.2](#A6.7.2)). Kliknięcie „+N” otwiera dymek
   **Pozostałe cytowania** (na telefonie panel od dołu); kliknięcie źródła otwiera je w menedżerze źródeł.
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10), godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10); 3.27.0: a97de984 bSig/bFolio/bImage/bRef…dRef, table-bubble.ts, table-events source text, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
 
 <a id="A6.7.13"></a>
 ### A6.7.13 Oznaczenia w komórkach

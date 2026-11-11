@@ -16,7 +16,7 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [R3 Weryfikacja i cytowanie](R3-verification-and-citation.md): stopnie pewności, co musi być spełnione dla Udokumentowane, źródła i wskazówki
 - [R4 Miejsca](R4-places.md): identyfikacja miejsc, nazwy i przynależność, co rozstrzyga człowiek
 - [R5 Sprzeczności](R5-conflicts.md): jak powstaje sprzeczność, kto ją rozstrzyga, czego agent nie nadpisze
-- [R6 Czeka na decyzję](R6-awaiting-action.md): czego badanie potrzebuje od człowieka i gdzie się to załatwia
+- [R6 Czeka na załatwienie](R6-awaiting-action.md): czego badanie potrzebuje od człowieka i gdzie się to załatwia
 - [R7 Kiedy i jak długo agent pracuje](R7-when-the-agent-works.md): sesje, limit czasu, warunek przebiegu, limit subskrypcji
 - [R8 Wyszukiwanie i odczyt wpisów w skanach](R8-reading-scans.md): księga, skany przez program pobierający, czytelnicy, własny odczyt, zapis znaleziska i pewność
 - [R9 Archiwa: co wolno agentowi, a co robi człowiek](R9-archives.md): rodzaje archiwów, zgoda, przeglądarka agenta, oczekiwanie na skany, co robi człowiek

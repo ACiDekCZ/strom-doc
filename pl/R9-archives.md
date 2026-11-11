@@ -80,7 +80,7 @@ strom może robić automatycznie; szczegółowa tabela poziomów jest w [R8.2](R
   przeglądarkę, idzie najwyżej przeglądarka, za zgodą człowieka i w jego tempie; to, co lista archiwów zostawia
   ręce człowieka, zapisuje człowiek.
 - **Obsługa:** terminal: `strom net web --check <adresa>` (co strom zrobiłby z adresem), menu archiwów, `strom
-  allow archive` (tylko człowiek). Aplikacja: Czeka na decyzję.
+  allow archive` (tylko człowiek). Aplikacja: Czeka na załatwienie.
 - **Obowiązuje od:** badanie 1.14.0. Kolejne archiwa Czech, Niemiec i Polski oraz serwer obrazów od 1.27.0.
 
 <!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel (robots "Disallow: /" → browserOnly, restricted; robotsYield: openByTerms + robotsNamesAi false), :789-803 allows (browserOnly + manual → nothing) · assets/archives.json (level, browserOnly, pace, disallow, imagesFrom, quote, quoteFrom, checked; metrikai.lt, lagis, gov, online-ofb restricted + browserOnly; ebadatelna.soapraha.cz manual) · src/core/knownterms.ts imagesFrom · test/unit/known-terms.test.ts (imagesFrom closed whole ⇒ manual) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 (c3ee4422) -->
@@ -260,7 +260,7 @@ badanie pracuje:
   przeglądarkę zapisuje człowiek.** albo przy innym agencie **przeglądarki tego agenta Strom nie śledzi**. Przy
   pozycji, która czeka na skany takiego archiwum, stoi ta sama rada jako notatka. Badanie, które służy jako archiwum,
   tego wiersza nie ma.
-- **Obsługa:** terminal: `strom doctor`. Aplikacja: okno **Badanie dla drzewa**, Czeka na decyzję.
+- **Obsługa:** terminal: `strom doctor`. Aplikacja: okno **Badanie dla drzewa**, Czeka na załatwienie.
 - **Obowiązuje od:** badanie 1.27.0
 
 <!-- zdroj: research:src/commands/setup.ts:490-516 · src/core/browserhelp.ts browserState, agentBrowserAdvice, personBrowserNote · assets/lang/cs.json ui.doc.browser.archives.* · app:src/research-browser.ts:75-98 browserRow, :170-201 browserNote · src/ui/research-browser-ui.ts:96-144 · src/strings.ts research.browser -->
@@ -338,7 +338,7 @@ nich folder. Zadanie wraca do kolejki samo, gdy w badaniu są wszystkie jego ska
   człowiek, przechodzi tylko człowiek.
 - **Dlaczego:** skany to to, na co zadanie czekało; część skanów zadania nie kończy.
 - **Obsługa:** terminal: `strom task wait T… --images B…:40-45`, `strom media add --inbox --waiting`, w Co czeka
-  **Otwórz folder (zapisano M/N)**. Aplikacja: Czeka na decyzję, przy pozycji w tej kolejności **Dodaj
+  **Otwórz folder (zapisano M/N)**. Aplikacja: Czeka na załatwienie, przy pozycji w tej kolejności **Dodaj
   skany**, **Otwórz stronę ↗**, **Odpowiedz**, **Omów z agentem**, **Otwórz folder** (dwa ostatnie otwierają badanie
   w terminalu). Stan skanów pokazuje „1 z 2 skanów”, a przy księdze chipy **zapisany** / **brak**. Witryny jednego
   archiwum czekają w jednej grupie **Archiwum** pod nazwą archiwum, z odnośnikiem **Strona archiwum ↗** i liczbą
@@ -425,7 +425,7 @@ mówi „Claude + Chrome”, chodzi o Claude Code z rozszerzeniem Claude in Chro
 
 Kroki przy zadaniu, które czeka na skany archiwum, do którego agentowi nie wolno:
 
-1. **Znaleźć:** aplikacja: **Czeka na decyzję** (grupa według archiwum). Terminal: menu **Co czeka (n)** lub wiersz
+1. **Znaleźć:** aplikacja: **Czeka na załatwienie** (grupa według archiwum). Terminal: menu **Co czeka (n)** lub wiersz
    stanu **Czeka: N**. Pozycja podaje księgę, numery skanów i czego do tego brakuje.
 2. **Wybrać drogę:**
    - z Claude Code i rozszerzeniem Claude in Chrome można dać archiwum zgodę **przez przeglądarkę** (aplikacja:
@@ -445,7 +445,7 @@ Kroki przy zadaniu, które czeka na skany archiwum, do którego agentowi nie wol
 
 - **Granice:** zgoda, odpowiedź i zapisanie skanów należą tylko do człowieka; agent nie zrobi ich za człowieka
   ([R6.6](R6-awaiting-action.md#R6.6)).
-- **Obsługa:** aplikacja: Czeka na decyzję. Terminal: Co czeka, `strom allow archive`, `strom media add --inbox
+- **Obsługa:** aplikacja: Czeka na załatwienie. Terminal: Co czeka, `strom allow archive`, `strom media add --inbox
   --waiting`.
 - **Obowiązuje od:** badanie 1.27.0, aplikacja Strom 3.23.0
 

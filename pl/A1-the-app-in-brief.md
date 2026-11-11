@@ -85,7 +85,7 @@ treści części A, R i S, **Słowniczek pojęć** i wyszukiwanie według słowa
     od …”).
 - **Obsługa:** aplikacja: **Akcje → Jak działa Strom**, na telefonie **Więcej → Jak działa Strom** albo **O aplikacji
   → Jak działa Strom**. Kółko **?** w nagłówku otwiera pomoc od razu przy zasadzie: w Przeglądzie badania i małym
-  panelu przy sekcjach **Kolejka** ([R2.4](R2-lines-and-queue.md#R2.4)), **Czeka na decyzję** ([R6.4](R6-awaiting-action.md#R6.4))
+  panelu przy sekcjach **Kolejka** ([R2.4](R2-lines-and-queue.md#R2.4)), **Czeka na załatwienie** ([R6.4](R6-awaiting-action.md#R6.4))
   i **Teraz** ([R7](R7-when-the-agent-works.md), przy wstrzymaniu [R7.6](R7-when-the-agent-works.md#R7.6)), w oknie **Miejsca** ([R4.5](R4-places.md#R4.5)), w menedżerze miejsc
   ([R4.4](R4-places.md#R4.4)), w panelu sprzeczności ([R5.3](R5-conflicts.md#R5.3)) i w **Co wie badanie → Sprzeczności**
   ([R5.6](R5-conflicts.md#R5.6)). W badaniu: `strom doc`

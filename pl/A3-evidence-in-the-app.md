@@ -12,9 +12,10 @@ z GEDCOM jest w [A2](A2-loading-a-family-tree.md).
 Źródło to jeden konkretny zapis: chrzest, ślub, zgon. Drzewo ma jedną listę źródeł. Osoby i dane tylko się do nich
 odwołują, więc jeden zapis może dokumentować wiele osób i wiele danych.
 
-- Pola: **Tytuł** (obowiązkowe), **Archiwum / instytucja**, **Sygnatura / strona**, **URL**, **Notatka**. Pod
-  **Więcej: transkrypcja, data zapisu, wiarygodność** są **Transkrypcja zapisu**, **Data zapisu**
-  i **Wiarygodność**. Sekcja jest otwarta, gdy któreś z nich jest wypełnione.
+- Pola: **Tytuł** (obowiązkowe), **Archiwum**, **Sygnatura**, **Folio/strona**, **Skan**, **Dalsza lokalizacja**,
+  **URL**, **Notatka**. Gdzie wpis stoi w księdze, opisuje [A3.9](#A3.9). Pod **Więcej: transkrypcja, data zapisu,
+  wiarygodność** są **Transkrypcja zapisu**, **Data zapisu** i **Wiarygodność**. Sekcja jest otwarta, gdy któreś z nich
+  jest wypełnione.
 - **Data zapisu** mówi, kiedy zapis sporządzono. Może się różnić od daty zdarzenia, np. chrzest zapisany później.
 - **Wiarygodność** ma trzy stopnie: **Oryginał**, **Odpis / indeks**, **Niepewne**. Drugie kliknięcie wybranego
   stopnia go anuluje. Ocenia jedno źródło, nie daną. Jak traktuje ją badanie, opisuje
@@ -27,9 +28,10 @@ odwołują, więc jeden zapis może dokumentować wiele osób i wiele danych.
   według tytułu); **Edycja źródła**, **Dodaj źródło**. Pozycja **Źródła** w menu **Akcje** jest tylko przy drzewie,
   które można edytować, i tylko wtedy, gdy jakieś źródło już istnieje lub włączone jest **Ustawienia → Karta osoby →
   Pola zaawansowane**.
-- **Obowiązuje od:** aplikacja 1.4.0; **Wiarygodność** i **Data zapisu** 3.1.0
+- **Obowiązuje od:** aplikacja 1.4.0; **Wiarygodność** i **Data zapisu** 3.1.0; **Sygnatura**, **Folio/strona**,
+  **Skan** i **Dalsza lokalizacja** 3.27.0 (wcześniej **Archiwum / instytucja** i **Sygnatura / strona**)
 
-<!-- zdroj: app:src/types.ts Source · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/fieldQuality/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel -->
+<!-- zdroj: app:src/types.ts Source · od 3.27.0: app:9732853b strings.ts sources.fieldRepository/fieldCallNumber/fieldFolio/fieldImage/fieldReference · src/ui/sources.ts:214 renderSourcesList, :327 deleteSource, :531 fillSourceEditor, :576 wireSourceEditor, :667 renderQualityControl, :733 saveSourceFromModal · src/ui/tree-management.ts:675 isSourcesMenuOffered · src/settings.ts:320 isAdvancedFields · strings.ts sources.titleHint/fieldTitle/fieldRepository/fieldReference/fieldUrl/fieldNote/more/fieldTranscript/fieldRecordDate/recordDateHint/fieldQuality/quality1-3/titleRequired/citations/deleteConfirm, advanced.settingLabel -->
 
 <a id="A3.1.1"></a>
 ### A3.1.1 Transkrypcja i Transkrypcja zweryfikowana
@@ -97,8 +99,12 @@ osoby, do ślubu i do wspólnego zdarzenia pary. Z cytatów aplikacja liczy pozi
   sprawdzenia. Otwarte z etykiety cytatu zostaje od razu tam zacytowane.
 - **Obowiązuje od:** aplikacja 3.1.0 (**Ostatnio używane**, **Kolejny zapis z tej samej księgi**); **Inna strona**
   3.9.0; 3.25.0: **Kolejny zapis z tej samej księgi** bez numeru i daty zapisu
+- **Od aplikacji 3.27.0:** szuka się także w sygnaturze, folio i skanie. Przy źródle z polami ([A3.9](#A3.9))
+  **Kolejny zapis z tej samej księgi** przejmuje archiwum, sygnaturę i odnośnik; **Folio/strona**, **Skan** i **Dalsza
+  lokalizacja** zostają puste, a kursor stoi w **Folio/strona**. **Inna strona** przy źródle z polami przejmuje także
+  sygnaturę. Starsze źródło (lokalizacja jednym tekstem) zachowuje się jak dotąd.
 
-<!-- zdroj: app:src/ui/sources.ts:1427 renderSourcePickerList, :322 sourceMatches, :1475 currentCitationSourceIds, :1505 noteRecentSource, :1526 otherPageFromPicker, :1554 createSourceFromPicker, :1569 suggestedSourceTitle, :1181 startSameBookEntry · src/settings.ts:12 RECENT_SOURCES_MAX · strings.ts sources.pickTitle/searchPlaceholder/recent/all/createNew/newTitleMarriage/otherPage/otherPageTitle/sameBook · 3.25.0: app:7327b758 src/source-page.ts sameBookReference (ENTRY_PART, DATE_PART, whole), src/ui/sources.ts:1217 (nepoznaný tvar označený) · CHANGELOG.cs.md 3.25.0 · dirigent:test/vysledek-1107-nejista-mista.md -->
+<!-- zdroj: app:src/ui/sources.ts:1427 renderSourcePickerList, :322 sourceMatches, :1475 currentCitationSourceIds, :1505 noteRecentSource, :1526 otherPageFromPicker, :1554 createSourceFromPicker, :1569 suggestedSourceTitle, :1181 startSameBookEntry · src/settings.ts:12 RECENT_SOURCES_MAX · strings.ts sources.pickTitle/searchPlaceholder/recent/all/createNew/newTitleMarriage/otherPage/otherPageTitle/sameBook · 3.25.0: app:7327b758 src/source-page.ts sameBookReference (ENTRY_PART, DATE_PART, whole), src/ui/sources.ts:1217 (nepoznaný tvar označený) · CHANGELOG.cs.md 3.25.0 · dirigent:test/vysledek-1107-nejista-mista.md · 3.27.0: app:9732853b (další zápis s poli, Jiná stránka se signaturou), c3278633 sourcePlaceSearchText -->
 
 <a id="A3.3"></a>
 ## A3.3 Wycinek zapisu
@@ -295,3 +301,84 @@ komputerze.
   wiersz pod filtrem mówi, gdzie obrazy są, a **?** otwiera tę regułę.
 
 <!-- zdroj: app:src/strings.ts researchImages.* (held.scope/limit/later, heldTag, filter, bulkLine, bulkLoad, bulkSummary, bulkReady, bulkSpace, bulkCanClose, bulkLeft, menuRow, removeFromApp(Note), heldBridgeOff, heldDevice, settings.section/auto/autoDesc/remove/loadAll/removeKeep, export.legend/none/app/all/allOff) · src/help/topics.ts imagesHeld · CHANGELOG.cs.md 3.14.0, 3.25.0 · commit 68b31a48 -->
+
+<a id="A3.9"></a>
+## A3.9 Gdzie stoi wpis w księdze
+
+Gdzie wpis stoi, zapisuje się przy źródle w polach. Po archiwum, sygnaturze, folio i skanie wpis da się odnaleźć
+ponownie także wtedy, gdy archiwum zmieni adresy skanów albo księga nie ma numerów stron.
+
+- **Pola:**
+  - **Archiwum**: archiwum, parafia, biblioteka;
+  - **Sygnatura**: sygnatura księgi, numer inwentarzowy;
+  - **Folio/strona**: folio albo strona, tak jak numeruje je księga, także ze słowem („fol. 12v”, „pag. 112”);
+  - **Skan**: numer skanu w przeglądarce archiwum. **?** obok pola mówi, po co: „Numer skanu w przeglądarce archiwum.
+    Po archiwum, sygnaturze, folio i skanie wpis da się odnaleźć także po zmianie adresu.”;
+  - **Dalsza lokalizacja**: reszta, np. numer wpisu, kolumna, tom.
+- **Starsze źródło** ma miejsce wpisu jednym tekstem w **Dalsza lokalizacja**, a nowe pola puste. Gdy **Folio/strona**
+  i **Skan** są puste, a tekst wymienia folio albo skan, edytor proponuje pod polami „Z lokalizacji: fol. 31 recto ·
+  skan 3 · reszta „nr 2””. **Przejmij** wypełnia trzy pola („Przejęto z lokalizacji „…”. Zapisze się po Zapisz.”),
+  **Cofnij** je przywraca. Nic nie zapisuje się samo: przejęte pola zapisują się dopiero z **Zapisz**, jednym krokiem
+  wstecz. Rozpoznanie to kod aplikacji, taki sam jak w badaniu ([R3.4.3](R3-verification-and-citation.md#R3.4.3)).
+- **Sprzeczność:** gdy **Dalsza lokalizacja** wymienia inny skan albo folio niż pole, edytor to mówi („Lokalizacja
+  podaje skan 35, pole Skan mówi 34. W GED obowiązuje pole.”) i proponuje **Zmień lokalizację na „…”** (albo **Usuń
+  sprzeczną część**). Zapisać można także ze sprzecznością; do GEDCOM trafia pole.
+- **Gdzie widać:**
+  - podgląd źródła pod wycinkami: **Księga** (archiwum · sygnatura) i **Wpis** (folio · skan · dalsza lokalizacja),
+    przy starszym źródle **Lokalizacja** w całości; pod nimi link do strony w archiwum, bez linku „Brak linku. Wpis da
+    się odnaleźć po księdze i wpisie.”;
+  - **Akcje → Źródła** i wybór źródła: archiwum · sygnatura · folio · skan w skrócie („skan 34”);
+  - etykieta cytatu: dymek ma trzy wiersze (tytuł, księga, wpis);
+  - strona osoby, księga rodu i strony rodzin podają także sygnaturę, folio i skan;
+  - Tabela: kolumny w [A6.7.11](A6-views.md#A6.7.11) i [A6.7.12](A6-views.md#A6.7.12).
+  Źródło bez nowych pól wygląda wszędzie jak dotąd.
+- **Granice:**
+  - wyczyszczone pole usuwa się ze źródła. Przy drzewie badania wyczyszczenie przenosi się także do badania
+    ([S2.2.2](S2-edits-from-the-app.md#S2.2.2));
+  - **Kolejny zapis z tej samej księgi** i **Inna strona** z polami opisuje [A3.2.1](#A3.2.1);
+  - GEDCOM: księga jako `REPO` z `CALN`, jedna czytelna `PAGE` i własne znaczniki Strom ([A2.6](A2-loading-a-family-tree.md#A2.6),
+    [A2.7](A2-loading-a-family-tree.md#A2.7));
+  - pag. i fol. ani strona przednia i odwrotna (r/v) nie są rozróżniane osobno: są częścią tekstu **Folio/strona**.
+- **Obsługa:** edytor źródła (**Edycja źródła**, **Dodaj źródło**): **Archiwum**, **Sygnatura**, **Folio/strona**,
+  **Skan**, **Dalsza lokalizacja**, **URL**; propozycja **Z lokalizacji:** z **Przejmij** i **Cofnij**.
+- **Obowiązuje od:** aplikacja 3.27.0
+
+<!-- zdroj: app:c3278633 src/types.ts Source.callNumber/folio/image (reference = další umístění), src/source-location.ts hasPlaceFields, recognizeLocation, locatorOverlap, composePage, sourcePlaceParts, sourcePlaceLine (short: imageShort), test/fixtures/source-locations.json (38 případů společných s výzkumem) · 9732853b src/ui/sources.ts:1269 (návrh sleduje psaní), :1363-1400 řádek pod poli (taken/conflict/proposal jen při prázdném foliu i snímku), :1429 Vrátit; prázdná pole odebrána · 2f4a9c2f prohlížeč (viewerBook/viewerEntry/viewerLocation/viewerNoUrl), Správa a výběr, bublina čipu, person-page.ts, book-blocks.ts, family-pages-html.ts · strings.ts sources.fieldRepository(Ph)/fieldCallNumber(Ph)/fieldFolio(Ph)/fieldImage(Ph)/fieldImageHelp/imageHelpLabel/fieldReference(Ph)/proposalFrom/proposalRest/proposalTake/proposalTaken/proposalUndo/conflictImage/conflictFolio/conflictFix/conflictFixEmpty/imageShort · spec 075 K1.1, rozhodnutí 1, 2, 5 · dirigent:prace/1111-app-citace-pole -->
+
+<a id="A3.9.1"></a>
+### A3.9.1 Podziel według propozycji
+
+Starsze lokalizacje wszystkich źródeł można podzielić na pola naraz: folio/strona i skan trafiają do własnych pól,
+reszta zostaje w **Dalsza lokalizacja**. Dzieli kod, bez agenta, i jednym krokiem da się to także cofnąć.
+
+- **Oferta:** w **Akcje → Źródła** i nad Tabelą › Źródła wiersz „Lokalizacje 12 źródeł można podzielić na pola.”
+  z **Podziel według propozycji…**. Okno **Podziel lokalizacje na pola** pokazuje podgląd: **Źródło**, **Lokalizacja
+  dotąd**, **Folio/strona**, **Skan**, **Dalsza lokalizacja**; najpierw 6 źródeł, **Pokaż wszystkie (n)** wczytuje
+  kolejne przy przewijaniu. Ile lokalizacji nie rozpoznano („… pozostaną bez zmian”), stoi pod podglądem.
+- **Zasada:** „Pole, które jest już wypełnione, nie zostanie nadpisane. Część, którą pole podaje inaczej, zostaje
+  w lokalizacji.” Wartość, która zostaje, ma w podglądzie „· bez zmian”. Wiersz notatki „Sygnatura: …” z wcześniejszego
+  importu GEDCOM przenosi się do pustego pola **Sygnatura** (kolumna **Sygnatura** z „· z notatki”).
+- **Podziel (n)** zmienia wszystkie n źródeł jednym krokiem, także te, których podgląd jeszcze nie pokazał. Komunikat
+  „Podzielono n lokalizacji.” oferuje przez 8 sekund **Cofnij**; cofnąć można też Ctrl+Z (na Macu ⌘Z). Dopóki podział
+  jest ostatnim krokiem, **Źródła** mówią „Lokalizacje podzielone … (n źródeł).” z **Cofnij…**, a okno otwiera się
+  z wierszem **Cofnij podział z …**. Gdy nie ma już nic do podziału: „Innych lokalizacji do podziału teraz nie ma.”
+- **Drzewo badania:** dzieli badanie, tylko gdy działa i umie dzielić ([R3.4.4](R3-verification-and-citation.md#R3.4.4)).
+  Podgląd pochodzi z badania; **Podziel** prosi je o podział dokładnie tego, co pokazał podgląd, a postęp zostaje na
+  przycisku, dopóki badanie nie zapisze. Aplikacja przejmuje potem nową wersję badania sama, gdy różnią się tylko
+  lokalizacje źródeł i nic nie czeka na wysłanie. **Cofnij** cofa podział przez badanie.
+- **Granice:**
+  - drzewo badania bez działającego badania: w **Źródła** tylko zdanie „Podział lokalizacji działa, gdy badanie jest
+    uruchomione.”, w Tabeli nic. Archiwum Strom, drzewo tylko do odczytu i drzewo zablokowane podziału nie oferują;
+  - źródła zmienione w międzyczasie: „Źródła w międzyczasie się zmieniły. Podgląd pokazuje stan obecny.”; badanie zajęte
+    innym zadaniem: „Badanie pracuje teraz nad innym zadaniem. Podział będzie możliwy za chwilę.” ze **Spróbuj
+    ponownie**;
+  - cofnięcie odmawia w całości, gdy źródło zmieniło się po podziale: mówi ile i podaje pierwsze trzy, nic się nie
+    cofa. W aplikacji bez badania po późniejszej zmianie drzewa „Cofnięcie nie jest już możliwe: drzewo zmieniło się od
+    podziału.”;
+  - nierozpoznana lokalizacja zostaje, jaka jest. Przykłady nierozpoznanych podgląd pokazuje tylko przy drzewie bez
+    badania.
+- **Obsługa:** **Akcje → Źródła → Podziel według propozycji…**; Tabela › Źródła, wiersz nad tabelą; **Podziel (n)**,
+  **Cofnij**, **Cofnij…**. Badanie w terminalu: `strom source split` ([R3.4.4](R3-verification-and-citation.md#R3.4.4)).
+- **Obowiązuje od:** aplikacja 3.27.0; drzewo badania z badaniem 1.31.0
+
+<!-- zdroj: app:8dd21adf src/source-split.ts SplitSourceKind (local/bridge/needsResearch/archive/none), localSplitPlan (řádek poznámky „Signatura:“ v každém jazyce importu), splitOffer (needsResearch jen v Prameny) · src/ui/source-split-ui.ts:37 TOAST_MS 8000, sourceSplitKind (read-only/zamčený → none, archiv → archive, most + feature sources.split → bridge) · 5a59f01d src/source-split-bridge.ts (GET/POST sources/split, undo), náhled přes most bez příkladů nerozpoznaných (dirigent:prace/1111-app-citace-pole Navazuje) · src/ui/misc.ts:1352 Ctrl/⌘+Z · strings.ts sources.split.* (offer, open, needsResearch, doneLine, undoOpen, title, lead, rule, sigNote, col*, kept, fromNote, all, shown, unrec, go, progress, toast, undo, undoRow, nothingLeft, errPlan, errBusy, retry, errUndoLater, errUndo) · spec 075 K4.2 · research:c4fe4fac -->

@@ -215,8 +215,13 @@ jako **Spolehlivost pramene**: 3 je **Originál**, 2 **Opis / index**, 1 a 0 **N
 - **Ovládání:** **Spolehlivost pramene** v detailu pramene (**Originál**, **Opis / index**, **Nejisté**).
 - **Platí od:** aplikace 1.9.4 (`QUAY`), 3.9.0 (odvozený pramen pro stranu).
 - **Od aplikace 3.22.0:** Příběh osoby (`_STORY`) čte a exportuje i odkazy na prameny.
+- **Od aplikace 3.27.0:** signatura z `REPO` › `CALN` jde do pole **Signatura** (první `CALN`), ne do
+  poznámky; vydavatel a autor zůstávají v poznámce. Export píše knihu jako `1 REPO` s `2 CALN` a jednu čitelnou
+  `PAGE` složenou z polí: folium, další umístění, snímek („fol. 12v, č. 5, snímek 34“; slovo pro snímek v jazyce
+  aplikace). Číslo, které už další umístění jmenuje, se neopakuje. Pramen bez folia a snímku se exportuje přesně jako
+  dřív. Pole pramene popisuje [A3.9](A3-evidence-in-the-app.md#A3.9).
 
-<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE -->
+<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord -->
 
 <a id="A2.7"></a>
 ## A2.7 Vlastní značky Stromu a co se vrací
@@ -236,8 +241,11 @@ Hlavička `1 SOUR STROM` říká, že soubor psal Strom.
 - **Od aplikace 3.26.0:** ID programů se vracejí pod `_STROM_IMPORT` a `_STROM_XID`; soubor se při novém načtení
   podle nich páruje ([S6.7](S6-tree-from-another-program.md#S6.7)). Soubor s hlavičkou Stromu není rodokmen z jiného
   programu: nemá značku **Z rodokmenu** ani kartu **Co teď**.
+- **Od aplikace 3.27.0:** folium, snímek a další umístění pramene se vracejí pod `_STROM_FOLIO`, `_STROM_IMAGE`
+  a `_STROM_LOCATOR` vedle složené `PAGE`; se značkami platí pole, ne `PAGE`. Export **Zpět do {program}** ([S6.6](S6-tree-from-another-program.md#S6.6)) pro program, ze
+  kterého strom přišel, je nepíše. Výzkumu je aplikace posílá, jen když výzkum říká, že je čte.
 
-<!-- zdroj: app:src/ged-exporter.ts:506 STROM_SEX_U_LINE, :508 exportToGedcom, :680 TYPE married · app:src/ged-parser.ts:2174 _STROM_VERIFIED/_STROM_READ, :2324 výzkumné bloky, :2574 _DRAFT, :2654 _STROM_STATUS, :1914 _STROM_PLACE · app:src/research-link.ts:2936 researchHeaderLines -->
+<!-- zdroj: app:src/ged-exporter.ts:506 STROM_SEX_U_LINE, :508 exportToGedcom, :680 TYPE married · app:src/ged-parser.ts:2174 _STROM_VERIFIED/_STROM_READ, :2324 výzkumné bloky, :2574 _DRAFT, :2654 _STROM_STATUS, :1914 _STROM_PLACE · app:src/research-link.ts:2936 researchHeaderLines · 3.27.0: app:c3278633 src/ged-exporter.ts sourceFields (false pro výzkum bez sources.fields, nikdy u backTo), src/ged-parser.ts placeFields (s _STROM_* platí pole) -->
 
 <a id="A2.8"></a>
 ## A2.8 Opakovaný import a sloučení

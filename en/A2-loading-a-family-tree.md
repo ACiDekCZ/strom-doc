@@ -234,8 +234,14 @@ index**, 1 and 0 **Uncertain**.
 - **Controls:** **Source reliability** in the source's detail (**Original**, **Copy / index**, **Uncertain**).
 - **Since:** app 1.9.4 (`QUAY`), 3.9.0 (derived source for a page).
 - **From app 3.22.0:** the person's story (`_STORY`) also reads and exports references to sources.
+- **From app 3.27.0:** the call number from `REPO` › `CALN` goes into the field **Call number** (the first `CALN`), not into
+  the note; the publisher and the author stay in the note. The export writes the book as
+  `1 REPO` with `2 CALN` and one readable `PAGE` composed of the fields: folio, other location, image ("fol. 12v,
+  no. 5, image 34"; the word for the image in the app's language). A number the other location already names is not
+  repeated. A source without a folio and an image is exported exactly as before. The source's fields are described in
+  [A3.9](A3-evidence-in-the-app.md#A3.9).
 
-<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE -->
+<!-- zdroj: app:src/ged-parser.ts:2140–2230 záznam SOUR, :1700 noteQuay, :3010–3055 citace a odvozené prameny, :3099–3140 převod pramenů · app:src/ui/sources.ts:75 qualityLabel · app:src/ged-exporter.ts pushCitation · strings.ts gedcom.quality1–3, gedcom.reliabilityLabel · research:src/sync.ts:4660 QUAY_EVIDENCE · 3.27.0: app:c3278633 src/ged-parser.ts (REPO jen první, CALN → callNumber), src/ged-exporter.ts (1 REPO / 2 CALN, composePage), src/source-location.ts composePage, imageWord -->
 
 <a id="A2.7"></a>
 ## A2.7 Strom's own tags and what comes back
@@ -258,8 +264,12 @@ new load. The header `1 SOUR STROM` says that Strom wrote the file.
 - **From app 3.26.0:** program IDs come back under `_STROM_IMPORT` and `_STROM_XID`; on a new load the file is paired
   by them ([S6.7](S6-tree-from-another-program.md#S6.7)). A file with Strom's header is not a family tree from another
   program: it has no mark **From family tree** and no card **What next**.
+- **From app 3.27.0:** a source's folio, image and other location come back under `_STROM_FOLIO`, `_STROM_IMAGE`
+  and `_STROM_LOCATOR` beside the composed `PAGE`; with the tags the fields hold, not `PAGE`. The export **Back to
+  {program}** ([S6.6](S6-tree-from-another-program.md#S6.6)) for the program the tree came from does not write them.
+  The app sends them to the research only when the research says it reads them.
 
-<!-- zdroj: app:src/ged-exporter.ts:506 STROM_SEX_U_LINE, :508 exportToGedcom, :680 TYPE married · app:src/ged-parser.ts:2174 _STROM_VERIFIED/_STROM_READ, :2324 výzkumné bloky, :2574 _DRAFT, :2654 _STROM_STATUS, :1914 _STROM_PLACE · app:src/research-link.ts:2936 researchHeaderLines -->
+<!-- zdroj: app:src/ged-exporter.ts:506 STROM_SEX_U_LINE, :508 exportToGedcom, :680 TYPE married · app:src/ged-parser.ts:2174 _STROM_VERIFIED/_STROM_READ, :2324 výzkumné bloky, :2574 _DRAFT, :2654 _STROM_STATUS, :1914 _STROM_PLACE · app:src/research-link.ts:2936 researchHeaderLines · 3.27.0: app:c3278633 src/ged-exporter.ts sourceFields (false pro výzkum bez sources.fields, nikdy u backTo), src/ged-parser.ts placeFields (s _STROM_* platí pole) -->
 
 <a id="A2.8"></a>
 ## A2.8 Repeated import and merging
