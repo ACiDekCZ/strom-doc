@@ -53,6 +53,37 @@ Z czym otwiera się drzewo, określa ustawienie drzewa **Domyślna osoba i widok
 
 <!-- zdroj: app:src/renderer.ts:1178 findDefaultFocusPerson, getStartupFocus · strings.ts treeManager.defaultPersonViewTitle, focus.defaultPersonLastFocused, focus.defaultPersonSpecific, focus.defaultViewFamily, focus.defaultViewLast · CHANGELOG.cs.md 3.21.0 -->
 
+<a id="A6.1.2"></a>
+### A6.1.2 Odstępy: Normalne i Gęste
+
+Ustawienie **Odstępy** określa odstępy między kartami i między pokoleniami w widokach Rodzina i Potomkowie. **Gęste**
+je zmniejsza, aby na ekranie zmieściło się więcej osób. **Normalne** jest domyślne, także na telefonie.
+
+| Odstęp | Normalne | Gęste |
+|---|---|---|
+| między kartami obok siebie | 31 px | 20 px |
+| między pokoleniami | 80 px | 48 px |
+| między partnerami | 18 px | 14 px |
+
+- Po przełączeniu drzewo od razu się przerysuje i zostaje przy tej samej osobie: przy karcie osoby w centrum, gdy jest
+  cała widoczna, w przeciwnym razie przy karcie najbliższej środka. Tak samo drzewo zachowuje się po zmianie
+  **Szczegóły kart**.
+- **Kolejność małżeństwa:** w Gęste zamiast pigułki „1. ∞ 1866” jest tylko krótkie „∞ 1” na brzegu karty, czyli
+  kolejność tego małżeństwa. Całą kolejność pokazuje dymek (myszą, klawiaturą i stuknięciem). Pigułka, która nie ma
+  przy karcie miejsca, nie jest rysowana.
+- **Eksport:** eksport plakatu ma własne ustawienie **Odstępy** (za formatem papieru i orientacją). Gdy różni się od
+  ekranu, obraz, plakat i PDF w arkuszach układają się na nowo z wybranymi odstępami, z tym samym wyborem osób i tymi
+  samymi kartami; ekran się nie zmienia. Pod każdą opcją jest liczba arkuszy („26 arkuszy A4”), gdy liczby się różnią.
+  Druk (Ctrl+P) bierze odstępy ekranu.
+- **Granice:** ustawienie należy do urządzenia i nie zapisuje się z drzewem. Oś czasu, Wachlarz, Mapa i Tabela mają
+  własny układ i ustawienie ich nie dotyczy; eksport plakatu z Wachlarza i Osi czasu nie ma wiersza **Odstępy**.
+- **Obsługa:** **Ustawienia** → **Karta osoby** → **Odstępy** (za **Szczegóły kart**): **Normalne** · **Gęste**. Na
+  małym ekranie bez kompaktowej karty pod ustawieniem jest „Na małym ekranie pomogą też karty Kompaktowe.” Eksport:
+  **Eksport plakatu** → **Odstępy**.
+- **Obowiązuje od:** aplikacja 3.27.0
+
+<!-- zdroj: app:src/types.ts TreeSpacing, DEFAULT_LAYOUT_CONFIG (31/80/18), DENSE_LAYOUT_CONFIG (20/48/14), layoutConfigFor · src/settings.ts getTreeSpacing/setTreeSpacing (treeSpacing), getPosterSpacing/setPosterSpacing (posterSpacing), výchozí normal · src/renderer.ts:804 STANDALONE_VIEWS (timeline, fan, map, table), getPosterLayout({spacing}), kotva překreslení (ústřední karta celá v obraze, jinak nejbližší středu; i při změně typu karty) · src/marriage-order.ts (husté: „∞ N“ na okraji karty, bez místa se nekreslí) · src/ui/export-image-ui.ts (řádek za formátem a orientací, skrytý u vějíře a časové osy, sheetsCount) · strings.ts spacing.label, normal, dense, desc, scope, scopeExport, smallHint, marriageOrder.short, poster.menu, poster.sheetsCount, settings.groupCard, cardDensity.settingLabel · commity 68b9dde4, 03918007, 928db183, e2891a8a · spec 069 K1.1, K3.1 -->
+
 <a id="A6.2"></a>
 ## A6.2 Widok Potomkowie
 
@@ -237,11 +268,18 @@ Widok Tabela opiera się na tabeli Ondřeja Chrpy.
   główną** i chip **Krewni**: przodkowie osoby głównej (także ona sama) i wszyscy ich potomkowie. Partnerzy, którzy
   weszli do rodziny przez małżeństwo, do nich nie należą.
 - **Pokolenie** 1 to najstarsze pokolenie drzewa; partner ma pokolenie swojego partnera.
-- **Żyje** liczy się jak ochrona osób żyjących ([A7.1](A7-book-pages-and-export.md#A7.1)).
+- **Żyjący** (kolumna, wartość „żyjący”) liczy się jak ochrona osób żyjących
+  ([A7.1](A7-book-pages-and-export.md#A7.1)).
 - Nad tabelą jest liczba („42 z 120 osób”) i sortowanie („Sortowanie: …”). Pole **Szukaj osoby...** na pasku
   narzędzi w tabeli wybiera wiersz osoby i przewija do niego; osoba w centrum się nie zmienia.
+- **Osoba w centrum między widokami:** po przełączeniu na Tabelę wiersz osoby w centrum jest aktywnym wierszem
+  i tabela przewija się do niego (wybrany wiersz, który jej dotyczy, zostaje; gdy filtr lub wyszukiwanie osobę
+  pomija, aktywnego wiersza nie ma). Po przełączeniu z Tabeli osobą w centrum jest osoba aktywnego wiersza: przy
+  związku ten partner, który już jest osobą w centrum, w przeciwnym razie **Partner 1**; przy wydarzeniu osoba
+  w centrum, gdy jest wśród jego osób, w przeciwnym razie pierwsza osoba; wiersz źródła osoby w centrum nie zmienia.
 - **Granice:**
   - wyróżnienie rodu ([A6.6](#A6.6)) w tabeli się nie stosuje; ród można wybrać chipem **Ród** ([A6.7.6](#A6.7.6));
+  - kolumny, chipy i widoki badań są tylko w drzewie z badania ([A6.7.14](#A6.7.14));
   - drzewo tylko do odczytu (śledzone drzewo, drzewo zapisane nowszą wersją aplikacji, zablokowane drzewo) tabela
     tylko pokazuje: „Tylko do odczytu: edycji i „To nie błąd” tu nie ma.” Przeglądanie, filtr, sortowanie i eksport
     CSV i XLSX działają; widoku nie można zapisać, przemianować ani usunąć.
@@ -249,7 +287,7 @@ Widok Tabela opiera się na tabeli Ondřeja Chrpy.
   Tabela**. Widok jest zapamiętywany jak pozostałe ([A6.1.1](#A6.1.1)).
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Związki w tabeli osób
@@ -268,10 +306,12 @@ z 3”). Wiersz osoby ma w kolumnie **Partner** liczbę („3 związki”), a po
   filtru.
 - **Sortowanie według kolumny związku** bierze pierwszy związek, który spełnia filtr.
 - Osoba z jednym związkiem ma jego dane bezpośrednio w swoim wierszu.
+- Podwiersz związku niesie tylko ustalenia swojego związku. Ustalenia osoby (np. wiek matki przy urodzeniu) i paski
+  zwiniętych grup zostają w wierszu osoby.
 - **Obsługa:** **Rozwiń związki** / **Zwiń związki** (na telefonie w menu **⋯**); klawisze → i ← w kolumnie **Imię
   i nazwisko**, * dla wszystkich osób; menu wiersza. Stan zapisuje się z widokiem ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
+<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d · nálezy podřádku: commit 75de3a9b (T54 F6) -->
 
 <a id="A6.7.2"></a>
 ### A6.7.2 Kolumny
@@ -285,11 +325,16 @@ Kolumny są w grupach. Które są widoczne i w jakiej kolejności, jest części
 
 - **Imię i nazwisko** (przy związkach **Partner 1**) jest przypięte po lewej i sortuje się według nazwiska, potem
   imienia. **Nazwisko** to nazwisko po ślubie, w przeciwnym razie rodowe; **Nazwisko rodowe** to zapisane nazwisko.
-- **ID badań** pokazuje tylko numer osoby z badania (P…).
+- **ID badań** pokazuje tylko numer osoby z badania (P…). **Nr ref. (REFN)** to numer referencyjny osoby, tak jak
+  przyniósł go plik GEDCOM (i jak wraca do niego); sortuje się i filtruje jako tekst.
+- **Otwarte pytanie**, **⇄ W innym drzewie** (drzewa na tym urządzeniu, w których osoba jest) i **Stan osoby**
+  (oznaczenie udokumentowania i wiarygodności z karty, słowami; sortowane od najsilniejszego) są w każdym drzewie.
+  Grupa **Badania** jest tylko w drzewie z badania ([A6.7.14](#A6.7.14)).
 - **Wydarzenia** (**Zawód**, **Miejsce zamieszkania**, **Wyznanie**, **Służba wojskowa**, **Emigracja**,
   **Wykształcenie**) pokazują każdą wartość raz, najnowszą pierwszą.
 - Kolumny **Wiarygodność …** i **Pewność z badań** mają wartość tylko w drzewie z badania
   ([S7](S7-reliability-and-verification.md)).
+- Kolumny **Nr ref. (REFN)**, **Otwarte pytanie**, **⇄ W innym drzewie** i **Stan osoby** są domyślnie ukryte.
 - **Granice:** zwinięta grupa to wąski pasek; pokazuje najwyższy poziom ustalenia w swoich komórkach. Na telefonie
   przypięte imię i nazwisko jest węższe, a nagłówek można tylko czytać, nie zmieniać.
 - **Obsługa:**
@@ -300,7 +345,7 @@ Kolumny są w grupach. Które są widoczne i w jakiej kolejności, jest części
     **Zwiń grupę …** / **Rozwiń grupę …**; przy kolumnie obliczonej „Obliczono z: …”;
   - szerokość kolumny przez przeciągnięcie krawędzi nagłówka.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus -->
 
 <a id="A6.7.3"></a>
 ### A6.7.3 Wartości obliczone i zastępcze
@@ -377,10 +422,14 @@ jest podbarwiona i ma oznaczenie poziomu. Kontrola działa nad całym drzewem w 
   - **To nie błąd** (powiadomienie „Oznaczono: to nie błąd” z **Cofnij**); przy nietypowym **Zgłaszaj ponownie**;
   - **Jakość danych ›** otwiera okno Jakości danych na grupie tego ustalenia; przy nietypowym na liście oznaczonych.
 
+  Komórki **Ustalenia** i **Najwyższy poziom** otwierają listę wszystkich ustaleń osoby (kliknięcie, Enter,
+  stuknięcie; na telefonie panel od dołu): przy każdym poziom, tekst i kogo lub czego dotyczy; zgłaszane według
+  poziomu, oznaczone **To nie błąd** na końcu.
+
   Legenda **Oznaczenia** („Oznaczenia w komórkach”) objaśnia też niepewną datę, wiarygodność, wartość zastępczą,
   obliczenie i **Nie dotyczy**. Jak które oznaczenie wygląda: [A6.7.13](#A6.7.13).
 
-<!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 -->
+<!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 · seznam nálezů osoby z buněk Nálezy a Nejvyšší úroveň: commit 75de3a9b (T54 F5) -->
 
 <a id="A6.7.6"></a>
 ### A6.7.6 Filtr, wyszukiwanie i sortowanie
@@ -395,7 +444,9 @@ Filtr wybiera wiersze, wyszukiwanie zawęża je dalej, sortowanie ustala kolejno
 - **Filtr w kolumnie** (**Filtr…** w nagłówku) według rodzaju kolumny:
   - wartości z listy (płeć, stan związku, poziom ustalenia, ród …);
   - zakres **od**–**do** (przy dacie **Rok**, przy wieku, liczbie i procentach liczba);
-  - tekst: **zawiera** · **zaczyna się od**;
+  - tekst: **zawiera** · **zaczyna się od** · **jest** · **nie jest** (bez względu na wielkość liter i znaki
+    diakrytyczne; chip „Kolumna = wartość ×” lub „Kolumna ≠ wartość ×”; szybko z menu komórki,
+    [A6.7.15](#A6.7.15));
   - przy każdym **Tylko puste** · **Tylko wypełnione**.
 - Obowiązują wszystkie filtry naraz. Liczba filtrów jest na **Filtry (n)**, wszystko anuluje **Wyczyść filtry**. Bez
   wiersza: „Nic nie pasuje do filtru”.
@@ -407,7 +458,7 @@ Filtr wybiera wiersze, wyszukiwanie zawęża je dalej, sortowanie ustala kolejno
   w obu kierunkach. Liczby w tekście sortują się jak liczby.
 - **Granice:** wyszukiwanie nie zapisuje się w widoku ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 -->
+<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 · je / není: strings.ts table.matchEquals, matchNotEquals (commit 05d9a9ab, T54 F4) -->
 
 <a id="A6.7.7"></a>
 ### A6.7.7 Widoki tabeli
@@ -463,6 +514,7 @@ anuluje.
 - Po edycji powiadomienie „Zapisano: …”, wiersz krótko mignie, a wiersze zostają w kolejności. Wiersz, który już nie
   spełnia filtru, zostaje z etykietą „nie pasuje do filtru” do następnej zmiany sortowania, filtru lub widoku. Zmianę
   z badania zgłasza „Badania zmieniły 3 dane: …”.
+- Jedną daną można edytować także bezpośrednio w komórce ([A6.7.15](#A6.7.15)).
 - **Granice:** w drzewie tylko do odczytu **Edytuj…** nie ma.
 - **Obsługa:** przyciski przy wybranym wierszu, menu wiersza (prawy przycisk; także rozwinięcie związków). Na
   telefonie stuknięcie wiersza otwiera panel z akcjami i ze związkami („Związek 1: … · Edytuj ›”).
@@ -555,8 +607,9 @@ Tabela źródeł ma wiersz dla każdego źródła drzewa (**Akcje → Źródła*
 i mówi, ile źródło w drzewie dokumentuje.
 
 - **Kolumny** w grupach **Źródło** · **Użycie**:
-  - **Tytuł**, **Archiwum**, **Księga, sygnatura, folio**, **Online** (adres bez `https://`; adres internetowy jest
-    linkiem ↗ do nowego okna);
+  - **Tytuł**, **Archiwum**, **Księga, sygnatura, folio**, **Online** (adres źródła, w przeciwnym razie strona jego
+    pierwszego wypisu, bez `https://`; adres internetowy jest linkiem ↗ do nowego okna, tylko http i https; zapisany
+    bez schematu („www.…”) otwiera się przez https; kliknięcie linku nie zmienia wyboru wiersza);
   - **Osób**: ile osób ma daną, która cytuje to źródło; dana związku dokumentuje obu partnerów;
   - **Faktów**: ile faktów cytuje źródło. Fakt to jedna lista cytowań: cytowania osoby, urodzenia, zgonu, każdego
     wydarzenia osoby, ślubu, rozwodu i każdego wydarzenia pary;
@@ -564,22 +617,24 @@ i mówi, ile źródło w drzewie dokumentuje.
     w aplikacji i badanie), w przeciwnym razie „nie”;
   - **Transkrypcja**: tak / nie; w katalogu kolumn jest też **Data wpisu**.
 - Cytowania osób zastępczych i źródeł opowieści się nie liczą.
-- **Chipy:** **Bez osoby** (żadna osoba go nie cytuje), **Nieprzeczytane**, **Z transkrypcją**, **Online**.
+- **Chipy:** **Bez osoby** (żadna osoba go nie cytuje), **Nieprzeczytane**, **Z transkrypcją**, **Online** (tak samo jak
+  kolumna **Online**, także z adresem bez `https://`).
 - **Obsługa:** wbudowany widok **Wszystkie źródła**. Przy wierszu **Otwórz źródło** i **Edytuj…**: oba otwierają
   menedżera źródeł na tym źródle; **Pokaż w drzewie** tu nie ma.
 - **Granice:** w zablokowanym drzewie źródło tylko się pokazuje, bez edycji.
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
 
 <a id="A6.7.12"></a>
 ### A6.7.12 Cytowania i chrzestni w tabeli osób
 
 Tabela osób ma kolumny, które pokazują, z jakiego źródła jest urodzenie, ślub i zgon, i kto był chrzestnym.
 
-- **Cytowania** (grupa **Źródła**): **Urodzenie: archiwum**, **Urodzenie: sygnatura**, **Urodzenie: link** i to samo
+- **Cytowania** (grupa **Źródła**): **Urodzenie: archiwum**, **Urodzenie: sygnatura**, **Urodzenie: URL** i to samo
   dla **Ślub** i **Zgon**. Komórka pokazuje archiwum, sygnaturę lub adres internetowy pierwszego cytowanego źródła;
-  kolejne źródła są w przycisku „+N”.
+  kolejne źródła są w przycisku „+N”. Adres internetowy w kolumnie **… URL** jest linkiem do nowego okna, jak
+  w kolumnie **Online** ([A6.7.11](#A6.7.11)).
   - Urodzenie bierze cytowania urodzenia, potem wydarzeń urodzenia i chrztu; zgon cytowania zgonu, potem wydarzeń
     zgonu, pochówku i kremacji; ślub cytowania związku (przy podwierszu związku tego związku). Każde źródło raz.
   - Źródła z pochodzenia danej w badaniu się nie liczą, tylko cytowania w danych.
@@ -591,14 +646,14 @@ Tabela osób ma kolumny, które pokazują, z jakiego źródła jest urodzenie, �
   **Pozostałe cytowania** (na telefonie panel od dołu); kliknięcie źródła otwiera je w menedżerze źródeł.
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10), godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
 
 <a id="A6.7.13"></a>
 ### A6.7.13 Oznaczenia w komórkach
 
 Przegląd wszystkiego, czym tabela oznacza komórkę lub wiersz. Legenda **Oznaczenia ⓘ** po prawej nad tabelą (dymek
 „Oznaczenia w komórkach”, na telefonie panel od dołu) pokazuje dwie pierwsze tabele: cztery poziomy ustalenia i pięć
-rodzajów wartości.
+rodzajów wartości; w drzewie z badania także trzecią, oznaczenia badań.
 
 **Ustalenia kontroli** ([A6.7.5](#A6.7.5)). Oznaczenie stoi na końcu komórki za wartością; kliknięcie komórki
 z ustaleniem otwiera dymek ustalenia.
@@ -621,12 +676,30 @@ z ustaleniem otwiera dymek ustalenia.
 | Oznaczenie | Jak wygląda | Co znaczy (legenda) | Gdzie się pojawia |
 |---|---|---|---|
 | **niepewna data** | data podkreślona kropkami; słowo **ok.**, **przed** lub **po** mniejszym szarym pismem przed datą | „Około, przed, po lub zakres; nie jest to ustalenie.” | kolumny dat ([A6.7.3](#A6.7.3)) |
-| **wiarygodność** | w legendzie kółko z „✓”; w komórce szara nazwa stopnia: **Potwierdzone**, **Udokumentowane**, **Prawdopodobne**, **Możliwe**, **Wskazówka**, **Z drzewa**, **Bez źródła** | „Tylko w kolumnach Wiarygodność i badania.” | **Wiarygodność imienia**, **urodzenia**, **zgonu**, **ślubu** (osoby, związki), **Wiarygodność** (wydarzenia); stopnie: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **wiarygodność** | w legendzie kółko z „✓”; w komórce szara nazwa stopnia: **Potwierdzone**, **Udokumentowane**, **Prawdopodobne**, **Możliwe**, **Z drzewa**, **Wskazówka**, **Bez źródła** | „Tylko w kolumnach Wiarygodność i badania.” | **Wiarygodność imienia**, **urodzenia**, **zgonu**, **ślubu** (osoby, związki), **Wiarygodność** (wydarzenia); stopnie: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **wartość zastępcza** | skrót **chrz.** lub **poch.** w małej ramce przed wartością, wartość kursywą; podpowiedź „Chrzest, urodzenie nieznane”, „Pochówek, zgon nieznany” | „Chrzest zamiast urodzenia, pochówek zamiast zgonu.” | data i miejsce urodzenia i zgonu ([A6.7.3](#A6.7.3)) |
 | **obliczone** | szare pismo; „≈ 67” szacunek, „28–29” zakres | „Zakres z niedokładnej daty, ≈ z szacunku.” | wiek, różnica wieku zapisanego, długość związku, liczby, pokolenie, kompletność; przy nagłówku „Obliczono z: …” |
 | **nie dotyczy** | „–” szarą kursywą; podpowiedź „Nie dotyczy” | „Nie dotyczy osoby.” | zgon przy osobie żyjącej (przy **Kompletność zgonu** „żyje”), wiek ojca lub matki bez zapisanego rodzica, kolumny związku przy osobie bez związku, **Wiek w chwili wydarzenia** przy urodzeniu |
 
 - W kolumnach **Wiarygodność …** sortuje się od **Potwierdzone** do **Bez źródła** w kolejności z tabeli.
+
+**Oznaczenia badań** ([A6.7.14](#A6.7.14)), tylko w drzewie z badania. Kółko badań ma wokół siebie obwódkę, więc także
+bez koloru różni się od kółka błędu (bez obwódki) i kwadracika do sprawdzenia. Legenda dodaje: „Koło z obwódką oznacza
+badania. ! i ? badań są tylko w kolumnach Badania, przy danej może być tylko ≠.”
+
+| Oznaczenie | Jak wygląda | Co znaczy (legenda) | Gdzie się pojawia |
+|---|---|---|---|
+| **czeka** | pełne bursztynowe kółko z obwódką i „!” | „Badania czekają na decyzję.” | **Badania**, **Czeka na decyzję** |
+| **czeka na innych** | pusty bursztynowy okrąg z „!” | „Oczekuje się odpowiedzi z zewnątrz (list, archiwum); nie ma czego rozstrzygać.” | **Badania**, **Czeka na decyzję** |
+| **sprzeczność** | pełne bursztynowe kółko z obwódką i „≠” | „Źródła się nie zgadzają. To nie błąd w danych: chodzi o to, któremu źródłu zaufać.” | przed wartością w komórce danej (bez podbarwienia, kliknięcie otwiera sprzeczności); **Badania**, **Sprzeczności** |
+| **pytanie** | pełne bursztynowe kółko z obwódką i „?” | „Otwarte pytanie lub hipoteza.” | **Badania**, **Hipotezy** |
+| **agent** | obracający się łuk (przy ograniczonym ruchu stoi) | „Agent pracuje teraz nad osobą (tylko podczas śledzenia).” | **Badania**, **Agent**; przy imieniu osoby pionowy pasek 3 px |
+| **gotowe** | „✓” | „Agent zakończył pracę (przez 4 s).” | za imieniem, **Agent** |
+
+- W kolumnie **Badania** osoba w kolejce agenta ma szarą kropkę „·” z „w kolejce”; „+2” za oznaczeniem to kolejne
+  rodzaje sygnału. Nowe z badań ma w swojej kolumnie kropkę „•”.
+- Kolumna, która ma wartość tylko podczas śledzenia badań, ma bez śledzenia „–” z etykietą „na żywo” (podpowiedź
+  „Tylko podczas śledzenia badań”).
 
 **Inne oznaczenia** (legenda ich nie pokazuje):
 
@@ -637,7 +710,9 @@ z ustaleniem otwiera dymek ustalenia.
 | procent z paskiem | liczba i krótki pasek, którego wypełniona część to wartość | kompletność ([A6.7.4](#A6.7.4)) | kolumny **Kompletność …** |
 | pogrubiona liczba, „–” | w wierszu pokrycia | pokrycie poniżej 50 %; „–” kolumna bez komórki, której by dotyczyła | **Wiersz pokrycia** ([A6.7.4](#A6.7.4)) |
 | „+2” | liczba w owalnej ramce za pierwszym cytowaniem | kolejne cytowane źródła; kliknięcie otwiera **Pozostałe cytowania** | cytowania urodzenia, ślubu, zgonu ([A6.7.12](#A6.7.12)) |
-| „↗” | za podkreślonym adresem internetowym | link do nowego okna | **Online**, cytowania „… link” ([A6.7.11](#A6.7.11)) |
+| „↗” | za podkreślonym adresem internetowym | link do nowego okna | **Online**, cytowania „… URL” ([A6.7.11](#A6.7.11), [A6.7.12](#A6.7.12)) |
+| obrys komórki | cienki obrys 1 px | aktywna komórka ([A6.7.15](#A6.7.15)) | komórka wybranego wiersza |
+| kursor tekstowy | po najechaniu myszą | komórkę można edytować w miejscu ([A6.7.15](#A6.7.15)) | edytowalne komórki |
 | ●○, ●● | jedna lub dwie pełne kropki przed „1 czytelnik”, „2 czytelników”; podpowiedź, kto transkrypcję przeczytał | ilu czytelników przeczytało transkrypcję | **Przeczytane w badaniach** ([A6.7.11](#A6.7.11)) |
 | „12 dn.” | liczba z „dn.” | wiek do jednego roku w dniach | **Wiek w chwili wydarzenia** ([A6.7.10](#A6.7.10)) |
 | ▾, ▸ | trójkąt przed imieniem | związki osoby rozwinięte, zwinięte ([A6.7.1](#A6.7.1)) | **Imię i nazwisko** osoby z dwoma i więcej związkami |
@@ -654,4 +729,122 @@ z ustaleniem otwiera dymek ustalenia.
 - **Obsługa:** **Oznaczenia ⓘ** po prawej nad tabelą.
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) · pořadí stupňů podle RELIABILITY_RANK (Z rodokmenu před Vodítko), dirigent:prace/_drobnosti/doc.md · značky výzkumu: table-grid.ts RESEARCH_GLYPH (wait „!“, ext „!“, conf „≠“, q „?“, agent oblouk, done „✓“, queue „·“, new „•“), researchMarkHtml, conflictMarkHtml (≠ před hodnotou) · index.html .tv-rmark--wait/conf/q (kolečko 16 px, --signal-warn, lem box-shadow), --ext (prázdný kroužek), --agent (agSpin, prefers-reduced-motion), --done, .tv-agent-bar (3 px) · strings.ts table.res.legendName, legendText, legendNote, liveTag, liveOnly · aktivní buňka a kurzor: commity 05d9a9ab, be9ca8cd · spec 073 §16.3, U7 -->
+
+<a id="A6.7.14"></a>
+### A6.7.14 Badanie w tabeli
+
+W drzewie z badania ([S1](S1-connecting-app-and-research.md)) tabela pokazuje także to, co badanie wie o osobach: co
+czeka na decyzję, sprzeczności źródeł, hipotezy, pracę agenta, linie i wymianę z drzewem. Do drzewa niczego nie
+zapisuje.
+
+- **Kolumny osób** (grupa **Badania**, domyślnie ukryta; pole wyboru **wszystkie** włącza **Badania**, **Czeka na
+  decyzję**, **Sprzeczności**, **Hipotezy** i **Agent**):
+
+  | Kolumna | Co pokazuje |
+  |---|---|
+  | **Badania** | najpilniejszy sygnał osoby w kolejności czeka › sprzeczność › pytanie lub hipoteza › agent › w kolejce; „+n” kolejne rodzaje |
+  | **Czeka na decyzję** | liczba i pierwsza pozycja; przy czekaniu na innych „z zewnątrz: …” (list wysłano, pytanie w rodzinie …) |
+  | **Sprzeczności** | liczba otwartych sprzeczności i dane („· urodzenie, …”); „· można rozstrzygnąć w aplikacji”, gdzie się da ([S2](S2-edits-from-the-app.md)) |
+  | **Hipotezy** | liczba otwartych hipotez; „rozstrzygnął agent” |
+  | **Zadania badań** | zadania osoby w kolejce („2 · najbliższe 3. w kolejce”, „1 · trwa teraz”) |
+  | **Agent** | „pracuje: {zadanie}”, „w kolejce”, „gotowe” |
+  | **Linia** | miejsce osoby wśród linii (niżej) |
+  | **Materiały**, **Drzewo kończy się tu**, **Szukano bez wyniku**, **Wymiana z badaniami**, **Pierwotnie w drzewie**, **Opowieść**, **Gdzie się załatwia**, **Nowe z badań**, **Dostępność źródeł**, **Parafia (badania)**, **Szacowane urodzenie** | co badanie wie o materiałach osoby, o krawędzi drzewa, o wymianie z drzewem, o źródłach i miejscach |
+
+- **Związki:** **ID badań** (F…), **Linia** (według partnera z linii), **Agent** („pracuje nad parą: …”)
+  i **Sprzeczności** (sprzeczności dotyczące ślubu i rozwodu u obu partnerów). **Źródła:** **ID badań** (S…)
+  i **Obraz**: „na komputerze badań”, „brak skanu na komputerze badań” (wyróżnione), „online (archiwum)”.
+- **Linia:** w linii (partner osoby z linii „· partner”; boczna gałąź dodana do linii należy do tej linii), „boczna
+  gałąź: {imię}”, „wyspa”, „poza liniami”. **Poza liniami** są boczne gałęzie niedodane do linii, wyspy i pozostali
+  ([R2.3](R2-lines-and-queue.md#R2.3)). Linie tabela bierze na żywo z badania, w przeciwnym razie z pliku badania;
+  sortuje się w kolejności linii badania, potem gałęzie, wyspy i poza liniami, w ich obrębie według pokolenia. Kolumna
+  i chipy linii są tylko przy badaniu z liniami.
+- **Sprzeczność przy danej:** komórka danej z otwartą sprzecznością źródeł ma przed wartością „≠”, bez podbarwienia.
+  Kliknięcie „≠” otwiera dymek ze sprzecznościami; czytnik ekranu odczyta „{wartość}, sprzeczność źródeł: {dana}”.
+  Oznaczenia „!” i „?” badań są tylko w kolumnach badań ([A6.7.13](#A6.7.13)).
+- **Chip Badania ▾:** jeden chip z menu w sekcjach **Sygnały**, **Linie**, **Wymiana, źródła i miejsca**, **Więcej
+  filtrów badań** i **Nowe z badań**; „Wybór rozwija blok Badania w wierszu.” Chipy: **Czeka na decyzję**, **Ze
+  sprzecznością**, **Z pytaniem**, **Agent pracuje / w kolejce**, po jednym na każdą linię i **Poza liniami**
+  (z liczbami), **Niewysłane**, **Zmienione przez badania**, **Do rozstrzygnięcia tutaj**, **Czeka na innych**, **Nowe
+  z badań** (ostatnie 24 h, ostatnie 7 dni, od ostatniego otwarcia), **Tylko w czytelni**, **Miejsce nieokreślone**,
+  **Rozstrzygnął agent**, **Wstrzymane / odłożone**, **Drzewo kończy się tu**. Na telefonie sekcja **Badania** jest
+  w panelu **Filtry**, rzadsze chipy pod **Więcej badań (n)**.
+- **Wbudowane widoki** (sekcja **Badania** w menu **Widok**; jak inne wbudowane się nie zmieniają, [A6.7.7](#A6.7.7)):
+
+  | Widok | Co pokazuje |
+  |---|---|
+  | **Badania** | osoby z sygnałem: imię i nazwisko, Badania, Czeka na decyzję, Sprzeczności, Hipotezy, Agent, Zadania badań, urodzenie, zgon; sortowane od najpilniejszego, potem według imienia i nazwiska |
+  | **Linia: {linia}** (dla każdej linii) i **Poza liniami** | imię i nazwisko, Linia, pokolenie, Badania, urodzenie, zgon, Sprzeczności, Agent; chip linii; sortowane według linii |
+  | **Wymiana z badaniami** | osoby z wymianą: imię i nazwisko, Wymiana z badaniami, Pierwotnie w drzewie, Nowe z badań, Sprzeczności, urodzenie |
+
+  Związki są w nich zwinięte, a wiersz pokrycia włączony. Pusty widok powie „Badania niczego teraz nie potrzebują”
+  lub „Drzewo i badania są zgodne”.
+- **Dymek badań:** kliknięcie komórki badań otwiera dymek (na telefonie panel od dołu) z sekcjami według tego, co
+  osoba ma: **Czeka na decyzję · n** (**Porównaj wersje ›**, **Czeka na załatwienie ›**), **Czeka na innych**,
+  **Sprzeczności źródeł · n** (**Rozstrzygnij ›**), **Hipotezy** lub **Otwarte pytanie** (**Co wiedzą badania ›**,
+  [S3.5](S3-what-the-research-knows.md#S3.5)), **Agent pracuje** (**Śledź badania ›**), **Zadania badań w kolejce**
+  (**Otwórz zadanie w badaniach**), **Materiały ›**, **Linia** lub **Poza liniami** (**Pokaż linię w drzewie**,
+  **Zmień w badaniach**), **Pierwotnie w drzewie** (**Przywróć wartość z drzewa**, tylko z badaniem na tym
+  komputerze) i **Dostępność źródeł**. Akcja, którą potwierdza się w badaniu, ma oznaczenie jak gdzie indziej
+  ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
+- **Na żywo:** podczas śledzenia badania zmieniają się tylko komórki, których zmiana dotyczy, kolejność wierszy
+  zostaje. Przy imieniu osoby, nad którą agent pracuje, biegnie pionowy pasek. Nad tabelą jest „● Badania śledzone na
+  żywo”, w przeciwnym razie „Badania: stan z {kiedy}”.
+- **Eksport:** CSV i XLSX niosą teksty i liczby („czeka; sprzeczność (1)”, „1: urodzenie”, bez sprzeczności „0”), bez
+  oznaczeń. Bez śledzenia **Agent** i **Zadania badań** są puste, a powiadomienie powie „Agent i Zadania badań są
+  puste: badania nie są śledzone.” Wiersz pokrycia ma przy kolumnach badań „–”.
+- **Granice:**
+  - bez agenta (Archiwum Strom) i w drzewie tylko do odczytu nie ma **Czeka na decyzję**, **Zadania badań**
+    i **Agent** ani chipów **Niewysłane** i **Do rozstrzygnięcia tutaj**; widok **Wymiana z badaniami** jest tylko
+    w badaniu z agentem, które można zmieniać;
+  - **Agent** i **Zadania badań** mają wartość tylko podczas śledzenia badania, w przeciwnym razie „–” z etykietą „na
+    żywo”; chip **Agent pracuje / w kolejce** bez śledzenia nie filtruje;
+  - w drzewie tylko do odczytu dymek nie ma akcji: „Tylko do odczytu: sprzeczności nie można tu rozstrzygnąć.”
+- **Obsługa:** panel **Kolumny** → grupa **Badania**; chip **Badania ▾**; **Widok** → sekcja **Badania**;
+  **Oznaczenia ⓘ**.
+- **Obowiązuje od:** aplikacja 3.27.0 z badaniem 1.31.0
+
+<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 -->
+
+<a id="A6.7.15"></a>
+### A6.7.15 Aktywna komórka, menu komórki i edycja w miejscu
+
+Kliknięcie komórki wybiera wiersz i czyni z komórki aktywną komórkę (cienki obrys); strzałki ją przesuwają. Aktywną
+komórkę można skopiować, filtrować według jej wartości i edytować daną w niej bezpośrednio w tabeli.
+
+- **Kopiowanie:** Ctrl/Cmd+C bez zaznaczonego tekstu kopiuje tekst, który aktywna komórka pokazuje, bez oznaczeń,
+  ikon i pigułek. Ręcznie zaznaczony tekst kopiuje się jak zwykle.
+- **Menu komórki:** menu wiersza (prawy przycisk, Shift+F10) i na telefonie panel wiersza (stuknięcie komórki)
+  zaczynają się od opcji komórki **Kopiuj**, **Tylko „{wartość}”** i **Bez „{wartość}”** (wartość skrócona do około
+  24 znaków z „…”); pod nimi są akcje wiersza ([A6.7.8](#A6.7.8)).
+  - **Tylko** i **Bez** ustawiają filtr kolumny **jest** / **nie jest** ([A6.7.6](#A6.7.6)), chip „{Kolumna} =
+    {wartość} ×” lub „{Kolumna} ≠ {wartość} ×”; porównuje się bez względu na wielkość liter i znaki diakrytyczne.
+    Komórka z imieniem i nazwiskiem osoby porównuje osobę: **Tylko „{ojciec}”** w kolumnie **Ojciec** pokaże
+    rodzeństwo, nie dzieci imiennika.
+  - Pusta komórka oferuje **Tylko puste** i **Tylko wypełnione**, komórka z listą wartości ustawia filtr wartości.
+    Komórka bez jednej wartości do porównania (oznaczenie badań, kilka imion, kompletność, liczba związków) oferuje
+    tylko **Kopiuj**; własne imię i nazwisko lub tytuł wiersza ma tylko akcje wiersza.
+  - Filtr zapisuje się z widokiem ([A6.7.7](#A6.7.7)).
+- **Edycja w miejscu:** edytować można komórkę, która odpowiada jednej danej drzewa:
+  - **Nazwisko** (gdy pokazuje nazwisko po ślubie, edytuje je), **Nazwisko rodowe**, **Nazwisko po ślubie**;
+  - data i miejsce urodzenia, chrztu, zgonu i pochówku;
+  - **Zawód**, dopóki osoba ma najwyżej jeden;
+  - data i miejsce ślubu (tabela związków, podwiersz związku, wiersz osoby z jednym związkiem).
+
+  **Imię i nazwisko** nie edytuje się w komórce (składa się z kilku części), tak samo jak komórki obliczone,
+  kontrole, badania, cytowania, liczby i relacje; dwuklik na nich otwiera **Edytuj…**.
+- **Pole** zakrywa komórkę. **Enter** zapisuje, **Esc** anuluje, **Tab** i **Shift+Tab** zapisują i przechodzą do
+  następnej lub poprzedniej edytowalnej komórki wiersza, kliknięcie gdzie indziej zapisuje. Datę odczytuje się jak
+  w formularzu osoby; nieczytelna zostaje w polu z błędem „Nie można odczytać daty (np. 15.5.1880, 1880, ok. 1880)”.
+  Miejsce podpowiada miejsca drzewa. Bez imienia i nazwiska nic się nie zapisze: „Imię lub nazwisko musi pozostać”.
+- **Zapisanie** idzie tą samą drogą co formularz osoby i jest jednym krokiem wstecz (Ctrl/Cmd+Z). Chrzest i pochówek
+  edytują pierwsze takie wydarzenie (jego pozostałe dane i cytowania zostają) albo je dodają; puste pole usuwa tylko
+  tę daną. Potem wiersz mignie, zostanie na miejscu, a powiadomienie powie „Zapisano: {imię}”.
+- **Granice:** w miejscu nie można edytować w drzewie tylko do odczytu ani zablokowanym, w Archiwum Strom, na
+  telefonie i przy zablokowanej osobie. Na telefonie daną edytuje się przez panel wiersza → **Edytuj…**.
+- **Obsługa:** dwuklik, **F2**, **Enter** na aktywnej komórce (przy komórce z ustaleniem Enter najpierw otwiera dymek
+  ustalenia), w menu wiersza **Edytuj komórkę** (F2). Edytowalna komórka ma po najechaniu myszą kursor tekstowy.
+- **Obowiązuje od:** aplikacja 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) -->

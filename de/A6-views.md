@@ -54,6 +54,40 @@ Womit sich der Stammbaum öffnet, bestimmt die Stammbaum-Einstellung **Standardp
 
 <!-- zdroj: app:src/renderer.ts:1178 findDefaultFocusPerson, getStartupFocus · strings.ts treeManager.defaultPersonViewTitle, focus.defaultPersonLastFocused, focus.defaultPersonSpecific, focus.defaultViewFamily, focus.defaultViewLast · CHANGELOG.cs.md 3.21.0 -->
 
+<a id="A6.1.2"></a>
+### A6.1.2 Abstände: Normal und Dicht
+
+Die Einstellung **Abstände** bestimmt die Lücken zwischen den Karten und zwischen den Generationen in den Ansichten
+Familie und Nachkommen. **Dicht** macht sie kleiner, damit mehr Personen auf den Bildschirm passen. **Normal** ist der
+Standard, auch auf dem Telefon.
+
+| Lücke | Normal | Dicht |
+|---|---|---|
+| zwischen Karten nebeneinander | 31 px | 20 px |
+| zwischen Generationen | 80 px | 48 px |
+| zwischen Partnern | 18 px | 14 px |
+
+- Nach dem Umschalten wird der Stammbaum sofort neu gezeichnet und bleibt bei derselben Person: bei der Karte der
+  zentralen Person, wenn sie ganz im Bild ist, sonst bei der Karte, die der Mitte am nächsten ist. Ebenso verhält sich
+  der Stammbaum nach einer Änderung von **Kartendetail**.
+- **Ehefolge:** bei Dicht steht statt der Marke „1. ∞ 1866“ nur ein kurzes „∞ 1“ am Rand der Karte, also die
+  Stelle dieser Ehe in der Folge. Die ganze Reihenfolge zeigt eine Blase (mit der Maus, der Tastatur und durch Tippen).
+  Eine Marke, die an der Karte keinen Platz hat, wird nicht gezeichnet.
+- **Export:** der Posterexport hat eine eigene Einstellung **Abstände** (nach dem Papierformat und der Ausrichtung).
+  Weicht sie vom Bildschirm ab, werden Bild, Poster und PDF in Blättern mit den gewählten Abständen neu angeordnet,
+  mit derselben Auswahl der Personen und denselben Karten; der Bildschirm ändert sich nicht. Unter jeder Möglichkeit
+  steht die Zahl der Blätter („26 Blätter A4“), wenn sich die Zahlen unterscheiden. Der Druck (Strg+P) nimmt die
+  Abstände des Bildschirms.
+- **Grenzen:** die Einstellung gehört zum Gerät und wird nicht mit dem Stammbaum gespeichert. Zeitleiste, Fächer, Karte
+  und Tabelle haben eine eigene Anordnung, die Einstellung betrifft sie nicht; der Posterexport aus dem Fächer und der
+  Zeitleiste hat keine Zeile **Abstände**.
+- **Bedienung:** **Einstellungen** → **Personenkarte** → **Abstände** (nach **Kartendetail**): **Normal** ·
+  **Dicht**. Auf einem kleinen Bildschirm ohne Kompakt-Karte steht unter der Einstellung „Auf einem kleinen Bildschirm
+  hilft auch die Kompakt-Karte.“ Export: **Poster exportieren** → **Abstände**.
+- **Gilt seit:** App 3.27.0
+
+<!-- zdroj: app:src/types.ts TreeSpacing, DEFAULT_LAYOUT_CONFIG (31/80/18), DENSE_LAYOUT_CONFIG (20/48/14), layoutConfigFor · src/settings.ts getTreeSpacing/setTreeSpacing (treeSpacing), getPosterSpacing/setPosterSpacing (posterSpacing), výchozí normal · src/renderer.ts:804 STANDALONE_VIEWS (timeline, fan, map, table), getPosterLayout({spacing}), kotva překreslení (ústřední karta celá v obraze, jinak nejbližší středu; i při změně typu karty) · src/marriage-order.ts (husté: „∞ N“ na okraji karty, bez místa se nekreslí) · src/ui/export-image-ui.ts (řádek za formátem a orientací, skrytý u vějíře a časové osy, sheetsCount) · strings.ts spacing.label, normal, dense, desc, scope, scopeExport, smallHint, marriageOrder.short, poster.menu, poster.sheetsCount, settings.groupCard, cardDensity.settingLabel · commity 68b9dde4, 03918007, 928db183, e2891a8a · spec 069 K1.1, K3.1 -->
+
 <a id="A6.2"></a>
 ## A6.2 Ansicht Nachkommen
 
@@ -250,13 +284,22 @@ Tabelle von Ondřej Chrpa.
   zur Hauptperson** und der Chip **Blutsverwandte** berechnet: die Vorfahren der Hauptperson (auch sie selbst) und
   alle ihre Nachkommen. Partner, die durch Heirat in die Familie kamen, gehören nicht dazu.
 - **Generation** 1 ist die älteste Generation des Stammbaums; ein Partner hat die Generation seines Partners.
-- **Lebt** wird wie beim Schutz lebender Personen berechnet ([A7.1](A7-book-pages-and-export.md#A7.1)).
+- **Lebend** (Spalte, Wert „lebend“) wird wie beim Schutz lebender Personen berechnet
+  ([A7.1](A7-book-pages-and-export.md#A7.1)).
 - Über der Tabelle stehen die Anzahl („42 von 120 Personen“) und die Sortierung („Sortierung: …“). Das Feld **Person
   suchen...** in der Leiste wählt in der Tabelle die Zeile der Person aus und rollt zu ihr; die zentrale Person ändert
   sich nicht.
+- **Die zentrale Person zwischen den Ansichten:** nach dem Wechsel in die Tabelle ist die Zeile der zentralen Person
+  die aktive Zeile, und die Tabelle rollt zu ihr (eine ausgewählte Zeile, die sie betrifft, bleibt; lassen Filter oder
+  Suche die Person aus, gibt es keine aktive Zeile). Nach dem Wechsel aus der Tabelle ist die zentrale Person die
+  Person der aktiven Zeile: bei einer Verbindung der Partner, der schon zentrale Person ist, sonst **Partner 1**; bei
+  einem Ereignis die zentrale Person, wenn sie unter seinen Personen ist, sonst die erste Person; eine Zeile einer
+  Quelle ändert die zentrale Person nicht.
 - **Grenzen:**
   - die Hervorhebung einer Stammlinie ([A6.6](#A6.6)) wird in der Tabelle nicht verwendet; einen Stamm wählt der
     Chip **Stamm** ([A6.7.6](#A6.7.6));
+  - Spalten, Chips und Ansichten der Forschung gibt es nur in einem Stammbaum aus der Forschung
+    ([A6.7.14](#A6.7.14));
   - einen schreibgeschützten Stammbaum (verfolgter Stammbaum, von einer neueren Version der App gespeicherter
     Stammbaum, gesperrter Stammbaum) zeigt die Tabelle nur an: „Nur lesen: Bearbeiten und „Kein Fehler“ gibt es hier
     nicht.“ Ansehen, Filter, Sortierung und CSV- und XLSX-Export funktionieren; eine Ansicht lässt sich weder
@@ -265,7 +308,7 @@ Tabelle von Ondřej Chrpa.
   **Mehr → Ansicht → Tabelle**. Die Ansicht wird wie die anderen gespeichert ([A6.1.1](#A6.1.1)).
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Verbindungen in der Personentabelle
@@ -286,11 +329,13 @@ für jede Verbindung („Verbindung 2 von 3“). Die Zeile der Person hat in der
   Gezeigte sind bis zur nächsten Änderung des Filters abgeschwächt.
 - **Die Sortierung nach einer Spalte der Verbindung** nimmt die erste Verbindung, die dem Filter entspricht.
 - Eine Person mit einer Verbindung hat deren Angaben direkt in ihrer Zeile.
+- Eine Unterzeile einer Verbindung trägt nur die Befunde ihrer Verbindung. Die Befunde der Person (etwa das Alter der
+  Mutter bei der Geburt) und die Streifen eingeklappter Gruppen bleiben in der Zeile der Person.
 - **Bedienung:** **Verbindungen aufklappen** / **Verbindungen zuklappen** (auf dem Telefon im Menü **⋯**); die
   Tasten → und ← in der Spalte **Name**, * für alle Personen; das Zeilenmenü. Der Zustand wird mit der Ansicht
   gespeichert ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
+<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d · nálezy podřádku: commit 75de3a9b (T54 F6) -->
 
 <a id="A6.7.2"></a>
 ### A6.7.2 Spalten
@@ -305,11 +350,19 @@ Die Spalten stehen in Gruppen. Welche sichtbar sind und in welcher Reihenfolge, 
 
 - **Name** (bei Verbindungen **Partner 1**) ist links fixiert und wird nach dem Nachnamen, dann nach dem Vornamen
   sortiert. **Nachname** ist der Ehename, sonst der Geburtsname; **Geburtsname** ist der erfasste Nachname.
-- **Forschungs-ID** zeigt nur die Nummer der Person aus der Forschung (P…).
+- **Forschungs-ID** zeigt nur die Nummer der Person aus der Forschung (P…). **Ref.-Nummer (REFN)** ist die
+  Referenznummer der Person, wie sie die GEDCOM-Datei gebracht hat (und wie sie in eine zurückgeht); sie wird als Text
+  sortiert und gefiltert.
+- **Offene Frage**, **⇄ In anderem Baum** (die Stammbäume auf diesem Gerät, in denen die Person ist) und **Status der
+  Person** (das Zeichen der Belegung und Verlässlichkeit von der Karte, in Worten; von der stärksten an sortiert) gibt
+  es in jedem Stammbaum. Die Gruppe **Forschung** gibt es nur in einem Stammbaum aus der Forschung
+  ([A6.7.14](#A6.7.14)).
 - **Ereignisse** (**Beruf**, **Wohnort**, **Konfession**, **Militärdienst**, **Auswanderung**, **Bildung**) zeigen
   jeden Wert einmal, den neuesten zuerst.
 - Die Spalten **Verlässlichkeit …** und **Sicherheit aus der Forschung** haben nur in einem Stammbaum aus der
   Forschung einen Wert ([S7](S7-reliability-and-verification.md)).
+- Die Spalten **Ref.-Nummer (REFN)**, **Offene Frage**, **⇄ In anderem Baum** und **Status der Person** sind
+  standardmäßig ausgeblendet.
 - **Grenzen:** eine eingeklappte Gruppe ist ein schmaler Streifen; er zeigt die höchste Stufe eines Befunds in seinen
   Zellen. Auf dem Telefon ist der fixierte Name schmaler, und die Kopfzeile lässt sich nur lesen, nicht ändern.
 - **Bedienung:**
@@ -320,7 +373,7 @@ Die Spalten stehen in Gruppen. Welche sichtbar sind und in welcher Reihenfolge, 
     ausblenden**, **Gruppe … einklappen** / **Gruppe … ausklappen**; bei einer berechneten Spalte „Berechnet aus: …“;
   - Breite der Spalte durch Ziehen am Rand des Spaltenkopfs.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus -->
 
 <a id="A6.7.3"></a>
 ### A6.7.3 Berechnete und Ersatzwerte
@@ -403,10 +456,14 @@ wenn die App frei ist.
   - **Datenqualität ›** öffnet den Dialog der Datenqualität bei der Gruppe dieses Befunds; bei einem ungewöhnlichen
     bei der Liste der markierten.
 
+  Die Zellen **Befunde** und **Höchste Stufe** öffnen die Liste aller Befunde der Person (Klick, Enter, Tippen; auf
+  dem Telefon ein Panel von unten): bei jedem die Stufe, der Text und wen oder was er betrifft; gemeldete nach der
+  Stufe, die als **Kein Fehler** markierten am Ende.
+
   Die Legende **Zeichen** („Zeichen in den Zellen“) erklärt auch das unsichere Datum, die Verlässlichkeit, den
   Ersatzwert, den berechneten Wert und **Trifft nicht zu**. Wie welches Zeichen aussieht: [A6.7.13](#A6.7.13).
 
-<!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 -->
+<!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 · seznam nálezů osoby z buněk Nálezy a Nejvyšší úroveň: commit 75de3a9b (T54 F5) -->
 
 <a id="A6.7.6"></a>
 ### A6.7.6 Filter, Suche und Sortierung
@@ -422,7 +479,9 @@ Der Filter wählt die Zeilen aus, die Suche engt sie weiter ein, die Sortierung 
 - **Filter in der Spalte** (**Filter…** im Spaltenkopf) nach der Art der Spalte:
   - Werte aus einer Liste (Geschlecht, Stand der Verbindung, Stufe des Befunds, Stamm …);
   - Bereich **von**–**bis** (beim Datum **Jahr**, bei Alter, Anzahl und Prozent eine Zahl);
-  - Text: **enthält** · **beginnt mit**;
+  - Text: **enthält** · **beginnt mit** · **ist** · **ist nicht** (ohne Rücksicht auf Groß- und Kleinschreibung und
+    diakritische Zeichen; Chip „Spalte = Wert ×“ oder „Spalte ≠ Wert ×“; schnell aus dem Zellenmenü,
+    [A6.7.15](#A6.7.15));
   - bei jeder **Nur leere** · **Nur ausgefüllte**.
 - Es gelten alle Filter zugleich. Die Zahl der Filter steht auf **Filter (n)**, alles hebt **Filter aufheben** auf.
   Ohne Zeile: „Nichts entspricht dem Filter“.
@@ -436,7 +495,7 @@ Der Filter wählt die Zeilen aus, die Suche engt sie weiter ein, die Sortierung 
   sortiert.
 - **Grenzen:** die Suche wird nicht in der Ansicht gespeichert ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 -->
+<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 · je / není: strings.ts table.matchEquals, matchNotEquals (commit 05d9a9ab, T54 F4) -->
 
 <a id="A6.7.7"></a>
 ### A6.7.7 Tabellenansichten
@@ -495,6 +554,7 @@ Strg+Pos1/Ende verschieben die Auswahl, Esc hebt sie auf.
   Reihenfolge. Eine Zeile, die dem Filter nicht mehr entspricht, bleibt mit dem Etikett „passt nicht mehr“ bis zur
   nächsten Änderung der Sortierung, des Filters oder der Ansicht. Eine Änderung aus der Forschung meldet „Die
   Forschung hat 3 Angaben geändert: …“.
+- Eine Angabe lässt sich auch direkt in der Zelle bearbeiten ([A6.7.15](#A6.7.15)).
 - **Grenzen:** in einem schreibgeschützten Stammbaum gibt es kein **Bearbeiten…**.
 - **Bedienung:** Schaltflächen an der ausgewählten Zeile, Zeilenmenü (rechte Maustaste; auch Aufklappen der
   Verbindungen). Auf dem Telefon öffnet ein Tippen auf die Zeile ein Panel mit den Aktionen und den Verbindungen
@@ -598,8 +658,9 @@ Die Quellentabelle hat eine Zeile für jede Quelle des Stammbaums (**Aktionen �
 [A3.1](A3-evidence-in-the-app.md#A3.1)) und sagt, wie viel die Quelle im Stammbaum belegt.
 
 - **Spalten** in den Gruppen **Quelle** · **Verwendung**:
-  - **Titel**, **Archiv**, **Buch, Signatur, Folio**, **Online** (die Adresse ohne `https://`; eine Webadresse ist ein
-    Link ↗ in ein neues Fenster);
+  - **Titel**, **Archiv**, **Buch, Signatur, Folio**, **Online** (die Adresse der Quelle, sonst die Seite ihres ersten
+    Auszugs, ohne `https://`; eine Webadresse ist ein Link ↗ in ein neues Fenster, nur http und https; eine ohne
+    Schema geschriebene („www.…“) öffnet sich über https; ein Klick auf den Link ändert die Auswahl der Zeile nicht);
   - **Personen**: wie viele Personen eine Angabe haben, die die Quelle zitiert; eine Angabe der Verbindung belegt
     beide Partner;
   - **Angaben**: wie viele Angaben die Quelle zitieren. Eine Angabe ist eine Liste von Zitaten: das Zitat der Person,
@@ -608,22 +669,24 @@ Die Quellentabelle hat eine Zeile für jede Quelle des Stammbaums (**Aktionen �
     der App und die Forschung), sonst „nein“;
   - **Abschrift**: ja / nein; im Katalog der Spalten gibt es auch **Datum des Eintrags**.
 - Zitate von Platzhalterpersonen und Quellen einer Geschichte werden nicht gezählt.
-- **Chips:** **Ohne Person** (keine Person zitiert sie), **Ungelesen**, **Mit Abschrift**, **Online**.
+- **Chips:** **Ohne Person** (keine Person zitiert sie), **Ungelesen**, **Mit Abschrift**, **Online** (wie die Spalte
+  **Online**, auch mit einer Adresse ohne `https://`).
 - **Bedienung:** die vorgegebene Ansicht **Alle Quellen**. An der Zeile **Quelle öffnen** und **Bearbeiten…**: beide
   öffnen die Quellenverwaltung bei dieser Quelle; **Im Baum zeigen** gibt es hier nicht.
 - **Grenzen:** in einem gesperrten Stammbaum wird die Quelle nur angezeigt, ohne Bearbeitung.
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
 
 <a id="A6.7.12"></a>
 ### A6.7.12 Quellenangaben und Paten in der Personentabelle
 
 Die Personentabelle hat Spalten, die zeigen, aus welcher Quelle Geburt, Heirat und Tod stammen und wer Pate war.
 
-- **Quellenangaben** (Gruppe **Quellen**): **Geburt: Archiv**, **Geburt: Signatur**, **Geburt: Link** und dasselbe
+- **Quellenangaben** (Gruppe **Quellen**): **Geburt: Archiv**, **Geburt: Signatur**, **Geburt: URL** und dasselbe
   für **Heirat** und **Tod**. Die Zelle zeigt Archiv, Signatur oder Webadresse der ersten zitierten Quelle; weitere
-  Quellen stehen in der Schaltfläche „+N“.
+  Quellen stehen in der Schaltfläche „+N“. Eine Webadresse in der Spalte **… URL** ist ein Link in ein neues Fenster,
+  wie in der Spalte **Online** ([A6.7.11](#A6.7.11)).
   - Geburt nimmt die Zitate der Geburt, dann der Ereignisse Geburt und Taufe; Tod die Zitate des Todes, dann der
     Ereignisse Tod, Begräbnis und Einäscherung; Heirat die Zitate der Verbindung (bei einer Unterzeile der
     Verbindung die dieser Verbindung). Jede Quelle einmal.
@@ -638,14 +701,15 @@ Die Personentabelle hat Spalten, die zeigen, aus welcher Quelle Geburt, Heirat u
   öffnet sie in der Quellenverwaltung.
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10), godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
 
 <a id="A6.7.13"></a>
 ### A6.7.13 Zeichen in den Zellen
 
 Übersicht über alles, womit die Tabelle eine Zelle oder eine Zeile kennzeichnet. Die Legende **Zeichen ⓘ** rechts
 über der Tabelle (Blase „Zeichen in den Zellen“, auf dem Telefon ein Panel von unten) zeigt die ersten zwei Tabellen:
-vier Stufen eines Befunds und fünf Arten eines Werts.
+vier Stufen eines Befunds und fünf Arten eines Werts; in einem Stammbaum aus der Forschung auch die dritte, die
+Zeichen der Forschung.
 
 **Befunde der Prüfung** ([A6.7.5](#A6.7.5)). Das Zeichen steht am Ende der Zelle hinter dem Wert; ein Klick auf eine
 Zelle mit Befund öffnet die Blase des Befunds.
@@ -668,13 +732,33 @@ Zelle mit Befund öffnet die Blase des Befunds.
 | Zeichen | Wie es aussieht | Was es bedeutet (Legende) | Wo es erscheint |
 |---|---|---|---|
 | **unsicheres Datum** | das Datum gepunktet unterstrichen; das Wort **um**, **vor** oder **nach** in kleinerer grauer Schrift vor dem Datum | „Etwa, vor, nach oder ein Zeitraum; kein Befund.“ | Spalten der Daten ([A6.7.3](#A6.7.3)) |
-| **Verlässlichkeit** | in der Legende ein Ring mit „✓“; in der Zelle der Name der Stufe in Grau: **Bestätigt**, **Belegt**, **Wahrscheinlich**, **Möglich**, **Hinweis**, **Aus dem Stammbaum**, **Ohne Quelle** | „Nur in den Spalten Verlässlichkeit und Forschung.“ | **Verlässlichkeit Name**, **Verlässlichkeit Geburt**, **Verlässlichkeit Tod**, **Verlässlichkeit Heirat** (Personen, Verbindungen), **Verlässlichkeit** (Ereignisse); Stufen: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **Verlässlichkeit** | in der Legende ein Ring mit „✓“; in der Zelle der Name der Stufe in Grau: **Bestätigt**, **Belegt**, **Wahrscheinlich**, **Möglich**, **Aus dem Stammbaum**, **Hinweis**, **Ohne Quelle** | „Nur in den Spalten Verlässlichkeit und Forschung.“ | **Verlässlichkeit Name**, **Verlässlichkeit Geburt**, **Verlässlichkeit Tod**, **Verlässlichkeit Heirat** (Personen, Verbindungen), **Verlässlichkeit** (Ereignisse); Stufen: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **Ersatzwert** | die Abkürzung **get.** oder **begr.** in einem kleinen Rahmen vor dem Wert, der Wert kursiv; Hinweis „Taufe, Geburt unbekannt“, „Begräbnis, Tod unbekannt“ | „Taufe statt Geburt, Begräbnis statt Tod.“ | Datum und Ort von Geburt und Tod ([A6.7.3](#A6.7.3)) |
 | **berechnet** | graue Schrift; „≈ 67“ eine Schätzung, „28–29“ ein Bereich | „Ein Bereich aus ungenauem Datum, ≈ aus einer Schätzung.“ | Alter, Abweichung des angegebenen Alters, Dauer der Verbindung, Anzahlen, Generation, Vollständigkeit; am Spaltenkopf „Berechnet aus: …“ |
 | **entfällt** | „–“ in grauer Kursivschrift; Hinweis „Trifft nicht zu“ | „Betrifft die Person nicht.“ | der Tod bei einer lebenden Person (bei **Vollständigkeit Sterbefall** „lebt“), das Alter des Vaters oder der Mutter ohne erfassten Elternteil, die Spalten der Verbindung bei einer Person ohne Verbindung, **Alter beim Ereignis** bei der Geburt |
 
 - In den Spalten **Verlässlichkeit …** wird von **Bestätigt** bis **Ohne Quelle** in der Reihenfolge aus der Tabelle
   sortiert.
+
+**Zeichen der Forschung** ([A6.7.14](#A6.7.14)), nur in einem Stammbaum aus der Forschung. Der Kreis der Forschung hat
+einen Rand, so dass er sich auch ohne Farbe vom Kreis des Fehlers (ohne Rand) und vom Quadrat „zu prüfen“
+unterscheidet. Die Legende ergänzt: „Ein Kreis mit Rand steht für die Forschung. ! und ? der Forschung stehen nur in
+den Spalten Forschung, an einer Angabe nur ≠.“
+
+| Zeichen | Wie es aussieht | Was es bedeutet (Legende) | Wo es erscheint |
+|---|---|---|---|
+| **wartet** | ein voller bernsteinfarbener Kreis mit Rand und „!“ | „Die Forschung wartet auf eine Entscheidung.“ | **Forschung**, **Wartet auf Entscheidung** |
+| **wartet auf andere** | ein leerer bernsteinfarbener Ring mit „!“ | „Eine Antwort von außen steht aus (Brief, Archiv); zu entscheiden gibt es nichts.“ | **Forschung**, **Wartet auf Entscheidung** |
+| **Widerspruch** | ein voller bernsteinfarbener Kreis mit Rand und „≠“ | „Die Quellen stimmen nicht überein. Das ist kein Fehler in den Daten: Es geht darum, welcher Quelle man folgt.“ | vor dem Wert in der Zelle der Angabe (ohne Hinterlegung, ein Klick öffnet die Widersprüche); **Forschung**, **Widersprüche** |
+| **Frage** | ein voller bernsteinfarbener Kreis mit Rand und „?“ | „Eine offene Frage oder eine Hypothese.“ | **Forschung**, **Hypothesen** |
+| **Agent** | ein sich drehender Bogen (bei reduzierter Bewegung steht er still) | „Der Agent arbeitet gerade an der Person (nur beim Verfolgen).“ | **Forschung**, **Agent**; am Namen der Person ein senkrechter Balken von 3 px |
+| **fertig** | „✓“ | „Der Agent hat die Arbeit beendet (4 s lang).“ | hinter dem Namen, **Agent** |
+
+- In der Spalte **Forschung** hat eine Person in der Warteschlange des Agenten einen grauen Punkt „·“ mit „in der
+  Warteschlange“; „+2“ hinter dem Zeichen sind weitere Arten von Signalen. Neu aus der Forschung hat in seiner Spalte
+  den Punkt „•“.
+- Eine Spalte, die nur beim Verfolgen der Forschung einen Wert hat, hat ohne Verfolgen „–“ mit dem Etikett „live“
+  (Hinweis „Nur beim Verfolgen der Forschung“).
 
 **Weitere Zeichen** (die Legende zeigt sie nicht):
 
@@ -685,7 +769,9 @@ Zelle mit Befund öffnet die Blase des Befunds.
 | Prozent mit Balken | eine Zahl und ein kurzer Balken, dessen gefüllter Teil der Wert ist | Vollständigkeit ([A6.7.4](#A6.7.4)) | Spalten **Vollständigkeit …** |
 | fette Zahl, „–“ | in der Abdeckungszeile | Abdeckung unter 50 %; „–“ eine Spalte ohne eine Zelle, die sie betreffen würde | **Abdeckungszeile** ([A6.7.4](#A6.7.4)) |
 | „+2“ | eine Zahl in einem ovalen Rahmen hinter dem ersten Zitat | weitere zitierte Quellen; ein Klick öffnet **Weitere Quellenangaben** | Quellenangaben zu Geburt, Heirat, Tod ([A6.7.12](#A6.7.12)) |
-| „↗“ | hinter einer unterstrichenen Webadresse | ein Link in ein neues Fenster | **Online**, Quellenangaben „… Link“ ([A6.7.11](#A6.7.11)) |
+| „↗“ | hinter einer unterstrichenen Webadresse | ein Link in ein neues Fenster | **Online**, Quellenangaben „… URL“ ([A6.7.11](#A6.7.11), [A6.7.12](#A6.7.12)) |
+| Umriss der Zelle | ein dünner Umriss von 1 px | die aktive Zelle ([A6.7.15](#A6.7.15)) | eine Zelle der ausgewählten Zeile |
+| Textcursor | beim Überfahren mit der Maus | die Zelle lässt sich an Ort und Stelle bearbeiten ([A6.7.15](#A6.7.15)) | bearbeitbare Zellen |
 | ●○, ●● | ein oder zwei volle Punkte vor „1 Leser“, „2 Leser“; Hinweis, wer die Abschrift gelesen hat | wie viele Leser die Abschrift gelesen haben | **Von der Forschung gelesen** ([A6.7.11](#A6.7.11)) |
 | „12 T.“ | eine Zahl mit „T.“ | ein Alter bis zu einem Jahr in Tagen | **Alter beim Ereignis** ([A6.7.10](#A6.7.10)) |
 | ▾, ▸ | ein Dreieck vor dem Namen | die Verbindungen der Person aufgeklappt, zugeklappt ([A6.7.1](#A6.7.1)) | **Name** einer Person mit zwei und mehr Verbindungen |
@@ -702,4 +788,137 @@ Zelle mit Befund öffnet die Blase des Befunds.
 - **Bedienung:** **Zeichen ⓘ** rechts über der Tabelle.
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) · pořadí stupňů podle RELIABILITY_RANK (Z rodokmenu před Vodítko), dirigent:prace/_drobnosti/doc.md · značky výzkumu: table-grid.ts RESEARCH_GLYPH (wait „!“, ext „!“, conf „≠“, q „?“, agent oblouk, done „✓“, queue „·“, new „•“), researchMarkHtml, conflictMarkHtml (≠ před hodnotou) · index.html .tv-rmark--wait/conf/q (kolečko 16 px, --signal-warn, lem box-shadow), --ext (prázdný kroužek), --agent (agSpin, prefers-reduced-motion), --done, .tv-agent-bar (3 px) · strings.ts table.res.legendName, legendText, legendNote, liveTag, liveOnly · aktivní buňka a kurzor: commity 05d9a9ab, be9ca8cd · spec 073 §16.3, U7 -->
+
+<a id="A6.7.14"></a>
+### A6.7.14 Die Forschung in der Tabelle
+
+In einem Stammbaum aus der Forschung ([S1](S1-connecting-app-and-research.md)) zeigt die Tabelle auch, was die
+Forschung über die Personen weiß: was auf Entscheidung wartet, Widersprüche der Quellen, Hypothesen, die Arbeit des
+Agenten, die Linien und den Austausch mit dem Stammbaum. In den Stammbaum schreibt sie nichts.
+
+- **Spalten der Personen** (Gruppe **Forschung**, standardmäßig ausgeblendet; das Kästchen **alle** schaltet
+  **Forschung**, **Wartet auf Entscheidung**, **Widersprüche**, **Hypothesen** und **Agent** ein):
+
+  | Spalte | Was sie zeigt |
+  |---|---|
+  | **Forschung** | das dringendste Signal der Person in der Reihenfolge wartet › Widerspruch › Frage oder Hypothese › Agent › in der Warteschlange; „+n“ weitere Arten |
+  | **Wartet auf Entscheidung** | die Anzahl und der erste Eintrag; beim Warten auf andere „von außen: …“ (Brief gesendet, Anfrage in der Familie …) |
+  | **Widersprüche** | die Zahl der offenen Widersprüche und die Angaben („· Geburt, …“); „· in der App entscheidbar“, wo das geht ([S2](S2-edits-from-the-app.md)) |
+  | **Hypothesen** | die Zahl der offenen Hypothesen; „vom Agenten entschieden“ |
+  | **Forschungsaufgaben** | die Aufgaben der Person in der Warteschlange („2 · nächste Nr. 3 in der Warteschlange“, „1 · läuft gerade“) |
+  | **Agent** | „arbeitet: {Aufgabe}“, „in der Warteschlange“, „fertig“ |
+  | **Linie** | der Platz der Person zwischen den Linien (unten) |
+  | **Materialien**, **Baum endet hier**, **Gesucht, nichts gefunden**, **Austausch mit der Forschung**, **Ursprünglich im Stammbaum**, **Geschichte**, **Wo es bearbeitet wird**, **Neu aus der Forschung**, **Verfügbarkeit der Quellen**, **Pfarrei (Forschung)**, **Geschätzte Geburt** | was die Forschung über die Materialien der Person weiß, über den Rand des Stammbaums, über den Austausch mit dem Stammbaum, über Quellen und Orte |
+
+- **Verbindungen:** **Forschungs-ID** (F…), **Linie** (nach dem Partner aus der Linie), **Agent** („arbeitet am Paar:
+  …“) und **Widersprüche** (Widersprüche zu Heirat und Scheidung bei beiden Partnern). **Quellen:** **Forschungs-ID**
+  (S…) und **Bild**: „auf dem Rechner der Forschung“, „Scan fehlt auf dem Rechner der Forschung“ (hervorgehoben),
+  „online (Archiv)“.
+- **Linie:** in einer Linie (der Partner einer Person aus der Linie „· Partner“; ein zur Linie hinzugefügter
+  Seitenzweig gehört zu dieser Linie), „Seitenzweig: {Name}“, „Insel“, „außerhalb der Linien“. **Außerhalb der
+  Linien** sind nicht zu einer Linie hinzugefügte Seitenzweige, Inseln und die übrigen
+  ([R2.3](R2-lines-and-queue.md#R2.3)). Die Linien nimmt die Tabelle live aus der Forschung, sonst aus der Datei der
+  Forschung; sortiert wird in der Reihenfolge der Linien der Forschung, dann Zweige, Inseln und außerhalb der Linien,
+  darin nach der Generation. Die Spalte und die Chips der Linien gibt es nur bei einer Forschung mit Linien.
+- **Widerspruch an einer Angabe:** die Zelle einer Angabe mit offenem Widerspruch der Quellen hat vor dem Wert „≠“,
+  ohne Hinterlegung. Ein Klick auf „≠“ öffnet die Blase mit den Widersprüchen; ein Bildschirmleser liest „{Wert},
+  Widerspruch der Quellen: {Angabe}“. Die Zeichen „!“ und „?“ der Forschung stehen nur in den Spalten der Forschung
+  ([A6.7.13](#A6.7.13)).
+- **Chip Forschung ▾:** ein Chip mit einem Menü in den Abschnitten **Signale**, **Linien**, **Austausch, Quellen und
+  Orte**, **Weitere Filter der Forschung** und **Neu aus der Forschung**; „Eine Auswahl öffnet den Block Forschung in
+  der Leiste.“ Chips: **Wartet auf Entscheidung**, **Mit Widerspruch**, **Mit offener Frage**, **Agent arbeitet /
+  wartet**, einer für jede Linie und **Außerhalb der Linien** (mit Anzahlen), **Nicht gesendet**, **Von der Forschung
+  geändert**, **Hier zu entscheiden**, **Wartet auf andere**, **Neu aus der Forschung** (letzte 24 Std., letzte
+  7 Tage, seit dem letzten Öffnen), **Nur im Lesesaal**, **Ort unbestimmt**, **Vom Agenten entschieden**, **Pausiert /
+  zurückgestellt**, **Baum endet hier**. Auf dem Telefon ist der Abschnitt **Forschung** im Panel **Filter**, seltenere
+  Chips unter **Weitere Forschung (n)**.
+- **Vorgegebene Ansichten** (Abschnitt **Forschung** im Menü **Ansicht**; wie die anderen vorgegebenen ändern sie sich
+  nicht, [A6.7.7](#A6.7.7)):
+
+  | Ansicht | Was sie zeigt |
+  |---|---|
+  | **Forschung** | Personen mit einem Signal: Name, Forschung, Wartet auf Entscheidung, Widersprüche, Hypothesen, Agent, Forschungsaufgaben, Geburt, Tod; vom dringendsten an sortiert, dann nach dem Namen |
+  | **Linie: {Linie}** (für jede Linie) und **Außerhalb der Linien** | Name, Linie, Generation, Forschung, Geburt, Tod, Widersprüche, Agent; Chip der Linie; nach der Linie sortiert |
+  | **Austausch mit der Forschung** | Personen mit einem Austausch: Name, Austausch mit der Forschung, Ursprünglich im Stammbaum, Neu aus der Forschung, Widersprüche, Geburt |
+
+  Die Verbindungen sind darin zugeklappt und die Abdeckungszeile eingeschaltet. Eine leere Ansicht sagt „Die
+  Forschung braucht gerade nichts“ oder „Baum und Forschung sind abgeglichen“.
+- **Blase der Forschung:** ein Klick auf eine Zelle der Forschung öffnet eine Blase (auf dem Telefon ein Panel von
+  unten) mit Abschnitten danach, was die Person hat: **Wartet auf Entscheidung · n** (**Versionen vergleichen ›**,
+  **Wartet auf Entscheidung ›**), **Wartet auf andere**, **Widersprüche der Quellen · n** (**Entscheiden ›**),
+  **Hypothesen** oder **Offene Frage** (**Was die Forschung weiß ›**, [S3.5](S3-what-the-research-knows.md#S3.5)),
+  **Agent arbeitet** (**Forschung verfolgen ›**), **Forschungsaufgaben in der Warteschlange** (**Aufgabe in der
+  Forschung öffnen**), **Materialien ›**, **Linie** oder **Außerhalb der Linien** (**Linie im Baum zeigen**, **In der
+  Forschung ändern**), **Ursprünglich im Stammbaum** (**Wert aus dem Stammbaum wiederherstellen**, nur mit der
+  Forschung auf diesem Rechner) und **Verfügbarkeit der Quellen**. Eine Aktion, die in der Forschung bestätigt wird,
+  hat ein Zeichen wie anderswo ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
+- **Live:** beim Verfolgen der Forschung ändern sich nur die Zellen, die die Änderung betrifft; die Reihenfolge der
+  Zeilen bleibt. Am Namen der Person, an der der Agent arbeitet, läuft ein senkrechter Balken. Über der Tabelle steht
+  „● Forschung live verfolgt“, sonst „Forschung: Stand vom {wann}“.
+- **Export:** CSV und XLSX tragen Texte und Anzahlen („wartet; Widerspruch (1)“, „1: Geburt“, ohne Widerspruch „0“),
+  ohne Zeichen. Ohne Verfolgen sind **Agent** und **Forschungsaufgaben** leer, und die Meldung sagt „Agent und
+  Forschungsaufgaben sind leer: Die Forschung wird nicht verfolgt.“ Die Abdeckungszeile hat bei den Spalten der
+  Forschung „–“.
+- **Grenzen:**
+  - ohne Agenten (Strom-Archiv) und in einem schreibgeschützten Stammbaum gibt es weder **Wartet auf Entscheidung**,
+    **Forschungsaufgaben** und **Agent** noch die Chips **Nicht gesendet** und **Hier zu entscheiden**; die Ansicht
+    **Austausch mit der Forschung** gibt es nur in einer Forschung mit Agenten, die sich ändern lässt;
+  - **Agent** und **Forschungsaufgaben** haben nur beim Verfolgen der Forschung einen Wert, sonst „–“ mit dem Etikett
+    „live“; der Chip **Agent arbeitet / wartet** filtert ohne Verfolgen nicht;
+  - in einem schreibgeschützten Stammbaum hat die Blase keine Aktionen: „Schreibgeschützt: Widersprüche lassen sich
+    hier nicht entscheiden.“
+- **Bedienung:** Panel **Spalten** → Gruppe **Forschung**; Chip **Forschung ▾**; **Ansicht** → Abschnitt
+  **Forschung**; **Zeichen ⓘ**.
+- **Gilt seit:** App 3.27.0 mit Forschung 1.31.0
+
+<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 -->
+
+<a id="A6.7.15"></a>
+### A6.7.15 Aktive Zelle, Zellenmenü und Bearbeiten an Ort und Stelle
+
+Ein Klick auf eine Zelle wählt die Zeile aus und macht die Zelle zur aktiven Zelle (dünner Umriss); die Pfeiltasten
+verschieben sie. Die aktive Zelle lässt sich kopieren, nach ihrem Wert filtern und die Angabe in ihr direkt in der
+Tabelle bearbeiten.
+
+- **Kopieren:** Strg/Cmd+C ohne ausgewählten Text kopiert den Text, den die aktive Zelle zeigt, ohne Zeichen, Symbole
+  und Marken. Von Hand ausgewählter Text wird wie gewohnt kopiert.
+- **Zellenmenü:** das Zeilenmenü (rechte Maustaste, Umschalt+F10) und auf dem Telefon das Panel der Zeile (Tippen auf
+  die Zelle) beginnen mit den Möglichkeiten der Zelle **Kopieren**, **Nur „{Wert}“** und **Ohne „{Wert}“** (der Wert
+  auf etwa 24 Zeichen gekürzt, mit „…“); darunter stehen die Zeilenaktionen ([A6.7.8](#A6.7.8)).
+  - **Nur** und **Ohne** setzen den Filter der Spalte **ist** / **ist nicht** ([A6.7.6](#A6.7.6)), Chip „{Spalte} =
+    {Wert} ×“ oder „{Spalte} ≠ {Wert} ×“; verglichen wird ohne Rücksicht auf Groß- und Kleinschreibung und
+    diakritische Zeichen. Eine Zelle mit dem Namen einer Person vergleicht die Person: **Nur „{Vater}“** in der Spalte
+    **Vater** zeigt die Geschwister, nicht die Kinder eines Namensvetters.
+  - Eine leere Zelle bietet **Nur leere** und **Nur ausgefüllte**, eine Zelle mit einer Werteliste setzt den Filter
+    der Werte. Eine Zelle ohne einen einzelnen Wert zum Vergleichen (Zeichen der Forschung, mehrere Namen,
+    Vollständigkeit, Zahl der Verbindungen) bietet nur **Kopieren**; der eigene Name oder Titel der Zeile hat nur die
+    Zeilenaktionen.
+  - Der Filter wird mit der Ansicht gespeichert ([A6.7.7](#A6.7.7)).
+- **Bearbeiten an Ort und Stelle:** bearbeiten lässt sich eine Zelle, die für eine Angabe des Stammbaums steht:
+  - **Nachname** (zeigt er den Ehenamen, wird dieser bearbeitet), **Geburtsname**, **Ehename**;
+  - Datum und Ort von Geburt, Taufe, Tod und Begräbnis;
+  - **Beruf**, solange die Person höchstens einen hat;
+  - Datum und Ort der Heirat (Verbindungstabelle, Unterzeile der Verbindung, Zeile einer Person mit einer
+    Verbindung).
+
+  **Name** wird in der Zelle nicht bearbeitet (er besteht aus mehreren Teilen), ebenso wenig berechnete Zellen,
+  Prüfungen, Forschung, Quellenangaben, Anzahlen und Beziehungen; ein Doppelklick darauf öffnet **Bearbeiten…**.
+- **Das Feld** überdeckt die Zelle. **Enter** speichert, **Esc** bricht ab, **Tab** und **Umschalt+Tab** speichern und
+  gehen zur nächsten oder vorigen bearbeitbaren Zelle der Zeile, ein Klick anderswohin speichert. Das Datum wird wie im
+  Formular der Person gelesen; ein unlesbares bleibt im Feld mit dem Fehler „Das Datum ist nicht lesbar (z. B.
+  15.5.1880, 1880, um 1880)“. Der Ort bietet die Orte des Stammbaums an. Ohne Vor- und Nachname wird nichts
+  gespeichert: „Vor- oder Nachname muss bleiben“.
+- **Das Speichern** geht denselben Weg wie das Formular der Person und ist ein Schritt zurück (Strg/Cmd+Z). Taufe und
+  Begräbnis bearbeiten das erste solche Ereignis (seine übrigen Angaben und Zitate bleiben) oder fügen eines hinzu;
+  ein leeres Feld löscht nur diese Angabe. Dann blinkt die Zeile, bleibt an ihrem Platz, und die Meldung sagt
+  „Gespeichert: {Name}“.
+- **Grenzen:** an Ort und Stelle lässt sich nicht bearbeiten in einem schreibgeschützten oder gesperrten Stammbaum,
+  im Strom-Archiv, auf dem Telefon und bei einer gesperrten Person. Auf dem Telefon wird eine Angabe über das Panel
+  der Zeile → **Bearbeiten…** bearbeitet.
+- **Bedienung:** Doppelklick, **F2**, **Enter** auf der aktiven Zelle (bei einer Zelle mit Befund öffnet Enter zuerst
+  die Blase des Befunds), im Zeilenmenü **Zelle bearbeiten** (F2). Eine bearbeitbare Zelle hat beim Überfahren mit der
+  Maus einen Textcursor.
+- **Gilt seit:** App 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) -->

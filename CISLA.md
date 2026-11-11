@@ -257,6 +257,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A6 | A6-views.md | aplikace 1.0.0 | platí | Pohledy a výběr osob | Views and the choice of people | Ansichten und Auswahl der Personen | Widoki i wybór osób |
 | A6.1 | A6-views.md | aplikace 1.0.0 | platí | Okolí ústřední osoby v pohledu Rodina | The surroundings of the central person in the Family view | Umfeld der zentralen Person in der Ansicht Familie | Otoczenie osoby w centrum w widoku Rodzina |
 | A6.1.1 | A6-views.md | aplikace 1.0.0 | platí | Výchozí osoba a pohled | Default person and view | Standardperson und -ansicht | Domyślna osoba i widok |
+| A6.1.2 | A6-views.md | aplikace 3.27.0 | platí | Rozestupy: Normální a Husté | Spacing: Normal and Dense | Abstände: Normal und Dicht | Odstępy: Normalne i Gęste |
 | A6.2 | A6-views.md | aplikace 1.4.0 | platí | Pohled Potomci | The Descendants view | Ansicht Nachkommen | Widok Potomkowie |
 | A6.3 | A6-views.md | aplikace 1.5.0 | platí | Časová osa | Timeline | Zeitleiste | Oś czasu |
 | A6.4 | A6-views.md | aplikace 1.8.0 | platí | Vějíř | Fan | Fächer | Wachlarz |
@@ -278,6 +279,8 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.7.11 | A6-views.md | aplikace 3.27.0 | platí | Prameny v řádcích | Sources in rows | Quellen in Zeilen | Źródła w wierszach |
 | A6.7.12 | A6-views.md | aplikace 3.27.0 | platí | Citace a kmotři v tabulce osob | Citations and godparents in the People table | Quellenangaben und Paten in der Personentabelle | Cytowania i chrzestni w tabeli osób |
 | A6.7.13 | A6-views.md | aplikace 3.27.0 | platí | Značky v buňkách | Marks in the cells | Zeichen in den Zellen | Oznaczenia w komórkach |
+| A6.7.14 | A6-views.md | aplikace 3.27.0 | platí | Výzkum v tabulce | The research in the Table | Die Forschung in der Tabelle | Badanie w tabeli |
+| A6.7.15 | A6-views.md | aplikace 3.27.0 | platí | Aktivní buňka, nabídka buňky a úprava na místě | The active cell, the cell menu and editing in place | Aktive Zelle, Zellenmenü und Bearbeiten an Ort und Stelle | Aktywna komórka, menu komórki i edycja w miejscu |
 | A7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Kniha, stránky a export | Book, pages and export | Buch, Seiten und Export | Księga, strony i eksport |
 | A7.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Kdo je žijící osoba | Who is a living person | Wer eine lebende Person ist | Kto jest osobą żyjącą |
 | A7.2 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Ochrana žijících | Privacy of living people | Schutz lebender Personen | Ochrona osób żyjących |

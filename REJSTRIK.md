@@ -1260,6 +1260,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [S1.3](cs/S1-connecting-app-and-research.md#S1.3), S1.7
 
+<a id="spacing"></a>
+### Rozestupy
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Rozestupy · Normální · Husté | Volba zařízení pro mezery mezi kartami a generacemi v pohledech Rodina a Potomci; Husté je zmenší, takže se na obrazovku vejde víc osob. Export plakátu má vlastní volbu. |
+| en | Spacing · Normal · Dense | A setting of the device for the gaps between cards and generations in the Family and Descendants views; Dense makes them smaller, so more people fit on the screen. The poster export has its own setting. |
+| de | Abstände · Normal · Dicht | Eine Einstellung des Geräts für die Abstände zwischen Karten und Generationen in den Ansichten Familie und Nachkommen; Dicht verkleinert sie, sodass mehr Personen auf den Bildschirm passen. Der Posterexport hat eine eigene Einstellung. |
+| pl | Odstępy · Normalne · Gęste | Ustawienie urządzenia dla odstępów między kartami i pokoleniami w widokach Rodzina i Potomkowie; Gęste je zmniejsza, więc na ekranie mieści się więcej osób. Eksport plakatu ma własne ustawienie. |
+
+- **Čísla:** [A6.1.2](cs/A6-views.md#A6.1.2)
+
 <a id="table-view"></a>
 ### Tabulka
 
@@ -1270,7 +1282,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Tabelle (Ansicht) · Personen · Verbindungen · Ereignisse · Quellen (Zeilen) | Die Ansicht der App auf den ganzen Stammbaum in Zeilen von Personen, Verbindungen, Ereignissen oder Quellen: Angaben, berechnete Werte, Vollständigkeit, Quellenangaben und Befunde der Prüfung in Spalten, mit Filter, Sortierung, gespeicherten Ansichten und CSV- und XLSX-Export. |
 | pl | Tabela (widok) · Osoby · Związki · Wydarzenia · Źródła (wiersze) | Widok aplikacji na całe drzewo w wierszach osób, związków, wydarzeń lub źródeł: dane, wartości obliczone, kompletność, cytowania i wyniki kontroli w kolumnach, z filtrem, sortowaniem, zapisanymi widokami i eksportem CSV i XLSX. |
 
-- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12, A6.7.13
+- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12, A6.7.13, A6.7.14, A6.7.15
 
 <a id="surname-spellings"></a>
 ### Tvary příjmení

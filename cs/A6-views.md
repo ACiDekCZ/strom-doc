@@ -49,6 +49,36 @@ S čím se strom otevře, určuje nastavení stromu **Výchozí osoba a pohled**
 
 <!-- zdroj: app:src/renderer.ts:1178 findDefaultFocusPerson, getStartupFocus · strings.ts treeManager.defaultPersonViewTitle, focus.defaultPersonLastFocused, focus.defaultPersonSpecific, focus.defaultViewFamily, focus.defaultViewLast · CHANGELOG.cs.md 3.21.0 -->
 
+<a id="A6.1.2"></a>
+### A6.1.2 Rozestupy: Normální a Husté
+
+Volba **Rozestupy** určuje mezery mezi kartami a mezi generacemi v pohledech Rodina a Potomci. **Husté** je zmenší,
+takže se na obrazovku vejde víc osob. **Normální** je výchozí, i na telefonu.
+
+| Mezera | Normální | Husté |
+|---|---|---|
+| mezi kartami vedle sebe | 31 px | 20 px |
+| mezi generacemi | 80 px | 48 px |
+| mezi partnery | 18 px | 14 px |
+
+- Po přepnutí se strom hned překreslí a zůstane na stejné osobě: na kartě ústřední osoby, když je celá vidět, jinak
+  na kartě nejblíž středu. Stejně se strom chová po změně **Detail karet**.
+- **Pořadí sňatku:** v Husté je místo pilulky „1. ∞ 1866“ jen krátké „∞ 1“ na okraji karty, tedy pořadí tohoto
+  sňatku. Celé pořadí ukáže bublina (myší, klávesnicí i klepnutím). Pilulka, pro kterou u karty není místo, se
+  nekreslí.
+- **Export:** export plakátu má vlastní volbu **Rozestupy** (za formátem papíru a orientací). Když se liší od
+  obrazovky, obrázek, plakát i PDF po listech se rozloží znovu s vybranými rozestupy, se stejným výběrem osob a
+  stejnými kartami; obrazovka se nemění. Pod každou volbou je počet listů („26 listů A4“), když se počty liší. Tisk
+  (Ctrl+P) bere rozestupy obrazovky.
+- **Hranice:** volba patří zařízení, se stromem se neukládá. Časová osa, Vějíř, Mapa a Tabulka mají vlastní
+  rozložení a volba se jich netýká; export plakátu z Vějíře a Časové osy řádek **Rozestupy** nemá.
+- **Ovládání:** **Nastavení** → **Karta osoby** → **Rozestupy** (za **Detail karet**): **Normální** · **Husté**. Na malé
+  obrazovce bez kompaktní karty stojí pod volbou „Na malé obrazovce pomůže i Kompaktní karta.“ Export: **Export
+  plakátu** → **Rozestupy**.
+- **Platí od:** aplikace 3.27.0
+
+<!-- zdroj: app:src/types.ts TreeSpacing, DEFAULT_LAYOUT_CONFIG (31/80/18), DENSE_LAYOUT_CONFIG (20/48/14), layoutConfigFor · src/settings.ts getTreeSpacing/setTreeSpacing (treeSpacing), getPosterSpacing/setPosterSpacing (posterSpacing), výchozí normal · src/renderer.ts:804 STANDALONE_VIEWS (timeline, fan, map, table), getPosterLayout({spacing}), kotva překreslení (ústřední karta celá v obraze, jinak nejbližší středu; i při změně typu karty) · src/marriage-order.ts (husté: „∞ N“ na okraji karty, bez místa se nekreslí) · src/ui/export-image-ui.ts (řádek za formátem a orientací, skrytý u vějíře a časové osy, sheetsCount) · strings.ts spacing.label, normal, dense, desc, scope, scopeExport, smallHint, marriageOrder.short, poster.menu, poster.sheetsCount, settings.groupCard, cardDensity.settingLabel · commity 68b9dde4, 03918007, 928db183, e2891a8a · spec 069 K1.1, K3.1 -->
+
 <a id="A6.2"></a>
 ## A6.2 Pohled Potomci
 
@@ -224,11 +254,17 @@ Pohled Tabulka vychází z tabulky od Ondřeje Chrpy.
   a čip **Pokrevní příbuzní**: předci hlavní osoby (i ona sama) a všichni jejich potomci. Partneři, kteří do rodiny
   přišli sňatkem, mezi ně nepatří.
 - **Generace** 1 je nejstarší generace stromu; partner má generaci svého partnera.
-- **Žije** počítá jako ochrana žijících ([A7.1](A7-book-pages-and-export.md#A7.1)).
+- **Žijící** (sloupec, hodnota „žijící“) počítá jako ochrana žijících ([A7.1](A7-book-pages-and-export.md#A7.1)).
 - Nad tabulkou je počet („42 z 120 osob“) a řazení („Řazení: …“). Pole **Hledat osobu...** v liště v tabulce
   řádek osoby vybere a posune na něj; ústřední osoba se nemění.
+- **Ústřední osoba mezi pohledy:** po přepnutí do Tabulky je aktivní řádek ústřední osoby a tabulka se na něj posune
+  (vybraný řádek, který se jí týká, zůstane; když osobu vynechá filtr nebo hledání, aktivní řádek není). Po přepnutí
+  z Tabulky je ústřední osobou osoba aktivního řádku: u svazku partner, který už ústřední osobou je, jinak
+  **Partner 1**; u události ústřední osoba, je-li mezi jejími osobami, jinak první osoba; řádek pramene ústřední osobu
+  nemění.
 - **Hranice:**
   - zvýraznění rodu ([A6.6](#A6.6)) se v tabulce nepoužije; rod jde vybrat čipem **Rod** ([A6.7.6](#A6.7.6));
+  - sloupce, čipy a pohledy výzkumu jsou jen ve stromu z výzkumu ([A6.7.14](#A6.7.14));
   - strom jen ke čtení (sledovaný strom, strom uložený novější verzí aplikace, zamčený strom) tabulka jen
     ukazuje: „Jen ke čtení: úpravy a „Není chyba“ tu nejsou.“ Prohlížení, filtr, řazení a export CSV a XLSX
     fungují; pohled uložit, přejmenovat ani smazat nejde.
@@ -236,7 +272,7 @@ Pohled Tabulka vychází z tabulky od Ondřeje Chrpy.
   Pohled se pamatuje jako ostatní ([A6.1.1](#A6.1.1)).
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Svazky v tabulce osob
@@ -254,10 +290,12 @@ Osoba se dvěma a více svazky má v tabulce osob vlastní řádek a pod ním po
   ostatní se schovají pod řádek „2 svazky mimo filtr · ukázat“. Ukázané jsou znevýrazněné do další změny filtru.
 - **Řazení podle sloupce svazku** bere první svazek, který vyhoví filtru.
 - Osoba s jedním svazkem má jeho údaje přímo ve svém řádku.
+- Podřádek svazku nese jen nálezy svého svazku. Nálezy osoby (třeba věk matky při narození) a pruhy sbalených skupin
+  zůstávají v řádku osoby.
 - **Ovládání:** **Rozbalit svazky** / **Sbalit svazky** (na telefonu v nabídce **⋯**); klávesy → a ← ve sloupci
   **Jméno**, * pro všechny osoby; nabídka řádku. Stav se ukládá s pohledem ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d -->
+<!-- zdroj: app:src/ui/table-view/table-subrows.ts defaultUnionCollapse (collapsed: false), isExpanded, setAllExpanded, passingUnions, personPassesUnions, sortUnionOf, buildLines · table-model.ts unionsInMarriageOrder (marriagesInOrder z src/marriage-order.ts: Svazek 1 = „1. ∞“; bez data sňatku podle rozvodu nebo prvního dítěte; shoda podle seznamu partnerships osoby; zástupné rodiny „?“ za nimi v pořadí dat; commit 2e0346f9, T13) · table-views.ts BUILTIN_VIEWS gaps (unions collapsed) · strings.ts table.unionsN, unionKofN, hiddenUnions, expandAll, collapseAll · commity 8833da14, 8192621d · nálezy podřádku: commit 75de3a9b (T54 F6) -->
 
 <a id="A6.7.2"></a>
 ### A6.7.2 Sloupce
@@ -271,11 +309,16 @@ Sloupce jsou ve skupinách. Které jsou vidět a v jakém pořadí, je část po
 
 - **Jméno** (u svazků **Partner 1**) je ukotvené vlevo a řadí se podle příjmení, pak křestního jména.
   **Příjmení** je příjmení po sňatku, jinak rodné; **Rodné příjmení** je zapsané příjmení.
-- **ID výzkumu** ukazuje jen číslo osoby z výzkumu (P…).
+- **ID výzkumu** ukazuje jen číslo osoby z výzkumu (P…). **Ref. číslo (REFN)** je referenční číslo osoby, jak ho
+  přinesl soubor GEDCOM (a jak do něj zase jde); řadí a filtruje se jako text.
+- **Otevřená otázka**, **⇄ V jiném stromu** (stromy na tomto zařízení, ve kterých osoba je) a **Stav osoby** (značka
+  doložení a spolehlivosti z karty, slovy; řadí se od nejsilnější) jsou v každém stromu. Skupina **Výzkum** je jen ve
+  stromu z výzkumu ([A6.7.14](#A6.7.14)).
 - **Události** (**Povolání**, **Bydliště**, **Vyznání**, **Vojsko**, **Vystěhování**, **Vzdělání**) ukazují
   každou hodnotu jednou, nejnovější první.
 - Sloupce **Spolehlivost …** a **Jistota z výzkumu** mají hodnotu jen ve stromu z výzkumu
   ([S7](S7-reliability-and-verification.md)).
+- Sloupce **Ref. číslo (REFN)**, **Otevřená otázka**, **⇄ V jiném stromu** a **Stav osoby** jsou ve výchozím stavu skryté.
 - **Hranice:** sbalená skupina je úzký pruh; ukazuje nejvyšší úroveň nálezu ve svých buňkách. Na telefonu je
   ukotvené jméno užší a hlavičku jde jen číst, ne měnit.
 - **Ovládání:**
@@ -286,7 +329,7 @@ Sloupce jsou ve skupinách. Které jsou vidět a v jakém pořadí, je část po
     **Sbalit skupinu …** / **Rozbalit skupinu …**; u dopočteného sloupce „Vypočteno z: …“;
   - šířka sloupce tažením okraje hlavičky.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus -->
 
 <a id="A6.7.3"></a>
 ### A6.7.3 Dopočtené a náhradní hodnoty
@@ -358,10 +401,13 @@ podbarvená a má značku úrovně. Kontrola běží nad celým stromem na pozad
   - **Není chyba** (oznámení „Označeno: není chyba“ s **Vrátit**); u neobvyklého **Hlásit znovu**;
   - **Kvalita dat ›** otevře dialog Kvality dat na skupině tohoto nálezu; u neobvyklého na seznamu označených.
 
+  Buňky **Nálezy** a **Nejvyšší úroveň** otevřou seznam všech nálezů osoby (klik, Enter, klepnutí; na telefonu panel
+  zdola): u každého úroveň, text a koho nebo čeho se týká; hlášené podle úrovně, označené **Není chyba** na konci.
+
   Legenda **Značky** („Značky v buňkách“) vysvětluje i nejisté datum, spolehlivost, náhradní hodnotu, dopočet
   a **Nevztahuje se**. Jak která značka vypadá: [A6.7.13](#A6.7.13).
 
-<!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 -->
+<!-- zdroj: app:src/ui/table-view/table-checks.ts severityRank, parentAgeColumn, issueTargets (mapování nálezů na buňky), buildCheckIndex, CHECK_COLUMNS, applyChecks · table-ui.ts whenIdle (validateTreeData jednou), cellFindings · table-bubble.ts bubbleHeading, bubbleHtml, legendHtml, openBubblePanel, sheetElement · src/ui/tree-stats.ts showTreeValidationDialog (focus: skupina otevřená a posunutá; označené → seznam) · strings.ts table.sev.*, unusualChecked, notError, reReport, toQuality, dismissedToast, roNote, checksRunning, findingOf, legend, legendTitle, legendKind.*, legendText.* · commity 19cf28ea, e530019b, 59a8eed0 · seznam nálezů osoby z buněk Nálezy a Nejvyšší úroveň: commit 75de3a9b (T54 F5) -->
 
 <a id="A6.7.6"></a>
 ### A6.7.6 Filtr, hledání a řazení
@@ -375,7 +421,8 @@ Filtr vybere řádky, hledání je zúží dál, řazení určí pořadí.
 - **Filtr ve sloupci** (**Filtr…** v hlavičce) podle druhu sloupce:
   - hodnoty ze seznamu (pohlaví, stav svazku, úroveň nálezu, rod …);
   - rozsah **od**–**do** (u data **Rok**, u věku, počtu a procent číslo);
-  - text: **obsahuje** · **začíná**;
+  - text: **obsahuje** · **začíná** · **je** · **není** (bez ohledu na velikost písmen a diakritiku; čip „Sloupec =
+    hodnota ×“ nebo „Sloupec ≠ hodnota ×“; rychle z nabídky buňky, [A6.7.15](#A6.7.15));
   - u každého **Jen prázdné** · **Jen vyplněné**.
 - Platí všechny filtry zároveň. Počet filtrů je na **Filtry (n)**, vše ruší **Zrušit filtry**. Bez řádku:
   „Nic nevyhovuje filtru“.
@@ -386,7 +433,7 @@ Filtr vybere řádky, hledání je zúží dál, řazení určí pořadí.
   má číslo pořadí klíče. Prázdné hodnoty jsou vždy na konci, v obou směrech. Čísla v textu se řadí jako čísla.
 - **Hranice:** hledání se do pohledu neukládá ([A6.7.7](#A6.7.7)).
 
-<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 -->
+<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 · je / není: strings.ts table.matchEquals, matchNotEquals (commit 05d9a9ab, T54 F4) -->
 
 <a id="A6.7.7"></a>
 ### A6.7.7 Pohledy tabulky
@@ -440,6 +487,7 @@ Klik vybere řádek (i podřádek svazku); šipky, Page Up/Down a Ctrl+Home/End 
 - Po úpravě oznámení „Uloženo: …“, řádek krátce blikne a řádky zůstanou v pořadí. Řádek, který už filtru
   nevyhovuje, zůstane se štítkem „nevyhovuje filtru“ do další změny řazení, filtru nebo pohledu. Změnu z výzkumu
   ohlásí „Výzkum změnil 3 údaje: …“.
+- Jeden údaj jde upravit i přímo v buňce ([A6.7.15](#A6.7.15)).
 - **Hranice:** ve stromu jen ke čtení **Upravit…** není.
 - **Ovládání:** tlačítka u vybraného řádku, nabídka řádku (pravé tlačítko; i rozbalení svazků). Na telefonu
   klepnutí na řádek otevře panel s akcemi a se svazky („Svazek 1: … · Upravit ›“).
@@ -526,30 +574,33 @@ Tabulka pramenů má řádek na každý pramen stromu (**Akce → Prameny**, [A3
 kolik toho pramen ve stromu dokládá.
 
 - **Sloupce** ve skupinách **Pramen** · **Použití**:
-  - **Titul**, **Archiv**, **Kniha, signatura, folio**, **Online** (adresa bez `https://`; webová adresa je odkaz ↗
-    do nového okna);
+  - **Titul**, **Archiv**, **Kniha, signatura, folio**, **Online** (adresa pramene, jinak stránka jeho prvního výpisu,
+    bez `https://`; webová adresa je odkaz ↗ do nového okna, jen http a https, zapsaná bez schématu („www.…“) se
+    otevře přes https; klik na odkaz výběr řádku nezmění);
   - **Osob**: kolik osob má údaj, který pramen cituje; údaj svazku dokládá oba partnery;
   - **Údajů**: kolik údajů pramen cituje. Údaj je jeden seznam citací: citace osoby, narození, úmrtí, každá událost
     osoby, sňatek, rozvod a každá událost páru;
   - **Přečteno výzkumem**: kolik čtenářů přepis četlo („1 čtenář“, „2 čtenáři“: člověk v aplikaci a výzkum), jinak „ne“;
   - **Přepis**: ano / ne; v katalogu sloupců je i **Datum záznamu**.
 - Citace zástupných osob a pramenů příběhu se nepočítají.
-- **Čipy:** **Bez osoby** (žádná osoba ho necituje), **Nepřečteno**, **S přepisem**, **Online**.
+- **Čipy:** **Bez osoby** (žádná osoba ho necituje), **Nepřečteno**, **S přepisem**, **Online** (stejně jako sloupec
+  **Online**, i s adresou bez `https://`).
 - **Ovládání:** vestavěný pohled **Všechny prameny**. U řádku **Otevřít pramen** a **Upravit…**: obojí otevře správce
   pramenů na tom pramenu; **Ukázat ve stromu** tu není.
 - **Hranice:** v zamčeném stromu se pramen jen ukáže, bez úprav.
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts sourceUsage (PERSON_CITATION_FIELDS, události, PARTNERSHIP_CITATION_FIELDS pro oba partnery, bez zástupných, ne příběh), buildSourceRows (katalog data.sources), sourceReaders (readBy user/research/both) · table-columns.ts SOURCE_COLUMNS, urlCell, shortUrl, readersCell, DEFAULT_VIEWS.sources · table-filter.ts SOURCE_CHIP_ORDER (srcNoPerson persons 0, srcUnread, srcTranscript, srcOnline safeHttpUrl) · table-grid.ts rowTail (source: open + edit) · table-ui.ts tableRowAction (source → openTableSource), openTableSourceId (zamčený strom → showSourceViewer readOnly) · strings.ts table.rows.sources, group.source, group.use, col.src*, chip.src*, readers, act.openSource, viewName.allSources, sources.readBy.* · commity 1a3a49f1, 3cf69ffa · spec 073 §14.2 · dirigent:prace/1110-app-tabulka-p2 · odkaz a čip Online: safeWebUrl (http/https, www. → https, rel noopener noreferrer), commit 7e648e24 (T54 F10, F11) -->
 
 <a id="A6.7.12"></a>
 ### A6.7.12 Citace a kmotři v tabulce osob
 
 Tabulka osob má sloupce, které ukážou, z jakého pramene je narození, sňatek a úmrtí, a kdo byl kmotrem.
 
-- **Citace** (skupina **Prameny**): **Narození: archiv**, **Narození: signatura**, **Narození: odkaz** a totéž pro
+- **Citace** (skupina **Prameny**): **Narození: archiv**, **Narození: signatura**, **Narození: URL** a totéž pro
   **Sňatek** a **Úmrtí**. Buňka ukáže archiv, signaturu nebo webovou adresu prvního citovaného pramene; další prameny
-  jsou v tlačítku „+N“.
+  jsou v tlačítku „+N“. Webová adresa ve sloupci **… URL** je odkaz do nového okna, jako ve sloupci **Online**
+  ([A6.7.11](#A6.7.11)).
   - Narození bere citace narození, pak událostí narození a křtu; úmrtí citace úmrtí, pak událostí úmrtí, pohřbu a
     kremace; sňatek citace svazku (u podřádku svazku toho svazku). Každý pramen jednou.
   - Prameny z původu údaje ve výzkumu se nepočítají, jen citace v datech.
@@ -561,13 +612,14 @@ Tabulka osob má sloupce, které ukážou, z jakého pramene je narození, sňat
   **Další citace** (na telefonu panel zdola); klik na pramen ho otevře ve správci pramenů.
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl, godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
+<!-- zdroj: app:src/ui/table-view/table-sources.ts factCitations (narození: birthSourceIds + birth/baptism; úmrtí: deathSourceIds + death/burial/cremation; sňatek: sourceIds svazku; neznámé id ven, každý jednou) · table-columns.ts citeCell (první pramen, moreSources), bArch…dUrl (group sources, unionScoped, deathOnly → naCell), godparentsCell (group birth), personGodparents · table-checks.ts personRecurring (sloupec godparents) · table-grid.ts moreCitesHtml · table-ui.ts showTableCites, openTableSourceId · strings.ts table.col.bArch…dUrl (bUrl „Narození: URL“, commit 7e648e24, T54 F10), godparents, moreCites, citesTitle · commity 208d8b92, 21a132c1 · spec 073 §14.3, §14.5 · dirigent:prace/1110-app-tabulka-p2 (citace: jen citace v datech, ne FactReliability.sourceIds) -->
 
 <a id="A6.7.13"></a>
 ### A6.7.13 Značky v buňkách
 
 Přehled všeho, čím tabulka označí buňku nebo řádek. Legenda **Značky ⓘ** vpravo nad tabulkou (bublina „Značky
-v buňkách“, na telefonu panel zdola) ukazuje první dvě tabulky: čtyři úrovně nálezu a pět druhů hodnoty.
+v buňkách“, na telefonu panel zdola) ukazuje první dvě tabulky: čtyři úrovně nálezu a pět druhů hodnoty; ve stromu
+z výzkumu i třetí, značky výzkumu.
 
 **Nálezy kontroly** ([A6.7.5](#A6.7.5)). Značka stojí na konci buňky za hodnotou; klik na buňku s nálezem otevře
 bublinu nálezu.
@@ -589,12 +641,30 @@ bublinu nálezu.
 | Značka | Jak vypadá | Co znamená (legenda) | Kde se objeví |
 |---|---|---|---|
 | **nejisté datum** | datum podtržené tečkami; slovo **cca**, **před** nebo **po** menším šedým písmem před datem | „Cca, před, po nebo rozsah; není to nález.“ | sloupce dat ([A6.7.3](#A6.7.3)) |
-| **spolehlivost** | v legendě kroužek s „✓“; v buňce šedý název stupně: **Potvrzeno**, **Doloženo**, **Pravděpodobné**, **Možné**, **Vodítko**, **Z rodokmenu**, **Bez pramene** | „Jen ve sloupcích Spolehlivost a výzkum.“ | **Spolehlivost jména**, **narození**, **úmrtí**, **sňatku** (osoby, svazky), **Spolehlivost** (události); stupně: [S7.1](S7-reliability-and-verification.md#S7.1) |
+| **spolehlivost** | v legendě kroužek s „✓“; v buňce šedý název stupně: **Potvrzeno**, **Doloženo**, **Pravděpodobné**, **Možné**, **Z rodokmenu**, **Vodítko**, **Bez pramene** | „Jen ve sloupcích Spolehlivost a výzkum.“ | **Spolehlivost jména**, **narození**, **úmrtí**, **sňatku** (osoby, svazky), **Spolehlivost** (události); stupně: [S7.1](S7-reliability-and-verification.md#S7.1) |
 | **náhradní hodnota** | zkratka **křt.** nebo **pohř.** v malém rámečku před hodnotou, hodnota kurzívou; nápověda „Křest, narození neznámé“, „Pohřeb, úmrtí neznámé“ | „Křest místo narození, pohřeb místo úmrtí.“ | datum a místo narození a úmrtí ([A6.7.3](#A6.7.3)) |
 | **dopočteno** | šedé písmo; „≈ 67“ odhad, „28–29“ rozsah | „Rozsah z nepřesného data, ≈ z odhadu.“ | věky, rozdíl zapsaného věku, délka svazku, počty, generace, úplnost; u hlavičky „Vypočteno z: …“ |
 | **nevztahuje se** | „–“ šedou kurzívou; nápověda „Nevztahuje se“ | „Údaj se osoby netýká.“ | úmrtí u žijící osoby (u **Úplnost úmrtí** „žije“), věk otce nebo matky bez zapsaného rodiče, sloupce svazku u osoby bez svazku, **Věk při události** u narození |
 
 - Ve sloupcích **Spolehlivost …** se řadí od **Potvrzeno** po **Bez pramene** v pořadí z tabulky.
+
+**Značky výzkumu** ([A6.7.14](#A6.7.14)), jen ve stromu z výzkumu. Kolečko výzkumu má kolem sebe lem, takže se i bez
+barvy liší od kolečka chyby (bez lemu) a čtverečku k ověření. Legenda dodá: „Kruh s lemem znamená výzkum. ! a ?
+výzkumu jsou jen ve sloupcích Výzkum, na údaji smí být jen ≠.“
+
+| Značka | Jak vypadá | Co znamená (legenda) | Kde se objeví |
+|---|---|---|---|
+| **čeká** | plné jantarové kolečko s lemem a „!“ | „Výzkum čeká na rozhodnutí.“ | **Výzkum**, **Čeká na rozhodnutí** |
+| **čeká zvenku** | prázdný jantarový kroužek s „!“ | „Čeká se na odpověď zvenku (dopis, archiv), rozhodovat není co.“ | **Výzkum**, **Čeká na rozhodnutí** |
+| **rozpor** | plné jantarové kolečko s lemem a „≠“ | „Prameny se neshodují. Není to chyba v datech: rozhoduje se, kterému prameni věřit.“ | před hodnotou v buňce údaje (bez podbarvení, klik otevře rozpory); **Výzkum**, **Rozpory** |
+| **otázka** | plné jantarové kolečko s lemem a „?“ | „Otevřená otázka nebo hypotéza.“ | **Výzkum**, **Hypotézy** |
+| **agent** | otáčející se oblouk (při omezeném pohybu stojí) | „Agent u osoby právě pracuje (jen při sledování).“ | **Výzkum**, **Agent**; u jména osoby svislý pruh 3 px |
+| **hotovo** | „✓“ | „Agent práci dokončil (na 4 s).“ | za jménem, **Agent** |
+
+- Ve sloupci **Výzkum** je u osoby ve frontě agenta šedá tečka „·“ s „ve frontě“; „+2“ za značkou jsou další druhy
+  signálu. Nové od výzkumu má ve svém sloupci tečku „•“.
+- Sloupec, který má hodnotu jen při sledování výzkumu, má bez sledování „–“ se štítkem „živě“ (nápověda „Jen při
+  sledování výzkumu“).
 
 **Další značky** (legenda je neukazuje):
 
@@ -605,7 +675,9 @@ bublinu nálezu.
 | procento s proužkem | číslo a krátký proužek, jehož vyplněná část je hodnota | úplnost ([A6.7.4](#A6.7.4)) | sloupce **Úplnost …** |
 | tučné číslo, „–“ | v řádku pokrytí | pokrytí pod 50 %; „–“ sloupec bez buňky, které by se týkal | **Řádek pokrytí** ([A6.7.4](#A6.7.4)) |
 | „+2“ | číslo v oválném rámečku za první citací | další citované prameny; klik otevře **Další citace** | citace narození, sňatku, úmrtí ([A6.7.12](#A6.7.12)) |
-| „↗“ | za podtrženou webovou adresou | odkaz do nového okna | **Online**, citace „… odkaz“ ([A6.7.11](#A6.7.11)) |
+| „↗“ | za podtrženou webovou adresou | odkaz do nového okna | **Online**, citace „… URL“ ([A6.7.11](#A6.7.11), [A6.7.12](#A6.7.12)) |
+| obrys buňky | tenký obrys 1 px | aktivní buňka ([A6.7.15](#A6.7.15)) | buňka vybraného řádku |
+| textový kurzor | při najetí myší | buňka jde upravit na místě ([A6.7.15](#A6.7.15)) | upravitelné buňky |
 | ●○, ●● | jedna nebo dvě plné tečky před „1 čtenář“, „2 čtenáři“; nápověda, kdo přepis četl | kolik čtenářů přepis četlo | **Přečteno výzkumem** ([A6.7.11](#A6.7.11)) |
 | „12 d.“ | číslo s „d.“ | věk do jednoho roku ve dnech | **Věk při události** ([A6.7.10](#A6.7.10)) |
 | ▾, ▸ | trojúhelník před jménem | svazky osoby rozbalené, sbalené ([A6.7.1](#A6.7.1)) | **Jméno** osoby se dvěma a více svazky |
@@ -621,4 +693,117 @@ bublinu nálezu.
 - **Ovládání:** **Značky ⓘ** vpravo nad tabulkou.
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts MARK_GLYPH (error „!“, warning „?“, info prázdný, unusual „☆“), markHtml (role img, aria-label úroveň: text), cellClasses (aggregate, na, computed, uncertain, subst, ghost, issue), cellText („–“), cellInner (značka za hodnotou; u čísla vpravo za, jinak před slovem), moreCitesHtml „+N“, cellValueCore (tv-comp proužek 30 px, tv-subst, tv-qual), linkHtml „ ↗“, readersHtml (fs-dots), nameCell (▾/▸, tv-unions-pill unionsN, └ unionKofN, hiddenUnions), sort mark ↑/↓ s číslem, tv-group-toggle −/+ · table-bubble.ts legendHtml (4 značky + uncertain „1890–1892“, reliability ✓, subst křt., computed „≈ 67“, na „–“) · table-bar.ts createStatus (◌ checksRunning, legenda „Značky ⓘ“) · table-columns.ts checksPendingCell („…“ ghost), findingsCell („0“ ghost), topSeverityCell, unusualCell (☆), pillCell + reliabilityText + RELIABILITY_RANK (human, proven, probable, possible, import, lead, none), readersCell (dots [true, n > 1]), naCell (relD, fAge, mAge, unionScoped bez svazku, evAge narození), eventAge (ageDays) · table-subrows.ts aggregate „n svazků“ · table-checks.ts bandSeverity · table-coverage.ts LOW pod 50 % · index.html CSS .tv-mark--error (kolečko 16 px, --danger), --warning (čtverec radius 3px, --warning), --info (kroužek 10 px, okraj --text-faint), --unusual, .tv-cell--error/--warning (danger-soft, warning-soft), --uncertain (dotted), --na (kurzíva), --computed, .tv-subst, .tv-cites-more, .tv-row.is-stale, .tv-stale-note, mark.tv-hit · strings.ts table.legend, legendTitle, legendKind.*, legendText.*, sev.*, subst.*, qual.*, na, living, checksRunning, moreCites, citesTitle, readers, ageDays, unionsN, unionKofN, hiddenUnions, staleRow, col.relN/relB/relD/relW/evRel, reliability.human/proven/import/none, factStatus.probable/possible/lead · app f34d41e1 · Milan 10. 11. (dirigent:prace/1110-doc-tabulka-znacky bod 1) · pořadí stupňů podle RELIABILITY_RANK (Z rodokmenu před Vodítko), dirigent:prace/_drobnosti/doc.md · značky výzkumu: table-grid.ts RESEARCH_GLYPH (wait „!“, ext „!“, conf „≠“, q „?“, agent oblouk, done „✓“, queue „·“, new „•“), researchMarkHtml, conflictMarkHtml (≠ před hodnotou) · index.html .tv-rmark--wait/conf/q (kolečko 16 px, --signal-warn, lem box-shadow), --ext (prázdný kroužek), --agent (agSpin, prefers-reduced-motion), --done, .tv-agent-bar (3 px) · strings.ts table.res.legendName, legendText, legendNote, liveTag, liveOnly · aktivní buňka a kurzor: commity 05d9a9ab, be9ca8cd · spec 073 §16.3, U7 -->
+
+<a id="A6.7.14"></a>
+### A6.7.14 Výzkum v tabulce
+
+Ve stromu z výzkumu ([S1](S1-connecting-app-and-research.md)) tabulka ukáže i to, co o osobách ví výzkum: co čeká na
+rozhodnutí, rozpory pramenů, hypotézy, práci agenta, linie a výměnu se stromem. Do stromu nic nezapisuje.
+
+- **Sloupce osob** (skupina **Výzkum**, ve výchozím stavu skrytá; zaškrtávátko **vše** zapne **Výzkum**, **Čeká na
+  rozhodnutí**, **Rozpory**, **Hypotézy** a **Agent**):
+
+  | Sloupec | Co ukazuje |
+  |---|---|
+  | **Výzkum** | nejnaléhavější signál osoby v pořadí čeká › rozpor › otázka nebo hypotéza › agent › ve frontě; „+n“ další druhy |
+  | **Čeká na rozhodnutí** | počet a první položka; u čekání na jiné „zvenku: …“ (dopis odeslán, dotaz na rodinu …) |
+  | **Rozpory** | počet otevřených rozporů a údaje („· narození, …“); „· lze rozhodnout v aplikaci“, kde to jde ([S2](S2-edits-from-the-app.md)) |
+  | **Hypotézy** | počet otevřených hypotéz; „rozhodl agent“ |
+  | **Úkoly výzkumu** | úkoly osoby ve frontě („2 · nejbližší 3. ve frontě“, „1 · právě běží“) |
+  | **Agent** | „pracuje: {úkol}“, „ve frontě“, „hotovo“ |
+  | **Linie** | místo osoby mezi liniemi (níže) |
+  | **Materiály**, **Strom tu končí**, **Hledáno bez výsledku**, **Výměna s výzkumem**, **Původně v rodokmenu**, **Příběh**, **Kde se vyřizuje**, **Nové od výzkumu**, **Dostupnost pramenů**, **Farnost (výzkum)**, **Odhad narození** | co výzkum ví o materiálech osoby, o kraji stromu, o výměně se stromem, o pramenech a místech |
+
+- **Svazky:** **ID výzkumu** (F…), **Linie** (podle partnera z linie), **Agent** („pracuje na páru: …“) a **Rozpory**
+  (rozpory ke sňatku a rozvodu u obou partnerů). **Prameny:** **ID výzkumu** (S…) a **Obraz**: „v počítači výzkumu“,
+  „sken chybí v počítači výzkumu“ (zvýrazněné), „online (archiv)“.
+- **Linie:** v linii (partner osoby z linie „· partner“; vedlejší větev přidaná k linii patří do té linie),
+  „vedlejší větev: {jméno}“, „ostrov“, „mimo linie“. **Mimo linie** jsou vedlejší větve nepřidané k linii, ostrovy a
+  ostatní ([R2.3](R2-lines-and-queue.md#R2.3)). Linie bere tabulka živě z výzkumu, jinak ze souboru výzkumu; řadí se
+  v pořadí linií výzkumu, pak větve, ostrovy a mimo linie, uvnitř podle generace. Sloupec i čipy linií jsou jen
+  u výzkumu s liniemi.
+- **Rozpor na údaji:** buňka údaje s otevřeným rozporem pramenů má před hodnotou „≠“, bez podbarvení. Klik na „≠“
+  otevře bublinu s rozpory; čtečka obrazovky přečte „{hodnota}, rozpor pramenů: {údaj}“. Značky „!“ a „?“ výzkumu
+  jsou jen ve sloupcích výzkumu ([A6.7.13](#A6.7.13)).
+- **Čip Výzkum ▾:** jeden čip s nabídkou v oddílech **Signály**, **Linie**, **Výměna, prameny a místa**, **Další čipy
+  výzkumu** a **Nové od výzkumu**; „Výběrem se blok Výzkum v řadě rozbalí.“ Čipy: **Čeká na rozhodnutí**, **S
+  rozporem**, **S otázkou**, **Agent pracuje / ve frontě**, jeden na každou linii a **Mimo linie** (s počty),
+  **Neodesláno**, **Změněno výzkumem**, **Rozhodnout tady**, **Čeká zvenku**, **Nové od výzkumu** (za 24 h, za 7 dní,
+  od posledního otevření), **Jen v badatelně**, **Místo neurčeno**, **Rozhodl agent**, **Pozastaveno / odloženo**,
+  **Strom tu končí**. Na telefonu je oddíl **Výzkum** v panelu **Filtry**, méně časté čipy pod **Další výzkum (n)**.
+- **Vestavěné pohledy** (oddíl **Výzkum** v nabídce **Pohled**; jako ostatní vestavěné se nemění, [A6.7.7](#A6.7.7)):
+
+  | Pohled | Co ukazuje |
+  |---|---|
+  | **Výzkum** | osoby se signálem: jméno, Výzkum, Čeká na rozhodnutí, Rozpory, Hypotézy, Agent, Úkoly výzkumu, narození, úmrtí; řazeno od nejnaléhavějšího, pak podle jména |
+  | **Linie: {linie}** (pro každou linii) a **Mimo linie** | jméno, Linie, generace, Výzkum, narození, úmrtí, Rozpory, Agent; čip linie; řazeno podle linie |
+  | **Výměna s výzkumem** | osoby s výměnou: jméno, Výměna s výzkumem, Původně v rodokmenu, Nové od výzkumu, Rozpory, narození |
+
+  Svazky jsou v nich sbalené a řádek pokrytí zapnutý. Prázdný pohled řekne „Výzkum teď nic nepotřebuje“ nebo „Strom a
+  výzkum jsou srovnané“.
+- **Bublina výzkumu:** klik na buňku výzkumu otevře bublinu (na telefonu panel zdola) s oddíly podle toho, co osoba
+  má: **Čeká na rozhodnutí · n** (**Porovnat verze ›**, **Čeká na vyřízení ›**), **Čeká zvenku**, **Rozpory pramenů · n**
+  (**Rozhodnout ›**), **Hypotézy** nebo **Otevřená otázka** (**Co ví výzkum ›**, [S3.5](S3-what-the-research-knows.md#S3.5)),
+  **Agent pracuje** (**Sledovat výzkum ›**), **Úkoly výzkumu ve frontě** (**Otevřít úkol ve výzkumu**), **Materiály ›**,
+  **Linie** nebo **Mimo linie** (**Ukázat linii ve stromu**, **Změnit ve výzkumu**), **Původně v rodokmenu** (**Vrátit
+  hodnotu z rodokmenu**, jen s výzkumem na tomto počítači) a **Dostupnost pramenů**. Akce, která se potvrzuje ve
+  výzkumu, má značku jako jinde ([S4.5.1](S4-research-from-the-app.md#S4.5.1)).
+- **Naživo:** při sledování výzkumu se mění jen buňky, kterých se změna týká, pořadí řádků zůstane. U jména osoby,
+  na které agent pracuje, běží svislý pruh. Nad tabulkou stojí „● Výzkum sledován naživo“, jinak „Výzkum: stav z
+  {kdy}“.
+- **Export:** CSV a XLSX nesou texty a počty („čeká; rozpor (1)“, „1: narození“, bez rozporu „0“), bez značek.
+  Bez sledování jsou **Agent** a **Úkoly výzkumu** prázdné a oznámení řekne „Agent a Úkoly výzkumu jsou prázdné:
+  výzkum se nesleduje.“ Řádek pokrytí má u sloupců výzkumu „–“.
+- **Hranice:**
+  - bez agenta (Archiv Stromu) a ve stromu jen ke čtení nejsou **Čeká na rozhodnutí**, **Úkoly výzkumu** a **Agent**
+    ani čipy **Neodesláno** a **Rozhodnout tady**; pohled **Výměna s výzkumem** je jen ve výzkumu s agentem, který
+    jde měnit;
+  - **Agent** a **Úkoly výzkumu** mají hodnotu jen při sledování výzkumu, jinak „–“ se štítkem „živě“; čip **Agent
+    pracuje / ve frontě** bez sledování nefiltruje;
+  - ve stromu jen ke čtení bublina nemá akce: „Jen ke čtení: rozpory tu nejde rozhodnout.“
+- **Ovládání:** panel **Sloupce** → skupina **Výzkum**; čip **Výzkum ▾**; **Pohled** → oddíl **Výzkum**; **Značky ⓘ**.
+- **Platí od:** aplikace 3.27.0 s výzkumem 1.31.0
+
+<!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 -->
+
+<a id="A6.7.15"></a>
+### A6.7.15 Aktivní buňka, nabídka buňky a úprava na místě
+
+Klik na buňku vybere řádek a udělá z buňky aktivní buňku (tenký obrys); šipky ji posouvají. Aktivní buňku jde
+zkopírovat, podle její hodnoty filtrovat a údaj v ní upravit přímo v tabulce.
+
+- **Kopírovat:** Ctrl/Cmd+C bez vybraného textu zkopíruje text, který aktivní buňka ukazuje, bez značek, ikon a
+  pilulek. Ručně vybraný text se kopíruje jako obvykle.
+- **Nabídka buňky:** nabídka řádku (pravé tlačítko, Shift+F10) a na telefonu panel řádku (klepnutí na buňku) začínají
+  volbami buňky **Kopírovat**, **Jen „{hodnota}“** a **Bez „{hodnota}“** (hodnota zkrácená asi na 24 znaků s „…“); pod
+  nimi jsou akce řádku ([A6.7.8](#A6.7.8)).
+  - **Jen** a **Bez** nastaví filtr sloupce **je** / **není** ([A6.7.6](#A6.7.6)), čip „{Sloupec} = {hodnota} ×“ nebo
+    „{Sloupec} ≠ {hodnota} ×“; porovnává se bez ohledu na velikost písmen a diakritiku. Buňka se jménem osoby porovnává
+    osobu: **Jen „{otec}“** ve sloupci **Otec** ukáže sourozence, ne děti jmenovce.
+  - Prázdná buňka nabídne **Jen prázdné** a **Jen vyplněné**, buňka s výčtem nastaví filtr hodnot. Buňka bez jedné
+    hodnoty k porovnání (značka výzkumu, více jmen, úplnost, počet svazků) nabídne jen **Kopírovat**; vlastní jméno
+    nebo titul řádku má jen akce řádku.
+  - Filtr se uloží s pohledem ([A6.7.7](#A6.7.7)).
+- **Úprava na místě:** upravit jde buňku, která stojí za jedním údajem stromu:
+  - **Příjmení** (ukazuje-li příjmení po sňatku, upraví ho), **Rodné příjmení**, **Příjmení po sňatku**;
+  - datum a místo narození, křtu, úmrtí a pohřbu;
+  - **Povolání**, dokud má osoba nejvýš jedno;
+  - datum a místo sňatku (tabulka svazků, podřádek svazku, řádek osoby s jedním svazkem).
+
+  **Jméno** se v buňce neupravuje (skládá se z více částí), stejně jako dopočtené buňky, kontroly, výzkum, citace,
+  počty a vztahy; dvojklik na ně otevře **Upravit…**.
+- **Pole** zakryje buňku. **Enter** uloží, **Esc** zruší, **Tab** a **Shift+Tab** uloží a přejdou na další nebo
+  předchozí upravitelnou buňku řádku, klik jinam uloží. Datum se čte jako ve formuláři osoby; nečitelné zůstane
+  v poli s chybou „Datum nejde přečíst (např. 15.5.1880, 1880, kolem 1880)“. Místo nabízí místa stromu. Bez jména
+  i příjmení se neuloží nic: „Jméno nebo příjmení musí zůstat“.
+- **Uložení** jde stejnou cestou jako formulář osoby a je to jeden krok zpět (Ctrl/Cmd+Z). Křest a pohřeb upraví první
+  takovou událost (její další údaje a citace zůstanou), nebo ji přidá; prázdné pole smaže jen ten údaj. Pak řádek
+  blikne, zůstane na místě a oznámení řekne „Uloženo: {jméno}“.
+- **Hranice:** na místě nejde upravovat ve stromu jen ke čtení nebo zamčeném, v Archivu Stromu, na telefonu a
+  u zamčené osoby. Na telefonu se údaj upraví přes panel řádku → **Upravit…**.
+- **Ovládání:** dvojklik, **F2**, **Enter** na aktivní buňce (u buňky s nálezem otevře Enter nejdřív bublinu nálezu),
+  v nabídce řádku **Upravit buňku** (F2). Upravitelná buňka má při najetí myší textový kurzor.
+- **Platí od:** aplikace 3.27.0
+
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) -->
