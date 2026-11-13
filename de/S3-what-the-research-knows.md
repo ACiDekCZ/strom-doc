@@ -306,5 +306,11 @@ beim jeweiligen Widerspruch oder bei der Hypothese.
   - ohne offene Widersprüche und Hypothesen gibt es den Abschnitt nicht.
 - **Bedienung:** App: Panel der Forschung, Abschnitt **Was die Forschung weiß**.
 - **Gilt seit:** App 3.5.0
+- **Ab App 3.28.0:** in der **Forschungsübersicht** hat der Abschnitt oben die Etiketten **Alle**, **Widersprüche** und
+  **Hypothesen** mit Zahlen, nur wenn es offene Widersprüche und auch Hypothesen gibt; sonst gibt es die Etiketten
+  nicht. **Alle** zeigt die Widersprüche oben und die Hypothesen darunter. Das Annehmen von Hypothesen auf einmal
+  ([S3.5.2](#S3.5.2)) steht über den Hypothesen (in **Alle** und in **Hypothesen**), in **Widersprüche** nicht;
+  **Alle mit Vorschlag auswählen** gilt für die gezeigten Hypothesen. Die Wahl gilt bis zum Schließen der Übersicht,
+  danach ist es wieder **Alle**; sie wird nirgends gespeichert.
 
-<!-- zdroj: app:src/ui/research-overview-ui.ts appendOverviewKnows · strings.ts live.knowsTitle, live.hypothesisRow · commit 228ac6a -->
+<!-- zdroj: app:src/ui/research-overview-ui.ts appendOverviewKnows · strings.ts live.knowsTitle, live.hypothesisRow · commit 228ac6a · 3.28.0: app 4ad34832 (8a10387e) src/knows-kind.ts knowsKindChoice (štítky jen s rozpory i hypotézami), knowsKindShows · src/ui/research-overview-ui.ts appendOverviewKnows (rozpory první, hlavička přijetí nad hypotézami, v Rozporech žádná; knowsKind = 'all' při zavření), knowsKindChips · strings.ts live.knowsKindAll/Con/Hyp · spec 052 K3.1, K3.2 · ZADANI_DEV_fronta-hledani §3 -->

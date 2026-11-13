@@ -65,7 +65,8 @@ session is one task. A run starts one or more sessions in a row; between them it
   - the run goes on in the same terminal window. Ctrl-C asks the session at work to finish and stops the run
     ([R7.3](#R7.3)); the rest stays in the queue;
   - the bridge does not start the agent's work, only the terminal after the yes.
-- **Controls:** a link from the Strom app (`strom-research://work` with `do=tasks` and `n`, or `do=loop`); terminal:
+- **Controls:** a link from the Strom app (`strom-research://work` with `do=tasks` and `n`, or `do=loop`), in the app
+  3.28.0 **Work on the queue…** ([S4.2.3](S4-research-from-the-app.md#S4.2.3)); terminal:
   `strom link open "<link>"`.
 - **Since:** research 1.32.0
 

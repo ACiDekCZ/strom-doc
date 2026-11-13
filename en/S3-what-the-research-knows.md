@@ -282,5 +282,11 @@ Hypothesis: Father from the Horák mill"). A click opens the person's dialog at 
   - without open conflicts and hypotheses the section is not there.
 - **Controls:** app: the research panel, section **What the research knows**.
 - **Since:** app 3.5.0
+- **From app 3.28.0:** in the **Research overview** the section has at the top the chips **All**, **Conflicts** and
+  **Hypotheses** with counts, only when there are open conflicts and hypotheses both; otherwise there are no chips.
+  **All** shows the conflicts at the top and the hypotheses under them. Accepting hypotheses at once
+  ([S3.5.2](#S3.5.2)) stands above the hypotheses (in **All** and in **Hypotheses**), in **Conflicts** it is not
+  there; **Select all with a proposal** applies to the hypotheses shown. The choice lasts until the overview
+  closes, then it is **All** again; it is kept nowhere.
 
-<!-- zdroj: app:src/ui/research-overview-ui.ts appendOverviewKnows · strings.ts live.knowsTitle, live.hypothesisRow · commit 228ac6a -->
+<!-- zdroj: app:src/ui/research-overview-ui.ts appendOverviewKnows · strings.ts live.knowsTitle, live.hypothesisRow · commit 228ac6a · 3.28.0: app 4ad34832 (8a10387e) src/knows-kind.ts knowsKindChoice (štítky jen s rozpory i hypotézami), knowsKindShows · src/ui/research-overview-ui.ts appendOverviewKnows (rozpory první, hlavička přijetí nad hypotézami, v Rozporech žádná; knowsKind = 'all' při zavření), knowsKindChips · strings.ts live.knowsKindAll/Con/Hyp · spec 052 K3.1, K3.2 · ZADANI_DEV_fronta-hledani §3 -->

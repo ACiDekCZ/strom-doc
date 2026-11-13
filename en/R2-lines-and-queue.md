@@ -97,7 +97,8 @@ before all others.
   key 4 and places on request from 1.25.0. Key 2 from 1.26.0.
 - **From research 1.32.0:** the bridge searches the whole queue (a task or person number, the names of persons, the
   words of the task, its book, call number, archive and place, ignoring diacritics), and the text searched for is
-  kept nowhere, not even in the bridge's log.
+  kept nowhere, not even in the bridge's log. In the app: the search field in the **Queue**
+  ([S4.2.1](S4-research-from-the-app.md#S4.2.1)).
 
 <!-- zdroj: research:src/core/queue.ts rankTasks (řazení :374-396), LEVEL_ORDER :52, linksFirst (hypolinks.ts:453), placesFirst · verze klíčů: git log -S na „a.blocked - b.blocked“ (v1.0.0), „a.story - b.story“ (v1.1.0), „a.first - b.first“ (v1.17.0), „a.hist - b.hist“ (v1.22.0), „a.offLine - b.offLine“ a placesFirst (v1.25.0) · 1.32.0: src/core/live.ts searchQueue, queueAsk (GET /queue?q=, q nikdy v logu mostu), funkce queue.search · CHANGELOG.cs.md 1.32.0 -->
 
@@ -195,7 +196,8 @@ end**) can have their own choice. The narrower choice wins: the task before the 
     is working on does not change its place.
 - **Controls:** terminal: `strom offline list|show`, `strom offline set B-P… --mode occasional|last|normal|never`,
   `--line G…`, `--default`; `strom task order T… --next|--last|--default`. App 3.22.0:
-  **Do next**, **To the end**, the branch's choices ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
+  **Do next**, **To the end**, the branch's choices ([S4.3.2](S4-research-from-the-app.md#S4.3.2)). App 3.28.0
+  with research 1.32.0: **Do next** and **Undo** ([S4.2.2](S4-research-from-the-app.md#S4.2.2)).
 - **Since:** research 1.26.0
 - **From research 1.32.0:** of several tasks chosen **Do next** the last chosen goes first (one chosen again goes to
   the top); before, the first chosen. The task the agent is working on stays first. `strom task order T… --restore

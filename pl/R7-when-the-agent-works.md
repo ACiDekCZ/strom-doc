@@ -66,7 +66,8 @@ to jedno zadanie. Przebieg uruchamia jedną lub więcej sesji po kolei; między 
   - przebieg idzie w tym samym oknie terminala. Ctrl-C prosi rozpoczętą sesję o dokończenie i zatrzymuje przebieg
     ([R7.3](#R7.3)); reszta zostaje w kolejce;
   - most nie uruchamia pracy agenta, tylko terminal po potwierdzeniu.
-- **Obsługa:** link z aplikacji Strom (`strom-research://work` z `do=tasks` i `n` albo `do=loop`); terminal:
+- **Obsługa:** link z aplikacji Strom (`strom-research://work` z `do=tasks` i `n` albo `do=loop`), w aplikacji
+  3.28.0 **Praca nad kolejką…** ([S4.2.3](S4-research-from-the-app.md#S4.2.3)); terminal:
   `strom link open "<link>"`.
 - **Obowiązuje od:** badanie 1.32.0
 

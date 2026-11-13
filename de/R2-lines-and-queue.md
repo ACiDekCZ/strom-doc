@@ -105,6 +105,7 @@ begonnene Aufgabe geht allen voran.
 - **Ab Forschung 1.32.0:** die Brücke sucht in der ganzen Warteschlange (Nummer der Aufgabe oder Person, Namen der
   Personen, Wörter der Aufgabe, ihr Buch, ihre Signatur, ihr Archiv und Ort, ohne Rücksicht auf diakritische Zeichen),
   und der gesuchte Text wird nirgends gespeichert, auch nicht im Protokoll der Brücke.
+  In der App: das Suchfeld in der **Warteschlange** ([S4.2.1](S4-research-from-the-app.md#S4.2.1)).
 
 <!-- zdroj: research:src/core/queue.ts rankTasks (řazení :374-396), LEVEL_ORDER :52, linksFirst (hypolinks.ts:453), placesFirst · verze klíčů: git log -S na „a.blocked - b.blocked“ (v1.0.0), „a.story - b.story“ (v1.1.0), „a.first - b.first“ (v1.17.0), „a.hist - b.hist“ (v1.22.0), „a.offLine - b.offLine“ a placesFirst (v1.25.0) · 1.32.0: src/core/live.ts searchQueue, queueAsk (GET /queue?q=, q nikdy v logu mostu), funkce queue.search · CHANGELOG.cs.md 1.32.0 -->
 
@@ -210,7 +211,8 @@ Aufgabe (**sofort** / **ans Ende**). Die engere Wahl gewinnt: die Aufgabe vor de
     bis die Wahl zurückgesetzt wird. Eine Aufgabe, an der der Agent arbeitet, ändert ihren Platz nicht.
 - **Bedienung:** Terminal: `strom offline list|show`, `strom offline set B-P… --mode occasional|last|normal|never`,
   `--line G…`, `--default`; `strom task order T… --next|--last|--default`. App 3.22.0:
-  **Als Nächstes**, **Ans Ende**, Optionen des Zweigs ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
+  **Als Nächstes**, **Ans Ende**, Optionen des Zweigs ([S4.3.2](S4-research-from-the-app.md#S4.3.2)). App 3.28.0
+  mit Forschung 1.32.0: **Als Nächstes erledigen** und **Rückgängig** ([S4.2.2](S4-research-from-the-app.md#S4.2.2)).
 - **Gilt seit:** Forschung 1.26.0
 - **Ab Forschung 1.32.0:** von mehreren Aufgaben mit **sofort** kommt die zuletzt gewählte zuerst (eine erneut
   gewählte geht nach oben); vorher die zuerst gewählte. Die Aufgabe, an der der Agent arbeitet, bleibt die erste.

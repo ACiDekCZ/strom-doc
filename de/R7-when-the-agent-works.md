@@ -70,8 +70,8 @@ kann er eine Bedingung fragen ([R7.4](#R7.4)).
   - der Lauf geht im selben Terminalfenster. Strg-C bittet die laufende Sitzung um Abschluss und hält den Lauf an
     ([R7.3](#R7.3)); der Rest bleibt in der Warteschlange;
   - die Brücke startet die Arbeit des Agenten nicht, nur das Terminal nach dem Ja.
-- **Bedienung:** ein Link aus der Strom-App (`strom-research://work` mit `do=tasks` und `n`, oder `do=loop`);
-  Terminal: `strom link open "<Link>"`.
+- **Bedienung:** ein Link aus der Strom-App (`strom-research://work` mit `do=tasks` und `n`, oder `do=loop`), in der
+  App 3.28.0 **An der Warteschlange arbeiten…** ([S4.2.3](S4-research-from-the-app.md#S4.2.3)); Terminal: `strom link open "<Link>"`.
 - **Gilt seit:** Forschung 1.32.0
 
 <!-- zdroj: research:src/cli/menu-links.ts workRun (WORK_LIST=5, agentCliHere, busyIn, taskQueue s RUN_TURNS, loop jen s run.gate, choose výchozí „Teď nic“, asks … false, run --tasks | --loop) · src/core/links.ts LINK_WORK_DOS, LINK_WORK_MAX=100, LINK_WORK_DEFAULT=5 · src/commands/links.ts case "work" · cs.json ui.link.work.*, ui.link.what.work.*, ui.run.next, ui.run.limit, ui.link.cost · CHANGELOG.cs.md 1.32.0 · spec 052 K6.2 (cesta terminál, most agenta nespouští) -->

@@ -291,8 +291,110 @@ The app shows the beginning of the research's queue in the order in which the ag
   **history** after its text (in **Up next**, in the **Queue**, at set-aside tasks and in a branch's tasks); a task
   without it looks as before. Without following, the overview ([S4.1.5](#S4.1.5)) and the Table show the queue when
   the bridge answers.
+- **From app 3.28.0:** with research 1.32.0 the **Queue** can be searched ([S4.2.1](#S4.2.1)), a task set next and
+  undone ([S4.2.2](#S4.2.2)), and the agent's work on the queue asked for ([S4.2.3](#S4.2.3)). The unfolded
+  **Queue** then has the number of tasks in its heading ("Queue · 1,240") instead of on the right. With an older
+  research the Queue is as before.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear · 3.27.0: app 2ee3718d (queue[].kind ze /status i ze stránek fronty, jiná hodnota zahozena) strings.ts live.queueKind · research 5f48cdaf src/core/queue.ts RUN_TURNS, runOrder (most /status queue[], GET /queue, menu před strom run), kind story|history -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear · 3.27.0: app 2ee3718d (queue[].kind ze /status i ze stránek fronty, jiná hodnota zahozena) strings.ts live.queueKind · research 5f48cdaf src/core/queue.ts RUN_TURNS, runOrder (most /status queue[], GET /queue, menu před strom run), kind story|history · 3.28.0: app 4ad34832 src/ui/research-ui.ts appendQueueSection (counted: queueTitleCount místo summary, když je pole nebo akce záhlaví) · spec 052 -->
+
+<a id="S4.2.1"></a>
+### S4.2.1 Searching the queue
+
+The **Queue** in the **Research overview** has the field **Search tasks, people, archives…**. The research searches its
+whole queue, also beyond the loaded pages; the app sends it only the text searched for
+([R2.2](R2-lines-and-queue.md#R2.2)).
+
+- **When the field is there:** in the unfolded **Queue**, with a research whose bridge can search and answers, and
+  only when the queue has at least one task (a postponed one too). With an older research the field is not there
+  and the Queue is as before.
+- **What is found:**
+  - a task number (`T0815`, `t815`, `815`): that task first, then the tasks whose text holds that number;
+  - a person number (`P12`): the tasks about that person;
+  - other text: the tasks that have every word in the task's text, in the names of its people, in its book, call
+    number, archive or place, or in the task's or a person's number; ignoring case and diacritics. The results are
+    in the order of the queue.
+- **Limits:**
+  - the search runs 300 ms after the last typed character, at most 100 characters are sent; an empty field brings
+    back the queue;
+  - the direction and branch chips ([S4.2](#S4.2)) combine with the search: the result is the chip's tasks that match
+    the text. The counts in the chips stay the queue's counts;
+  - a result row is a queue row (place in the queue, text, **⋯**) with the task number in grey. Only a match of the
+    task or person number is highlighted ("P0108 Jan Horák"), a text match is not. Postponed tasks are at the end with
+    the place "–" and the tag **postponed**;
+  - above the results stands their count ("12 tasks found"). Without a result **Nothing found.** and **Clear search**,
+    with a direction chip also **Search all directions**;
+  - the number of a task that is no longer in the queue: "T0815 is no longer in the queue (done)", the state **done**,
+    **awaiting action**, **postponed** or **given up**;
+  - more than 50 results: **Load more** by 50, at most 300 rows as in the queue;
+  - the bridge does not answer or is busy: **Search failed; the research is not responding.** or **The research is
+    busy; search is not available right now.** and **Try again**; the text stays in the field;
+  - when the queue changes during a search, the result refreshes by itself; the text and the caret stay in the field;
+  - the search lasts until it is cleared (×, Escape in the field, **Clear search**) or until the overview closes. The
+    text searched for is kept nowhere.
+- **Controls:** app: **Research overview → Queue**, the search field; in the small panel under **Up next** the link
+  **Search the queue…**: it opens the overview, unfolds the **Queue** only until it closes (the section's saved choice
+  does not change) and puts the caret in the field. On a phone, where the panel is a strip, the link is not there.
+- **Since:** app 3.28.0 (research 1.32.0)
+
+<!-- zdroj: app:4ad34832 (8a10387e) src/ui/queue-search-ui.ts QUEUE_SEARCH_PAUSE_MS 300, queueSearchOffered (queue.search, queuePaged, queue/queueMore/queueCounts next+parked), resetQueueSearch (zavření Přehledu), Escape · src/research-queue-pages.ts QUEUE_QUERY_MAX 100, QUEUE_PAGE 50, QUEUE_ROWS_CAP 300, QUEUE_ELSEWHERE_STATES · src/ui/research-ui.ts appendQueueSection (searchable jen v Přehledu, ne při sbalení), appendQueueSearchResult (štítek + q, queueSearchBusy/Err, dirRetry), řádek výsledku (live-queue-num „–“, research-queue__match id/person, queueTagDeferred), live-queue-search-link (canExpandLivePanel) · src/ui/research-overview-ui.ts openQueueSearch (unfoldOverviewSection queue do zavření) · strings.ts live.queueSearch*, queueState, queueTagDeferred, queueTitleCount, dirRetry · research 1.32.0 src/core/live.ts searchQueue (TASK_NUMBER, PERSON_NUMBER, každé slovo v jednom poli, pořadí fronty, elsewhere) · spec 052 K1.1–K1.7 · ZADANI_DEV_fronta-hledani §1, §2; D1 (bez řádku pole) -->
+
+<a id="S4.2.2"></a>
+### S4.2.2 Do next and Undo
+
+A task can be sent from the app to come up next, without the terminal. The agent does not interrupt the work in
+progress: the task comes up after it ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
+
+- **Limits:**
+  - **Do next** ("Comes up after the task in progress") is the first item in **⋯** at a task in the **Queue**, in the
+    search results ([S4.2.1](#S4.2.1)) and in **Up next** of the small panel, without a mark. It takes the place of
+    the earlier **Do next** (3.22.0); **To the end** and **Reset to default** stay with a research that offers them
+    ([S4.2](#S4.2));
+  - it is not offered for a task that is first already, that the agent is working on, or that is postponed;
+  - the task moves to the first place, its row is briefly highlighted and its text has the tag **next** until it comes
+    up. Of several tasks set next, the last one marked is first; all of them have the tag. The search stays;
+  - the bubble **Comes up next.** with **Undo** stays 6 s. **Undo** puts the task back exactly in its former place,
+    with its former choice;
+  - when the agent took the task meanwhile: **The agent is working on this task now; its place cannot change.** and
+    the queue refreshes. When the bridge does not answer: **The research is not responding; the order has not
+    changed.** and **Try again**;
+  - nothing is confirmed: nothing starts and nothing is paid;
+  - on a phone the menu is a sheet at the bottom edge with the task's number and text at the top.
+- **Controls:** app: at a task **⋯ → Do next**, in the bubble **Undo**. Terminal: `strom task order T… --next`,
+  `--restore` ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
+- **Since:** app 3.28.0 (research 1.32.0)
+
+<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 -->
+
+<a id="S4.2.3"></a>
+### S4.2.3 Work on the queue…
+
+The app can ask for the agent's work alone on the queue. The app starts nothing: it opens the research's terminal,
+which shows what will run and starts it only on a **yes** ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)). The agent's
+work uses the AI subscription.
+
+- **When it is offered:** with a bridge that answers, for a research that announced the work link, with an agent (not
+  in a Strom archive nor in a research waiting for an agent), only where the app opens the research's links
+  ([S4.5](#S4.5)); not on a phone. While the agent works or a run goes on, the action is not there; in the **Queue**
+  heading **● At work ›** stands in its place, which unfolds **Now** and goes to **Finish and stop**.
+- **The dialog Work on the queue:**
+  - **Automatically** (the default): "The agent takes one task after another as long as the subscription limit
+    allows." When the research reports that the subscription gate (the condition, [R7.4](R7-when-the-agent-works.md#R7.4))
+    is not set, under it stands **Automatic work needs a subscription gate; the terminal offers to set one up.** The
+    choice stays;
+  - **Only 5 tasks**: a number 1–100, the default 5. The work stops after that many completed tasks; a task that ends
+    in waiting, postponing or giving up counts too. Only with a research that can do it; otherwise there is only
+    **Automatically**;
+  - **First up**: the task set next ([S4.2.2](#S4.2.2)), otherwise the first task of the queue;
+  - when the research reports it, the session's length and the gate ("Session up to 3 h · subscription gate: …");
+  - **Cancel** and **Open terminal** (the mark AI and terminal) with the sentence **The research terminal confirms the
+    start. Ctrl-C in its window or Finish and stop in Now stops the work.**
+- **Controls:** app: **Work on the queue…** on the right of the unfolded **Queue** heading in the **Research
+  overview**; menu **Research → Work on the queue…** ([S4.5.2](#S4.5.2)). Terminal: `strom run --tasks N`,
+  `strom run --loop` ([R7.1](R7-when-the-agent-works.md#R7.1)).
+- **Since:** app 3.28.0 (research 1.32.0)
+
+<!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) -->
 
 <a id="S4.3"></a>
 ## S4.3 Directions in the app
@@ -497,8 +599,11 @@ Each research action has one of three marks according to what it opens.
   find out. The agent's work uses the AI subscription.** A conversation can open the agent's app instead of the
   terminal when the research is set up that way.
 - **Since:** app 3.21.0
+- **From app 3.28.0:** **Work on the queue…** and **Open terminal** in its dialog have the mark AI and terminal
+  ([S4.2.3](#S4.2.3)). Searching the queue, **Do next** and **Undo** have no mark: they go through the bridge and
+  open nothing ([S4.2.1](#S4.2.1), [S4.2.2](#S4.2.2)).
 
-<!-- zdroj: app:v3.21.2 src/research-link.ts:66 RESEARCH_LINK_MARKS, researchLinkMark (task do=chat, conflict do=agent, experiment do=off, fixes paid) · strings.ts research.openingAgent, research.openingAgentHint · research:v1.25.2 src/commands/links.ts:373 whereToTalk -->
+<!-- zdroj: app:v3.21.2 src/research-link.ts:66 RESEARCH_LINK_MARKS, researchLinkMark (task do=chat, conflict do=agent, experiment do=off, fixes paid) · strings.ts research.openingAgent, research.openingAgentHint · research:v1.25.2 src/commands/links.ts:373 whereToTalk · 3.28.0: app 9cf43b22 researchLinkMark('work') u queue-work-btn, research-item-queue-work, Otevřít terminál; ZADANI_DEV_fronta-hledani „Značení akcí“ -->
 
 <a id="S4.5.2"></a>
 ### S4.5.2 Where the actions are
@@ -516,8 +621,14 @@ Each research action has one of three marks according to what it opens.
 - **Research overview → Now**: for a working agent **Finish and stop** ([R7.3](R7-when-the-agent-works.md#R7.3)).
 - In a Strom archive everything that needs an agent is missing, **Follow live** too.
 - **Since:** app 3.4.0; the top 6 items from 3.14.0, **Research tools** from 3.19.0, **Finish and stop** from 3.5.0
+- **From app 3.28.0:**
+  - the **Research** menu has under **Continue with the agent** the item **Work on the queue…** ([S4.2.3](#S4.2.3))
+    when it is offered. When there are more than 6 items at the top, **Open the research** is the first to move to
+    **More actions**;
+  - in **Now** the actions stand under the text of each session, in one row: **Show in tree** · **Finish and stop**.
+    On a phone there is only **Show in tree**.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-actions-ui.ts:152 UNDO_MAX_AGE_MS, :158 FIRST_LEVEL_MAX, :300 researchMenuShown, :435 tools, :1000 personResearchActions · src/research-link.ts:115 RESEARCH_TOOL_GROUPS, :132 RESEARCH_TOOL_ACTIONS · research-overview-ui.ts:811, :870 finishSession · strings.ts research.footerFull, research.tools.*, research.reviewWhere, research.continueAgent -->
+<!-- zdroj: app:v3.21.2 src/ui/research-actions-ui.ts:152 UNDO_MAX_AGE_MS, :158 FIRST_LEVEL_MAX, :300 researchMenuShown, :435 tools, :1000 personResearchActions · src/research-link.ts:115 RESEARCH_TOOL_GROUPS, :132 RESEARCH_TOOL_ACTIONS · research-overview-ui.ts:811, :870 finishSession · strings.ts research.footerFull, research.tools.*, research.reviewWhere, research.continueAgent · 3.28.0: app 9cf43b22 src/ui/research-actions-ui.ts research-item-queue-work za research-item-chat (queueWorkMenuOffered), FIRST_LEVEL_MAX 6: research-item-open do more · 623d9c77 src/ui/research-overview-ui.ts overviewNowActions (now-actions pod textem: showInTree · finishSession, finish ne v sheet), overviewNowLine (každé sezení svůj řádek) · ZADANI_DEV_fronta-hledani §6 (varianta A) -->
 
 <a id="S4.5.3"></a>
 ### S4.5.3 Opening a task in the queue
@@ -557,5 +668,8 @@ research's terminal, even when it starts with a click in the app.
 - **Since:** app 3.4.0 (research 1.6.0)
 - **From app 3.22.0:** with research 1.26.0 directions ([S4.3.1](#S4.3.1)), work outside the directions by branches
   ([S4.3.2](#S4.3.2)) and a task's place in the queue ([S4.2](#S4.2)) go without the terminal.
+- **From app 3.28.0:** with research 1.32.0 the agent's work alone on the queue can be asked for from the app
+  ([S4.2.3](#S4.2.3)). The research's terminal starts it only after confirmation
+  ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)); the condition and its settings stay in the terminal.
 
-<!-- zdroj: research:v1.25.2 src/core/links.ts (hlavička: nic se nezapíše bez slova člověka v terminálu) · src/core/live.ts (hlavička mostu) · app:v3.21.2 src/research-link.ts:66 · HEAD src/research-directions-write.ts -->
+<!-- zdroj: research:v1.25.2 src/core/links.ts (hlavička: nic se nezapíše bez slova člověka v terminálu) · src/core/live.ts (hlavička mostu) · app:v3.21.2 src/research-link.ts:66 · HEAD src/research-directions-write.ts · 3.28.0: app 9cf43b22 src/ui/queue-work-dialog.ts (aplikace nic nespouští, odkaz work) · spec 052 K6.2 (cesta terminál) -->

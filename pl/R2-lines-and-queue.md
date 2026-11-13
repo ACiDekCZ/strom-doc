@@ -101,6 +101,7 @@ rozpoczęte idzie przed wszystkimi.
 - **Od badania 1.32.0:** most szuka w całej kolejce (numer zadania lub osoby, imiona i nazwiska osób, słowa zadania,
   jego księga, sygnatura, archiwum i miejsce, bez względu na znaki diakrytyczne), a szukany tekst nie jest nigdzie
   zapisywany, nawet w dzienniku mostu.
+  W aplikacji: pole wyszukiwania w **Kolejce** ([S4.2.1](S4-research-from-the-app.md#S4.2.1)).
 
 <!-- zdroj: research:src/core/queue.ts rankTasks (řazení :374-396), LEVEL_ORDER :52, linksFirst (hypolinks.ts:453), placesFirst · verze klíčů: git log -S na „a.blocked - b.blocked“ (v1.0.0), „a.story - b.story“ (v1.1.0), „a.first - b.first“ (v1.17.0), „a.hist - b.hist“ (v1.22.0), „a.offLine - b.offLine“ a placesFirst (v1.25.0) · 1.32.0: src/core/live.ts searchQueue, queueAsk (GET /queue?q=, q nikdy v logu mostu), funkce queue.search · CHANGELOG.cs.md 1.32.0 -->
 
@@ -197,7 +198,8 @@ Oprócz wyboru dla całego badania własny wybór może mieć jedna gałąź (ta
     zostanie cofnięty. Zadanie, nad którym pracuje agent, miejsca nie zmienia.
 - **Obsługa:** terminal: `strom offline list|show`, `strom offline set B-P… --mode occasional|last|normal|never`,
   `--line G…`, `--default`; `strom task order T… --next|--last|--default`. Aplikacja 3.22.0:
-  **Zrób jako następne**, **Na koniec**, opcje gałęzi ([S4.3.2](S4-research-from-the-app.md#S4.3.2)).
+  **Zrób jako następne**, **Na koniec**, opcje gałęzi ([S4.3.2](S4-research-from-the-app.md#S4.3.2)). Aplikacja 3.28.0
+  z badaniem 1.32.0: **Zrób jako następne** i **Cofnij** ([S4.2.2](S4-research-from-the-app.md#S4.2.2)).
 - **Obowiązuje od:** badanie 1.26.0
 - **Od badania 1.32.0:** z kilku zadań wybranych **od razu** pierwsze idzie ostatnio wybrane (wybrane ponownie idzie
   na górę); wcześniej pierwsze wybrane. Zadanie, nad którym agent pracuje, zostaje pierwsze. `strom task order T…

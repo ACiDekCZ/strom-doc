@@ -61,7 +61,8 @@ jeden úkol. Běh spustí jedno nebo víc sezení za sebou; mezi nimi se může 
   - běh jde v tomtéž okně terminálu. Ctrl-C požádá rozpracované sezení o dokončení a běh zastaví
     ([R7.3](#R7.3)); zbytek zůstane ve frontě;
   - most práci agenta nespouští, jen terminál po potvrzení.
-- **Ovládání:** odkaz z aplikace Strom (`strom-research://work` s `do=tasks` a `n`, nebo `do=loop`); terminál:
+- **Ovládání:** odkaz z aplikace Strom (`strom-research://work` s `do=tasks` a `n`, nebo `do=loop`), v aplikaci
+  3.28.0 **Pracovat na frontě…** ([S4.2.3](S4-research-from-the-app.md#S4.2.3)); terminál:
   `strom link open "<odkaz>"`.
 - **Platí od:** výzkum 1.32.0
 

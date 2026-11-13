@@ -281,5 +281,11 @@ Hipoteza: Otec z Horákova mlýna”). Kliknięcie otwiera okno osoby przy danej
   - bez otwartych sprzeczności i hipotez sekcji nie ma.
 - **Obsługa:** aplikacja: panel badania, sekcja **Co wie badanie**.
 - **Obowiązuje od:** aplikacja 3.5.0
+- **Od aplikacji 3.28.0:** w **Przeglądzie badania** sekcja ma na górze etykiety **Wszystko**, **Sprzeczności**
+  i **Hipotezy** z liczbami, tylko gdy są otwarte zarówno sprzeczności, jak i hipotezy; w przeciwnym razie etykiet nie
+  ma. **Wszystko** pokazuje sprzeczności na górze, a hipotezy pod nimi. Zbiorcze przyjęcie hipotez ([S3.5.2](#S3.5.2))
+  stoi nad hipotezami (we **Wszystko** i w **Hipotezy**), w **Sprzeczności** go nie ma; **Zaznacz wszystkie
+  z propozycją** dotyczy pokazanych hipotez. Wybór obowiązuje do zamknięcia Przeglądu, potem znowu jest **Wszystko**;
+  nigdzie się nie zapisuje.
 
-<!-- zdroj: app:src/ui/research-overview-ui.ts appendOverviewKnows · strings.ts live.knowsTitle, live.hypothesisRow · commit 228ac6a -->
+<!-- zdroj: app:src/ui/research-overview-ui.ts appendOverviewKnows · strings.ts live.knowsTitle, live.hypothesisRow · commit 228ac6a · 3.28.0: app 4ad34832 (8a10387e) src/knows-kind.ts knowsKindChoice (štítky jen s rozpory i hypotézami), knowsKindShows · src/ui/research-overview-ui.ts appendOverviewKnows (rozpory první, hlavička přijetí nad hypotézami, v Rozporech žádná; knowsKind = 'all' při zavření), knowsKindChips · strings.ts live.knowsKindAll/Con/Hyp · spec 052 K3.1, K3.2 · ZADANI_DEV_fronta-hledani §3 -->

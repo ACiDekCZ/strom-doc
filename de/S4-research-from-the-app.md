@@ -309,8 +309,119 @@ Die App zeigt den Anfang der Warteschlange der Forschung in der Reihenfolge, in 
   Nächstes**, in der **Warteschlange**, bei zurückgestellten Aufgaben und in den Aufgaben eines Zweigs); eine Aufgabe
   ohne Etikett sieht aus wie bisher. Ohne Verfolgen zeigen die Warteschlange die Übersicht ([S4.1.5](#S4.1.5)) und die
   Tabelle, wenn die Brücke antwortet.
+- **Ab App 3.28.0:** mit Forschung 1.32.0 lässt sich in der **Warteschlange** suchen ([S4.2.1](#S4.2.1)), eine
+  Aufgabe als nächste einreihen und zurücknehmen ([S4.2.2](#S4.2.2)) und um die Arbeit des Agenten an der
+  Warteschlange bitten ([S4.2.3](#S4.2.3)). Die aufgeklappte **Warteschlange** hat dann die Zahl der Aufgaben in der
+  Überschrift („Warteschlange · 1.240“) statt rechts. Mit einer älteren Forschung ist die Warteschlange wie bisher.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear · 3.27.0: app 2ee3718d (queue[].kind ze /status i ze stránek fronty, jiná hodnota zahozena) strings.ts live.queueKind · research 5f48cdaf src/core/queue.ts RUN_TURNS, runOrder (most /status queue[], GET /queue, menu před strom run), kind story|history -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear · 3.27.0: app 2ee3718d (queue[].kind ze /status i ze stránek fronty, jiná hodnota zahozena) strings.ts live.queueKind · research 5f48cdaf src/core/queue.ts RUN_TURNS, runOrder (most /status queue[], GET /queue, menu před strom run), kind story|history · 3.28.0: app 4ad34832 src/ui/research-ui.ts appendQueueSection (counted: queueTitleCount místo summary, když je pole nebo akce záhlaví) · spec 052 -->
+
+<a id="S4.2.1"></a>
+### S4.2.1 Suche in der Warteschlange
+
+In der **Warteschlange** in der **Forschungsübersicht** gibt es das Feld **Aufgabe, Person, Archiv suchen…**. Die
+Forschung sucht in der ganzen Warteschlange, auch jenseits der geladenen Seiten; die App schickt ihr nur den gesuchten
+Text ([R2.2](R2-lines-and-queue.md#R2.2)).
+
+- **Wann es das Feld gibt:** in der aufgeklappten **Warteschlange**, mit einer Forschung, deren Brücke die Suche kann
+  und antwortet, und nur, wenn in der Warteschlange mindestens eine Aufgabe ist (auch eine zurückgestellte). Mit einer
+  älteren Forschung gibt es das Feld nicht, und die Warteschlange ist wie bisher.
+- **Was gefunden wird:**
+  - Nummer einer Aufgabe (`T0815`, `t815`, `815`): diese Aufgabe als erste, dann Aufgaben, in deren Text die Nummer
+    steht;
+  - Nummer einer Person (`P12`): Aufgaben zu dieser Person;
+  - anderer Text: Aufgaben, die jedes Wort im Text der Aufgabe, in den Namen ihrer Personen, im Buch, in der
+    Signatur, im Archiv oder Ort oder in der Nummer der Aufgabe oder Person haben; ohne Rücksicht auf Groß- und
+    Kleinschreibung und diakritische Zeichen. Die Ergebnisse stehen in der Reihenfolge der Warteschlange.
+- **Grenzen:**
+  - gesucht wird 300 ms nach dem zuletzt getippten Zeichen, geschickt werden höchstens 100 Zeichen; ein leeres Feld
+    bringt die Warteschlange zurück;
+  - die Etiketten der Linie und des Zweigs ([S4.2](#S4.2)) lassen sich mit der Suche kombinieren: das Ergebnis sind
+    die Aufgaben des Etiketts, die zum Text passen. Die Zahlen in den Etiketten bleiben die der Warteschlange;
+  - eine Zeile des Ergebnisses ist eine Zeile der Warteschlange (Platz in der Warteschlange, Text, **⋯**) mit der
+    grauen Nummer der Aufgabe. Hervorgehoben ist nur ein Treffer der Nummer der Aufgabe oder Person („P0108 Jan
+    Horák“), ein Treffer im Text nicht. Zurückgestellte Aufgaben stehen am Ende mit dem Platz „–“ und dem Etikett
+    **zurückgestellt**;
+  - über den Ergebnissen steht ihre Zahl („12 Aufgaben gefunden“). Ohne Ergebnis **Nichts gefunden.** und **Suche
+    aufheben**, mit dem Etikett einer Linie auch **In allen Richtungen suchen**;
+  - die Nummer einer Aufgabe, die nicht mehr in der Warteschlange ist: „T0815 ist nicht mehr in der Warteschlange
+    (erledigt)“, Zustand **erledigt**, **wartet auf Bearbeitung**, **zurückgestellt** oder **aufgegeben**;
+  - mehr als 50 Ergebnisse: **Weitere laden** je 50, höchstens 300 Zeilen wie in der Warteschlange;
+  - antwortet die Brücke nicht oder ist sie beschäftigt: **Die Suche ist fehlgeschlagen, die Forschung antwortet
+    nicht.** oder **Die Forschung ist beschäftigt, Suchen geht gerade nicht.** und **Erneut versuchen**; der Text im
+    Feld bleibt;
+  - ändert sich die Warteschlange während der Suche, erneuert sich das Ergebnis von selbst; Text und Cursor im Feld
+    bleiben;
+  - die Suche gilt, bis sie aufgehoben wird (×, Escape im Feld, **Suche aufheben**) oder bis die Übersicht
+    geschlossen wird. Der gesuchte Text wird nirgends gespeichert.
+- **Bedienung:** App: **Forschungsübersicht → Warteschlange**, Suchfeld; im kleinen Panel unter **Als Nächstes** der
+  Link **In der Warteschlange suchen…**: er öffnet die Übersicht, klappt die **Warteschlange** nur bis zu deren
+  Schließen auf (die gespeicherte Wahl des Abschnitts ändert sich nicht) und setzt den Cursor ins Feld. Auf dem
+  Telefon, wo das Panel ein Streifen ist, gibt es den Link nicht.
+- **Gilt seit:** App 3.28.0 (Forschung 1.32.0)
+
+<!-- zdroj: app:4ad34832 (8a10387e) src/ui/queue-search-ui.ts QUEUE_SEARCH_PAUSE_MS 300, queueSearchOffered (queue.search, queuePaged, queue/queueMore/queueCounts next+parked), resetQueueSearch (zavření Přehledu), Escape · src/research-queue-pages.ts QUEUE_QUERY_MAX 100, QUEUE_PAGE 50, QUEUE_ROWS_CAP 300, QUEUE_ELSEWHERE_STATES · src/ui/research-ui.ts appendQueueSection (searchable jen v Přehledu, ne při sbalení), appendQueueSearchResult (štítek + q, queueSearchBusy/Err, dirRetry), řádek výsledku (live-queue-num „–“, research-queue__match id/person, queueTagDeferred), live-queue-search-link (canExpandLivePanel) · src/ui/research-overview-ui.ts openQueueSearch (unfoldOverviewSection queue do zavření) · strings.ts live.queueSearch*, queueState, queueTagDeferred, queueTitleCount, dirRetry · research 1.32.0 src/core/live.ts searchQueue (TASK_NUMBER, PERSON_NUMBER, každé slovo v jednom poli, pořadí fronty, elsewhere) · spec 052 K1.1–K1.7 · ZADANI_DEV_fronta-hledani §1, §2; D1 (bez řádku pole) -->
+
+<a id="S4.2.2"></a>
+### S4.2.2 Als Nächstes erledigen und Rückgängig
+
+Eine Aufgabe lässt sich aus der App als nächste einreihen, ohne Terminal. Laufende Arbeit unterbricht der Agent
+nicht: die Aufgabe kommt nach ihr an die Reihe ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
+
+- **Grenzen:**
+  - **Als Nächstes erledigen** („Kommt nach der laufenden Aufgabe an die Reihe“) ist der erste Eintrag in **⋯** bei
+    einer Aufgabe in der **Warteschlange**, in den Ergebnissen der Suche ([S4.2.1](#S4.2.1)) und in **Als Nächstes**
+    im kleinen Panel, ohne Marke. Es steht an der Stelle von **Als Nächstes**; **Ans Ende** und **Auf Standard
+    zurücksetzen** bleiben bei einer Forschung, die sie anbietet ([S4.2](#S4.2));
+  - nicht angeboten bei einer Aufgabe, die schon die erste ist, an der der Agent arbeitet oder die zurückgestellt ist;
+  - die Aufgabe rückt an die erste Stelle, ihre Zeile wird kurz hervorgehoben und hat beim Text das Etikett **als
+    Nächstes**, bis sie an der Reihe ist. Von mehreren Aufgaben als nächste ist die zuletzt markierte die erste; das
+    Etikett haben alle. Die Suche bleibt;
+  - die Meldung **Kommt als Nächstes an die Reihe.** mit **Rückgängig** steht 6 s. **Rückgängig** setzt die Aufgabe
+    genau auf ihren früheren Platz zurück, samt ihrer früheren Wahl;
+  - hat der Agent die Aufgabe inzwischen genommen: **Der Agent arbeitet gerade an dieser Aufgabe; ihr Platz lässt sich
+    jetzt nicht ändern.**, und die Warteschlange wird neu geladen. Antwortet die Brücke nicht: **Die Forschung
+    antwortet nicht, die Reihenfolge ist unverändert.** und **Erneut versuchen**;
+  - nichts wird bestätigt: nichts wird gestartet und nichts bezahlt;
+  - auf dem Telefon ist das Menü ein Blatt am unteren Rand mit Nummer und Text der Aufgabe oben.
+- **Bedienung:** App: bei der Aufgabe **⋯ → Als Nächstes erledigen**, in der Meldung **Rückgängig**. Terminal:
+  `strom task order T… --next`, `--restore` ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
+- **Gilt seit:** App 3.28.0 (Forschung 1.32.0)
+
+<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 -->
+
+<a id="S4.2.3"></a>
+### S4.2.3 An der Warteschlange arbeiten…
+
+Aus der App lässt sich um selbstständige Arbeit des Agenten an der Warteschlange bitten. Die App startet nichts: sie
+öffnet das Terminal der Forschung, das zeigt, was gestartet wird, und es erst auf ein Ja startet
+([R7.1.2](R7-when-the-agent-works.md#R7.1.2)). Die Arbeit des Agenten verbraucht das KI-Abonnement.
+
+- **Wann sie angeboten wird:** mit einer Brücke, die antwortet, bei einer Forschung, die den Link für die Arbeit
+  gemeldet hat, mit einem Agenten (nicht im Strom-Archiv und nicht in einer Forschung, die auf einen Agenten wartet),
+  nur dort, wo die App Links der Forschung öffnet ([S4.5](#S4.5)); nicht auf dem Telefon. Arbeitet der Agent oder
+  läuft ein Lauf, gibt es die Aktion nicht; im Kopf der **Warteschlange** steht stattdessen **● In Arbeit ›**, das
+  **Jetzt** aufklappt und zu **Abschließen und beenden** springt.
+- **Dialog An der Warteschlange arbeiten:**
+  - **Automatisch** (Standard): „Der Agent nimmt eine Aufgabe nach der anderen, solange das Abo-Limit es erlaubt.“
+    Meldet die Forschung, dass die Abo-Schranke (Bedingung, [R7.4](R7-when-the-agent-works.md#R7.4)) nicht
+    eingerichtet ist, steht darunter **Automatische Arbeit braucht eine eingerichtete Abo-Schranke; das Terminal
+    bietet die Einrichtung an.** Die Wahl bleibt;
+  - **Nur 5 Aufgaben**: Zahl 1–100, Standard 5. Die Arbeit endet nach so vielen erledigten Aufgaben; mit zählt auch
+    eine Aufgabe, die mit Warten, Zurückstellen oder Aufgeben endet. Nur mit einer Forschung, die das kann; sonst
+    gibt es nur **Automatisch**;
+  - **Als Erstes kommt**: die als nächste markierte Aufgabe ([S4.2.2](#S4.2.2)), sonst die erste Aufgabe der
+    Warteschlange;
+  - wenn die Forschung es meldet, die Länge der Sitzung und die Schranke („Sitzung höchstens 3 Std. · Abo-Schranke:
+    …“);
+  - **Abbrechen** und **Terminal öffnen** (Marke KI und Terminal) mit dem Satz **Den Start bestätigt das
+    Forschungsterminal. Die Arbeit stoppt Strg-C in dessen Fenster oder „Abschließen und beenden“ im Bereich Jetzt.**
+- **Bedienung:** App: **An der Warteschlange arbeiten…** rechts im Kopf der aufgeklappten **Warteschlange** in der
+  **Forschungsübersicht**; Menü **Forschung → An der Warteschlange arbeiten…** ([S4.5.2](#S4.5.2)). Terminal:
+  `strom run --tasks N`, `strom run --loop` ([R7.1](R7-when-the-agent-works.md#R7.1)).
+- **Gilt seit:** App 3.28.0 (Forschung 1.32.0)
+
+<!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) -->
 
 <a id="S4.3"></a>
 ## S4.3 Linien in der App
@@ -525,8 +636,11 @@ Jede Aktion der Forschung hat eine von drei Marken, je nachdem, was sie öffnet.
   schreiben, was herausgefunden werden soll. Seine Arbeit nutzt das eigene KI-Abo.** Ein Gespräch kann statt des
   Terminals die App des Agenten öffnen, wenn die Forschung so eingestellt ist.
 - **Gilt seit:** App 3.21.0
+- **Ab App 3.28.0:** **An der Warteschlange arbeiten…** und in seinem Dialog **Terminal öffnen** haben die Marke KI
+  und Terminal ([S4.2.3](#S4.2.3)). Die Suche in der Warteschlange, **Als Nächstes erledigen** und **Rückgängig** sind
+  ohne Marke: sie gehen über die Brücke und öffnen nichts ([S4.2.1](#S4.2.1), [S4.2.2](#S4.2.2)).
 
-<!-- zdroj: app:v3.21.2 src/research-link.ts:66 RESEARCH_LINK_MARKS, researchLinkMark (task do=chat, conflict do=agent, experiment do=off, fixes paid) · strings.ts research.openingAgent, research.openingAgentHint · research:v1.25.2 src/commands/links.ts:373 whereToTalk -->
+<!-- zdroj: app:v3.21.2 src/research-link.ts:66 RESEARCH_LINK_MARKS, researchLinkMark (task do=chat, conflict do=agent, experiment do=off, fixes paid) · strings.ts research.openingAgent, research.openingAgentHint · research:v1.25.2 src/commands/links.ts:373 whereToTalk · 3.28.0: app 9cf43b22 researchLinkMark('work') u queue-work-btn, research-item-queue-work, Otevřít terminál; ZADANI_DEV_fronta-hledani „Značení akcí“ -->
 
 <a id="S4.5.2"></a>
 ### S4.5.2 Wo die Aktionen sind
@@ -547,8 +661,14 @@ Jede Aktion der Forschung hat eine von drei Marken, je nachdem, was sie öffnet.
 - Im Strom-Archiv fehlt alles, was einen Agenten braucht, auch **Live verfolgen**.
 - **Gilt seit:** App 3.4.0; die oberen 6 Einträge seit 3.14.0, **Forschungswerkzeuge** seit 3.19.0, **Abschließen
   und beenden** seit 3.5.0
+- **Ab App 3.28.0:**
+  - im Menü **Forschung** steht unter **Mit dem Agenten weitermachen** der Eintrag **An der Warteschlange arbeiten…**
+    ([S4.2.3](#S4.2.3)), wenn er angeboten wird. Sind es oben mehr als 6 Einträge, rückt **Forschung öffnen** als
+    erster Eintrag in **Weitere Aktionen**;
+  - in **Jetzt** stehen die Aktionen unter dem Text jeder Sitzung, in einer Zeile: **Im Stammbaum zeigen** ·
+    **Abschließen und beenden**. Auf dem Telefon gibt es nur **Im Stammbaum zeigen**.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-actions-ui.ts:152 UNDO_MAX_AGE_MS, :158 FIRST_LEVEL_MAX, :300 researchMenuShown, :435 tools, :1000 personResearchActions · src/research-link.ts:115 RESEARCH_TOOL_GROUPS, :132 RESEARCH_TOOL_ACTIONS · research-overview-ui.ts:811, :870 finishSession · strings.ts research.footerFull, research.tools.*, research.reviewWhere, research.continueAgent -->
+<!-- zdroj: app:v3.21.2 src/ui/research-actions-ui.ts:152 UNDO_MAX_AGE_MS, :158 FIRST_LEVEL_MAX, :300 researchMenuShown, :435 tools, :1000 personResearchActions · src/research-link.ts:115 RESEARCH_TOOL_GROUPS, :132 RESEARCH_TOOL_ACTIONS · research-overview-ui.ts:811, :870 finishSession · strings.ts research.footerFull, research.tools.*, research.reviewWhere, research.continueAgent · 3.28.0: app 9cf43b22 src/ui/research-actions-ui.ts research-item-queue-work za research-item-chat (queueWorkMenuOffered), FIRST_LEVEL_MAX 6: research-item-open do more · 623d9c77 src/ui/research-overview-ui.ts overviewNowActions (now-actions pod textem: showInTree · finishSession, finish ne v sheet), overviewNowLine (každé sezení svůj řádek) · ZADANI_DEV_fronta-hledani §6 (varianta A) -->
 
 <a id="S4.5.3"></a>
 ### S4.5.3 Eine Aufgabe in der Warteschlange öffnen
@@ -589,5 +709,8 @@ immer im Terminal der Forschung bestätigt, auch wenn es mit einem Klick in der 
 - **Ab App 3.22.0:** mit der Forschung 1.26.0 gehen ohne Terminal die Linien ([S4.3.1](#S4.3.1)), die Arbeit
   außerhalb der Linien nach Zweigen
   ([S4.3.2](#S4.3.2)) und der Platz einer Aufgabe in der Warteschlange ([S4.2](#S4.2)).
+- **Ab App 3.28.0:** mit Forschung 1.32.0 lässt sich um selbstständige Arbeit des Agenten an der Warteschlange aus
+  der App bitten ([S4.2.3](#S4.2.3)). Gestartet wird sie vom Terminal der Forschung erst nach der Bestätigung
+  ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)); die Bedingung und ihre Einstellung bleiben im Terminal.
 
-<!-- zdroj: research:v1.25.2 src/core/links.ts (hlavička: nic se nezapíše bez slova člověka v terminálu) · src/core/live.ts (hlavička mostu) · app:v3.21.2 src/research-link.ts:66 · HEAD src/research-directions-write.ts -->
+<!-- zdroj: research:v1.25.2 src/core/links.ts (hlavička: nic se nezapíše bez slova člověka v terminálu) · src/core/live.ts (hlavička mostu) · app:v3.21.2 src/research-link.ts:66 · HEAD src/research-directions-write.ts · 3.28.0: app 9cf43b22 src/ui/queue-work-dialog.ts (aplikace nic nespouští, odkaz work) · spec 052 K6.2 (cesta terminál) -->

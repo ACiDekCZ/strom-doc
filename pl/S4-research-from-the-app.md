@@ -281,8 +281,109 @@ Aplikacja pokazuje początek kolejki badania w kolejności, w jakiej bierze ją 
   górze jest jedna opowieść, a w kolejce są też zadania historii. Zadanie ma za tekstem cichą etykietę **opowieść**
   albo **historia** (w **W kolejce**, w **Kolejce**, przy odłożonych zadaniach i w zadaniach gałęzi); zadanie bez niej
   wygląda jak wcześniej. Bez śledzenia kolejkę pokazuje Przegląd ([S4.1.5](#S4.1.5)) i Tabela, gdy most odpowiada.
+- **Od aplikacji 3.28.0:** z badaniem 1.32.0 w **Kolejce** można szukać ([S4.2.1](#S4.2.1)), dać zadanie jako
+  następne i cofnąć to ([S4.2.2](#S4.2.2)) oraz poprosić o pracę agenta nad kolejką ([S4.2.3](#S4.2.3)). Rozwinięta
+  **Kolejka** ma wtedy liczbę zadań w nagłówku („Kolejka · 1240”) zamiast po prawej. Ze starszym badaniem Kolejka
+  jest jak wcześniej.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear · 3.27.0: app 2ee3718d (queue[].kind ze /status i ze stránek fronty, jiná hodnota zahozena) strings.ts live.queueKind · research 5f48cdaf src/core/queue.ts RUN_TURNS, runOrder (most /status queue[], GET /queue, menu před strom run), kind story|history -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear · 3.27.0: app 2ee3718d (queue[].kind ze /status i ze stránek fronty, jiná hodnota zahozena) strings.ts live.queueKind · research 5f48cdaf src/core/queue.ts RUN_TURNS, runOrder (most /status queue[], GET /queue, menu před strom run), kind story|history · 3.28.0: app 4ad34832 src/ui/research-ui.ts appendQueueSection (counted: queueTitleCount místo summary, když je pole nebo akce záhlaví) · spec 052 -->
+
+<a id="S4.2.1"></a>
+### S4.2.1 Wyszukiwanie w kolejce
+
+W **Kolejce** w **Przeglądzie badania** jest pole **Szukaj zadania, osoby, archiwum…**. Szuka badanie w całej
+kolejce, także poza wczytanymi stronami; aplikacja wysyła mu tylko szukany tekst ([R2.2](R2-lines-and-queue.md#R2.2)).
+
+- **Kiedy pole jest:** w rozwiniętej **Kolejce**, z badaniem, którego most umie szukać i odpowiada, i tylko gdy
+  w kolejce jest co najmniej jedno zadanie (także odłożone). Ze starszym badaniem pola nie ma, a Kolejka jest jak
+  wcześniej.
+- **Co się znajduje:**
+  - numer zadania (`T0815`, `t815`, `815`): to zadanie jako pierwsze, potem zadania, w których tekście jest ten numer;
+  - numer osoby (`P12`): zadania dotyczące tej osoby;
+  - inny tekst: zadania, które mają każde słowo w tekście zadania, w imionach i nazwiskach jego osób, w księdze,
+    sygnaturze, archiwum lub miejscu albo w numerze zadania lub osoby; bez względu na wielkość liter i znaki
+    diakrytyczne. Wyniki są w kolejności kolejki.
+- **Granice:**
+  - szuka się 300 ms po ostatnim wpisanym znaku, wysyła się najwyżej 100 znaków; puste pole przywraca kolejkę;
+  - etykiety linii i gałęzi ([S4.2](#S4.2)) łączą się z wyszukiwaniem: wynikiem są zadania etykiety, które pasują do
+    tekstu. Liczby w etykietach pozostają liczbami kolejki;
+  - wiersz wyniku to wiersz kolejki (miejsce w kolejce, tekst, **⋯**) z szarym numerem zadania. Wyróżnione jest tylko
+    dopasowanie numeru zadania lub osoby („P0108 Jan Horák”), dopasowanie tekstu nie. Odłożone zadania są na końcu
+    z miejscem „–” i etykietą **odłożone**;
+  - nad wynikami stoi ich liczba („Znaleziono 12 zadań”). Bez wyniku **Nic nie znaleziono.** i **Wyczyść
+    wyszukiwanie**, z etykietą linii także **Szukaj we wszystkich kierunkach**;
+  - numer zadania, którego już nie ma w kolejce: „T0815 nie ma już w kolejce (gotowe).”, stan **gotowe**, **czeka na
+    decyzję**, **odłożone** albo **porzucone**;
+  - więcej niż 50 wyników: **Wczytaj więcej** po 50, najwyżej 300 wierszy jak w kolejce;
+  - most nie odpowiada albo jest zajęty: **Wyszukiwanie nie powiodło się, badanie nie odpowiada.** albo **Badanie jest
+    zajęte, wyszukiwanie jest teraz niedostępne.** i **Spróbuj ponownie**; tekst w polu zostaje;
+  - gdy kolejka zmieni się w trakcie wyszukiwania, wynik odświeża się sam; tekst i kursor w polu zostają;
+  - wyszukiwanie obowiązuje, dopóki się go nie wyczyści (×, Escape w polu, **Wyczyść wyszukiwanie**) albo dopóki nie
+    zamknie się Przeglądu. Szukany tekst nie jest nigdzie zapisywany.
+- **Obsługa:** aplikacja: **Przegląd badania → Kolejka**, pole wyszukiwania; w małym panelu pod **W kolejce** link
+  **Szukaj w kolejce…**: otwiera Przegląd, rozwija **Kolejkę** tylko do jego zamknięcia (zapisany wybór sekcji się nie
+  zmienia) i ustawia kursor w polu. Na telefonie, gdzie panel staje się paskiem, linku nie ma.
+- **Obowiązuje od:** aplikacja 3.28.0 (badanie 1.32.0)
+
+<!-- zdroj: app:4ad34832 (8a10387e) src/ui/queue-search-ui.ts QUEUE_SEARCH_PAUSE_MS 300, queueSearchOffered (queue.search, queuePaged, queue/queueMore/queueCounts next+parked), resetQueueSearch (zavření Přehledu), Escape · src/research-queue-pages.ts QUEUE_QUERY_MAX 100, QUEUE_PAGE 50, QUEUE_ROWS_CAP 300, QUEUE_ELSEWHERE_STATES · src/ui/research-ui.ts appendQueueSection (searchable jen v Přehledu, ne při sbalení), appendQueueSearchResult (štítek + q, queueSearchBusy/Err, dirRetry), řádek výsledku (live-queue-num „–“, research-queue__match id/person, queueTagDeferred), live-queue-search-link (canExpandLivePanel) · src/ui/research-overview-ui.ts openQueueSearch (unfoldOverviewSection queue do zavření) · strings.ts live.queueSearch*, queueState, queueTagDeferred, queueTitleCount, dirRetry · research 1.32.0 src/core/live.ts searchQueue (TASK_NUMBER, PERSON_NUMBER, každé slovo v jednom poli, pořadí fronty, elsewhere) · spec 052 K1.1–K1.7 · ZADANI_DEV_fronta-hledani §1, §2; D1 (bez řádku pole) -->
+
+<a id="S4.2.2"></a>
+### S4.2.2 Zrób jako następne i Cofnij
+
+Zadanie można z aplikacji wysłać na kolej jako następne, bez terminala. Rozpoczętej pracy agent nie przerywa: zadanie
+przychodzi na kolej po niej ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
+
+- **Granice:**
+  - **Zrób jako następne** („Przyjdzie kolej po zadaniu w toku”) to pierwsza pozycja w **⋯** przy zadaniu w **Kolejce**,
+    w wynikach wyszukiwania ([S4.2.1](#S4.2.1)) i w **W kolejce** małego panelu, bez oznaczenia. Stoi w miejscu
+    dotychczasowego **Zrób jako następne** (wybór **od razu**); **Na koniec** i **Przywróć domyślne** zostają przy
+    badaniu, które je oferuje ([S4.2](#S4.2));
+  - nie jest oferowane przy zadaniu, które już jest pierwsze, nad którym pracuje agent albo które jest odłożone;
+  - zadanie przesuwa się na pierwsze miejsce, jego wiersz krótko się wyróżni i przy tekście ma etykietę **jako
+    następne**, dopóki nie przyjdzie jego kolej. Z kilku zadań jako następne pierwsze jest ostatnio oznaczone; etykietę
+    mają wszystkie. Wyszukiwanie zostaje;
+  - powiadomienie **Będzie następne w kolejce.** z **Cofnij** stoi 6 s. **Cofnij** stawia zadanie dokładnie na
+    pierwotne miejsce, także z jego pierwotnym wyborem;
+  - gdy agent tymczasem wziął zadanie: **Agent właśnie pracuje nad tym zadaniem; jego miejsca nie można teraz
+    zmienić.** i kolejka się odświeża. Gdy most nie odpowiada: **Badanie nie odpowiada, kolejność się nie zmieniła.**
+    i **Spróbuj ponownie**;
+  - nic się nie potwierdza: nic się nie uruchamia ani nie płaci;
+  - na telefonie menu jest panelem wysuwanym od dołu z numerem i tekstem zadania na górze.
+- **Obsługa:** aplikacja: przy zadaniu **⋯ → Zrób jako następne**, w powiadomieniu **Cofnij**. Terminal: `strom task
+  order T… --next`, `--restore` ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
+- **Obowiązuje od:** aplikacja 3.28.0 (badanie 1.32.0)
+
+<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 -->
+
+<a id="S4.2.3"></a>
+### S4.2.3 Praca nad kolejką…
+
+Z aplikacji można poprosić o samodzielną pracę agenta nad kolejką. Aplikacja niczego nie uruchamia: otwiera terminal
+badania, ten pokazuje, co się uruchomi, i uruchamia to dopiero po **tak** ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)).
+Praca agenta zużywa subskrypcję AI.
+
+- **Kiedy jest oferowana:** z mostem, który odpowiada, przy badaniu, które zgłosiło link do pracy, z agentem (nie
+  w Archiwum Strom ani w badaniu, które czeka na agenta), tylko tam, gdzie aplikacja otwiera linki badania
+  ([S4.5](#S4.5)); nie na telefonie. Gdy agent pracuje albo trwa przebieg, działania nie ma; w nagłówku **Kolejki**
+  jest zamiast niego **● Trwa praca ›**, które rozwija **Teraz** i przechodzi do **Dokończ i zakończ**.
+- **Okno Praca nad kolejką:**
+  - **Automatycznie** (domyślnie): „Agent bierze zadanie za zadaniem, dopóki pozwala limit subskrypcji.” Gdy badanie
+    zgłasza, że bramka subskrypcji (warunek, [R7.4](R7-when-the-agent-works.md#R7.4)) nie jest ustawiona, stoi pod tym
+    **Praca automatyczna wymaga ustawionej bramki subskrypcji; terminal zaproponuje ustawienie.** Wybór zostaje;
+  - **Tylko 5 zadań**: liczba 1–100, domyślnie 5. Praca kończy się po tylu załatwionych zadaniach; liczy się też
+    zadanie, które kończy się czekaniem, odłożeniem lub porzuceniem. Tylko z badaniem, które to umie; w przeciwnym
+    razie jest tylko **Automatycznie**;
+  - **Jako pierwsze**: zadanie oznaczone jako następne ([S4.2.2](#S4.2.2)), w przeciwnym razie pierwsze zadanie
+    kolejki;
+  - gdy badanie to zgłasza, długość sesji i bramka („Sesja najwyżej 3 godz. · bramka subskrypcji: …”);
+  - **Anuluj** i **Otwórz terminal** (oznaczenie AI i terminal) ze zdaniem **Uruchomienie potwierdza terminal badania.
+    Pracę zatrzymuje Ctrl-C w jego oknie lub „Dokończ i zakończ” w sekcji Teraz.**
+- **Obsługa:** aplikacja: **Praca nad kolejką…** po prawej w nagłówku rozwiniętej **Kolejki** w **Przeglądzie
+  badania**; menu **Badanie → Praca nad kolejką…** ([S4.5.2](#S4.5.2)). Terminal: `strom run --tasks N`,
+  `strom run --loop` ([R7.1](R7-when-the-agent-works.md#R7.1)).
+- **Obowiązuje od:** aplikacja 3.28.0 (badanie 1.32.0)
+
+<!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) -->
 
 <a id="S4.3"></a>
 ## S4.3 Linie w aplikacji
@@ -486,8 +587,11 @@ Każde działanie badania ma jedno z trzech oznaczeń według tego, co otwiera.
   agentowi. Praca agenta zużywa subskrypcję AI.** Rozmowa może zamiast terminala otworzyć aplikację agenta, gdy
   badanie jest tak ustawione.
 - **Obowiązuje od:** aplikacja 3.21.0
+- **Od aplikacji 3.28.0:** **Praca nad kolejką…** i w jej oknie **Otwórz terminal** mają oznaczenie AI i terminal
+  ([S4.2.3](#S4.2.3)). Wyszukiwanie w kolejce, **Zrób jako następne** i **Cofnij** są bez oznaczenia: idą przez most
+  i nic nie otwierają ([S4.2.1](#S4.2.1), [S4.2.2](#S4.2.2)).
 
-<!-- zdroj: app:v3.21.2 src/research-link.ts:66 RESEARCH_LINK_MARKS, researchLinkMark (task do=chat, conflict do=agent, experiment do=off, fixes paid) · strings.ts research.openingAgent, research.openingAgentHint · research:v1.25.2 src/commands/links.ts:373 whereToTalk -->
+<!-- zdroj: app:v3.21.2 src/research-link.ts:66 RESEARCH_LINK_MARKS, researchLinkMark (task do=chat, conflict do=agent, experiment do=off, fixes paid) · strings.ts research.openingAgent, research.openingAgentHint · research:v1.25.2 src/commands/links.ts:373 whereToTalk · 3.28.0: app 9cf43b22 researchLinkMark('work') u queue-work-btn, research-item-queue-work, Otevřít terminál; ZADANI_DEV_fronta-hledani „Značení akcí“ -->
 
 <a id="S4.5.2"></a>
 ### S4.5.2 Gdzie są działania
@@ -507,8 +611,14 @@ Każde działanie badania ma jedno z trzech oznaczeń według tego, co otwiera.
 - W Archiwum Strom brakuje wszystkiego, co potrzebuje agenta, także **Śledź na żywo**.
 - **Obowiązuje od:** aplikacja 3.4.0; górnych 6 pozycji od 3.14.0, **Narzędzia badania** od 3.19.0, **Dokończ
   i zakończ** od 3.5.0
+- **Od aplikacji 3.28.0:**
+  - w menu **Badanie** pod **Kontynuuj z agentem** jest pozycja **Praca nad kolejką…** ([S4.2.3](#S4.2.3)), gdy jest
+    oferowana. Gdy na górze jest więcej niż 6 pozycji, do **Więcej działań** przenosi się jako pierwsze **Otwórz
+    badanie**;
+  - w **Teraz** działania stoją pod tekstem każdej sesji, w jednym wierszu: **Pokaż w drzewie** · **Dokończ
+    i zakończ**. Na telefonie jest tylko **Pokaż w drzewie**.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-actions-ui.ts:152 UNDO_MAX_AGE_MS, :158 FIRST_LEVEL_MAX, :300 researchMenuShown, :435 tools, :1000 personResearchActions · src/research-link.ts:115 RESEARCH_TOOL_GROUPS, :132 RESEARCH_TOOL_ACTIONS · research-overview-ui.ts:811, :870 finishSession · strings.ts research.footerFull, research.tools.*, research.reviewWhere, research.continueAgent -->
+<!-- zdroj: app:v3.21.2 src/ui/research-actions-ui.ts:152 UNDO_MAX_AGE_MS, :158 FIRST_LEVEL_MAX, :300 researchMenuShown, :435 tools, :1000 personResearchActions · src/research-link.ts:115 RESEARCH_TOOL_GROUPS, :132 RESEARCH_TOOL_ACTIONS · research-overview-ui.ts:811, :870 finishSession · strings.ts research.footerFull, research.tools.*, research.reviewWhere, research.continueAgent · 3.28.0: app 9cf43b22 src/ui/research-actions-ui.ts research-item-queue-work za research-item-chat (queueWorkMenuOffered), FIRST_LEVEL_MAX 6: research-item-open do more · 623d9c77 src/ui/research-overview-ui.ts overviewNowActions (now-actions pod textem: showInTree · finishSession, finish ne v sheet), overviewNowLine (každé sezení svůj řádek) · ZADANI_DEV_fronta-hledani §6 (varianta A) -->
 
 <a id="S4.5.3"></a>
 ### S4.5.3 Otwarcie zadania w kolejce
@@ -548,5 +658,8 @@ zawsze w terminalu badania, nawet gdy zaczyna się kliknięciem w aplikacji.
 - **Obowiązuje od:** aplikacja 3.4.0 (badanie 1.6.0)
 - **Od aplikacji 3.22.0:** z badaniem 1.26.0 bez terminala działają linie ([S4.3.1](#S4.3.1)), praca poza liniami
   według gałęzi ([S4.3.2](#S4.3.2)) i miejsce zadania w kolejce ([S4.2](#S4.2)).
+- **Od aplikacji 3.28.0:** z badaniem 1.32.0 o samodzielną pracę agenta nad kolejką można poprosić z aplikacji
+  ([S4.2.3](#S4.2.3)). Uruchamia ją terminal badania dopiero po potwierdzeniu
+  ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)); warunek i jego ustawienie zostają w terminalu.
 
-<!-- zdroj: research:v1.25.2 src/core/links.ts (hlavička: nic se nezapíše bez slova člověka v terminálu) · src/core/live.ts (hlavička mostu) · app:v3.21.2 src/research-link.ts:66 · HEAD src/research-directions-write.ts -->
+<!-- zdroj: research:v1.25.2 src/core/links.ts (hlavička: nic se nezapíše bez slova člověka v terminálu) · src/core/live.ts (hlavička mostu) · app:v3.21.2 src/research-link.ts:66 · HEAD src/research-directions-write.ts · 3.28.0: app 9cf43b22 src/ui/queue-work-dialog.ts (aplikace nic nespouští, odkaz work) · spec 052 K6.2 (cesta terminál) -->

@@ -268,5 +268,10 @@ Otec z Horákova mlýna“). Klik otevře dialog osoby u daného rozporu nebo hy
   - bez otevřených rozporů a hypotéz oddíl není.
 - **Ovládání:** aplikace: panel výzkumu, oddíl **Co ví výzkum**.
 - **Platí od:** aplikace 3.5.0
+- **Od aplikace 3.28.0:** v **Přehledu výzkumu** má oddíl nahoře štítky **Vše**, **Rozpory** a **Hypotézy**
+  s počty, jen když jsou otevřené rozpory i hypotézy; jinak štítky nejsou. **Vše** ukáže rozpory nahoře
+  a hypotézy pod nimi. Hromadné přijetí hypotéz ([S3.5.2](#S3.5.2)) stojí nad hypotézami (ve **Vše**
+  i v **Hypotézy**), v **Rozpory** není; **Vybrat vše s návrhem** platí pro zobrazené hypotézy. Volba platí do
+  zavření Přehledu, pak je zase **Vše**; nikam se neukládá.
 
-<!-- zdroj: app:src/ui/research-overview-ui.ts appendOverviewKnows · strings.ts live.knowsTitle, live.hypothesisRow · commit 228ac6a -->
+<!-- zdroj: app:src/ui/research-overview-ui.ts appendOverviewKnows · strings.ts live.knowsTitle, live.hypothesisRow · commit 228ac6a · 3.28.0: app 4ad34832 (8a10387e) src/knows-kind.ts knowsKindChoice (štítky jen s rozpory i hypotézami), knowsKindShows · src/ui/research-overview-ui.ts appendOverviewKnows (rozpory první, hlavička přijetí nad hypotézami, v Rozporech žádná; knowsKind = 'all' při zavření), knowsKindChips · strings.ts live.knowsKindAll/Con/Hyp · spec 052 K3.1, K3.2 · ZADANI_DEV_fronta-hledani §3 -->

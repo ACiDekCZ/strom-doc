@@ -358,6 +358,9 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.1.5 | S4-research-from-the-app.md | aplikace 3.27.0 | platí | Přehled výzkumu bez sledování | The Research overview without following | Forschungsübersicht ohne Folgen | Przegląd badania bez śledzenia |
 | S4.1.6 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Přehled výzkumu v samostatném okně | The Research overview in a separate window | Forschungsübersicht in einem eigenen Fenster | Przegląd badania w osobnym oknie |
 | S4.2 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Fronta v aplikaci | The queue in the app | Warteschlange in der App | Kolejka w aplikacji |
+| S4.2.1 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Hledání ve frontě | Searching the queue | Suche in der Warteschlange | Wyszukiwanie w kolejce |
+| S4.2.2 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Udělat jako další a Vrátit | Do next and Undo | Als Nächstes erledigen und Rückgängig | Zrób jako następne i Cofnij |
+| S4.2.3 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Pracovat na frontě… | Work on the queue… | An der Warteschlange arbeiten… | Praca nad kolejką… |
 | S4.3 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Linie v aplikaci | Directions in the app | Linien in der App | Linie w aplikacji |
 | S4.3.1 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Správa linií z aplikace | Managing directions from the app | Verwaltung der Linien aus der App | Zarządzanie liniami z aplikacji |
 | S4.3.2 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Práce mimo linie po větvích | Work outside the directions by branches | Arbeit außerhalb der Linien nach Zweigen | Praca poza liniami według gałęzi |
