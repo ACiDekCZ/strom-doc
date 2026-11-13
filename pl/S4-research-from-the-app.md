@@ -210,8 +210,14 @@ badania odpowiada.
   drzewie bez osób w nagłówku okna); na telefonie i tablecie w działaniach drzewa, grupa **Badanie**; w Przeglądzie
   **Śledź na żywo**.
 - **Obowiązuje od:** aplikacja 3.27.0
+- **Od aplikacji 3.28.0:** gdy most odpowiada, **⋯** przy zadaniu w **Kolejce** zmienia jego miejsce jak podczas
+  śledzenia: **Zrób jako następne** z **Cofnij** ([S4.2.2](#S4.2.2)), a gdzie badanie je oferuje, **Na koniec**
+  i **Przywróć domyślne** ([S4.2](#S4.2)). Tak samo w wynikach wyszukiwania ([S4.2.1](#S4.2.1)) i w osobnym oknie
+  Przeglądu ([S4.1.6](#S4.1.6)), gdzie robi to główne okno. Zapisuje to most badania; śledzenie się nie zaczyna,
+  drzewo się nie przełącza i można je dalej edytować. Kolejka zaraz potem wczytuje się z badania, bez czekania na
+  regularne zapytanie. Bez mostu (Przegląd z drzewa, telefon) nic się nie zmienia.
 
-<!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 -->
+<!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 · 3.28.0: app:bb6c0d07 src/ui/research-ui.ts researchSession (sledovaný, jinak prohlížený přes most), openLiveTaskMenu, researchStatusAfterWrite / statusAfterWriteWay (bez sledování hned askResearchBridge, jen počítač), src/ui/research-offline-ui.ts taskMenuOrders (queue.next; queue.own last, default), changeTaskOrder, writeTaskOrder · CHANGELOG.cs.md 3.28.0 (c04a7199) · spec 052 K5.1, K5.6; spec 057 §7 · prace/1113-app-jako-dalsi-bez-sledovani -->
 
 <a id="S4.1.6"></a>
 ### S4.1.6 Przegląd badania w osobnym oknie
@@ -348,6 +354,9 @@ przychodzi na kolej po niej ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
     dotychczasowego **Zrób jako następne** (wybór **od razu**); **Na koniec** i **Przywróć domyślne** zostają przy
     badaniu, które je oferuje ([S4.2](#S4.2));
   - nie jest oferowane przy zadaniu, które już jest pierwsze, nad którym pracuje agent albo które jest odłożone;
+  - działa ze śledzeniem i bez niego: w **Przeglądzie badania** otwartym bez śledzenia ([S4.1.5](#S4.1.5)), gdy most
+    badania odpowiada; śledzenie się nie zaczyna, a drzewo pozostaje edytowalne. Po zmianie kolejka od razu
+    wczytuje się z badania;
   - zadanie przesuwa się na pierwsze miejsce, jego wiersz krótko się wyróżni i przy tekście ma etykietę **jako
     następne**, dopóki nie przyjdzie jego kolej. Z kilku zadań jako następne pierwsze jest ostatnio oznaczone; etykietę
     mają wszystkie. Wyszukiwanie zostaje;
@@ -364,7 +373,7 @@ przychodzi na kolej po niej ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
   order T… --next`, `--restore` ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
 - **Obowiązuje od:** aplikacja 3.28.0 (badanie 1.32.0)
 
-<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 · app:2876d570 placeQueueItemInLists (odpověď restore: pos, own, why), strings.ts live.queueMoved(id) · app:7dc924ee list ⋯ = bottom-sheet (úchyt, ztmavení, Escape) · app:3f9a5ca4 Vrátit v okně Přehledu · spec 052 K5.4 -->
+<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 · app:2876d570 placeQueueItemInLists (odpověď restore: pos, own, why), strings.ts live.queueMoved(id) · app:7dc924ee list ⋯ = bottom-sheet (úchyt, ztmavení, Escape) · app:3f9a5ca4 Vrátit v okně Přehledu · spec 052 K5.4 · app:bb6c0d07 bez sledování přes most (researchSession, taskMenuOrders, researchStatusAfterWrite) · spec 057 §7 -->
 
 <a id="S4.2.3"></a>
 ### S4.2.3 Praca nad kolejką…

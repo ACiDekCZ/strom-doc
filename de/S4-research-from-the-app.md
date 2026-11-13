@@ -230,8 +230,15 @@ zeigt, hängt davon ab, ob die Brücke der Forschung antwortet.
   (bei einem Stammbaum ohne Personen im Kopf des Dialogs); auf Telefon und Tablet in den Aktionen des Stammbaums,
   Gruppe **Forschung**; in der Übersicht **Live verfolgen**.
 - **Gilt seit:** App 3.27.0
+- **Ab App 3.28.0:** wenn die Brücke antwortet, ändert **⋯** bei einer Aufgabe in der **Warteschlange** ihre Stelle
+  wie beim Verfolgen: **Als Nächstes erledigen** mit **Rückgängig** ([S4.2.2](#S4.2.2)) und, wo die Forschung sie
+  anbietet, **Ans Ende** und **Auf Standard zurücksetzen** ([S4.2](#S4.2)). Ebenso in den Ergebnissen der Suche
+  ([S4.2.1](#S4.2.1)) und im eigenen Fenster der Übersicht ([S4.1.6](#S4.1.6)), wo es das Hauptfenster ausführt. Es
+  schreibt die Brücke der Forschung; das Verfolgen beginnt nicht, der Stammbaum wechselt nicht und lässt sich weiter
+  bearbeiten. Die Warteschlange wird gleich danach aus der Forschung gelesen, ohne auf die regelmäßige Abfrage zu
+  warten. Ohne Brücke (die Übersicht aus dem Stammbaum, ein Telefon) ändert sich nichts.
 
-<!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 -->
+<!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 · 3.28.0: app:bb6c0d07 src/ui/research-ui.ts researchSession (sledovaný, jinak prohlížený přes most), openLiveTaskMenu, researchStatusAfterWrite / statusAfterWriteWay (bez sledování hned askResearchBridge, jen počítač), src/ui/research-offline-ui.ts taskMenuOrders (queue.next; queue.own last, default), changeTaskOrder, writeTaskOrder · CHANGELOG.cs.md 3.28.0 (c04a7199) · spec 052 K5.1, K5.6; spec 057 §7 · prace/1113-app-jako-dalsi-bez-sledovani -->
 
 <a id="S4.1.6"></a>
 ### S4.1.6 Forschungsübersicht in einem eigenen Fenster
@@ -385,6 +392,9 @@ nicht: die Aufgabe kommt nach ihr an die Reihe ([R2.3.1](R2-lines-and-queue.md#R
     im kleinen Panel, ohne Marke. Es steht an der Stelle von **Als Nächstes**; **Ans Ende** und **Auf Standard
     zurücksetzen** bleiben bei einer Forschung, die sie anbietet ([S4.2](#S4.2));
   - nicht angeboten bei einer Aufgabe, die schon die erste ist, an der der Agent arbeitet oder die zurückgestellt ist;
+  - es geht mit und ohne Verfolgen: in der **Forschungsübersicht**, die ohne Verfolgen geöffnet ist
+    ([S4.1.5](#S4.1.5)), wenn die Brücke der Forschung antwortet; das Verfolgen beginnt nicht und der Stammbaum
+    bleibt bearbeitbar. Nach der Änderung wird die Warteschlange sofort aus der Forschung gelesen;
   - die Aufgabe rückt an die erste Stelle, ihre Zeile wird kurz hervorgehoben und hat beim Text das Etikett **als
     Nächstes**, bis sie an der Reihe ist. Von mehreren Aufgaben als nächste ist die zuletzt markierte die erste; das
     Etikett haben alle. Die Suche bleibt;
@@ -402,7 +412,7 @@ nicht: die Aufgabe kommt nach ihr an die Reihe ([R2.3.1](R2-lines-and-queue.md#R
   `strom task order T… --next`, `--restore` ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
 - **Gilt seit:** App 3.28.0 (Forschung 1.32.0)
 
-<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 · app:2876d570 placeQueueItemInLists (odpověď restore: pos, own, why), strings.ts live.queueMoved(id) · app:7dc924ee list ⋯ = bottom-sheet (úchyt, ztmavení, Escape) · app:3f9a5ca4 Vrátit v okně Přehledu · spec 052 K5.4 -->
+<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 · app:2876d570 placeQueueItemInLists (odpověď restore: pos, own, why), strings.ts live.queueMoved(id) · app:7dc924ee list ⋯ = bottom-sheet (úchyt, ztmavení, Escape) · app:3f9a5ca4 Vrátit v okně Přehledu · spec 052 K5.4 · app:bb6c0d07 bez sledování přes most (researchSession, taskMenuOrders, researchStatusAfterWrite) · spec 057 §7 -->
 
 <a id="S4.2.3"></a>
 ### S4.2.3 An der Warteschlange arbeiten…
