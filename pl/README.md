@@ -37,6 +37,7 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [A7 Księga, strony i eksport](A7-book-pages-and-export.md): kto jest żyjący, ochrona żyjących, księga rodu, strony, zapisany HTML
 - [A8 Scalanie drzew](A8-merging-trees.md): scalanie pliku, drzewa lub widoku w nowe drzewo, parowanie osób
 - [A9 Obsługa aplikacji](A9-using-the-app.md): gdzie co jest, czytelne nazwy elementów, edycja podczas śledzenia badania, agent w aplikacji, dolny pasek na telefonie i tablecie
+- [A10 Jedno wydarzenie wielu osób](A10-shared-events.md): wspólne wydarzenie gospodarstwa (Razem z), Ujednolić, Połącz w jedno wydarzenie, chrzestni i świadkowie w życiu osoby, scalanie i starsze drzewa
 
 ## S Aplikacja i badanie razem
 

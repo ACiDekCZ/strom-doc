@@ -38,6 +38,7 @@ dauerhaft.
 - [A7 Buch, Seiten und Export](A7-book-pages-and-export.md): wer lebend ist, Schutz lebender Personen, Familienbuch, Seiten, gespeichertes HTML
 - [A8 Zusammenführen von Stammbäumen](A8-merging-trees.md): Zusammenführen einer Datei, eines Stammbaums oder einer Ansicht in einen neuen Stammbaum, Abgleich der Personen
 - [A9 Bedienung der App](A9-using-the-app.md): wo was ist, lesbare Namen der Bedienelemente, Bearbeiten beim Verfolgen der Forschung, der Agent in der App, die untere Leiste auf Telefon und Tablet
+- [A10 Ein Ereignis mehrerer Personen](A10-shared-events.md): das gemeinsame Ereignis eines Haushalts (Gemeinsam mit), Angleichen, Zu einem Ereignis verbinden, Paten und Zeugen im Leben einer Person, Zusammenführen und ältere Stammbäume
 
 ## S App und Forschung zusammen
 

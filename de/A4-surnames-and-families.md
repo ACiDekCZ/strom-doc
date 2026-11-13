@@ -296,9 +296,14 @@ wie bisher.
   3. Eltern: „Tochter von Vater und Mutter“ (beim Mann „Sohn von“, ohne Geschlecht „Kind von“), nur bekannte Eltern;
   4. Ort: „Geburtsort …“, ohne ihn „Wohnort …“ (der letzte Wohnort mit Ort).
 - **Grenzen:**
-  - die Angaben werden in dieser Reihenfolge genommen, bis die Kombination keiner anderen Zeile der Gruppe entspricht;
-    gezeigt wird nur Bekanntes, verbunden mit „ · “. Unterscheidet nichts die Person, wird ihre erste bekannte Angabe
-    gezeigt, und ist über sie nichts bekannt, „keine weiteren Angaben“;
+  - die Angaben werden in dieser Reihenfolge genommen, bis die Kombination keiner anderen Zeile der Gruppe entspricht.
+    Gezeigt wird davon nur, was bekannt ist und was nicht alle anderen Zeilen der Gruppe gleich haben, verbunden mit
+    „ · “. Schwestern mit denselben Eltern unterscheidet so der Geburtsort, nicht die Eltern; zwei „Radegunda
+    Pokusná“, geboren 1900, haben „⚭ Bohuchval Zkoušek“ und „⚭ Sudivoj Pokus“, nicht „* 1900 · ⚭ …“. Eine Angabe,
+    die nur einige Zeilen gleich haben, wird gezeigt;
+  - unterscheidet die Zeile nur eine Angabe, die bei ihr nicht bekannt ist, wird ihre erste bekannte Angabe gezeigt,
+    die nicht alle anderen gleich haben, und gibt es keine solche, „keine weiteren Angaben“. Eine Zeile, die nichts
+    von einer anderen unterscheidet, zeigt alle ihre bekannten Angaben;
   - eine über eine Angabe gefundene Person (Ehename, Todesursache, Haus, [A4.8](#A4.8)) hat eine Zeile: die
     Unterscheidung und nach „ · “ den Fund. Ein Jahr, das der Fund schon nennt („† 1866 …“), wird in der
     Unterscheidung nicht wiederholt;
@@ -312,4 +317,4 @@ wie bisher.
 - **Bedienung:** keine: es gilt von selbst. Tasten und das Laden zu je 50 Zeilen bleiben unverändert.
 - **Gilt seit:** App 3.28.0
 
-<!-- zdroj: app:f5d56ed3 src/picker-distinguish.ts rowKey (shownNameParts + birthNoteText, rok narození jen se showBirthYear, normalizeSearchText), distinguishFeatures (roky * – †, bez roku v řádku a bez části, kterou říká nález; partner první, kterého jiné řádky nemají; rodiče otec, matka, ostatní, bez zástupných; rodiště, jinak poslední bydliště s místem), distinguishLine (nejkratší předpona údajů, kterou nemá nikdo jiný; jinak první známý; jinak distNone), PickerDistinguisher (celý výsledek, i za 50) · src/person-picker.ts renderItem (person-picker-dist, nález na jednom řádku za „ · “, role option, aria-label a title „jméno, rozlišení“) · index.html .person-picker-dist (výpustka, min-width 330 px, telefon 100vw) · všechny new PersonPicker (search.ts, relation-modal.ts, kinship-ui.ts, read-document-ui.ts, tree-management.ts …); PathPersonPicker samostatný · strings.ts personPicker.distNone, distChild, distAnd, distBorn, distLived · app ac34f598 · dirigent:prace/1113-app-drobnosti-1112 · ZADANI_DEV_drobnosti-1112 §1 -->
+<!-- zdroj: app:f5d56ed3 src/picker-distinguish.ts rowKey (shownNameParts + birthNoteText, rok narození jen se showBirthYear, normalizeSearchText), distinguishFeatures (roky * – †, bez roku v řádku a bez části, kterou říká nález; partner první, kterého jiné řádky nemají; rodiče otec, matka, ostatní, bez zástupných; rodiště, jinak poslední bydliště s místem), distinguishLine (nejkratší předpona údajů, kterou nemá nikdo jiný; jinak první známý; jinak distNone), PickerDistinguisher (celý výsledek, i za 50) · src/person-picker.ts renderItem (person-picker-dist, nález na jednom řádku za „ · “, role option, aria-label a title „jméno, rozlišení“) · index.html .person-picker-dist (výpustka, min-width 330 px, telefon 100vw) · všechny new PersonPicker (search.ts, relation-modal.ts, kinship-ui.ts, read-document-ui.ts, tree-management.ts …); PathPersonPicker samostatný · strings.ts personPicker.distNone, distChild, distAnd, distBorn, distLived · app ac34f598 · dirigent:prace/1113-app-drobnosti-1112 · ZADANI_DEV_drobnosti-1112 §1 · app:1c4b7d19 distinguishLine (údaj shodný u všech ostatních řádků skupiny se vynechá; jinak první známý nesdílený; bez rozlišení vše) · dirigent:spec/085 A4.8.1 -->

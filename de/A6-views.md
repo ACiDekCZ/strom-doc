@@ -869,6 +869,15 @@ war.
   das bei mehreren Personen gleich erfasst ist, ist eine Zeile mit allen diesen Personen. Gleich heißt gleiche Art,
   gleiches Datum, gleicher Ort, gleiche Adresse, Notiz und Quellen; das Datum muss erfasst sein und dazu ein Ort oder
   eine Quelle. Taufe, Beruf oder Titel gehören immer nur einer Person.
+- **Ab App 3.28.0:**
+  - ein gemeinsames Ereignis ([A10.1](A10-shared-events.md#A10.1)) ist eine Zeile mit allen seinen Personen, auch
+    wenn seine Kopien abweichen. Gleiche Kopien ohne gemeinsames Ereignis (ältere Daten) werden weiter nach ihren
+    Angaben zu einer Zeile verbunden; das ist nur eine Ansicht, eine Bearbeitung geht in eine Kopie;
+  - die Zelle der Personen hat eine Anzahl („N Personen“). Das Alter zeigt das Alter jeder Person („42 · 38“) mit
+    dem Tooltip „Alter laut Eintrag · je Person“; weichen die Kopien ab, hat die Zelle „weicht bei N ab“
+    ([A10.3](A10-shared-events.md#A10.3));
+  - eine Bearbeitung von **Datum** oder **Ort** direkt in der Zelle ändert alle Kopien des gemeinsamen Ereignisses
+    („{Feld}: bei N Personen geändert ({Ereignis}).“), ein Schritt **Rückgängig**.
 - **Spalten** in den Gruppen **Ereignis** · **Beteiligte** · **Quelle**:
   - **Art**, **Person oder Paar** (beim Paar zuerst der Blutsverwandte der Hauptperson), **Datum**, **Ort**;
   - **Alter beim Ereignis** wie anderswo ([A6.7.3](#A6.7.3)); bis zu einem Jahr aus genauen Daten in Tagen
@@ -894,9 +903,10 @@ war.
   Ereignis (beim gemeinsamen bei der ersten Kopie), bei Geburt und Tod die Bearbeitung der Person, beim Ereignis
   eines Paares dessen Dialog, bei Heirat und Scheidung die Beziehungen der Person in dieser Verbindung.
 - **Grenzen:** Platzhalterpersonen haben keine Zeilen; Geburt und Tod ohne erfasste Angabe haben keine Zeile.
-- **Gilt seit:** App 3.27.0; 3.28.0: eine Volkszählung bei einer Person ist ein gemeinsames Ereignis
+- **Gilt seit:** App 3.27.0; 3.28.0: eine Volkszählung bei einer Person ist ein gemeinsames Ereignis, ein
+  gemeinsames Ereignis ist eine Zeile
 
-<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES (od 3.28.0 i census, app:34b2174c), shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 -->
+<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES (od 3.28.0 i census, app:34b2174c), shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · 3.28.0: app:80c2ffb9 table-events.ts (shareId → jeden řádek, bez shareId odhad podle shareKey), strings.ts table agePerPerson, sharedDiffers, events.sharedCellChanged · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 -->
 
 <a id="A6.7.11"></a>
 ### A6.7.11 Quellen in Zeilen
