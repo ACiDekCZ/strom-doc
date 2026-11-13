@@ -38,8 +38,14 @@ rekordy**. Nic nie ginie po cichu na poziomie rekordu ani bezpośredniej danej o
   - imię zapisane jako opis (`Son`, `Unknown`) wraca tak, jak było zapisane, bez zrobionej z niego notatki; tekst
     w wierszu danej (wykształcenie, pogrzeb, własne zdarzenie), adres w częściach (`ADR1`, `CITY`…) i odnośnik
     internetowy w tekście źródła zostają i wracają tak, jak miał je plik.
+- **Od aplikacji 3.28.0:** `CENS` przy osobie to wydarzenie osoby **Spis ludności** z datą, miejscem, wiekiem
+  według zapisu, domem lub adresem, notatką i źródłami; w wyborze wydarzeń osoby jest zaraz po **Miejsce
+  zamieszkania**. Import tak go czyta (także z pliku badania), a eksport zapisuje go jako `1 CENS` przy osobie.
+  Do aplikacji 3.27.0 `CENS` przy osobie czytało się jako własne wydarzenie o nazwie „Spis ludności”. `CENS`
+  przy rodzinie pozostaje wydarzeniem pary. Własne wydarzenia „Spis ludności” w drzewach zapisanych wcześniej
+  pozostają własne.
 
-<!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels -->
+<!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels · 3.28.0: app:34b2174c src/ged-parser.ts EVENT_TAG_TO_TYPE CENS → census (dřív CENS u INDI vlastní událost s gedcomNotes.census), src/ged-exporter.ts EVENT_TAG_TO_TYPE census → CENS, src/events.ts SELECTABLE_EVENT_TYPES (census za residence), src/ui/event-details-ui.ts offeredDetails census (age, address), strings.ts events.census, strings-pl part1 · CENS u FAM coupleEventTypeOfTag · dirigent:prace/1113-app-scitani-u-osoby Výsledek (bez migrace starých vlastních událostí) · spec 053 U2 K1.1 -->
 
 <a id="A2.1.1"></a>
 ### A2.1.1 Podsumowanie importu

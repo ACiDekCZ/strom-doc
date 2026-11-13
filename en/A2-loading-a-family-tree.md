@@ -37,8 +37,13 @@ source.
   - a name written as a description (`Son`, `Unknown`) comes back as it was written, with no note made of it; text on
     the line of a fact (education, burial, a custom event), an address in parts (`ADR1`, `CITY`…) and a web link in
     the text of a source stay and come back as the file had them.
+- **From app 3.28.0:** `CENS` at a person is the person's event **Census** with a date, place, the age as
+  recorded, the house or address, a note and sources; among a person's events it comes right after **Residence**.
+  The import reads it so (also from the research's file) and the export writes it as `1 CENS` at the person. Up to
+  app 3.27.0, `CENS` at a person was read as a custom event named “Census”. `CENS` at a family stays an event of
+  the couple. Custom events “Census” in trees saved earlier stay custom.
 
-<!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels -->
+<!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels · 3.28.0: app:34b2174c src/ged-parser.ts EVENT_TAG_TO_TYPE CENS → census (dřív CENS u INDI vlastní událost s gedcomNotes.census), src/ged-exporter.ts EVENT_TAG_TO_TYPE census → CENS, src/events.ts SELECTABLE_EVENT_TYPES (census za residence), src/ui/event-details-ui.ts offeredDetails census (age, address), strings.ts events.census, strings-pl part1 · CENS u FAM coupleEventTypeOfTag · dirigent:prace/1113-app-scitani-u-osoby Výsledek (bez migrace starých vlastních událostí) · spec 053 U2 K1.1 -->
 
 <a id="A2.1.1"></a>
 ### A2.1.1 Import summary

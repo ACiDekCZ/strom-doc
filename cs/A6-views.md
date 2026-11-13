@@ -567,7 +567,7 @@ Tabulka událostí má řádek na každou událost stromu: kdo, kdy, kde, v jak�
     nebo věk);
   - sňatek svazku: u manželství vždy, u jiného vztahu („Začátek vztahu“) jen se zapsaným údajem; rozvod („Konec
     vztahu“), když je svazek rozvedený nebo je zapsaný jeho konec.
-- **Sdílená událost** (bydliště, vojsko, vystěhování, přistěhování, naturalizace, vlastní událost) zapsaná u více osob
+- **Sdílená událost** (bydliště, sčítání lidu, vojsko, vystěhování, přistěhování, naturalizace, vlastní událost) zapsaná u více osob
   stejně je jeden řádek se všemi osobami. Stejně znamená stejný typ, datum, místo, adresu, poznámku a prameny; datum
   musí být zapsané a k němu místo nebo pramen. Křest, povolání nebo titul je vždy jen jedné osoby.
 - **Sloupce** ve skupinách **Událost** · **Účastníci** · **Pramen**:
@@ -587,9 +587,9 @@ Tabulka událostí má řádek na každou událost stromu: kdo, kdy, kde, v jak�
   **Upravit…** otevře u události osoby úpravu osoby na té události (u sdílené na první kopii), u narození a úmrtí
   úpravu osoby, u události páru její dialog, u sňatku a rozvodu vztahy osoby na tom svazku.
 - **Hranice:** zástupné osoby řádky nemají; narození a úmrtí bez zapsaného údaje řádek nemají.
-- **Platí od:** aplikace 3.27.0
+- **Platí od:** aplikace 3.27.0; 3.28.0: sčítání lidu u osoby je sdílená událost
 
-<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES, shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 -->
+<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES (od 3.28.0 i census, app:34b2174c), shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 -->
 
 <a id="A6.7.11"></a>
 ### A6.7.11 Prameny v řádcích

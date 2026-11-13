@@ -42,8 +42,14 @@ Angabe von Person, Familie und Quelle geht nichts stillschweigend verloren.
     daraus gemachte Notiz; Text auf der Zeile einer Angabe (Bildung, Begräbnis, eigenes Ereignis), eine Adresse in
     Teilen (`ADR1`, `CITY`…) und ein Weblink im Text einer Quelle bleiben erhalten und kommen so zurück, wie die Datei
     sie hatte.
+- **Ab App 3.28.0:** `CENS` bei einer Person ist das Ereignis der Person **Volkszählung** mit Datum, Ort, Alter
+  laut Eintrag, Haus oder Adresse, Notiz und Quellen; in der Auswahl der Ereignisse einer Person steht es direkt
+  nach **Wohnort**. Der Import liest es so (auch aus der Datei der Forschung) und der Export schreibt es als
+  `1 CENS` bei der Person. Bis App 3.27.0 wurde `CENS` bei einer Person als eigenes Ereignis mit dem Namen
+  „Volkszählung“ gelesen. `CENS` bei einer Familie bleibt ein Ereignis des Paares. Eigene Ereignisse
+  „Volkszählung“ in früher gespeicherten Stammbäumen bleiben eigene.
 
-<!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels -->
+<!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels · 3.28.0: app:34b2174c src/ged-parser.ts EVENT_TAG_TO_TYPE CENS → census (dřív CENS u INDI vlastní událost s gedcomNotes.census), src/ged-exporter.ts EVENT_TAG_TO_TYPE census → CENS, src/events.ts SELECTABLE_EVENT_TYPES (census za residence), src/ui/event-details-ui.ts offeredDetails census (age, address), strings.ts events.census, strings-pl part1 · CENS u FAM coupleEventTypeOfTag · dirigent:prace/1113-app-scitani-u-osoby Výsledek (bez migrace starých vlastních událostí) · spec 053 U2 K1.1 -->
 
 <a id="A2.1.1"></a>
 ### A2.1.1 Zusammenfassung des Imports

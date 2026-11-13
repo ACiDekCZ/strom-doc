@@ -34,8 +34,13 @@ tiše neztratí na úrovni záznamu ani přímého údaje osoby, rodiny a pramen
   - jméno zapsané jako popis (`Son`, `Unknown`) se vrací tak, jak bylo zapsané, bez poznámky z něj udělané; text na
     řádku údaje (vzdělání, pohřeb, vlastní událost), adresa po částech (`ADR1`, `CITY`…) a webový odkaz v textu
     pramene zůstanou a vrátí se tak, jak je soubor měl.
+- **Od aplikace 3.28.0:** `CENS` u osoby je událost osoby **Sčítání lidu** s datem, místem, věkem podle zápisu,
+  domem nebo adresou, poznámkou a prameny; ve výběru událostí osoby je hned za **Bydliště**. Import ho tak čte
+  (i ze souboru výzkumu) a export ho píše jako `1 CENS` u osoby. Do aplikace 3.27.0 se `CENS` u osoby četl jako
+  vlastní událost se jménem „Sčítání lidu“. `CENS` u rodiny zůstává událostí páru. Vlastní události „Sčítání lidu“
+  ve stromech uložených dřív zůstávají vlastní.
 
-<!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels -->
+<!-- zdroj: app:src/ged-parser.ts:1450 KNOWN_INDI_TAGS, :1453 KNOWN_FAM_TAGS, :1464 KNOWN_RECORD_TYPES, :1478 IGNORED_BOOKKEEPING_TAGS, :636 NOTED_INDI_TAGS, :2094 drop, :2410, :2486, :2194 · strings.ts gedcom.unsupported, gedcom.skippedTags, gedcomNotes.factLabels · 3.28.0: app:34b2174c src/ged-parser.ts EVENT_TAG_TO_TYPE CENS → census (dřív CENS u INDI vlastní událost s gedcomNotes.census), src/ged-exporter.ts EVENT_TAG_TO_TYPE census → CENS, src/events.ts SELECTABLE_EVENT_TYPES (census za residence), src/ui/event-details-ui.ts offeredDetails census (age, address), strings.ts events.census, strings-pl part1 · CENS u FAM coupleEventTypeOfTag · dirigent:prace/1113-app-scitani-u-osoby Výsledek (bez migrace starých vlastních událostí) · spec 053 U2 K1.1 -->
 
 <a id="A2.1.1"></a>
 ### A2.1.1 Souhrn importu
