@@ -237,8 +237,14 @@ zeigt, hängt davon ab, ob die Brücke der Forschung antwortet.
   schreibt die Brücke der Forschung; das Verfolgen beginnt nicht, der Stammbaum wechselt nicht und lässt sich weiter
   bearbeiten. Die Warteschlange wird gleich danach aus der Forschung gelesen, ohne auf die regelmäßige Abfrage zu
   warten. Ohne Brücke (die Übersicht aus dem Stammbaum, ein Telefon) ändert sich nichts.
+  Ebenso fragt die Übersicht ohne Verfolgen die Brücke nach jedem Schreiben über die Brücke sofort nach dem Stand: in
+  **Wartet auf Bearbeitung** eine Antwort, **Datei hinzufügen**, **Gesendet** und **Zurück zu „Zu erledigen“**, eine
+  Antwort auf die Fragen zu Orten und zu einem wachsenden Zweig; in **Richtungen** das Anlegen, Bearbeiten,
+  Verschieben, Pausieren, Beenden und Wiederaufnehmen einer Richtung; das Entscheiden eines Widerspruchs, das
+  Zurücknehmen eines Werts und das Prüfen oder Bestätigen einer Angabe über die Brücke. Das Fenster der Übersicht
+  ([S4.1.6](#S4.1.6)) bekommt den neuen Stand vom Hauptfenster, das das Schreiben ausführt.
 
-<!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 · 3.28.0: app:bb6c0d07 src/ui/research-ui.ts researchSession (sledovaný, jinak prohlížený přes most), openLiveTaskMenu, researchStatusAfterWrite / statusAfterWriteWay (bez sledování hned askResearchBridge, jen počítač), src/ui/research-offline-ui.ts taskMenuOrders (queue.next; queue.own last, default), changeTaskOrder, writeTaskOrder · CHANGELOG.cs.md 3.28.0 (c04a7199) · spec 052 K5.1, K5.6; spec 057 §7 · prace/1113-app-jako-dalsi-bez-sledovani -->
+<!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 · 3.28.0: app:bb6c0d07 src/ui/research-ui.ts researchSession (sledovaný, jinak prohlížený přes most), openLiveTaskMenu, researchStatusAfterWrite / statusAfterWriteWay (bez sledování hned askResearchBridge, jen počítač), src/ui/research-offline-ui.ts taskMenuOrders (queue.next; queue.own last, default), changeTaskOrder, writeTaskOrder · CHANGELOG.cs.md 3.28.0 (c04a7199) · spec 052 K5.1, K5.6; spec 057 §7 · prace/1113-app-jako-dalsi-bez-sledovani · app:3c751bea src/ui/research-ui.ts researchStatusAfterWrite (Čeká: sent, unsent, odpověď, soubor; linie; větev), researchViewedStatusAfterWrite, viewedWriteSession (jen prohlížený přes most, ne sledovaný, ne ze stromu) · research-waiting-write-ui.ts, research-directions-ui.ts, direction-form-ui.ts, research-offline-ui.ts, research-sync-ui.ts, verify-ui.ts, waiting-places-ui.ts · e2e/overview-write-unfollowed.spec.ts (do 3 s, okno bez dotazu na most) · strings.ts live.waitingWrite.sent, unsent, file · spec 083 · prace/1113-app-hledani-v-prehledu bod 2 -->
 
 <a id="S4.1.6"></a>
 ### S4.1.6 Forschungsübersicht in einem eigenen Fenster
@@ -249,10 +255,22 @@ das Hauptfenster aus. Mit der Brücke der Forschung spricht das Fenster nicht.
 
 - **Wo es geht:** bei einem Stammbaum aus der Forschung, mit oder ohne Verfolgen ([S4.1.5](#S4.1.5)), unter denselben
   Bedingungen wie eine Ansicht im Fenster ([A6.8](A6-views.md#A6.8)): Computer, Fenster breiter als 640 px.
-- **Aufteilung:** die Zusammenfassung über die ganze Breite. Ab 1100 px Fensterbreite zwei Spalten: links **Jetzt**,
-  **Wartet auf Bearbeitung**, **Richtungen**; rechts **Verlauf**, **Warteschlange**, **Was die Forschung weiß**. Ein
-  schmaleres Fenster hat eine Spalte in der Reihenfolge der Übersicht ([S4.1](#S4.1)). Die Einstellungen der
-  Abschnitte ([S4.1.2](#S4.1.2)) gelten auch im Fenster.
+- **Aufteilung:** die Zusammenfassung über die ganze Breite, darunter die Abschnitte in Spalten nach der Breite des
+  Fensters:
+  - unter 1100 px eine Spalte wie die Übersicht im Hauptfenster, ab 1100 px zwei, ab 1600 px drei. Zu weniger Spalten
+    kehrt das Fenster erst 24 px unter der Grenze zurück, damit das Ziehen am Rand nicht flackert;
+  - eine Spalte ist höchstens 660 px breit, die Spalten stehen in der Mitte, und jede scrollt für sich;
+  - die Abschnitte folgen der Reihenfolge der Übersicht (**Panel anpassen**, [S4.1.2](#S4.1.2)) und werden der Reihe
+    nach so auf die Spalten verteilt, dass die höchste Spalte möglichst niedrig ist. Drei Spalten, von denen eine
+    weniger als ein Fünftel der Höhe hätte, sind zwei;
+  - die Verteilung ändert sich, wenn sich die Zahl der Spalten ändert, wenn ein Abschnitt eingeklappt, aufgeklappt,
+    ausgeblendet oder verschoben wird, und nach **Weitere laden** in der **Warteschlange**; neue Daten aus der
+    Forschung und das Tippen ändern sie nicht;
+  - ein langer Abschnitt (mit Suchfeld oder mit mehr als 8 Zeilen) hat in seiner Spalte einen haftenden Kopf:
+    Überschrift, Suchfeld, Chips und die Zahl der Gefundenen bleiben oben, die Zeilen scrollen darunter;
+  - ändert sich die Breite über eine Grenze, bleiben die angefangene Suche, der Cursor und der Abschnitt, der zu
+    sehen war;
+  - die Einstellungen der Abschnitte ([S4.1.2](#S4.1.2)) gelten auch im Fenster.
 - **Kopf des Fensters:** „{Stammbaum} · Forschungsübersicht“, darunter der Name der Forschung, rechts je nach Zustand
   **Live verfolgen** oder das Beenden des Verfolgens, und ⋯. Ohne ⤡, × und **Folgen in**.
 - **Aktionen:** eine Person im Stammbaum zeigen, eine Antwort in **Wartet auf Bearbeitung**, die Verwaltung der
@@ -262,7 +280,8 @@ das Hauptfenster aus. Mit der Brücke der Forschung spricht das Fenster nicht.
   der Warteschlange liest das Hauptfenster von seiner Brücke und schickt das Ergebnis dem Fenster. Nach einer Aktion,
   deren Ergebnis im Hauptfenster zu sehen ist (etwa das Zeigen im Stammbaum oder der Dialog **Angaben im Baum
   prüfen**, der sich im Hauptfenster öffnet), bittet das Fenster, das Hauptfenster nach vorne zu holen; nach
-  **Anhalten** nicht.
+  **Anhalten** nicht. Die Suche in **Wartet auf Bearbeitung** und **Was die Forschung weiß**
+  ([S4.4.2](#S4.4.2), [S3.7.1](S3-what-the-research-knows.md#S3.7.1)) filtert das Fenster selbst.
 - **Hervorhebung:** Was der Stammbaum im Hauptfenster gerade hervorhebt, zeigt das Fenster, indem es die Schaltfläche
   dieser Gruppe hervorhebt: **Im Stammbaum zeigen** bei einer Richtung in **Jetzt** und in **Richtungen**, die Zahl
   der gefundenen Personen einer Richtung und **Geänderte im Stammbaum zeigen** in **Verlauf**. Nach dem Ende der
@@ -289,7 +308,7 @@ das Hauptfenster aus. Mit der Brücke der Forschung spricht das Fenster nicht.
   Ansichtsumschalter → **Forschungsübersicht**.
 - **Gilt seit:** App 3.28.0
 
-<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) · app:3c2fde77 src/ui/overview-window-view.ts readQueuePage přes akci queue-list do hlavního okna (okno most nevolá) · app:3f9a5ca4 overview-window-view.ts treeVerifyNow (extras.verify), verifyStop → verify-stop, showVerifyBulkDialog → verify-bulk; evidenceHighlightNow (extras.highlight), endEvidenceHighlight → highlight-end, startPersonHighlight quiet · src/ui/research-ui.ts lightsGroup, markOverviewLit (is-lit, aria-current; nic při zavřeném hlavním okně) · research-overview-ui.ts lightsGroup direction (show-in-tree v Teď), changed (showChanged) · research-directions-ui.ts lightsGroup direction (dirShow), direction-found (dirFoundPersons) · strings.ts verify.section, bulkRow, stop, live.showInTree, dirShow, showChanged · spec 079 K3 · prace/1113-app-dorovnani-052-okna (2876d570..27f0bafb) -->
+<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) · app:3c2fde77 src/ui/overview-window-view.ts readQueuePage přes akci queue-list do hlavního okna (okno most nevolá) · app:3f9a5ca4 overview-window-view.ts treeVerifyNow (extras.verify), verifyStop → verify-stop, showVerifyBulkDialog → verify-bulk; evidenceHighlightNow (extras.highlight), endEvidenceHighlight → highlight-end, startPersonHighlight quiet · src/ui/research-ui.ts lightsGroup, markOverviewLit (is-lit, aria-current; nic při zavřeném hlavním okně) · research-overview-ui.ts lightsGroup direction (show-in-tree v Teď), changed (showChanged) · research-directions-ui.ts lightsGroup direction (dirShow), direction-found (dirFoundPersons) · strings.ts verify.section, bulkRow, stop, live.showInTree, dirShow, showChanged · spec 079 K3 · prace/1113-app-dorovnani-052-okna (2876d570..27f0bafb) · app:7f307c74 src/overview-columns.ts OVERVIEW_WINDOW_COLS_2 1100, OVERVIEW_WINDOW_COLS_3 1600, OVERVIEW_COLS_HYSTERESIS 24, OVERVIEW_SMALL_COLUMN 0.2, OVERVIEW_COLUMN_MAX 660, partitionContiguous, planOverviewColumns · src/ui/overview-columns-ui.ts (souhrn a pruhy nad sloupci, každý sloupec se posouvá sám, nové rozdělení jen při změně sloupců, sbalení, skrytí, přesunu, Načíst další; lepkavá hlava: pole nebo > 8 řádků; fokus, výběr v poli a oddíl na očích při změně šířky) · e2e/windows-overview-columns.spec.ts · CHANGELOG.cs.md 3.28.0 (e540e4b5) · spec 083 U3 · prace/1113-app-hledani-v-prehledu -->
 
 <a id="S4.2"></a>
 ## S4.2 Warteschlange in der App
@@ -577,6 +596,7 @@ erledigen lässt und was nur in der Forschung, sagt [R6.5](R6-awaiting-action.md
 - **Gilt seit:** App 3.4.0. Fragen zu Orten seit Forschung 1.25.0. Die Marke **!** und **Antworten · N wartend** so
   seit App 3.26.0. Hypothesen seit App 3.27.0 mit Forschung 1.31.0. Mehrere Marken auf dem Kärtchen seit App 3.27.0
   ([S4.4.1](#S4.4.1)).
+- **Ab App 3.28.0:** in der **Forschungsübersicht** hat der Abschnitt ab 10 Einträgen ein Suchfeld ([S4.4.2](#S4.4.2)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
@@ -617,6 +637,56 @@ Schaltfläche.
 - **Gilt seit:** App 3.27.0
 
 <!-- zdroj: app:16461aca, 85c1f704, abf7620f src/card-signals.ts ACTION_ORDER (waiting, conflict, question), presentActions (zapnuté v Na kartě ukázat), stackChoices (waiting, story, knows, agent), ACTION_GLYPH · src/card-signal-marks.ts cardActionMarksHtml (stoh n2/n3, tečky), stackAriaLabel, stackTipHtml (tipClickChoose / tipClickKnows), stackMenuItemsHtml (menuAnswer / dotyk menuWaiting, story.compare, menuKnows, menuAgent; bez značky výzkumu), placeStackMenu · index.html .card-signal-stack, #tree-canvas.zoom-far (src/zoom.ts ZOOM_FAR = 0.55; index.html:13732-13741 jedna tečka u všech Detailů karet, e2e/card-signals.spec.ts:353), body.view-mode-print bez značek, compact dvě tečky · strings.ts card.stackLabel, stackWaiting, stackMenuLabel, tipClickChoose, cardDensity.cardWaiting, cardConflict, cardQuestion, compact · CHANGELOG.cs.md 3.27.0 „Více značek na kartě“ · dirigent:prace/1111-app-karta-vice-znacek -->
+
+<a id="S4.4.2"></a>
+### S4.4.2 Suche in Wartet auf Bearbeitung
+
+Der Abschnitt **Wartet auf Bearbeitung** in der **Forschungsübersicht** hat das Feld **Person, Ort, Archiv, Aufgabe
+suchen…**. Die App sucht selbst in den Einträgen, die sie schon hat, und schickt nichts an die Forschung. Sie filtert
+gleich beim Tippen, auch ohne Verfolgen, wenn die Forschung nicht läuft (die Einträge, die die Forschung zuletzt
+gesagt hat, [S4.1.5](#S4.1.5)), und im Fenster der Übersicht ([S4.1.6](#S4.1.6)).
+
+- **Wann das Feld da ist:** in einem aufgeklappten Abschnitt mit 10 und mehr Einträgen, unter der Überschrift des
+  Abschnitts und über den Chips der Arten. Mit eingegebenem Text bleibt das Feld, auch wenn es weniger Einträge
+  werden.
+- **Was gefunden wird:** Einträge, die jedes eingegebene Wort haben (in beliebiger Reihenfolge; Wörter trennt ein
+  Leerzeichen, ein Komma oder ein Semikolon) in dem, was ihre Zeile, ihr Detail oder die Überschrift ihrer Gruppe
+  zeigt:
+  - der Text des Eintrags und worauf er wartet;
+  - Namen und Nummern von Personen (`P47` und `P0047`);
+  - die Nummer einer Aufgabe (`T0815`, `t815`) und einer Hypothese (`H22`); eine bloße Zahl (`815`) findet die
+    Aufgabe mit dieser Nummer, sonst die Hypothese, sonst Text (etwa ein Jahr);
+  - der Name der Gruppe (Ort, Archiv, Amt), die Adresse des Archivs bei einer Erlaubnis und an wen ein Brief geht.
+- **Übereinstimmung im Text:** ohne Rücksicht auf Groß- und Kleinschreibung und diakritische Zeichen; ß, ł, đ, ø, æ
+  und œ werden auch als ss, l, d, o, ae und oe gefunden (`grosshof` findet „Großhof“). Ein Wort mit 5 und mehr
+  Zeichen findet auch Wörter, die wie es ohne das letzte Zeichen beginnen (`bialy` findet „Białe“).
+- **Grenzen:**
+  - die Chips der Arten (**Entscheidungen**, **Bilder**, **Archive und Ämter**…) zeigen die Zahl der Gefundenen;
+    eine Art ohne Treffer ist gestrichelt und lässt sich weiter wählen. Gesucht wird in der gewählten Art;
+  - über der Liste „12 von 40 gefunden“ (aus den Einträgen der gewählten Art). Ohne Ergebnis **Nichts gefunden.**,
+    in einer gewählten Art „In der Art Bilder nichts gefunden.“ mit **In allen Arten suchen**, und **Suche
+    aufheben**;
+  - Phasen (**Zu erledigen**, **Wartet auf Antwort**) und Gruppen mit Treffer klappen auf, ohne Treffer erscheinen
+    sie nicht. Was während der Suche eingeklappt wird, gilt nur für diese Suche; nach dem Leeren des Felds kehrt das
+    manuelle Aufklappen zurück;
+  - ein Treffer bei der Nummer einer Person, Aufgabe oder Hypothese hat an der Zeile ein bernsteinfarbenes Etikett
+    („P0108 Jan Horák“); ein Treffer im Text wird nicht hervorgehoben;
+  - Hypothesen in der Gruppe **Hypothesen zu entscheiden**: der Kopf der Auswahl **Gefundene mit Vorschlag auswählen
+    (n)** wählt nur die Gefundenen. Ausgewählte außerhalb der Suche bleiben ausgewählt, und die Fußzeile sagt es
+    („5 ausgewählt, davon 2 außerhalb der Suche.“) mit **Auswahl außerhalb der Suche aufheben**. **Vorschläge
+    annehmen (n)** zählt alle ausgewählten ([S3.5.2](S3-what-the-research-knows.md#S3.5.2));
+  - ein eingeklappter Abschnitt mit eingegebener Suche hat in der Überschrift statt der Zusammenfassung eine Lupe und
+    den gesuchten Text;
+  - eine ältere Forschung ohne Arten und Gruppen: gesucht wird in den Zeilen, wie sie aufeinander folgen;
+  - × oder Escape leert das Feld (Escape im leeren Feld schließt die Übersicht), ↓ geht zur ersten Zeile, ein
+    Bildschirmleser sagt die Zahl nach einer kurzen Pause. Der Text gilt bis zum Schließen der Übersicht und wird
+    nirgends gespeichert;
+  - Telefon: das Feld ist 44 px hoch; nach einem Tippen ins Feld rückt der Abschnitt unter den Kopf der Übersicht,
+    und die Übersicht endet über der Tastatur, sodass das Gefundene zwischen Feld und Tastatur steht.
+- **Bedienung:** App: **Forschungsübersicht → Wartet auf Bearbeitung**, Suchfeld.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:8cbada1c src/section-search-match.ts foldSearch2 (ß ł đ ø æ œ), tokenize (mezera, čárka, středník; p/t/h + číslo, samotné číslo), matchDoc (každé slovo; n: úkol, hypotéza, text), textMatches (≥ 5 znaků bez posledního na začátku slova), fieldVisible (≥ 10 nebo text) · src/ui/section-search.ts (×, Escape: nejdřív hledání, prázdné pole zavře Přehled; ↓; searchOpen se vymaže s textem; zavření Přehledu text zahodí) · app:9ebf7f2c src/section-search-filter.ts searchSection, chipCount, sectionPartOpen, toggleSectionPart, sheetOverKeyboard · src/ui/section-search-view.ts mountSectionSearch, paintSearchChip (čárkovaný), appendSearchOutcome (sectionSearchFound, queueSearchNone, sectionSearchNoneKind + sectionSearchAllKinds, queueSearchCancel), searchHitTag, searchSummaryEl (lupa a text), bindSheetSearch, keepSheetOverKeyboard · src/ui/research-overview-ui.ts appendOverviewWaiting (pole jen v rozbaleném oddílu, starší výzkum bez skupin), waitingSearchDoc (what, on, osoby, person, partner, task, hypo, group.name / otázky k místům, host, to), overviewWaitingRow (hit t, p) · app:cd0030b0 src/ui/hypothesis-waiting-ui.ts hypothesisAcceptHeadEl (bulkSelectFound), hypothesisAcceptFootEl (bulkSelectedHidden, bulkDeselectHidden), hwr-id hit h · strings.ts live.waitingSearchPlaceholder, waitingSearchAria, sectionSearchFound, sectionSearchNoneKind, sectionSearchAllKinds, bulkSelectFound, bulkSelectedHidden, bulkDeselectHidden, sectionSearchQuoted, waitingPhaseTodo, waitingPhaseSent, waitingChips · e2e/overview-waiting-search.spec.ts · CHANGELOG.cs.md 3.28.0 (e540e4b5) · spec 083 K1.1–K1.3 · prace/1113-app-hledani-v-prehledu (pole 44 px na telefonu) -->
 
 <a id="S4.5"></a>
 ## S4.5 Aktionen, die die Forschung öffnen

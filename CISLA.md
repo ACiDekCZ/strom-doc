@@ -349,6 +349,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S3.5.2 | S3-what-the-research-knows.md | aplikace 3.27.0 | platí | Rozhodnout hypotézu v aplikaci | Deciding a hypothesis in the app | Eine Hypothese in der App entscheiden | Rozstrzygnięcie hipotezy w aplikacji |
 | S3.6 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Prohledáno | Searched | Durchsucht | Przeszukano |
 | S3.7 | S3-what-the-research-knows.md | aplikace 3.5.0 | platí | Oddíl Co ví výzkum v panelu výzkumu | The section What the research knows in the research panel | Abschnitt Was die Forschung weiß im Panel der Forschung | Sekcja Co wie badanie w panelu badania |
+| S3.7.1 | S3-what-the-research-knows.md | aplikace 3.28.0 | platí | Hledání v Co ví výzkum | Searching What the research knows | Suche in Was die Forschung weiß | Wyszukiwanie w Co wie badanie |
 | S4 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Výzkum řízený z aplikace | Research run from the app | Forschung aus der App gesteuert | Badanie sterowane z aplikacji |
 | S4.1 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Panel a Přehled výzkumu ukazují běžící práci | The panel and the Research overview show running work | Panel und Forschungsübersicht zeigen die laufende Arbeit | Panel i Przegląd badania pokazują bieżącą pracę |
 | S4.1.1 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Sledovat agenta ve stromu | Follow the agent in the tree | Agenten im Stammbaum folgen | Śledź agenta w drzewie |
@@ -366,6 +367,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.3.2 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Práce mimo linie po větvích | Work outside the directions by branches | Arbeit außerhalb der Linien nach Zweigen | Praca poza liniami według gałęzi |
 | S4.4 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Čeká na vyřízení v aplikaci | Awaiting action in the app | Wartet auf Bearbeitung in der App | Czeka na załatwienie w aplikacji |
 | S4.4.1 | S4-research-from-the-app.md | aplikace 3.27.0 | platí | Více značek na kartě osoby | Several marks on a person card | Mehrere Marken auf der Personenkarte | Kilka oznaczeń na karcie osoby |
+| S4.4.2 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Hledání v Čeká na vyřízení | Searching Awaiting action | Suche in Wartet auf Bearbeitung | Wyszukiwanie w Czeka na załatwienie |
 | S4.5 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Akce, které otevřou výzkum | Actions that open the research | Aktionen, die die Forschung öffnen | Działania, które otwierają badanie |
 | S4.5.1 | S4-research-from-the-app.md | aplikace 3.21.0 | platí | Značky akcí | Action marks | Marken der Aktionen | Oznaczenia działań |
 | S4.5.2 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Kde akce jsou | Where the actions are | Wo die Aktionen sind | Gdzie są działania |
