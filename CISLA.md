@@ -273,6 +273,10 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.5 | A6-views.md | aplikace 1.10.0 | platí | Mapa | Map | Karte | Mapa |
 | A6.5.1 | A6-views.md | aplikace 1.10.0 | platí | Odkud mapa bere polohu místa | Where the map gets a place's location | Woher die Karte die Lage eines Ortes nimmt | Skąd mapa bierze położenie miejsca |
 | A6.5.2 | A6-views.md | aplikace 3.25.0 | platí | Místa mimo mapu dohledat ve výzkumu | Looking up places off the map in the research | Orte ohne Karte in der Forschung suchen | Odszukanie miejsc poza mapą w badaniu |
+| A6.5.3 | A6-views.md | aplikace 2.4.0 | platí | Migrace v čase | Migration over time | Wanderung über die Zeit | Migracje w czasie |
+| A6.5.4 | A6-views.md | aplikace 3.28.0 | platí | Cesta předků k osobě | The ancestors' path to a person | Der Weg der Vorfahren zu einer Person | Droga przodków do osoby |
+| A6.5.5 | A6-views.md | aplikace 3.28.0 | platí | Barvy rodů a legenda Rody | Line colours and the Family lines legend | Linienfarben und die Legende Stammlinien | Kolory rodów i legenda Rody |
+| A6.5.6 | A6-views.md | aplikace 3.28.0 | platí | Přehrát cestu k osobě | Playing the path to a person | Den Weg zu einer Person abspielen | Odtwarzanie drogi do osoby |
 | A6.6 | A6-views.md | aplikace 3.21.0 | platí | Rod v pohledu | A family line in the view | Stammlinie in der Ansicht | Ród w widoku |
 | A6.7 | A6-views.md | aplikace 3.27.0 | platí | Tabulka | Table | Tabelle | Tabela |
 | A6.7.1 | A6-views.md | aplikace 3.27.0 | platí | Svazky v tabulce osob | Unions in the People table | Verbindungen in der Personentabelle | Związki w tabeli osób |

@@ -157,6 +157,7 @@ Mapa pokazuje miejsca zdarzeń osób.
 - Miejsce ślubu pokazuje się, gdy w widoku jest co najmniej jedno z partnerów.
 - Miejsce pisze się w najczęstszym zapisie. Miejscowość to jeden punkt także z numerami domów; miejsce z własnymi
   dokładnymi współrzędnymi zostaje osobnym punktem.
+- **Migracje w czasie** pokazują miejsca według lat i drogę przodków do jednej osoby ([A6.5.3](#A6.5.3)).
 - **Obowiązuje od:** mapa aplikacja 1.10.0; rodzaje zdarzeń i punkty miejscowości aplikacja 3.21.0
 
 <!-- zdroj: app:src/places.ts collectPlaces, groupTownPoints · src/ui/map-ui.ts (localStorage strom.map.kinds) · strings.ts map.scopeView, map.scopeTree, map.kinds · CHANGELOG.cs.md 3.21.0 -->
@@ -229,6 +230,151 @@ dopiero po **Dodaj do kolejki**.
 - **Obowiązuje od:** aplikacja 3.25.0
 
 <!-- zdroj: app:src/ui/map-ui.ts (stavový pruh, lookResearch, lookable), src/ui/place-actions.ts, src/ui/places-research-ui.ts (bulkLook, bulkLookHead, bulkLookGo, nic dvakrát), src/ui/map-follow-ui.ts (noCoords + places.research.look, Undo) · strings.ts map.onMap.notFound, lookResearch, lookResearchShort, lookResearchTitle, confirm; places.dialog.elsewhere, phoneLine, oldResearch · CHANGELOG.cs.md 3.25.0 · commit 2246ca28 · spec 058 -->
+
+<a id="A6.5.3"></a>
+### A6.5.3 Migracje w czasie
+
+**Migracje w czasie** pokazują miejsca według lat. Suwak na osi czasu pod mapą wyznacza rok, a mapa pokazuje miejsca,
+które do tego roku przybyły, i linie przeprowadzek rodu.
+
+- **Granice:**
+  - na osi czasu są tylko miejsca z rokiem i położeniem. Miejsca z położeniem, ale bez daty pasek stanu liczy („N miejsc
+    bez daty nie jest wyświetlanych na osi czasu.”);
+  - oś czasu biegnie od najstarszego do najmłodszego roku miejsc w zakresie (**Ten widok** / **Całe drzewo**)
+    i włączonych rodzajów ([A6.5](#A6.5)). Bez datowanych miejsc trybu nie można włączyć;
+  - punkt, w którym coś się stało w ostatnich dziesięciu latach przed wybranym rokiem, jest wyróżniony;
+  - linia prowadzi z miejsca urodzenia rodzica do miejsca urodzenia dziecka, gdy oba mają rok i położenie i się
+    różnią. Rodzeństwo z tą samą drogą ma jedną linię. Linia blednie z wiekiem dziecka, po 60 latach do 15 %. Rysowane
+    są tylko linie z końcem przy widocznym obszarze mapy, najwyżej 400. Bez rodzaju **Urodzenia** linie się nie
+    rysują („Droga rodu jest widoczna tylko z Urodzeniami.”);
+  - **Odtwórz** przesuwa rok mniej więcej co 120 ms aż do ostatniego roku. Na ostatnim roku **Odtwórz** zaczyna znowu
+    od początku.
+- **Od aplikacji 3.28.0:**
+  - przycisk **◷ W czasie** ma przy ikonie także tekst;
+  - mapa proponuje tryb raz: dopóki nie był włączony, a drzewo ma co najmniej dwa datowane miejsca z położeniem, przy
+    przycisku stoi karta **Migracja w czasie** („Odtwarza, jak rody się przemieszczały, i pokazuje drogę przodków do
+    jednej osoby.”). **Wypróbuj** włącza tryb, **Nie teraz** zamyka kartę. Po którymkolwiek z nich karta na tym
+    urządzeniu już się nie pokazuje;
+  - klawisze na suwaku: strzałki o rok, PageUp i PageDown o 10 lat, Home i End na początek i koniec. Spacja
+    w dowolnym miejscu mapy (poza polami i przyciskami) odtwarza lub wstrzymuje. Ręczne przesunięcie wstrzymuje
+    odtwarzanie;
+  - w trybie można wybrać osobę, do której prowadzi droga jej przodków ([A6.5.4](#A6.5.4)).
+- **Obsługa:** aplikacja: mapa → **◷ W czasie** (**Migracje w czasie**) → suwak, **Odtwórz** / **Wstrzymaj**.
+- **Obowiązuje od:** aplikacja 2.4.0; rodzaje miejsc 3.21.0; tekst przycisku, jednorazowa propozycja i klawisze 3.28.0
+
+<!-- zdroj: app:src/map-time.ts collectDatedPlacePoints (undatedPlaceCount, minYear/maxYear) · src/ui/map-ui.ts drawMapTimeLayer (fresh = posledních 10 let, slice(0, 400) s koncem u výřezu), mapMigrationSegments (místa narození rodič → dítě, opacity max(0.15, 1 − věk/60·0.85), bez Narození nic), toggleMapTimePlay (setInterval 120, na konci od začátku), renderMapTimeTip / dismissMapTimeTip (strom.map.timeTipSeen, ≥ 2 datovaná místa s polohou, podklad mapy potvrzený), klávesy na posuvníku a mezerník (setMapTimeYear pozastaví) · strings.ts map.timeMode, timeModeShort, timeModeEmpty, timePlay, timePause, timeUndated, noFamilyPath, timeTipTitle, timeTipText, timeTipTry, timeTipLater · Migrace v čase od v2.4.0 (app 44a903bc) · 3.28.0: app 34e82d43, cce82a89 (app:81f2adf0) · CHANGELOG.cs.md 3.21.0, 3.28.0 · spec 054 P2 -->
+
+<a id="A6.5.4"></a>
+### A6.5.4 Droga przodków do osoby
+
+W Migracjach w czasie można wybrać jedną osobę. Mapa pokazuje wtedy tylko jej bezpośrednich przodków, linie od
+każdego przodka do jego dziecka aż do wybranej osoby, a oś czasu kończy się na niej.
+
+- **Granice:**
+  - przodkowie to rodzice, ich rodzice i dalej, najwyżej 30 pokoleń. Rodziców bierze się jak w wachlarzu
+    ([A6.4](#A6.4)). Zastępczy drugi rodzic rodziny z jednym rodzicem przodkiem nie jest: jego gałąź jest nieznana;
+  - przodek, do którego prowadzi kilka dróg (implex), jest na mapie jednym punktem, ale liczy się w każdej gałęzi, do
+    której należy. W tej samej gałęzi jego przodkowie nie rozwijają się drugi raz;
+  - przodek stoi w miejscu urodzenia, bez niego w miejscu chrztu, bez niego w pierwszym datowanym miejscu
+    zamieszkania; zawsze tylko w miejscu z położeniem. Jego rok to rok urodzenia, bez niego rok chrztu, bez niego rok
+    tego miejsca. Przodka bez roku albo bez miejsca z położeniem na osi czasu nie ma: legenda go liczy, a **Lista ›**
+    wymienia go z tym, czego brakuje (**bez daty urodzenia**, **bez miejsca**, **bez daty i miejsca**), oraz
+    odnośnik **Strona osoby ›** ([A6.5.5](#A6.5.5));
+  - wybrana osoba stoi tak samo. Jest celem: kółko „◎ cel: imię”, na końcu osi czasu pełne kółko „◎ imię · rok” (przy
+    miejscu chrztu „· chrzest rok”, przy miejscu zamieszkania „· zamieszkanie rok”). Cel bez miejsca na mapie się
+    nie rysuje, a na końcu osi czasu stoi „… nie ma miejsca na mapie.”;
+  - oś czasu biegnie od roku najstarszego przodka na mapie do późniejszego z lat ostatniego przodka i celu;
+  - droga bierze przodków z całego drzewa: zamiast zakresu stoi chip z osobą, po usunięciu drogi zakres wraca.
+    Rodzaje miejsc drogi nie dotyczą. Punkt miejscowości zbiera także jej domy jak bez drogi;
+  - dymek miejsca pokazuje tylko ludzi drogi w tym miejscu, przodków do wybranego roku i cel, z etykietami ich rodów;
+  - po wybraniu osoby mapa raz się przesuwa i przybliża na całą drogę, potem sama się nie rusza (wyjątek na końcu
+    odtwarzania, [A6.5.6](#A6.5.6));
+  - linii jest najwyżej 400 jak bez drogi. Gdy jest ich więcej, pierwszeństwo mają: pień (rodzice i dziadkowie), linie
+    z ostatnich 10 lat, bliższe pokolenia, koniec w widocznym obszarze mapy, dłuższa linia. Legenda to mówi
+    („Pokazano N z M linii”, „Pierwszeństwo mają bliższe pokolenia i nowo dodane linie.”);
+  - wyłączenie **W czasie** drogę tylko ukrywa. Po włączeniu wraca i biegnie od pierwszego roku. Usuwa ją **×** na
+    chipie;
+  - nowe okno z mapą ([A6.8](#A6.8)) przejmuje osobę drogi, ćwiartki lub ósemki i kolory rodów.
+- **Wybór osoby:** **Droga do osoby** szuka w całym drzewie („Imię, nazwisko lub rok”), najwyżej 30 osób. Puste pole
+  pokazuje osobę centralną (**Ostatnio wybrana**). Przy każdej osobie stoi, ilu jej przodków jest na mapie; osoba bez
+  nich jest wyszarzona („przodkowie jeszcze bez miejsc na mapie”) i nie można jej wybrać. Na telefonie i ekranie
+  dotykowym wybór otwiera się jako panel wysuwany od dołu. Gdy żaden przodek nie jest na mapie, oś czasu mówi „Żaden
+  przodek nie ma jeszcze miejsca na mapie.” i oferuje **Wybierz inną osobę**.
+- **Obsługa:** aplikacja:
+  - mapa → **◷ W czasie** → na osi czasu **◎ Droga do osoby…** → osoba. Chip **◎ Droga do:** imię otwiera wybór
+    ponownie (**Zmień osobę**), **×** usuwa drogę (**Usuń drogę**);
+  - w dymku miejsca kliknięcie osoby → **◎ Droga do tej osoby** (obok **Strona osoby ›**), także bez wybranej osoby;
+  - na stronie osoby **◎ Droga przodków na mapie ›** ([A7.6](A7-book-pages-and-export.md#A7.6)): strona się zamyka,
+    mapa pokazuje drogę od pierwszego roku, a powiadomienie oferuje **‹ Wróć do strony osoby**. Gdy osoba ma
+    przodków, ale żaden nie jest na mapie, odnośnik jest wyszarzony („Żaden przodek nie ma jeszcze miejsca na
+    mapie.”). Bez przodków w drzewie odnośnika nie ma.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:src/map-lines.ts buildPathModel (maxGen 30, fatherMother přes parentSlots jako vějíř, isPlaceholder není předek, implex záznam na cestu, expanded podle osoby a větve), placeOf (narození → křest → první datované bydliště, jen s polohou; rok narození → křest → místa), missing (date/place/both), yearFrom/yearTo, links, pathSegments (PATH_LINE_CAP 400, pořadí kmen, fresh < 10 let, generace, výřez, délka) · src/ui/map-path-ui.ts (mapEffectiveScope celý strom, čip místo rozsahu, clearMapPath vrátí rozsah, jednorázový výřez framed, cíl čárkovaný → plný, pathTargetNoPlace, pathNoAncestors + pathOtherPerson) · src/person-picker.ts PathPersonPicker (limit 30, recentId = ústřední osoba, onMapCount 0 = aria-disabled, celý strom) · src/ui/map-lines-legend-ui.ts mapPathBubbleParts · src/ui/map-ui.ts showMapPathPlace, toggleMapTime (vypnutí skryje, zapnutí od začátku) · src/ui/person-page-ui.ts personPageMapPath (on/off/null), openPersonPageMapPath (toast map-path-back) · src/person-page-map.ts (pp-map-path, aria-disabled, jen v okně aplikace) · src/windows/view-window-state.ts MapTimeState path, mode, colors · strings.ts map.pathPick, pathPickTitle, pathPickPlaceholder, pathPickRecent, pathPickOnMap, pathPickNone, pathChip, pathChange, pathClear, pathFromPage, pathThisPerson, pathBackToPage, pathGoal, pathGoalEnd, pathTargetNoPlace, pathNoAncestors, pathOtherPerson, linesCut, linesCutWhy, missingDate, missingPlace, missingBoth · app 388e5a87, b01693bc, 5853882e, 34e82d43 (app:81f2adf0) · dirigent:prace/1113-app-mapa-rody-v-case · ZADANI_UIX_mapa-rody-v-case D3, D4 (ponechat) · spec 054 K2.1, P2 · CHANGELOG.cs.md 3.28.0 -->
+
+<a id="A6.5.5"></a>
+### A6.5.5 Kolory rodów i legenda Rody
+
+Droga przodków jest kolorowa według rodów. Ród to tu gałąź jednego z dziadków (ćwiartka) lub jednego z pradziadków
+(ósemka) wybranej osoby, nazwana jego nazwiskiem rodowym. Nie jest to ród według nazwiska
+([A4](A4-surnames-and-families.md)).
+
+- **Granice:**
+  - ćwiartki to ojciec ojca, matka ojca, ojciec matki i matka matki, w tych samych odcieniach co kolory **Linie**
+    w wachlarzu ([A6.4](#A6.4)). Każda ćwiartka ma też własny wzór linii (pierwsza ciągłą), więc rody da się
+    rozróżnić także przy słabszym rozróżnianiu barw. Pary, które słabsze rozróżnianie czerwieni i zieleni zlewa,
+    różnią się jasnością i wzorem. Jasny i ciemny wygląd mają własne odcienie;
+  - ósemka ma kolor swojej ćwiartki, druga ósemka tej samej ćwiartki ciemniejszy odcień. Numer ósemki (1–8) stoi na
+    najdłuższej widocznej linii każdej ósemki;
+  - linie od rodziców i dziadków to pień: w kolorze tekstu i szersze. Punkty rodziców mają kolor pnia, punkty
+    dziadków kolor swojej ćwiartki. Punkt, w którym spotyka się kilka rodów, ma kolory wszystkich;
+  - linia z ostatnich 10 lat jest szersza. Starsze linie bledną, najwyżej do 55 %, aby na końcu była widoczna cała
+    droga;
+  - nazwisko rodu to nazwisko rodowe dziadka lub pradziadka; bez nazwiska jego imię.
+- **Legenda Rody** (po prawej pod sterowaniem mapy, gdy na mapie jest co najmniej jeden przodek):
+  - **Ćwiartki** · **Ósemki**. **Ósemki** można wybrać, gdy drzewo zna co najmniej dwie ósemki;
+  - wiersz rodu: wzór linii, nazwisko, relacja i liczba przodków na mapie („ojciec ojca · 12 przodków”). W ósemkach
+    wiersze stoją pod nagłówkiem swojej ćwiartki („1 · nazwisko”). Nieznany dziadek lub babcia ma wiersz bez koloru
+    („matka ojca – nieznana”). Ostatni wiersz to **Pień: rodzice i dziadkowie**;
+  - najechanie na wiersz na chwilę wyróżnia ród, kliknięcie go przypina i przyciemnia pozostałe rody. Esc albo drugie
+    kliknięcie przypięcie usuwa, przełączenie ćwiartek i ósemek też;
+  - pod wierszami stoją: pierwsza osoba w dwóch rodach („↻ imię (rok) jest w dwóch rodach: … i ….”), przycięcie
+    dużego drzewa ([A6.5.4](#A6.5.4)), przodkowie poza osią czasu („N przodków bez daty lub miejsca nie ma na osi
+    czasu.” i **Lista ›**, lista **Przodkowie poza osią czasu**) i **Bez kolorów rodów**;
+  - **Bez kolorów rodów** rysuje całą drogę jednym kolorem i ukrywa wiersze rodów. Pień zostaje szerszy, a osoba
+    zostaje wybrana;
+  - **▴** (**Zwiń**) składa legendę do chipu „Rody (N)” z kolorami rodów. Mapa się przy tym nie przesuwa.
+- **Telefon:** legenda otwiera się jako panel wysuwany od dołu z chipu **Rody (N)** nad osią czasu, **Lista ›** także.
+  Otwarty jest zawsze tylko jeden panel (legenda, lista, dymek lub wybór osoby). Telefon w poziomie ma chip w górnym
+  rzędzie.
+- **Obsługa:** aplikacja: mapa → **◷ W czasie** → droga do osoby ([A6.5.4](#A6.5.4)) → legenda **Rody**.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml · strings.ts map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
+
+<a id="A6.5.6"></a>
+### A6.5.6 Odtwarzanie drogi do osoby
+
+Z wybraną osobą **Odtwórz** przechodzi całą oś czasu w 24 sekundy, od najstarszego przodka do wybranej osoby.
+
+- **Granice:**
+  - rok po roku, żaden nie jest pomijany. Rok, w którym przybył przodek lub cel, trwa pięć razy dłużej niż rok bez
+    nich;
+  - odtwarzanie kończy się na celu. Kolejne **Odtwórz** zaczyna od początku;
+  - wstrzymuje je **Wstrzymaj**, suwak, klawisze ([A6.5.3](#A6.5.3)) i znacznik nad suwakiem;
+  - znaczniki nad suwakiem: każda znana ćwiartka w roku swojego najstarszego przodka na mapie, w kolorze rodu
+    („nazwisko: najstarszy przodek rok”), i cel na końcu. Kliknięcie znacznika przeskakuje na jego rok;
+  - wiersz pod suwakiem mówi, co ostatnio przybyło: „rok · imię · miejsce rodzica → miejsce” z próbką koloru rodu,
+    cel pogrubiony. Gdy w jednym roku przybyło kilka osób, pokazuje cel, w przeciwnym razie osobę z najbliższego
+    pokolenia. Czytnik ekranu odczytuje wiersz przy zmianie. Bez wybranej osoby wiersza nie ma, a zdanie o miejscach
+    bez daty zostaje na pasku stanu;
+  - mapa się przy odtwarzaniu nie rusza. Tylko gdy od wybrania osoby nikt jej nie przesunął ani nie przybliżył, a cel
+    jest na końcu poza widocznym obszarem, przesuwa się do niego raz;
+  - na telefonie **▶** jest bez tekstu, a oś czasu w jednym rzędzie.
+- **Obsługa:** aplikacja: mapa → **◷ W czasie** → droga do osoby ([A6.5.4](#A6.5.4)) → **Odtwórz**.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:src/map-lines.ts pathPlaySchedule (PATH_PLAY_MS 24000, PATH_EVENT_WEIGHT 5, krok rok, součet 24 000), pathAddedIn (nejbližší generace, pak rel, cíl poslední), pathLastAdded · src/ui/map-path-ui.ts playMapPath (konec u cíle), panMapToPathEnd (framed, jednou), renderMapTimeMarks (čtvrtiny podle firstYear, cíl), renderMapTimeCaption (cíl, jinak items[0]; aria-live, aria-valuetext; bez cesty skryto) · src/ui/map-ui.ts toggleMapTimePlay (na konci od začátku), setMapTimeYear (pozastaví), značky → setMapTimeYear · strings.ts map.timeMarkTitle, pathGoalEnd · app cce82a89, 34e82d43 (app:81f2adf0) · ZADANI_UIX_mapa-rody-v-case D5 (ponechat) · spec 054 K2.2 · CHANGELOG.cs.md 3.28.0 -->
 
 <a id="A6.6"></a>
 ## A6.6 Ród w widoku

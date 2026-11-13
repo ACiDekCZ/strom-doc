@@ -163,6 +163,8 @@ Die Karte zeigt die Orte der Ereignisse der Personen.
 - Der Ort der Hochzeit wird gezeigt, wenn mindestens einer der Partner in der Ansicht ist.
 - Ein Ort wird in der häufigsten Schreibung geschrieben. Eine Gemeinde ist ein Punkt, auch mit Hausnummern; ein Ort
   mit eigenen genauen Koordinaten bleibt ein eigener Punkt.
+- **Wanderung über die Zeit** zeigt die Orte nach Jahren und den Weg der Vorfahren zu einer Person
+  ([A6.5.3](#A6.5.3)).
 - **Gilt seit:** Karte App 1.10.0; Arten der Ereignisse und Punkte der Gemeinden App 3.21.0
 
 <!-- zdroj: app:src/places.ts collectPlaces, groupTownPoints · src/ui/map-ui.ts (localStorage strom.map.kinds) · strings.ts map.scopeView, map.scopeTree, map.kinds · CHANGELOG.cs.md 3.21.0 -->
@@ -242,6 +244,171 @@ Forschung kommen die Orte erst nach **Vormerken**.
 - **Gilt seit:** App 3.25.0
 
 <!-- zdroj: app:src/ui/map-ui.ts (stavový pruh, lookResearch, lookable), src/ui/place-actions.ts, src/ui/places-research-ui.ts (bulkLook, bulkLookHead, bulkLookGo, nic dvakrát), src/ui/map-follow-ui.ts (noCoords + places.research.look, Undo) · strings.ts map.onMap.notFound, lookResearch, lookResearchShort, lookResearchTitle, confirm; places.dialog.elsewhere, phoneLine, oldResearch · CHANGELOG.cs.md 3.25.0 · commit 2246ca28 · spec 058 -->
+
+<a id="A6.5.3"></a>
+### A6.5.3 Wanderung über die Zeit
+
+**Wanderung über die Zeit** zeigt die Orte nach Jahren. Der Schieberegler in der Leiste unter der Karte bestimmt das
+Jahr, und die Karte zeigt die Orte, die bis zu diesem Jahr hinzugekommen sind, und die Linien der Umzüge der Familie.
+
+- **Grenzen:**
+  - auf der Leiste sind nur Orte mit Jahr und Lage. Orte mit Lage, aber ohne Datum zählt die Statusleiste („N Orte
+    ohne Datum werden auf der Zeitleiste nicht angezeigt.“);
+  - die Leiste reicht vom ältesten bis zum jüngsten Jahr der Orte im Umfang (**Diese Ansicht** / **Ganzer
+    Stammbaum**) und in den eingeschalteten Arten ([A6.5](#A6.5)). Ohne datierte Orte lässt sich der Modus nicht
+    einschalten;
+  - ein Punkt, an dem in den letzten zehn Jahren vor dem gewählten Jahr etwas geschah, ist hervorgehoben;
+  - eine Linie führt vom Geburtsort eines Elternteils zum Geburtsort des Kindes, wenn beide Jahr und Lage haben und
+    verschieden sind. Geschwister mit demselben Weg haben eine Linie. Die Linie verblasst mit dem Alter des Kindes,
+    nach 60 Jahren auf 15 %. Gezeichnet werden nur Linien mit einem Ende am Kartenausschnitt, höchstens 400. Ohne die
+    Art **Geburten** werden keine Linien gezeichnet („Der Familienweg erscheint nur mit Geburten.“);
+  - **Abspielen** verschiebt das Jahr etwa alle 120 ms bis zum letzten Jahr. Im letzten Jahr beginnt **Abspielen**
+    wieder von vorn.
+- **Ab App 3.28.0:**
+  - die Schaltfläche **◷ Zeitverlauf** hat neben dem Symbol auch Text;
+  - die Karte bietet den Modus einmal an: solange er nicht eingeschaltet war und der Stammbaum mindestens zwei
+    datierte Orte mit Lage hat, steht bei der Schaltfläche der Hinweis **Migration im Zeitverlauf** („Spielt ab, wie
+    die Linien umzogen, und zeigt den Weg der Vorfahren zu einer Person.“). **Ausprobieren** schaltet den Modus ein,
+    **Nicht jetzt** schließt den Hinweis. Nach einer der beiden erscheint der Hinweis auf diesem Gerät nicht mehr;
+  - Tasten am Schieberegler: Pfeile um ein Jahr, PageUp und PageDown um 10 Jahre, Home und End an Anfang und Ende.
+    Die Leertaste irgendwo auf der Karte (außer in Feldern und auf Schaltflächen) spielt ab oder pausiert. Ein
+    Verschieben von Hand pausiert das Abspielen;
+  - im Modus lässt sich eine Person wählen, zu der der Weg ihrer Vorfahren führt ([A6.5.4](#A6.5.4)).
+- **Bedienung:** App: Karte → **◷ Zeitverlauf** (**Wanderung über die Zeit**) → Schieberegler, **Abspielen** /
+  **Pause**.
+- **Gilt seit:** App 2.4.0; Arten der Orte 3.21.0; Text der Schaltfläche, einmaliges Angebot und Tasten 3.28.0
+
+<!-- zdroj: app:src/map-time.ts collectDatedPlacePoints (undatedPlaceCount, minYear/maxYear) · src/ui/map-ui.ts drawMapTimeLayer (fresh = posledních 10 let, slice(0, 400) s koncem u výřezu), mapMigrationSegments (místa narození rodič → dítě, opacity max(0.15, 1 − věk/60·0.85), bez Narození nic), toggleMapTimePlay (setInterval 120, na konci od začátku), renderMapTimeTip / dismissMapTimeTip (strom.map.timeTipSeen, ≥ 2 datovaná místa s polohou, podklad mapy potvrzený), klávesy na posuvníku a mezerník (setMapTimeYear pozastaví) · strings.ts map.timeMode, timeModeShort, timeModeEmpty, timePlay, timePause, timeUndated, noFamilyPath, timeTipTitle, timeTipText, timeTipTry, timeTipLater · Migrace v čase od v2.4.0 (app 44a903bc) · 3.28.0: app 34e82d43, cce82a89 (app:81f2adf0) · CHANGELOG.cs.md 3.21.0, 3.28.0 · spec 054 P2 -->
+
+<a id="A6.5.4"></a>
+### A6.5.4 Der Weg der Vorfahren zu einer Person
+
+In der Wanderung über die Zeit lässt sich eine Person wählen. Die Karte zeigt dann nur ihre direkten Vorfahren und
+die Linien von jedem Vorfahren zu seinem Kind bis zur gewählten Person, und die Leiste endet bei ihr.
+
+- **Grenzen:**
+  - Vorfahren sind die Eltern, deren Eltern und so weiter, höchstens 30 Generationen. Die Eltern werden wie im Fächer
+    genommen ([A6.4](#A6.4)). Ein Platzhalter als zweiter Elternteil einer Familie mit einem Elternteil ist kein
+    Vorfahr: sein Zweig ist unbekannt;
+  - ein Vorfahr, zu dem mehrere Wege führen (Ahnenschwund), ist auf der Karte ein Punkt, zählt aber in jedem Zweig,
+    zu dem er gehört. Im selben Zweig werden seine Vorfahren nicht ein zweites Mal entfaltet;
+  - ein Vorfahr steht am Geburtsort, ohne ihn am Taufort, ohne ihn am ersten datierten Wohnort; immer nur an einem
+    Ort mit Lage. Sein Jahr ist das Geburtsjahr, ohne es das Jahr der Taufe, ohne es das Jahr dieses Ortes. Ein
+    Vorfahr ohne Jahr oder ohne Ort mit Lage ist nicht auf der Leiste: die Legende zählt ihn, und **Liste ›** nennt
+    ihn mit dem, was fehlt (**ohne Geburtsdatum**, **ohne Ort**, **ohne Datum und Ort**), und **Personenseite ›**
+    ([A6.5.5](#A6.5.5));
+  - die gewählte Person steht genauso. Sie ist das Ziel: Kreis „◎ Ziel: Name“, am Ende der Leiste ein voller Kreis
+    „◎ Name · Jahr“ (beim Taufort „· Taufe Jahr“, beim Wohnort „· Wohnort Jahr“). Ein Ziel ohne Ort auf der Karte
+    wird nicht gezeichnet, und am Ende der Leiste steht „… hat keinen Ort auf der Karte.“;
+  - die Leiste reicht vom Jahr des ältesten Vorfahren auf der Karte bis zum späteren der Jahre des letzten Vorfahren
+    und des Ziels;
+  - der Weg nimmt die Vorfahren aus dem ganzen Stammbaum: statt des Umfangs steht ein Chip mit der Person, nach dem
+    Aufheben des Weges kehrt der Umfang zurück. Die Arten der Orte gelten für den Weg nicht. Der Punkt einer Gemeinde
+    sammelt auch ihre Häuser wie ohne Weg;
+  - die Blase eines Ortes zeigt nur die Personen des Weges an diesem Ort, die Vorfahren bis zum gewählten Jahr und
+    das Ziel, mit den Etiketten ihrer Stammlinien;
+  - nach der Wahl der Person verschiebt und vergrößert sich die Karte einmal auf den ganzen Weg, danach bewegt sie
+    sich nicht von selbst (Ausnahme am Ende des Abspielens, [A6.5.6](#A6.5.6));
+  - es gibt höchstens 400 Linien wie ohne Weg. Sind es mehr, haben Vorrang: der Stamm (Eltern und Großeltern),
+    Linien aus den letzten 10 Jahren, nähere Generationen, ein Ende im Kartenausschnitt, die längere Linie. Die
+    Legende sagt es („N von M Linien gezeigt“, „Vorrang haben nähere Generationen und neu hinzugekommene Linien.“);
+  - das Ausschalten von **Zeitverlauf** blendet den Weg nur aus. Nach dem Einschalten kehrt er zurück und läuft ab
+    dem ersten Jahr. Aufgehoben wird er mit **×** am Chip;
+  - ein neues Fenster mit der Karte ([A6.8](#A6.8)) übernimmt die Person des Weges, Viertel oder Achtel und die
+    Farben der Stammlinien.
+- **Wahl der Person:** **Weg zu einer Person** sucht im ganzen Stammbaum („Name, Nachname oder Jahr“), höchstens 30
+  Personen. Ein leeres Feld zeigt die zentrale Person (**Zuletzt fokussiert**). Bei jeder Person steht, wie viele
+  ihrer Vorfahren auf der Karte sind; eine Person ohne sie ist ausgegraut („Vorfahren noch ohne Orte auf der Karte“)
+  und lässt sich nicht wählen. Auf dem Telefon und einem Touch-Gerät öffnet sich die Wahl als Blatt von unten. Wenn
+  kein Vorfahr auf der Karte ist, sagt die Leiste „Noch kein Vorfahre hat einen Ort auf der Karte.“ und bietet
+  **Andere Person wählen** an.
+- **Bedienung:** App:
+  - Karte → **◷ Zeitverlauf** → in der Leiste **◎ Weg zu einer Person…** → Person. Der Chip **◎ Weg zu:** Name
+    öffnet die Wahl erneut (**Person ändern**), **×** hebt den Weg auf (**Weg aufheben**);
+  - in der Blase eines Ortes Klick auf eine Person → **◎ Weg zu dieser Person** (neben **Personenseite ›**), auch
+    ohne gewählte Person;
+  - auf der Personenseite **◎ Weg der Vorfahren auf der Karte ›** ([A7.6](A7-book-pages-and-export.md#A7.6)): die
+    Seite schließt sich, die Karte zeigt den Weg ab dem ersten Jahr, und die Meldung bietet **‹ Zurück zur
+    Personenseite** an. Hat die Person Vorfahren, aber keiner ist auf der Karte, ist der Link ausgegraut („Noch kein
+    Vorfahre hat einen Ort auf der Karte.“). Ohne Vorfahren im Stammbaum gibt es den Link nicht.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:src/map-lines.ts buildPathModel (maxGen 30, fatherMother přes parentSlots jako vějíř, isPlaceholder není předek, implex záznam na cestu, expanded podle osoby a větve), placeOf (narození → křest → první datované bydliště, jen s polohou; rok narození → křest → místa), missing (date/place/both), yearFrom/yearTo, links, pathSegments (PATH_LINE_CAP 400, pořadí kmen, fresh < 10 let, generace, výřez, délka) · src/ui/map-path-ui.ts (mapEffectiveScope celý strom, čip místo rozsahu, clearMapPath vrátí rozsah, jednorázový výřez framed, cíl čárkovaný → plný, pathTargetNoPlace, pathNoAncestors + pathOtherPerson) · src/person-picker.ts PathPersonPicker (limit 30, recentId = ústřední osoba, onMapCount 0 = aria-disabled, celý strom) · src/ui/map-lines-legend-ui.ts mapPathBubbleParts · src/ui/map-ui.ts showMapPathPlace, toggleMapTime (vypnutí skryje, zapnutí od začátku) · src/ui/person-page-ui.ts personPageMapPath (on/off/null), openPersonPageMapPath (toast map-path-back) · src/person-page-map.ts (pp-map-path, aria-disabled, jen v okně aplikace) · src/windows/view-window-state.ts MapTimeState path, mode, colors · strings.ts map.pathPick, pathPickTitle, pathPickPlaceholder, pathPickRecent, pathPickOnMap, pathPickNone, pathChip, pathChange, pathClear, pathFromPage, pathThisPerson, pathBackToPage, pathGoal, pathGoalEnd, pathTargetNoPlace, pathNoAncestors, pathOtherPerson, linesCut, linesCutWhy, missingDate, missingPlace, missingBoth · app 388e5a87, b01693bc, 5853882e, 34e82d43 (app:81f2adf0) · dirigent:prace/1113-app-mapa-rody-v-case · ZADANI_UIX_mapa-rody-v-case D3, D4 (ponechat) · spec 054 K2.1, P2 · CHANGELOG.cs.md 3.28.0 -->
+
+<a id="A6.5.5"></a>
+### A6.5.5 Linienfarben und die Legende Stammlinien
+
+Der Weg der Vorfahren ist nach Stammlinien gefärbt. Eine Stammlinie ist hier der Zweig eines Großelternteils
+(Viertel) oder eines Urgroßelternteils (Achtel) der gewählten Person, benannt nach seinem Geburtsnamen. Es ist nicht
+die Stammlinie nach dem Nachnamen ([A4](A4-surnames-and-families.md)).
+
+- **Grenzen:**
+  - die Viertel sind Vater des Vaters, Mutter des Vaters, Vater der Mutter und Mutter der Mutter, in denselben Tönen
+    wie die Farben **Linien** im Fächer ([A6.4](#A6.4)). Jedes Viertel hat auch ein eigenes Linienmuster (das erste
+    durchgezogen), sodass sich die Stammlinien auch bei schwächerem Farbsehen unterscheiden. Paare, die eine
+    schwächere Unterscheidung von Rot und Grün verschmelzen lässt, unterscheiden sich in Helligkeit und Muster.
+    Helles und dunkles Erscheinungsbild haben eigene Töne;
+  - ein Achtel hat die Farbe seines Viertels, das zweite Achtel desselben Viertels einen dunkleren Ton. Die Nummer
+    des Achtels (1–8) steht auf der längsten sichtbaren Linie jedes Achtels;
+  - die Linien von Eltern und Großeltern sind der Stamm: in der Textfarbe und breiter. Die Punkte der Eltern haben
+    die Farbe des Stamms, die Punkte der Großeltern die Farbe ihres Viertels. Ein Punkt, an dem sich mehrere
+    Stammlinien treffen, hat die Farben aller;
+  - eine Linie aus den letzten 10 Jahren ist breiter. Ältere Linien verblassen, höchstens auf 55 %, damit am Ende der
+    ganze Weg zu sehen ist;
+  - der Nachname der Stammlinie ist der Geburtsname des Großelternteils oder Urgroßelternteils; ohne Nachnamen sein
+    Vorname.
+- **Legende Stammlinien** (rechts unter den Steuerelementen der Karte, wenn mindestens ein Vorfahr auf der Karte
+  ist):
+  - **Viertel** · **Achtel**. **Achtel** lassen sich wählen, wenn der Stammbaum mindestens zwei Achtel kennt;
+  - Zeile einer Stammlinie: Linienmuster, Nachname, Beziehung und Zahl der Vorfahren auf der Karte („Vater des
+    Vaters · 12 Vorfahren“). Bei den Achteln stehen die Zeilen unter der Überschrift ihres Viertels („1 ·
+    Nachname“). Ein unbekannter Großelternteil hat eine Zeile ohne Farbe („Mutter des Vaters – unbekannt“). Die
+    letzte Zeile ist **Stamm: Eltern und Großeltern**;
+  - das Überfahren einer Zeile hebt die Stammlinie kurz hervor, ein Klick heftet sie an und dämpft die übrigen
+    Stammlinien. Esc oder ein zweiter Klick hebt das Anheften auf, ebenso das Umschalten von Vierteln und Achteln;
+  - unter den Zeilen stehen: die erste Person in zwei Zweigen („↻ Name (Jahr) gehört zu zwei Linien: … und ….“),
+    die Kürzung eines großen Stammbaums ([A6.5.4](#A6.5.4)), Vorfahren außerhalb der Leiste („N Vorfahren ohne Datum
+    oder Ort sind nicht auf der Zeitleiste.“ und **Liste ›**, die Liste **Vorfahren außerhalb der Zeitleiste**) und
+    **Ohne Linienfarben**;
+  - **Ohne Linienfarben** zeichnet den ganzen Weg in einer Farbe und blendet die Zeilen der Stammlinien aus. Der
+    Stamm bleibt breiter, und die Person bleibt gewählt;
+  - **▴** (**Einklappen**) klappt die Legende zu einem Chip „Stammlinien (N)“ mit den Farben der Stammlinien
+    zusammen. Die Karte verschiebt sich dadurch nicht.
+- **Telefon:** die Legende öffnet sich als Blatt von unten aus dem Chip **Stammlinien (N)** über der Leiste,
+  **Liste ›** ebenso. Offen ist immer nur ein Blatt (Legende, Liste, Blase oder Wahl der Person). Ein Telefon im
+  Querformat hat den Chip in der oberen Reihe.
+- **Bedienung:** App: Karte → **◷ Zeitverlauf** → Weg zu einer Person ([A6.5.4](#A6.5.4)) → Legende
+  **Stammlinien**.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml · strings.ts map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
+
+<a id="A6.5.6"></a>
+### A6.5.6 Den Weg zu einer Person abspielen
+
+Mit gewählter Person geht **Abspielen** die ganze Leiste in 24 Sekunden durch, vom ältesten Vorfahren bis zur
+gewählten Person.
+
+- **Grenzen:**
+  - Jahr für Jahr, keines wird übersprungen. Ein Jahr, in dem ein Vorfahr oder das Ziel hinzukam, dauert fünfmal so
+    lange wie ein Jahr ohne sie;
+  - das Abspielen endet beim Ziel. Ein weiteres **Abspielen** beginnt von vorn;
+  - angehalten wird es durch **Pause**, den Schieberegler, die Tasten ([A6.5.3](#A6.5.3)) und eine Marke über dem
+    Schieberegler;
+  - Marken über dem Schieberegler: jedes bekannte Viertel im Jahr seines ältesten Vorfahren auf der Karte, in der
+    Farbe der Stammlinie („Nachname: ältester Vorfahr Jahr“), und das Ziel am Ende. Ein Klick auf eine Marke springt
+    zu ihrem Jahr;
+  - die Zeile unter dem Schieberegler sagt, was zuletzt hinzukam: „Jahr · Name · Ort des Elternteils → Ort“ mit einem
+    Farbfeld der Stammlinie, das Ziel fett. Kamen in einem Jahr mehrere Personen hinzu, zeigt sie das Ziel, sonst die
+    Person aus der nächsten Generation. Ein Bildschirmleser liest die Zeile bei einer Änderung vor. Ohne gewählte
+    Person gibt es die Zeile nicht, und der Satz über Orte ohne Datum bleibt in der Statusleiste;
+  - die Karte bewegt sich beim Abspielen nicht. Nur wenn sie seit der Wahl der Person niemand verschoben oder
+    vergrößert hat und das Ziel am Ende außer Sicht ist, verschiebt sie sich einmal zu ihm;
+  - auf dem Telefon ist **▶** ohne Text und die Leiste in einer Reihe.
+- **Bedienung:** App: Karte → **◷ Zeitverlauf** → Weg zu einer Person ([A6.5.4](#A6.5.4)) → **Abspielen**.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:src/map-lines.ts pathPlaySchedule (PATH_PLAY_MS 24000, PATH_EVENT_WEIGHT 5, krok rok, součet 24 000), pathAddedIn (nejbližší generace, pak rel, cíl poslední), pathLastAdded · src/ui/map-path-ui.ts playMapPath (konec u cíle), panMapToPathEnd (framed, jednou), renderMapTimeMarks (čtvrtiny podle firstYear, cíl), renderMapTimeCaption (cíl, jinak items[0]; aria-live, aria-valuetext; bez cesty skryto) · src/ui/map-ui.ts toggleMapTimePlay (na konci od začátku), setMapTimeYear (pozastaví), značky → setMapTimeYear · strings.ts map.timeMarkTitle, pathGoalEnd · app cce82a89, 34e82d43 (app:81f2adf0) · ZADANI_UIX_mapa-rody-v-case D5 (ponechat) · spec 054 K2.2 · CHANGELOG.cs.md 3.28.0 -->
 
 <a id="A6.6"></a>
 ## A6.6 Stammlinie in der Ansicht

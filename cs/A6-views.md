@@ -149,6 +149,7 @@ Mapa ukazuje místa událostí osob.
 - Místo sňatku se ukáže, když je v pohledu aspoň jeden z partnerů.
 - Místo se píše v nejčastějším zápisu. Obec je jeden bod i s čísly domů; místo s vlastními přesnými souřadnicemi
   zůstává samostatným bodem.
+- **Migrace v čase** ukáže místa podle let a cestu předků k jedné osobě ([A6.5.3](#A6.5.3)).
 - **Platí od:** mapa aplikace 1.10.0; druhy událostí a body obcí aplikace 3.21.0
 
 <!-- zdroj: app:src/places.ts collectPlaces, groupTownPoints · src/ui/map-ui.ts (localStorage strom.map.kinds) · strings.ts map.scopeView, map.scopeTree, map.kinds · CHANGELOG.cs.md 3.21.0 -->
@@ -217,6 +218,141 @@ Tlačítko otevře okno **Místa** s náhledem; do fronty výzkumu jdou místa a
 - **Platí od:** aplikace 3.25.0
 
 <!-- zdroj: app:src/ui/map-ui.ts (stavový pruh, lookResearch, lookable), src/ui/place-actions.ts, src/ui/places-research-ui.ts (bulkLook, bulkLookHead, bulkLookGo, nic dvakrát), src/ui/map-follow-ui.ts (noCoords + places.research.look, Undo) · strings.ts map.onMap.notFound, lookResearch, lookResearchShort, lookResearchTitle, confirm; places.dialog.elsewhere, phoneLine, oldResearch · CHANGELOG.cs.md 3.25.0 · commit 2246ca28 · spec 058 -->
+
+<a id="A6.5.3"></a>
+### A6.5.3 Migrace v čase
+
+**Migrace v čase** ukazuje místa podle let. Posuvník v liště pod mapou určí rok a mapa ukáže místa, která do toho
+roku přibyla, a čáry stěhování rodu.
+
+- **Hranice:**
+  - na liště jsou jen místa s rokem a polohou. Místa s polohou, ale bez data stavový pruh spočítá („N míst bez data
+    se na časové ose nezobrazuje.“);
+  - lišta jde od nejstaršího po nejmladší rok míst v rozsahu (**Tento pohled** / **Celý strom**) a zapnutých druhů
+    ([A6.5](#A6.5)). Bez datovaných míst režim zapnout nejde;
+  - bod, kde se něco stalo v posledních deseti letech před zvoleným rokem, je zvýrazněný;
+  - čára vede z místa narození rodiče do místa narození dítěte, když obě mají rok a polohu a liší se. Sourozenci se
+    stejnou cestou mají jednu čáru. Čára s věkem dítěte bledne, po 60 letech na 15 %. Kreslí se jen čáry s koncem
+    u výřezu mapy, nejvýš 400. Bez druhu **Narození** se čáry nekreslí („Cesta rodu jen s Narozeními.“);
+  - **Přehrát** posouvá rok zhruba po 120 ms až k poslednímu roku. Na posledním roce začne **Přehrát** znovu od
+    začátku.
+- **Od aplikace 3.28.0:**
+  - tlačítko **◷ V čase** má u ikony i text;
+  - mapa nabídne režim jednou: dokud nebyl zapnutý a strom má aspoň dvě datovaná místa s polohou, stojí u tlačítka
+    karta **Migrace v čase** („Přehraje, jak se rody stěhovaly, a ukáže cestu předků k jedné osobě.“). **Vyzkoušet**
+    režim zapne, **Teď ne** kartu zavře. Po kterékoli z obou se karta na tomto zařízení už neukáže;
+  - klávesy na posuvníku: šipky o rok, PageUp a PageDown o 10 let, Home a End na začátek a konec. Mezerník kdekoli
+    na mapě (mimo pole a tlačítka) přehraje nebo pozastaví. Ruční posun přehrávání pozastaví;
+  - v režimu jde vybrat osobu, ke které vede cesta jejích předků ([A6.5.4](#A6.5.4)).
+- **Ovládání:** aplikace: mapa → **◷ V čase** (**Migrace v čase**) → posuvník, **Přehrát** / **Pozastavit**.
+- **Platí od:** aplikace 2.4.0; druhy míst 3.21.0; text tlačítka, jednorázová nabídka a klávesy 3.28.0
+
+<!-- zdroj: app:src/map-time.ts collectDatedPlacePoints (undatedPlaceCount, minYear/maxYear) · src/ui/map-ui.ts drawMapTimeLayer (fresh = posledních 10 let, slice(0, 400) s koncem u výřezu), mapMigrationSegments (místa narození rodič → dítě, opacity max(0.15, 1 − věk/60·0.85), bez Narození nic), toggleMapTimePlay (setInterval 120, na konci od začátku), renderMapTimeTip / dismissMapTimeTip (strom.map.timeTipSeen, ≥ 2 datovaná místa s polohou, podklad mapy potvrzený), klávesy na posuvníku a mezerník (setMapTimeYear pozastaví) · strings.ts map.timeMode, timeModeShort, timeModeEmpty, timePlay, timePause, timeUndated, noFamilyPath, timeTipTitle, timeTipText, timeTipTry, timeTipLater · Migrace v čase od v2.4.0 (app 44a903bc) · 3.28.0: app 34e82d43, cce82a89 (app:81f2adf0) · CHANGELOG.cs.md 3.21.0, 3.28.0 · spec 054 P2 -->
+
+<a id="A6.5.4"></a>
+### A6.5.4 Cesta předků k osobě
+
+V Migraci v čase jde vybrat jednu osobu. Mapa pak ukáže jen její přímé předky, čáry od každého předka k jeho
+dítěti až k vybrané osobě a lišta končí u ní.
+
+- **Hranice:**
+  - předkové jsou rodiče, jejich rodiče a dál, nejvýš 30 generací. Rodiče se berou jako ve Vějíři
+    ([A6.4](#A6.4)). Zástupný druhý rodič rodiny s jedním rodičem předkem není: jeho větev je neznámá;
+  - předek, ke kterému vede víc cest (implex), je na mapě jeden bod, ale počítá se v každé větvi, do které patří.
+    Ve stejné větvi se jeho předkové nerozvíjejí podruhé;
+  - předek stojí na místě narození, bez něj na místě křtu, bez něj na prvním datovaném bydlišti; vždy jen na místě
+    s polohou. Jeho rok je rok narození, bez něj rok křtu, bez něj rok toho místa. Předek bez roku nebo bez místa
+    s polohou na liště není: legenda ho spočítá a **Seznam ›** ho jmenuje s tím, co chybí (**bez data narození**,
+    **bez místa**, **bez data a místa**) a **Stránka osoby ›** ([A6.5.5](#A6.5.5));
+  - vybraná osoba stojí stejně. Je to cíl: kroužek „◎ cíl: jméno“, na konci lišty plný kroužek „◎ jméno · rok“
+    (u místa křtu „· křest rok“, u bydliště „· bydliště rok“). Cíl bez místa na mapě se nekreslí a na konci lišty
+    stojí „… nemá místo na mapě.“;
+  - lišta jde od roku nejstaršího předka na mapě do pozdějšího z roků posledního předka a cíle;
+  - cesta bere předky z celého stromu: místo rozsahu stojí čip s osobou, po zrušení cesty se rozsah vrátí.
+    Druhy míst se na cestu nevztahují. Bod obce sbírá i její domy jako bez cesty;
+  - bublina místa ukáže jen lidi cesty na tom místě, předky do zvoleného roku a cíl, se štítky jejich rodů;
+  - po výběru osoby se mapa jednou posune a přiblíží na celou cestu, pak se sama nehýbe (výjimka na konci
+    přehrávání, [A6.5.6](#A6.5.6));
+  - čar je nejvýš 400 jako bez cesty. Když jich je víc, mají přednost: kmen (rodiče a prarodiče), čáry z posledních
+    10 let, bližší generace, konec ve výřezu mapy, delší čára. Legenda to řekne („Ukázáno N z M čar“, „Přednost
+    mají bližší generace a čáry, které právě přibyly.“);
+  - vypnutí **V čase** cestu jen skryje. Po zapnutí se vrátí a běží od prvního roku. Zruší ji **×** na čipu;
+  - nové okno s mapou ([A6.8](#A6.8)) převezme osobu cesty, čtvrtiny nebo osminy a barvy rodů.
+- **Výběr osoby:** **Cesta k osobě** hledá v celém stromu („Jméno, příjmení nebo rok“), nejvýš 30 osob. Prázdné
+  pole ukáže ústřední osobu (**Naposledy zaměřená**). U každé osoby stojí, kolik jejích předků je na mapě; osoba bez
+  nich je zašedlá („předkové zatím bez míst na mapě“) a vybrat nejde. Na telefonu a dotykové obrazovce se výběr
+  otevře jako list zespodu. Když žádný předek na mapě není, lišta řekne „Předkové zatím nemají místa na mapě.“
+  a nabídne **Vybrat jinou osobu**.
+- **Ovládání:** aplikace:
+  - mapa → **◷ V čase** → v liště **◎ Cesta k osobě…** → osoba. Čip **◎ Cesta k:** jméno otevře výběr znovu
+    (**Změnit osobu**), **×** cestu zruší (**Zrušit cestu**);
+  - v bublině místa klik na osobu → **◎ Cesta k této osobě** (vedle **Stránka osoby ›**), i bez vybrané osoby;
+  - na stránce osoby **◎ Cesta předků na mapě ›** ([A7.6](A7-book-pages-and-export.md#A7.6)): stránka se zavře,
+    mapa ukáže cestu od prvního roku a oznámení nabídne **‹ Zpět na stránku osoby**. Když osoba předky má, ale žádný
+    není na mapě, je odkaz zašedlý („Předkové zatím nemají místa na mapě.“). Bez předků ve stromu odkaz není.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:src/map-lines.ts buildPathModel (maxGen 30, fatherMother přes parentSlots jako vějíř, isPlaceholder není předek, implex záznam na cestu, expanded podle osoby a větve), placeOf (narození → křest → první datované bydliště, jen s polohou; rok narození → křest → místa), missing (date/place/both), yearFrom/yearTo, links, pathSegments (PATH_LINE_CAP 400, pořadí kmen, fresh < 10 let, generace, výřez, délka) · src/ui/map-path-ui.ts (mapEffectiveScope celý strom, čip místo rozsahu, clearMapPath vrátí rozsah, jednorázový výřez framed, cíl čárkovaný → plný, pathTargetNoPlace, pathNoAncestors + pathOtherPerson) · src/person-picker.ts PathPersonPicker (limit 30, recentId = ústřední osoba, onMapCount 0 = aria-disabled, celý strom) · src/ui/map-lines-legend-ui.ts mapPathBubbleParts · src/ui/map-ui.ts showMapPathPlace, toggleMapTime (vypnutí skryje, zapnutí od začátku) · src/ui/person-page-ui.ts personPageMapPath (on/off/null), openPersonPageMapPath (toast map-path-back) · src/person-page-map.ts (pp-map-path, aria-disabled, jen v okně aplikace) · src/windows/view-window-state.ts MapTimeState path, mode, colors · strings.ts map.pathPick, pathPickTitle, pathPickPlaceholder, pathPickRecent, pathPickOnMap, pathPickNone, pathChip, pathChange, pathClear, pathFromPage, pathThisPerson, pathBackToPage, pathGoal, pathGoalEnd, pathTargetNoPlace, pathNoAncestors, pathOtherPerson, linesCut, linesCutWhy, missingDate, missingPlace, missingBoth · app 388e5a87, b01693bc, 5853882e, 34e82d43 (app:81f2adf0) · dirigent:prace/1113-app-mapa-rody-v-case · ZADANI_UIX_mapa-rody-v-case D3, D4 (ponechat) · spec 054 K2.1, P2 · CHANGELOG.cs.md 3.28.0 -->
+
+<a id="A6.5.5"></a>
+### A6.5.5 Barvy rodů a legenda Rody
+
+Cesta předků je barevná podle rodů. Rod je tu větev jednoho prarodiče (čtvrtina) nebo jednoho praprarodiče
+(osmina) vybrané osoby, pojmenovaná jeho příjmením za svobodna. Není to rod podle příjmení
+([A4](A4-surnames-and-families.md)).
+
+- **Hranice:**
+  - čtvrtiny jsou otcův otec, otcova matka, matčin otec a matčina matka, ve stejných odstínech jako barvy **Linie**
+    ve Vějíři ([A6.4](#A6.4)). Každá čtvrtina má i vlastní vzor čáry (první plnou), takže se rody rozliší i při
+    slabším barvocitu. Dvojice, které slabší rozlišení červené a zelené slévá, se liší světlostí i vzorem. Světlý
+    a tmavý vzhled mají vlastní odstíny;
+  - osmina má barvu své čtvrtiny, druhá osmina téže čtvrtiny tmavší odstín. Číslo osminy (1–8) stojí na nejdelší
+    viditelné čáře každé osminy;
+  - čáry od rodičů a prarodičů jsou kmen: barvou textu a širší. Body rodičů mají barvu kmene, body prarodičů barvu
+    své čtvrtiny. Bod, kde se potkává víc rodů, má barvy všech;
+  - čára z posledních 10 let je širší. Starší čáry blednou, nejvýš na 55 %, aby byla na konci vidět celá cesta;
+  - příjmení rodu je rodné příjmení prarodiče nebo praprarodiče; bez příjmení jeho křestní jméno.
+- **Legenda Rody** (vpravo pod ovládáním mapy, když je na mapě aspoň jeden předek):
+  - **Čtvrtiny** · **Osminy**. **Osminy** jdou zvolit, když strom zná aspoň dvě osminy;
+  - řádek rodu: vzor čáry, příjmení, vztah a počet předků na mapě („otcův otec · 12 předků“). V osminách stojí
+    řádky pod nadpisem své čtvrtiny („1 · příjmení“). Neznámý prarodič má řádek bez barvy („otcova matka –
+    neznámá“). Poslední řádek je **Kmen: rodiče a prarodiče**;
+  - najetí na řádek rod na chvíli zvýrazní, klik ho připne a ostatní rody utlumí. Esc nebo druhý klik připnutí
+    zruší, přepnutí čtvrtin a osmin taky;
+  - pod řádky stojí: první osoba ve dvou větvích („↻ jméno (rok) je ve dvou větvích: … a ….“), ořez velkého stromu
+    ([A6.5.4](#A6.5.4)), předkové mimo lištu („N předků bez data nebo místa na liště není.“ a **Seznam ›**,
+    seznam **Předkové mimo lištu**) a **Bez barev rodů**;
+  - **Bez barev rodů** nakreslí celou cestu jednou barvou a skryje řádky rodů. Kmen zůstane širší a osoba
+    zůstane vybraná;
+  - **▴** (**Sbalit**) složí legendu do čipu „Rody (N)“ s barvami rodů. Mapa se tím neposune.
+- **Telefon:** legenda se otevře jako list zespodu z čipu **Rody (N)** nad lištou, **Seznam ›** také. Otevřený je
+  vždy jen jeden list (legenda, seznam, bublina nebo výběr osoby). Telefon na šířku má čip v horní řadě.
+- **Ovládání:** aplikace: mapa → **◷ V čase** → cesta k osobě ([A6.5.4](#A6.5.4)) → legenda **Rody**.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml · strings.ts map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
+
+<a id="A6.5.6"></a>
+### A6.5.6 Přehrát cestu k osobě
+
+S vybranou osobou projde **Přehrát** celou lištu za 24 sekund, od nejstaršího předka k vybrané osobě.
+
+- **Hranice:**
+  - rok po roku, žádný se nepřeskočí. Rok, ve kterém přibyl předek nebo cíl, trvá pětkrát déle než rok bez nich;
+  - přehrávání skončí u cíle. Další **Přehrát** začne od začátku;
+  - pozastaví ho **Pozastavit**, posuvník, klávesy ([A6.5.3](#A6.5.3)) i značka nad posuvníkem;
+  - značky nad posuvníkem: každá známá čtvrtina v roce svého nejstaršího předka na mapě, v barvě rodu („příjmení:
+    nejstarší předek rok“), a cíl na konci. Klik na značku skočí na její rok;
+  - řádek pod posuvníkem říká, co naposledy přibylo: „rok · jméno · místo rodiče → místo“ se vzorkem barvy rodu,
+    cíl tučně. Přibylo-li v jednom roce víc osob, ukáže cíl, jinak osobu z nejbližší generace. Čtečka obrazovky
+    řádek přečte při změně. Bez vybrané osoby řádek není a věta o místech bez data zůstává ve stavovém pruhu;
+  - mapa se při přehrávání nehýbe. Jen když ji od výběru osoby nikdo neposunul ani nepřiblížil a cíl je na konci
+    mimo dohled, posune se k němu jednou;
+  - na telefonu je **▶** bez textu a lišta v jedné řadě.
+- **Ovládání:** aplikace: mapa → **◷ V čase** → cesta k osobě ([A6.5.4](#A6.5.4)) → **Přehrát**.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:src/map-lines.ts pathPlaySchedule (PATH_PLAY_MS 24000, PATH_EVENT_WEIGHT 5, krok rok, součet 24 000), pathAddedIn (nejbližší generace, pak rel, cíl poslední), pathLastAdded · src/ui/map-path-ui.ts playMapPath (konec u cíle), panMapToPathEnd (framed, jednou), renderMapTimeMarks (čtvrtiny podle firstYear, cíl), renderMapTimeCaption (cíl, jinak items[0]; aria-live, aria-valuetext; bez cesty skryto) · src/ui/map-ui.ts toggleMapTimePlay (na konci od začátku), setMapTimeYear (pozastaví), značky → setMapTimeYear · strings.ts map.timeMarkTitle, pathGoalEnd · app cce82a89, 34e82d43 (app:81f2adf0) · ZADANI_UIX_mapa-rody-v-case D5 (ponechat) · spec 054 K2.2 · CHANGELOG.cs.md 3.28.0 -->
 
 <a id="A6.6"></a>
 ## A6.6 Rod v pohledu

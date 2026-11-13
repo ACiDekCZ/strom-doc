@@ -184,10 +184,12 @@ den Abschnitt **Für Forschende**.
 - **Als HTML speichern** erzeugt eine einzige eigenständige Datei, die sich offline in jedem Browser öffnet. Die
   Gruppen des Inhalts und der Schutz lebender Personen lassen sich wählen ([A7.2.1](#A7.2.1)); die Auswahl wird
   gespeichert.
+- **Ab App 3.28.0:** im Fenster der App führt **◎ Weg der Vorfahren auf der Karte ›** zum Weg der Vorfahren der
+  Person in der Wanderung über die Zeit ([A6.5.4](A6-views.md#A6.5.4)). Die gespeicherte Seite hat ihn nicht.
 - **Bedienung:** Angebot der Personenkarte, **Personenseite**; auch aus dem Fächer.
 - **Gilt seit:** App 3.18.0
 
-<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 -->
+<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 -->
 
 <a id="A7.7"></a>
 ## A7.7 Gespeichertes HTML (eigenständige Datei)

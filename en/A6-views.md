@@ -158,6 +158,7 @@ The Map shows the places of people's events.
 - The place of a marriage is shown when at least one of the partners is in the view.
 - A place is written in its most frequent spelling. A town is one point, house numbers included; a place with its own
   exact coordinates stays a separate point.
+- **Migration over time** shows the places by year and the ancestors' path to one person ([A6.5.3](#A6.5.3)).
 - **Since:** map app 1.10.0; kinds of events and town points app 3.21.0
 
 <!-- zdroj: app:src/places.ts collectPlaces, groupTownPoints · src/ui/map-ui.ts (localStorage strom.map.kinds) · strings.ts map.scopeView, map.scopeTree, map.kinds · CHANGELOG.cs.md 3.21.0 -->
@@ -229,6 +230,164 @@ only after **Queue**.
 - **Since:** app 3.25.0
 
 <!-- zdroj: app:src/ui/map-ui.ts (stavový pruh, lookResearch, lookable), src/ui/place-actions.ts, src/ui/places-research-ui.ts (bulkLook, bulkLookHead, bulkLookGo, nic dvakrát), src/ui/map-follow-ui.ts (noCoords + places.research.look, Undo) · strings.ts map.onMap.notFound, lookResearch, lookResearchShort, lookResearchTitle, confirm; places.dialog.elsewhere, phoneLine, oldResearch · CHANGELOG.cs.md 3.25.0 · commit 2246ca28 · spec 058 -->
+
+<a id="A6.5.3"></a>
+### A6.5.3 Migration over time
+
+**Migration over time** shows the places by year. The slider in the bar under the map sets the year, and the map
+shows the places added up to that year and the lines of the family's moves.
+
+- **Limits:**
+  - the bar has only places with a year and a location. The status bar counts the places with a location but no date
+    ("N places without a date are not shown on the timeline.");
+  - the bar runs from the earliest to the latest year of the places in the scope (**This view** / **Whole tree**) and
+    of the kinds turned on ([A6.5](#A6.5)). Without dated places the mode cannot be turned on;
+  - a point where something happened in the last ten years before the chosen year is highlighted;
+  - a line runs from a parent's place of birth to the child's place of birth when both have a year and a location
+    and differ. Siblings on the same route share one line. A line fades with the child's age, to 15 % after 60
+    years. Only lines with an end near the map's view are drawn, at most 400. Without the kind **Births** no lines
+    are drawn ("The family path shows only with Births.");
+  - **Play** moves the year about every 120 ms up to the last year. On the last year, **Play** starts again from the
+    beginning.
+- **From app 3.28.0:**
+  - the button **◷ Over time** has text next to its icon;
+  - the map offers the mode once: while it has never been on and the tree has at least two dated places with a
+    location, the card **Migration over time** stands by the button ("Plays how the family lines moved and shows the
+    ancestors' path to one person."). **Try it** turns the mode on, **Not now** closes the card. After either, the
+    card does not come back on this device;
+  - keys on the slider: the arrows by a year, PageUp and PageDown by 10 years, Home and End to the beginning and the
+    end. The space bar anywhere on the map (outside fields and buttons) plays or pauses. Moving by hand pauses the
+    playback;
+  - in the mode a person can be chosen, and the map shows the path of that person's ancestors
+    ([A6.5.4](#A6.5.4)).
+- **Controls:** app: the map → **◷ Over time** (**Migration over time**) → the slider, **Play** / **Pause**.
+- **Since:** app 2.4.0; kinds of places 3.21.0; the button's text, the one-time offer and the keys 3.28.0
+
+<!-- zdroj: app:src/map-time.ts collectDatedPlacePoints (undatedPlaceCount, minYear/maxYear) · src/ui/map-ui.ts drawMapTimeLayer (fresh = posledních 10 let, slice(0, 400) s koncem u výřezu), mapMigrationSegments (místa narození rodič → dítě, opacity max(0.15, 1 − věk/60·0.85), bez Narození nic), toggleMapTimePlay (setInterval 120, na konci od začátku), renderMapTimeTip / dismissMapTimeTip (strom.map.timeTipSeen, ≥ 2 datovaná místa s polohou, podklad mapy potvrzený), klávesy na posuvníku a mezerník (setMapTimeYear pozastaví) · strings.ts map.timeMode, timeModeShort, timeModeEmpty, timePlay, timePause, timeUndated, noFamilyPath, timeTipTitle, timeTipText, timeTipTry, timeTipLater · Migrace v čase od v2.4.0 (app 44a903bc) · 3.28.0: app 34e82d43, cce82a89 (app:81f2adf0) · CHANGELOG.cs.md 3.21.0, 3.28.0 · spec 054 P2 -->
+
+<a id="A6.5.4"></a>
+### A6.5.4 The ancestors' path to a person
+
+In Migration over time one person can be chosen. The map then shows only that person's direct ancestors and the
+lines from each ancestor to their child, down to the chosen person, and the bar ends at that person.
+
+- **Limits:**
+  - the ancestors are the parents, their parents and further, at most 30 generations. The parents are taken as in
+    the Fan ([A6.4](#A6.4)). The stand-in second parent of a family with one parent is not an ancestor: that branch
+    is unknown;
+  - an ancestor reached by more than one path (pedigree collapse) is one point on the map but counts in every
+    branch they belong to. Within the same branch their ancestors are not expanded a second time;
+  - an ancestor stands at the place of birth, without it at the place of baptism, without it at the first dated
+    residence; always only at a place with a location. Their year is the year of birth, without it the year of
+    baptism, without it the year of that place. An ancestor without a year or without a place with a location is
+    not on the bar: the legend counts them, and **List ›** names them with what is missing (**no birth date**,
+    **no place**, **no date or place**) and **Person page ›** ([A6.5.5](#A6.5.5));
+  - the chosen person stands the same way. They are the end: a ring "◎ end: name", at the end of the bar a full ring
+    "◎ name · year" (at a place of baptism "· baptism year", at a residence "· residence year"). An end without a
+    place on the map is not drawn, and at the end of the bar stands "… has no place on the map.";
+  - the bar runs from the year of the earliest ancestor on the map to the later of the years of the last ancestor
+    and the end;
+  - the path takes the ancestors from the whole tree: a chip with the person stands in place of the scope, and
+    clearing the path brings the scope back. The kinds of places do not apply to the path. A town's point gathers
+    its houses as without the path;
+  - a place's bubble shows only the people of the path at that place, the ancestors up to the chosen year and the
+    end, with the tags of their family lines;
+  - after a person is chosen, the map moves and zooms once to the whole path, then it does not move by itself
+    (an exception at the end of the playback, [A6.5.6](#A6.5.6));
+  - there are at most 400 lines, as without the path. When there are more, these come first: the trunk (parents and
+    grandparents), lines from the last 10 years, closer generations, an end in the map's view, a longer line. The
+    legend says so ("N of M lines shown", "Closer generations and newly added lines come first.");
+  - turning **Over time** off only hides the path. When turned on again, it comes back and runs from the first year.
+    **×** on the chip clears it;
+  - a new window with the map ([A6.8](#A6.8)) takes over the path's person, quarters or eighths and the line
+    colours.
+- **Choosing the person:** **Path to a person** searches the whole tree ("Name, surname or year"), at most 30 people.
+  An empty field shows the central person (**Last focused**). Each person shows how many of their ancestors are on
+  the map; a person with none is greyed out ("ancestors have no places on the map yet") and cannot be chosen. On a
+  phone and a touch screen the choice opens as a sheet from below. When no ancestor is on the map, the bar says
+  "No ancestor has a place on the map yet." and offers **Choose another person**.
+- **Controls:** app:
+  - the map → **◷ Over time** → in the bar **◎ Path to a person…** → a person. The chip **◎ Path to:** name opens
+    the choice again (**Change person**), **×** clears the path (**Clear the path**);
+  - in a place's bubble a click on a person → **◎ Path to this person** (beside **Person page ›**), also without a
+    chosen person;
+  - on the person page **◎ Ancestors' path on the map ›** ([A7.6](A7-book-pages-and-export.md#A7.6)): the page
+    closes, the map shows the path from the first year and a notice offers **‹ Back to the person page**. When the
+    person has ancestors but none is on the map, the link is greyed out ("No ancestor has a place on the map yet.").
+    Without ancestors in the tree there is no link.
+- **Since:** app 3.28.0
+
+<!-- zdroj: app:src/map-lines.ts buildPathModel (maxGen 30, fatherMother přes parentSlots jako vějíř, isPlaceholder není předek, implex záznam na cestu, expanded podle osoby a větve), placeOf (narození → křest → první datované bydliště, jen s polohou; rok narození → křest → místa), missing (date/place/both), yearFrom/yearTo, links, pathSegments (PATH_LINE_CAP 400, pořadí kmen, fresh < 10 let, generace, výřez, délka) · src/ui/map-path-ui.ts (mapEffectiveScope celý strom, čip místo rozsahu, clearMapPath vrátí rozsah, jednorázový výřez framed, cíl čárkovaný → plný, pathTargetNoPlace, pathNoAncestors + pathOtherPerson) · src/person-picker.ts PathPersonPicker (limit 30, recentId = ústřední osoba, onMapCount 0 = aria-disabled, celý strom) · src/ui/map-lines-legend-ui.ts mapPathBubbleParts · src/ui/map-ui.ts showMapPathPlace, toggleMapTime (vypnutí skryje, zapnutí od začátku) · src/ui/person-page-ui.ts personPageMapPath (on/off/null), openPersonPageMapPath (toast map-path-back) · src/person-page-map.ts (pp-map-path, aria-disabled, jen v okně aplikace) · src/windows/view-window-state.ts MapTimeState path, mode, colors · strings.ts map.pathPick, pathPickTitle, pathPickPlaceholder, pathPickRecent, pathPickOnMap, pathPickNone, pathChip, pathChange, pathClear, pathFromPage, pathThisPerson, pathBackToPage, pathGoal, pathGoalEnd, pathTargetNoPlace, pathNoAncestors, pathOtherPerson, linesCut, linesCutWhy, missingDate, missingPlace, missingBoth · app 388e5a87, b01693bc, 5853882e, 34e82d43 (app:81f2adf0) · dirigent:prace/1113-app-mapa-rody-v-case · ZADANI_UIX_mapa-rody-v-case D3, D4 (ponechat) · spec 054 K2.1, P2 · CHANGELOG.cs.md 3.28.0 -->
+
+<a id="A6.5.5"></a>
+### A6.5.5 Line colours and the Family lines legend
+
+The ancestors' path is coloured by family line. A family line here is the branch of one grandparent (a quarter) or
+one great-grandparent (an eighth) of the chosen person, named by that person's birth surname. It is not a family
+line by surname ([A4](A4-surnames-and-families.md)).
+
+- **Limits:**
+  - the quarters are father's father, father's mother, mother's father and mother's mother, in the same hues as the
+    colours **Lines** in the Fan ([A6.4](#A6.4)). Each quarter also has its own line pattern (the first a solid
+    line), so the family lines can be told apart with weaker colour vision too. Pairs that a weaker red–green vision
+    merges differ in lightness and in pattern as well. The light and the dark appearance have their own shades;
+  - an eighth has its quarter's colour, the second eighth of the same quarter a darker shade. The eighth's number
+    (1–8) stands on the longest visible line of each eighth;
+  - the lines from parents and grandparents are the trunk: in the text colour and wider. The parents' points have the
+    trunk's colour, the grandparents' points the colour of their quarter. A point where several family lines meet
+    has the colours of all of them;
+  - a line from the last 10 years is wider. Older lines fade, at most to 55 %, so that the whole path is visible at
+    the end;
+  - the family line's surname is the birth surname of the grandparent or great-grandparent; without a surname their
+    given name.
+- **The Family lines legend** (on the right under the map's controls, when at least one ancestor is on the map):
+  - **Quarters** · **Eighths**. **Eighths** can be chosen when the tree knows at least two eighths;
+  - a family line's row: the line's pattern, the surname, the relationship and the number of ancestors on the map
+    ("father's father · 12 ancestors"). With eighths the rows stand under the heading of their quarter ("1 ·
+    surname"). An unknown grandparent has a row without a colour ("father's mother – unknown"). The last row is
+    **Trunk: parents and grandparents**;
+  - hovering over a row highlights the family line for a moment, a click pins it and dims the others. Esc or a
+    second click releases it, and so does switching between quarters and eighths;
+  - under the rows stand: the first person in two branches ("↻ name (year) is in two lines: … and …."), the cut of
+    a big tree ([A6.5.4](#A6.5.4)), the ancestors off the bar ("N ancestors without a date or place are not on the
+    timeline." and **List ›**, the list **Ancestors not on the timeline**) and **No line colours**;
+  - **No line colours** draws the whole path in one colour and hides the family lines' rows. The trunk stays wider
+    and the person stays chosen;
+  - **▴** (**Collapse**) folds the legend into the chip "Family lines (N)" with the family lines' colours. The map
+    does not move.
+- **Phone:** the legend opens as a sheet from below from the chip **Family lines (N)** above the bar, **List ›**
+  too. Only one sheet is open at a time (the legend, the list, the bubble or the choice of a person). A phone held
+  sideways has the chip in the top row.
+- **Controls:** app: the map → **◷ Over time** → the path to a person ([A6.5.4](#A6.5.4)) → the legend **Family
+  lines**.
+- **Since:** app 3.28.0
+
+<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml · strings.ts map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
+
+<a id="A6.5.6"></a>
+### A6.5.6 Playing the path to a person
+
+With a chosen person, **Play** goes through the whole bar in 24 seconds, from the earliest ancestor to the chosen
+person.
+
+- **Limits:**
+  - year by year, none is skipped. A year in which an ancestor or the end was added lasts five times longer than a
+    year without them;
+  - the playback ends at the end person. The next **Play** starts from the beginning;
+  - it is paused by **Pause**, the slider, the keys ([A6.5.3](#A6.5.3)) and a mark above the slider;
+  - the marks above the slider: each known quarter at the year of its earliest ancestor on the map, in the family
+    line's colour ("surname: earliest ancestor year"), and the end at the end. A click on a mark jumps to its year;
+  - the line under the slider says what was added last: "year · name · parent's place → place" with a swatch of the
+    family line's colour, the end in bold. When several people were added in one year, it shows the end, otherwise
+    the person from the closest generation. A screen reader reads the line when it changes. Without a chosen person
+    there is no such line, and the sentence about places without a date stays in the status bar;
+  - the map does not move during the playback. Only when nobody has moved or zoomed it since the person was chosen
+    and the end is out of sight at the end, it moves to it once;
+  - on a phone **▶** has no text and the bar is in one row.
+- **Controls:** app: the map → **◷ Over time** → the path to a person ([A6.5.4](#A6.5.4)) → **Play**.
+- **Since:** app 3.28.0
+
+<!-- zdroj: app:src/map-lines.ts pathPlaySchedule (PATH_PLAY_MS 24000, PATH_EVENT_WEIGHT 5, krok rok, součet 24 000), pathAddedIn (nejbližší generace, pak rel, cíl poslední), pathLastAdded · src/ui/map-path-ui.ts playMapPath (konec u cíle), panMapToPathEnd (framed, jednou), renderMapTimeMarks (čtvrtiny podle firstYear, cíl), renderMapTimeCaption (cíl, jinak items[0]; aria-live, aria-valuetext; bez cesty skryto) · src/ui/map-ui.ts toggleMapTimePlay (na konci od začátku), setMapTimeYear (pozastaví), značky → setMapTimeYear · strings.ts map.timeMarkTitle, pathGoalEnd · app cce82a89, 34e82d43 (app:81f2adf0) · ZADANI_UIX_mapa-rody-v-case D5 (ponechat) · spec 054 K2.2 · CHANGELOG.cs.md 3.28.0 -->
 
 <a id="A6.6"></a>
 ## A6.6 A family line in the view
