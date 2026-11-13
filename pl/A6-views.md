@@ -286,11 +286,11 @@ Widok Tabela opiera się na tabeli Ondřeja Chrpy.
     CSV i XLSX działają; widoku nie można zapisać, przemianować ani usunąć;
   - strzałek **↩ ↪** w lewym dolnym rogu (poprzednia i następna osoba centralna) ani Alt+← / Alt+→ w Tabeli nie ma:
     tabela nie pokazuje osoby centralnej i nie zmienia jej podczas pracy.
-- **Obsługa:** w przełączniku widoków **Tabela** (za **Mapa**); w wąskim oknie i na telefonie **Więcej → Widok →
-  Tabela**. Widok jest zapamiętywany jak pozostałe ([A6.1.1](#A6.1.1)).
+- **Obsługa:** w przełączniku widoków **Tabela** (za **Mapa**); na telefonie, tablecie i w oknie do 1024 px **Tabela**
+  na dolnym pasku ([A9.5](A9-using-the-app.md#A9.5); do aplikacji 3.27.0 **Więcej → Widok → Tabela**). Widok jest zapamiętywany jak pozostałe ([A6.1.1](#A6.1.1)).
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) · ↩ ↪ a Alt+šipky v Tabulce skryté: commity 79764eba, b1cbe546 (T54 G14) -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (do 3.27.0 Více → Pohled: Vějíř, Mapa, Tabulka; od 3.28.0 app:4b1373a7 index.html bb-view-table, commit bb5e4d12) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) · ↩ ↪ a Alt+šipky v Tabulce skryté: commity 79764eba, b1cbe546 (T54 G14) -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Związki w tabeli osób
@@ -326,8 +326,8 @@ Kolumny są w grupach. Które są widoczne i w jakiej kolejności, jest części
 | **Osoby** | **Osoba** · **Urodzenie i chrzest** · **Rodzice** · **Związki** · **Rozwód** · **Zgon i pochówek** · **Wydarzenia** · **Źródła** · **Wiarygodność i badanie** · **Kontrole** |
 | **Związki** | **Para** · **Ślub** · **Rozwód** · **Dzieci i źródła** |
 
-- **Imię i nazwisko** (przy związkach **Partner 1**) jest przypięte po lewej i sortuje się według nazwiska, potem
-  imienia. Składa się z części imienia i nazwiska, dlatego jest osobna kolumna **Imię** (domyślnie ukryta), którą
+- **Imię i nazwisko** (przy związkach **Partner 1**) jest zawsze przypięte po lewej; nie da się go odpiąć ani ukryć.
+  Sortuje się według nazwiska, potem imienia. Składa się z części imienia i nazwiska, dlatego jest osobna kolumna **Imię** (domyślnie ukryta), którą
   można edytować w komórce ([A6.7.15](#A6.7.15)). **Nazwisko** to nazwisko po ślubie, w przeciwnym razie rodowe; **Nazwisko rodowe** to zapisane nazwisko.
 - **ID badania** pokazuje tylko numer osoby z badania (P…). **Nr ref.** to numer referencyjny osoby (REFN), tak jak
   przyniósł go plik GEDCOM (i jak wraca do niego); sortuje się i filtruje jako tekst.
@@ -349,7 +349,17 @@ Kolumny są w grupach. Które są widoczne i w jakiej kolejności, jest części
     **Filtr…**, **Przypnij do lewej** / **Odepnij**, **Przesuń w lewo** / **Przesuń w prawo**, **Ukryj kolumnę**,
     **Zwiń grupę …** / **Rozwiń grupę …**; przy kolumnie obliczonej „Obliczono z: …”;
   - szerokość kolumny przez przeciągnięcie krawędzi nagłówka.
+- **Kolejność kolumn:**
+  - w części przypiętej każdą przypiętą kolumnę można przesunąć na dowolne miejsce wśród przypiętych, także
+    **Imię i nazwisko** (nie musi być pierwsze);
+  - poza częścią przypiętą kolumna przesuwa się tylko w obrębie swojej grupy;
+  - przesunięcie, którego nie da się wykonać, nie jest oferowane: w menu nagłówka brakuje **Przesuń w lewo** albo
+    **Przesuń w prawo**, w panelu **Kolumny** strzałki ↑ albo ↓.
+- **Od aplikacji 3.28.0:** przypięte kolumny w dowolnej kolejności. Do 3.27.0 **Imię i nazwisko** było zawsze pierwsze
+  i nie dało się go przesunąć, przypięte kolumny przesuwały się tylko w obrębie swojej grupy, a przesunięcie, którego
+  nie dało się wykonać, było wyszarzone.
 
+<!-- zdroj: app:4b1373a7 src/ui/table-view/table-state.ts normalizeColumns (zamčený sloupec ukotvený, kdekoli v ukotvené části), columnRun (ukotvená část: [0, pinned − 1]; mimo ni skupina), canMoveColumn, moveColumnBy · table-headmenu.ts headMenuItems (moveLeft/moveRight jen canMove; Skrýt ne u zamčeného; Uvolnit ne u zamčeného) · table-colpanel.ts (šipka jen pro možný posun) · commit 19dbb595 (dřív columnRun locked = 1, disabled/aria-disabled) · dirigent:spec/082-tester-3.28 K2.1 -->
 <!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) -->
 
 <a id="A6.7.3"></a>
@@ -391,7 +401,8 @@ Kolumny **Kompletność …** mówią, ile śledzonych pól jest wypełnionych, 
 - Wartość zastępcza (chrzest, pochówek) pola nie wypełnia. Podpowiedź przy komórce wypisuje, czego brakuje („brak:
   miejsce urodzenia, źródło urodzenia”).
 - **Wiersz pokrycia** pod nagłówkiem pokazuje przy każdej kolumnie, ile procent wierszy ma wartość („wypełniono
-  64 %”, podpowiedź „77 z 120”). Przy kolumnach **Kompletność …** pokazuje średnią kompletność wierszy (podpowiedź
+  64 %”, podpowiedź „77 z 120”). Słowo „wypełniono” stoi w pierwszej kolumnie, jakakolwiek to jest (od aplikacji 3.28.0;
+  wcześniej w kolumnie imienia i nazwiska), także w eksporcie XLSX. Przy kolumnach **Kompletność …** pokazuje średnią kompletność wierszy (podpowiedź
   „średnia z 120”). Liczy tylko wiersze, które są właśnie widoczne (po filtrze i wyszukiwaniu). Komórek
   **Nie dotyczy** się nie liczy; przy kolumnach związku liczą się związki, które spełniają filtr. Poniżej 50 % liczba
   jest pogrubiona; bez komórki, której by dotyczyła, jest „–”.
@@ -401,7 +412,7 @@ Kolumny **Kompletność …** mówią, ile śledzonych pól jest wypełnionych, 
   (początek związku z formularza związku), pokazuje się jak dotąd.
 - **Obsługa:** **Wiersz pokrycia** w panelu **Kolumny** (na telefonie w **⋯**); zapisuje się z widokiem.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 · průměr u sloupců úplnosti (kind percent): table-coverage.ts columnCoverage average, strings.ts table.coverageAverage, i XLSX, commit 56f3418c (T54 G12) · svazek bez sňatku: table-columns.ts unionWithoutWedding (partners, separated), weddingCell, oneUnionFields (jen partner), strings.ts table.naNoWedding, compList.unionNoWedding, commit 8fdf52ca (T54 G5, MILAN.md rozhodnutí 21) -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 · průměr u sloupců úplnosti (kind percent): table-coverage.ts columnCoverage average, strings.ts table.coverageAverage, i XLSX, commit 56f3418c (T54 G12) · „vyplněno“ v prvním sloupci: app:4b1373a7 table-ui.ts coverageOf (firstId), table-xlsx.ts labelAt, commit 19dbb595 · svazek bez sňatku: table-columns.ts unionWithoutWedding (partners, separated), weddingCell, oneUnionFields (jen partner), strings.ts table.naNoWedding, compList.unionNoWedding, commit 8fdf52ca (T54 G5, MILAN.md rozhodnutí 21) -->
 
 <a id="A6.7.5"></a>
 ### A6.7.5 Ustalenia kontroli w komórkach

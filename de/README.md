@@ -37,7 +37,7 @@ dauerhaft.
 - [A6 Ansichten und Auswahl der Personen](A6-views.md): Familie, Nachkommen, Zeitleiste, Fächer, Karte, die Stammlinie in der Ansicht, Tabelle und eine Ansicht in einem eigenen Fenster
 - [A7 Buch, Seiten und Export](A7-book-pages-and-export.md): wer lebend ist, Schutz lebender Personen, Familienbuch, Seiten, gespeichertes HTML
 - [A8 Zusammenführen von Stammbäumen](A8-merging-trees.md): Zusammenführen einer Datei, eines Stammbaums oder einer Ansicht in einen neuen Stammbaum, Abgleich der Personen
-- [A9 Bedienung der App](A9-using-the-app.md): wo was ist, lesbare Namen der Bedienelemente, Bearbeiten beim Verfolgen der Forschung, der Agent in der App
+- [A9 Bedienung der App](A9-using-the-app.md): wo was ist, lesbare Namen der Bedienelemente, Bearbeiten beim Verfolgen der Forschung, der Agent in der App, die untere Leiste auf Telefon und Tablet
 
 ## S App und Forschung zusammen
 

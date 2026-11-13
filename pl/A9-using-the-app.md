@@ -21,8 +21,9 @@ osoby; to, co dotyczy całego drzewa, jest na pasku narzędzi i w menu **Akcje**
 | źródła osoby | menu osoby → **Źródła** | [A3.6](A3-evidence-in-the-app.md#A3.6) |
 | źródła drzewa | **Akcje → Źródła** | [A3.1](A3-evidence-in-the-app.md#A3.1) |
 | edytować osobę | menu osoby → **Edytuj** | [S2](S2-edits-from-the-app.md), przy śledzeniu [A9.3](#A9.3) |
-| widok Mapa i inne widoki | przełącznik widoków na pasku narzędzi; w wąskim oknie i na telefonie **Więcej → Widok** | [A6](A6-views.md) |
-| całe drzewo w wierszach, eksport CSV i XLSX | **Tabela** w przełączniku widoków; w wąskim oknie i na telefonie **Więcej → Widok → Tabela** | [A6.7](A6-views.md#A6.7) |
+| widok Mapa i inne widoki | przełącznik widoków na pasku narzędzi; na telefonie, tablecie i w oknie do 1024 px dolny pasek i **Więcej → Widok** | [A6](A6-views.md), [A9.5](#A9.5) |
+| całe drzewo w wierszach, eksport CSV i XLSX | **Tabela** w przełączniku widoków; na telefonie, tablecie i w oknie do 1024 px **Tabela** na dolnym pasku | [A6.7](A6-views.md#A6.7) |
+| pełny ekran (telefon i tablet) | **Więcej → Pełny ekran**; na iPhonie w Safari **Więcej → Pełny ekran…** | [A9.5](#A9.5) |
 | widok albo Przegląd badania w osobnym oknie (na komputerze) | ⧉ **Otwórz w nowym oknie** obok przełącznika widoków; Ctrl+klik (macOS ⌘+klik) na karcie widoku; ⧉ na pasku Tabeli i w nagłówku Przeglądu | [A6.8](A6-views.md#A6.8), [S4.1.6](S4-research-from-the-app.md#S4.1.6) |
 | podkład mapy | **Pokaż mapę** przy powiadomieniu, że podkład wczytuje się z openstreetmap.org | [A9.4](#A9.4) |
 | miejsca poza mapą | pasek stanu mapy → **W badaniu**; w badaniu sekcja **Czeka na załatwienie** | [A6.5.2](A6-views.md#A6.5.2), [R4.5](R4-places.md#R4.5) |
@@ -39,7 +40,7 @@ osoby; to, co dotyczy całego drzewa, jest na pasku narzędzi i w menu **Akcje**
 - **Obsługa:** jak w tabeli.
 - **Obowiązuje od:** aplikacja 3.25.0 (podsumowanie; każde miejsce obowiązuje od wersji w swojej zasadzie)
 
-<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 · okna: A6.8, S4.1.6 (app:4b1373a7 src/windows/window-controls.ts) -->
+<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 · okna: A6.8, S4.1.6 (app:4b1373a7 src/windows/window-controls.ts) · dolní lišta a Celá obrazovka: A9.5 (app:4b1373a7, commit bb5e4d12) -->
 
 <a id="A9.2"></a>
 ## A9.2 Elementy mają czytelną nazwę
@@ -100,3 +101,29 @@ komputerem ([R12.10](R12-where-the-agent-works.md#R12.10)).
 - **Obowiązuje od:** badanie 1.29.0; aplikacja 3.25.0
 
 <!-- zdroj: research:src/agents/files.ts AGENTS.md „## When you have computer use“ (page tools, click by the reference find gives, never by coordinates, wait until a sliding panel has stopped; Claude's computer use only looks at browsers; research through strom; consent or setting left to the person: map's OpenStreetMap, how edits are sent) · CHANGELOG.cs.md 1.29.0 · src/core/browser.ts + src/core/bridgeguard.ts (most odmítnut) · dirigent:test/vysledek-063-pruzkum.md kolo 1 (úrovně), kolo 2 (klik přes ref z find spolehlivý, klik podle souřadnic během vysouvání trefil jinou položku; souhlas Zobrazit mapu nekliknut; místo mimo mapu v Čeká na vyřízení) · spec/063-computer-use-usnadnit K1.2, K1.3, K1.5 -->
+
+<a id="A9.5"></a>
+## A9.5 Dolny pasek na telefonie i tablecie
+
+Na telefonie, tablecie i w oknie do 1024 px aplikacja ma zamiast przełącznika widoków dolny pasek. Pozostałe widoki
+i akcje są w arkuszu **Więcej**.
+
+- **Dolny pasek:** **Rodzina** | **Potomkowie** | **＋** (dodaj osobę; tylko w drzewie, które można edytować) |
+  **Tabela** | **Więcej**. Otwarta Rodzina, Potomkowie lub Tabela jest wyróżniona na pasku; otwarty Wachlarz, Mapa
+  lub Oś czasu wyróżnia **Więcej**.
+- **Więcej → Widok:** **Wachlarz** | **Mapa** | **Oś czasu**. Na telefonie jest pod nimi wybór rodu
+  ([A6.6](A6-views.md#A6.6)), gdy drzewo go oferuje; nie przy Osi czasu, Mapie i Tabeli.
+- **Pełny ekran:** w arkuszu **Więcej** jest **Pełny ekran**, w trybie pełnego ekranu **Zamknij pełny ekran**.
+  Paski przeglądarki nie zajmują wtedy miejsca.
+  - Oferuje się go tylko tam, gdzie przeglądarka pozwala stronie na pełny ekran, i tylko z dolnym paskiem. Telefon
+    trzymany poziomo ma go jako czwarty kafelek w wierszu **Widok**.
+  - Na iPhonie lub iPadzie, którego przeglądarka nie pozwala stronie na pełny ekran (Safari na iPhonie), jest zamiast
+    niego **Pełny ekran…** z podpowiedzią: Strom dodany do ekranu początkowego (**Udostępnij → Do ekranu
+    początkowego**) otwiera się bez pasków przeglądarki, ale ma własną, oddzielną pamięć; drzewo trafia do niej przez
+    eksport i import. Aplikacja uruchomiona z ekranu początkowego tego wiersza nie ma.
+  - Gdy przeglądarka pełny ekran odrzuci, okno zostaje bez zmian.
+- **Obsługa:** dolny pasek; **Więcej → Widok**; **Więcej → Pełny ekran**.
+- **Obowiązuje od:** aplikacja 3.28.0 (do 3.27.0 dolny pasek miał **Oś czasu** zamiast **Tabeli**, a Tabela była
+  w **Więcej → Widok**)
+
+<!-- zdroj: app:4b1373a7 index.html #bottom-bar (bb-view-family, bb-view-descendants, bottom-bar-fab edit-only, bb-view-table, bb-view-more) · src/ui/misc.ts:530–533 (active: table na liště; fan, map, timeline → Více) · src/breakpoints.ts isTabletOrMobile (≤ 1024 px), isPhoneBar, MQ_PHONE_LANDSCAPE · src/ui/bottom-sheet.ts blok 5 (Pohled: fan, map, timeline; rodRow jen isPhoneBar, ne timeline/map/table; fullscreenRow jen isTabletOrMobile, na šířku čtvrtá dlaždice) · src/ui/fullscreen.ts fullscreenOffer (fullscreenEnabled → enter/exit; iOS a ne standalone → ios-hint; jinak nic), toggleFullscreen (odmítnutí: okno beze změny) · src/file-copy.ts isIosDevice · src/pwa.ts isStandaloneDisplay · strings.ts mobileMenu.fullscreen, fullscreenExit, fullscreenIos, fullscreenIosText, menu.sectionView, viewModeSwitch.* · commit bb5e4d12 (dřív bb-view-timeline a v Pohledu Tabulka) · dirigent:spec/082-tester-3.28 K1.1, K1.3 · prace/1112-app-tester-328-telefon -->

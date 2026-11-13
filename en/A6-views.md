@@ -288,11 +288,12 @@ the depth **Ancestors** and **Descendants**. The Table view is based on a table 
     export work; a view cannot be saved, renamed or deleted;
   - the arrows **↩ ↪** in the bottom left corner (the previous and the next central person) and Alt+← / Alt+→ are not
     in the Table: the table neither shows the central person nor changes it while working.
-- **Controls:** **Table** in the view bar (after **Map**); in a narrow window and on a phone **More → View → Table**.
+- **Controls:** **Table** in the view bar (after **Map**); on a phone, a tablet and in a window up to 1024 px **Table**
+  on the bottom bar ([A9.5](A9-using-the-app.md#A9.5); up to app 3.27.0 **More → View → Table**).
   The view is remembered like the others ([A6.1.1](#A6.1.1)).
 - **Since:** app 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) · ↩ ↪ a Alt+šipky v Tabulce skryté: commity 79764eba, b1cbe546 (T54 G14) -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (do 3.27.0 Více → Pohled: Vějíř, Mapa, Tabulka; od 3.28.0 app:4b1373a7 index.html bb-view-table, commit bb5e4d12) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) · ↩ ↪ a Alt+šipky v Tabulce skryté: commity 79764eba, b1cbe546 (T54 G14) -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Unions in the People table
@@ -329,7 +330,8 @@ The columns are in groups. Which are visible and in what order is part of the vi
 | **People** | **Person** · **Birth and baptism** · **Parents** · **Unions** · **Divorce** · **Death and burial** · **Events** · **Sources** · **Reliability and research** · **Checks** |
 | **Unions** | **Couple** · **Marriage** · **Divorce** · **Children and sources** |
 
-- **Full name** (for unions **Partner 1**) is pinned on the left and sorts by surname, then by given name.
+- **Full name** (for unions **Partner 1**) is always pinned on the left; it cannot be unpinned or hidden. It sorts
+  by surname, then by given name.
   It is made of the parts of the name, so there is a separate column **First name** (hidden by default) that can be
   edited in the cell ([A6.7.15](#A6.7.15)).
   **Surname** is the married surname, otherwise the birth surname; **Birth surname** is the recorded surname.
@@ -354,7 +356,16 @@ The columns are in groups. Which are visible and in what order is part of the vi
     **Filter…**, **Pin left** / **Unpin**, **Move left** / **Move right**, **Hide column**,
     **Collapse group …** / **Expand group …**; at a computed column “Computed from: …”;
   - the column width by dragging the edge of the header.
+- **Order of the columns:**
+  - in the pinned part any pinned column can be moved to any place among the pinned ones, **Full name** too (it
+    need not be first);
+  - outside the pinned part a column moves only within its group;
+  - a move that cannot be made is not offered: the header menu leaves out **Move left** or **Move right**, the panel
+    **Columns** the arrow ↑ or ↓.
+- **From app 3.28.0:** pinned columns in any order. Up to 3.27.0 **Full name** was always first and could not be
+  moved, pinned columns moved only within their group, and a move that could not be made was greyed out.
 
+<!-- zdroj: app:4b1373a7 src/ui/table-view/table-state.ts normalizeColumns (zamčený sloupec ukotvený, kdekoli v ukotvené části), columnRun (ukotvená část: [0, pinned − 1]; mimo ni skupina), canMoveColumn, moveColumnBy · table-headmenu.ts headMenuItems (moveLeft/moveRight jen canMove; Skrýt ne u zamčeného; Uvolnit ne u zamčeného) · table-colpanel.ts (šipka jen pro možný posun) · commit 19dbb595 (dřív columnRun locked = 1, disabled/aria-disabled) · dirigent:spec/082-tester-3.28 K2.1 -->
 <!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) -->
 
 <a id="A6.7.3"></a>
@@ -395,7 +406,8 @@ The columns **… completeness** say how many of the tracked fields are filled i
 - A substitute value (baptism, burial) does not fill a field. The hint at a cell lists what is missing (“missing:
   birth place, birth source”).
 - The **Coverage row** under the header shows for each column what percentage of the rows has a value (“filled
-  64 %”, hint “77 of 120”). Under the columns **… completeness** it shows the average completeness of the rows (hint
+  64 %”, hint “77 of 120”). The word “filled” stands in the first column, whichever it is (from app 3.28.0; before in
+  the name column), in the XLSX export too. Under the columns **… completeness** it shows the average completeness of the rows (hint
   “average of 120”). It counts only the rows visible at the moment (after the filter and the search). Cells
   **Does not apply** are not counted; for union columns the unions that match the filter are counted. Under 50 % the
   number is bold; without a cell it would concern, it is “–”.
@@ -405,7 +417,7 @@ The columns **… completeness** say how many of the tracked fields are filled i
   value that is there anyway (the start of the relationship from the union form) is shown as before.
 - **Controls:** **Coverage row** in the panel **Columns** (on a phone in **⋯**); it is saved with the view.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 · průměr u sloupců úplnosti (kind percent): table-coverage.ts columnCoverage average, strings.ts table.coverageAverage, i XLSX, commit 56f3418c (T54 G12) · svazek bez sňatku: table-columns.ts unionWithoutWedding (partners, separated), weddingCell, oneUnionFields (jen partner), strings.ts table.naNoWedding, compList.unionNoWedding, commit 8fdf52ca (T54 G5, MILAN.md rozhodnutí 21) -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 · průměr u sloupců úplnosti (kind percent): table-coverage.ts columnCoverage average, strings.ts table.coverageAverage, i XLSX, commit 56f3418c (T54 G12) · „vyplněno“ v prvním sloupci: app:4b1373a7 table-ui.ts coverageOf (firstId), table-xlsx.ts labelAt, commit 19dbb595 · svazek bez sňatku: table-columns.ts unionWithoutWedding (partners, separated), weddingCell, oneUnionFields (jen partner), strings.ts table.naNoWedding, compList.unionNoWedding, commit 8fdf52ca (T54 G5, MILAN.md rozhodnutí 21) -->
 
 <a id="A6.7.5"></a>
 ### A6.7.5 Findings of the check in the cells

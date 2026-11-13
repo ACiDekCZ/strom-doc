@@ -271,11 +271,12 @@ Pohled Tabulka vychází z tabulky od Ondřeje Chrpy.
     fungují; pohled uložit, přejmenovat ani smazat nejde;
   - šipky **↩ ↪** vlevo dole (předchozí a další ústřední osoba) a Alt+← / Alt+→ v Tabulce nejsou: tabulka ústřední
     osobu neukazuje ani během práce nemění.
-- **Ovládání:** v liště pohledů **Tabulka** (za **Mapa**); v úzkém okně a na telefonu **Více → Pohled → Tabulka**.
+- **Ovládání:** v liště pohledů **Tabulka** (za **Mapa**); na telefonu, tabletu a v okně do 1024 px **Tabulka** na dolní
+  liště ([A9.5](A9-using-the-app.md#A9.5); do aplikace 3.27.0 **Více → Pohled → Tabulka**).
   Pohled se pamatuje jako ostatní ([A6.1.1](#A6.1.1)).
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (Více → Pohled: Vějíř, Mapa, Tabulka) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) · ↩ ↪ a Alt+šipky v Tabulce skryté: commity 79764eba, b1cbe546 (T54 G14) -->
+<!-- zdroj: app:src/ui/table-view/table-model.ts ROW_TYPES, buildTableModel (isPlaceholder ven, svazek aspoň s jedním skutečným partnerem), bloodOf (předci hlavní osoby a všichni jejich potomci), makeContext (homeId, isLivingPerson) · table-columns.ts unionPartners (pokrevní partner jako Partner 1), gen (assignGenerations + 1), kin (findRelationship, kinSelf) · src/ui/table-view/table-ui.ts tableReadOnly (isReadOnly: viewMode, isLocked, isNewerData) · src/data.ts:655 isReadOnly · src/ui/bottom-sheet.ts:443 (do 3.27.0 Více → Pohled: Vějíř, Mapa, Tabulka; od 3.28.0 app:4b1373a7 index.html bb-view-table, commit bb5e4d12) · table-bar.ts countText, sortText · perf-budget test 5 000 osob · strings.ts viewModeSwitch.table, table.rows, rowType, rowTypeNote, countOf, sortedBy, readOnly, readOnlyShort · commity c34c47ff, 1b72e6d8 · spec 073 U2 · Události a Prameny (spec 073 U3 P2, K5.1–K5.4): commity 8de751c2, 63ed9def, 1a3a49f1, 3cf69ffa, strings.ts table.rows.events, rows.sources, perf-budget 5 000 osob (Události) a 2 000 pramenů · poděkování: Milan 10. 11. (dirigent:prace/1110-doc-tabulka, bod 4) · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1110-app-tabulka-p1 · Žijící: strings.ts table.col.living, table.living (commit 7e648e24) · ústřední osoba mezi pohledy: commit 75de3a9b (T54 F1) · ↩ ↪ a Alt+šipky v Tabulce skryté: commity 79764eba, b1cbe546 (T54 G14) -->
 
 <a id="A6.7.1"></a>
 ### A6.7.1 Svazky v tabulce osob
@@ -310,7 +311,8 @@ Sloupce jsou ve skupinách. Které jsou vidět a v jakém pořadí, je část po
 | **Osoby** | **Osoba** · **Narození a křest** · **Rodiče** · **Svazky** · **Rozvod** · **Úmrtí a pohřeb** · **Události** · **Prameny** · **Spolehlivost a výzkum** · **Kontroly** |
 | **Svazky** | **Pár** · **Sňatek** · **Rozvod** · **Děti a prameny** |
 
-- **Celé jméno** (u svazků **Partner 1**) je ukotvené vlevo a řadí se podle příjmení, pak křestního jména.
+- **Celé jméno** (u svazků **Partner 1**) je vždy ukotvené vlevo; odkotvit ani skrýt nejde. Řadí se podle příjmení,
+  pak křestního jména.
   Skládá se z částí jména, proto je zvlášť sloupec **Křestní jméno** (ve výchozím stavu skrytý), který jde upravit
   v buňce ([A6.7.15](#A6.7.15)). **Příjmení** je příjmení po sňatku, jinak rodné; **Rodné příjmení** je zapsané příjmení.
 - **ID výzkumu** ukazuje jen číslo osoby z výzkumu (P…). **Ref. číslo** je referenční číslo osoby (REFN), jak ho
@@ -333,7 +335,16 @@ Sloupce jsou ve skupinách. Které jsou vidět a v jakém pořadí, je část po
     **Filtr…**, **Ukotvit vlevo** / **Uvolnit**, **Posunout vlevo** / **Posunout vpravo**, **Skrýt sloupec**,
     **Sbalit skupinu …** / **Rozbalit skupinu …**; u dopočteného sloupce „Vypočteno z: …“;
   - šířka sloupce tažením okraje hlavičky.
+- **Pořadí sloupců:**
+  - v ukotvené části jde kterýkoli ukotvený sloupec přesunout na kterékoli místo mezi ukotvenými, i **Celé jméno**
+    (nemusí být první);
+  - mimo ukotvenou část se sloupec posouvá jen v rámci své skupiny;
+  - posun, který nejde, se nenabízí: v nabídce hlavičky chybí **Posunout vlevo** nebo **Posunout vpravo**, v panelu
+    **Sloupce** šipka ↑ nebo ↓.
+- **Od aplikace 3.28.0:** ukotvené sloupce v libovolném pořadí. Do 3.27.0 bylo **Celé jméno** vždy první a nešlo
+  posunout, ukotvené sloupce se posouvaly jen v rámci své skupiny a posun, který nešel, byl zašedlý.
 
+<!-- zdroj: app:4b1373a7 src/ui/table-view/table-state.ts normalizeColumns (zamčený sloupec ukotvený, kdekoli v ukotvené části), columnRun (ukotvená část: [0, pinned − 1]; mimo ni skupina), canMoveColumn, moveColumnBy · table-headmenu.ts headMenuItems (moveLeft/moveRight jen canMove; Skrýt ne u zamčeného; Uvolnit ne u zamčeného) · table-colpanel.ts (šipka jen pro možný posun) · commit 19dbb595 (dřív columnRun locked = 1, disabled/aria-disabled) · dirigent:spec/082-tester-3.28 K2.1 -->
 <!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) -->
 
 <a id="A6.7.3"></a>
@@ -373,7 +384,8 @@ Sloupce **Úplnost …** říkají, kolik sledovaných polí je vyplněno, v pro
 - Náhradní hodnota (křest, pohřeb) pole nevyplní. Nápověda u buňky vypíše, co chybí („chybí: místo narození,
   pramen narození“).
 - **Řádek pokrytí** pod hlavičkou ukazuje u každého sloupce, kolik procent řádků má hodnotu („vyplněno 64 %“,
-  nápověda „77 z 120“). U sloupců **Úplnost …** ukazuje průměrnou úplnost řádků (nápověda „průměr z 120“).
+  nápověda „77 z 120“). Slovo „vyplněno“ stojí v prvním sloupci, ať je jím kterýkoli (od aplikace 3.28.0; dřív
+  ve sloupci jména), v exportu XLSX také. U sloupců **Úplnost …** ukazuje průměrnou úplnost řádků (nápověda „průměr z 120“).
   Počítá jen řádky, které jsou právě vidět (po filtru a hledání). Buňky **Nevztahuje se**
   se nepočítají; u sloupců svazku se počítají svazky, které vyhoví filtru. Pod 50 % je číslo tučně; bez buňky,
   které by se týkal, je „–“.
@@ -383,7 +395,7 @@ Sloupce **Úplnost …** říkají, kolik sledovaných polí je vyplněno, v pro
   svazku), se ukáže jako dřív.
 - **Ovládání:** **Řádek pokrytí** v panelu **Sloupce** (na telefonu v **⋯**); ukládá se s pohledem.
 
-<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 · průměr u sloupců úplnosti (kind percent): table-coverage.ts columnCoverage average, strings.ts table.coverageAverage, i XLSX, commit 56f3418c (T54 G12) · svazek bez sňatku: table-columns.ts unionWithoutWedding (partners, separated), weddingCell, oneUnionFields (jen partner), strings.ts table.naNoWedding, compList.unionNoWedding, commit 8fdf52ca (T54 G5, MILAN.md rozhodnutí 21) -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts compCell, unionComp (pole a váhy, náhrada nevyplní) · table-coverage.ts cellFilled, columnCoverage, coverageCell, coverageLabel (LOW pod 50 %) · table-subrows.ts coverageUnionsOf · strings.ts table.compList.*, compField.*, missing, missingNone, compCounts, coverage, coverageOf · rozhodnutí Milan 10. 11. (spec 073, bod 5) · commit 8833da14 · průměr u sloupců úplnosti (kind percent): table-coverage.ts columnCoverage average, strings.ts table.coverageAverage, i XLSX, commit 56f3418c (T54 G12) · „vyplněno“ v prvním sloupci: app:4b1373a7 table-ui.ts coverageOf (firstId), table-xlsx.ts labelAt, commit 19dbb595 · svazek bez sňatku: table-columns.ts unionWithoutWedding (partners, separated), weddingCell, oneUnionFields (jen partner), strings.ts table.naNoWedding, compList.unionNoWedding, commit 8fdf52ca (T54 G5, MILAN.md rozhodnutí 21) -->
 
 <a id="A6.7.5"></a>
 ### A6.7.5 Nálezy kontroly v buňkách

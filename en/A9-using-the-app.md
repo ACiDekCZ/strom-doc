@@ -21,8 +21,9 @@ person menu; what concerns the whole tree is in the bar and in the **Actions** m
 | a person's sources | person menu → **Sources** | [A3.6](A3-evidence-in-the-app.md#A3.6) |
 | the tree's sources | **Actions → Sources** | [A3.1](A3-evidence-in-the-app.md#A3.1) |
 | edit a person | person menu → **Edit** | [S2](S2-edits-from-the-app.md), while following [A9.3](#A9.3) |
-| the Map view and other views | the view switch in the bar; in a narrow window and on a phone **More → View** | [A6](A6-views.md) |
-| the whole tree in rows, CSV and XLSX export | **Table** in the view switch; in a narrow window and on a phone **More → View → Table** | [A6.7](A6-views.md#A6.7) |
+| the Map view and other views | the view switch in the bar; on a phone, a tablet and in a window up to 1024 px the bottom bar and **More → View** | [A6](A6-views.md), [A9.5](#A9.5) |
+| the whole tree in rows, CSV and XLSX export | **Table** in the view switch; on a phone, a tablet and in a window up to 1024 px **Table** on the bottom bar | [A6.7](A6-views.md#A6.7) |
+| full screen (phone and tablet) | **More → Full screen**; on an iPhone in Safari **More → Full screen…** | [A9.5](#A9.5) |
 | a view or the Research overview in a separate window (on a computer) | ⧉ **Open in a new window** next to the view switch; Ctrl+click (macOS ⌘+click) on a view's tab; ⧉ in the Table's bar and in the overview's heading | [A6.8](A6-views.md#A6.8), [S4.1.6](S4-research-from-the-app.md#S4.1.6) |
 | the map's base layer | **Show the map** at the notice that the base layer loads from openstreetmap.org | [A9.4](#A9.4) |
 | places off the map | the map's status bar → **In the research**; in the research the section **Awaiting action** | [A6.5.2](A6-views.md#A6.5.2), [R4.5](R4-places.md#R4.5) |
@@ -39,7 +40,7 @@ person menu; what concerns the whole tree is in the bar and in the **Actions** m
 - **Controls:** as in the table.
 - **Since:** app 3.25.0 (summary; each place applies since the version in its rule)
 
-<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 · okna: A6.8, S4.1.6 (app:4b1373a7 src/windows/window-controls.ts) -->
+<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 · okna: A6.8, S4.1.6 (app:4b1373a7 src/windows/window-controls.ts) · dolní lišta a Celá obrazovka: A9.5 (app:4b1373a7, commit bb5e4d12) -->
 
 <a id="A9.2"></a>
 ## A9.2 Controls have a readable name
@@ -100,3 +101,29 @@ it. The research's actions go more reliably by the command `strom`. strom nowher
 - **Since:** research 1.29.0; app 3.25.0
 
 <!-- zdroj: research:src/agents/files.ts AGENTS.md „## When you have computer use“ (page tools, click by the reference find gives, never by coordinates, wait until a sliding panel has stopped; Claude's computer use only looks at browsers; research through strom; consent or setting left to the person: map's OpenStreetMap, how edits are sent) · CHANGELOG.cs.md 1.29.0 · src/core/browser.ts + src/core/bridgeguard.ts (most odmítnut) · dirigent:test/vysledek-063-pruzkum.md kolo 1 (úrovně), kolo 2 (klik přes ref z find spolehlivý, klik podle souřadnic během vysouvání trefil jinou položku; souhlas Zobrazit mapu nekliknut; místo mimo mapu v Čeká na vyřízení) · spec/063-computer-use-usnadnit K1.2, K1.3, K1.5 -->
+
+<a id="A9.5"></a>
+## A9.5 The bottom bar on a phone and a tablet
+
+On a phone, a tablet and in a window up to 1024 px the app has a bottom bar instead of the view switch. The other
+views and actions are in the **More** sheet.
+
+- **Bottom bar:** **Family** | **Descendants** | **＋** (add a person; only in a tree that can be edited) | **Table** |
+  **More**. An open Family, Descendants or Table view is highlighted on the bar; an open Fan, Map or Timeline
+  highlights **More**.
+- **More → View:** **Fan** | **Map** | **Timeline**. On a phone the choice of the family line ([A6.6](A6-views.md#A6.6))
+  is under them when the tree offers it; not in the Timeline, the Map and the Table.
+- **Full screen:** the **More** sheet has **Full screen**, in full screen **Exit full screen**. The browser's bars
+  then take no room.
+  - It is offered only where the browser allows a page full screen, and only with the bottom bar. A phone held
+    sideways has it as a fourth tile in the **View** row.
+  - On an iPhone or iPad whose browser does not allow a page full screen (Safari on an iPhone) there is
+    **Full screen…** instead, with a hint: Strom added to the Home Screen (**Share → Add to Home Screen**) opens
+    without the browser's bars, but has its own separate storage; a tree gets there by export and import. The app
+    started from the Home Screen has no such row.
+  - When the browser refuses full screen, the window stays as it is.
+- **Controls:** the bottom bar; **More → View**; **More → Full screen**.
+- **Since:** app 3.28.0 (up to 3.27.0 the bottom bar had **Timeline** instead of **Table**, and the Table was in
+  **More → View**)
+
+<!-- zdroj: app:4b1373a7 index.html #bottom-bar (bb-view-family, bb-view-descendants, bottom-bar-fab edit-only, bb-view-table, bb-view-more) · src/ui/misc.ts:530–533 (active: table na liště; fan, map, timeline → Více) · src/breakpoints.ts isTabletOrMobile (≤ 1024 px), isPhoneBar, MQ_PHONE_LANDSCAPE · src/ui/bottom-sheet.ts blok 5 (Pohled: fan, map, timeline; rodRow jen isPhoneBar, ne timeline/map/table; fullscreenRow jen isTabletOrMobile, na šířku čtvrtá dlaždice) · src/ui/fullscreen.ts fullscreenOffer (fullscreenEnabled → enter/exit; iOS a ne standalone → ios-hint; jinak nic), toggleFullscreen (odmítnutí: okno beze změny) · src/file-copy.ts isIosDevice · src/pwa.ts isStandaloneDisplay · strings.ts mobileMenu.fullscreen, fullscreenExit, fullscreenIos, fullscreenIosText, menu.sectionView, viewModeSwitch.* · commit bb5e4d12 (dřív bb-view-timeline a v Pohledu Tabulka) · dirigent:spec/082-tester-3.28 K1.1, K1.3 · prace/1112-app-tester-328-telefon -->
