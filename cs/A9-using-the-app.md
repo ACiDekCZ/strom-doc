@@ -22,6 +22,7 @@ co se týká celého stromu, je v liště a v menu **Akce**.
 | upravit osobu | nabídka osoby → **Upravit** | [S2](S2-edits-from-the-app.md), při sledování [A9.3](#A9.3) |
 | pohled Mapa a další pohledy | přepínač pohledů v liště; v úzkém okně a na telefonu **Více → Pohled** | [A6](A6-views.md) |
 | celý strom v řádcích, export CSV a XLSX | **Tabulka** v přepínači pohledů; v úzkém okně a na telefonu **Více → Pohled → Tabulka** | [A6.7](A6-views.md#A6.7) |
+| pohled nebo Přehled výzkumu v samostatném okně (na počítači) | ⧉ **Otevřít v novém okně** vedle přepínače pohledů; Ctrl+klik (macOS ⌘+klik) na záložku pohledu; ⧉ v liště Tabulky a v hlavičce Přehledu | [A6.8](A6-views.md#A6.8), [S4.1.6](S4-research-from-the-app.md#S4.1.6) |
 | podklad mapy | **Zobrazit mapu** u upozornění, že se podklad načítá z openstreetmap.org | [A9.4](#A9.4) |
 | místa mimo mapu | stavový pruh mapy → **Ve výzkumu**; ve výzkumu oddíl **Čeká na vyřízení** | [A6.5.2](A6-views.md#A6.5.2), [R4.5](R4-places.md#R4.5) |
 | práce výzkumu | panel výzkumu, **⤢ Otevřít přehled**; menu **Výzkum → Přehled výzkumu** | [S4.1](S4-research-from-the-app.md#S4.1) |
@@ -37,7 +38,7 @@ co se týká celého stromu, je v liště a v menu **Akce**.
 - **Ovládání:** jak v tabulce.
 - **Platí od:** aplikace 3.25.0 (souhrn; každé místo platí od verze ve svém pravidle)
 
-<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 -->
+<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 · okna: A6.8, S4.1.6 (app:4b1373a7 src/windows/window-controls.ts) -->
 
 <a id="A9.2"></a>
 ## A9.2 Prvky mají čitelný název

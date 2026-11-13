@@ -7,6 +7,7 @@ A view is a different reading of **the same choice of people**. The choice is se
 clicked) and the depth **Ancestors** and **Descendants**. Family, Descendants, Timeline and Map show the same
 surroundings of the central person. The Fan counts ancestors and descendants on its own by the number of generations
 ([A6.4](#A6.4)). The Table shows the whole tree ([A6.7](#A6.7)).
+On a computer each view can also be opened in a separate window ([A6.8](#A6.8)).
 
 Views: **Family**, **Descendants**, **Timeline**, **Fan**, **Map**, **Table**.
 
@@ -901,3 +902,112 @@ cell can be copied, the table filtered by its value and the fact in it edited ri
 - **Since:** app 3.27.0
 
 <!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->
+
+<a id="A6.8"></a>
+## A6.8 A view in a separate window
+
+On a computer each view can be opened in a separate window, for example on a second monitor, as many as needed. The
+main window stays on its view. Only the main window saves; the other windows send it their edits and get the tree
+from it.
+
+- **Where it works:** on a computer (Windows, macOS, Linux, ChromeOS), also with a touch screen, in a window wider
+  than 640 px. On a phone and a tablet (Android, iOS, iPadOS) and in the exported app (an HTML file) ⧉ is not shown
+  and the shortcuts open nothing.
+- **What the window takes over:** the tree, the person in the centre and what the view shows: for the Table the
+  row type, filters, search, saved view, sorting and the selected row; for Family the zoom, for the Fan the rings,
+  for the Map the places and the zoom. Then the window has its own state. Reloading the window (F5) keeps its view
+  and person.
+- **What the window has:** instead of the app's toolbar it has a heading: the tree's name, the view switch (below
+  960 px as "{view} ▾"), **Follow selection** ([A6.8.1](#A6.8.1)), **Undo**, **Redo** and ⧉ **Open another window**. It has no
+  tree switcher, no **Research** menu, no Settings and no small research panel.
+- **Edits:** in the window a person can be edited (the person menu, **Edit**) and so can a Table cell. The main
+  window saves them, they can be undone as its steps and show in all windows at once. **Undo** and **Redo** in the window's heading
+  undo and redo the main window's steps. When the tree changed in another window meanwhile, the edit is not applied:
+  "The tree changed in another window meanwhile. The edit was not applied; the data is refreshed." A Table cell being
+  typed stays then ("Draft kept · Enter applies, Esc discards").
+- **Research:** only the main window handles the connection to the research (the bridge, following, sending edits).
+  The research items in the person menu of a window stand under the heading **Research · runs in the main window**
+  and the main window runs them. While the research is followed live
+  ([S1.4](S1-connecting-app-and-research.md#S1.4)), the windows are read-only like the main window: "Read-only · the
+  main window is following research" with **Go to the main window**.
+- **Limits:**
+  - ⧉ in the main window shows the number of other windows ("2 more windows", below 1280 px the number only). Its
+    menu has **Open windows** at the top (each with **Bring to front** and ×) and **Close all**;
+  - from 5 open windows on, the app warns that each extra window needs memory; it forbids nothing;
+  - a window blocked by the browser is reported ("The browser blocked the new window…") with **Try again**;
+  - the window's title carries the view and the tree ("Table – Horáks – Strom"), the main window's title the tree
+    ("Horáks – Strom").
+- **Controls:** app: ⧉ **Open in a new window** next to the view switch (a menu of the six views, for a tree from a
+  research also **Research overview**, [S4.1.6](S4-research-from-the-app.md#S4.1.6)); ⧉ in the Table's bar after
+  **Export ▾**; on a view's tab Ctrl+click (macOS ⌘+click), the middle button or a right click (Shift+F10) →
+  **{view} in a new window**.
+- **Since:** app 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/window-open.ts isDesktopSystem, windowsOffered (role main, ne isViewMode, > MOBILE_MAX 640, ne isPhoneBar), openInNewWindow · src/windows/window-controls.ts openWindow (BLOCKED_TOAST_MS 10 s, win.retry; MANY_WINDOWS 5, manyWindows), INDICATOR_TEXT_MIN_WIDTH 1280, renderMenu (6 pohledů, thisView, overview jen UI.canOpenResearchOverview), wireTabs (ctrl/meta click, auxclick button 1, contextmenu, Shift+F10 / ContextMenu) · src/windows/view-window-state.ts (přenos stavu, F5 satelitu) · src/windows/sat-header.ts · src/windows/satellite.ts readOnly (live, locked) · src/windows/sat-states.ts (live strip readOnlyLive, goToMain; CONFLICT_TOAST_MS) · src/windows/window-drafts.ts (draftKept) · src/windows/window-research-menu.ts (researchInMain) · src/windows/window-title.ts · index.html html.window-satellite .toolbar skryto · strings.ts win.* · CHANGELOG.cs.md 3.28.0 · spec 079 K1.1–K1.4, K1.7 · prace/1112-app-okna-zaklad, 1112-app-okna-pohledy -->
+
+<a id="A6.8.1"></a>
+### A6.8.1 Follow selection
+
+The selected person is shared between the windows. What a choice in another window does in this window is set by the
+switch **Follow selection** in the window's heading.
+
+| Mode | What a person chosen in another window does | Default in the views |
+|---|---|---|
+| **switch** | becomes the window's centre as after Focus: Descendants shows their descendants, the Fan their ancestors, Family their family | Family, Descendants, Fan |
+| **mark only** | is only marked: the card with a ring, a sector in the Fan, a row on the Timeline, their places on the Map, a row in the Table; the centre stays | Timeline, Map, Table |
+| **off** | nothing; the window has its own selection and does not send it | – |
+
+- **Limits:**
+  - **switch** is offered only in Family, Descendants and the Fan; elsewhere there are only **mark only** and **off**;
+  - a click of its own in the window changes the centre only in this window; a window that switched after another
+    window does not pass the choice on;
+  - the main window always follows the selection and has no switch;
+  - the choice holds for one window and survives its reload (F5). A chosen mode that is not the default holds also
+    after the view is switched in the window (**switch**, where it is not offered, as **mark only**); otherwise the
+    default of the new view applies.
+- **Controls:** app: in the window's heading **Follow selection: {mode} ▾**.
+- **Since:** app 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
+
+<a id="A6.8.2"></a>
+### A6.8.2 When the main window is missing
+
+A window without the main window loses nothing and nothing closes by itself. It stays read-only with the last data.
+
+| State | What the window shows | Choices |
+|---|---|---|
+| the main window is closed (3 s without a message from it) | a strip "The main window is closed · as of {time}, read-only"; the research items in the person menu under **Research · main window only** cannot be used | **Open Strom**, **Make this the main window** |
+| the tree was deleted in the main window | "The tree no longer exists" instead of the content | **Close window** |
+| the tree is locked | "The tree is locked · The password is entered in the main window." | **Go to the main window** |
+| the main window switched the tree | the window switches with it, the view stays, the selection is cleared ("{tree} → {tree}") | – |
+
+- **Limits:**
+  - **Open Strom** opens a new main window; the windows connect to it and the strip disappears;
+  - **Make this the main window** makes this window the main one: it loads the tree from storage (the data in the
+    window may be older than the saved data), gets the app's toolbar and the view stays. When another main window
+    came up meanwhile, nothing happens;
+  - reloading the main window (F5) does not show the strip.
+- **Controls:** app: the buttons in the strip and in place of the window's content.
+- **Since:** app 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/satellite.ts MAIN_SILENCE_MS 3000, lastHeardAt, treeGone · src/windows/sat-states.ts (closed strip mainClosed, treeGone, treeLocked, SWITCHED_TOAST_MS) · src/windows/become-main.ts (zámek ifAvailable, znovunačtení jako hlavní z IndexedDB) · src/windows/window-research-menu.ts researchMainOnly · strings.ts win.mainClosed, openStrom, makeMain, treeGone, treeGoneNote, treeLocked, treeLockedNote, closeWindow, goToMain, treeSwitched · spec 079 K1.5 · prace/1112-app-okna-zaklad (stavy 1–6) -->
+
+<a id="A6.8.3"></a>
+### A6.8.3 A second tab of the app
+
+The app opened a second time in an ordinary browser tab or window does not load a second copy of the tree. It shows
+"Strom is already open in another window" with the explanation "Only one window saves, so edits don't overwrite each
+other. Other windows connect to it."
+
+- **Limits:**
+  - **Switch there** brings the main window to the front. When the browser does not allow it, the tab says so and
+    adds "This tab can be closed.";
+  - **Open as another window** turns the tab into a window as in [A6.8](#A6.8), with the Table;
+  - a link opened in the second tab (a person, a search, the research's links, a file opened by the installed app)
+    goes to the main window exactly once: "The link opened in the main window.";
+  - the second tab writes nothing to the list of trees or to Settings.
+- **Controls:** app: **Switch there**, **Open as another window**.
+- **Since:** app 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/window-role.ts (Web Lock strom-main ifAvailable → main, jinak second-tab) · src/windows/second-tab.ts (secondTabSatelliteKind table) · src/windows/window-link.ts (předání odkazu hlavnímu jednou) · src/windows/window-start.ts openLinkFromWindow · strings.ts win.alreadyOpen, alreadyOpenNote, switchThere, openAsWindow, switchFailed, tabCanClose, linkForwarded · CHANGELOG.cs.md 3.28.0 · spec 079 K1.6 · prace/1112-app-okna-zaklad (7d22e396) -->

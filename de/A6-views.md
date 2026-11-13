@@ -8,6 +8,7 @@ Eine Ansicht ist eine andere Lesart **derselben Auswahl der Personen**. Die Ausw
 (die angeklickte) und die Tiefe **Vorfahren** und **Nachkommen**. Familie, Nachkommen, Zeitleiste und Karte zeigen
 dasselbe Umfeld der zentralen Person. Der Fächer berechnet Vorfahren und Nachkommen selbst nach der Zahl der
 Generationen ([A6.4](#A6.4)). Die Tabelle zeigt den ganzen Stammbaum ([A6.7](#A6.7)).
+Am Computer lässt sich jede Ansicht auch in einem eigenen Fenster öffnen ([A6.8](#A6.8)).
 
 Ansichten: **Familie**, **Nachkommen**, **Zeitleiste**, **Fächer**, **Karte**, **Tabelle**.
 
@@ -967,3 +968,116 @@ Tabelle bearbeiten.
 - **Gilt seit:** App 3.27.0
 
 <!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->
+
+<a id="A6.8"></a>
+## A6.8 Ansicht in einem eigenen Fenster
+
+Am Computer lässt sich jede Ansicht in einem eigenen Fenster öffnen, etwa auf einem zweiten Monitor, und zwar in
+beliebiger Zahl. Das Hauptfenster bleibt bei seiner Ansicht. Nur das Hauptfenster speichert; die anderen Fenster
+schicken ihm ihre Änderungen und bekommen von ihm den Stammbaum.
+
+- **Wo es geht:** am Computer (Windows, macOS, Linux, ChromeOS), auch mit Touchscreen, in einem Fenster breiter als
+  640 px. Auf Telefon und Tablet (Android, iOS, iPadOS) und in der exportierten App (HTML-Datei) erscheint ⧉ nicht,
+  und die Kurzbefehle öffnen nichts.
+- **Was das Fenster übernimmt:** den Stammbaum, die Person in der Mitte und das, was die Ansicht zeigt: bei der
+  Tabelle Zeilentyp, Filter, Suche, gespeicherte Ansicht, Sortierung und die gewählte Zeile; bei Familie den Zoom,
+  beim Fächer die Kreise, bei der Karte Orte und Zoom. Danach hat das Fenster einen eigenen Zustand. Neu laden des
+  Fensters (F5) behält Ansicht und Person.
+- **Was das Fenster hat:** statt der Leiste der App einen Kopf: Name des Stammbaums, Ansichtsumschalter (unter
+  960 px als „{Ansicht} ▾“), **Auswahl folgen** ([A6.8.1](#A6.8.1)), **Rückgängig**, **Wiederholen** und ⧉ **Weiteres Fenster
+  öffnen**. Stammbaum-Umschalter, Menü **Forschung**, Einstellungen und das kleine Forschungspanel hat das Fenster
+  nicht.
+- **Änderungen:** im Fenster lässt sich eine Person bearbeiten (Menü der Person, **Bearbeiten**) und eine Zelle der
+  Tabelle. Das Hauptfenster speichert sie, sie lassen sich als seine Schritte rückgängig machen und erscheinen sofort in allen Fenstern.
+  **Rückgängig** und **Wiederholen** im Kopf des Fensters nehmen Schritte des Hauptfensters zurück oder wiederholen sie. Wurde
+  der Stammbaum inzwischen in einem anderen Fenster geändert, wird die Änderung nicht übernommen: „Der Stammbaum wurde
+  inzwischen in einem anderen Fenster geändert. Die Änderung wurde nicht übernommen, die Daten sind aktualisiert.“ Eine
+  angefangene Zelle der Tabelle bleibt dabei erhalten („Entwurf bleibt · Enter übernimmt, Esc verwirft“).
+- **Forschung:** die Verbindung zur Forschung (Brücke, Verfolgen, Senden von Änderungen) bedient nur das
+  Hauptfenster. Die Forschungseinträge im Menü der Person stehen im Fenster unter der Überschrift **Forschung · läuft
+  im Hauptfenster**, und das Hauptfenster führt sie aus. Beim Live-Verfolgen der Forschung
+  ([S1.4](S1-connecting-app-and-research.md#S1.4)) sind die Fenster wie das Hauptfenster nur lesbar: „Nur lesen · das
+  Hauptfenster verfolgt die Forschung“ mit **Zum Hauptfenster**.
+- **Grenzen:**
+  - ⧉ im Hauptfenster zeigt die Zahl weiterer Fenster („2 weitere Fenster“, unter 1280 px nur die Zahl). Sein Menü
+    hat oben **Geöffnete Fenster** (jedes mit **In den Vordergrund** und ×) und **Alle schließen**;
+  - ab 5 offenen Fenstern weist die App darauf hin, dass jedes weitere Fenster Speicher braucht; sie verbietet nichts;
+  - ein vom Browser blockiertes Fenster wird gemeldet („Der Browser hat das neue Fenster blockiert…“), mit **Erneut
+    versuchen**;
+  - der Titel des Fensters nennt Ansicht und Stammbaum („Tabelle – Horák – Strom“), der des Hauptfensters den
+    Stammbaum („Horák – Strom“).
+- **Bedienung:** App: ⧉ **In neuem Fenster öffnen** neben dem Ansichtsumschalter (Menü mit den sechs Ansichten, bei
+  einem Stammbaum aus der Forschung auch **Forschungsübersicht**, [S4.1.6](S4-research-from-the-app.md#S4.1.6)); ⧉ in
+  der Leiste der Tabelle nach **Export ▾**; am Reiter einer Ansicht Strg+Klick (macOS ⌘+Klick), mittlere Maustaste
+  oder Rechtsklick (Umschalt+F10) → **{Ansicht} in neuem Fenster**.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/window-open.ts isDesktopSystem, windowsOffered (role main, ne isViewMode, > MOBILE_MAX 640, ne isPhoneBar), openInNewWindow · src/windows/window-controls.ts openWindow (BLOCKED_TOAST_MS 10 s, win.retry; MANY_WINDOWS 5, manyWindows), INDICATOR_TEXT_MIN_WIDTH 1280, renderMenu (6 pohledů, thisView, overview jen UI.canOpenResearchOverview), wireTabs (ctrl/meta click, auxclick button 1, contextmenu, Shift+F10 / ContextMenu) · src/windows/view-window-state.ts (přenos stavu, F5 satelitu) · src/windows/sat-header.ts · src/windows/satellite.ts readOnly (live, locked) · src/windows/sat-states.ts (live strip readOnlyLive, goToMain; CONFLICT_TOAST_MS) · src/windows/window-drafts.ts (draftKept) · src/windows/window-research-menu.ts (researchInMain) · src/windows/window-title.ts · index.html html.window-satellite .toolbar skryto · strings.ts win.* · CHANGELOG.cs.md 3.28.0 · spec 079 K1.1–K1.4, K1.7 · prace/1112-app-okna-zaklad, 1112-app-okna-pohledy -->
+
+<a id="A6.8.1"></a>
+### A6.8.1 Auswahl folgen
+
+Die gewählte Person ist zwischen den Fenstern geteilt. Was eine Wahl in einem anderen Fenster in diesem Fenster
+bewirkt, bestimmt der Schalter **Auswahl folgen** im Kopf des Fensters.
+
+| Modus | Was eine in einem anderen Fenster gewählte Person bewirkt | Standard in den Ansichten |
+|---|---|---|
+| **wechseln** | sie wird zur Mitte des Fensters wie nach Fokussieren: Nachkommen zeigt ihre Nachkommen, der Fächer ihre Vorfahren, Familie ihre Familie | Familie, Nachkommen, Fächer |
+| **nur markieren** | sie wird nur markiert: die Karte mit einem Ring, im Fächer ein Sektor, in der Zeitleiste eine Zeile, auf der Karte ihre Orte, in der Tabelle eine Zeile; die Mitte bleibt | Zeitleiste, Karte, Tabelle |
+| **aus** | nichts; das Fenster hat eine eigene Auswahl und schickt sie nicht | – |
+
+- **Grenzen:**
+  - **wechseln** gibt es nur in Familie, Nachkommen und Fächer; sonst nur **nur markieren** und **aus**;
+  - ein eigener Klick im Fenster ändert die Mitte nur in diesem Fenster; ein Fenster, das nach einem anderen
+    gewechselt hat, gibt die Wahl nicht weiter;
+  - das Hauptfenster folgt der Auswahl immer und hat keinen Schalter;
+  - die Wahl gilt für ein Fenster und übersteht sein Neuladen (F5). Ein gewählter Modus, der nicht der Standard ist,
+    gilt auch nach einem Wechsel der Ansicht im Fenster (**wechseln**, wo es fehlt, wie **nur markieren**); sonst gilt
+    der Standard der neuen Ansicht.
+- **Bedienung:** App: im Kopf des Fensters **Auswahl folgen: {Modus} ▾**.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
+
+<a id="A6.8.2"></a>
+### A6.8.2 Wenn das Hauptfenster fehlt
+
+Ein Fenster ohne Hauptfenster verliert nichts, und nichts schließt sich von selbst. Es bleibt mit den letzten Daten
+nur lesbar.
+
+| Zustand | Was das Fenster zeigt | Auswahl |
+|---|---|---|
+| das Hauptfenster ist geschlossen (3 s ohne Nachricht von ihm) | Streifen „Das Hauptfenster ist geschlossen · Stand {Zeit}, nur lesen“; die Forschungseinträge im Menü der Person unter **Forschung · nur mit Hauptfenster** sind nicht nutzbar | **Strom öffnen**, **Zum Hauptfenster machen** |
+| der Stammbaum wurde im Hauptfenster gelöscht | „Der Stammbaum existiert nicht mehr“ statt des Inhalts | **Fenster schließen** |
+| der Stammbaum ist gesperrt | „Der Stammbaum ist gesperrt · Das Passwort wird im Hauptfenster eingegeben.“ | **Zum Hauptfenster** |
+| das Hauptfenster hat den Stammbaum gewechselt | das Fenster wechselt mit, die Ansicht bleibt, die Auswahl wird aufgehoben („{Stammbaum} → {Stammbaum}“) | – |
+
+- **Grenzen:**
+  - **Strom öffnen** öffnet ein neues Hauptfenster; die Fenster verbinden sich damit, und der Streifen verschwindet;
+  - **Zum Hauptfenster machen** macht dieses Fenster zum Hauptfenster: es lädt den Stammbaum aus dem Speicher (die
+    Daten im Fenster können älter sein als die gespeicherten), bekommt die Leiste der App, und die Ansicht bleibt.
+    Ist inzwischen ein anderes Hauptfenster entstanden, geschieht nichts;
+  - Neuladen des Hauptfensters (F5) zeigt den Streifen nicht.
+- **Bedienung:** App: die Schaltflächen im Streifen und anstelle des Fensterinhalts.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/satellite.ts MAIN_SILENCE_MS 3000, lastHeardAt, treeGone · src/windows/sat-states.ts (closed strip mainClosed, treeGone, treeLocked, SWITCHED_TOAST_MS) · src/windows/become-main.ts (zámek ifAvailable, znovunačtení jako hlavní z IndexedDB) · src/windows/window-research-menu.ts researchMainOnly · strings.ts win.mainClosed, openStrom, makeMain, treeGone, treeGoneNote, treeLocked, treeLockedNote, closeWindow, goToMain, treeSwitched · spec 079 K1.5 · prace/1112-app-okna-zaklad (stavy 1–6) -->
+
+<a id="A6.8.3"></a>
+### A6.8.3 Ein zweiter Tab der App
+
+Die App, ein zweites Mal in einem gewöhnlichen Tab oder Fenster des Browsers geöffnet, lädt keine zweite Kopie des
+Stammbaums. Sie zeigt „Strom ist bereits in einem anderen Fenster geöffnet“ mit der Erklärung „Nur ein Fenster
+speichert, damit sich Änderungen nicht gegenseitig überschreiben. Weitere Fenster verbinden sich damit.“
+
+- **Grenzen:**
+  - **Dorthin wechseln** holt das Hauptfenster nach vorne. Lässt der Browser das nicht zu, sagt es der Tab und fügt
+    „Dieser Tab kann geschlossen werden.“ hinzu;
+  - **Als weiteres Fenster öffnen** macht aus dem Tab ein Fenster wie in [A6.8](#A6.8), mit der Tabelle;
+  - ein im zweiten Tab geöffneter Link (Person, Suche, Links der Forschung, eine von der installierten App geöffnete
+    Datei) geht genau einmal an das Hauptfenster: „Der Link wurde im Hauptfenster geöffnet.“;
+  - der zweite Tab schreibt nichts in die Liste der Stammbäume und nichts in die Einstellungen.
+- **Bedienung:** App: **Dorthin wechseln**, **Als weiteres Fenster öffnen**.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/window-role.ts (Web Lock strom-main ifAvailable → main, jinak second-tab) · src/windows/second-tab.ts (secondTabSatelliteKind table) · src/windows/window-link.ts (předání odkazu hlavnímu jednou) · src/windows/window-start.ts openLinkFromWindow · strings.ts win.alreadyOpen, alreadyOpenNote, switchThere, openAsWindow, switchFailed, tabCanClose, linkForwarded · CHANGELOG.cs.md 3.28.0 · spec 079 K1.6 · prace/1112-app-okna-zaklad (7d22e396) -->

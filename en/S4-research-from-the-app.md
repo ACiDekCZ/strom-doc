@@ -49,6 +49,7 @@ through the bridge.
   - In a direction's row in the section **Directions**, the work shows only as "being worked on" when the section
     **Now** is visible (expanded or collapsed); the whole "Now: …" is in the hover text. With **Now** hidden, the
     row says the whole "Now: …".
+- **From app 3.28.0:** on a computer the overview also opens in a separate window ([S4.1.6](#S4.1.6)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · spec 036 K1.8 · malý panel: app 2c018779 src/ui/research-ui.ts, research-directions-ui.ts (pod nadpisem linie jen jak) · 3.27.0 spec 057: app f05fff8e src/ui/research-actions-ui.ts overviewRows (research-item-overview první; stop při sledování, jinak followLive, ne bez agenta), src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (live.researchLink v záhlaví focus) · 28bbebeb src/ui/live-section-prefs.ts TOP_DEFAULTS (month.price false), research-overview-ui.ts appendOverviewSummary, strings.ts live.spendSessions, spendAmount · 87a6ea88 live.dirWorkedOn · strings.ts live.openOverview -->
 
@@ -217,6 +218,46 @@ whether the research bridge answers.
 - **Since:** app 3.27.0
 
 <!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 -->
+
+<a id="S4.1.6"></a>
+### S4.1.6 The Research overview in a separate window
+
+On a computer the **Research overview** can be opened in a separate window, for example on a second monitor. The
+window only shows: the main window sends it the research's state, and what is done in the window, the main window
+carries out. The window does not talk to the research bridge.
+
+- **Where it works:** for a tree from a research, with or without following ([S4.1.5](#S4.1.5)), under the same
+  conditions as a view in a window ([A6.8](A6-views.md#A6.8)): a computer, a window wider than 640 px.
+- **Layout:** the summary across the whole width. From a window width of 1100 px two columns: left **Now**,
+  **Awaiting action**, **Directions**; right **Progress**, **Queue**, **What the research knows**. A narrower window
+  has one column in the overview's order ([S4.1](#S4.1)). The section choices ([S4.1.2](#S4.1.2)) hold in the window
+  too.
+- **The window's heading:** "{tree} · Research overview", below it the research's name, on the right by state
+  **Follow live** or ending the following, and ⋯. Without ⤡, × and **Follow in**.
+- **Actions:** showing a person in the tree, an answer in **Awaiting action**, managing the directions, a task's
+  place in the queue, **Follow live** and ending it, **Turn on** are carried out by the main window. After an action
+  whose result shows in the main window (for example showing in the tree), the window asks for the main window to
+  be brought to the front.
+- **States of the window:**
+
+| State | What the window shows |
+|---|---|
+| followed live | the same as the overview while following |
+| not followed, the bridge answers | the same as the overview without following ([S4.1.5](#S4.1.5)) with the strip **Follow live** |
+| the research is not running | "The research is not running · showing what is in the tree" with **Turn on**; **Awaiting action** from memory with "as of …" |
+| the main window switched to a tree without a research | "This tree has no research", "The main window switched to {tree}, which has no research." and **Close window**; back on a tree with a research the window comes back by itself |
+| the main window is closed | the strip "The main window is closed · as of {time}, read-only", the last state, actions greyed out; **Open Strom** ([A6.8.2](A6-views.md#A6.8.2)) |
+| the tree deleted or locked | as a view in a window ([A6.8.2](A6-views.md#A6.8.2)) |
+
+- **Limits:** while the overview window is open, the main window does not draw its own overview; an open one closes
+  when the window opens. The small research panel stays. **⤢ Open overview**, **Research → Research overview** and
+  the item in the ⧉ menu then only bring the overview window to the front ("The research overview is in a separate
+  window · click brings it to the front"). After the window is closed, all is as before.
+- **Controls:** app: ⧉ in the overview's heading (between ⋯ and ⤡); ⧉ **Open in a new window** next to the view
+  switch → **Research overview**.
+- **Since:** app 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) -->
 
 <a id="S4.2"></a>
 ## S4.2 The queue in the app

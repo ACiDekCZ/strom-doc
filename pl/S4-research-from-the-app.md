@@ -47,6 +47,7 @@ most.
   - W wierszu linii w sekcji **Linie** stoi przy pracy tylko „trwa praca”, gdy sekcja **Teraz** jest widoczna
     (rozwinięta i zwinięta); całe „Teraz: …” jest w tekście po najechaniu. Przy ukrytym **Teraz** wiersz mówi
     „Teraz: …” w całości.
+- **Od aplikacji 3.28.0:** na komputerze Przegląd otwiera się także w osobnym oknie ([S4.1.6](#S4.1.6)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · spec 036 K1.8 · malý panel: app 2c018779 src/ui/research-ui.ts, research-directions-ui.ts (pod nadpisem linie jen jak) · 3.27.0 spec 057: app f05fff8e src/ui/research-actions-ui.ts overviewRows (research-item-overview první; stop při sledování, jinak followLive, ne bez agenta), src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (live.researchLink v záhlaví focus) · 28bbebeb src/ui/live-section-prefs.ts TOP_DEFAULTS (month.price false), research-overview-ui.ts appendOverviewSummary, strings.ts live.spendSessions, spendAmount · 87a6ea88 live.dirWorkedOn · strings.ts live.openOverview -->
 
@@ -211,6 +212,44 @@ badania odpowiada.
 - **Obowiązuje od:** aplikacja 3.27.0
 
 <!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 -->
+
+<a id="S4.1.6"></a>
+### S4.1.6 Przegląd badania w osobnym oknie
+
+Na komputerze **Przegląd badania** można otworzyć w osobnym oknie, na przykład na drugim monitorze. Okno tylko
+pokazuje: stan badania wysyła mu okno główne, a to, co zrobi się w oknie, wykonuje okno główne. Z mostem badania
+okno nie rozmawia.
+
+- **Gdzie to działa:** przy drzewie z badania, ze śledzeniem i bez niego ([S4.1.5](#S4.1.5)), na tych samych
+  warunkach co widok w oknie ([A6.8](A6-views.md#A6.8)): komputer, okno szersze niż 640 px.
+- **Układ:** podsumowanie na całą szerokość. Od 1100 px szerokości okna dwie kolumny: po lewej **Teraz**, **Czeka
+  na załatwienie**, **Linie**; po prawej **Przebieg**, **Kolejka**, **Co wie badanie**. Węższe okno ma jedną kolumnę
+  w kolejności Przeglądu ([S4.1](#S4.1)). Ustawienia sekcji ([S4.1.2](#S4.1.2)) obowiązują także w oknie.
+- **Nagłówek okna:** „{drzewo} · Przegląd badania”, pod nim nazwa badania, po prawej zależnie od stanu **Śledź na
+  żywo** albo zakończenie śledzenia, i ⋯. Bez ⤡, × i **Śledzenie w**.
+- **Akcje:** pokazanie osoby w drzewie, odpowiedź w **Czeka na załatwienie**, zarządzanie liniami, miejsce zadania
+  w kolejce, **Śledź na żywo** i jego zakończenie, **Włącz** wykonuje okno główne. Po akcji, której wynik widać
+  w oknie głównym (na przykład pokazanie w drzewie), okno prosi o przeniesienie okna głównego na wierzch.
+- **Stany okna:**
+
+| Stan | Co okno pokazuje |
+|---|---|
+| śledzone na żywo | to samo co Przegląd podczas śledzenia |
+| nieśledzone, most odpowiada | to samo co Przegląd bez śledzenia ([S4.1.5](#S4.1.5)) z paskiem **Śledź na żywo** |
+| badanie nie działa | „Badanie nie działa · widać to, co jest w drzewie” z **Włącz**; **Czeka na załatwienie** z pamięci ze „stan na …” |
+| okno główne przełączyło się na drzewo bez badania | „To drzewo nie ma badania”, „Okno główne przełączyło się na drzewo {drzewo}, które nie ma badania.” i **Zamknij okno**; po powrocie do drzewa z badaniem okno wraca samo |
+| okno główne jest zamknięte | pasek „Okno główne jest zamknięte · stan z {czas}, tylko do odczytu”, ostatni stan, akcje wyszarzone; **Otwórz Strom** ([A6.8.2](A6-views.md#A6.8.2)) |
+| drzewo usunięte albo zablokowane | jak widok w oknie ([A6.8.2](A6-views.md#A6.8.2)) |
+
+- **Granice:** dopóki okno Przeglądu jest otwarte, okno główne własnego Przeglądu nie rysuje; otwarty zamyka się
+  po otwarciu okna. Mały panel badania zostaje. **⤢ Otwórz przegląd**, **Badanie → Przegląd badania** i pozycja
+  w menu ⧉ wtedy tylko przenoszą okno Przeglądu na wierzch („Przegląd badania jest w osobnym oknie · kliknięcie
+  przeniesie je na wierzch”). Po zamknięciu okna wszystko jest jak wcześniej.
+- **Obsługa:** aplikacja: ⧉ w nagłówku Przeglądu (między ⋯ a ⤡); ⧉ **Otwórz w nowym oknie** obok przełącznika
+  widoków → **Przegląd badania**.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) -->
 
 <a id="S4.2"></a>
 ## S4.2 Kolejka w aplikacji

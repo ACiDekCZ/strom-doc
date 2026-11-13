@@ -44,6 +44,7 @@ Research** a z něj větší **Přehled výzkumu**. Oba jen čtou. Co ukazují, 
     panelem stojí „Agent tento měsíc: 4 sezení“, částka, obojí, nebo nic.
   - V řádku linie v oddílu **Linie** stojí u práce jen „pracuje se“, když je oddíl **Teď** vidět (rozbalený i
     sbalený); celé „Teď: …“ je v textu při najetí. Při skrytém **Teď** řádek říká „Teď: …“ celé.
+- **Od aplikace 3.28.0:** na počítači jde Přehled otevřít i v samostatném okně ([S4.1.6](#S4.1.6)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · spec 036 K1.8 · malý panel: app 2c018779 src/ui/research-ui.ts, research-directions-ui.ts (pod nadpisem linie jen jak) · 3.27.0 spec 057: app f05fff8e src/ui/research-actions-ui.ts overviewRows (research-item-overview první; stop při sledování, jinak followLive, ne bez agenta), src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (live.researchLink v záhlaví focus) · 28bbebeb src/ui/live-section-prefs.ts TOP_DEFAULTS (month.price false), research-overview-ui.ts appendOverviewSummary, strings.ts live.spendSessions, spendAmount · 87a6ea88 live.dirWorkedOn · strings.ts live.openOverview -->
 
@@ -200,6 +201,43 @@ výzkumu, nezamkne se a dá se dál upravovat. Co Přehled ukáže, záleží na
 - **Platí od:** aplikace 3.27.0
 
 <!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 -->
+
+<a id="S4.1.6"></a>
+### S4.1.6 Přehled výzkumu v samostatném okně
+
+Na počítači jde **Přehled výzkumu** otevřít v samostatném okně, třeba na druhém monitoru. Okno jen ukazuje: stav
+výzkumu mu posílá hlavní okno a co se v okně udělá, provede hlavní okno. S mostem výzkumu okno nemluví.
+
+- **Kde to jde:** u stromu z výzkumu, se sledováním i bez něj ([S4.1.5](#S4.1.5)), za stejných podmínek jako pohled
+  v okně ([A6.8](A6-views.md#A6.8)): počítač, okno širší než 640 px.
+- **Rozvržení:** souhrn přes celou šířku. Od 1100 px šířky okna dva sloupce: vlevo **Teď**, **Čeká na vyřízení**,
+  **Linie**; vpravo **Průběh**, **Fronta**, **Co ví výzkum**. Užší okno má jeden sloupec v pořadí Přehledu
+  ([S4.1](#S4.1)). Volby oddílů ([S4.1.2](#S4.1.2)) platí i v okně.
+- **Hlavička okna:** „{strom} · Přehled výzkumu“, pod tím jméno výzkumu, vpravo podle stavu **Sledovat živě** nebo
+  ukončení sledování a ⋯. Bez ⤡, × a **Sledovat v**.
+- **Akce:** ukázání osoby ve stromu, odpověď v **Čeká na vyřízení**, správa linií, místo úkolu ve frontě, **Sledovat
+  živě** a jeho ukončení, **Zapnout** provede hlavní okno. Po akci, jejíž výsledek je vidět v hlavním okně (třeba
+  ukázání ve stromu), okno požádá o přenesení hlavního okna do popředí.
+- **Stavy okna:**
+
+| Stav | Co okno ukáže |
+|---|---|
+| sleduje se živě | totéž co Přehled při sledování |
+| nesleduje se, most odpovídá | totéž co Přehled bez sledování ([S4.1.5](#S4.1.5)) s pruhem **Sledovat živě** |
+| výzkum neběží | „Výzkum neběží · ukazuje se, co je ve stromu“ s **Zapnout**; **Čeká na vyřízení** z paměti se „stav k …“ |
+| hlavní okno přepnulo na strom bez výzkumu | „Strom nemá výzkum“, „Hlavní okno přepnulo na strom {strom}, který výzkum nemá.“ a **Zavřít okno**; po návratu na strom s výzkumem se okno obnoví samo |
+| hlavní okno je zavřené | pruh „Hlavní okno je zavřené · stav k {čas}, jen ke čtení“, poslední stav, akce zašedlé; **Otevřít Strom** ([A6.8.2](A6-views.md#A6.8.2)) |
+| strom smazaný nebo zamčený | jako pohled v okně ([A6.8.2](A6-views.md#A6.8.2)) |
+
+- **Hranice:** dokud je okno Přehledu otevřené, hlavní okno svůj Přehled nekreslí; otevřený se po otevření okna
+  zavře. Malý panel výzkumu zůstává. **⤢ Otevřít přehled**, **Výzkum → Přehled výzkumu** i položka v nabídce ⧉ pak
+  jen přenesou okno Přehledu do popředí („Přehled výzkumu je v samostatném okně · klik ho přenese do popředí“). Po
+  zavření okna je vše jako dřív.
+- **Ovládání:** aplikace: ⧉ v hlavičce Přehledu (mezi ⋯ a ⤡); ⧉ **Otevřít v novém okně** vedle přepínače pohledů →
+  **Přehled výzkumu**.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) -->
 
 <a id="S4.2"></a>
 ## S4.2 Fronta v aplikaci

@@ -290,6 +290,10 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.7.13 | A6-views.md | aplikace 3.27.0 | platí | Značky v buňkách | Marks in the cells | Zeichen in den Zellen | Oznaczenia w komórkach |
 | A6.7.14 | A6-views.md | aplikace 3.27.0 | platí | Výzkum v tabulce | The research in the Table | Die Forschung in der Tabelle | Badanie w tabeli |
 | A6.7.15 | A6-views.md | aplikace 3.27.0 | platí | Aktivní buňka, nabídka buňky a úprava na místě | The active cell, the cell menu and editing in place | Aktive Zelle, Zellenmenü und Bearbeiten an Ort und Stelle | Aktywna komórka, menu komórki i edycja w miejscu |
+| A6.8 | A6-views.md | aplikace 3.28.0 | platí | Pohled v samostatném okně | A view in a separate window | Ansicht in einem eigenen Fenster | Widok w osobnym oknie |
+| A6.8.1 | A6-views.md | aplikace 3.28.0 | platí | Sledovat výběr | Follow selection | Auswahl folgen | Śledź wybór |
+| A6.8.2 | A6-views.md | aplikace 3.28.0 | platí | Když hlavní okno chybí | When the main window is missing | Wenn das Hauptfenster fehlt | Gdy brakuje okna głównego |
+| A6.8.3 | A6-views.md | aplikace 3.28.0 | platí | Druhá karta aplikace | A second tab of the app | Ein zweiter Tab der App | Druga karta aplikacji |
 | A7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Kniha, stránky a export | Book, pages and export | Buch, Seiten und Export | Księga, strony i eksport |
 | A7.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Kdo je žijící osoba | Who is a living person | Wer eine lebende Person ist | Kto jest osobą żyjącą |
 | A7.2 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Ochrana žijících | Privacy of living people | Schutz lebender Personen | Ochrona osób żyjących |
@@ -351,6 +355,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.1.3 | S4-research-from-the-app.md | aplikace 3.24.0 | platí | Sledovat ve vějíři a na mapě | Following in the fan and on the map | Folgen im Fächer und auf der Karte | Śledzenie w wachlarzu i na mapie |
 | S4.1.4 | S4-research-from-the-app.md | aplikace 3.24.0 | platí | Změny z výzkumu bez blikání | Changes from the research without flicker | Änderungen aus der Forschung ohne Flackern | Zmiany z badania bez migania |
 | S4.1.5 | S4-research-from-the-app.md | aplikace 3.27.0 | platí | Přehled výzkumu bez sledování | The Research overview without following | Forschungsübersicht ohne Folgen | Przegląd badania bez śledzenia |
+| S4.1.6 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Přehled výzkumu v samostatném okně | The Research overview in a separate window | Forschungsübersicht in einem eigenen Fenster | Przegląd badania w osobnym oknie |
 | S4.2 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Fronta v aplikaci | The queue in the app | Warteschlange in der App | Kolejka w aplikacji |
 | S4.3 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Linie v aplikaci | Directions in the app | Linien in der App | Linie w aplikacji |
 | S4.3.1 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Správa linií z aplikace | Managing directions from the app | Verwaltung der Linien aus der App | Zarządzanie liniami z aplikacji |

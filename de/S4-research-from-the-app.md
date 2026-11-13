@@ -54,6 +54,7 @@ zeigen, sendet die Forschung über die Brücke.
   - In der Zeile einer Richtung im Abschnitt **Richtungen** steht bei der Arbeit nur „wird bearbeitet“, wenn der
     Abschnitt **Jetzt** sichtbar ist (aufgeklappt oder eingeklappt); das ganze „Jetzt: …“ steht im Text beim
     Überfahren mit der Maus. Bei ausgeblendetem **Jetzt** sagt die Zeile „Jetzt: …“ ganz.
+- **Ab App 3.28.0:** am Computer öffnet sich die Übersicht auch in einem eigenen Fenster ([S4.1.6](#S4.1.6)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · spec 036 K1.8 · malý panel: app 2c018779 src/ui/research-ui.ts, research-directions-ui.ts (pod nadpisem linie jen jak) · 3.27.0 spec 057: app f05fff8e src/ui/research-actions-ui.ts overviewRows (research-item-overview první; stop při sledování, jinak followLive, ne bez agenta), src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (live.researchLink v záhlaví focus) · 28bbebeb src/ui/live-section-prefs.ts TOP_DEFAULTS (month.price false), research-overview-ui.ts appendOverviewSummary, strings.ts live.spendSessions, spendAmount · 87a6ea88 live.dirWorkedOn · strings.ts live.openOverview -->
 
@@ -231,6 +232,47 @@ zeigt, hängt davon ab, ob die Brücke der Forschung antwortet.
 - **Gilt seit:** App 3.27.0
 
 <!-- zdroj: app:f05fff8e, 48573de6 src/ui/research-overview-ui.ts renderResearchOverview (source live | bridge | tree; fromTree vynechá working, changes, queue), appendOverviewStateOff (notRunning, turnOn / researchLiveStartHow; telefon phoneTreeOnly, phoneWhy), overviewFollowStrip (activeResearchAgentless → bez pruhu; agentStarted, followNote), appendOverviewWaitingAsOf (asOf), appendOverviewSkeletonLines, appendOverviewFoot (missingLink) · src/research-overview-source.ts BRIDGE_ONLY_SECTIONS, afterTurnOnKeys, skeletonLines (_STROM_DIRECTION, místa osob) · src/research-device.ts WAITING_MAX_AGE_MS = 7 dní · src/ui/research-ui.ts OverviewViewing (refreshedAt, agentStarted, waitingAt) · src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (sekce focus, bez osob v záhlaví) · strings.ts live.followNote, agentStarted, notRunning, turnOn, afterTurnOn, refreshedAgo, asOf, phoneTreeOnly, phoneWhy, researchLink, missingLink, treeOverview focus · CHANGELOG.cs.md 3.27.0 · spec 057 K1.8–K1.12 -->
+
+<a id="S4.1.6"></a>
+### S4.1.6 Forschungsübersicht in einem eigenen Fenster
+
+Am Computer lässt sich die **Forschungsübersicht** in einem eigenen Fenster öffnen, etwa auf einem zweiten Monitor.
+Das Fenster zeigt nur: den Stand der Forschung schickt ihm das Hauptfenster, und was im Fenster getan wird, führt
+das Hauptfenster aus. Mit der Brücke der Forschung spricht das Fenster nicht.
+
+- **Wo es geht:** bei einem Stammbaum aus der Forschung, mit oder ohne Verfolgen ([S4.1.5](#S4.1.5)), unter denselben
+  Bedingungen wie eine Ansicht im Fenster ([A6.8](A6-views.md#A6.8)): Computer, Fenster breiter als 640 px.
+- **Aufteilung:** die Zusammenfassung über die ganze Breite. Ab 1100 px Fensterbreite zwei Spalten: links **Jetzt**,
+  **Wartet auf Bearbeitung**, **Richtungen**; rechts **Verlauf**, **Warteschlange**, **Was die Forschung weiß**. Ein
+  schmaleres Fenster hat eine Spalte in der Reihenfolge der Übersicht ([S4.1](#S4.1)). Die Einstellungen der
+  Abschnitte ([S4.1.2](#S4.1.2)) gelten auch im Fenster.
+- **Kopf des Fensters:** „{Stammbaum} · Forschungsübersicht“, darunter der Name der Forschung, rechts je nach Zustand
+  **Live verfolgen** oder das Beenden des Verfolgens, und ⋯. Ohne ⤡, × und **Folgen in**.
+- **Aktionen:** eine Person im Stammbaum zeigen, eine Antwort in **Wartet auf Bearbeitung**, die Verwaltung der
+  Richtungen, die Stelle einer Aufgabe in der Warteschlange, **Live verfolgen** und sein Beenden, **Einschalten** führt
+  das Hauptfenster aus. Nach einer Aktion, deren Ergebnis im Hauptfenster zu sehen ist (etwa das Zeigen im Stammbaum),
+  bittet das Fenster, das Hauptfenster nach vorne zu holen.
+- **Zustände des Fensters:**
+
+| Zustand | Was das Fenster zeigt |
+|---|---|
+| live verfolgt | dasselbe wie die Übersicht beim Verfolgen |
+| nicht verfolgt, die Brücke antwortet | dasselbe wie die Übersicht ohne Verfolgen ([S4.1.5](#S4.1.5)) mit dem Streifen **Live verfolgen** |
+| die Forschung läuft nicht | „Forschung läuft nicht · gezeigt wird, was im Stammbaum ist“ mit **Einschalten**; **Wartet auf Bearbeitung** aus dem Gedächtnis mit „Stand …“ |
+| das Hauptfenster hat zu einem Stammbaum ohne Forschung gewechselt | „Dieser Stammbaum hat keine Forschung“, „Das Hauptfenster hat zu {Stammbaum} gewechselt, ohne Forschung.“ und **Fenster schließen**; zurück bei einem Stammbaum mit Forschung kommt das Fenster von selbst wieder |
+| das Hauptfenster ist geschlossen | Streifen „Das Hauptfenster ist geschlossen · Stand {Zeit}, nur lesen“, der letzte Stand, Aktionen ausgegraut; **Strom öffnen** ([A6.8.2](A6-views.md#A6.8.2)) |
+| der Stammbaum gelöscht oder gesperrt | wie bei einer Ansicht im Fenster ([A6.8.2](A6-views.md#A6.8.2)) |
+
+- **Grenzen:** solange das Fenster der Übersicht offen ist, zeichnet das Hauptfenster keine eigene Übersicht; eine
+  offene schließt sich, wenn das Fenster aufgeht. Das kleine Forschungspanel bleibt. **⤢ Übersicht öffnen**,
+  **Forschung → Forschungsübersicht** und der Eintrag im Menü ⧉ holen dann nur das Fenster der Übersicht nach vorne
+  („Die Forschungsübersicht ist in einem eigenen Fenster · Klick holt sie nach vorne“). Nach dem Schließen des
+  Fensters ist alles wie vorher.
+- **Bedienung:** App: ⧉ im Kopf der Übersicht (zwischen ⋯ und ⤡); ⧉ **In neuem Fenster öffnen** neben dem
+  Ansichtsumschalter → **Forschungsübersicht**.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) -->
 
 <a id="S4.2"></a>
 ## S4.2 Warteschlange in der App

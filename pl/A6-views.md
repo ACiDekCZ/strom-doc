@@ -8,6 +8,7 @@ Widok to inne odczytanie **tego samego wyboru osób**. Wybór określa osoba w c
 i głębokość **Przodkowie** oraz **Potomkowie**. Rodzina, Potomkowie, Oś czasu i Mapa pokazują to samo otoczenie
 osoby w centrum. Wachlarz liczy przodków i potomków sam według liczby pokoleń ([A6.4](#A6.4)). Tabela pokazuje
 całe drzewo ([A6.7](#A6.7)).
+Na komputerze każdy widok można otworzyć także w osobnym oknie ([A6.8](#A6.8)).
 
 Widoki: **Rodzina**, **Potomkowie**, **Oś czasu**, **Wachlarz**, **Mapa**, **Tabela**.
 
@@ -887,3 +888,112 @@ komórkę można skopiować, filtrować według jej wartości i edytować daną 
 - **Obowiązuje od:** aplikacja 3.27.0
 
 <!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->
+
+<a id="A6.8"></a>
+## A6.8 Widok w osobnym oknie
+
+Na komputerze każdy widok można otworzyć w osobnym oknie, na przykład na drugim monitorze, i to w dowolnej liczbie.
+Okno główne zostaje przy swoim widoku. Zapisuje tylko okno główne; pozostałe okna wysyłają mu swoje zmiany
+i dostają od niego drzewo.
+
+- **Gdzie to działa:** na komputerze (Windows, macOS, Linux, ChromeOS), także z ekranem dotykowym, w oknie szerszym
+  niż 640 px. Na telefonie i tablecie (Android, iOS, iPadOS) oraz w wyeksportowanej aplikacji (plik HTML) ⧉ się nie
+  pokazuje, a skróty niczego nie otwierają.
+- **Co okno przejmuje:** drzewo, osobę w centrum i to, co pokazuje widok: w Tabeli typ wierszy, filtry,
+  wyszukiwanie, zapisany widok, sortowanie i wybrany wiersz; w Rodzinie powiększenie, w Wachlarzu kręgi, na Mapie
+  miejsca i powiększenie. Potem okno ma własny stan. Odświeżenie okna (F5) zachowuje jego widok i osobę.
+- **Co okno ma:** zamiast paska aplikacji nagłówek: nazwę drzewa, przełącznik widoków (poniżej 960 px jako
+  „{widok} ▾”), **Śledź wybór** ([A6.8.1](#A6.8.1)), **Cofnij**, **Ponów** i ⧉ **Otwórz kolejne okno**. Przełącznika
+  drzew, menu **Badanie**, Ustawień ani małego panelu badania okno nie ma.
+- **Zmiany:** w oknie można edytować osobę (menu osoby, **Edytuj**) i komórkę Tabeli. Zapisuje je okno główne, można
+  je cofnąć jako jego kroki i od razu pokazują się we wszystkich oknach. **Cofnij** i **Ponów** w nagłówku okna cofają
+  i ponawiają kroki okna głównego. Gdy drzewo w międzyczasie zmieniło się w innym oknie, zmiana nie zostaje
+  zastosowana: „Drzewo zmieniło się w międzyczasie w innym oknie. Zmiany nie zastosowano, dane odświeżono.”
+  Rozpoczęta komórka Tabeli przy tym zostaje („Szkic zachowany · Enter zastosuje, Esc odrzuci”).
+- **Badanie:** połączenie z badaniem (most, śledzenie, wysyłanie zmian) obsługuje tylko okno główne. Pozycje badania
+  w menu osoby stoją w oknie pod nagłówkiem **Badanie · wykona okno główne** i wykonuje je okno główne. Podczas
+  śledzenia badania na żywo ([S1.4](S1-connecting-app-and-research.md#S1.4)) okna są tylko do odczytu jak okno
+  główne: „Tylko do odczytu · okno główne śledzi badanie” z **Przejdź do okna głównego**.
+- **Granice:**
+  - ⧉ w oknie głównym pokazuje liczbę innych okien („2 inne okna”, poniżej 1280 px tylko liczbę). Jego menu ma na
+    górze **Otwarte okna** (każde z **Przenieś na wierzch** i ×) oraz **Zamknij wszystkie**;
+  - od 5 otwartych okien aplikacja ostrzega, że każde kolejne okno wymaga pamięci; niczego nie zabrania;
+  - okno zablokowane przez przeglądarkę zostaje zgłoszone („Przeglądarka zablokowała nowe okno…”) ze **Spróbuj
+    ponownie**;
+  - tytuł okna podaje widok i drzewo („Tabela – Horákowie – Strom”), tytuł okna głównego drzewo („Horákowie –
+    Strom”).
+- **Obsługa:** aplikacja: ⧉ **Otwórz w nowym oknie** obok przełącznika widoków (menu sześciu widoków, przy drzewie
+  z badania także **Przegląd badania**, [S4.1.6](S4-research-from-the-app.md#S4.1.6)); ⧉ na pasku Tabeli za
+  **Eksport ▾**; na karcie widoku Ctrl+klik (macOS ⌘+klik), środkowy przycisk albo prawy klik (Shift+F10) →
+  **{widok} w nowym oknie**.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/window-open.ts isDesktopSystem, windowsOffered (role main, ne isViewMode, > MOBILE_MAX 640, ne isPhoneBar), openInNewWindow · src/windows/window-controls.ts openWindow (BLOCKED_TOAST_MS 10 s, win.retry; MANY_WINDOWS 5, manyWindows), INDICATOR_TEXT_MIN_WIDTH 1280, renderMenu (6 pohledů, thisView, overview jen UI.canOpenResearchOverview), wireTabs (ctrl/meta click, auxclick button 1, contextmenu, Shift+F10 / ContextMenu) · src/windows/view-window-state.ts (přenos stavu, F5 satelitu) · src/windows/sat-header.ts · src/windows/satellite.ts readOnly (live, locked) · src/windows/sat-states.ts (live strip readOnlyLive, goToMain; CONFLICT_TOAST_MS) · src/windows/window-drafts.ts (draftKept) · src/windows/window-research-menu.ts (researchInMain) · src/windows/window-title.ts · index.html html.window-satellite .toolbar skryto · strings.ts win.* · CHANGELOG.cs.md 3.28.0 · spec 079 K1.1–K1.4, K1.7 · prace/1112-app-okna-zaklad, 1112-app-okna-pohledy -->
+
+<a id="A6.8.1"></a>
+### A6.8.1 Śledź wybór
+
+Wybrana osoba jest wspólna dla okien. Co wybór w innym oknie zrobi w tym oknie, określa przełącznik **Śledź wybór**
+w nagłówku okna.
+
+| Tryb | Co robi osoba wybrana w innym oknie | Domyślnie w widokach |
+|---|---|---|
+| **przełączaj** | staje się centrum okna jak po Ustaw w centrum: Potomkowie pokazuje jej potomków, Wachlarz przodków, Rodzina jej rodzinę | Rodzina, Potomkowie, Wachlarz |
+| **tylko zaznaczaj** | zostaje tylko zaznaczona: karta pierścieniem, w Wachlarzu wycinek, na Osi czasu wiersz, na Mapie jej miejsca, w Tabeli wiersz; centrum zostaje | Oś czasu, Mapa, Tabela |
+| **wyłączone** | nic; okno ma własny wybór osoby i swojego wyboru nie wysyła | – |
+
+- **Granice:**
+  - **przełączaj** jest tylko w Rodzinie, Potomkach i Wachlarzu; gdzie indziej są tylko **tylko zaznaczaj**
+    i **wyłączone**;
+  - własne kliknięcie w oknie zmienia centrum tylko w tym oknie; okno, które przełączyło się za innym oknem, nie
+    przekazuje wyboru dalej;
+  - okno główne śledzi wybór zawsze i przełącznika nie ma;
+  - wybór dotyczy jednego okna i przetrwa jego odświeżenie (F5). Wybrany tryb, który nie jest domyślny, obowiązuje
+    także po przełączeniu widoku w oknie (**przełączaj** tam, gdzie go nie ma, jak **tylko zaznaczaj**); inaczej
+    obowiązuje tryb domyślny nowego widoku.
+- **Obsługa:** aplikacja: w nagłówku okna **Śledź wybór: {tryb} ▾**.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
+
+<a id="A6.8.2"></a>
+### A6.8.2 Gdy brakuje okna głównego
+
+Okno bez okna głównego nic nie traci i nic nie zamyka się samo. Zostaje tylko do odczytu z ostatnimi danymi.
+
+| Stan | Co okno pokazuje | Wybór |
+|---|---|---|
+| okno główne jest zamknięte (3 s bez wiadomości od niego) | pasek „Okno główne jest zamknięte · stan z {czas}, tylko do odczytu”; pozycji badania w menu osoby pod **Badanie · tylko z oknem głównym** nie da się użyć | **Otwórz Strom**, **Ustaw jako główne** |
+| drzewo zostało usunięte w oknie głównym | „Drzewo już nie istnieje” zamiast zawartości | **Zamknij okno** |
+| drzewo jest zablokowane | „Drzewo jest zablokowane · Hasło wpisuje się w oknie głównym.” | **Przejdź do okna głównego** |
+| okno główne przełączyło drzewo | okno przełącza się razem z nim, widok zostaje, wybór się kasuje („{drzewo} → {drzewo}”) | – |
+
+- **Granice:**
+  - **Otwórz Strom** otwiera nowe okno główne; okna łączą się z nim i pasek znika;
+  - **Ustaw jako główne** robi główne z tego okna: wczytuje drzewo z pamięci (dane w oknie mogły być starsze niż
+    zapisane), dostaje pasek aplikacji, a widok zostaje. Gdy w międzyczasie powstało inne okno główne, nic się nie
+    dzieje;
+  - odświeżenie okna głównego (F5) paska nie pokazuje.
+- **Obsługa:** aplikacja: przyciski na pasku i w miejscu zawartości okna.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/satellite.ts MAIN_SILENCE_MS 3000, lastHeardAt, treeGone · src/windows/sat-states.ts (closed strip mainClosed, treeGone, treeLocked, SWITCHED_TOAST_MS) · src/windows/become-main.ts (zámek ifAvailable, znovunačtení jako hlavní z IndexedDB) · src/windows/window-research-menu.ts researchMainOnly · strings.ts win.mainClosed, openStrom, makeMain, treeGone, treeGoneNote, treeLocked, treeLockedNote, closeWindow, goToMain, treeSwitched · spec 079 K1.5 · prace/1112-app-okna-zaklad (stavy 1–6) -->
+
+<a id="A6.8.3"></a>
+### A6.8.3 Druga karta aplikacji
+
+Aplikacja otwarta drugi raz w zwykłej karcie lub oknie przeglądarki nie wczytuje drugiej kopii drzewa. Pokazuje
+„Strom jest już otwarty w innym oknie” z wyjaśnieniem „Zapisuje tylko jedno okno, aby zmiany się nie nadpisywały.
+Kolejne okna łączą się z nim.”
+
+- **Granice:**
+  - **Przełącz tam** przenosi okno główne na wierzch. Gdy przeglądarka na to nie pozwala, karta to mówi i dodaje
+    „Tę kartę można zamknąć.”;
+  - **Otwórz jako kolejne okno** robi z karty okno jak w [A6.8](#A6.8), z Tabelą;
+  - link otwarty w drugiej karcie (osoba, wyszukiwanie, linki badania, plik otwarty przez zainstalowaną aplikację)
+    trafia do okna głównego dokładnie raz: „Link otworzył się w oknie głównym.”;
+  - druga karta nic nie zapisuje do listy drzew ani do Ustawień.
+- **Obsługa:** aplikacja: **Przełącz tam**, **Otwórz jako kolejne okno**.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/window-role.ts (Web Lock strom-main ifAvailable → main, jinak second-tab) · src/windows/second-tab.ts (secondTabSatelliteKind table) · src/windows/window-link.ts (předání odkazu hlavnímu jednou) · src/windows/window-start.ts openLinkFromWindow · strings.ts win.alreadyOpen, alreadyOpenNote, switchThere, openAsWindow, switchFailed, tabCanClose, linkForwarded · CHANGELOG.cs.md 3.28.0 · spec 079 K1.6 · prace/1112-app-okna-zaklad (7d22e396) -->

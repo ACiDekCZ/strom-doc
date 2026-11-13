@@ -6,6 +6,7 @@ Jak aplikace Strom vybírá, které osoby ukáže, a jak je ukazují jednotlivé
 Pohled je jiné čtení **téhož výběru osob**. Výběr určuje ústřední osoba (ta, na kterou se klikne) a hloubka
 **Předci** a **Potomci**. Rodina, Potomci, Časová osa a Mapa ukazují stejné okolí ústřední osoby. Vějíř si
 předky a potomky počítá sám podle počtu generací ([A6.4](#A6.4)). Tabulka ukazuje celý strom ([A6.7](#A6.7)).
+Na počítači jde každý pohled otevřít i v samostatném okně ([A6.8](#A6.8)).
 
 Pohledy: **Rodina**, **Potomci**, **Časová osa**, **Vějíř**, **Mapa**, **Tabulka**.
 
@@ -841,3 +842,104 @@ zkopírovat, podle její hodnoty filtrovat a údaj v ní upravit přímo v tabul
 - **Platí od:** aplikace 3.27.0
 
 <!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->
+
+<a id="A6.8"></a>
+## A6.8 Pohled v samostatném okně
+
+Na počítači jde každý pohled otevřít v samostatném okně, třeba na druhém monitoru, a to v libovolném počtu. Hlavní
+okno zůstane na svém pohledu. Ukládá jen hlavní okno; ostatní okna mu úpravy posílají a dostávají od něj strom.
+
+- **Kde to jde:** na počítači (Windows, macOS, Linux, ChromeOS), i s dotykovou obrazovkou, v okně širším než 640 px.
+  Na telefonu a tabletu (Android, iOS, iPadOS) a v exportované aplikaci (soubor HTML) se ⧉ neukazuje a zkratky nic
+  neotevřou.
+- **Co okno převezme:** strom, osobu ve středu a to, co pohled ukazuje: u Tabulky typ řádků, filtry, hledání,
+  uložený pohled, řazení a vybraný řádek; u Rodiny přiblížení, u Vějíře kruhy, u Mapy místa a přiblížení. Pak má
+  okno vlastní stav. Obnovení okna (F5) drží jeho pohled i osobu.
+- **Co okno umí:** místo lišty aplikace má hlavičku: název stromu, přepínač pohledů (pod 960 px jako „{pohled} ▾“),
+  **Sledovat výběr** ([A6.8.1](#A6.8.1)), **Vrátit**, **Znovu** a ⧉ **Otevřít další okno**. Přepínač stromů, nabídku **Výzkum**,
+  Nastavení ani malý panel výzkumu okno nemá.
+- **Úpravy:** v okně jde upravovat osobu (nabídka osoby, **Upravit**) i buňku Tabulky. Uloží je hlavní okno, jdou
+  vrátit jako jeho kroky a hned se ukážou ve všech oknech. **Vrátit** a **Znovu** v hlavičce okna vrací a opakují kroky hlavního okna. Když se
+  strom mezitím změnil v jiném okně, úprava se nepoužije: „Strom se mezitím změnil v jiném okně. Úprava se nepoužila,
+  data jsou obnovená.“ Rozepsaná buňka Tabulky přitom zůstane („Rozepsané zůstalo · Enter použije, Esc zahodí“).
+- **Výzkum:** spojení s výzkumem (most, sledování, posílání úprav) obsluhuje jen hlavní okno. Položky výzkumu
+  v nabídce osoby v okně stojí pod nadpisem **Výzkum · provede hlavní okno** a provede je hlavní okno. Při živém
+  sledování výzkumu ([S1.4](S1-connecting-app-and-research.md#S1.4)) jsou okna jen ke čtení jako hlavní okno: „Jen ke
+  čtení · hlavní okno sleduje výzkum“ s **Přejít do hlavního okna**.
+- **Hranice:**
+  - ⧉ v hlavním okně ukazuje počet dalších oken („2 další okna“, pod 1280 px jen číslo). Jeho nabídka má nahoře
+    **Otevřená okna** (u každého **Přenést do popředí** a ×) a **Zavřít vše**;
+  - od 5 otevřených oken aplikace upozorní, že každé další okno potřebuje paměť; nic nezakáže;
+  - okno zablokované prohlížečem se ohlásí („Prohlížeč nové okno zablokoval…“) se **Zkusit znovu**;
+  - titulek okna nese pohled a strom („Tabulka – Horákovi – Strom“), titulek hlavního okna strom („Horákovi – Strom“).
+- **Ovládání:** aplikace: ⧉ **Otevřít v novém okně** vedle přepínače pohledů (nabídka šesti pohledů, u
+  stromu z výzkumu i **Přehled výzkumu**, [S4.1.6](S4-research-from-the-app.md#S4.1.6)); ⧉ v liště Tabulky za
+  **Export ▾**; na záložce pohledu Ctrl+klik (macOS ⌘+klik), prostřední tlačítko nebo pravý klik (Shift+F10) →
+  **{pohled} v novém okně**.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/window-open.ts isDesktopSystem, windowsOffered (role main, ne isViewMode, > MOBILE_MAX 640, ne isPhoneBar), openInNewWindow · src/windows/window-controls.ts openWindow (BLOCKED_TOAST_MS 10 s, win.retry; MANY_WINDOWS 5, manyWindows), INDICATOR_TEXT_MIN_WIDTH 1280, renderMenu (6 pohledů, thisView, overview jen UI.canOpenResearchOverview), wireTabs (ctrl/meta click, auxclick button 1, contextmenu, Shift+F10 / ContextMenu) · src/windows/view-window-state.ts (přenos stavu, F5 satelitu) · src/windows/sat-header.ts · src/windows/satellite.ts readOnly (live, locked) · src/windows/sat-states.ts (live strip readOnlyLive, goToMain; CONFLICT_TOAST_MS) · src/windows/window-drafts.ts (draftKept) · src/windows/window-research-menu.ts (researchInMain) · src/windows/window-title.ts · index.html html.window-satellite .toolbar skryto · strings.ts win.* · CHANGELOG.cs.md 3.28.0 · spec 079 K1.1–K1.4, K1.7 · prace/1112-app-okna-zaklad, 1112-app-okna-pohledy -->
+
+<a id="A6.8.1"></a>
+### A6.8.1 Sledovat výběr
+
+Vybraná osoba je mezi okny sdílená. Co výběr z jiného okna udělá v tomto okně, určuje přepínač **Sledovat výběr**
+v hlavičce okna.
+
+| Režim | Co udělá osoba vybraná v jiném okně | Výchozí v pohledech |
+|---|---|---|
+| **přepnout** | stane se středem okna jako po Zaměřit: Potomci ukáže její potomky, Vějíř předky, Rodina její rodinu | Rodina, Potomci, Vějíř |
+| **jen vyznačit** | jen se vyznačí: karta prstencem, ve Vějíři výseč, na Časové ose řádek, na Mapě její místa, v Tabulce řádek; střed zůstane | Časová osa, Mapa, Tabulka |
+| **vypnuto** | nic; okno má vlastní výběr osoby a svůj výběr neposílá | – |
+
+- **Hranice:**
+  - **přepnout** se nabízí jen v Rodině, Potomcích a Vějíři; jinde jsou jen **jen vyznačit** a **vypnuto**;
+  - vlastní klik v okně mění střed jen v tomto okně; okno, které se přepnulo podle jiného okna, výběr dál nerozesílá;
+  - hlavní okno sleduje výběr vždy a přepínač nemá;
+  - volba platí pro jedno okno a vydrží jeho obnovení (F5). Zvolený režim, který není výchozí, platí i po přepnutí
+    pohledu v okně (**přepnout** tam, kde není, jako **jen vyznačit**); jinak platí výchozí režim nového pohledu.
+- **Ovládání:** aplikace: v hlavičce okna **Sledovat výběr: {režim} ▾**.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
+
+<a id="A6.8.2"></a>
+### A6.8.2 Když hlavní okno chybí
+
+Okno bez hlavního okna nic neztratí a nic se samo nezavře. Zůstane jen ke čtení s posledními daty.
+
+| Stav | Co okno ukáže | Volby |
+|---|---|---|
+| hlavní okno je zavřené (3 s bez zprávy od něj) | pruh „Hlavní okno je zavřené · stav k {čas}, jen ke čtení“; položky výzkumu v nabídce osoby pod **Výzkum · jen s hlavním oknem** nejdou použít | **Otevřít Strom**, **Udělat hlavním** |
+| strom byl v hlavním okně smazán | „Strom už neexistuje“ místo obsahu | **Zavřít okno** |
+| strom je zamčený | „Strom je zamčený · Heslo se zadává v hlavním okně.“ | **Přejít do hlavního okna** |
+| hlavní okno přepnulo strom | okno přepne s ním, pohled zůstane, výběr se zruší („{strom} → {strom}“) | – |
+
+- **Hranice:**
+  - **Otevřít Strom** otevře nové hlavní okno; okna se k němu připojí a pruh zmizí;
+  - **Udělat hlavním** udělá hlavním toto okno: načte strom z úložiště (data v okně mohla být starší než uložená),
+    dostane lištu aplikace a pohled zůstane. Když mezitím vzniklo jiné hlavní okno, nestane se nic;
+  - obnovení hlavního okna (F5) pruh neukáže.
+- **Ovládání:** aplikace: tlačítka v pruhu a místo obsahu okna.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/satellite.ts MAIN_SILENCE_MS 3000, lastHeardAt, treeGone · src/windows/sat-states.ts (closed strip mainClosed, treeGone, treeLocked, SWITCHED_TOAST_MS) · src/windows/become-main.ts (zámek ifAvailable, znovunačtení jako hlavní z IndexedDB) · src/windows/window-research-menu.ts researchMainOnly · strings.ts win.mainClosed, openStrom, makeMain, treeGone, treeGoneNote, treeLocked, treeLockedNote, closeWindow, goToMain, treeSwitched · spec 079 K1.5 · prace/1112-app-okna-zaklad (stavy 1–6) -->
+
+<a id="A6.8.3"></a>
+### A6.8.3 Druhá karta aplikace
+
+Aplikace otevřená podruhé v obyčejné kartě nebo okně prohlížeče nenačte druhou kopii stromu. Ukáže „Strom už je
+otevřený v jiném okně“ s vysvětlením „Ukládá jen jedno okno, aby se úpravy navzájem nepřepisovaly. Další okna se
+k němu připojí.“
+
+- **Hranice:**
+  - **Přepnout tam** přenese do popředí hlavní okno. Když to prohlížeč nedovolí, karta to řekne a dodá „Tuto kartu
+    lze zavřít.“;
+  - **Otevřít jako další okno** z karty udělá okno podle [A6.8](#A6.8) s Tabulkou;
+  - odkaz otevřený v druhé kartě (osoba, hledání, odkazy výzkumu, soubor otevřený instalovanou aplikací) dostane
+    hlavní okno právě jednou: „Odkaz se otevřel v hlavním okně.“;
+  - druhá karta nic nezapíše do seznamu stromů ani do Nastavení.
+- **Ovládání:** aplikace: **Přepnout tam**, **Otevřít jako další okno**.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:4b1373a7 src/windows/window-role.ts (Web Lock strom-main ifAvailable → main, jinak second-tab) · src/windows/second-tab.ts (secondTabSatelliteKind table) · src/windows/window-link.ts (předání odkazu hlavnímu jednou) · src/windows/window-start.ts openLinkFromWindow · strings.ts win.alreadyOpen, alreadyOpenNote, switchThere, openAsWindow, switchFailed, tabCanClose, linkForwarded · CHANGELOG.cs.md 3.28.0 · spec 079 K1.6 · prace/1112-app-okna-zaklad (7d22e396) -->
