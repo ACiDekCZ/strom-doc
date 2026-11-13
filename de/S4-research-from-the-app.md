@@ -249,9 +249,19 @@ das Hauptfenster aus. Mit der Brücke der Forschung spricht das Fenster nicht.
 - **Kopf des Fensters:** „{Stammbaum} · Forschungsübersicht“, darunter der Name der Forschung, rechts je nach Zustand
   **Live verfolgen** oder das Beenden des Verfolgens, und ⋯. Ohne ⤡, × und **Folgen in**.
 - **Aktionen:** eine Person im Stammbaum zeigen, eine Antwort in **Wartet auf Bearbeitung**, die Verwaltung der
-  Richtungen, die Stelle einer Aufgabe in der Warteschlange, **Live verfolgen** und sein Beenden, **Einschalten** führt
-  das Hauptfenster aus. Nach einer Aktion, deren Ergebnis im Hauptfenster zu sehen ist (etwa das Zeigen im Stammbaum),
-  bittet das Fenster, das Hauptfenster nach vorne zu holen.
+  Richtungen, die Stelle einer Aufgabe in der Warteschlange, die Suche in der **Warteschlange** ([S4.2.1](#S4.2.1)),
+  **Live verfolgen** und sein Beenden, **Einschalten** und im Abschnitt **Prüfung** **Anhalten** und **Angaben im Baum
+  prüfen…** ([S7.5](S7-reliability-and-verification.md#S7.5)) führt das Hauptfenster aus. Die Suche und die Seiten
+  der Warteschlange liest das Hauptfenster von seiner Brücke und schickt das Ergebnis dem Fenster. Nach einer Aktion,
+  deren Ergebnis im Hauptfenster zu sehen ist (etwa das Zeigen im Stammbaum oder der Dialog **Angaben im Baum
+  prüfen**, der sich im Hauptfenster öffnet), bittet das Fenster, das Hauptfenster nach vorne zu holen; nach
+  **Anhalten** nicht.
+- **Hervorhebung:** Was der Stammbaum im Hauptfenster gerade hervorhebt, zeigt das Fenster, indem es die Schaltfläche
+  dieser Gruppe hervorhebt: **Im Stammbaum zeigen** bei einer Richtung in **Jetzt** und in **Richtungen**, die Zahl
+  der gefundenen Personen einer Richtung und **Geänderte im Stammbaum zeigen** in **Verlauf**. Nach dem Ende der
+  Hervorhebung oder dem Schließen des Hauptfensters ist nichts hervorgehoben. Hebt ein Filter in **Verlauf** die
+  geänderten Personen erneut hervor, wird das Hauptfenster nicht nach vorne geholt; ein Filter ohne Personen beendet
+  die Hervorhebung im Hauptfenster.
 - **Zustände des Fensters:**
 
 | Zustand | Was das Fenster zeigt |
@@ -272,7 +282,7 @@ das Hauptfenster aus. Mit der Brücke der Forschung spricht das Fenster nicht.
   Ansichtsumschalter → **Forschungsübersicht**.
 - **Gilt seit:** App 3.28.0
 
-<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) -->
+<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) · app:3c2fde77 src/ui/overview-window-view.ts readQueuePage přes akci queue-list do hlavního okna (okno most nevolá) · app:3f9a5ca4 overview-window-view.ts treeVerifyNow (extras.verify), verifyStop → verify-stop, showVerifyBulkDialog → verify-bulk; evidenceHighlightNow (extras.highlight), endEvidenceHighlight → highlight-end, startPersonHighlight quiet · src/ui/research-ui.ts lightsGroup, markOverviewLit (is-lit, aria-current; nic při zavřeném hlavním okně) · research-overview-ui.ts lightsGroup direction (show-in-tree v Teď), changed (showChanged) · research-directions-ui.ts lightsGroup direction (dirShow), direction-found (dirFoundPersons) · strings.ts verify.section, bulkRow, stop, live.showInTree, dirShow, showChanged · spec 079 K3 · prace/1113-app-dorovnani-052-okna (2876d570..27f0bafb) -->
 
 <a id="S4.2"></a>
 ## S4.2 Warteschlange in der App
@@ -319,7 +329,8 @@ Die App zeigt den Anfang der Warteschlange der Forschung in der Reihenfolge, in 
 <a id="S4.2.1"></a>
 ### S4.2.1 Suche in der Warteschlange
 
-In der **Warteschlange** in der **Forschungsübersicht** gibt es das Feld **Aufgabe, Person, Archiv suchen…**. Die
+In der **Warteschlange** in der **Forschungsübersicht** (auch in ihrem eigenen Fenster, [S4.1.6](#S4.1.6)) gibt es
+das Feld **Aufgabe, Person, Archiv suchen…**. Die
 Forschung sucht in der ganzen Warteschlange, auch jenseits der geladenen Seiten; die App schickt ihr nur den gesuchten
 Text ([R2.2](R2-lines-and-queue.md#R2.2)).
 
@@ -360,7 +371,7 @@ Text ([R2.2](R2-lines-and-queue.md#R2.2)).
   Telefon, wo das Panel ein Streifen ist, gibt es den Link nicht.
 - **Gilt seit:** App 3.28.0 (Forschung 1.32.0)
 
-<!-- zdroj: app:4ad34832 (8a10387e) src/ui/queue-search-ui.ts QUEUE_SEARCH_PAUSE_MS 300, queueSearchOffered (queue.search, queuePaged, queue/queueMore/queueCounts next+parked), resetQueueSearch (zavření Přehledu), Escape · src/research-queue-pages.ts QUEUE_QUERY_MAX 100, QUEUE_PAGE 50, QUEUE_ROWS_CAP 300, QUEUE_ELSEWHERE_STATES · src/ui/research-ui.ts appendQueueSection (searchable jen v Přehledu, ne při sbalení), appendQueueSearchResult (štítek + q, queueSearchBusy/Err, dirRetry), řádek výsledku (live-queue-num „–“, research-queue__match id/person, queueTagDeferred), live-queue-search-link (canExpandLivePanel) · src/ui/research-overview-ui.ts openQueueSearch (unfoldOverviewSection queue do zavření) · strings.ts live.queueSearch*, queueState, queueTagDeferred, queueTitleCount, dirRetry · research 1.32.0 src/core/live.ts searchQueue (TASK_NUMBER, PERSON_NUMBER, každé slovo v jednom poli, pořadí fronty, elsewhere) · spec 052 K1.1–K1.7 · ZADANI_DEV_fronta-hledani §1, §2; D1 (bez řádku pole) -->
+<!-- zdroj: app:4ad34832 (8a10387e) src/ui/queue-search-ui.ts QUEUE_SEARCH_PAUSE_MS 300, queueSearchOffered (queue.search, queuePaged, queue/queueMore/queueCounts next+parked), resetQueueSearch (zavření Přehledu), Escape · src/research-queue-pages.ts QUEUE_QUERY_MAX 100, QUEUE_PAGE 50, QUEUE_ROWS_CAP 300, QUEUE_ELSEWHERE_STATES · src/ui/research-ui.ts appendQueueSection (searchable jen v Přehledu, ne při sbalení), appendQueueSearchResult (štítek + q, queueSearchBusy/Err, dirRetry), řádek výsledku (live-queue-num „–“, research-queue__match id/person, queueTagDeferred), live-queue-search-link (canExpandLivePanel) · src/ui/research-overview-ui.ts openQueueSearch (unfoldOverviewSection queue do zavření) · strings.ts live.queueSearch*, queueState, queueTagDeferred, queueTitleCount, dirRetry · research 1.32.0 src/core/live.ts searchQueue (TASK_NUMBER, PERSON_NUMBER, každé slovo v jednom poli, pořadí fronty, elsewhere) · spec 052 K1.1–K1.7 · ZADANI_DEV_fronta-hledani §1, §2; D1 (bez řádku pole) · app:08268b9f strings.ts live.queueSearchInDir, queueSearchNoneDir, queueSearchAllDirs (linie) · app:3c2fde77 okno Přehledu (queue-list) · spec 052 K1.1 -->
 
 <a id="S4.2.2"></a>
 ### S4.2.2 Als Nächstes erledigen und Rückgängig
@@ -377,18 +388,21 @@ nicht: die Aufgabe kommt nach ihr an die Reihe ([R2.3.1](R2-lines-and-queue.md#R
   - die Aufgabe rückt an die erste Stelle, ihre Zeile wird kurz hervorgehoben und hat beim Text das Etikett **als
     Nächstes**, bis sie an der Reihe ist. Von mehreren Aufgaben als nächste ist die zuletzt markierte die erste; das
     Etikett haben alle. Die Suche bleibt;
-  - die Meldung **Kommt als Nächstes an die Reihe.** mit **Rückgängig** steht 6 s. **Rückgängig** setzt die Aufgabe
-    genau auf ihren früheren Platz zurück, samt ihrer früheren Wahl;
+  - die Meldung mit der Nummer der Aufgabe („T0103 als Nächstes“) und **Rückgängig** steht 6 s. **Rückgängig** setzt
+    die Aufgabe genau auf ihren früheren Platz zurück, samt ihrer früheren Wahl; die Zeile steht dort, sobald die
+    Forschung antwortet, auch im eigenen Fenster der Übersicht ([S4.1.6](#S4.1.6));
   - hat der Agent die Aufgabe inzwischen genommen: **Der Agent arbeitet gerade an dieser Aufgabe; ihr Platz lässt sich
     jetzt nicht ändern.**, und die Warteschlange wird neu geladen. Antwortet die Brücke nicht: **Die Forschung
     antwortet nicht, die Reihenfolge ist unverändert.** und **Erneut versuchen**;
   - nichts wird bestätigt: nichts wird gestartet und nichts bezahlt;
-  - auf dem Telefon ist das Menü ein Blatt am unteren Rand mit Nummer und Text der Aufgabe oben.
+  - auf dem Telefon ist das Menü ein Blatt am unteren Rand wie die anderen Blätter der App (Griff, das Fenster
+    darunter abgedunkelt) mit Nummer und Text der Aufgabe oben; ein Tippen auf das abgedunkelte Fenster oder Escape
+    schließt es.
 - **Bedienung:** App: bei der Aufgabe **⋯ → Als Nächstes erledigen**, in der Meldung **Rückgängig**. Terminal:
   `strom task order T… --next`, `--restore` ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
 - **Gilt seit:** App 3.28.0 (Forschung 1.32.0)
 
-<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 -->
+<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 · app:2876d570 placeQueueItemInLists (odpověď restore: pos, own, why), strings.ts live.queueMoved(id) · app:7dc924ee list ⋯ = bottom-sheet (úchyt, ztmavení, Escape) · app:3f9a5ca4 Vrátit v okně Přehledu · spec 052 K5.4 -->
 
 <a id="S4.2.3"></a>
 ### S4.2.3 An der Warteschlange arbeiten…

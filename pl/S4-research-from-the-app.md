@@ -228,8 +228,17 @@ okno nie rozmawia.
 - **Nagłówek okna:** „{drzewo} · Przegląd badania”, pod nim nazwa badania, po prawej zależnie od stanu **Śledź na
   żywo** albo zakończenie śledzenia, i ⋯. Bez ⤡, × i **Śledzenie w**.
 - **Akcje:** pokazanie osoby w drzewie, odpowiedź w **Czeka na załatwienie**, zarządzanie liniami, miejsce zadania
-  w kolejce, **Śledź na żywo** i jego zakończenie, **Włącz** wykonuje okno główne. Po akcji, której wynik widać
-  w oknie głównym (na przykład pokazanie w drzewie), okno prosi o przeniesienie okna głównego na wierzch.
+  w kolejce, wyszukiwanie w **Kolejce** ([S4.2.1](#S4.2.1)), **Śledź na żywo** i jego zakończenie, **Włącz**,
+  a w sekcji **Weryfikacja** **Zatrzymaj** i **Zweryfikuj dane w drzewie…**
+  ([S7.5](S7-reliability-and-verification.md#S7.5)) wykonuje okno główne. Wyszukiwanie i strony kolejki czyta okno
+  główne ze swojego mostu i wynik wysyła oknu. Po akcji, której wynik widać w oknie głównym (na przykład pokazanie
+  w drzewie albo okno dialogowe **Zweryfikuj dane w drzewie**, które otwiera się w oknie głównym), okno prosi
+  o przeniesienie okna głównego na wierzch; po **Zatrzymaj** nie.
+- **Wyróżnienie:** to, co drzewo w oknie głównym właśnie wyróżnia, okno pokazuje podświetleniem przycisku tej grupy:
+  **Pokaż w drzewie** przy linii w **Teraz** i w **Linie**, liczba znalezionych osób linii i **Pokaż zmienione
+  w drzewie** w **Przebiegu**. Po zakończeniu wyróżnienia lub zamknięciu okna głównego nic nie jest podświetlone. Gdy
+  filtr **Przebiegu** ponownie wyróżni zmienione osoby, okno główne nie przechodzi na wierzch; filtr bez osób kończy
+  wyróżnienie w oknie głównym.
 - **Stany okna:**
 
 | Stan | Co okno pokazuje |
@@ -249,7 +258,7 @@ okno nie rozmawia.
   widoków → **Przegląd badania**.
 - **Obowiązuje od:** aplikacja 3.28.0
 
-<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) -->
+<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) · app:3c2fde77 src/ui/overview-window-view.ts readQueuePage přes akci queue-list do hlavního okna (okno most nevolá) · app:3f9a5ca4 overview-window-view.ts treeVerifyNow (extras.verify), verifyStop → verify-stop, showVerifyBulkDialog → verify-bulk; evidenceHighlightNow (extras.highlight), endEvidenceHighlight → highlight-end, startPersonHighlight quiet · src/ui/research-ui.ts lightsGroup, markOverviewLit (is-lit, aria-current; nic při zavřeném hlavním okně) · research-overview-ui.ts lightsGroup direction (show-in-tree v Teď), changed (showChanged) · research-directions-ui.ts lightsGroup direction (dirShow), direction-found (dirFoundPersons) · strings.ts verify.section, bulkRow, stop, live.showInTree, dirShow, showChanged · spec 079 K3 · prace/1113-app-dorovnani-052-okna (2876d570..27f0bafb) -->
 
 <a id="S4.2"></a>
 ## S4.2 Kolejka w aplikacji
@@ -291,7 +300,7 @@ Aplikacja pokazuje początek kolejki badania w kolejności, w jakiej bierze ją 
 <a id="S4.2.1"></a>
 ### S4.2.1 Wyszukiwanie w kolejce
 
-W **Kolejce** w **Przeglądzie badania** jest pole **Szukaj zadania, osoby, archiwum…**. Szuka badanie w całej
+W **Kolejce** w **Przeglądzie badania** (także w jego osobnym oknie, [S4.1.6](#S4.1.6)) jest pole **Szukaj zadania, osoby, archiwum…**. Szuka badanie w całej
 kolejce, także poza wczytanymi stronami; aplikacja wysyła mu tylko szukany tekst ([R2.2](R2-lines-and-queue.md#R2.2)).
 
 - **Kiedy pole jest:** w rozwiniętej **Kolejce**, z badaniem, którego most umie szukać i odpowiada, i tylko gdy
@@ -311,7 +320,7 @@ kolejce, także poza wczytanymi stronami; aplikacja wysyła mu tylko szukany tek
     dopasowanie numeru zadania lub osoby („P0108 Jan Horák”), dopasowanie tekstu nie. Odłożone zadania są na końcu
     z miejscem „–” i etykietą **odłożone**;
   - nad wynikami stoi ich liczba („Znaleziono 12 zadań”). Bez wyniku **Nic nie znaleziono.** i **Wyczyść
-    wyszukiwanie**, z etykietą linii także **Szukaj we wszystkich kierunkach**;
+    wyszukiwanie**, z etykietą linii także **Szukaj we wszystkich liniach**;
   - numer zadania, którego już nie ma w kolejce: „T0815 nie ma już w kolejce (gotowe).”, stan **gotowe**, **czeka na
     decyzję**, **odłożone** albo **porzucone**;
   - więcej niż 50 wyników: **Wczytaj więcej** po 50, najwyżej 300 wierszy jak w kolejce;
@@ -325,7 +334,7 @@ kolejce, także poza wczytanymi stronami; aplikacja wysyła mu tylko szukany tek
   zmienia) i ustawia kursor w polu. Na telefonie, gdzie panel staje się paskiem, linku nie ma.
 - **Obowiązuje od:** aplikacja 3.28.0 (badanie 1.32.0)
 
-<!-- zdroj: app:4ad34832 (8a10387e) src/ui/queue-search-ui.ts QUEUE_SEARCH_PAUSE_MS 300, queueSearchOffered (queue.search, queuePaged, queue/queueMore/queueCounts next+parked), resetQueueSearch (zavření Přehledu), Escape · src/research-queue-pages.ts QUEUE_QUERY_MAX 100, QUEUE_PAGE 50, QUEUE_ROWS_CAP 300, QUEUE_ELSEWHERE_STATES · src/ui/research-ui.ts appendQueueSection (searchable jen v Přehledu, ne při sbalení), appendQueueSearchResult (štítek + q, queueSearchBusy/Err, dirRetry), řádek výsledku (live-queue-num „–“, research-queue__match id/person, queueTagDeferred), live-queue-search-link (canExpandLivePanel) · src/ui/research-overview-ui.ts openQueueSearch (unfoldOverviewSection queue do zavření) · strings.ts live.queueSearch*, queueState, queueTagDeferred, queueTitleCount, dirRetry · research 1.32.0 src/core/live.ts searchQueue (TASK_NUMBER, PERSON_NUMBER, každé slovo v jednom poli, pořadí fronty, elsewhere) · spec 052 K1.1–K1.7 · ZADANI_DEV_fronta-hledani §1, §2; D1 (bez řádku pole) -->
+<!-- zdroj: app:4ad34832 (8a10387e) src/ui/queue-search-ui.ts QUEUE_SEARCH_PAUSE_MS 300, queueSearchOffered (queue.search, queuePaged, queue/queueMore/queueCounts next+parked), resetQueueSearch (zavření Přehledu), Escape · src/research-queue-pages.ts QUEUE_QUERY_MAX 100, QUEUE_PAGE 50, QUEUE_ROWS_CAP 300, QUEUE_ELSEWHERE_STATES · src/ui/research-ui.ts appendQueueSection (searchable jen v Přehledu, ne při sbalení), appendQueueSearchResult (štítek + q, queueSearchBusy/Err, dirRetry), řádek výsledku (live-queue-num „–“, research-queue__match id/person, queueTagDeferred), live-queue-search-link (canExpandLivePanel) · src/ui/research-overview-ui.ts openQueueSearch (unfoldOverviewSection queue do zavření) · strings.ts live.queueSearch*, queueState, queueTagDeferred, queueTitleCount, dirRetry · research 1.32.0 src/core/live.ts searchQueue (TASK_NUMBER, PERSON_NUMBER, každé slovo v jednom poli, pořadí fronty, elsewhere) · spec 052 K1.1–K1.7 · ZADANI_DEV_fronta-hledani §1, §2; D1 (bez řádku pole) · app:08268b9f strings.ts live.queueSearchInDir, queueSearchNoneDir, queueSearchAllDirs (linie) · app:3c2fde77 okno Přehledu (queue-list) · spec 052 K1.1 -->
 
 <a id="S4.2.2"></a>
 ### S4.2.2 Zrób jako następne i Cofnij
@@ -342,18 +351,20 @@ przychodzi na kolej po niej ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
   - zadanie przesuwa się na pierwsze miejsce, jego wiersz krótko się wyróżni i przy tekście ma etykietę **jako
     następne**, dopóki nie przyjdzie jego kolej. Z kilku zadań jako następne pierwsze jest ostatnio oznaczone; etykietę
     mają wszystkie. Wyszukiwanie zostaje;
-  - powiadomienie **Będzie następne w kolejce.** z **Cofnij** stoi 6 s. **Cofnij** stawia zadanie dokładnie na
-    pierwotne miejsce, także z jego pierwotnym wyborem;
+  - powiadomienie z numerem zadania („T0103 jako następne”) i **Cofnij** stoi 6 s. **Cofnij** stawia zadanie
+    dokładnie na pierwotne miejsce, także z jego pierwotnym wyborem; wiersz jest na tym miejscu zaraz po odpowiedzi
+    badania, także w osobnym oknie przeglądu ([S4.1.6](#S4.1.6));
   - gdy agent tymczasem wziął zadanie: **Agent właśnie pracuje nad tym zadaniem; jego miejsca nie można teraz
     zmienić.** i kolejka się odświeża. Gdy most nie odpowiada: **Badanie nie odpowiada, kolejność się nie zmieniła.**
     i **Spróbuj ponownie**;
   - nic się nie potwierdza: nic się nie uruchamia ani nie płaci;
-  - na telefonie menu jest panelem wysuwanym od dołu z numerem i tekstem zadania na górze.
+  - na telefonie menu jest panelem wysuwanym od dołu jak inne panele aplikacji (uchwyt, przyciemnione okno pod nim)
+    z numerem i tekstem zadania na górze; stuknięcie w przyciemnione okno lub Escape go zamyka.
 - **Obsługa:** aplikacja: przy zadaniu **⋯ → Zrób jako następne**, w powiadomieniu **Cofnij**. Terminal: `strom task
   order T… --next`, `--restore` ([R2.3.1](R2-lines-and-queue.md#R2.3.1)).
 - **Obowiązuje od:** aplikacja 3.28.0 (badanie 1.32.0)
 
-<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 -->
+<!-- zdroj: app:623d9c77 (8a10387e) src/ui/research-offline-ui.ts queueNextOffered (queue.next, most odpovídá), queueNextFor (state next, ne pozice 1, ne práce agenta), doTaskNext (toast queueMoved 6000 ms, queueUndo → restoreTaskPlace {do: restore, was}), taskOrderRefusedToast (taken → taskDoing, bridge → queueBridgeErr + dirRetry), QUEUE_FLASH_MS 1600 · src/ui/research-ui.ts openLiveTaskMenu (nextOn: queueNext místo taskDoNext; taskOrderOffered: last, default; list na telefonu ≤ 640 px s titulem), markQueueNextRow (queueTagNext) · strings.ts live.queueNext, queueNextHint, queueTagNext, queueMoved, queueUndo, queueBridgeErr, taskDoing · research 1.32.0 rankTasks (naposledy zvolený první) · spec 052 K5.1, K5.3, K5.4, K5.6 · ZADANI_DEV_fronta-hledani §4 · app:2876d570 placeQueueItemInLists (odpověď restore: pos, own, why), strings.ts live.queueMoved(id) · app:7dc924ee list ⋯ = bottom-sheet (úchyt, ztmavení, Escape) · app:3f9a5ca4 Vrátit v okně Přehledu · spec 052 K5.4 -->
 
 <a id="S4.2.3"></a>
 ### S4.2.3 Praca nad kolejką…
