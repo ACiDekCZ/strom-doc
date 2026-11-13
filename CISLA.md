@@ -21,6 +21,8 @@ nenapsáno) · `neplatí od <verze>`.
 | R1.6 | R1-research-in-brief.md | výzkum 1.0.0 | platí | Výzkum a aplikace Strom | The research and the Strom app | Die Forschung und die Strom-App | Badanie i aplikacja Strom |
 | R1.7 | R1-research-in-brief.md | výzkum 1.0.0 | platí | Jak výzkum čte skeny | How the research reads scans | Wie die Forschung Scans liest | Jak badanie czyta skany |
 | R1.8 | R1-research-in-brief.md | výzkum 1.28.0 | platí | Jak Strom funguje: `strom doc` | How Strom works: `strom doc` | So funktioniert Strom: `strom doc` | Jak działa Strom: `strom doc` |
+| R1.9 | R1-research-in-brief.md | výzkum 1.32.0 | platí | Otázky nad daty stromu: `strom query` | Questions over the tree's data: `strom query` | Fragen an die Daten des Baums: `strom query` | Pytania o dane drzewa: `strom query` |
+| R1.9.1 | R1-research-in-brief.md | výzkum 1.32.0 | platí | Vyprávění: `strom query --story` | Stories: `strom query --story` | Erzählungen: `strom query --story` | Opowieści: `strom query --story` |
 | R2 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Linie a fronta | Lines and the queue | Linien und Warteschlange | Linie i kolejka |
 | R2.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Linie určuje, co výzkum zkoumá | A line sets what the research investigates | Die Linie bestimmt, was die Forschung untersucht | Linia wyznacza, co badanie bada |
 | R2.1.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Druhy linií a meze | Kinds of lines and their limits | Arten von Linien und Grenzen | Rodzaje linii i ograniczenia |
@@ -98,6 +100,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R7 | R7-when-the-agent-works.md | výzkum 1.0.0 | platí | Kdy a jak dlouho agent pracuje | When and how long the agent works | Wann und wie lange der Agent arbeitet | Kiedy i jak długo agent pracuje |
 | R7.1 | R7-when-the-agent-works.md | výzkum 1.0.0 | platí | Samostatná práce běží po sezeních | Working alone runs in sessions | Die Arbeit allein läuft in Sitzungen | Samodzielna praca przebiega sesjami |
 | R7.1.1 | R7-when-the-agent-works.md | výzkum 1.0.0 | platí | Proč běh skončí | Why a run ends | Warum ein Lauf endet | Dlaczego przebieg się kończy |
+| R7.1.2 | R7-when-the-agent-works.md | výzkum 1.32.0 | platí | Práce na frontě z odkazu aplikace Strom | Work on the queue from a Strom app link | Arbeit an der Warteschlange über einen Link der Strom-App | Praca nad kolejką z linku aplikacji Strom |
 | R7.2 | R7-when-the-agent-works.md | výzkum 1.0.0 | platí | Každé sezení má časový limit | Each session has a time limit | Jede Sitzung hat ein Zeitlimit | Każda sesja ma limit czasu |
 | R7.3 | R7-when-the-agent-works.md | výzkum 1.8.0 | platí | Sezení jde požádat o dokončení | A session can be asked to finish | Eine Sitzung lässt sich um Abschluss bitten | Sesję można poprosić o dokończenie |
 | R7.4 | R7-when-the-agent-works.md | výzkum 1.2.0 | platí | Podmínka rozhoduje, zda začne další sezení | A condition decides whether the next session starts | Die Bedingung entscheidet, ob die nächste Sitzung beginnt | Warunek rozstrzyga, czy zacznie się kolejna sesja |
