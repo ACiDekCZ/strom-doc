@@ -23,6 +23,7 @@ person menu; what concerns the whole tree is in the bar and in the **Actions** m
 | edit a person | person menu → **Edit** | [S2](S2-edits-from-the-app.md), while following [A9.3](#A9.3) |
 | the Map view and other views | the view switch in the bar; on a phone, a tablet and in a window up to 1024 px the bottom bar and **More → View** | [A6](A6-views.md), [A9.5](#A9.5) |
 | the whole tree in rows, CSV and XLSX export | **Table** in the view switch; on a phone, a tablet and in a window up to 1024 px **Table** on the bottom bar | [A6.7](A6-views.md#A6.7) |
+| fold the minimap or the tree legend | the tab above the minimap; **◯** in the legend | [A9.6](#A9.6) |
 | full screen (phone and tablet) | **More → Full screen**; on an iPhone in Safari **More → Full screen…** | [A9.5](#A9.5) |
 | a view or the Research overview in a separate window (on a computer) | ⧉ **Open in a new window** next to the view switch; Ctrl+click (macOS ⌘+click) on a view's tab; ⧉ in the Table's bar and in the overview's heading | [A6.8](A6-views.md#A6.8), [S4.1.6](S4-research-from-the-app.md#S4.1.6) |
 | the map's base layer | **Show the map** at the notice that the base layer loads from openstreetmap.org | [A9.4](#A9.4) |
@@ -127,3 +128,34 @@ views and actions are in the **More** sheet.
   **More → View**)
 
 <!-- zdroj: app:4b1373a7 index.html #bottom-bar (bb-view-family, bb-view-descendants, bottom-bar-fab edit-only, bb-view-table, bb-view-more) · src/ui/misc.ts:530–533 (active: table na liště; fan, map, timeline → Více) · src/breakpoints.ts isTabletOrMobile (≤ 1024 px), isPhoneBar, MQ_PHONE_LANDSCAPE · src/ui/bottom-sheet.ts blok 5 (Pohled: fan, map, timeline; rodRow jen isPhoneBar, ne timeline/map/table; fullscreenRow jen isTabletOrMobile, na šířku čtvrtá dlaždice) · src/ui/fullscreen.ts fullscreenOffer (fullscreenEnabled → enter/exit; iOS a ne standalone → ios-hint; jinak nic), toggleFullscreen (odmítnutí: okno beze změny) · src/file-copy.ts isIosDevice · src/pwa.ts isStandaloneDisplay · strings.ts mobileMenu.fullscreen, fullscreenExit, fullscreenIos, fullscreenIosText, menu.sectionView, viewModeSwitch.* · commit bb5e4d12 (dřív bb-view-timeline a v Pohledu Tabulka) · dirigent:spec/082-tester-3.28 K1.1, K1.3 · prace/1112-app-tester-328-telefon -->
+
+<a id="A9.6"></a>
+## A9.6 The minimap and the tree legend fold away
+
+The minimap and the tree legend can be folded so that they do not cover the tree. The device remembers the choice for
+all trees. Folding is not switching off: whether the element shows at all is still decided by the settings
+**Minimap** and **Tree legend**.
+
+- **Minimap** (computer and tablet, the Family and Descendants views, when the tree is larger than the window):
+  - on the top edge of the minimap block there is a tab: ⌄ folds the minimap (**Collapse minimap**), a folded one has
+    a tab with the minimap sign (**Expand minimap**). With a mouse the tab shows only on hovering over the block or on
+    keyboard focus, on touch always;
+  - a folded minimap is hidden and not drawn; the zoom buttons stay in their place;
+  - the default is open. A phone has no minimap.
+- **Tree legend:**
+  - **◯** folds the legend into a chip "◯ Legend" and the chip opens it again. The button is the first part of the
+    pill (on hover it turns into ⌄, **Collapse legend**) and, in the panel with the card marks, the whole head
+    "◯ Legend ⌄";
+  - the default is open. Dragging the mouse over the legend outside the button still moves the tree;
+  - a folded chip has a dot when the view shows a kind of card mark that the legend has not yet shown open on this
+    device; a screen reader reads "Legend, new mark". After opening the dot goes;
+  - **phone** (upright and sideways): the legend is always a chip. A tap opens it as a sheet from the bottom
+    (sideways as a panel on the right) with the heading "◯ Legend" and **Done**. It is closed by **Done**, a tap
+    beside it, dragging down (sideways to the right) and Esc. After the page is reloaded it does not open by itself,
+    and the phone neither reads nor writes the device's choice.
+- **Limits:** without the browser's storage (private window) the choice lasts until the page is closed.
+- **Controls:** the tab above the minimap; **◯** in the legend, the chip "◯ Legend". Switching off: the settings
+  **Minimap**, **Tree legend**.
+- **Since:** app 3.28.0
+
+<!-- zdroj: app:f5d56ed3 src/ui/minimap.ts readMinimapOpen (strom-minimap-open, výchozí otevřeno), setMinimapFold (ouško jen když je minimapa nabízená), updateMinimap (isMinimapEnabled, mobil a telefon na šířku bez minimapy, STANDALONE_VIEWS, sbaleno: display none, nic se nekreslí) · src/ui/tree-legend.ts readTreeLegendOpen (strom-tree-legend-open, výchozí otevřeno), readTreeLegendSeen / noteTreeLegendSeen (strom-tree-legend-seen), syncTreeLegendFold (tečka, aria-label title + newMark, telefon vždy čip), openTreeLegendSheet (Hotovo = tour.done, klepnutí vedle, tažení 80 px dolů / doprava na šířku, nečte ani nepíše volbu), paměť bez úložiště · src/ui/misc.ts updateLegendMarks (data-marks: story-own, story-other, action, cross) · src/storage-keys.ts TREE_UI_STORAGE_KEYS · index.html .minimap-toggle (hover / pointer coarse), #tree-legend .tree-legend-toggle, pointer-events · strings.ts minimap.title, collapse, expand, settingLabel; legend.title, collapse, expand, newMark; settings legendLabel · app d78ba58b · dirigent:prace/1113-app-drobnosti-1112 · ZADANI_DEV_drobnosti-1112 §2 -->

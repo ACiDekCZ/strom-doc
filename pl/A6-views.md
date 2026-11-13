@@ -85,6 +85,47 @@ je zmniejsza, aby na ekranie zmieściło się więcej osób. **Normalne** jest d
 
 <!-- zdroj: app:src/types.ts TreeSpacing, DEFAULT_LAYOUT_CONFIG (31/80/18), DENSE_LAYOUT_CONFIG (20/48/14), layoutConfigFor · src/settings.ts getTreeSpacing/setTreeSpacing (treeSpacing), getPosterSpacing/setPosterSpacing (posterSpacing), výchozí normal · src/renderer.ts:804 STANDALONE_VIEWS (timeline, fan, map, table), getPosterLayout({spacing}), kotva překreslení (ústřední karta celá v obraze, jinak nejbližší středu; i při změně typu karty) · src/marriage-order.ts (husté: „∞ N“ na okraji karty, bez místa se nekreslí) · src/ui/export-image-ui.ts (řádek za formátem a orientací, skrytý u vějíře a časové osy, sheetsCount) · strings.ts spacing.label, normal, dense, desc, scope, scopeExport, smallHint, marriageOrder.short, poster.menu, poster.sheetsCount, settings.groupCard, cardDensity.settingLabel · commity 68b9dde4, 03918007, 928db183, e2891a8a · spec 069 K1.1, K3.1 -->
 
+<a id="A6.1.3"></a>
+### A6.1.3 Dzieci i rodzeństwo naraz
+
+W widoku Rodzina jednym krokiem można pokazać na miejscu dzieci osoby oraz rodzeństwo osoby i jej przodków. Fokus,
+głębokość i powiększenie zostają, karta osoby stoi w tym samym miejscu ekranu.
+
+- **Kto dojdzie:**
+  - dzieci osoby (nie wnuki);
+  - rodzeństwo osoby i każdego jej przodka, który jest w widoku i którego rodzice są w widoku. Górny rząd głębokości
+    **Przodkowie** się nie rozwija (jego rodzeństwo przyniosłoby nowe pokolenie, to zadanie głębokości); przy nim
+    zostaje „▸ rodzice”;
+  - rodzeństwo to dzieci rodziców w widoku ze wszystkich małżeństw, tak samo jak przy pojedynczym „Pokaż rodzeństwo
+    tutaj”. Z dziećmi dochodzi ich drugi rodzic, partnerzy, których widok z nimi rysuje, i to, co pod nimi trzyma
+    głębokość **Potomkowie**.
+- **Liczba +n:** ile kart krok doda; liczy ją ten sam układ co widok, więc po kroku dochodzi dokładnie n kart. Liczy
+  się na nowo po każdym rysowaniu.
+- **Granice:**
+  - krok to jeden układ, jeden krok historii i jeden krok **Ukryj pokazane · n** (n + 1). Cofa go **Wstecz**
+    w historii, **Ukryj pokazane** (cofa wszystko pokazane) albo ponownie ta sama opcja („Zwiń dzieci
+    i rodzeństwo”);
+  - na dotkniętych kartach są zakładki „▾ dzieci” i „▾ rodzeństwo”, a pojedyncze rodziny można dalej zwijać po
+    jednej;
+  - nowa osoba w fokusie, inny widok lub drzewo krok anulują. Zmiana głębokości **Przodkowie** lub **Potomkowie**
+    kończy wszystkie kroki „naraz”: ich karty znikają, rodziny pokazane po jednej zostają, a opcja proponuje „+n”
+    nowej głębokości;
+  - powyżej 150 osób aplikacja najpierw pyta w dymku: „Dojdzie n osób”, „Drzewo poszerzy się do ok. k szerokości
+    ekranu. Powiększenie się nie zmienia.” (k z rzeczywistego układu przy obecnym powiększeniu, zaokrąglone w górę)
+    i przyciski **Rozwiń +n**, **Tylko 2 pokolenia przodków +m** (tylko rodzeństwo osoby, rodziców i dziadków; brak,
+    gdy m to n lub 0) i **Anuluj**. Esc, kliknięcie obok lub zmiana rozmiaru okna = Anuluj. Do 150 osób bez pytania.
+- **Obsługa:** aplikacja, widok Rodzina:
+  - pasek widoku, zaraz za opcjami **Przodkowie** i **Potomkowie**: **Dzieci i rodzeństwo +n** dla osoby w fokusie.
+    Włączony krok pokazuje ✓, a kliknięcie go cofa; gdy nie ma czego dodać, opcja jest wyciszona („Wszystkie dzieci
+    i rodzeństwo są już widoczne”). Na tablecie ikona i „+n”; gdy nie mieści się na pasku, ustępuje (menu osoby ma ją
+    nadal). Telefon nie ma opcji na pasku;
+  - menu osoby (na dotyku dolny panel osoby) pod wierszami, które pokazują na miejscu rodziców, rodzeństwo i dzieci:
+    **Rozwiń dzieci i rodzeństwo · +n** z podwierszem „dzieci osoby, rodzeństwo osoby i jej przodków”, tylko gdy jest
+    co dodać; gdy krok osoby stoi, **Zwiń dzieci i rodzeństwo**. U osoby w fokusie to ten sam krok co na pasku.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:f5d56ed3 src/bulk-family.ts collectBulkFamily (childrenOf osoba; siblingsOf osoba a předci v pohledu s rodiči v pohledu; maxGeneration), bulkParents, bulkNewIds (drawnPersonIds, kroky 1–5 pipeline), BULK_CONFIRM_ABOVE 150, BULK_TWO_GENERATIONS 2 · src/renderer.ts bulkFamilyPlan (jen family), bulkFamilyState (offer/on/none), bulkFamilyScreens (ceil šířka × zoom / plátno), showBulkFamily → showChildrenOf (jeden krok historie, zoom beze změny, kotva), undoBulkFamily, bulkStepOf (jen při stejné hloubce), forgetBulkSteps při změně hloubky, resetChildrenShown při změně fokusu, pohledu, stromu, hiddenShownCount (+1 za krok) · src/ui/bulk-family-ui.ts confirmBulkFamily (Esc, klik vedle, resize = zrušit; two jen m > 0 a m ≠ n), runBulkFamily, updateBulkFamilySwitches (title treeTip/menuOff/treeNone, aria-disabled) · src/ui/context-menu.ts bulkFamilyRows (offer: menu, +n, menuSub; on: menuOff) · src/ui/toolbar-fit.ts (tablet: přepínač ustoupí před hledáním, f5d56ed3) · index.html button.bulk-family (telefon skrytý) · strings.ts bulk.*, menu.showChildrenHere, showSiblingsHere, focusBar hideAllShown, history back · app 2eb013ba, cecea43f, 8dc34565, f5d56ed3 · dirigent:prace/1113-app-drobnosti-1112 · ZADANI_DEV_drobnosti-1112 §3 -->
+
 <a id="A6.2"></a>
 ## A6.2 Widok Potomkowie
 
@@ -157,7 +198,7 @@ Mapa pokazuje miejsca zdarzeń osób.
 - Miejsce ślubu pokazuje się, gdy w widoku jest co najmniej jedno z partnerów.
 - Miejsce pisze się w najczęstszym zapisie. Miejscowość to jeden punkt także z numerami domów; miejsce z własnymi
   dokładnymi współrzędnymi zostaje osobnym punktem.
-- **Migracje w czasie** pokazują miejsca według lat i drogę przodków do jednej osoby ([A6.5.3](#A6.5.3)).
+- **Migracja w czasie** pokazuje miejsca według lat i drogę przodków do jednej osoby ([A6.5.3](#A6.5.3)).
 - **Obowiązuje od:** mapa aplikacja 1.10.0; rodzaje zdarzeń i punkty miejscowości aplikacja 3.21.0
 
 <!-- zdroj: app:src/places.ts collectPlaces, groupTownPoints · src/ui/map-ui.ts (localStorage strom.map.kinds) · strings.ts map.scopeView, map.scopeTree, map.kinds · CHANGELOG.cs.md 3.21.0 -->
@@ -232,9 +273,9 @@ dopiero po **Dodaj do kolejki**.
 <!-- zdroj: app:src/ui/map-ui.ts (stavový pruh, lookResearch, lookable), src/ui/place-actions.ts, src/ui/places-research-ui.ts (bulkLook, bulkLookHead, bulkLookGo, nic dvakrát), src/ui/map-follow-ui.ts (noCoords + places.research.look, Undo) · strings.ts map.onMap.notFound, lookResearch, lookResearchShort, lookResearchTitle, confirm; places.dialog.elsewhere, phoneLine, oldResearch · CHANGELOG.cs.md 3.25.0 · commit 2246ca28 · spec 058 -->
 
 <a id="A6.5.3"></a>
-### A6.5.3 Migracje w czasie
+### A6.5.3 Migracja w czasie
 
-**Migracje w czasie** pokazują miejsca według lat. Suwak na osi czasu pod mapą wyznacza rok, a mapa pokazuje miejsca,
+**Migracja w czasie** pokazuje miejsca według lat. Suwak na osi czasu pod mapą wyznacza rok, a mapa pokazuje miejsca,
 które do tego roku przybyły, i linie przeprowadzek rodu.
 
 - **Granice:**
@@ -258,16 +299,19 @@ które do tego roku przybyły, i linie przeprowadzek rodu.
   - klawisze na suwaku: strzałki o rok, PageUp i PageDown o 10 lat, Home i End na początek i koniec. Spacja
     w dowolnym miejscu mapy (poza polami i przyciskami) odtwarza lub wstrzymuje. Ręczne przesunięcie wstrzymuje
     odtwarzanie;
-  - w trybie można wybrać osobę, do której prowadzi droga jej przodków ([A6.5.4](#A6.5.4)).
-- **Obsługa:** aplikacja: mapa → **◷ W czasie** (**Migracje w czasie**) → suwak, **Odtwórz** / **Wstrzymaj**.
-- **Obowiązuje od:** aplikacja 2.4.0; rodzaje miejsc 3.21.0; tekst przycisku, jednorazowa propozycja i klawisze 3.28.0
+  - w trybie można wybrać osobę, do której prowadzi droga jej przodków ([A6.5.4](#A6.5.4));
+  - **Odtwórz** i **Wstrzymaj** mają tę samą szerokość (dłuższego z obu słów w danym języku), więc suwak, jego znaczniki
+    ani rok nie przesuwają się przy uruchomieniu i zatrzymaniu. Telefon ma tylko ikonę.
+- **Obsługa:** aplikacja: mapa → **◷ W czasie** (**Migracja w czasie**) → suwak, **Odtwórz** / **Wstrzymaj**.
+- **Obowiązuje od:** aplikacja 2.4.0; rodzaje miejsc 3.21.0; tekst przycisku, jednorazowa propozycja, klawisze i stała
+  szerokość **Odtwórz** 3.28.0
 
-<!-- zdroj: app:src/map-time.ts collectDatedPlacePoints (undatedPlaceCount, minYear/maxYear) · src/ui/map-ui.ts drawMapTimeLayer (fresh = posledních 10 let, slice(0, 400) s koncem u výřezu), mapMigrationSegments (místa narození rodič → dítě, opacity max(0.15, 1 − věk/60·0.85), bez Narození nic), toggleMapTimePlay (setInterval 120, na konci od začátku), renderMapTimeTip / dismissMapTimeTip (strom.map.timeTipSeen, ≥ 2 datovaná místa s polohou, podklad mapy potvrzený), klávesy na posuvníku a mezerník (setMapTimeYear pozastaví) · strings.ts map.timeMode, timeModeShort, timeModeEmpty, timePlay, timePause, timeUndated, noFamilyPath, timeTipTitle, timeTipText, timeTipTry, timeTipLater · Migrace v čase od v2.4.0 (app 44a903bc) · 3.28.0: app 34e82d43, cce82a89 (app:81f2adf0) · CHANGELOG.cs.md 3.21.0, 3.28.0 · spec 054 P2 -->
+<!-- zdroj: app:src/map-time.ts collectDatedPlacePoints (undatedPlaceCount, minYear/maxYear) · src/ui/map-ui.ts drawMapTimeLayer (fresh = posledních 10 let, slice(0, 400) s koncem u výřezu), mapMigrationSegments (místa narození rodič → dítě, opacity max(0.15, 1 − věk/60·0.85), bez Narození nic), toggleMapTimePlay (setInterval 120, na konci od začátku), renderMapTimeTip / dismissMapTimeTip (strom.map.timeTipSeen, ≥ 2 datovaná místa s polohou, podklad mapy potvrzený), klávesy na posuvníku a mezerník (setMapTimeYear pozastaví) · strings.ts map.timeMode, timeModeShort, timeModeEmpty, timePlay, timePause, timeUndated, noFamilyPath, timeTipTitle, timeTipText, timeTipTry, timeTipLater · Migrace v čase od v2.4.0 (app 44a903bc) · 3.28.0: app 34e82d43, cce82a89 (app:81f2adf0) · CHANGELOG.cs.md 3.21.0, 3.28.0 · spec 054 P2 · stálá šířka Přehrát/Pozastavit: app 35ed67f9 src/ui/map-ui.ts (obě slova v jedné buňce, map-time-play-word), index.html .map-time-play-text -->
 
 <a id="A6.5.4"></a>
 ### A6.5.4 Droga przodków do osoby
 
-W Migracjach w czasie można wybrać jedną osobę. Mapa pokazuje wtedy tylko jej bezpośrednich przodków, linie od
+W Migracji w czasie można wybrać jedną osobę. Mapa pokazuje wtedy tylko jej bezpośrednich przodków, linie od
 każdego przodka do jego dziecka aż do wybranej osoby, a oś czasu kończy się na niej.
 
 - **Granice:**
@@ -305,12 +349,14 @@ każdego przodka do jego dziecka aż do wybranej osoby, a oś czasu kończy się
     ponownie (**Zmień osobę**), **×** usuwa drogę (**Usuń drogę**);
   - w dymku miejsca kliknięcie osoby → **◎ Droga do tej osoby** (obok **Strona osoby ›**), także bez wybranej osoby;
   - na stronie osoby **◎ Droga przodków na mapie ›** ([A7.6](A7-book-pages-and-export.md#A7.6)): strona się zamyka,
-    mapa pokazuje drogę od pierwszego roku, a powiadomienie oferuje **‹ Wróć do strony osoby**. Gdy osoba ma
-    przodków, ale żaden nie jest na mapie, odnośnik jest wyszarzony („Żaden przodek nie ma jeszcze miejsca na
-    mapie.”). Bez przodków w drzewie odnośnika nie ma.
+    mapa pokazuje drogę od pierwszego roku, a powiadomienie oferuje **‹ Wróć do strony osoby**. Odnośnik jest
+    w sekcji **Miejsca życia**. Osoba z najwyżej jednym własnym miejscem tej sekcji nie ma; gdy ma przodków na mapie,
+    odnośnik stoi we własnym wierszu tam, gdzie byłaby sekcja. Gdy osoba ma przodków, ale żaden nie jest na mapie,
+    odnośnik jest wyszarzony („Żaden przodek nie ma jeszcze miejsca na mapie.”) i tylko w sekcji **Miejsca życia**.
+    Bez przodków w drzewie odnośnika nie ma.
 - **Obowiązuje od:** aplikacja 3.28.0
 
-<!-- zdroj: app:src/map-lines.ts buildPathModel (maxGen 30, fatherMother přes parentSlots jako vějíř, isPlaceholder není předek, implex záznam na cestu, expanded podle osoby a větve), placeOf (narození → křest → první datované bydliště, jen s polohou; rok narození → křest → místa), missing (date/place/both), yearFrom/yearTo, links, pathSegments (PATH_LINE_CAP 400, pořadí kmen, fresh < 10 let, generace, výřez, délka) · src/ui/map-path-ui.ts (mapEffectiveScope celý strom, čip místo rozsahu, clearMapPath vrátí rozsah, jednorázový výřez framed, cíl čárkovaný → plný, pathTargetNoPlace, pathNoAncestors + pathOtherPerson) · src/person-picker.ts PathPersonPicker (limit 30, recentId = ústřední osoba, onMapCount 0 = aria-disabled, celý strom) · src/ui/map-lines-legend-ui.ts mapPathBubbleParts · src/ui/map-ui.ts showMapPathPlace, toggleMapTime (vypnutí skryje, zapnutí od začátku) · src/ui/person-page-ui.ts personPageMapPath (on/off/null), openPersonPageMapPath (toast map-path-back) · src/person-page-map.ts (pp-map-path, aria-disabled, jen v okně aplikace) · src/windows/view-window-state.ts MapTimeState path, mode, colors · strings.ts map.pathPick, pathPickTitle, pathPickPlaceholder, pathPickRecent, pathPickOnMap, pathPickNone, pathChip, pathChange, pathClear, pathFromPage, pathThisPerson, pathBackToPage, pathGoal, pathGoalEnd, pathTargetNoPlace, pathNoAncestors, pathOtherPerson, linesCut, linesCutWhy, missingDate, missingPlace, missingBoth · app 388e5a87, b01693bc, 5853882e, 34e82d43 (app:81f2adf0) · dirigent:prace/1113-app-mapa-rody-v-case · ZADANI_UIX_mapa-rody-v-case D3, D4 (ponechat) · spec 054 K2.1, P2 · CHANGELOG.cs.md 3.28.0 -->
+<!-- zdroj: app:src/map-lines.ts buildPathModel (maxGen 30, fatherMother přes parentSlots jako vějíř, isPlaceholder není předek, implex záznam na cestu, expanded podle osoby a větve), placeOf (narození → křest → první datované bydliště, jen s polohou; rok narození → křest → místa), missing (date/place/both), yearFrom/yearTo, links, pathSegments (PATH_LINE_CAP 400, pořadí kmen, fresh < 10 let, generace, výřez, délka) · src/ui/map-path-ui.ts (mapEffectiveScope celý strom, čip místo rozsahu, clearMapPath vrátí rozsah, jednorázový výřez framed, cíl čárkovaný → plný, pathTargetNoPlace, pathNoAncestors + pathOtherPerson) · src/person-picker.ts PathPersonPicker (limit 30, recentId = ústřední osoba, onMapCount 0 = aria-disabled, celý strom) · src/ui/map-lines-legend-ui.ts mapPathBubbleParts · src/ui/map-ui.ts showMapPathPlace, toggleMapTime (vypnutí skryje, zapnutí od začátku) · src/ui/person-page-ui.ts personPageMapPath (on/off/null), openPersonPageMapPath (toast map-path-back) · src/person-page-map.ts (pp-map-path, aria-disabled, jen v okně aplikace; mapPathRowHtml vlastní řádek bez oddílu Místa života jen pro mapPath on, app caea192a) · src/person-page.ts mapPathRow · src/windows/view-window-state.ts MapTimeState path, mode, colors · strings.ts map.pathPick, pathPickTitle, pathPickPlaceholder, pathPickRecent, pathPickOnMap, pathPickNone, pathChip, pathChange, pathClear, pathFromPage, pathThisPerson, pathBackToPage, pathGoal, pathGoalEnd, pathTargetNoPlace, pathNoAncestors, pathOtherPerson, linesCut, linesCutWhy, missingDate, missingPlace, missingBoth · app 388e5a87, b01693bc, 5853882e, 34e82d43 (app:81f2adf0) · dirigent:prace/1113-app-mapa-rody-v-case · ZADANI_UIX_mapa-rody-v-case D3, D4 (ponechat) · spec 054 K2.1, P2 · CHANGELOG.cs.md 3.28.0 -->
 
 <a id="A6.5.5"></a>
 ### A6.5.5 Kolory rodów i legenda Rody
@@ -335,11 +381,13 @@ Droga przodków jest kolorowa według rodów. Ród to tu gałąź jednego z dzia
   - **Ćwiartki** · **Ósemki**. **Ósemki** można wybrać, gdy drzewo zna co najmniej dwie ósemki;
   - wiersz rodu: wzór linii, nazwisko, relacja i liczba przodków na mapie („ojciec ojca · 12 przodków”). W ósemkach
     wiersze stoją pod nagłówkiem swojej ćwiartki („1 · nazwisko”). Nieznany dziadek lub babcia ma wiersz bez koloru
-    („matka ojca – nieznana”). Ostatni wiersz to **Pień: rodzice i dziadkowie**;
+    („matka ojca – nieznana”). Ród, którego żaden przodek nie jest na osi czasu (wszyscy bez daty lub miejsca), ma
+    wiersz wyciszony jak nieznany, z pustym kreskowanym wzorem i „poza osią czasu” zamiast liczby („matka ojca · poza
+    osią czasu”); nie można go wyróżnić ani przypiąć. Ostatni wiersz to **Pień: rodzice i dziadkowie**;
   - najechanie na wiersz na chwilę wyróżnia ród, kliknięcie go przypina i przyciemnia pozostałe rody. Esc albo drugie
     kliknięcie przypięcie usuwa, przełączenie ćwiartek i ósemek też;
   - pod wierszami stoją: pierwsza osoba w dwóch rodach („↻ imię (rok) jest w dwóch rodach: … i ….”), przycięcie
-    dużego drzewa ([A6.5.4](#A6.5.4)), przodkowie poza osią czasu („N przodków bez daty lub miejsca nie ma na osi
+    dużego drzewa ([A6.5.4](#A6.5.4)), przodkowie poza osią czasu („N przodków bez daty lub miejsca nie jest na osi
     czasu.” i **Lista ›**, lista **Przodkowie poza osią czasu**) i **Bez kolorów rodów**;
   - **Bez kolorów rodów** rysuje całą drogę jednym kolorem i ukrywa wiersze rodów. Pień zostaje szerszy, a osoba
     zostaje wybrana;
@@ -350,7 +398,7 @@ Droga przodków jest kolorowa według rodów. Ród to tu gałąź jednego z dzia
 - **Obsługa:** aplikacja: mapa → **◷ W czasie** → droga do osoby ([A6.5.4](#A6.5.4)) → legenda **Rody**.
 - **Obowiązuje od:** aplikacja 3.28.0
 
-<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml · strings.ts map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
+<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml, offTimeline (count 0: is-unknown, is-off-timeline, swatch is-empty, app caea192a) · strings.ts map.linesOffTimeline, map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
 
 <a id="A6.5.6"></a>
 ### A6.5.6 Odtwarzanie drogi do osoby

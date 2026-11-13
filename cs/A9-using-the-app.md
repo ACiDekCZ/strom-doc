@@ -22,6 +22,7 @@ co se týká celého stromu, je v liště a v menu **Akce**.
 | upravit osobu | nabídka osoby → **Upravit** | [S2](S2-edits-from-the-app.md), při sledování [A9.3](#A9.3) |
 | pohled Mapa a další pohledy | přepínač pohledů v liště; na telefonu, tabletu a v okně do 1024 px dolní lišta a **Více → Pohled** | [A6](A6-views.md), [A9.5](#A9.5) |
 | celý strom v řádcích, export CSV a XLSX | **Tabulka** v přepínači pohledů; na telefonu, tabletu a v okně do 1024 px **Tabulka** na dolní liště | [A6.7](A6-views.md#A6.7) |
+| sbalit minimapu nebo legendu stromu | ouško nad minimapou; **◯** v legendě | [A9.6](#A9.6) |
 | celá obrazovka (telefon a tablet) | **Více → Celá obrazovka**; na iPhonu v Safari **Více → Celá obrazovka…** | [A9.5](#A9.5) |
 | pohled nebo Přehled výzkumu v samostatném okně (na počítači) | ⧉ **Otevřít v novém okně** vedle přepínače pohledů; Ctrl+klik (macOS ⌘+klik) na záložku pohledu; ⧉ v liště Tabulky a v hlavičce Přehledu | [A6.8](A6-views.md#A6.8), [S4.1.6](S4-research-from-the-app.md#S4.1.6) |
 | podklad mapy | **Zobrazit mapu** u upozornění, že se podklad načítá z openstreetmap.org | [A9.4](#A9.4) |
@@ -124,3 +125,31 @@ jsou v listu **Více**.
   ve **Více → Pohled**)
 
 <!-- zdroj: app:4b1373a7 index.html #bottom-bar (bb-view-family, bb-view-descendants, bottom-bar-fab edit-only, bb-view-table, bb-view-more) · src/ui/misc.ts:530–533 (active: table na liště; fan, map, timeline → Více) · src/breakpoints.ts isTabletOrMobile (≤ 1024 px), isPhoneBar, MQ_PHONE_LANDSCAPE · src/ui/bottom-sheet.ts blok 5 (Pohled: fan, map, timeline; rodRow jen isPhoneBar, ne timeline/map/table; fullscreenRow jen isTabletOrMobile, na šířku čtvrtá dlaždice) · src/ui/fullscreen.ts fullscreenOffer (fullscreenEnabled → enter/exit; iOS a ne standalone → ios-hint; jinak nic), toggleFullscreen (odmítnutí: okno beze změny) · src/file-copy.ts isIosDevice · src/pwa.ts isStandaloneDisplay · strings.ts mobileMenu.fullscreen, fullscreenExit, fullscreenIos, fullscreenIosText, menu.sectionView, viewModeSwitch.* · commit bb5e4d12 (dřív bb-view-timeline a v Pohledu Tabulka) · dirigent:spec/082-tester-3.28 K1.1, K1.3 · prace/1112-app-tester-328-telefon -->
+
+<a id="A9.6"></a>
+## A9.6 Minimapa a legenda stromu jdou sbalit
+
+Minimapu a legendu stromu jde sbalit, aby nezakrývaly strom. Zařízení si volbu pamatuje pro všechny stromy.
+Sbalení není vypnutí: zda se prvek ukazuje vůbec, dál rozhodují nastavení **Minimapa** a **Legenda stromu**.
+
+- **Minimapa** (počítač a tablet, pohledy Rodina a Potomci, když je strom větší než okno):
+  - na horní hraně bloku s minimapou je ouško: ⌄ sbalí minimapu (**Sbalit minimapu**), sbalená má ouško se značkou
+    minimapy (**Rozbalit minimapu**). S myší je ouško vidět jen při najetí na blok nebo při zaměření klávesnicí,
+    na dotyku vždy;
+  - sbalená minimapa se skryje a nekreslí; tlačítka přiblížení zůstanou na svém místě;
+  - výchozí je rozbaleno. Telefon minimapu nemá.
+- **Legenda stromu:**
+  - **◯** legendu sbalí do čipu „◯ Legenda“ a čip ji zase rozbalí. Tlačítkem je první část pilulky (při najetí se
+    změní na ⌄, **Sbalit legendu**) a v panelu se značkami kartiček celá hlavička „◯ Legenda ⌄“;
+  - výchozí je rozbaleno. Tah myší po legendě mimo tlačítko dál posouvá strom;
+  - sbalený čip má tečku, když pohled ukazuje druh značky kartičky, který legenda na tomto zařízení ještě rozbalená
+    neukázala; čtečka obrazovky čte „Legenda, nová značka“. Po rozbalení tečka zmizí;
+  - **telefon** (na výšku i na šířku): legenda je vždy čip. Klepnutí ji otevře jako list zespodu (na šířku jako
+    panel vpravo) s nadpisem „◯ Legenda“ a **Hotovo**. Zavře ho **Hotovo**, klepnutí vedle, tažení dolů (na šířku
+    doprava) a Esc. Po obnovení stránky se sám neotevře a volbu zařízení telefon nečte ani nepíše.
+- **Hranice:** bez úložiště prohlížeče (soukromé okno) platí volba do zavření stránky.
+- **Ovládání:** ouško nad minimapou; **◯** v legendě, čip „◯ Legenda“. Vypnutí: nastavení **Minimapa**, **Legenda
+  stromu**.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:f5d56ed3 src/ui/minimap.ts readMinimapOpen (strom-minimap-open, výchozí otevřeno), setMinimapFold (ouško jen když je minimapa nabízená), updateMinimap (isMinimapEnabled, mobil a telefon na šířku bez minimapy, STANDALONE_VIEWS, sbaleno: display none, nic se nekreslí) · src/ui/tree-legend.ts readTreeLegendOpen (strom-tree-legend-open, výchozí otevřeno), readTreeLegendSeen / noteTreeLegendSeen (strom-tree-legend-seen), syncTreeLegendFold (tečka, aria-label title + newMark, telefon vždy čip), openTreeLegendSheet (Hotovo = tour.done, klepnutí vedle, tažení 80 px dolů / doprava na šířku, nečte ani nepíše volbu), paměť bez úložiště · src/ui/misc.ts updateLegendMarks (data-marks: story-own, story-other, action, cross) · src/storage-keys.ts TREE_UI_STORAGE_KEYS · index.html .minimap-toggle (hover / pointer coarse), #tree-legend .tree-legend-toggle, pointer-events · strings.ts minimap.title, collapse, expand, settingLabel; legend.title, collapse, expand, newMark; settings legendLabel · app d78ba58b · dirigent:prace/1113-app-drobnosti-1112 · ZADANI_DEV_drobnosti-1112 §2 -->

@@ -23,6 +23,7 @@ der Person; was den ganzen Stammbaum betrifft, steht in der Leiste und im Menü 
 | eine Person bearbeiten | Menü der Person → **Bearbeiten** | [S2](S2-edits-from-the-app.md), beim Verfolgen [A9.3](#A9.3) |
 | Ansicht Karte und weitere Ansichten | Umschalter der Ansichten in der Leiste; auf Telefon, Tablet und im Fenster bis 1024 px die untere Leiste und **Mehr → Ansicht** | [A6](A6-views.md), [A9.5](#A9.5) |
 | der ganze Stammbaum in Zeilen, CSV- und XLSX-Export | **Tabelle** im Umschalter der Ansichten; auf Telefon, Tablet und im Fenster bis 1024 px **Tabelle** in der unteren Leiste | [A6.7](A6-views.md#A6.7) |
+| Minikarte oder Stammbaum-Legende einklappen | Reiter über der Minikarte; **◯** in der Legende | [A9.6](#A9.6) |
 | Vollbild (Telefon und Tablet) | **Mehr → Vollbild**; auf dem iPhone in Safari **Mehr → Vollbild…** | [A9.5](#A9.5) |
 | eine Ansicht oder die Forschungsübersicht in einem eigenen Fenster (am Computer) | ⧉ **In neuem Fenster öffnen** neben dem Ansichtsumschalter; Strg+Klick (macOS ⌘+Klick) auf den Reiter einer Ansicht; ⧉ in der Leiste der Tabelle und im Kopf der Übersicht | [A6.8](A6-views.md#A6.8), [S4.1.6](S4-research-from-the-app.md#S4.1.6) |
 | Kartenhintergrund | **Karte anzeigen** beim Hinweis, dass der Hintergrund von openstreetmap.org geladen wird | [A9.4](#A9.4) |
@@ -133,3 +134,38 @@ Die übrigen Ansichten und Aktionen stehen im Blatt **Mehr**.
   stand unter **Mehr → Ansicht**)
 
 <!-- zdroj: app:4b1373a7 index.html #bottom-bar (bb-view-family, bb-view-descendants, bottom-bar-fab edit-only, bb-view-table, bb-view-more) · src/ui/misc.ts:530–533 (active: table na liště; fan, map, timeline → Více) · src/breakpoints.ts isTabletOrMobile (≤ 1024 px), isPhoneBar, MQ_PHONE_LANDSCAPE · src/ui/bottom-sheet.ts blok 5 (Pohled: fan, map, timeline; rodRow jen isPhoneBar, ne timeline/map/table; fullscreenRow jen isTabletOrMobile, na šířku čtvrtá dlaždice) · src/ui/fullscreen.ts fullscreenOffer (fullscreenEnabled → enter/exit; iOS a ne standalone → ios-hint; jinak nic), toggleFullscreen (odmítnutí: okno beze změny) · src/file-copy.ts isIosDevice · src/pwa.ts isStandaloneDisplay · strings.ts mobileMenu.fullscreen, fullscreenExit, fullscreenIos, fullscreenIosText, menu.sectionView, viewModeSwitch.* · commit bb5e4d12 (dřív bb-view-timeline a v Pohledu Tabulka) · dirigent:spec/082-tester-3.28 K1.1, K1.3 · prace/1112-app-tester-328-telefon -->
+
+<a id="A9.6"></a>
+## A9.6 Minikarte und Stammbaum-Legende lassen sich einklappen
+
+Minikarte und Stammbaum-Legende lassen sich einklappen, damit sie den Stammbaum nicht verdecken. Das Gerät merkt sich
+die Wahl für alle Stammbäume. Einklappen ist kein Ausschalten: ob das Element überhaupt erscheint, bestimmen weiter
+die Einstellungen **Minikarte** und **Stammbaum-Legende**.
+
+- **Minikarte** (Computer und Tablet, Ansichten Familie und Nachkommen, wenn der Stammbaum größer als das Fenster
+  ist):
+  - an der oberen Kante des Blocks mit der Minikarte ist ein Reiter: ⌄ klappt die Minikarte ein (**Minikarte
+    einklappen**), eine eingeklappte hat einen Reiter mit dem Zeichen der Minikarte (**Minikarte ausklappen**). Mit
+    der Maus ist der Reiter nur beim Überfahren des Blocks oder bei Tastaturfokus sichtbar, bei Berührung immer;
+  - eine eingeklappte Minikarte wird ausgeblendet und nicht gezeichnet; die Zoom-Schaltflächen bleiben an ihrem
+    Platz;
+  - Standard ist ausgeklappt. Das Telefon hat keine Minikarte.
+- **Stammbaum-Legende:**
+  - **◯** klappt die Legende zu einem Chip „◯ Legende“ ein, und der Chip klappt sie wieder aus. Schaltfläche ist der
+    erste Teil der Pille (beim Überfahren wird daraus ⌄, **Legende einklappen**) und im Feld mit den Zeichen der
+    Karten der ganze Kopf „◯ Legende ⌄“;
+  - Standard ist ausgeklappt. Ziehen mit der Maus über die Legende außerhalb der Schaltfläche verschiebt weiter den
+    Stammbaum;
+  - der eingeklappte Chip hat einen Punkt, wenn die Ansicht eine Art Kartenzeichen zeigt, die die Legende auf diesem
+    Gerät noch nicht ausgeklappt gezeigt hat; ein Bildschirmleser liest „Legende, neues Zeichen“. Nach dem
+    Ausklappen verschwindet der Punkt;
+  - **Telefon** (hochkant und quer): die Legende ist immer ein Chip. Tippen öffnet sie als Blatt von unten (quer als
+    Feld rechts) mit der Überschrift „◯ Legende“ und **Fertig**. Es schließen **Fertig**, Tippen daneben, Ziehen nach
+    unten (quer nach rechts) und Esc. Nach dem Neuladen der Seite öffnet es sich nicht von selbst, und das Telefon
+    liest und schreibt die Wahl des Geräts nicht.
+- **Grenzen:** ohne Speicher des Browsers (privates Fenster) gilt die Wahl, bis die Seite geschlossen wird.
+- **Bedienung:** Reiter über der Minikarte; **◯** in der Legende, Chip „◯ Legende“. Ausschalten: Einstellungen
+  **Minikarte**, **Stammbaum-Legende**.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:f5d56ed3 src/ui/minimap.ts readMinimapOpen (strom-minimap-open, výchozí otevřeno), setMinimapFold (ouško jen když je minimapa nabízená), updateMinimap (isMinimapEnabled, mobil a telefon na šířku bez minimapy, STANDALONE_VIEWS, sbaleno: display none, nic se nekreslí) · src/ui/tree-legend.ts readTreeLegendOpen (strom-tree-legend-open, výchozí otevřeno), readTreeLegendSeen / noteTreeLegendSeen (strom-tree-legend-seen), syncTreeLegendFold (tečka, aria-label title + newMark, telefon vždy čip), openTreeLegendSheet (Hotovo = tour.done, klepnutí vedle, tažení 80 px dolů / doprava na šířku, nečte ani nepíše volbu), paměť bez úložiště · src/ui/misc.ts updateLegendMarks (data-marks: story-own, story-other, action, cross) · src/storage-keys.ts TREE_UI_STORAGE_KEYS · index.html .minimap-toggle (hover / pointer coarse), #tree-legend .tree-legend-toggle, pointer-events · strings.ts minimap.title, collapse, expand, settingLabel; legend.title, collapse, expand, newMark; settings legendLabel · app d78ba58b · dirigent:prace/1113-app-drobnosti-1112 · ZADANI_DEV_drobnosti-1112 §2 -->

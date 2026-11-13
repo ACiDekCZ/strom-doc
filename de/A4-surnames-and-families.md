@@ -277,3 +277,39 @@ anderen Schreibweisen des Namens.
 - **Gilt seit:** App 3.0.0 (Ehename in der Suche 3.13.0)
 
 <!-- zdroj: app:src/name-search.ts:26 searchableSurnames · :82 surnameMatchesQuery · src/merge/matching.ts:38 normalizeName · src/person-picker.ts:18 sortByName · :28 calculateMatchScore · :98 hiddenSurnameMatchHtml · src/search-filter.ts:95 · src/given-names.ts -->
+
+<a id="A4.8.1"></a>
+### A4.8.1 Gleiche Namen in der Personenauswahl
+
+Wiederholt sich im Suchergebnis derselbe Name, hat jede solche Zeile unter dem Namen eine zweite, graue Zeile mit der
+kürzesten Angabe, die sie von den anderen gleichnamigen unterscheidet. Eine Zeile mit eindeutigem Namen sieht aus
+wie bisher.
+
+- **Wann:** gleich ist, was die Zeile zeigt: der Name mit Titeln und dem Hinweis auf den Geburts- oder früheren
+  Nachnamen sowie das Geburtsjahr, wenn die Liste es hinter den Namen schreibt. Verglichen wird wie bei der Suche,
+  ohne Groß- und Kleinschreibung und diakritische Zeichen. Gezählt wird im ganzen Ergebnis, auch in den Zeilen nach
+  den ersten 50.
+- **Reihenfolge der Angaben:**
+  1. Jahre: „* 1820 – † 1866“, nur die bekannten Teile und nur das Jahr. Ein Geburtsjahr, das die Liste hinter den
+     Namen schreibt, wird nicht wiederholt;
+  2. Partner: „⚭ Name“; bei mehreren Ehen der erste Partner, den die anderen Zeilen nicht haben;
+  3. Eltern: „Tochter von Vater und Mutter“ (beim Mann „Sohn von“, ohne Geschlecht „Kind von“), nur bekannte Eltern;
+  4. Ort: „Geburtsort …“, ohne ihn „Wohnort …“ (der letzte Wohnort mit Ort).
+- **Grenzen:**
+  - die Angaben werden in dieser Reihenfolge genommen, bis die Kombination keiner anderen Zeile der Gruppe entspricht;
+    gezeigt wird nur Bekanntes, verbunden mit „ · “. Unterscheidet nichts die Person, wird ihre erste bekannte Angabe
+    gezeigt, und ist über sie nichts bekannt, „keine weiteren Angaben“;
+  - eine über eine Angabe gefundene Person (Ehename, Todesursache, Haus, [A4.8](#A4.8)) hat eine Zeile: die
+    Unterscheidung und nach „ · “ den Fund. Ein Jahr, das der Fund schon nennt („† 1866 …“), wird in der
+    Unterscheidung nicht wiederholt;
+  - die Unterscheidungszeile verbreitert die Liste nicht: ein längeres Ende wird mit „…“ gekürzt. Der ganze Text
+    steht im Tooltip der Zeile, und ein Bildschirmleser liest die Zeile als „Name, Unterscheidung“;
+  - am Telefon ist die Liste so breit wie der Bildschirm.
+- **Wo:** jede Auswahl einer Person aus einem Feld: die Suche in der Werkzeugleiste, das Hinzufügen einer Beziehung,
+  das Ermitteln einer Verwandtschaft, das Lesen eines Dokuments, die Standardperson des Stammbaums und weitere. Die
+  Auswahl einer Person für den Weg der Vorfahren auf der Karte ([A6.5.4](A6-views.md#A6.5.4)) hat eine eigene Liste
+  ohne Unterscheidung.
+- **Bedienung:** keine: es gilt von selbst. Tasten und das Laden zu je 50 Zeilen bleiben unverändert.
+- **Gilt seit:** App 3.28.0
+
+<!-- zdroj: app:f5d56ed3 src/picker-distinguish.ts rowKey (shownNameParts + birthNoteText, rok narození jen se showBirthYear, normalizeSearchText), distinguishFeatures (roky * – †, bez roku v řádku a bez části, kterou říká nález; partner první, kterého jiné řádky nemají; rodiče otec, matka, ostatní, bez zástupných; rodiště, jinak poslední bydliště s místem), distinguishLine (nejkratší předpona údajů, kterou nemá nikdo jiný; jinak první známý; jinak distNone), PickerDistinguisher (celý výsledek, i za 50) · src/person-picker.ts renderItem (person-picker-dist, nález na jednom řádku za „ · “, role option, aria-label a title „jméno, rozlišení“) · index.html .person-picker-dist (výpustka, min-width 330 px, telefon 100vw) · všechny new PersonPicker (search.ts, relation-modal.ts, kinship-ui.ts, read-document-ui.ts, tree-management.ts …); PathPersonPicker samostatný · strings.ts personPicker.distNone, distChild, distAnd, distBorn, distLived · app ac34f598 · dirigent:prace/1113-app-drobnosti-1112 · ZADANI_DEV_drobnosti-1112 §1 -->

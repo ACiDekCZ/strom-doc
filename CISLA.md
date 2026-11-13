@@ -250,6 +250,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A4.6 | A4-surnames-and-families.md | aplikace 3.13.0 | platí | Příjmení po sňatku a používané příjmení | Married surname and the surname in use | Ehename und geführter Nachname | Nazwisko po ślubie i używane nazwisko |
 | A4.7 | A4-surnames-and-families.md | aplikace 1.15.0 | platí | Tvary příjmení stromu a návrhy z výzkumu | Surname spellings of the tree and suggestions from the research | Namensschreibweisen des Stammbaums und Vorschläge aus der Forschung | Formy nazwiska drzewa i propozycje z badania |
 | A4.8 | A4-surnames-and-families.md | aplikace 3.0.0 | platí | Hledání a řazení jmen | Searching and sorting names | Suche und Sortierung von Namen | Wyszukiwanie i sortowanie imion i nazwisk |
+| A4.8.1 | A4-surnames-and-families.md | aplikace 3.28.0 | platí | Stejná jména ve výběru osoby | Same names in a person list | Gleiche Namen in der Personenauswahl | Te same imiona i nazwiska w wyborze osoby |
 | A5 | A5-tree-check.md | aplikace 1.0.0 | platí | Kontrola stromu | Tree check | Prüfung des Stammbaums | Kontrola drzewa |
 | A5.1 | A5-tree-check.md | aplikace 3.17.0 | platí | Kontrola a její nálezy | The check and its findings | Die Prüfung und ihre Befunde | Kontrola i jej wyniki |
 | A5.1.1 | A5-tree-check.md | aplikace 1.10.0 | platí | Oprava jedním klikem | One-click fix | Behebung mit einem Klick | Naprawa jednym kliknięciem |
@@ -267,13 +268,14 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.1 | A6-views.md | aplikace 1.0.0 | platí | Okolí ústřední osoby v pohledu Rodina | The surroundings of the central person in the Family view | Umfeld der zentralen Person in der Ansicht Familie | Otoczenie osoby w centrum w widoku Rodzina |
 | A6.1.1 | A6-views.md | aplikace 1.0.0 | platí | Výchozí osoba a pohled | Default person and view | Standardperson und -ansicht | Domyślna osoba i widok |
 | A6.1.2 | A6-views.md | aplikace 3.27.0 | platí | Rozestupy: Normální a Husté | Spacing: Normal and Dense | Abstände: Normal und Dicht | Odstępy: Normalne i Gęste |
+| A6.1.3 | A6-views.md | aplikace 3.28.0 | platí | Děti a sourozenci najednou | Children and siblings at once | Kinder und Geschwister auf einmal | Dzieci i rodzeństwo naraz |
 | A6.2 | A6-views.md | aplikace 1.4.0 | platí | Pohled Potomci | The Descendants view | Ansicht Nachkommen | Widok Potomkowie |
 | A6.3 | A6-views.md | aplikace 1.5.0 | platí | Časová osa | Timeline | Zeitleiste | Oś czasu |
 | A6.4 | A6-views.md | aplikace 1.8.0 | platí | Vějíř | Fan | Fächer | Wachlarz |
 | A6.5 | A6-views.md | aplikace 1.10.0 | platí | Mapa | Map | Karte | Mapa |
 | A6.5.1 | A6-views.md | aplikace 1.10.0 | platí | Odkud mapa bere polohu místa | Where the map gets a place's location | Woher die Karte die Lage eines Ortes nimmt | Skąd mapa bierze położenie miejsca |
 | A6.5.2 | A6-views.md | aplikace 3.25.0 | platí | Místa mimo mapu dohledat ve výzkumu | Looking up places off the map in the research | Orte ohne Karte in der Forschung suchen | Odszukanie miejsc poza mapą w badaniu |
-| A6.5.3 | A6-views.md | aplikace 2.4.0 | platí | Migrace v čase | Migration over time | Wanderung über die Zeit | Migracje w czasie |
+| A6.5.3 | A6-views.md | aplikace 2.4.0 | platí | Migrace v čase | Migration over time | Migration im Zeitverlauf | Migracja w czasie |
 | A6.5.4 | A6-views.md | aplikace 3.28.0 | platí | Cesta předků k osobě | The ancestors' path to a person | Der Weg der Vorfahren zu einer Person | Droga przodków do osoby |
 | A6.5.5 | A6-views.md | aplikace 3.28.0 | platí | Barvy rodů a legenda Rody | Line colours and the Family lines legend | Linienfarben und die Legende Stammlinien | Kolory rodów i legenda Rody |
 | A6.5.6 | A6-views.md | aplikace 3.28.0 | platí | Přehrát cestu k osobě | Playing the path to a person | Den Weg zu einer Person abspielen | Odtwarzanie drogi do osoby |
@@ -320,6 +322,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A9.3 | A9-using-the-app.md | aplikace 3.25.0 | koncept | Úpravy během sledování výzkumu | Editing while following the research | Bearbeiten beim Verfolgen der Forschung | Edycja podczas śledzenia badania |
 | A9.4 | A9-using-the-app.md | výzkum 1.29.0, aplikace 3.25.0 | koncept | Agent v aplikaci | The agent in the app | Der Agent in der App | Agent w aplikacji |
 | A9.5 | A9-using-the-app.md | aplikace 3.28.0 | platí | Dolní lišta na telefonu a tabletu | The bottom bar on a phone and a tablet | Die untere Leiste auf Telefon und Tablet | Dolny pasek na telefonie i tablecie |
+| A9.6 | A9-using-the-app.md | aplikace 3.28.0 | platí | Minimapa a legenda stromu jdou sbalit | The minimap and the tree legend fold away | Minikarte und Stammbaum-Legende lassen sich einklappen | Minimapę i legendę drzewa można zwinąć |
 | S1 | S1-connecting-app-and-research.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Propojení aplikace a výzkumu | Connecting the app and the research | Verbindung von App und Forschung | Połączenie aplikacji i badania |
 | S1.1 | S1-connecting-app-and-research.md | výzkum 1.0.0 | platí | Most výzkumu běží jen na tomto počítači | The research's bridge runs only on this computer | Die Brücke der Forschung läuft nur auf diesem Computer | Most badania działa tylko na tym komputerze |
 | S1.2 | S1-connecting-app-and-research.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Výzkum se otevře v aplikaci odkazem z terminálu | The research opens in the app through a link from the terminal | Die Forschung öffnet sich in der App über einen Link aus dem Terminal | Badanie otwiera się w aplikacji linkiem z terminala |

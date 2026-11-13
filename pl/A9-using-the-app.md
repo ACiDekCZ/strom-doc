@@ -23,6 +23,7 @@ osoby; to, co dotyczy całego drzewa, jest na pasku narzędzi i w menu **Akcje**
 | edytować osobę | menu osoby → **Edytuj** | [S2](S2-edits-from-the-app.md), przy śledzeniu [A9.3](#A9.3) |
 | widok Mapa i inne widoki | przełącznik widoków na pasku narzędzi; na telefonie, tablecie i w oknie do 1024 px dolny pasek i **Więcej → Widok** | [A6](A6-views.md), [A9.5](#A9.5) |
 | całe drzewo w wierszach, eksport CSV i XLSX | **Tabela** w przełączniku widoków; na telefonie, tablecie i w oknie do 1024 px **Tabela** na dolnym pasku | [A6.7](A6-views.md#A6.7) |
+| zwinąć minimapę lub legendę drzewa | uszko nad minimapą; **◯** w legendzie | [A9.6](#A9.6) |
 | pełny ekran (telefon i tablet) | **Więcej → Pełny ekran**; na iPhonie w Safari **Więcej → Pełny ekran…** | [A9.5](#A9.5) |
 | widok albo Przegląd badania w osobnym oknie (na komputerze) | ⧉ **Otwórz w nowym oknie** obok przełącznika widoków; Ctrl+klik (macOS ⌘+klik) na karcie widoku; ⧉ na pasku Tabeli i w nagłówku Przeglądu | [A6.8](A6-views.md#A6.8), [S4.1.6](S4-research-from-the-app.md#S4.1.6) |
 | podkład mapy | **Pokaż mapę** przy powiadomieniu, że podkład wczytuje się z openstreetmap.org | [A9.4](#A9.4) |
@@ -127,3 +128,33 @@ i akcje są w arkuszu **Więcej**.
   w **Więcej → Widok**)
 
 <!-- zdroj: app:4b1373a7 index.html #bottom-bar (bb-view-family, bb-view-descendants, bottom-bar-fab edit-only, bb-view-table, bb-view-more) · src/ui/misc.ts:530–533 (active: table na liště; fan, map, timeline → Více) · src/breakpoints.ts isTabletOrMobile (≤ 1024 px), isPhoneBar, MQ_PHONE_LANDSCAPE · src/ui/bottom-sheet.ts blok 5 (Pohled: fan, map, timeline; rodRow jen isPhoneBar, ne timeline/map/table; fullscreenRow jen isTabletOrMobile, na šířku čtvrtá dlaždice) · src/ui/fullscreen.ts fullscreenOffer (fullscreenEnabled → enter/exit; iOS a ne standalone → ios-hint; jinak nic), toggleFullscreen (odmítnutí: okno beze změny) · src/file-copy.ts isIosDevice · src/pwa.ts isStandaloneDisplay · strings.ts mobileMenu.fullscreen, fullscreenExit, fullscreenIos, fullscreenIosText, menu.sectionView, viewModeSwitch.* · commit bb5e4d12 (dřív bb-view-timeline a v Pohledu Tabulka) · dirigent:spec/082-tester-3.28 K1.1, K1.3 · prace/1112-app-tester-328-telefon -->
+
+<a id="A9.6"></a>
+## A9.6 Minimapę i legendę drzewa można zwinąć
+
+Minimapę i legendę drzewa można zwinąć, aby nie zasłaniały drzewa. Urządzenie zapamiętuje wybór dla wszystkich drzew.
+Zwinięcie to nie wyłączenie: czy element w ogóle się pokazuje, nadal decydują ustawienia **Minimapa** i **Legenda
+drzewa**.
+
+- **Minimapa** (komputer i tablet, widoki Rodzina i Potomkowie, gdy drzewo jest większe niż okno):
+  - na górnej krawędzi bloku z minimapą jest uszko: ⌄ zwija minimapę (**Zwiń minimapę**), zwinięta ma uszko ze
+    znakiem minimapy (**Rozwiń minimapę**). Przy myszy uszko widać tylko po najechaniu na blok lub przy fokusie
+    klawiatury, na dotyku zawsze;
+  - zwinięta minimapa się ukrywa i nie rysuje; przyciski powiększenia zostają na swoim miejscu;
+  - domyślnie rozwinięta. Telefon nie ma minimapy.
+- **Legenda drzewa:**
+  - **◯** zwija legendę do chipu „◯ Legenda”, a chip ją z powrotem rozwija. Przyciskiem jest pierwsza część pigułki
+    (po najechaniu zmienia się w ⌄, **Zwiń legendę**), a w panelu ze znakami kart cały nagłówek „◯ Legenda ⌄”;
+  - domyślnie rozwinięta. Przeciąganie myszą po legendzie poza przyciskiem dalej przesuwa drzewo;
+  - zwinięty chip ma kropkę, gdy widok pokazuje rodzaj znaku karty, którego legenda na tym urządzeniu jeszcze
+    rozwinięta nie pokazała; czytnik ekranu czyta „Legenda, nowy znak”. Po rozwinięciu kropka znika;
+  - **telefon** (pionowo i poziomo): legenda jest zawsze chipem. Stuknięcie otwiera ją jako panel od dołu (poziomo
+    jako panel po prawej) z nagłówkiem „◯ Legenda” i **Gotowe**. Zamyka go **Gotowe**, stuknięcie obok, przeciągnięcie
+    w dół (poziomo w prawo) i Esc. Po odświeżeniu strony sam się nie otwiera, a telefon wyboru urządzenia nie czyta
+    ani nie zapisuje.
+- **Granice:** bez pamięci przeglądarki (okno prywatne) wybór obowiązuje do zamknięcia strony.
+- **Obsługa:** uszko nad minimapą; **◯** w legendzie, chip „◯ Legenda”. Wyłączenie: ustawienia **Minimapa**,
+  **Legenda drzewa**.
+- **Obowiązuje od:** aplikacja 3.28.0
+
+<!-- zdroj: app:f5d56ed3 src/ui/minimap.ts readMinimapOpen (strom-minimap-open, výchozí otevřeno), setMinimapFold (ouško jen když je minimapa nabízená), updateMinimap (isMinimapEnabled, mobil a telefon na šířku bez minimapy, STANDALONE_VIEWS, sbaleno: display none, nic se nekreslí) · src/ui/tree-legend.ts readTreeLegendOpen (strom-tree-legend-open, výchozí otevřeno), readTreeLegendSeen / noteTreeLegendSeen (strom-tree-legend-seen), syncTreeLegendFold (tečka, aria-label title + newMark, telefon vždy čip), openTreeLegendSheet (Hotovo = tour.done, klepnutí vedle, tažení 80 px dolů / doprava na šířku, nečte ani nepíše volbu), paměť bez úložiště · src/ui/misc.ts updateLegendMarks (data-marks: story-own, story-other, action, cross) · src/storage-keys.ts TREE_UI_STORAGE_KEYS · index.html .minimap-toggle (hover / pointer coarse), #tree-legend .tree-legend-toggle, pointer-events · strings.ts minimap.title, collapse, expand, settingLabel; legend.title, collapse, expand, newMark; settings legendLabel · app d78ba58b · dirigent:prace/1113-app-drobnosti-1112 · ZADANI_DEV_drobnosti-1112 §2 -->

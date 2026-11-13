@@ -80,6 +80,44 @@ takže se na obrazovku vejde víc osob. **Normální** je výchozí, i na telefo
 
 <!-- zdroj: app:src/types.ts TreeSpacing, DEFAULT_LAYOUT_CONFIG (31/80/18), DENSE_LAYOUT_CONFIG (20/48/14), layoutConfigFor · src/settings.ts getTreeSpacing/setTreeSpacing (treeSpacing), getPosterSpacing/setPosterSpacing (posterSpacing), výchozí normal · src/renderer.ts:804 STANDALONE_VIEWS (timeline, fan, map, table), getPosterLayout({spacing}), kotva překreslení (ústřední karta celá v obraze, jinak nejbližší středu; i při změně typu karty) · src/marriage-order.ts (husté: „∞ N“ na okraji karty, bez místa se nekreslí) · src/ui/export-image-ui.ts (řádek za formátem a orientací, skrytý u vějíře a časové osy, sheetsCount) · strings.ts spacing.label, normal, dense, desc, scope, scopeExport, smallHint, marriageOrder.short, poster.menu, poster.sheetsCount, settings.groupCard, cardDensity.settingLabel · commity 68b9dde4, 03918007, 928db183, e2891a8a · spec 069 K1.1, K3.1 -->
 
+<a id="A6.1.3"></a>
+### A6.1.3 Děti a sourozenci najednou
+
+V pohledu Rodina jde jedním krokem ukázat na místě děti osoby a sourozence osoby i jejích předků. Fokus, hloubka
+a přiblížení zůstanou, karta osoby stojí na stejném místě obrazovky.
+
+- **Kdo přibude:**
+  - děti osoby (ne vnoučata);
+  - sourozenci osoby a každého jejího předka, který je v pohledu a jehož rodiče jsou v pohledu. Horní řada hloubky
+    **Předci** se nerozbaluje (její sourozenci by přinesli novou generaci, to je práce hloubky); u ní zůstává
+    „▸ rodiče“;
+  - sourozenci jsou děti rodičů v pohledu ze všech sňatků, stejně jako u jednotlivého „Ukázat sourozence tady“.
+    S dětmi přibude i jejich druhý rodič, partneři, které pohled s nimi kreslí, a to, co pod nimi drží hloubka
+    **Potomci**.
+- **Počet +n:** kolik karet krok přidá; počítá ho stejné rozvržení jako pohled, takže po kroku přibude právě n
+  karet. Přepočítá se po každém vykreslení.
+- **Hranice:**
+  - krok je jedno rozvržení, jeden krok historie a jeden krok **Skrýt ukázané · n** (n + 1). Vrátí ho **Zpět**
+    v historii, **Skrýt ukázané** (vrátí všechno ukázané) nebo znovu stejná volba („Sbalit děti a sourozence“);
+  - na dotčených kartách jsou záložky „▾ děti“ a „▾ sourozenci“ a jednotlivé rodiny jdou dál sbalit po jedné;
+  - nová osoba ve fokusu, jiný pohled nebo strom krok zruší. Změna hloubky **Předci** nebo **Potomci** ukončí
+    všechny kroky „najednou“: jejich karty zmizí, rodiny ukázané po jedné zůstanou a volba nabídne „+n“ nové hloubky;
+  - nad 150 osob se aplikace nejdřív zeptá bublinou: „Přibude n osob“, „Strom se rozšíří asi na k šířek obrazovky.
+    Přiblížení se nemění.“ (k ze skutečného rozvržení při dnešním přiblížení, zaokrouhleno nahoru) a tlačítka
+    **Rozbalit +n**, **Jen 2 generace předků +m** (jen sourozenci osoby, rodičů a prarodičů; chybí, když m je n
+    nebo 0) a **Zrušit**. Esc, klik vedle nebo změna velikosti okna = Zrušit. Do 150 osob bez ptaní.
+- **Ovládání:** aplikace, pohled Rodina:
+  - lišta pohledu, hned za volbami **Předci** a **Potomci**: **Děti a sourozenci +n** pro osobu ve fokusu. Zapnutý
+    krok ukáže ✓ a klik ho vrátí; když není co přidat, je volba ztlumená („Všechny děti a sourozenci už jsou
+    vidět“). Na tabletu ikona a „+n“; když se do lišty nevejde, ustoupí (nabídka osoby ji má dál). Telefon volbu
+    v liště nemá;
+  - nabídka osoby (na dotyku spodní panel osoby) pod řádky, které ukazují na místě rodiče, sourozence a děti: **Rozbalit
+    děti a sourozence · +n** s podřádkem „děti osoby, sourozenci osoby a jejích předků“, jen když je co přidat;
+    při stojícím kroku osoby **Sbalit děti a sourozence**. U osoby ve fokusu je to tentýž krok jako v liště.
+- **Platí od:** aplikace 3.28.0
+
+<!-- zdroj: app:f5d56ed3 src/bulk-family.ts collectBulkFamily (childrenOf osoba; siblingsOf osoba a předci v pohledu s rodiči v pohledu; maxGeneration), bulkParents, bulkNewIds (drawnPersonIds, kroky 1–5 pipeline), BULK_CONFIRM_ABOVE 150, BULK_TWO_GENERATIONS 2 · src/renderer.ts bulkFamilyPlan (jen family), bulkFamilyState (offer/on/none), bulkFamilyScreens (ceil šířka × zoom / plátno), showBulkFamily → showChildrenOf (jeden krok historie, zoom beze změny, kotva), undoBulkFamily, bulkStepOf (jen při stejné hloubce), forgetBulkSteps při změně hloubky, resetChildrenShown při změně fokusu, pohledu, stromu, hiddenShownCount (+1 za krok) · src/ui/bulk-family-ui.ts confirmBulkFamily (Esc, klik vedle, resize = zrušit; two jen m > 0 a m ≠ n), runBulkFamily, updateBulkFamilySwitches (title treeTip/menuOff/treeNone, aria-disabled) · src/ui/context-menu.ts bulkFamilyRows (offer: menu, +n, menuSub; on: menuOff) · src/ui/toolbar-fit.ts (tablet: přepínač ustoupí před hledáním, f5d56ed3) · index.html button.bulk-family (telefon skrytý) · strings.ts bulk.*, menu.showChildrenHere, showSiblingsHere, focusBar hideAllShown, history back · app 2eb013ba, cecea43f, 8dc34565, f5d56ed3 · dirigent:prace/1113-app-drobnosti-1112 · ZADANI_DEV_drobnosti-1112 §3 -->
+
 <a id="A6.2"></a>
 ## A6.2 Pohled Potomci
 
@@ -243,11 +281,14 @@ roku přibyla, a čáry stěhování rodu.
     režim zapne, **Teď ne** kartu zavře. Po kterékoli z obou se karta na tomto zařízení už neukáže;
   - klávesy na posuvníku: šipky o rok, PageUp a PageDown o 10 let, Home a End na začátek a konec. Mezerník kdekoli
     na mapě (mimo pole a tlačítka) přehraje nebo pozastaví. Ruční posun přehrávání pozastaví;
-  - v režimu jde vybrat osobu, ke které vede cesta jejích předků ([A6.5.4](#A6.5.4)).
+  - v režimu jde vybrat osobu, ke které vede cesta jejích předků ([A6.5.4](#A6.5.4));
+  - **Přehrát** a **Pozastavit** mají stejnou šířku (delšího z obou slov v daném jazyce), takže se posuvník, jeho
+    značky ani rok při spuštění a zastavení neposunou. Telefon má jen ikonu.
 - **Ovládání:** aplikace: mapa → **◷ V čase** (**Migrace v čase**) → posuvník, **Přehrát** / **Pozastavit**.
-- **Platí od:** aplikace 2.4.0; druhy míst 3.21.0; text tlačítka, jednorázová nabídka a klávesy 3.28.0
+- **Platí od:** aplikace 2.4.0; druhy míst 3.21.0; text tlačítka, jednorázová nabídka, klávesy a stálá šířka
+  **Přehrát** 3.28.0
 
-<!-- zdroj: app:src/map-time.ts collectDatedPlacePoints (undatedPlaceCount, minYear/maxYear) · src/ui/map-ui.ts drawMapTimeLayer (fresh = posledních 10 let, slice(0, 400) s koncem u výřezu), mapMigrationSegments (místa narození rodič → dítě, opacity max(0.15, 1 − věk/60·0.85), bez Narození nic), toggleMapTimePlay (setInterval 120, na konci od začátku), renderMapTimeTip / dismissMapTimeTip (strom.map.timeTipSeen, ≥ 2 datovaná místa s polohou, podklad mapy potvrzený), klávesy na posuvníku a mezerník (setMapTimeYear pozastaví) · strings.ts map.timeMode, timeModeShort, timeModeEmpty, timePlay, timePause, timeUndated, noFamilyPath, timeTipTitle, timeTipText, timeTipTry, timeTipLater · Migrace v čase od v2.4.0 (app 44a903bc) · 3.28.0: app 34e82d43, cce82a89 (app:81f2adf0) · CHANGELOG.cs.md 3.21.0, 3.28.0 · spec 054 P2 -->
+<!-- zdroj: app:src/map-time.ts collectDatedPlacePoints (undatedPlaceCount, minYear/maxYear) · src/ui/map-ui.ts drawMapTimeLayer (fresh = posledních 10 let, slice(0, 400) s koncem u výřezu), mapMigrationSegments (místa narození rodič → dítě, opacity max(0.15, 1 − věk/60·0.85), bez Narození nic), toggleMapTimePlay (setInterval 120, na konci od začátku), renderMapTimeTip / dismissMapTimeTip (strom.map.timeTipSeen, ≥ 2 datovaná místa s polohou, podklad mapy potvrzený), klávesy na posuvníku a mezerník (setMapTimeYear pozastaví) · strings.ts map.timeMode, timeModeShort, timeModeEmpty, timePlay, timePause, timeUndated, noFamilyPath, timeTipTitle, timeTipText, timeTipTry, timeTipLater · Migrace v čase od v2.4.0 (app 44a903bc) · 3.28.0: app 34e82d43, cce82a89 (app:81f2adf0) · CHANGELOG.cs.md 3.21.0, 3.28.0 · spec 054 P2 · stálá šířka Přehrát/Pozastavit: app 35ed67f9 src/ui/map-ui.ts (obě slova v jedné buňce, map-time-play-word), index.html .map-time-play-text -->
 
 <a id="A6.5.4"></a>
 ### A6.5.4 Cesta předků k osobě
@@ -288,11 +329,13 @@ dítěti až k vybrané osobě a lišta končí u ní.
     (**Změnit osobu**), **×** cestu zruší (**Zrušit cestu**);
   - v bublině místa klik na osobu → **◎ Cesta k této osobě** (vedle **Stránka osoby ›**), i bez vybrané osoby;
   - na stránce osoby **◎ Cesta předků na mapě ›** ([A7.6](A7-book-pages-and-export.md#A7.6)): stránka se zavře,
-    mapa ukáže cestu od prvního roku a oznámení nabídne **‹ Zpět na stránku osoby**. Když osoba předky má, ale žádný
-    není na mapě, je odkaz zašedlý („Předkové zatím nemají místa na mapě.“). Bez předků ve stromu odkaz není.
+    mapa ukáže cestu od prvního roku a oznámení nabídne **‹ Zpět na stránku osoby**. Odkaz je v oddílu **Místa
+    života**. Osoba s nejvýš jedním vlastním místem tento oddíl nemá; když má předky na mapě, stojí odkaz na vlastním
+    řádku tam, kde by oddíl byl. Když osoba předky má, ale žádný není na mapě, je odkaz zašedlý („Předkové zatím
+    nemají místa na mapě.“) a jen v oddílu **Místa života**. Bez předků ve stromu odkaz není.
 - **Platí od:** aplikace 3.28.0
 
-<!-- zdroj: app:src/map-lines.ts buildPathModel (maxGen 30, fatherMother přes parentSlots jako vějíř, isPlaceholder není předek, implex záznam na cestu, expanded podle osoby a větve), placeOf (narození → křest → první datované bydliště, jen s polohou; rok narození → křest → místa), missing (date/place/both), yearFrom/yearTo, links, pathSegments (PATH_LINE_CAP 400, pořadí kmen, fresh < 10 let, generace, výřez, délka) · src/ui/map-path-ui.ts (mapEffectiveScope celý strom, čip místo rozsahu, clearMapPath vrátí rozsah, jednorázový výřez framed, cíl čárkovaný → plný, pathTargetNoPlace, pathNoAncestors + pathOtherPerson) · src/person-picker.ts PathPersonPicker (limit 30, recentId = ústřední osoba, onMapCount 0 = aria-disabled, celý strom) · src/ui/map-lines-legend-ui.ts mapPathBubbleParts · src/ui/map-ui.ts showMapPathPlace, toggleMapTime (vypnutí skryje, zapnutí od začátku) · src/ui/person-page-ui.ts personPageMapPath (on/off/null), openPersonPageMapPath (toast map-path-back) · src/person-page-map.ts (pp-map-path, aria-disabled, jen v okně aplikace) · src/windows/view-window-state.ts MapTimeState path, mode, colors · strings.ts map.pathPick, pathPickTitle, pathPickPlaceholder, pathPickRecent, pathPickOnMap, pathPickNone, pathChip, pathChange, pathClear, pathFromPage, pathThisPerson, pathBackToPage, pathGoal, pathGoalEnd, pathTargetNoPlace, pathNoAncestors, pathOtherPerson, linesCut, linesCutWhy, missingDate, missingPlace, missingBoth · app 388e5a87, b01693bc, 5853882e, 34e82d43 (app:81f2adf0) · dirigent:prace/1113-app-mapa-rody-v-case · ZADANI_UIX_mapa-rody-v-case D3, D4 (ponechat) · spec 054 K2.1, P2 · CHANGELOG.cs.md 3.28.0 -->
+<!-- zdroj: app:src/map-lines.ts buildPathModel (maxGen 30, fatherMother přes parentSlots jako vějíř, isPlaceholder není předek, implex záznam na cestu, expanded podle osoby a větve), placeOf (narození → křest → první datované bydliště, jen s polohou; rok narození → křest → místa), missing (date/place/both), yearFrom/yearTo, links, pathSegments (PATH_LINE_CAP 400, pořadí kmen, fresh < 10 let, generace, výřez, délka) · src/ui/map-path-ui.ts (mapEffectiveScope celý strom, čip místo rozsahu, clearMapPath vrátí rozsah, jednorázový výřez framed, cíl čárkovaný → plný, pathTargetNoPlace, pathNoAncestors + pathOtherPerson) · src/person-picker.ts PathPersonPicker (limit 30, recentId = ústřední osoba, onMapCount 0 = aria-disabled, celý strom) · src/ui/map-lines-legend-ui.ts mapPathBubbleParts · src/ui/map-ui.ts showMapPathPlace, toggleMapTime (vypnutí skryje, zapnutí od začátku) · src/ui/person-page-ui.ts personPageMapPath (on/off/null), openPersonPageMapPath (toast map-path-back) · src/person-page-map.ts (pp-map-path, aria-disabled, jen v okně aplikace; mapPathRowHtml vlastní řádek bez oddílu Místa života jen pro mapPath on, app caea192a) · src/person-page.ts mapPathRow · src/windows/view-window-state.ts MapTimeState path, mode, colors · strings.ts map.pathPick, pathPickTitle, pathPickPlaceholder, pathPickRecent, pathPickOnMap, pathPickNone, pathChip, pathChange, pathClear, pathFromPage, pathThisPerson, pathBackToPage, pathGoal, pathGoalEnd, pathTargetNoPlace, pathNoAncestors, pathOtherPerson, linesCut, linesCutWhy, missingDate, missingPlace, missingBoth · app 388e5a87, b01693bc, 5853882e, 34e82d43 (app:81f2adf0) · dirigent:prace/1113-app-mapa-rody-v-case · ZADANI_UIX_mapa-rody-v-case D3, D4 (ponechat) · spec 054 K2.1, P2 · CHANGELOG.cs.md 3.28.0 -->
 
 <a id="A6.5.5"></a>
 ### A6.5.5 Barvy rodů a legenda Rody
@@ -316,7 +359,9 @@ Cesta předků je barevná podle rodů. Rod je tu větev jednoho prarodiče (čt
   - **Čtvrtiny** · **Osminy**. **Osminy** jdou zvolit, když strom zná aspoň dvě osminy;
   - řádek rodu: vzor čáry, příjmení, vztah a počet předků na mapě („otcův otec · 12 předků“). V osminách stojí
     řádky pod nadpisem své čtvrtiny („1 · příjmení“). Neznámý prarodič má řádek bez barvy („otcova matka –
-    neznámá“). Poslední řádek je **Kmen: rodiče a prarodiče**;
+    neznámá“). Rod, jehož žádný předek na liště není (všichni bez data nebo místa), má řádek tlumený jako neznámý,
+    s prázdným čárkovaným vzorkem a „mimo lištu“ místo počtu („otcova matka · mimo lištu“); zvýraznit ani připnout
+    nejde. Poslední řádek je **Kmen: rodiče a prarodiče**;
   - najetí na řádek rod na chvíli zvýrazní, klik ho připne a ostatní rody utlumí. Esc nebo druhý klik připnutí
     zruší, přepnutí čtvrtin a osmin taky;
   - pod řádky stojí: první osoba ve dvou větvích („↻ jméno (rok) je ve dvou větvích: … a ….“), ořez velkého stromu
@@ -330,7 +375,7 @@ Cesta předků je barevná podle rodů. Rod je tu větev jednoho prarodiče (čt
 - **Ovládání:** aplikace: mapa → **◷ V čase** → cesta k osobě ([A6.5.4](#A6.5.4)) → legenda **Rody**.
 - **Platí od:** aplikace 3.28.0
 
-<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml · strings.ts map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
+<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml, offTimeline (count 0: is-unknown, is-off-timeline, swatch is-empty, app caea192a) · strings.ts map.linesOffTimeline, map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
 
 <a id="A6.5.6"></a>
 ### A6.5.6 Přehrát cestu k osobě
