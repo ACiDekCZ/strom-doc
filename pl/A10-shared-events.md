@@ -78,9 +78,9 @@ wszystkich kopiach takie same, a zmiana dowolnej kopii dotyczy wszystkich.
 Wspólne wydarzenie jest w życiu każdej osoby, która je ma. Gdzie w jednym miejscu jest kilka osób tego wydarzenia,
 pokazuje się raz.
 
-- **Lista wydarzeń osoby:** pod wydarzeniem wiersz „razem z …”: do 3 osób z imienia i nazwiska, więcej jako pierwsze
+- **Lista wydarzeń osoby:** pod wydarzeniem wiersz „razem: …”: do 3 osób z imienia i nazwiska, więcej jako pierwsze
   2 i „i N innych”. **Otwórz wspólne wydarzenie** otwiera edycję wydarzenia.
-- **Strona osoby, sekcja Oś czasu życia:** jak pozostałe wydarzenia osoby, z wierszem „razem z …”.
+- **Strona osoby, sekcja Oś czasu życia:** jak pozostałe wydarzenia osoby, z wierszem „razem: …”.
 - **Mapa:** w dymku miejsca wspólne wydarzenie jest jednym wierszem ze wszystkimi osobami.
 - **Oś czasu rodziny:** raz.
 - **Księga i strony rodziny:** blok **Rodzina razem**, gdy wszystkie osoby wydarzenia są w tej rodzinie (para i ich

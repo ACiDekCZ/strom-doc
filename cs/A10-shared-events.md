@@ -75,9 +75,9 @@ kopií stejné a úprava kterékoli kopie platí pro všechny.
 Společná událost je v životě každé osoby, která ji má. Kde jsou na jednom místě víc osob té události, ukáže se
 jednou.
 
-- **Seznam událostí osoby:** pod událostí řádek „spolu s …“: do 3 osob jménem, víc jako první 2 a „a další N“.
+- **Seznam událostí osoby:** pod událostí řádek „spolu: …“: do 3 osob jménem, víc jako první 2 a „a další N“.
   **Otevřít společnou událost** otevře úpravu události.
-- **Stránka osoby, oddíl Časová osa života:** jako ostatní události osoby, s řádkem „spolu s …“.
+- **Stránka osoby, oddíl Časová osa života:** jako ostatní události osoby, s řádkem „spolu: …“.
 - **Mapa:** v bublině místa je společná událost jedním řádkem se všemi osobami.
 - **Časová osa rodiny:** jednou.
 - **Kniha a stránky rodiny:** blok **Rodina spolu**, když jsou všechny osoby události v této rodině (pár a jejich
