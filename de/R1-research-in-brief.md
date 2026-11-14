@@ -155,7 +155,8 @@ wie sicher sie ist und auf welcher Quelle sie beruht. Der Befehl liest nur: er p
     widerlegte Angaben nur mit `--status disproven`;
   - die Beziehung zur Ausgangsperson (Einstellung `main.person`, sonst `--of P…`) steht in Worten in der Sprache der
     Forschung, mit der Seite und der Generation, zum Beispiel **Großvater, väterlicherseits (G3)**. G1 ist die
-    Ausgangsperson, G2 ihre Eltern;
+    Ausgangsperson, G2 ihre Eltern. Ohne Ausgangsperson, oder wenn sie zurückgezogen ist, lehnt `strom query` ab und
+    sagt, wie es weitergeht (`strom config set main.person P…` oder `--of P…`);
   - wessen Angaben (`--kin`): `ancestors` die Ausgangsperson und die direkte Linie; `blood` (Standard) die Vorfahren
     und alle ihre Nachkommen, auch die Seitenzweige; `family` die Blutsverwandten und ihre Partner; `all` der ganze
     Baum;
@@ -190,7 +191,7 @@ wie sicher sie ist und auf welcher Quelle sie beruht. Der Befehl liest nur: er p
   `strom query`.
 - **Gilt seit:** Forschung 1.32.0
 
-<!-- zdroj: research:src/commands/query.ts (popis, volby, KIN_SETS, FACT_GROUPS, LIST_PAGE_MAX=100, elsewhereOf, tries) · src/core/query.ts (hlavička, kinSet, SHOWN_STATUSES, ASKED_STATUSES) · src/core/occupations.ts · src/commands/analysis.ts help find („the facts recorded of people … strom query“) · src/cli/execute.ts RENAMED, renamedCommand · src/agents/files.ts AGENTS.md „Questions over the data“ · src/commands/start.ts app --person · cs.json ui.query.*, ui.error.command.renamed · test/cli/query.test.ts · CHANGELOG.cs.md 1.32.0 · spec 081 K1–K7 -->
+<!-- zdroj: research:src/commands/query.ts (popis, volby, KIN_SETS, FACT_GROUPS, LIST_PAGE_MAX=100, elsewhereOf, tries) · src/core/query.ts (hlavička, kinSet, SHOWN_STATUSES, ASKED_STATUSES) · src/core/occupations.ts · src/commands/analysis.ts help find („the facts recorded of people … strom query“) · src/cli/execute.ts RENAMED, renamedCommand · src/agents/files.ts AGENTS.md „Questions over the data“ · src/commands/start.ts app --person · cs.json ui.query.*, ui.error.command.renamed · test/cli/query.test.ts · CHANGELOG.cs.md 1.32.0 · spec 081 K1–K7 · query bez hlavní osoby / odvolaná: src/commands/query.ts ofPerson (query.no-main, query.retracted), cs.json ui.error.query.*, commit 6cdab11b -->
 
 <a id="R1.9.1"></a>
 ### R1.9.1 Erzählungen: `strom query --story`

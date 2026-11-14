@@ -147,7 +147,8 @@ czyta: niczego nie weryfikuje i niczego nie zapisuje.
     z `--status disproven`;
   - pokrewieństwo z osobą wyjściową (ustawienie `main.person`, w przeciwnym razie `--of P…`) jest słowami w języku
     badania, ze stroną i pokoleniem, na przykład **dziadek, ze strony ojca (G3)**. G1 to osoba wyjściowa, G2 jej
-    rodzice;
+    rodzice. Bez osoby wyjściowej albo gdy jest wycofana, `strom query` odmawia i mówi, jak dalej
+    (`strom config set main.person P…` albo `--of P…`);
   - czyje dane (`--kin`): `ancestors` osoba wyjściowa i linia prosta; `blood` (domyślnie) przodkowie i wszyscy ich
     potomkowie, także gałęzie boczne; `family` krewni i ich partnerzy; `all` całe drzewo;
   - filtry obowiązują wszystkie naraz: `--kind` (rodzaj danej: OCCU, RESI, BIRT …; nieznany rodzaj zostaje odrzucony
@@ -175,7 +176,7 @@ czyta: niczego nie weryfikuje i niczego nie zapisuje.
   mówi **„strom facts” to teraz „strom query” (te same opcje)** i całe wywołanie ze `strom query`.
 - **Obowiązuje od:** badanie 1.32.0
 
-<!-- zdroj: research:src/commands/query.ts (popis, volby, KIN_SETS, FACT_GROUPS, LIST_PAGE_MAX=100, elsewhereOf, tries) · src/core/query.ts (hlavička, kinSet, SHOWN_STATUSES, ASKED_STATUSES) · src/core/occupations.ts · src/commands/analysis.ts help find („the facts recorded of people … strom query“) · src/cli/execute.ts RENAMED, renamedCommand · src/agents/files.ts AGENTS.md „Questions over the data“ · src/commands/start.ts app --person · cs.json ui.query.*, ui.error.command.renamed · test/cli/query.test.ts · CHANGELOG.cs.md 1.32.0 · spec 081 K1–K7 -->
+<!-- zdroj: research:src/commands/query.ts (popis, volby, KIN_SETS, FACT_GROUPS, LIST_PAGE_MAX=100, elsewhereOf, tries) · src/core/query.ts (hlavička, kinSet, SHOWN_STATUSES, ASKED_STATUSES) · src/core/occupations.ts · src/commands/analysis.ts help find („the facts recorded of people … strom query“) · src/cli/execute.ts RENAMED, renamedCommand · src/agents/files.ts AGENTS.md „Questions over the data“ · src/commands/start.ts app --person · cs.json ui.query.*, ui.error.command.renamed · test/cli/query.test.ts · CHANGELOG.cs.md 1.32.0 · spec 081 K1–K7 · query bez hlavní osoby / odvolaná: src/commands/query.ts ofPerson (query.no-main, query.retracted), cs.json ui.error.query.*, commit 6cdab11b -->
 
 <a id="R1.9.1"></a>
 ### R1.9.1 Opowieści: `strom query --story`

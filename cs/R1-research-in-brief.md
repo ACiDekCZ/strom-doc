@@ -137,7 +137,8 @@ osobě, co údaj říká, kde, kdy, jak je jistý a z jakého pramene. Příkaz 
   - údaj rodiny (sňatek) má řádek za každého partnera. Odvolané osoby a údaje nikdy, vyvrácené údaje jen
     s `--status disproven`;
   - vztah k výchozí osobě (nastavení `main.person`, jinak `--of P…`) je slovy v jazyce výzkumu, se stranou
-    a generací, například **děd, z otcovy strany (G3)**. G1 je výchozí osoba, G2 její rodiče;
+    a generací, například **děd, z otcovy strany (G3)**. G1 je výchozí osoba, G2 její rodiče. Bez výchozí osoby, nebo když je odvolaná,
+    `strom query` odmítne a řekne, jak dál (`strom config set main.person P…`, nebo `--of P…`);
   - čí údaje (`--kin`): `ancestors` výchozí osoba a přímá linie; `blood` (výchozí) předkové a všichni jejich
     potomci, i boční větve; `family` pokrevní příbuzní a jejich partneři; `all` celý strom;
   - filtry platí všechny zároveň: `--kind` (druh údaje: OCCU, RESI, BIRT …; neznámý druh se odmítne se seznamem
@@ -165,7 +166,7 @@ osobě, co údaj říká, kde, kdy, jak je jistý a z jakého pramene. Příkaz 
   **„strom facts“ je teď „strom query“ (stejné přepínače)** a celé volání s `strom query`.
 - **Platí od:** výzkum 1.32.0
 
-<!-- zdroj: research:src/commands/query.ts (popis, volby, KIN_SETS, FACT_GROUPS, LIST_PAGE_MAX=100, elsewhereOf, tries) · src/core/query.ts (hlavička, kinSet, SHOWN_STATUSES, ASKED_STATUSES) · src/core/occupations.ts · src/commands/analysis.ts help find („the facts recorded of people … strom query“) · src/cli/execute.ts RENAMED, renamedCommand · src/agents/files.ts AGENTS.md „Questions over the data“ · src/commands/start.ts app --person · cs.json ui.query.*, ui.error.command.renamed · test/cli/query.test.ts · CHANGELOG.cs.md 1.32.0 · spec 081 K1–K7 -->
+<!-- zdroj: research:src/commands/query.ts (popis, volby, KIN_SETS, FACT_GROUPS, LIST_PAGE_MAX=100, elsewhereOf, tries) · src/core/query.ts (hlavička, kinSet, SHOWN_STATUSES, ASKED_STATUSES) · src/core/occupations.ts · src/commands/analysis.ts help find („the facts recorded of people … strom query“) · src/cli/execute.ts RENAMED, renamedCommand · src/agents/files.ts AGENTS.md „Questions over the data“ · src/commands/start.ts app --person · cs.json ui.query.*, ui.error.command.renamed · test/cli/query.test.ts · CHANGELOG.cs.md 1.32.0 · spec 081 K1–K7 · query bez hlavní osoby / odvolaná: src/commands/query.ts ofPerson (query.no-main, query.retracted), cs.json ui.error.query.*, commit 6cdab11b -->
 
 <a id="R1.9.1"></a>
 ### R1.9.1 Vyprávění: `strom query --story`
