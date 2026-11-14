@@ -754,10 +754,16 @@ cancels it.
   A change from the research is announced by “Research changed 3 facts: …”.
 - One fact can also be edited right in the cell ([A6.7.15](#A6.7.15)).
 - **Limits:** in a read-only tree there is no **Edit…**.
-- **Controls:** buttons at the selected row, the row menu (right button; expanding unions too). On a phone a tap on a
-  row opens a panel with the actions and the unions (“Union 1: … · Edit ›”).
+- **Controls:** the buttons ⌖ ▤ ✎ at the row's end, over no cell's text: with a mouse they show once the pointer has
+  been on the row away from them, on the selected row also with the pointer elsewhere; the row menu (right button;
+  expanding unions too). A finger's tap on a row (a phone, a narrow window, a device worked mainly by touch) opens a
+  panel with the actions and the unions (“Union 1: … · Edit ›”).
+- **From app 3.28.0:** a click with a mouse or a pen only selects the row and the cell on every device, also on a
+  laptop with a touch screen, a tablet with a mouse and in a narrow window; the click's pointer decides, not the
+  device. Up to 3.27.0 every click opened the row panel on a touch device and in a narrow window. The row's actions
+  stand at its end, so the persons' column keeps its whole width on the selected row.
 
-<!-- zdroj: app:src/ui/table-view/table-ui.ts tableMethods (tableRowAction: tree → Rodina, focus, highlight; open; edit → dialog osoby / panel vztahů na svazku), personOfRow (Partner 1), keepWork · table-refresh.ts keepOrder, watchEdit, changedKeys, bridgeChanges, namesList · table-grid.ts FLASH_MS · strings.ts table.act.*, dblClickHint, actionsOf, unionWith, editMore, staleRow, savedToast, bridgeToast · commity da6b9786, de46ae30, e4a35406 -->
+<!-- zdroj: app:src/ui/table-view/table-ui.ts tableMethods (tableRowAction: tree → Rodina, focus, highlight; open; edit → dialog osoby / panel vztahů na svazku), personOfRow (Partner 1), keepWork · table-refresh.ts keepOrder, watchEdit, changedKeys, bridgeChanges, namesList · table-grid.ts FLASH_MS · strings.ts table.act.*, dblClickHint, actionsOf, unionWith, editMore, staleRow, savedToast, bridgeToast · commity da6b9786, de46ae30, e4a35406 · od 3.28.0: table-grid.ts clickPointerType, isMouseLikePointer, table-ui.ts onRowClick (panel jen klepnutí a isPhoneBar | isCoarsePointer), commit ee38c7a6; rowActions ⌖ ▤ ✎ v .tv-acts-dock, armRowActions (myš a pero), commit 80c2ffb9 -->
 
 <a id="A6.7.9"></a>
 ### A6.7.9 CSV and XLSX export
@@ -1089,7 +1095,7 @@ cell can be copied, the table filtered by its value and the fact in it edited ri
 
 - **Copy:** Ctrl/Cmd+C without selected text copies the text the active cell shows, without marks, icons and pills.
   Text selected by hand is copied as usual.
-- **Cell menu:** the row menu (right button, Shift+F10) and on a phone the row panel (a tap on the cell) begin with
+- **Cell menu:** the row menu (right button, Shift+F10) and the row panel (a finger's tap on the cell) begin with
   the cell's choices **Copy**, **Only “{value}”** and **Without “{value}”** (the value shortened to about 24 characters
   with “…”); under them are the row actions ([A6.7.8](#A6.7.8)). The menu opens at the cell, also when another row was
   selected.
@@ -1115,7 +1121,9 @@ cell can be copied, the table filtered by its value and the fact in it edited ri
 
   **Full name** is not edited in the cell (it is made of several parts), nor are computed cells, checks, research,
   citations, counts and relationships; a double click on them opens **Edit…**.
-- **The field** covers the cell. **Enter** saves, **Esc** cancels, **Tab** and **Shift+Tab** save and go to the next
+- **The field** stands in the cell. Only in a column narrower than the field's least width (text and date 100 px,
+  place 140 px, a choice 90 px) is the field wider, lying over the row with a shadow (from app 3.28.0; before, it
+  lay over the next cell). **Enter** saves, **Esc** cancels, **Tab** and **Shift+Tab** save and go to the next
   or previous editable cell of the row, a click elsewhere saves. In a choice a click with the mouse saves the value at
   once; after choosing with the arrows, Enter, Tab or a click elsewhere saves it. The date is read as in the person form; an unreadable
   one stays in the field with the error “The date cannot be read (e.g. 1880-05-15, 1880, about 1880)”. The place
@@ -1131,7 +1139,7 @@ cell can be copied, the table filtered by its value and the fact in it edited ri
   finding's bubble), in the row menu **Edit cell** (F2). An editable cell has a text cursor on hovering with the mouse.
 - **Since:** app 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) · pole v buňce: table-grid.ts EDITOR_MIN_WIDTH (text 100, date 100, place 140, select 90), placeEditor, commit 80c2ffb9 · panel klepnutím: commit ee38c7a6 -->
 
 <a id="A6.8"></a>
 ## A6.8 A view in a separate window

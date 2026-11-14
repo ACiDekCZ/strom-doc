@@ -733,10 +733,16 @@ anuluje.
   z badania zgłasza „Badanie zmieniło 3 dane: …”.
 - Jedną daną można edytować także bezpośrednio w komórce ([A6.7.15](#A6.7.15)).
 - **Granice:** w drzewie tylko do odczytu **Edytuj…** nie ma.
-- **Obsługa:** przyciski przy wybranym wierszu, menu wiersza (prawy przycisk; także rozwinięcie związków). Na
-  telefonie stuknięcie wiersza otwiera panel z akcjami i ze związkami („Związek 1: … · Edytuj ›”).
+- **Obsługa:** przyciski ⌖ ▤ ✎ na końcu wiersza, nad żadnym tekstem komórki: przy myszy pokażą się, gdy wskaźnik
+  był na wierszu poza nimi, przy wybranym wierszu także ze wskaźnikiem gdzie indziej; menu wiersza (prawy przycisk;
+  także rozwinięcie związków). Stuknięcie palcem w wiersz (telefon, wąskie okno, urządzenie obsługiwane głównie
+  dotykiem) otwiera panel z akcjami i ze związkami („Związek 1: … · Edytuj ›”).
+- **Od aplikacji 3.28.0:** kliknięcie myszą lub piórem tylko wybiera wiersz i komórkę na każdym urządzeniu, także na
+  laptopie z ekranem dotykowym, tablecie z myszą i w wąskim oknie; decyduje wskaźnik kliknięcia, nie urządzenie. Do
+  3.27.0 na urządzeniu dotykowym i w wąskim oknie każde kliknięcie otwierało panel wiersza. Akcje wiersza stoją na
+  jego końcu, więc kolumna osób ma na wybranym wierszu całą szerokość.
 
-<!-- zdroj: app:src/ui/table-view/table-ui.ts tableMethods (tableRowAction: tree → Rodina, focus, highlight; open; edit → dialog osoby / panel vztahů na svazku), personOfRow (Partner 1), keepWork · table-refresh.ts keepOrder, watchEdit, changedKeys, bridgeChanges, namesList · table-grid.ts FLASH_MS · strings.ts table.act.*, dblClickHint, actionsOf, unionWith, editMore, staleRow, savedToast, bridgeToast · commity da6b9786, de46ae30, e4a35406 -->
+<!-- zdroj: app:src/ui/table-view/table-ui.ts tableMethods (tableRowAction: tree → Rodina, focus, highlight; open; edit → dialog osoby / panel vztahů na svazku), personOfRow (Partner 1), keepWork · table-refresh.ts keepOrder, watchEdit, changedKeys, bridgeChanges, namesList · table-grid.ts FLASH_MS · strings.ts table.act.*, dblClickHint, actionsOf, unionWith, editMore, staleRow, savedToast, bridgeToast · commity da6b9786, de46ae30, e4a35406 · od 3.28.0: table-grid.ts clickPointerType, isMouseLikePointer, table-ui.ts onRowClick (panel jen klepnutí a isPhoneBar | isCoarsePointer), commit ee38c7a6; rowActions ⌖ ▤ ✎ v .tv-acts-dock, armRowActions (myš a pero), commit 80c2ffb9 -->
 
 <a id="A6.7.9"></a>
 ### A6.7.9 Eksport CSV i XLSX
@@ -1059,7 +1065,7 @@ komórkę można skopiować, filtrować według jej wartości i edytować daną 
 
 - **Kopiowanie:** Ctrl/Cmd+C bez zaznaczonego tekstu kopiuje tekst, który aktywna komórka pokazuje, bez oznaczeń,
   ikon i pigułek. Ręcznie zaznaczony tekst kopiuje się jak zwykle.
-- **Menu komórki:** menu wiersza (prawy przycisk, Shift+F10) i na telefonie panel wiersza (stuknięcie komórki)
+- **Menu komórki:** menu wiersza (prawy przycisk, Shift+F10) i panel wiersza (stuknięcie palcem w komórkę)
   zaczynają się od opcji komórki **Kopiuj**, **Tylko „{wartość}”** i **Bez „{wartość}”** (wartość skrócona do około
   24 znaków z „…”); pod nimi są akcje wiersza ([A6.7.8](#A6.7.8)). Menu otwiera się przy komórce, także gdy wybrany
   był inny wiersz.
@@ -1085,7 +1091,9 @@ komórkę można skopiować, filtrować według jej wartości i edytować daną 
 
   **Imię i nazwisko** nie edytuje się w komórce (składa się z kilku części), tak samo jak komórki obliczone,
   kontrole, badanie, cytowania, liczby i relacje; dwuklik na nich otwiera **Edytuj…**.
-- **Pole** zakrywa komórkę. **Enter** zapisuje, **Esc** anuluje, **Tab** i **Shift+Tab** zapisują i przechodzą do
+- **Pole** stoi w komórce. Tylko w kolumnie węższej niż najmniejsza szerokość pola (tekst i data 100 px, miejsce
+  140 px, wybór 90 px) pole jest szersze i leży nad wierszem z cieniem (od aplikacji 3.28.0; wcześniej leżało na
+  sąsiedniej komórce). **Enter** zapisuje, **Esc** anuluje, **Tab** i **Shift+Tab** zapisują i przechodzą do
   następnej lub poprzedniej edytowalnej komórki wiersza, kliknięcie gdzie indziej zapisuje. W wyborze kliknięcie myszą
   zapisuje wartość od razu; po wyborze strzałkami zapisuje ją Enter, Tab lub kliknięcie gdzie indziej. Datę odczytuje
   się jak
@@ -1101,7 +1109,7 @@ komórkę można skopiować, filtrować według jej wartości i edytować daną 
   ustalenia), w menu wiersza **Edytuj komórkę** (F2). Edytowalna komórka ma po najechaniu myszą kursor tekstowy.
 - **Obowiązuje od:** aplikacja 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) · pole v buňce: table-grid.ts EDITOR_MIN_WIDTH (text 100, date 100, place 140, select 90), placeEditor, commit 80c2ffb9 · panel klepnutím: commit ee38c7a6 -->
 
 <a id="A6.8"></a>
 ## A6.8 Widok w osobnym oknie

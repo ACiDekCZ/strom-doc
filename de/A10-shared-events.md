@@ -133,7 +133,7 @@ Dieselbe Volkszählung oder denselben Wohnort, bei mehreren Personen getrennt ei
 wird von selbst verbunden, auch nicht bei einer Aktualisierung der Daten.
 
 - **Wo:** **Datenqualität**, Abschnitt **Hinweise**:
-  - eine Gruppe: „{Ereignis} {Datum}, {Ort} – bei N Personen getrennt eingetragen.“ mit **Zu einem Ereignis
+  - eine Gruppe: „{Ereignis} {Datum}, {Ort}, {Haus} – bei N Personen getrennt eingetragen.“ (das Haus nur, wenn eingetragen) mit **Zu einem Ereignis
     verbinden**;
   - mehrere Gruppen: „N Ereignisse sind bei mehreren Personen getrennt eingetragen.“ mit **Einzeln durchgehen**. Der
     Dialog **Bei mehreren Personen getrennt eingetragene Ereignisse · N** bietet die Gruppen einzeln an: **Zu einem
@@ -147,7 +147,7 @@ wird von selbst verbunden, auch nicht bei einer Aktualisierung der Daten.
   - eine Gruppe, in der schon ein gemeinsames Ereignis ist, wird ihm angeschlossen („Wird dem gemeinsamen Ereignis
     von N Personen angeschlossen.“);
   - das Verbinden ist ein Schritt **Rückgängig** („{Ereignis}: bei N Personen zu einem Ereignis verbunden.“).
-- **Bedienung:** **Stammbaum-Überblick → Datenqualität → Validierungsdetails**, Abschnitt **Hinweise**.
+- **Bedienung:** **Stammbaum-Überblick → Datenqualität → Schnellaktionen → Validierungsdetails**, Abschnitt **Hinweise**.
 - **Gilt seit:** App 3.28.0
 
 <!-- zdroj: app:80c2ffb9 src/ui/same-event-join-ui.ts · src/shared-events.ts sameEventKey (domy dělí skupiny) · src/validation.ts (stopa info) · strings.ts validation.sameJoinLead, sameJoinSummary, sameJoinReview, sameJoin, sameJoinTitle, sameJoinHint, sameJoinToShare, sameJoinDone, later, nameLinkBack · spec 085 K1.6 b · dirigent:prace/1113-app-085-nalezy Výsledek -->

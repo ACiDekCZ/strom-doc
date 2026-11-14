@@ -124,7 +124,7 @@ program) is found by Data quality, which offers to join it. Nothing is joined by
 updated.
 
 - **Where:** **Data quality**, the section **Leads**:
-  - one group: “{event} {date}, {place} – recorded separately for N people.” with **Join into one event**;
+  - one group: “{event} {date}, {place}, {house} – recorded separately for N people.” (the house only when recorded) with **Join into one event**;
   - more groups: “N events are recorded separately for several people.” with **Review one by one**. The dialog
     **Events recorded separately for several people · N** offers the groups one at a time: **Join into one event**,
     **Later** (the group does not show again until the dialog is closed), **Back** (back to the check).
@@ -135,7 +135,7 @@ updated.
     **Make copies match** is offered ([A10.3](#A10.3));
   - a group that already holds a shared event joins it (“Joins the shared event of N people.”);
   - joining is one **Undo** step (“{event}: joined into one event for N people.”).
-- **Controls:** **Tree overview → Data quality → Validation details**, the section **Leads**.
+- **Controls:** **Tree overview → Data quality → Quick actions → Validation details**, the section **Leads**.
 - **Since:** app 3.28.0
 
 <!-- zdroj: app:80c2ffb9 src/ui/same-event-join-ui.ts · src/shared-events.ts sameEventKey (domy dělí skupiny) · src/validation.ts (stopa info) · strings.ts validation.sameJoinLead, sameJoinSummary, sameJoinReview, sameJoin, sameJoinTitle, sameJoinHint, sameJoinToShare, sameJoinDone, later, nameLinkBack · spec 085 K1.6 b · dirigent:prace/1113-app-085-nalezy Výsledek -->

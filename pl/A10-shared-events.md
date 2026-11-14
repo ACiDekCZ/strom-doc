@@ -123,7 +123,7 @@ z innego programu) znajduje Jakość danych i proponuje je połączyć. Nic nie 
 danych.
 
 - **Gdzie:** **Jakość danych**, sekcja **Wskazówki**:
-  - jedna grupa: „{wydarzenie} {data}, {miejsce} – zapisano osobno u N osób.” z **Połącz w jedno wydarzenie**;
+  - jedna grupa: „{wydarzenie} {data}, {miejsce}, {dom} – zapisano osobno u N osób.” (dom tylko, gdy jest zapisany) z **Połącz w jedno wydarzenie**;
   - kilka grup: „N wydarzeń zapisano osobno u kilku osób.” z **Przejrzyj po kolei**. Okno **Wydarzenia zapisane
     osobno u kilku osób · N** proponuje grupy po kolei: **Połącz w jedno wydarzenie**, **Później** (grupa do
     zamknięcia okna się nie pokazuje), **Wstecz** (z powrotem do kontroli).
@@ -134,7 +134,7 @@ danych.
     proponuje się **Ujednolić kopie** ([A10.3](#A10.3));
   - grupa, w której jest już wspólne wydarzenie, do niego dołącza („Dołączy do wspólnego wydarzenia N osób.”);
   - połączenie to jeden krok **Cofnij** („{wydarzenie}: połączono w jedno wydarzenie u N osób.”).
-- **Obsługa:** **Przegląd drzewa → Jakość danych → Szczegóły walidacji**, sekcja **Wskazówki**.
+- **Obsługa:** **Przegląd drzewa → Jakość danych → Szybkie działania → Szczegóły walidacji**, sekcja **Wskazówki**.
 - **Obowiązuje od:** aplikacja 3.28.0
 
 <!-- zdroj: app:80c2ffb9 src/ui/same-event-join-ui.ts · src/shared-events.ts sameEventKey (domy dělí skupiny) · src/validation.ts (stopa info) · strings.ts validation.sameJoinLead, sameJoinSummary, sameJoinReview, sameJoin, sameJoinTitle, sameJoinHint, sameJoinToShare, sameJoinDone, later, nameLinkBack · spec 085 K1.6 b · dirigent:prace/1113-app-085-nalezy Výsledek -->

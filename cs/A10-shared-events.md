@@ -118,7 +118,7 @@ Stejné sčítání nebo bydliště zapsané zvlášť u několika osob (napří
 najde Kvalita dat a nabídne ho spojit. Nic se nespojí samo, ani při aktualizaci dat.
 
 - **Kde:** **Kvalita dat**, oddíl **Stopy**:
-  - jedna skupina: „{událost} {datum}, {místo} – zapsáno zvlášť u N osob.“ s **Spojit do jedné události**;
+  - jedna skupina: „{událost} {datum}, {místo}, {dům} – zapsáno zvlášť u N osob.“ (dům, jen je-li zapsaný) s **Spojit do jedné události**;
   - víc skupin: „N událostí je zapsaných zvlášť u více osob.“ s **Projít po jedné**. Dialog **Události zapsané
     zvlášť u více osob · N** nabídne skupiny po jedné: **Spojit do jedné události**, **Později** (skupina se do zavření dialogu
     neukáže), **Zpět** (zpět na kontrolu).
@@ -129,7 +129,7 @@ najde Kvalita dat a nabídne ho spojit. Nic se nespojí samo, ani při aktualiza
     nabídne se **Sjednotit kopie** ([A10.3](#A10.3));
   - skupina, ve které už společná událost je, se k ní připojí („Připojí se ke společné události N osob.“);
   - spojení je jeden krok **Zpět** („{událost}: spojeno do jedné události u N osob.“).
-- **Ovládání:** **Přehled stromu → Kvalita dat → Detaily validace**, oddíl **Stopy**.
+- **Ovládání:** **Přehled stromu → Kvalita dat → Rychlé akce → Detaily validace**, oddíl **Stopy**.
 - **Platí od:** aplikace 3.28.0
 
 <!-- zdroj: app:80c2ffb9 src/ui/same-event-join-ui.ts · src/shared-events.ts sameEventKey (domy dělí skupiny) · src/validation.ts (stopa info) · strings.ts validation.sameJoinLead, sameJoinSummary, sameJoinReview, sameJoin, sameJoinTitle, sameJoinHint, sameJoinToShare, sameJoinDone, later, nameLinkBack · spec 085 K1.6 b · dirigent:prace/1113-app-085-nalezy Výsledek -->

@@ -23,6 +23,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R1.8 | R1-research-in-brief.md | výzkum 1.28.0 | platí | Jak Strom funguje: `strom doc` | How Strom works: `strom doc` | So funktioniert Strom: `strom doc` | Jak działa Strom: `strom doc` |
 | R1.9 | R1-research-in-brief.md | výzkum 1.32.0 | platí | Otázky nad daty stromu: `strom query` | Questions over the tree's data: `strom query` | Fragen an die Daten des Baums: `strom query` | Pytania o dane drzewa: `strom query` |
 | R1.9.1 | R1-research-in-brief.md | výzkum 1.32.0 | platí | Vyprávění: `strom query --story` | Stories: `strom query --story` | Erzählungen: `strom query --story` | Opowieści: `strom query --story` |
+| R1.9.2 | R1-research-in-brief.md | výzkum 1.32.0 | platí | Vlastní tvary povolání: `strom occupation` | The research's own forms of occupations: `strom occupation` | Eigene Formen von Berufen: `strom occupation` | Własne formy zawodów: `strom occupation` |
 | R2 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Linie a fronta | Lines and the queue | Linien und Warteschlange | Linie i kolejka |
 | R2.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Linie určuje, co výzkum zkoumá | A line sets what the research investigates | Die Linie bestimmt, was die Forschung untersucht | Linia wyznacza, co badanie bada |
 | R2.1.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Druhy linií a meze | Kinds of lines and their limits | Arten von Linien und Grenzen | Rodzaje linii i ograniczenia |

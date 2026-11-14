@@ -694,10 +694,16 @@ Klik vybere řádek (i podřádek svazku); šipky, Page Up/Down a Ctrl+Home/End 
   ohlásí „Výzkum změnil 3 údaje: …“.
 - Jeden údaj jde upravit i přímo v buňce ([A6.7.15](#A6.7.15)).
 - **Hranice:** ve stromu jen ke čtení **Upravit…** není.
-- **Ovládání:** tlačítka u vybraného řádku, nabídka řádku (pravé tlačítko; i rozbalení svazků). Na telefonu
-  klepnutí na řádek otevře panel s akcemi a se svazky („Svazek 1: … · Upravit ›“).
+- **Ovládání:** tlačítka ⌖ ▤ ✎ na konci řádku, nad žádným textem buňky: u myši se ukážou, až ukazatel stál na
+  řádku mimo ně, u vybraného řádku i s ukazatelem jinde; nabídka řádku (pravé tlačítko; i rozbalení svazků).
+  Klepnutí prstem na řádek (telefon, úzké okno, zařízení ovládané hlavně dotykem) otevře panel s akcemi a se svazky („Svazek 1: … ·
+  Upravit ›“).
+- **Od aplikace 3.28.0:** klik myší nebo perem jen vybere řádek a buňku na každém zařízení, i na notebooku
+  s dotykovou obrazovkou, na tabletu s myší a v úzkém okně; rozhoduje ukazatel kliku, ne zařízení. Do 3.27.0
+  otevíral na dotykovém zařízení a v úzkém okně panel řádku každý klik. Akce řádku stojí na jeho konci, takže
+  sloupec osob má na vybraném řádku celou šířku.
 
-<!-- zdroj: app:src/ui/table-view/table-ui.ts tableMethods (tableRowAction: tree → Rodina, focus, highlight; open; edit → dialog osoby / panel vztahů na svazku), personOfRow (Partner 1), keepWork · table-refresh.ts keepOrder, watchEdit, changedKeys, bridgeChanges, namesList · table-grid.ts FLASH_MS · strings.ts table.act.*, dblClickHint, actionsOf, unionWith, editMore, staleRow, savedToast, bridgeToast · commity da6b9786, de46ae30, e4a35406 -->
+<!-- zdroj: app:src/ui/table-view/table-ui.ts tableMethods (tableRowAction: tree → Rodina, focus, highlight; open; edit → dialog osoby / panel vztahů na svazku), personOfRow (Partner 1), keepWork · table-refresh.ts keepOrder, watchEdit, changedKeys, bridgeChanges, namesList · table-grid.ts FLASH_MS · strings.ts table.act.*, dblClickHint, actionsOf, unionWith, editMore, staleRow, savedToast, bridgeToast · commity da6b9786, de46ae30, e4a35406 · od 3.28.0: table-grid.ts clickPointerType, isMouseLikePointer, table-ui.ts onRowClick (panel jen klepnutí a isPhoneBar | isCoarsePointer), commit ee38c7a6; rowActions ⌖ ▤ ✎ v .tv-acts-dock, armRowActions (myš a pero), commit 80c2ffb9 -->
 
 <a id="A6.7.9"></a>
 ### A6.7.9 Export CSV a XLSX
@@ -1003,7 +1009,7 @@ zkopírovat, podle její hodnoty filtrovat a údaj v ní upravit přímo v tabul
 
 - **Kopírovat:** Ctrl/Cmd+C bez vybraného textu zkopíruje text, který aktivní buňka ukazuje, bez značek, ikon a
   pilulek. Ručně vybraný text se kopíruje jako obvykle.
-- **Nabídka buňky:** nabídka řádku (pravé tlačítko, Shift+F10) a na telefonu panel řádku (klepnutí na buňku) začínají
+- **Nabídka buňky:** nabídka řádku (pravé tlačítko, Shift+F10) a panel řádku (klepnutí prstem na buňku) začínají
   volbami buňky **Kopírovat**, **Jen „{hodnota}“** a **Bez „{hodnota}“** (hodnota zkrácená asi na 24 znaků s „…“); pod
   nimi jsou akce řádku ([A6.7.8](#A6.7.8)). Nabídka se otevře u buňky, i když byl vybraný jiný řádek.
   - **Jen** a **Bez** nastaví filtr sloupce **je** / **není** ([A6.7.6](#A6.7.6)), čip „{Sloupec} = {hodnota} ×“ nebo
@@ -1027,7 +1033,8 @@ zkopírovat, podle její hodnoty filtrovat a údaj v ní upravit přímo v tabul
 
   **Celé jméno** se v buňce neupravuje (skládá se z více částí), stejně jako dopočtené buňky, kontroly, výzkum, citace,
   počty a vztahy; dvojklik na ně otevře **Upravit…**.
-- **Pole** zakryje buňku. **Enter** uloží, **Esc** zruší, **Tab** a **Shift+Tab** uloží a přejdou na další nebo
+- **Pole** stojí v buňce. Jen ve sloupci užším než nejmenší šířka pole (text a datum 100 px, místo 140 px, výběr
+  90 px) je pole širší a leží nad řádkem se stínem (od aplikace 3.28.0; dřív leželo přes sousední buňku). **Enter** uloží, **Esc** zruší, **Tab** a **Shift+Tab** uloží a přejdou na další nebo
   předchozí upravitelnou buňku řádku, klik jinam uloží. Ve výběru uloží hodnotu klik myší hned; po výběru šipkami
   ji uloží Enter, Tab nebo klik jinam. Datum se čte jako ve formuláři osoby; nečitelné zůstane
   v poli s chybou „Datum nejde přečíst (např. 15.5.1880, 1880, kolem 1880)“. Místo nabízí místa stromu. Bez jména
@@ -1042,7 +1049,7 @@ zkopírovat, podle její hodnoty filtrovat a údaj v ní upravit přímo v tabul
   v nabídce řádku **Upravit buňku** (F2). Upravitelná buňka má při najetí myší textový kurzor.
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) · pole v buňce: table-grid.ts EDITOR_MIN_WIDTH (text 100, date 100, place 140, select 90), placeEditor, commit 80c2ffb9 · panel klepnutím: commit ee38c7a6 -->
 
 <a id="A6.8"></a>
 ## A6.8 Pohled v samostatném okně
