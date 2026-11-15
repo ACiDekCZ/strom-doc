@@ -125,15 +125,63 @@ rules are in [R5.2](R5-conflicts.md#R5.2); transcriptions of sources from the ap
   - a person or family that the GEDCOM taking over in research 1.31 left out because of a long note with a character
     outside the basic set (emoji) is offered as new.
 
-  The notes of events and of participants are not compared by `strom sync`, so it does not fill them in; the app
-  keeps them whole.
+  The notes of events and of participants are not compared by `strom sync` in research 1.32.0 and 1.33.0, so it does
+  not fill them in; the app keeps them whole.
 - **From app 3.28.0:** research older than 1.32.0 does not give back shared events and the own events of a
   godparent and a witness. The app takes them over from the previous state of the tree when it loads a new version
   of such research: it knows a person by the number in the research, an event by type, date, place and value, only
   when the match is the only one. An event the research changed is an ordinary event of its person; the other copies
   stay joined.
+- **From research 1.34.0:** `strom sync` also compares the note of an event and the note of a participant of an
+  event (a godparent, a witness…), from the GEDCOM file and from the app's JSON alike, three ways: a note the research
+  does not have it fills in; a note the user changed since the last handover it corrects (the previous one stays in
+  the note's history); a note changed on both sides it leaves to a choice. A removed note removes nothing. The lines
+  the export writes into a note (the state, the words of the entry, ages), the research's own lines and the note the
+  app gives each copy of a shared event do not count as an edit. The edit can be undone. A sync started by the agent
+  changes neither the user's note nor the note of an imported fact. A new fact from the app does not carry its note
+  yet.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 · src/core/config.ts:285 sync.review · src/core/live.ts accepts() :1455 sync.auto write|off|mirror · app:src/ui/research-sync-ui.ts :1-21 · strings.ts sync.statePendingSub, sync.flyConflict, sync.showConflicts, sync.decideInResearch, sync.writtenConflictsSub, treeSettings.effectReview · 1.32.0: research:ac489205 src/core/sync.ts readStromJson (appPersonEvent, appParticipants; fact.new, fact.part, fact.share), research:f8eb2032 note.correct (zkrácená poznámka → celá), research:01125661 (NFD zkrácená poznámka), dirigent:prace/1113-vyzkum-json-intake-drobnosti bod 5 (vynechané osoby 1.31 → nové), postřeh 2 (sync poznámek událostí a účastníků) · 3.28.0: app:80c2ffb9 src/research-link.ts keepEventShares, EVENT_SHARE_FEATURE event.share, eventMatchKey -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 · src/core/config.ts:285 sync.review · src/core/live.ts accepts() :1455 sync.auto write|off|mirror · app:src/ui/research-sync-ui.ts :1-21 · strings.ts sync.statePendingSub, sync.flyConflict, sync.showConflicts, sync.decideInResearch, sync.writtenConflictsSub, treeSettings.effectReview · 1.32.0: research:ac489205 src/core/sync.ts readStromJson (appPersonEvent, appParticipants; fact.new, fact.part, fact.share), research:f8eb2032 note.correct (zkrácená poznámka → celá), research:01125661 (NFD zkrácená poznámka), dirigent:prace/1113-vyzkum-json-intake-drobnosti bod 5 (vynechané osoby 1.31 → nové), postřeh 2 (sync poznámek událostí a účastníků) · 3.28.0: app:80c2ffb9 src/research-link.ts keepEventShares, EVENT_SHARE_FEATURE event.share, eventMatchKey · 1.34.0: research:4cfc233c src/core/sync.ts fact.note, fact.part.note (noteEdits, pick, smazání nic), dirigent:prace/1115-vyzkum-095-cli-drobnosti B1 -->
+
+<a id="S2.3.1"></a>
+### S2.3.1 The main citation and a removed citation from the app
+
+The research takes the main citation ([A3.2.2](A3-evidence-in-the-app.md#A3.2.2)) and a citation removed from a fact
+([A3.2.3](A3-evidence-in-the-app.md#A3.2.3)) as the user's edit. Each can be undone ([S2.7](#S2.7)), and the
+research's history says who and when.
+
+- **Main citation:**
+  - the citation marked in the app is the main one in the research too
+    ([R3.4.5](R3-verification-and-citation.md#R3.4.5)); another citation of the same fact stops being the main one;
+  - the research recognises an unmarking when the file from the app comes from a version of the research in which
+    the main citation was, and it is no longer at the citation. For a file the research gave nothing, the main
+    citation is taken only as a setting;
+  - a main citation at a citation the research does not have, the research first adds and then marks. When it does
+    not add the citation, it does not set the main one and says so ([S2.5.1](#S2.5.1));
+  - a main citation at a fact whose date or type the user changed in the same send the research does not write (it
+    does not match the fact); it is enough to send it again after the next load.
+- **Removed citation:**
+  - the research removes it from the fact and remembers the removal
+    ([R3.4.6](R3-verification-and-citation.md#R3.4.6)). The source and its images stay. A removed main citation also
+    removes the main one;
+  - at a shared event it is removed once, from that one shared event of the research;
+  - only a citation the fact had in the research version the app's file comes from is removed. A citation of the
+    same source that the agent added later stays.
+- **Limits:**
+  - the research takes a removal only from the GEDCOM file the app sends through the bridge, and only at a birth,
+    a death, a person's events, a marriage, a couple's events and a divorce. Citations of a person, a name and
+    a family are not removed from the app;
+  - when the whole source is missing in the file, nothing is removed: the source stays in the research with its
+    citations and is deleted in the research;
+  - an app that does not send removals yet removes nothing; the citation stays in the research;
+  - from the app's JSON file the research reads the main citation (from data version 21), not a removal;
+  - the app offers the main citation only with a research that keeps it, and with a research that does not take
+    removals it says so ([A3.2.3](A3-evidence-in-the-app.md#A3.2.3)). The research writes `_STROM_MAIN` and
+    `1 DATA` › `2 EVEN` only to an app that reads them ([A2.7](A2-loading-a-family-tree.md#A2.7)).
+- What of this the research did not take, the app lists by name ([S2.5.1](#S2.5.1)).
+- **Since:** app 3.29.0 with research 1.34.0
+
+<!-- zdroj: research:355df0a5 src/core/sync.ts fact.main (op event.main, _STROM_HEAD: zrušení), fact.uncite (jen s HEAD, APP_SENDS_UNCITE, BIRT/DEAT/LifeEvent/MARR/události páru/DIV; cite.notCarried, cite.sourceRemoved, cite.olderApp, fact.noMatch, main.notCarried), :5268 · src/core/stromapp.ts:806-820 APP_READS_MAIN_CITATION, APP_SENDS_UNCITE, APP_DATA_MAIN_CITATION 21 · src/core/live.ts features citations.order, citations.main, citations.remove, sync.notWritten.codes · 4cd81f14 (vrácení) · app:src/citation-gates.ts · ZADANI_VYZKUM_hlavni-citace.md 3.2, 4.1, Upřesnění 3 a 5, V6, V7 · spec 095 K2, K3 -->
 
 <a id="S2.4"></a>
 ## S2.4 A Strom archive and a research without an agent
@@ -182,6 +230,49 @@ lost.
   whole. Before, it ended with a git error about a command too long (ENAMETOOLONG) and nothing was written.
 
 <!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
+
+<a id="S2.5.1"></a>
+### S2.5.1 Changes not taken, by name
+
+A research that sends the reason for each change not taken as a code gets, in the app, a line of its own at each
+such change, with the reason in the app's words.
+
+- **Message:** when the research took nothing from a send but named the changes: “The research did not take
+  3 changes. They stay here in the app.” with **Show**. The send's section in the research panel has the heading
+  “The research did not take 3 changes”. Such a send never says “nothing new”.
+- **List:** **What was written** ([S2.2.1](#S2.2.1)) has at each change not taken a line person · fact · source (the
+  person and the source can be opened, what is not known is left out; “Change” when neither the person nor the source
+  is known) and the reason:
+
+| When | What the app says |
+|---|---|
+| an older app that does not send removals of citations | citation kept in the research: this version of the app does not send removals yet |
+| the whole source is missing in the file | the source stays in the research with its citations; a source is deleted in the research |
+| the source disappeared from a whole person or family | citations of a person, a name or a family are not removed from the app |
+| a main citation at a citation the research did not add | main citation not set: the research did not take this citation |
+| the fact did not match | the research did not find this fact (its date or type changed) |
+| a person, fact, name, child or partner is missing in the file | missing in the file; the research deletes nothing, it only notes it |
+| a conflict already waits on the same thing | an open conflict on this is already waiting |
+| a later send from another window | a later send from another window changed the fact; this copy is older |
+| a confirmation of a fact the research changed meanwhile | confirmation not taken: the research changed the fact meanwhile |
+| a child's relationship by a word the research does not know | child's relationship: the research does not know this word |
+| a surname group the research changed meanwhile | the research keeps its surname group (it changed it meanwhile) |
+| a surname group with a warning | surname group: only with a warning in the research |
+| a value from an import or from the user that the agent only proposes | a value from an import or the user: the research only proposes it |
+| the person did not match | the research did not match the person |
+| an entry the research wanted to make and that failed | writing in the research failed |
+| a code the app does not know | not taken |
+
+- Changes the research wanted to write and that failed are in the same list, not in a message of their own. Reasons
+  the app gave before (waits for a choice, the archive keeps it, person removed, taken back) keep their existing
+  words.
+- A later state of the research fills in the same list without a message.
+- **Limits:** a research without codes behaves as before: a send it took nothing from reports “The research took
+  nothing new from this send.” The reasons at citations (the first three rows of the table) the research sends only
+  to an app that reads the main citation; an older app does not get them.
+- **Since:** app 3.29.0 with research 1.34.0
+
+<!-- zdroj: app:1e10a1dd src/ui/research-sync-ui.ts:1985-2005 (SYNC_NW_CODES_FEATURE, notTakenToast, nothingTakenToast), :2849 notTakenTitle · src/ui/research-changes-ui.ts nwReason, NW_TODAY_WHY · strings.ts sync.notTakenToast, notTakenTitle, nw.*, nwUnknown, nothingTakenToast · research:355df0a5 src/core/sync.ts notWritten codes, skipped codes, /status sends[].notWritten (nejvýš 50) · ZADANI_VYZKUM_hlavni-citace.md V4, V5 · spec 095 K3.4 -->
 
 <a id="S2.6"></a>
 ## S2.6 A person removed in the app

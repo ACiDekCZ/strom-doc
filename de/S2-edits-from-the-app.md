@@ -131,15 +131,65 @@ zum Widerspruch. Die genauen Regeln stehen in [R5.2](R5-conflicts.md#R5.2); Absc
   - eine Person oder Familie, die die Übernahme von GEDCOM in der Forschung 1.31 wegen einer langen Notiz mit einem
     Zeichen außerhalb des Grundzeichensatzes (Emoji) ausgelassen hat, wird als neu angeboten.
 
-  Notizen von Ereignissen und Notizen von Beteiligten vergleicht `strom sync` nicht und ergänzt sie daher nicht; die
-  App hält sie ganz.
+  Notizen von Ereignissen und Notizen von Beteiligten vergleicht `strom sync` in der Forschung 1.32.0 und 1.33.0
+  nicht und ergänzt sie daher nicht; die App hält sie ganz.
 - **Ab App 3.28.0:** eine Forschung älter als 1.32.0 gibt gemeinsame Ereignisse und die eigenen Ereignisse von Pate
   und Trauzeuge nicht zurück. Die App übernimmt sie beim Einlesen einer neuen Version einer solchen Forschung aus dem
   vorigen Stand des Stammbaums: die Person erkennt sie an der Nummer in der Forschung, das Ereignis an Art, Datum,
   Ort und Wert, nur wenn die Übereinstimmung eindeutig ist. Ein Ereignis, das die Forschung geändert hat, ist ein
   gewöhnliches Ereignis seiner Person; die anderen Kopien bleiben verbunden.
+- **Ab Forschung 1.34.0:** `strom sync` vergleicht auch die Notiz eines Ereignisses und die Notiz eines Beteiligten
+  eines Ereignisses (Pate, Zeuge…), aus der GEDCOM-Datei wie aus dem JSON der App, in drei Richtungen: eine Notiz,
+  die die Forschung nicht hat, ergänzt es; eine Notiz, die der Benutzer seit der letzten Übergabe geändert hat,
+  korrigiert es (die vorige bleibt im Verlauf der Notiz); eine auf beiden Seiten geänderte Notiz überlässt es der
+  Wahl. Eine entfernte Notiz entfernt nichts. Zeilen, die der Export in die Notiz schreibt (Stand, Worte des
+  Eintrags, Alter), eigene Zeilen der Forschung und die Notiz, die die App jeder Kopie eines gemeinsamen Ereignisses
+  gibt, zählen nicht als Änderung. Die Änderung lässt sich zurücknehmen. Ein vom Agenten gestartetes Sync ändert
+  weder die Notiz des Benutzers noch die einer importierten Angabe. Eine neue Angabe aus der App überträgt ihre
+  Notiz noch nicht.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 · src/core/config.ts:285 sync.review · src/core/live.ts accepts() :1455 sync.auto write|off|mirror · app:src/ui/research-sync-ui.ts :1-21 · strings.ts sync.statePendingSub, sync.flyConflict, sync.showConflicts, sync.decideInResearch, sync.writtenConflictsSub, treeSettings.effectReview · 1.32.0: research:ac489205 src/core/sync.ts readStromJson (appPersonEvent, appParticipants; fact.new, fact.part, fact.share), research:f8eb2032 note.correct (zkrácená poznámka → celá), research:01125661 (NFD zkrácená poznámka), dirigent:prace/1113-vyzkum-json-intake-drobnosti bod 5 (vynechané osoby 1.31 → nové), postřeh 2 (sync poznámek událostí a účastníků) · 3.28.0: app:80c2ffb9 src/research-link.ts keepEventShares, EVENT_SHARE_FEATURE event.share, eventMatchKey -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 · src/core/config.ts:285 sync.review · src/core/live.ts accepts() :1455 sync.auto write|off|mirror · app:src/ui/research-sync-ui.ts :1-21 · strings.ts sync.statePendingSub, sync.flyConflict, sync.showConflicts, sync.decideInResearch, sync.writtenConflictsSub, treeSettings.effectReview · 1.32.0: research:ac489205 src/core/sync.ts readStromJson (appPersonEvent, appParticipants; fact.new, fact.part, fact.share), research:f8eb2032 note.correct (zkrácená poznámka → celá), research:01125661 (NFD zkrácená poznámka), dirigent:prace/1113-vyzkum-json-intake-drobnosti bod 5 (vynechané osoby 1.31 → nové), postřeh 2 (sync poznámek událostí a účastníků) · 3.28.0: app:80c2ffb9 src/research-link.ts keepEventShares, EVENT_SHARE_FEATURE event.share, eventMatchKey · 1.34.0: research:4cfc233c src/core/sync.ts fact.note, fact.part.note (noteEdits, pick, smazání nic), dirigent:prace/1115-vyzkum-095-cli-drobnosti B1 -->
+
+<a id="S2.3.1"></a>
+### S2.3.1 Hauptzitat und entferntes Zitat aus der App
+
+Das Hauptzitat ([A3.2.2](A3-evidence-in-the-app.md#A3.2.2)) und eine von einer Angabe entfernte Zitation
+([A3.2.3](A3-evidence-in-the-app.md#A3.2.3)) übernimmt die Forschung als Änderung des Benutzers. Jede lässt sich
+zurücknehmen ([S2.7](#S2.7)), und der Verlauf der Forschung sagt, wer und wann.
+
+- **Hauptzitat:**
+  - die in der App markierte Zitation ist auch in der Forschung das Hauptzitat
+    ([R3.4.5](R3-verification-and-citation.md#R3.4.5)); eine andere Zitation derselben Angabe hört auf, Hauptzitat zu
+    sein;
+  - das Aufheben erkennt die Forschung, wenn die Datei aus der App auf einer Version der Forschung beruht, in der das
+    Hauptzitat war, und es bei der Zitation nicht mehr ist. Bei einer Datei, der die Forschung nichts gegeben hat,
+    gilt das Hauptzitat nur als Setzen;
+  - ein Hauptzitat bei einer Zitation, die die Forschung nicht hat, fügt die Forschung zuerst hinzu und markiert sie
+    dann. Fügt sie die Zitation nicht hinzu, setzt sie das Hauptzitat nicht und sagt es ([S2.5.1](#S2.5.1));
+  - ein Hauptzitat bei einer Angabe, deren Datum oder Art der Benutzer in derselben Sendung geändert hat, schreibt
+    die Forschung nicht (sie ordnet die Angabe nicht zu); es genügt, es nach dem nächsten Laden erneut zu senden.
+- **Entferntes Zitat:**
+  - die Forschung entfernt es von der Angabe und merkt sich das Entfernen
+    ([R3.4.6](R3-verification-and-citation.md#R3.4.6)). Die Quelle und ihre Bilder bleiben. Ein entferntes Hauptzitat
+    hebt auch das Hauptzitat auf;
+  - bei einem gemeinsamen Ereignis wird es einmal entfernt, von dem einen gemeinsamen Ereignis der Forschung;
+  - entfernt wird nur eine Zitation, die die Angabe in der Version der Forschung hatte, auf der die Datei der App
+    beruht. Eine Zitation derselben Quelle, die der Agent später hinzugefügt hat, bleibt.
+- **Grenzen:**
+  - das Entfernen nimmt die Forschung nur aus der GEDCOM-Datei, die die App über die Brücke sendet, und nur bei
+    Geburt, Tod, Ereignissen einer Person, Heirat, Ereignissen eines Paares und Scheidung. Zitationen einer Person,
+    eines Namens und einer Familie werden aus der App nicht entfernt;
+  - fehlt in der Datei die ganze Quelle, wird nichts entfernt: die Quelle bleibt mit ihren Zitationen in der
+    Forschung und wird in der Forschung gelöscht;
+  - eine App, die das Entfernen noch nicht sendet, entfernt nichts; die Zitation bleibt in der Forschung;
+  - aus der JSON-Datei der App liest die Forschung das Hauptzitat (ab Datenversion 21), das Entfernen nicht;
+  - die App bietet das Hauptzitat nur bei einer Forschung an, die es hält, und bei einer Forschung, die das Entfernen
+    nicht übernimmt, sagt sie es ([A3.2.3](A3-evidence-in-the-app.md#A3.2.3)). `_STROM_MAIN` und `1 DATA` › `2 EVEN`
+    schreibt die Forschung nur einer App, die sie liest ([A2.7](A2-loading-a-family-tree.md#A2.7)).
+- Was die Forschung davon nicht übernommen hat, nennt die App einzeln ([S2.5.1](#S2.5.1)).
+- **Gilt seit:** App 3.29.0 mit Forschung 1.34.0
+
+<!-- zdroj: research:355df0a5 src/core/sync.ts fact.main (op event.main, _STROM_HEAD: zrušení), fact.uncite (jen s HEAD, APP_SENDS_UNCITE, BIRT/DEAT/LifeEvent/MARR/události páru/DIV; cite.notCarried, cite.sourceRemoved, cite.olderApp, fact.noMatch, main.notCarried), :5268 · src/core/stromapp.ts:806-820 APP_READS_MAIN_CITATION, APP_SENDS_UNCITE, APP_DATA_MAIN_CITATION 21 · src/core/live.ts features citations.order, citations.main, citations.remove, sync.notWritten.codes · 4cd81f14 (vrácení) · app:src/citation-gates.ts · ZADANI_VYZKUM_hlavni-citace.md 3.2, 4.1, Upřesnění 3 a 5, V6, V7 · spec 095 K2, K3 -->
 
 <a id="S2.4"></a>
 ## S2.4 Strom-Archiv und Forschung ohne Agent
@@ -191,6 +241,51 @@ bleiben in der App, und nichts geht verloren.
   nichts wurde geschrieben.
 
 <!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
+
+<a id="S2.5.1"></a>
+### S2.5.1 Nicht übernommene Änderungen einzeln
+
+Eine Forschung, die zu jeder nicht übernommenen Änderung den Grund als Code sendet, bekommt in der App bei jeder
+solchen Änderung eine eigene Zeile mit dem Grund in den Worten der App.
+
+- **Meldung:** wenn die Forschung aus einer Sendung nichts übernommen, die Änderungen aber benannt hat: „Die Forschung
+  hat 3 Änderungen nicht übernommen. Die Änderungen bleiben hier in der App.“ mit **Anzeigen**. Der Abschnitt der
+  Sendung im Panel der Forschung hat die Überschrift „3 Änderungen nicht übernommen“. Eine solche Sendung sagt nie
+  „nichts Neues“.
+- **Liste:** **Was geschrieben wurde** ([S2.2.1](#S2.2.1)) hat bei jeder nicht übernommenen Änderung eine Zeile
+  Person · Angabe · Quelle (Person und Quelle lassen sich öffnen, was nicht bekannt ist, entfällt; „Änderung“, wenn
+  weder Person noch Quelle bekannt sind) und den Grund:
+
+| Wann | Was die App sagt |
+|---|---|
+| eine ältere App, die das Entfernen von Zitaten nicht sendet | Zitat bleibt in der Forschung: diese App-Version sendet Entfernungen noch nicht |
+| in der Datei fehlt die ganze Quelle | die Quelle bleibt mit ihren Zitaten in der Forschung; gelöscht wird eine Quelle in der Forschung |
+| die Quelle ist von einer ganzen Person oder Familie verschwunden | Zitate einer Person, eines Namens oder einer Familie werden aus der App nicht entfernt |
+| ein Hauptzitat bei einer Zitation, die die Forschung nicht hinzugefügt hat | Hauptzitat nicht gesetzt: die Forschung hat dieses Zitat nicht übernommen |
+| die Angabe wurde nicht zugeordnet | die Forschung hat diese Angabe nicht gefunden (Datum oder Art geändert) |
+| in der Datei fehlt eine Person, Angabe, ein Name, Kind oder Partner | fehlt in der Datei; die Forschung löscht nichts, sie vermerkt es nur |
+| dazu wartet schon ein Widerspruch | dazu wartet schon ein offener Widerspruch |
+| eine spätere Sendung aus einem anderen Fenster | eine spätere Sendung aus einem anderen Fenster hat die Angabe geändert; diese Kopie ist älter |
+| die Bestätigung einer Angabe, die die Forschung inzwischen geändert hat | Bestätigung nicht übernommen: die Forschung hat die Angabe inzwischen geändert |
+| eine Beziehung des Kindes mit einem Wort, das die Forschung nicht kennt | Beziehung des Kindes: die Forschung kennt dieses Wort nicht |
+| eine Namensgruppe, die die Forschung inzwischen geändert hat | die Forschung behält ihre Namensgruppe (inzwischen geändert) |
+| eine Namensgruppe mit Warnung | Namensgruppe: in der Forschung nur mit Warnung |
+| ein Wert aus einem Import oder vom Benutzer, den der Agent nur vorschlägt | ein Wert aus einem Import oder vom Nutzer: die Forschung schlägt ihn nur vor |
+| die Person wurde nicht zugeordnet | die Forschung hat die Person nicht zugeordnet |
+| ein Schreiben, das die Forschung vornehmen wollte und das fehlgeschlagen ist | das Schreiben in der Forschung ist fehlgeschlagen |
+| ein Code, den die App nicht kennt | nicht übernommen |
+
+- Änderungen, die die Forschung schreiben wollte und bei denen es fehlgeschlagen ist, stehen in derselben Liste,
+  nicht in einer eigenen Meldung. Gründe, die die App schon früher angab (wartet auf eine Wahl, das Archiv behält
+  sie, Person entfernt, zurückgenommen), behalten ihre bisherigen Worte.
+- Ein späterer Stand der Forschung ergänzt dieselbe Liste ohne Meldung.
+- **Grenzen:** eine Forschung ohne Codes verhält sich wie bisher: eine Sendung, aus der sie nichts übernommen hat,
+  meldet „Die Forschung hat aus dieser Sendung nichts Neues übernommen.“ Die Gründe bei Zitationen (die ersten drei
+  Zeilen der Tabelle) sendet die Forschung nur einer App, die das Hauptzitat liest; eine ältere App bekommt sie
+  nicht.
+- **Gilt seit:** App 3.29.0 mit Forschung 1.34.0
+
+<!-- zdroj: app:1e10a1dd src/ui/research-sync-ui.ts:1985-2005 (SYNC_NW_CODES_FEATURE, notTakenToast, nothingTakenToast), :2849 notTakenTitle · src/ui/research-changes-ui.ts nwReason, NW_TODAY_WHY · strings.ts sync.notTakenToast, notTakenTitle, nw.*, nwUnknown, nothingTakenToast · research:355df0a5 src/core/sync.ts notWritten codes, skipped codes, /status sends[].notWritten (nejvýš 50) · ZADANI_VYZKUM_hlavni-citace.md V4, V5 · spec 095 K3.4 -->
 
 <a id="S2.6"></a>
 ## S2.6 In der App entfernte Person

@@ -120,15 +120,61 @@ w [R3.5.1](R3-verification-and-citation.md#R3.5.1).
   - osobę lub rodzinę, którą przejęcie GEDCOM w badaniu 1.31 pominęło z powodu długiej notatki ze znakiem spoza
     podstawowego zestawu (emoji), zaproponuje jako nową.
 
-  Notatek wydarzeń i notatek uczestników `strom sync` nie porównuje, więc ich nie uzupełni; aplikacja trzyma je
-  w całości.
+  Notatek wydarzeń i notatek uczestników `strom sync` w badaniu 1.32.0 i 1.33.0 nie porównuje, więc ich nie
+  uzupełni; aplikacja trzyma je w całości.
 - **Od aplikacji 3.28.0:** badanie starsze niż 1.32.0 nie zwraca wspólnych wydarzeń ani własnych wydarzeń
   chrzestnego i świadka. Aplikacja przy wczytaniu nowej wersji takiego badania przejmuje je z poprzedniego stanu
   drzewa: osobę rozpoznaje po numerze w badaniu, wydarzenie po typie, dacie, miejscu i wartości, tylko gdy zgodność
   jest jedna. Wydarzenie, które badanie zmieniło, jest zwykłym wydarzeniem swojej osoby; pozostałe kopie zostają
   połączone.
+- **Od badania 1.34.0:** `strom sync` porównuje także notatkę wydarzenia i notatkę uczestnika wydarzenia
+  (chrzestnego, świadka…), z pliku GEDCOM i z JSON aplikacji, trójstronnie: notatkę, której badanie nie ma, uzupełni;
+  notatkę, którą użytkownik od ostatniego przekazania zmienił, poprawi (poprzednia zostaje w historii notatki);
+  notatkę zmienioną po obu stronach zostawi do wyboru. Usunięta notatka niczego nie usuwa. Wiersze, które do notatki
+  wpisuje eksport (stan, słowa wpisu, wiek), własne wiersze badania i notatka, którą aplikacja daje każdej kopii
+  wspólnego wydarzenia, nie liczą się jako zmiana. Zmianę można cofnąć. Sync uruchomiony przez agenta nie zmienia
+  notatki użytkownika ani notatki zaimportowanej danej. Nowa dana z aplikacji na razie notatki nie przenosi.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 · src/core/config.ts:285 sync.review · src/core/live.ts accepts() :1455 sync.auto write|off|mirror · app:src/ui/research-sync-ui.ts :1-21 · strings.ts sync.statePendingSub, sync.flyConflict, sync.showConflicts, sync.decideInResearch, sync.writtenConflictsSub, treeSettings.effectReview · 1.32.0: research:ac489205 src/core/sync.ts readStromJson (appPersonEvent, appParticipants; fact.new, fact.part, fact.share), research:f8eb2032 note.correct (zkrácená poznámka → celá), research:01125661 (NFD zkrácená poznámka), dirigent:prace/1113-vyzkum-json-intake-drobnosti bod 5 (vynechané osoby 1.31 → nové), postřeh 2 (sync poznámek událostí a účastníků) · 3.28.0: app:80c2ffb9 src/research-link.ts keepEventShares, EVENT_SHARE_FEATURE event.share, eventMatchKey -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 · src/core/config.ts:285 sync.review · src/core/live.ts accepts() :1455 sync.auto write|off|mirror · app:src/ui/research-sync-ui.ts :1-21 · strings.ts sync.statePendingSub, sync.flyConflict, sync.showConflicts, sync.decideInResearch, sync.writtenConflictsSub, treeSettings.effectReview · 1.32.0: research:ac489205 src/core/sync.ts readStromJson (appPersonEvent, appParticipants; fact.new, fact.part, fact.share), research:f8eb2032 note.correct (zkrácená poznámka → celá), research:01125661 (NFD zkrácená poznámka), dirigent:prace/1113-vyzkum-json-intake-drobnosti bod 5 (vynechané osoby 1.31 → nové), postřeh 2 (sync poznámek událostí a účastníků) · 3.28.0: app:80c2ffb9 src/research-link.ts keepEventShares, EVENT_SHARE_FEATURE event.share, eventMatchKey · 1.34.0: research:4cfc233c src/core/sync.ts fact.note, fact.part.note (noteEdits, pick, smazání nic), dirigent:prace/1115-vyzkum-095-cli-drobnosti B1 -->
+
+<a id="S2.3.1"></a>
+### S2.3.1 Cytat główny i usunięty cytat z aplikacji
+
+Cytat główny ([A3.2.2](A3-evidence-in-the-app.md#A3.2.2)) i cytat usunięty z danej
+([A3.2.3](A3-evidence-in-the-app.md#A3.2.3)) badanie przejmuje jako zmianę użytkownika. Każdą można cofnąć
+([S2.7](#S2.7)), a historia badania mówi, kto i kiedy.
+
+- **Cytat główny:**
+  - cytat oznaczony w aplikacji jest główny także w badaniu ([R3.4.5](R3-verification-and-citation.md#R3.4.5)); inny
+    cytat tej samej danej przestaje być główny;
+  - usunięcie oznaczenia badanie rozpozna, gdy plik z aplikacji wychodzi z wersji badania, w której cytat główny był,
+    a przy cytacie już go nie ma. Przy pliku, któremu badanie nic nie dało, cytat główny bierze się tylko jako
+    ustawienie;
+  - cytat główny przy cytacie, którego badanie nie ma, badanie najpierw doda, a potem oznaczy. Gdy cytatu nie doda,
+    głównego nie ustawi i powie to ([S2.5.1](#S2.5.1));
+  - cytatu głównego przy danej, której użytkownik w tym samym wysłaniu zmienił datę lub rodzaj, badanie nie zapisze
+    (nie dopasuje danej); wystarczy wysłać go ponownie po kolejnym wczytaniu.
+- **Usunięty cytat:**
+  - badanie usuwa go z danej i pamięta usunięcie ([R3.4.6](R3-verification-and-citation.md#R3.4.6)). Źródło i jego
+    skany zostają. Usunięty cytat główny usuwa także oznaczenie głównego;
+  - przy wspólnym wydarzeniu usuwa się raz, z tego jednego wspólnego wydarzenia badania;
+  - usuwa się tylko cytat, który dana miała w wersji badania, z której wychodzi plik aplikacji. Cytat tego samego
+    źródła, który agent dodał później, zostaje.
+- **Granice:**
+  - usunięcie badanie bierze tylko z pliku GEDCOM, który aplikacja wysyła przez most, i tylko przy urodzeniu,
+    zgonie, wydarzeniach osoby, ślubie, wydarzeniach pary i rozwodzie. Cytaty osoby, imienia i rodziny nie są
+    usuwane z aplikacji;
+  - gdy w pliku brakuje całego źródła, nic się nie usuwa: źródło zostaje w badaniu z cytatami i usuwa się je
+    w badaniu;
+  - aplikacja, która jeszcze nie wysyła usunięć, niczego nie usuwa; cytat zostaje w badaniu;
+  - z pliku JSON aplikacji badanie czyta cytat główny (od wersji danych 21), usunięcia nie;
+  - aplikacja proponuje cytat główny tylko przy badaniu, które go przechowuje, a przy badaniu, które usunięć nie
+    przejmuje, mówi to ([A3.2.3](A3-evidence-in-the-app.md#A3.2.3)). `_STROM_MAIN` i `1 DATA` › `2 EVEN` badanie
+    zapisuje tylko aplikacji, która je czyta ([A2.7](A2-loading-a-family-tree.md#A2.7)).
+- Co z tego badanie nie przyjęło, aplikacja wypisuje z nazwy ([S2.5.1](#S2.5.1)).
+- **Obowiązuje od:** aplikacja 3.29.0 z badaniem 1.34.0
+
+<!-- zdroj: research:355df0a5 src/core/sync.ts fact.main (op event.main, _STROM_HEAD: zrušení), fact.uncite (jen s HEAD, APP_SENDS_UNCITE, BIRT/DEAT/LifeEvent/MARR/události páru/DIV; cite.notCarried, cite.sourceRemoved, cite.olderApp, fact.noMatch, main.notCarried), :5268 · src/core/stromapp.ts:806-820 APP_READS_MAIN_CITATION, APP_SENDS_UNCITE, APP_DATA_MAIN_CITATION 21 · src/core/live.ts features citations.order, citations.main, citations.remove, sync.notWritten.codes · 4cd81f14 (vrácení) · app:src/citation-gates.ts · ZADANI_VYZKUM_hlavni-citace.md 3.2, 4.1, Upřesnění 3 a 5, V6, V7 · spec 095 K2, K3 -->
 
 <a id="S2.4"></a>
 ## S2.4 Archiwum Strom i badanie bez agenta
@@ -177,6 +223,49 @@ i nic się nie traci.
   się w całości. Wcześniej kończyło się błędem gita o zbyt długim poleceniu (ENAMETOOLONG) i nie zapisywało się nic.
 
 <!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
+
+<a id="S2.5.1"></a>
+### S2.5.1 Nieprzyjęte zmiany z nazwy
+
+Badanie, które do każdej nieprzyjętej zmiany wysyła powód jako kod, dostaje w aplikacji przy każdej takiej zmianie
+własny wiersz z powodem słowami aplikacji.
+
+- **Komunikat:** gdy badanie z wysłania niczego nie przyjęło, ale zmiany nazwało: „Badanie nie przyjęło 3 zmian.
+  Zostają tu w aplikacji.” z **Pokaż**. Sekcja wysłania w panelu badania ma nagłówek „Badanie nie przyjęło 3 zmian”.
+  Takie wysłanie nigdy nie mówi „nic nowego”.
+- **Lista:** **Co zostało zapisane** ([S2.2.1](#S2.2.1)) ma przy każdej nieprzyjętej zmianie wiersz osoba · dana ·
+  źródło (osobę i źródło można otworzyć, to, co nieznane, się pomija; „Zmiana”, gdy nie jest znana ani osoba, ani
+  źródło) i powód:
+
+| Kiedy | Co powie aplikacja |
+|---|---|
+| starsza aplikacja, która nie wysyła usunięcia cytatu | cytat zostaje w badaniu: ta wersja aplikacji nie wysyła jeszcze usunięć |
+| w pliku brakuje całego źródła | źródło zostaje w badaniu z cytatami; źródło usuwa się w badaniu |
+| źródło zniknęło z całej osoby lub rodziny | cytaty osoby, imienia lub rodziny nie są usuwane z aplikacji |
+| cytat główny przy cytacie, którego badanie nie dodało | cytat główny nie ustawiony: badanie nie przyjęło tego cytatu |
+| dana się nie dopasowała | badanie nie znalazło tego faktu (zmieniła się data lub rodzaj) |
+| w pliku brakuje osoby, danej, imienia, dziecka lub partnera | brak w pliku; badanie nic nie usuwa, tylko odnotowuje |
+| w tej sprawie czeka już sprzeczność | w tej sprawie czeka już otwarta sprzeczność |
+| późniejsze wysłanie z innego okna | późniejsze wysłanie z innego okna zmieniło fakt; ta kopia jest starsza |
+| potwierdzenie danej, którą badanie w międzyczasie zmieniło | potwierdzenie nieprzyjęte: badanie w międzyczasie zmieniło fakt |
+| relacja dziecka słowem, którego badanie nie zna | relacja dziecka: badanie nie zna tego słowa |
+| grupa form nazwiska, którą badanie w międzyczasie zmieniło | badanie zachowuje swoją grupę form nazwiska (w międzyczasie zmienioną) |
+| grupa form nazwiska z ostrzeżeniem | grupa form nazwiska: w badaniu tylko z ostrzeżeniem |
+| wartość z importu lub od użytkownika, którą agent tylko zaproponuje | wartość z importu lub od użytkownika: badanie ją tylko proponuje |
+| osoba się nie dopasowała | badanie nie dopasowało osoby |
+| zapis, który badanie chciało wykonać i który się nie powiódł | zapis w badaniu się nie powiódł |
+| kod, którego aplikacja nie zna | nieprzyjęte |
+
+- Zmiany, które badanie chciało zapisać, a zapis się nie powiódł, są na tej samej liście, nie we własnym komunikacie.
+  Powody, które aplikacja podawała już wcześniej (czeka na wybór, archiwum ją przechowuje, osoba usunięta, wycofane),
+  zostają przy swoich dotychczasowych słowach.
+- Późniejszy stan badania uzupełnia tę samą listę bez komunikatu.
+- **Granice:** badanie bez kodów zachowuje się jak dotąd: wysłanie, z którego nic nie przyjęło, zgłasza „Badanie nie
+  przejęło z tej wysyłki niczego nowego.” Powody przy cytatach (pierwsze trzy wiersze tabeli) badanie wysyła tylko
+  aplikacji, która czyta cytat główny; starsza aplikacja ich nie dostanie.
+- **Obowiązuje od:** aplikacja 3.29.0 z badaniem 1.34.0
+
+<!-- zdroj: app:1e10a1dd src/ui/research-sync-ui.ts:1985-2005 (SYNC_NW_CODES_FEATURE, notTakenToast, nothingTakenToast), :2849 notTakenTitle · src/ui/research-changes-ui.ts nwReason, NW_TODAY_WHY · strings.ts sync.notTakenToast, notTakenTitle, nw.*, nwUnknown, nothingTakenToast · research:355df0a5 src/core/sync.ts notWritten codes, skipped codes, /status sends[].notWritten (nejvýš 50) · ZADANI_VYZKUM_hlavni-citace.md V4, V5 · spec 095 K3.4 -->
 
 <a id="S2.6"></a>
 ## S2.6 Osoba usunięta w aplikacji
