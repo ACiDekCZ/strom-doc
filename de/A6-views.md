@@ -154,6 +154,12 @@ Standardwerte **Klein** und **Kreis** lassen die Karte wie bisher.
   (**Eigene** 70 oder 98 px und 17 px pro Zeile statt 56 px).
 - **Form:** **Kreis** oder **Abgerundetes Quadrat** (Rundung 12 px beim großen Foto, 5 px beim kleinen; ebenso die
   Initialen). Die Marken der Karte stehen in beiden Formen am Rand des Fotos.
+- **Export:** Bildexport, Plakat und sein PDF auf mehreren Blättern ([A7](A7-book-pages-and-export.md)) zeichnen die
+  Karten mit der gewählten Größe und Form des Fotos wie der Bildschirm: die Karte **Normal** hat ihre Größe vom
+  Bildschirm, **Detailliert** und **Matrikel** haben das Foto links im Kopf. Ein für eine lebende Person
+  verborgenes Foto lässt die Initialen auf der Karte. Eine Ausgabe, in der niemand ein Foto hat, und die Vorgabe
+  **Klein** mit **Kreis** sehen aus wie bisher. Der Satz unter der Einstellung: „Gilt für den Baum, Bildexport und
+  Plakat auf diesem Gerät.“
 - **Grenzen:** die Karte **Kompakt** hat kein Foto: die Zeile bleibt, die Optionen sind ausgeschaltet, und darunter
   steht „Die kompakte Karte hat kein Foto.“; die gewählte Größe bleibt erhalten. Die Einstellung gehört zum Gerät und
   wird nicht mit dem Stammbaum gespeichert. Die Vorschau in den Einstellungen zeigt die Größe der Karte („Karte
@@ -162,7 +168,7 @@ Standardwerte **Klein** und **Kreis** lassen die Karte wie bisher.
   Vorschau): **Größe** **Klein** · **Mittel** · **Groß**; **Form** **Kreis** · **Abgerundetes Quadrat**.
 - **Gilt seit:** App 3.29.0
 
-<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 -->
+<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 · export: app:64ae50ca src/export-image.ts, src/renderer.ts (poster, PDF po listech; výchozí small + circle bajt po bajtu jako dřív), strings.ts cardDensity.photoScope · spec 096 P2 -->
 
 <a id="A6.2"></a>
 ## A6.2 Ansicht Nachkommen

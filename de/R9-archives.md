@@ -136,7 +136,7 @@ hat drei Arten, und nur der Mensch gibt sie.
   übernommen ([R9.6](#R9.6)). Eine Aufgabe **Seite prüfen** wird nie geweckt
   ([R6.2.2](R6-awaiting-action.md#R6.2.2)).
 - **Warum:** ein Archiv lockern oder öffnen darf nur der Mensch; der Agent darf ein Archiv nur verschärfen.
-- **Bedienung:** Terminal: `strom allow archive <web|stahovač> --way slow|browser|manual`, `--revoke`, Menü der
+- **Bedienung:** Terminal: `strom allow archive <Website|Downloader> --way slow|browser|manual`, `--revoke`, Menü der
   Archive. App: der Link **Erlaubnis…** im Hinweis bei einem Eintrag, der auf Bilder eines Archivs nur über den
   Browser wartet, und in der Zeile **Browser** ([R9.4.3](#R9.4.3)). Er öffnet die Frage in der Forschung im Terminal,
   auch wenn zum Archiv kein Downloader führt.

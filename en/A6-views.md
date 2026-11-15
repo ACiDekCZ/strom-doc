@@ -149,6 +149,11 @@ defaults **Small** and **Circle** leave the card as before.
   (**Custom** 70 or 98 px and 17 px per row instead of 56 px).
 - **Shape:** **Circle** or **Rounded square** (rounding of 12 px for a large photo, 5 px for a small one; the same for
   the initials). The card's marks stand on the edge of the photo in both shapes.
+- **Export:** the image export, the poster and its tiled PDF ([A7](A7-book-pages-and-export.md)) draw the cards with
+  the chosen photo size and shape as the screen does: a **Normal** card has its size on the screen, **Detailed** and
+  **Register** have the photo on the left of their header. A photo hidden for a living person leaves the initials on
+  the card. An output where nobody has a photo, and the default **Small** with **Circle**, look as before. The
+  sentence under the option: "Applies to the tree, its image export and poster on this device."
 - **Limits:** the card **Compact** has no photo: the row stays, the options are off and below them is "The Compact
   card has no photo."; the chosen size is kept. The option belongs to the device and is not saved with the tree. The
   preview in the settings shows the card's size ("card 236 × 96 px").
@@ -156,7 +161,7 @@ defaults **Small** and **Circle** leave the card as before.
   **Size** **Small** · **Medium** · **Large**; **Shape** **Circle** · **Rounded square**.
 - **Since:** app 3.29.0
 
-<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 -->
+<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 · export: app:64ae50ca src/export-image.ts, src/renderer.ts (poster, PDF po listech; výchozí small + circle bajt po bajtu jako dřív), strings.ts cardDensity.photoScope · spec 096 P2 -->
 
 <a id="A6.2"></a>
 ## A6.2 The Descendants view

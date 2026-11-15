@@ -94,6 +94,26 @@ source's page.
 
 <!-- zdroj: research:337787ff, 87785596 src/core/sync.ts:3534 SOURCE_EDITS, SOURCE_FIELDS, :3551 removedFields (fieldsKept, entryWords, locatorOverlap, isValue, noteCallNumbers, CALL_NUMBER_LABELS), removedLine (sync.reading.removed) · 4de28f00 (úprava celé PAGE ze starší aplikace nahradí locator a smaže folio/snímek, undo vrátí) · app:c3278633 src/research-changes.ts (změna signatury, folia, snímku jako strana), src/ged-exporter.ts sourceFields · CHANGELOG.cs.md 1.31.0 · dirigent:prace/1111-vyzkum-citace-most-n1, prace/1111-vyzkum-citace-pole · spec 075 U1c B -->
 
+<a id="S2.2.3"></a>
+### S2.2.3 Which tree is sent
+
+What goes to the research is always the tree connected to it, with its own data. A switch to another tree changes
+nothing about that.
+
+- **A switch of trees:** the unsent edits of the tree being left go at once ([S2.2](#S2.2)). The tree being switched
+  to is sent only once it is open, at the bridge's next answer. An edit saved during the switch stays in the tree it
+  was made in.
+- **A copy without the research's people:** the app does not send a copy that hardly carries the research's people:
+  the research's version the tree builds on has at least 10 people with a research number, the send would carry
+  fewer than 10 % of them, and fewer than 10 % of the people sent would carry such a number. It does not send it by
+  itself, with the **Send** button or on leaving the page; the edits stay unsent in the app.
+- **The sample tree** is never sent to a research ([S1.3.1](S1-connecting-app-and-research.md#S1.3.1)).
+- **Limits:** from research 1.34.0 the research itself also refuses a small other tree under its connection
+  ([S2.5](#S2.5)). A send taken back that did not carry the tree's people is not offered again ([S2.7](#S2.7)).
+- **Since:** app 3.29.0
+
+<!-- zdroj: app:7e92c784 src/data.ts switchTree/loadStartupTree (switchSeq, id stromu spolu s daty), getDataFor(treeId), save() páruje id s daty · 92f9e978 DataManager.isSwitchingTo(treeId) (odkládá se jen poslání stromu, na který se přepíná; autoDue při odpovědi mostu) · bbcc2b17 src/research-foreign-send.ts foreignSendCheck (FOREIGN_SEND_MIN_BASE 10, FOREIGN_SEND_SHARE 0.1, čísla REFN P…), src/ui/research-sync-ui.ts (auto, ruční, odchod ze stránky) · 302a2d3d (bez navigator.locks bez zámku) · CHANGELOG.cs.md 3.29.0 „Přepnutí stromu“ · prace/1115-app-prepnuti-stromu, prace/1115-app-odeslani-pred-prepnutim -->
+
 <a id="S2.3"></a>
 ## S2.3 What the research does with sent edits
 
@@ -228,8 +248,12 @@ lost.
 - **Since:** app 3.11.0 (research 1.12.0); postponed writing from research 1.20.0
 - **From research 1.26.0:** a large family tree (roughly 1,500 people and more) taken over on Windows is written
   whole. Before, it ended with a git error about a command too long (ENAMETOOLONG) and nothing was written.
+- **From research 1.34.0:** the research also refuses a small other tree sent under its connection (the sample tree,
+  for example) in which fewer than half of the people of the research's family tree remain: of the people sent,
+  fewer than 10 % have a research number (with 10 or more sent) or none has (with 5 or more). Nothing is written
+  and the edits stay in the app. If it is meant, the terminal takes such a file: `strom sync <file> --force`.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) · 1.34.0: research:4a5887dc src/core/sync.ts planSync (jiný strom: poslaných ≥ 10 a s id výzkumu < 10 %, nebo ≥ 5 a žádná; kept < given/2, strangers > 0; --force) · CHANGELOG.cs.md 1.34.0 „Jiný rodokmen pod jménem výzkumu“ · prace/1115-vyzkum-cizi-strom -->
 
 <a id="S2.5.1"></a>
 ### S2.5.1 Changes not taken, by name
@@ -251,6 +275,7 @@ such change, with the reason in the app's words.
 | the source disappeared from a whole person or family | citations of a person, a name or a family are not removed from the app |
 | a main citation at a citation the research did not add | main citation not set: the research did not take this citation |
 | the fact did not match | the research did not find this fact (its date or type changed) |
+| the research has taken the fact back since | the research has since withdrawn this fact; it will not come back to the app |
 | a person, fact, name, child or partner is missing in the file | missing in the file; the research deletes nothing, it only notes it |
 | a conflict already waits on the same thing | an open conflict on this is already waiting |
 | a later send from another window | a later send from another window changed the fact; this copy is older |
@@ -266,13 +291,20 @@ such change, with the reason in the app's words.
 - Changes the research wanted to write and that failed are in the same list, not in a message of their own. Reasons
   the app gave before (waits for a choice, the archive keeps it, person removed, taken back) keep their existing
   words.
+- **A fact the research has taken back since** (`strom event retract`, [R3.1](R3-verification-and-citation.md#R3.1))
+  the version the app's file builds on: a removed citation, a main citation, a new citation, a note, a detail or
+  a confirmation of such a fact is not written, and each has a line in the list with this reason. The citations of
+  the fact taken back stay in the research. The terminal says at `strom sync`: "not written: the research has taken
+  this fact back since (nothing of it comes back to the app)".
+- The line of a new citation the research did not take names every cited source the tree has, a source new in the
+  app too.
 - A later state of the research fills in the same list without a message.
 - **Limits:** a research without codes behaves as before: a send it took nothing from reports “The research took
   nothing new from this send.” The reasons at citations (the first three rows of the table) the research sends only
   to an app that reads the main citation; an older app does not get them.
 - **Since:** app 3.29.0 with research 1.34.0
 
-<!-- zdroj: app:1e10a1dd src/ui/research-sync-ui.ts:1985-2005 (SYNC_NW_CODES_FEATURE, notTakenToast, nothingTakenToast), :2849 notTakenTitle · src/ui/research-changes-ui.ts nwReason, NW_TODAY_WHY · strings.ts sync.notTakenToast, notTakenTitle, nw.*, nwUnknown, nothingTakenToast · research:355df0a5 src/core/sync.ts notWritten codes, skipped codes, /status sends[].notWritten (nejvýš 50) · ZADANI_VYZKUM_hlavni-citace.md V4, V5 · spec 095 K3.4 -->
+<!-- zdroj: app:1e10a1dd src/ui/research-sync-ui.ts:1985-2005 (SYNC_NW_CODES_FEATURE, notTakenToast, nothingTakenToast), :2849 notTakenTitle · src/ui/research-changes-ui.ts nwReason, NW_TODAY_WHY · strings.ts sync.notTakenToast, notTakenTitle, nw.*, nwUnknown, nothingTakenToast · research:355df0a5 src/core/sync.ts notWritten codes, skipped codes, /status sends[].notWritten (nejvýš 50) · ZADANI_VYZKUM_hlavni-citace.md V4, V5 · spec 095 K3.4 · event.retracted: app:bcf456ee strings.ts sync.nw.event.retracted (notWritten i skipped), src/ui/research-changes-ui.ts nwRowParts more (cites) · research:4a5887dc src/core/sync.ts retractedDiff (code event.retracted: fact.uncite, fact.main, fact.cite s cites, fact.note, fact.detail, fact.confirm), cli/ui.ts + cs/de/pl.json ui.sync.do.event.retracted · prace/1115-vyzkum-095-retract -->
 
 <a id="S2.6"></a>
 ## S2.6 A person removed in the app
@@ -306,5 +338,31 @@ A send can be undone in the research. The edits in the app stay; only the change
 - **From research 1.26.0:** only a person may undo a send (`strom sync undo`) and discard a sent tree that waits
   (`strom sync discard`); the research refuses the agent. The edits in the app stay after discarding and can be sent
   again.
+- **From app 3.29.0:** a send taken back that did not carry this tree's people (the research's record of the send
+  names another tree of the app, or the version sent hardly names its people) is neither offered nor sent again.
+  The research panel says "That send did not carry this tree's people, so it is not sent again. Loading the
+  research's version keeps the undo." and its main action is **Load the research's version**. Where the app
+  cannot tell, the choice stays as before.
 
-<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) -->
+<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) · 3.29.0: app:bbcc2b17 src/ui/research-changes-ui.ts researchUndoneForeign (záznam poslání jmenuje jiný strom aplikace, nebo uložená verze poslání skoro nejmenuje osoby druhé uložené verze), strings.ts sync.undoneForeignSub -->
+
+<a id="S2.7.1"></a>
+### S2.7.1 Load the research version?
+
+Before the research's version replaces the tree in the app, the app asks **Load the research version?** and shows
+what changes or goes in the app.
+
+- **List:** a row for each value: person · fact · **here → from research**. The first 8 rows, the others under "and
+  N more". Below the list, what the research adds ("Added from the research: + 2 people, 3 facts"), and "A backup is
+  saved before loading; it can be restored."
+- **A note line by line:** when both versions have a note, the lines they share stay plain, removed lines are struck
+  through and added or changed lines are marked (a changed line: the old one struck through, then the new one).
+  A paragraph the research only added strikes nothing through. Spaces at the end of a line and Windows line ends
+  are no change. A note on one side only keeps **here → from research**. The same data is loaded as before.
+- **Limits:** for a tree that only loads from the research ([S2.2](#S2.2)), and when something of the last send was
+  not written, the dialog says that loading overwrites those edits; the buttons are **Load and overwrite** and
+  **Open as copy**.
+- **Controls:** app: **Load the research's version**
+- **Since:** app 3.9.0; a note line by line from 3.29.0
+
+<!-- zdroj: app:src/ui/research-load-ui.ts askResearchLoad (ROWS_SHOWN 8, overwrite: sendMode off nebo nezapsané z posledního poslání → loadOverwrite + research.openCopy), src/ui/research-ui.ts:2377 · 03352a9c src/line-diff.ts diffLines (LCS po řádcích, mezery na konci a CRLF nejsou změna), research-load-ui.ts notes · strings.ts sync.loadTitle, loadColChange, loadMore, loadAdded, loadBackupNote, loadOverwrite, loadOverNotWritten · CHANGELOG.cs.md 3.29.0 „Načíst verzi výzkumu?“ · v3.9.0 (loadColChange) -->

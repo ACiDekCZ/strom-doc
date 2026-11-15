@@ -137,6 +137,11 @@ kartu jako dřív.
   56 px).
 - **Tvar:** **Kruh** nebo **Zaoblený čtverec** (zaoblení 12 px u velké fotky, 5 px u malé; stejně i iniciály).
   Značky karty stojí na okraji fotky v obou tvarech.
+- **Export:** export obrázku, plakát i jeho PDF po listech ([A7](A7-book-pages-and-export.md)) kreslí karty se
+  zvolenou velikostí a tvarem fotky jako obrazovka: **Normální** karta má rozměr jako na obrazovce, **Podrobná**
+  a **Matriční** mají fotku vlevo v hlavičce. Skrytá fotka žijící osoby nechá na kartě iniciály. Výstup, ve kterém
+  nikdo fotku nemá, a výchozí **Malá** s **Kruh** vypadají jako dosud. Věta pod volbou: „Platí pro strom, export
+  obrázku a plakát na tomto zařízení.“
 - **Hranice:** karta **Kompaktní** fotku nemá: řádek zůstane, volby jsou vypnuté a pod nimi stojí „Kompaktní karta
   fotku nemá.“; zvolená velikost se drží. Volba patří zařízení, se stromem se neukládá. Náhled v nastavení ukazuje
   rozměr karty („karta 236 × 96 px“).
@@ -144,7 +149,7 @@ kartu jako dřív.
   **Velikost** **Malá** · **Střední** · **Velká**; **Tvar** **Kruh** · **Zaoblený čtverec**.
 - **Platí od:** aplikace 3.29.0
 
-<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 -->
+<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 · export: app:64ae50ca src/export-image.ts, src/renderer.ts (poster, PDF po listech; výchozí small + circle bajt po bajtu jako dřív), strings.ts cardDensity.photoScope · spec 096 P2 -->
 
 <a id="A6.2"></a>
 ## A6.2 Pohled Potomci

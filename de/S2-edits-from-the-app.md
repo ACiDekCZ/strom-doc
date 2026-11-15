@@ -99,6 +99,29 @@ als Änderung der Seite der Quelle.
 
 <!-- zdroj: research:337787ff, 87785596 src/core/sync.ts:3534 SOURCE_EDITS, SOURCE_FIELDS, :3551 removedFields (fieldsKept, entryWords, locatorOverlap, isValue, noteCallNumbers, CALL_NUMBER_LABELS), removedLine (sync.reading.removed) · 4de28f00 (úprava celé PAGE ze starší aplikace nahradí locator a smaže folio/snímek, undo vrátí) · app:c3278633 src/research-changes.ts (změna signatury, folia, snímku jako strana), src/ged-exporter.ts sourceFields · CHANGELOG.cs.md 1.31.0 · dirigent:prace/1111-vyzkum-citace-most-n1, prace/1111-vyzkum-citace-pole · spec 075 U1c B -->
 
+<a id="S2.2.3"></a>
+### S2.2.3 Welcher Stammbaum gesendet wird
+
+An die Forschung geht immer der Stammbaum, der mit ihr verbunden ist, mit seinen eigenen Daten. Ein Wechsel zu einem
+anderen Stammbaum ändert daran nichts.
+
+- **Wechsel des Stammbaums:** die nicht gesendeten Änderungen des verlassenen Stammbaums gehen sofort
+  ([S2.2](#S2.2)). Der Stammbaum, zu dem gewechselt wird, wird erst geöffnet gesendet, bei der nächsten Antwort der
+  Brücke. Eine während des Wechsels gespeicherte Änderung bleibt in dem Stammbaum, in dem sie entstand.
+- **Eine Kopie ohne die Personen der Forschung:** die App sendet keine Kopie, die die Personen der Forschung kaum
+  trägt: die Version der Forschung, auf der der Stammbaum beruht, hat mindestens 10 Personen mit einer Nummer der
+  Forschung, die Sendung trüge weniger als 10 % davon, und weniger als 10 % der gesendeten Personen trügen eine
+  solche Nummer. Sie sendet sie weder von selbst noch mit **Senden** noch beim Verlassen der Seite; die Änderungen
+  bleiben ungesendet in der App.
+- **Der Beispiel-Stammbaum** wird nie an eine Forschung gesendet
+  ([S1.3.1](S1-connecting-app-and-research.md#S1.3.1)).
+- **Grenzen:** seit Forschung 1.34.0 lehnt auch die Forschung selbst einen kleinen anderen Stammbaum unter ihrer
+  Verbindung ab ([S2.5](#S2.5)). Ein zurückgenommenes Senden, das die Personen des Stammbaums nicht trug, wird nicht
+  wieder angeboten ([S2.7](#S2.7)).
+- **Gilt seit:** App 3.29.0
+
+<!-- zdroj: app:7e92c784 src/data.ts switchTree/loadStartupTree (switchSeq, id stromu spolu s daty), getDataFor(treeId), save() páruje id s daty · 92f9e978 DataManager.isSwitchingTo(treeId) (odkládá se jen poslání stromu, na který se přepíná; autoDue při odpovědi mostu) · bbcc2b17 src/research-foreign-send.ts foreignSendCheck (FOREIGN_SEND_MIN_BASE 10, FOREIGN_SEND_SHARE 0.1, čísla REFN P…), src/ui/research-sync-ui.ts (auto, ruční, odchod ze stránky) · 302a2d3d (bez navigator.locks bez zámku) · CHANGELOG.cs.md 3.29.0 „Přepnutí stromu“ · prace/1115-app-prepnuti-stromu, prace/1115-app-odeslani-pred-prepnutim -->
+
 <a id="S2.3"></a>
 ## S2.3 Was die Forschung mit gesendeten Änderungen tut
 
@@ -239,8 +262,13 @@ bleiben in der App, und nichts geht verloren.
 - **Ab Forschung 1.26.0:** ein großer Stammbaum (etwa 1.500 Personen und mehr), der unter Windows übernommen wird,
   wird ganz geschrieben. Früher endete das mit einem Git-Fehler über einen zu langen Befehl (ENAMETOOLONG), und
   nichts wurde geschrieben.
+- **Ab Forschung 1.34.0:** die Forschung lehnt auch einen kleinen anderen Stammbaum ab, der unter ihrer Verbindung
+  gesendet wurde (etwa den Beispiel-Stammbaum) und in dem weniger als die Hälfte der Personen ihres Stammbaums
+  bleibt: von den gesendeten Personen haben weniger als 10 % eine Nummer der Forschung (bei 10 und mehr gesendeten)
+  oder keine (bei 5 und mehr). Nichts wird geschrieben, und die Änderungen bleiben in der App. Ist es gewollt, nimmt
+  das Terminal eine solche Datei: `strom sync <Datei> --force`.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) · 1.34.0: research:4a5887dc src/core/sync.ts planSync (jiný strom: poslaných ≥ 10 a s id výzkumu < 10 %, nebo ≥ 5 a žádná; kept < given/2, strangers > 0; --force) · CHANGELOG.cs.md 1.34.0 „Jiný rodokmen pod jménem výzkumu“ · prace/1115-vyzkum-cizi-strom -->
 
 <a id="S2.5.1"></a>
 ### S2.5.1 Nicht übernommene Änderungen einzeln
@@ -263,6 +291,7 @@ solchen Änderung eine eigene Zeile mit dem Grund in den Worten der App.
 | die Quelle ist von einer ganzen Person oder Familie verschwunden | Zitate einer Person, eines Namens oder einer Familie werden aus der App nicht entfernt |
 | ein Hauptzitat bei einer Zitation, die die Forschung nicht hinzugefügt hat | Hauptzitat nicht gesetzt: die Forschung hat dieses Zitat nicht übernommen |
 | die Angabe wurde nicht zugeordnet | die Forschung hat diese Angabe nicht gefunden (Datum oder Art geändert) |
+| die Forschung hat die Angabe inzwischen zurückgenommen | die Forschung hat diese Angabe inzwischen zurückgezogen; sie kommt nicht mehr in die App zurück |
 | in der Datei fehlt eine Person, Angabe, ein Name, Kind oder Partner | fehlt in der Datei; die Forschung löscht nichts, sie vermerkt es nur |
 | dazu wartet schon ein Widerspruch | dazu wartet schon ein offener Widerspruch |
 | eine spätere Sendung aus einem anderen Fenster | eine spätere Sendung aus einem anderen Fenster hat die Angabe geändert; diese Kopie ist älter |
@@ -278,6 +307,14 @@ solchen Änderung eine eigene Zeile mit dem Grund in den Worten der App.
 - Änderungen, die die Forschung schreiben wollte und bei denen es fehlgeschlagen ist, stehen in derselben Liste,
   nicht in einer eigenen Meldung. Gründe, die die App schon früher angab (wartet auf eine Wahl, das Archiv behält
   sie, Person entfernt, zurückgenommen), behalten ihre bisherigen Worte.
+- **Eine Angabe, die die Forschung inzwischen zurückgenommen hat** (`strom event retract`,
+  [R3.1](R3-verification-and-citation.md#R3.1)), nach der Version, auf der die Datei der App beruht: ein entferntes
+  Zitat, ein Hauptzitat, ein neues Zitat, eine Notiz, ein Detail oder eine Bestätigung einer solchen Angabe wird
+  nicht geschrieben, und jede hat in der Liste eine Zeile mit diesem Grund. Die Zitate der zurückgenommenen Angabe
+  bleiben in der Forschung. Das Terminal schreibt bei `strom sync`: „nicht geschrieben: die Forschung hat diese
+  Angabe inzwischen zurückgenommen (sie kommt nicht in die App zurück)“.
+- Die Zeile eines neuen Zitats, das die Forschung nicht übernommen hat, nennt alle zitierten Quellen, die der
+  Stammbaum hat, auch eine in der App neue Quelle.
 - Ein späterer Stand der Forschung ergänzt dieselbe Liste ohne Meldung.
 - **Grenzen:** eine Forschung ohne Codes verhält sich wie bisher: eine Sendung, aus der sie nichts übernommen hat,
   meldet „Die Forschung hat aus dieser Sendung nichts Neues übernommen.“ Die Gründe bei Zitationen (die ersten drei
@@ -285,7 +322,7 @@ solchen Änderung eine eigene Zeile mit dem Grund in den Worten der App.
   nicht.
 - **Gilt seit:** App 3.29.0 mit Forschung 1.34.0
 
-<!-- zdroj: app:1e10a1dd src/ui/research-sync-ui.ts:1985-2005 (SYNC_NW_CODES_FEATURE, notTakenToast, nothingTakenToast), :2849 notTakenTitle · src/ui/research-changes-ui.ts nwReason, NW_TODAY_WHY · strings.ts sync.notTakenToast, notTakenTitle, nw.*, nwUnknown, nothingTakenToast · research:355df0a5 src/core/sync.ts notWritten codes, skipped codes, /status sends[].notWritten (nejvýš 50) · ZADANI_VYZKUM_hlavni-citace.md V4, V5 · spec 095 K3.4 -->
+<!-- zdroj: app:1e10a1dd src/ui/research-sync-ui.ts:1985-2005 (SYNC_NW_CODES_FEATURE, notTakenToast, nothingTakenToast), :2849 notTakenTitle · src/ui/research-changes-ui.ts nwReason, NW_TODAY_WHY · strings.ts sync.notTakenToast, notTakenTitle, nw.*, nwUnknown, nothingTakenToast · research:355df0a5 src/core/sync.ts notWritten codes, skipped codes, /status sends[].notWritten (nejvýš 50) · ZADANI_VYZKUM_hlavni-citace.md V4, V5 · spec 095 K3.4 · event.retracted: app:bcf456ee strings.ts sync.nw.event.retracted (notWritten i skipped), src/ui/research-changes-ui.ts nwRowParts more (cites) · research:4a5887dc src/core/sync.ts retractedDiff (code event.retracted: fact.uncite, fact.main, fact.cite s cites, fact.note, fact.detail, fact.confirm), cli/ui.ts + cs/de/pl.json ui.sync.do.event.retracted · prace/1115-vyzkum-095-retract -->
 
 <a id="S2.6"></a>
 ## S2.6 In der App entfernte Person
@@ -322,5 +359,33 @@ nur die Änderungen dieses Sendens.
 - **Ab Forschung 1.26.0:** ein Senden zurücknehmen (`strom sync undo`) und einen gesendeten Stammbaum verwerfen, der
   wartet (`strom sync discard`), darf nur der Mensch; dem Agenten lehnt die Forschung das ab. Die Änderungen in der
   App bleiben nach dem Verwerfen und lassen sich erneut senden.
+- **Ab App 3.29.0:** ein zurückgenommenes Senden, das die Personen dieses Stammbaums nicht trug (der Eintrag der
+  Forschung zu der Sendung nennt einen anderen Stammbaum der App, oder die gesendete Version nennt seine Personen
+  kaum), wird weder wieder angeboten noch gesendet. Das Forschungspanel sagt „Diese Sendung enthielt nicht die
+  Personen dieses Stammbaums und wird daher nicht erneut gesendet. Mit dem Laden der Version der Forschung bleibt
+  die Rücknahme.“ und seine Hauptaktion ist **Version der Forschung laden**. Wo die App es nicht erkennen kann,
+  bleibt die Wahl wie bisher.
 
-<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) -->
+<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) · 3.29.0: app:bbcc2b17 src/ui/research-changes-ui.ts researchUndoneForeign (záznam poslání jmenuje jiný strom aplikace, nebo uložená verze poslání skoro nejmenuje osoby druhé uložené verze), strings.ts sync.undoneForeignSub -->
+
+<a id="S2.7.1"></a>
+### S2.7.1 Version der Forschung laden?
+
+Bevor die Version der Forschung den Stammbaum in der App ersetzt, fragt die App **Version der Forschung laden?** und
+zeigt, was sich in der App ändert oder wegfällt.
+
+- **Liste:** eine Zeile je Wert: Person · Angabe · **hier → aus der Forschung**. Die ersten 8 Zeilen, die übrigen
+  unter „und N weitere“. Unter der Liste, was aus der Forschung hinzukommt („Aus der Forschung kommen hinzu:
+  + 2 Personen, 3 Angaben“), und „Vor dem Laden wird gesichert; ein Zurück ist möglich.“
+- **Notiz zeilenweise:** wenn beide Versionen eine Notiz haben, bleiben gemeinsame Zeilen schlicht, entfernte sind
+  durchgestrichen, hinzugefügte oder geänderte hervorgehoben (eine geänderte Zeile: die alte durchgestrichen, dann
+  die neue). Ein Absatz, den die Forschung nur hinzugefügt hat, streicht nichts durch. Leerzeichen am Zeilenende und
+  Zeilenenden aus Windows sind keine Änderung. Eine Notiz nur auf einer Seite behält **hier → aus der Forschung**.
+  Geladen werden dieselben Daten wie bisher.
+- **Grenzen:** bei einem Stammbaum, der aus der Forschung nur lädt ([S2.2](#S2.2)), und wenn aus der letzten Sendung
+  etwas nicht geschrieben wurde, sagt der Dialog, dass das Laden diese Änderungen überschreibt; die Schaltflächen
+  sind **Laden und überschreiben** und **Als Kopie öffnen**.
+- **Bedienung:** App: **Version der Forschung laden**
+- **Gilt seit:** App 3.9.0; Notiz zeilenweise seit 3.29.0
+
+<!-- zdroj: app:src/ui/research-load-ui.ts askResearchLoad (ROWS_SHOWN 8, overwrite: sendMode off nebo nezapsané z posledního poslání → loadOverwrite + research.openCopy), src/ui/research-ui.ts:2377 · 03352a9c src/line-diff.ts diffLines (LCS po řádcích, mezery na konci a CRLF nejsou změna), research-load-ui.ts notes · strings.ts sync.loadTitle, loadColChange, loadMore, loadAdded, loadBackupNote, loadOverwrite, loadOverNotWritten · CHANGELOG.cs.md 3.29.0 „Načíst verzi výzkumu?“ · v3.9.0 (loadColChange) -->

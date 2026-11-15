@@ -92,6 +92,26 @@ skan i dalszą lokalizację w polach. Badanie porównuje je pole po polu i zapis
 
 <!-- zdroj: research:337787ff, 87785596 src/core/sync.ts:3534 SOURCE_EDITS, SOURCE_FIELDS, :3551 removedFields (fieldsKept, entryWords, locatorOverlap, isValue, noteCallNumbers, CALL_NUMBER_LABELS), removedLine (sync.reading.removed) · 4de28f00 (úprava celé PAGE ze starší aplikace nahradí locator a smaže folio/snímek, undo vrátí) · app:c3278633 src/research-changes.ts (změna signatury, folia, snímku jako strana), src/ged-exporter.ts sourceFields · CHANGELOG.cs.md 1.31.0 · dirigent:prace/1111-vyzkum-citace-most-n1, prace/1111-vyzkum-citace-pole · spec 075 U1c B -->
 
+<a id="S2.2.3"></a>
+### S2.2.3 Które drzewo zostaje wysłane
+
+Do badania trafia zawsze drzewo, które jest z nim połączone, z własnymi danymi. Przełączenie na inne drzewo niczego
+w tym nie zmienia.
+
+- **Przełączenie drzewa:** niewysłane zmiany drzewa, które się opuszcza, odchodzą od razu ([S2.2](#S2.2)). Drzewo,
+  na które się przełącza, zostaje wysłane dopiero otwarte, przy najbliższej odpowiedzi mostu. Zmiana zapisana
+  w trakcie przełączania zostaje w drzewie, w którym powstała.
+- **Kopia bez osób badania:** aplikacja nie wyśle kopii, która prawie nie niesie osób badania: wersja badania,
+  z której drzewo wychodzi, ma co najmniej 10 osób z numerem badania, wysłanie niosłoby mniej niż 10 % z nich,
+  a mniej niż 10 % wysyłanych osób miałoby taki numer. Nie wyśle jej sama, przyciskiem **Wyślij** ani przy
+  opuszczeniu strony; zmiany zostają w aplikacji niewysłane.
+- **Drzewo przykładowe** nigdy nie jest wysyłane do badania ([S1.3.1](S1-connecting-app-and-research.md#S1.3.1)).
+- **Granice:** od badania 1.34.0 małe inne drzewo pod połączeniem badania odrzuca też samo badanie ([S2.5](#S2.5)).
+  Cofnięte wysłanie, które nie niosło osób drzewa, nie jest ponownie proponowane ([S2.7](#S2.7)).
+- **Obowiązuje od:** aplikacja 3.29.0
+
+<!-- zdroj: app:7e92c784 src/data.ts switchTree/loadStartupTree (switchSeq, id stromu spolu s daty), getDataFor(treeId), save() páruje id s daty · 92f9e978 DataManager.isSwitchingTo(treeId) (odkládá se jen poslání stromu, na který se přepíná; autoDue při odpovědi mostu) · bbcc2b17 src/research-foreign-send.ts foreignSendCheck (FOREIGN_SEND_MIN_BASE 10, FOREIGN_SEND_SHARE 0.1, čísla REFN P…), src/ui/research-sync-ui.ts (auto, ruční, odchod ze stránky) · 302a2d3d (bez navigator.locks bez zámku) · CHANGELOG.cs.md 3.29.0 „Přepnutí stromu“ · prace/1115-app-prepnuti-stromu, prace/1115-app-odeslani-pred-prepnutim -->
+
 <a id="S2.3"></a>
 ## S2.3 Co badanie zrobi z wysłanymi zmianami
 
@@ -221,8 +241,12 @@ i nic się nie traci.
 - **Obowiązuje od:** aplikacja 3.11.0 (badanie 1.12.0); odłożony zapis od badania 1.20.0
 - **Od badania 1.26.0:** duże drzewo genealogiczne (około 1 500 osób i więcej) przejęte w systemie Windows zapisuje
   się w całości. Wcześniej kończyło się błędem gita o zbyt długim poleceniu (ENAMETOOLONG) i nie zapisywało się nic.
+- **Od badania 1.34.0:** badanie odrzuca też małe inne drzewo wysłane pod jego połączeniem (na przykład drzewo
+  przykładowe), w którym z drzewa badania zostało mniej niż pół osób: z wysłanych osób numer badania ma mniej niż
+  10 % (przy 10 i więcej wysłanych) albo żadna (przy 5 i więcej). Nic się nie zapisuje, a zmiany zostają
+  w aplikacji. Jeśli to zamierzone, taki plik przyjmie terminal: `strom sync <plik> --force`.
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) SYNC_MAX_BYTES :1325, tree.empty :1218, tree.other-research :2038, tree.foreign :2068, tree.no-ids :2345 · src/core/live.ts seal.foreign, tree.not-downloaded, disk.full · app:src/research-write-held.ts · strings.ts sync.refusedCodes, sync.refusedDetails, sync.noIdsToast, sync.held, sync.writtenCount, sync.notWrittenPick, sync.rejectedAutoSub · 1.26.0: research:src/core/git.ts commitAll po částech (commit 0e7238fc) · 1.34.0: research:4a5887dc src/core/sync.ts planSync (jiný strom: poslaných ≥ 10 a s id výzkumu < 10 %, nebo ≥ 5 a žádná; kept < given/2, strangers > 0; --force) · CHANGELOG.cs.md 1.34.0 „Jiný rodokmen pod jménem výzkumu“ · prace/1115-vyzkum-cizi-strom -->
 
 <a id="S2.5.1"></a>
 ### S2.5.1 Nieprzyjęte zmiany z nazwy
@@ -244,6 +268,7 @@ własny wiersz z powodem słowami aplikacji.
 | źródło zniknęło z całej osoby lub rodziny | cytaty osoby, imienia lub rodziny nie są usuwane z aplikacji |
 | cytat główny przy cytacie, którego badanie nie dodało | cytat główny nie ustawiony: badanie nie przyjęło tego cytatu |
 | dana się nie dopasowała | badanie nie znalazło tego faktu (zmieniła się data lub rodzaj) |
+| badanie w międzyczasie wycofało daną | badanie w międzyczasie wycofało ten fakt; nie wróci już do aplikacji |
 | w pliku brakuje osoby, danej, imienia, dziecka lub partnera | brak w pliku; badanie nic nie usuwa, tylko odnotowuje |
 | w tej sprawie czeka już sprzeczność | w tej sprawie czeka już otwarta sprzeczność |
 | późniejsze wysłanie z innego okna | późniejsze wysłanie z innego okna zmieniło fakt; ta kopia jest starsza |
@@ -259,13 +284,20 @@ własny wiersz z powodem słowami aplikacji.
 - Zmiany, które badanie chciało zapisać, a zapis się nie powiódł, są na tej samej liście, nie we własnym komunikacie.
   Powody, które aplikacja podawała już wcześniej (czeka na wybór, archiwum ją przechowuje, osoba usunięta, wycofane),
   zostają przy swoich dotychczasowych słowach.
+- **Dana, którą badanie w międzyczasie wycofało** (`strom event retract`, [R3.1](R3-verification-and-citation.md#R3.1))
+  po wersji, z której wychodzi plik aplikacji: usunięty cytat, cytat główny, nowy cytat, notatka, szczegół ani
+  potwierdzenie takiej danej się nie zapiszą i każde z nich ma na liście wiersz z tym powodem. Cytaty wycofanej
+  danej zostają w badaniu. Terminal przy `strom sync` pisze „nie zapisano: badanie w międzyczasie wycofało tę daną
+  (nie wróci już do aplikacji)”.
+- Wiersz nowego cytatu, którego badanie nie przyjęło, podaje wszystkie cytowane źródła, które drzewo ma, także
+  źródło nowe w aplikacji.
 - Późniejszy stan badania uzupełnia tę samą listę bez komunikatu.
 - **Granice:** badanie bez kodów zachowuje się jak dotąd: wysłanie, z którego nic nie przyjęło, zgłasza „Badanie nie
   przejęło z tej wysyłki niczego nowego.” Powody przy cytatach (pierwsze trzy wiersze tabeli) badanie wysyła tylko
   aplikacji, która czyta cytat główny; starsza aplikacja ich nie dostanie.
 - **Obowiązuje od:** aplikacja 3.29.0 z badaniem 1.34.0
 
-<!-- zdroj: app:1e10a1dd src/ui/research-sync-ui.ts:1985-2005 (SYNC_NW_CODES_FEATURE, notTakenToast, nothingTakenToast), :2849 notTakenTitle · src/ui/research-changes-ui.ts nwReason, NW_TODAY_WHY · strings.ts sync.notTakenToast, notTakenTitle, nw.*, nwUnknown, nothingTakenToast · research:355df0a5 src/core/sync.ts notWritten codes, skipped codes, /status sends[].notWritten (nejvýš 50) · ZADANI_VYZKUM_hlavni-citace.md V4, V5 · spec 095 K3.4 -->
+<!-- zdroj: app:1e10a1dd src/ui/research-sync-ui.ts:1985-2005 (SYNC_NW_CODES_FEATURE, notTakenToast, nothingTakenToast), :2849 notTakenTitle · src/ui/research-changes-ui.ts nwReason, NW_TODAY_WHY · strings.ts sync.notTakenToast, notTakenTitle, nw.*, nwUnknown, nothingTakenToast · research:355df0a5 src/core/sync.ts notWritten codes, skipped codes, /status sends[].notWritten (nejvýš 50) · ZADANI_VYZKUM_hlavni-citace.md V4, V5 · spec 095 K3.4 · event.retracted: app:bcf456ee strings.ts sync.nw.event.retracted (notWritten i skipped), src/ui/research-changes-ui.ts nwRowParts more (cites) · research:4a5887dc src/core/sync.ts retractedDiff (code event.retracted: fact.uncite, fact.main, fact.cite s cites, fact.note, fact.detail, fact.confirm), cli/ui.ts + cs/de/pl.json ui.sync.do.event.retracted · prace/1115-vyzkum-095-retract -->
 
 <a id="S2.6"></a>
 ## S2.6 Osoba usunięta w aplikacji
@@ -298,5 +330,30 @@ Wysłanie można w badaniu cofnąć. Zmiany w aplikacji przy tym zostają; z bad
 - **Od badania 1.26.0:** cofnąć wysłanie (`strom sync undo`) i odrzucić wysłane drzewo, które czeka (`strom sync
   discard`), może tylko człowiek; agentowi badanie odmawia. Zmiany w aplikacji po odrzuceniu zostają i można je
   wysłać ponownie.
+- **Od aplikacji 3.29.0:** cofnięte wysłanie, które nie niosło osób tego drzewa (zapis badania o wysłaniu wymienia
+  inne drzewo aplikacji albo wysłana wersja prawie nie wymienia jego osób), nie jest ponownie proponowane ani
+  wysyłane. Panel badania mówi „Ta wysyłka nie zawierała osób tego drzewa, dlatego nie zostanie wysłana ponownie.
+  Wczytanie wersji badania zachowa cofnięcie.” a jego główną akcją jest **Wczytaj wersję badania**. Gdzie
+  aplikacja nie może tego rozpoznać, wybór zostaje jak dotąd.
 
-<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) -->
+<!-- zdroj: app:src/ui/research-actions-ui.ts (v3.21.2) :448 researchActionUndoSend, UNDO_MAX_AGE_MS :152 · src/research-link.ts:73 sync-undo terminal · strings.ts research.undoSend, sync.undoneSub, sync.sendAgain, sync.loadVersion, sync.againNothing, sync.restoreBeforeLoad · research:src/core/sync.ts :19 strom sync undo · 1.26.0: src/commands/sync.ts:503 sync discard (person), sync undo (person) (commit 942c56f9) · 3.29.0: app:bbcc2b17 src/ui/research-changes-ui.ts researchUndoneForeign (záznam poslání jmenuje jiný strom aplikace, nebo uložená verze poslání skoro nejmenuje osoby druhé uložené verze), strings.ts sync.undoneForeignSub -->
+
+<a id="S2.7.1"></a>
+### S2.7.1 Wczytać wersję badania?
+
+Zanim wersja badania zastąpi drzewo w aplikacji, aplikacja pyta **Wczytać wersję badania?** i pokazuje, co się
+w aplikacji zmieni albo zniknie.
+
+- **Lista:** wiersz na każdą wartość: osoba · dana · **tutaj → z badania**. Pierwsze 8 wierszy, pozostałe pod „i N
+  więcej”. Pod listą, co z badania przybędzie („Z badania przybędzie: + 2 osoby, 3 dane”), oraz „Przed wczytaniem
+  zapisywana jest kopia zapasowa; można ją przywrócić.”
+- **Notatka wiersz po wierszu:** gdy notatkę mają obie wersje, wspólne wiersze zostają zwykłe, usunięte są
+  przekreślone, a dodane lub zmienione wyróżnione (zmieniony wiersz: stary przekreślony, potem nowy). Akapit, który
+  badanie tylko dodało, niczego nie przekreśla. Spacje na końcu wiersza i końce wierszy z Windows nie są zmianą.
+  Notatka tylko po jednej stronie ma dalej **tutaj → z badania**. Wczytują się te same dane co dotąd.
+- **Granice:** przy drzewie, które z badania tylko wczytuje ([S2.2](#S2.2)), i gdy z ostatniego wysłania coś się nie
+  zapisało, okno mówi, że wczytanie nadpisze te zmiany; przyciski to **Wczytaj i nadpisz** i **Otwórz jako kopię**.
+- **Obsługa:** aplikacja: **Wczytaj wersję badania**
+- **Obowiązuje od:** aplikacja 3.9.0; notatka wiersz po wierszu od 3.29.0
+
+<!-- zdroj: app:src/ui/research-load-ui.ts askResearchLoad (ROWS_SHOWN 8, overwrite: sendMode off nebo nezapsané z posledního poslání → loadOverwrite + research.openCopy), src/ui/research-ui.ts:2377 · 03352a9c src/line-diff.ts diffLines (LCS po řádcích, mezery na konci a CRLF nejsou změna), research-load-ui.ts notes · strings.ts sync.loadTitle, loadColChange, loadMore, loadAdded, loadBackupNote, loadOverwrite, loadOverNotWritten · CHANGELOG.cs.md 3.29.0 „Načíst verzi výzkumu?“ · v3.9.0 (loadColChange) -->

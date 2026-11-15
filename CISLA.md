@@ -346,6 +346,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S1.2 | S1-connecting-app-and-research.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Výzkum se otevře v aplikaci odkazem z terminálu | The research opens in the app through a link from the terminal | Die Forschung öffnet sich in der App über einen Link aus dem Terminal | Badanie otwiera się w aplikacji linkiem z terminala |
 | S1.2.1 | S1-connecting-app-and-research.md | aplikace 3.0.0 | platí | Odkazy, které aplikace přijme | Links the app accepts | Links, die die App annimmt | Linki, które aplikacja przyjmuje |
 | S1.3 | S1-connecting-app-and-research.md | aplikace 3.12.0 | platí | Druhy stromů v aplikaci | Kinds of trees in the app | Arten von Stammbäumen in der App | Rodzaje drzew w aplikacji |
+| S1.3.1 | S1-connecting-app-and-research.md | aplikace 3.29.0 | koncept | Ukázkový strom | The sample tree | Der Beispiel-Stammbaum | Drzewo przykładowe |
 | S1.4 | S1-connecting-app-and-research.md | aplikace 3.0.0 | platí | Sledování živě | Following live | Live verfolgen | Śledzenie na żywo |
 | S1.5 | S1-connecting-app-and-research.md | aplikace 3.9.0 | platí | Když výzkum neběží nebo spojení nejde | When the research is not running or the connection fails | Wenn die Forschung nicht läuft oder die Verbindung nicht geht | Gdy badanie nie działa albo połączenie się nie udaje |
 | S1.6 | S1-connecting-app-and-research.md | aplikace 3.9.0, výzkum 1.12.0 | platí | Starší a novější verze | Older and newer versions | Ältere und neuere Versionen | Starsze i nowsze wersje |
@@ -357,6 +358,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S2.2 | S2-edits-from-the-app.md | aplikace 3.9.0, výzkum 1.12.0 | platí | Kdy se úpravy posílají | When edits are sent | Wann Änderungen gesendet werden | Kiedy zmiany są wysyłane |
 | S2.2.1 | S2-edits-from-the-app.md | aplikace 3.14.0 | platí | Co se pošle | What will be sent | Was gesendet wird | Co zostanie wysłane |
 | S2.2.2 | S2-edits-from-the-app.md | aplikace 3.27.0, výzkum 1.31.0 | platí | Folium, snímek a signatura z aplikace | Folio, image and call number from the app | Folio, Bild und Signatur aus der App | Folio, skan i sygnatura z aplikacji |
+| S2.2.3 | S2-edits-from-the-app.md | aplikace 3.29.0 | koncept | Který strom se pošle | Which tree is sent | Welcher Stammbaum gesendet wird | Które drzewo zostaje wysłane |
 | S2.3 | S2-edits-from-the-app.md | výzkum 1.5.0 | platí | Co výzkum s poslanými úpravami udělá | What the research does with sent edits | Was die Forschung mit gesendeten Änderungen tut | Co badanie zrobi z wysłanymi zmianami |
 | S2.3.1 | S2-edits-from-the-app.md | aplikace 3.29.0, výzkum 1.34.0 | koncept | Hlavní citace a odebraná citace z aplikace | The main citation and a removed citation from the app | Hauptzitat und entferntes Zitat aus der App | Cytat główny i usunięty cytat z aplikacji |
 | S2.4 | S2-edits-from-the-app.md | výzkum 1.12.0 | platí | Archiv Stromu a výzkum bez agenta | A Strom archive and a research without an agent | Strom-Archiv und Forschung ohne Agent | Archiwum Strom i badanie bez agenta |
@@ -364,6 +366,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S2.5.1 | S2-edits-from-the-app.md | aplikace 3.29.0, výzkum 1.34.0 | koncept | Nepřevzaté změny jmenovitě | Changes not taken, by name | Nicht übernommene Änderungen einzeln | Nieprzyjęte zmiany z nazwy |
 | S2.6 | S2-edits-from-the-app.md | výzkum 1.0.0 | platí | Osoba odebraná v aplikaci | A person removed in the app | In der App entfernte Person | Osoba usunięta w aplikacji |
 | S2.7 | S2-edits-from-the-app.md | aplikace 3.4.0, výzkum 1.0.0 | platí | Vrácení poslání | Undoing a send | Senden zurücknehmen | Cofnięcie wysłania |
+| S2.7.1 | S2-edits-from-the-app.md | aplikace 3.9.0 | koncept | Načíst verzi výzkumu? | Load the research version? | Version der Forschung laden? | Wczytać wersję badania? |
 | S3 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Co ví výzkum | What the research knows | Was die Forschung weiß | Co wie badanie |
 | S3.1 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Co ví výzkum jen čte to, co výzkum poslal | What the research knows only reads what the research sent | Was die Forschung weiß liest nur, was die Forschung gesendet hat | Co wie badanie tylko czyta to, co badanie wysłało |
 | S3.1.1 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Kdy výzkum bloky posílá | When the research sends the blocks | Wann die Forschung die Blöcke sendet | Kiedy badanie wysyła bloki |

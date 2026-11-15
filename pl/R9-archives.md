@@ -128,7 +128,7 @@ ją tylko człowiek.
   w folderze, nie wraca: skany zostaną przejęte ([R9.6](#R9.6)). Zadanie **witryna do sprawdzenia** nie budzi się
   nigdy ([R6.2.2](R6-awaiting-action.md#R6.2.2)).
 - **Dlaczego:** złagodzić archiwum lub je otworzyć może tylko człowiek; agent może archiwum tylko zaostrzyć.
-- **Obsługa:** terminal: `strom allow archive <web|stahovač> --way slow|browser|manual`, `--revoke`, menu archiwów.
+- **Obsługa:** terminal: `strom allow archive <witryna|pobieracz> --way slow|browser|manual`, `--revoke`, menu archiwów.
   Aplikacja: odnośnik **Zgoda…** w notatce przy pozycji, która czeka na skany archiwum tylko przez przeglądarkę,
   i w wierszu **Przeglądarka** ([R9.4.3](#R9.4.3)). Otwiera pytanie w badaniu w terminalu, nawet gdy do archiwum nie
   prowadzi żaden program pobierający.
