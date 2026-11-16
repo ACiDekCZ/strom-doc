@@ -23,6 +23,7 @@ der Person; was den ganzen Stammbaum betrifft, steht in der Leiste und im Menü 
 | eine Person bearbeiten | Menü der Person → **Bearbeiten** | [S2](S2-edits-from-the-app.md), beim Verfolgen [A9.3](#A9.3) |
 | Ansicht Karte und weitere Ansichten | Umschalter der Ansichten in der Leiste; auf Telefon, Tablet und im Fenster bis 1024 px die untere Leiste und **Mehr → Ansicht** | [A6](A6-views.md), [A9.5](#A9.5) |
 | der ganze Stammbaum in Zeilen, CSV- und XLSX-Export | **Tabelle** im Umschalter der Ansichten; auf Telefon, Tablet und im Fenster bis 1024 px **Tabelle** in der unteren Leiste | [A6.7](A6-views.md#A6.7) |
+| Personenlisten (feste, automatische, Arbeitslisten) | **Aktionen → Personenlisten…**; auf dem Telefon **Mehr → Personenlisten** | [A11](A11-lists-of-people.md) |
 | Minikarte oder Stammbaum-Legende einklappen | Reiter über der Minikarte; **◯** in der Legende | [A9.6](#A9.6) |
 | Vollbild (Telefon und Tablet) | **Mehr → Vollbild**; auf dem iPhone in Safari **Mehr → Vollbild…** | [A9.5](#A9.5) |
 | eine Ansicht oder die Forschungsübersicht in einem eigenen Fenster (am Computer) | ⧉ **In neuem Fenster öffnen** neben dem Ansichtsumschalter; Strg+Klick (macOS ⌘+Klick) auf den Reiter einer Ansicht; ⧉ in der Leiste der Tabelle und im Kopf der Übersicht | [A6.8](A6-views.md#A6.8), [S4.1.6](S4-research-from-the-app.md#S4.1.6) |
@@ -42,7 +43,7 @@ der Person; was den ganzen Stammbaum betrifft, steht in der Leiste und im Menü 
 - **Bedienung:** wie in der Tabelle.
 - **Gilt seit:** App 3.25.0 (Übersicht; jeder Ort gilt seit der Version in seiner Regel)
 
-<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 · okna: A6.8, S4.1.6 (app:4b1373a7 src/windows/window-controls.ts) · dolní lišta a Celá obrazovka: A9.5 (app:4b1373a7, commit bb5e4d12) -->
+<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, A11 (od 3.30.0, index.html #actions-lists-row, bottom-sheet.ts sheet-lists), S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 · okna: A6.8, S4.1.6 (app:4b1373a7 src/windows/window-controls.ts) · dolní lišta a Celá obrazovka: A9.5 (app:4b1373a7, commit bb5e4d12) -->
 
 <a id="A9.2"></a>
 ## A9.2 Bedienelemente haben einen lesbaren Namen

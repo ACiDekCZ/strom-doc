@@ -1188,6 +1188,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A4.1](cs/A4-surnames-and-families.md#A4.1), A4.1.1, A4.2, A4.4
 
+<a id="list-of-people"></a>
+### Seznam osob
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Seznam osob · pevný · automatický · pracovní | Vybrané osoby stromu pod jedním jménem. Pevný drží své osoby a mění se ručně; automatický je uložené pravidlo (rod, předci, potomci, linie výzkumu, filtr Tabulky, přidáno za období), jeho osoby se počítají vždy znovu; pracovní je pevný s odškrtáváním hotových. Slouží jako rozsah Tabulky a v exportu. |
+| en | List of people · fixed · automatic · checklist | Chosen people of the tree under one name. A fixed list holds its people and changes by hand; an automatic list is a saved rule (family line, ancestors, descendants, research line, Table filter, added in a period) whose people are worked out again each time; a checklist is a fixed list with ticking off done. It serves as the Table's scope and in export. |
+| de | Personenliste · fest · automatisch · Arbeitsliste | Ausgewählte Personen des Stammbaums unter einem Namen. Eine feste Liste hält ihre Personen und ändert sich von Hand; eine automatische Liste ist eine gespeicherte Regel (Stamm, Vorfahren, Nachkommen, Forschungslinie, Tabellenfilter, im Zeitraum hinzugefügt), deren Personen jedes Mal neu berechnet werden; eine Arbeitsliste ist eine feste Liste mit Abhaken des Erledigten. Sie dient als Umfang der Tabelle und im Export. |
+| pl | Lista osób · stała · automatyczna · robocza | Wybrane osoby drzewa pod jedną nazwą. Lista stała trzyma swoje osoby i zmienia się ręcznie; automatyczna to zapisana reguła (ród, przodkowie, potomkowie, linia badania, filtr tabeli, dodane w okresie), której osoby są za każdym razem wyliczane na nowo; robocza to lista stała z odhaczaniem gotowych. Służy jako zakres tabeli i w eksporcie. |
+
+- **Čísla:** [A11](cs/A11-lists-of-people.md), A11.1, A11.2, A11.3, A11.4, A11.5, A11.6, A11.7, A11.8, A11.9, A11.10, A6.7.19
+
 <a id="make-copies-match"></a>
 ### Sjednotit kopie
 
@@ -1342,7 +1354,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Tabelle (Ansicht) · Personen · Verbindungen · Ereignisse · Quellen (Zeilen) | Die Ansicht der App auf den ganzen Stammbaum in Zeilen von Personen, Verbindungen, Ereignissen oder Quellen: Angaben, berechnete Werte, Vollständigkeit, Quellenangaben und Befunde der Prüfung in Spalten, mit Filter, Sortierung, gespeicherten Ansichten und CSV- und XLSX-Export. |
 | pl | Tabela (widok) · Osoby · Związki · Wydarzenia · Źródła (wiersze) | Widok aplikacji na całe drzewo w wierszach osób, związków, wydarzeń lub źródeł: dane, wartości obliczone, kompletność, cytowania i wyniki kontroli w kolumnach, z filtrem, sortowaniem, zapisanymi widokami i eksportem CSV i XLSX. |
 
-- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12, A6.7.13, A6.7.14, A6.7.15, A6.7.16, A6.7.17, A6.7.18
+- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12, A6.7.13, A6.7.14, A6.7.15, A6.7.16, A6.7.17, A6.7.18, A6.7.19, A6.7.20
 
 <a id="surname-spellings"></a>
 ### Tvary příjmení

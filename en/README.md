@@ -38,6 +38,7 @@ Parts R (the research), A (the app) and S (the app and the research together) ar
 - [A8 Merging trees](A8-merging-trees.md): merging a file, a tree or a view into a new tree, matching people
 - [A9 Using the app](A9-using-the-app.md): where things are, readable names of controls, editing while following the research, the agent in the app, the bottom bar on a phone and a tablet
 - [A10 One event of several people](A10-shared-events.md): a household's shared event (Shared with), Make all match, Join into one event, godparents and witnesses in a person's life, merging and older trees
+- [A11 Lists of people](A11-lists-of-people.md): fixed, automatic and checklist, rules, Freeze, manual order, Add to list, Save as list, the date added, ticking off done, exporting a list
 
 ## S The app and the research together
 

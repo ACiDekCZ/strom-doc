@@ -106,9 +106,11 @@ Przy eksporcie obok ochrony wybiera się **Zawartość**: co zapisze się w plik
 - **Granice:** struktura drzewa i imiona z nazwiskami zostają zawsze. Warsztat pracy badania (kolejka, zadania,
   szkice opowieści) nie trafia do eksportu nigdy. Opcja ochrony może pominąć źródła i załączniki także przy Pełnym
   archiwum ([A7.2](#A7.2)).
+- **Od aplikacji 3.30.0:** wybór **Co eksportować** ma obok **Całe drzewo** i **Tylko bieżący widok** także
+  **Lista osób**: kopia zapasowa JSON i GEDCOM tylko z osobami listy ([A11.9](A11-lists-of-people.md#A11.9)).
 - **Obowiązuje od:** aplikacja 2.4.0
 
-<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent -->
+<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList -->
 
 <a id="A7.4"></a>
 ## A7.4 Księga rodu

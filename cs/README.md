@@ -38,6 +38,7 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [A8 Sloučení stromů](A8-merging-trees.md): sloučení souboru, stromu nebo pohledu do nového stromu, párování osob
 - [A9 Ovládání aplikace](A9-using-the-app.md): kde co je, čitelné názvy prvků, úpravy při sledování výzkumu, agent v aplikaci, dolní lišta na telefonu a tabletu
 - [A10 Jedna událost u více osob](A10-shared-events.md): společná událost domácnosti (Spolu s), Sjednotit, Spojit do jedné události, kmotři a svědci v životě osoby, sloučení a starší stromy
+- [A11 Seznamy osob](A11-lists-of-people.md): pevný, automatický a pracovní seznam, pravidla, Zmrazit, ruční řazení, Přidat do seznamu, Uložit jako seznam, údaj „přidáno“, odškrtávání hotových, export seznamu
 
 ## S Aplikace a výzkum spolu
 

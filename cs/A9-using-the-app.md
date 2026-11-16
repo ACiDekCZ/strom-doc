@@ -22,6 +22,7 @@ co se týká celého stromu, je v liště a v menu **Akce**.
 | upravit osobu | nabídka osoby → **Upravit** | [S2](S2-edits-from-the-app.md), při sledování [A9.3](#A9.3) |
 | pohled Mapa a další pohledy | přepínač pohledů v liště; na telefonu, tabletu a v okně do 1024 px dolní lišta a **Více → Pohled** | [A6](A6-views.md), [A9.5](#A9.5) |
 | celý strom v řádcích, export CSV a XLSX | **Tabulka** v přepínači pohledů; na telefonu, tabletu a v okně do 1024 px **Tabulka** na dolní liště | [A6.7](A6-views.md#A6.7) |
+| seznamy osob (pevné, automatické, pracovní) | **Akce → Seznamy osob…**; na telefonu **Více → Seznamy osob** | [A11](A11-lists-of-people.md) |
 | sbalit minimapu nebo legendu stromu | ouško nad minimapou; **◯** v legendě | [A9.6](#A9.6) |
 | celá obrazovka (telefon a tablet) | **Více → Celá obrazovka**; na iPhonu v Safari **Více → Celá obrazovka…** | [A9.5](#A9.5) |
 | pohled nebo Přehled výzkumu v samostatném okně (na počítači) | ⧉ **Otevřít v novém okně** vedle přepínače pohledů; Ctrl+klik (macOS ⌘+klik) na záložku pohledu; ⧉ v liště Tabulky a v hlavičce Přehledu | [A6.8](A6-views.md#A6.8), [S4.1.6](S4-research-from-the-app.md#S4.1.6) |
@@ -40,7 +41,7 @@ co se týká celého stromu, je v liště a v menu **Akce**.
 - **Ovládání:** jak v tabulce.
 - **Platí od:** aplikace 3.25.0 (souhrn; každé místo platí od verze ve svém pravidle)
 
-<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 · okna: A6.8, S4.1.6 (app:4b1373a7 src/windows/window-controls.ts) · dolní lišta a Celá obrazovka: A9.5 (app:4b1373a7, commit bb5e4d12) -->
+<!-- zdroj: app:index.html search input (search.placeholder) · src/renderer.ts card.onclick → UI.showContextMenu, klávesy Enter/Space · src/ui/bottom-sheet.ts (dlouhý stisk, menu.sectionView) · SPEC.md Long-press → bottom sheet · strings.ts search.placeholder, mobileMenu.more, menu.sectionView, map.tilesNotice, map.tilesNoticeOk, research.stop · cesty z pravidel A3.1, A3.6, A6, A6.5.2, A11 (od 3.30.0, index.html #actions-lists-row, bottom-sheet.ts sheet-lists), S1.4, S2.2, S3.2, S4.1, S4.4, A1.7 · okna: A6.8, S4.1.6 (app:4b1373a7 src/windows/window-controls.ts) · dolní lišta a Celá obrazovka: A9.5 (app:4b1373a7, commit bb5e4d12) -->
 
 <a id="A9.2"></a>
 ## A9.2 Prvky mají čitelný název

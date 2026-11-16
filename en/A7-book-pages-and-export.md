@@ -108,9 +108,11 @@ In the export, next to privacy, the **Content** is chosen: what is saved into th
 - **Limits:** the structure of the tree and the names always stay. The research's workshop (queue, tasks, drafts of
   stories) never goes into an export. The privacy option can leave out sources and attachments even with Complete
   archive ([A7.2](#A7.2)).
+- **From app 3.30.0:** the choice **What to export** has besides **Whole tree** and **Current view only** also
+  **List of people**: the JSON backup and GEDCOM with only the people of the list ([A11.9](A11-lists-of-people.md#A11.9)).
 - **Since:** app 2.4.0
 
-<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent -->
+<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList -->
 
 <a id="A7.4"></a>
 ## A7.4 Family book

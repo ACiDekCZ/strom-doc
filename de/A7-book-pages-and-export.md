@@ -112,9 +112,11 @@ Beim Export wird neben dem Schutz der **Inhalt** gewählt: was in die Datei gesp
 - **Grenzen:** die Struktur des Stammbaums und die Namen bleiben immer. Die Werkstatt der Forschung (Warteschlange,
   Aufgaben, Entwürfe von Erzählungen) kommt nie in den Export. Die Auswahl des Schutzes kann Quellen und Anhänge auch
   beim Vollständigen Archiv weglassen ([A7.2](#A7.2)).
+- **Ab App 3.30.0:** die Wahl **Was exportieren** hat neben **Ganzer Stammbaum** und **Nur aktuelle Ansicht** auch
+  **Personenliste**: Datensicherung (JSON) und GEDCOM nur mit den Personen der Liste ([A11.9](A11-lists-of-people.md#A11.9)).
 - **Gilt seit:** App 2.4.0
 
-<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent -->
+<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList -->
 
 <a id="A7.4"></a>
 ## A7.4 Familienbuch

@@ -307,6 +307,8 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.7.16 | A6-views.md | aplikace 3.30.0 | platí | Odkazy na osoby a skoky ‹ › | Links to people and jumps ‹ › | Links zu Personen und Sprünge ‹ › | Odnośniki do osób i skoki ‹ › |
 | A6.7.17 | A6-views.md | aplikace 3.30.0 | platí | Ukotvené řádky | Pinned rows | Angeheftete Zeilen | Przypięte wiersze |
 | A6.7.18 | A6-views.md | aplikace 3.30.0 | platí | Výzkum v Tabulce dalšího okna | The research in the Table of another window | Die Forschung in der Tabelle eines weiteren Fensters | Badanie w tabeli innego okna |
+| A6.7.19 | A6-views.md | aplikace 3.30.0 | platí | Rozsah: seznam osob | Scope: a list of people | Umfang: eine Personenliste | Zakres: lista osób |
+| A6.7.20 | A6-views.md | aplikace 3.30.0 | platí | Seskupit podle | Group by | Gruppieren nach | Grupuj według |
 | A6.8 | A6-views.md | aplikace 3.28.0 | platí | Pohled v samostatném okně | A view in a separate window | Ansicht in einem eigenen Fenster | Widok w osobnym oknie |
 | A6.8.1 | A6-views.md | aplikace 3.28.0 | platí | Sledovat výběr | Follow selection | Auswahl folgen | Śledź wybór |
 | A6.8.2 | A6-views.md | aplikace 3.28.0 | platí | Když hlavní okno chybí | When the main window is missing | Wenn das Hauptfenster fehlt | Gdy brakuje okna głównego |
@@ -345,6 +347,21 @@ nenapsáno) · `neplatí od <verze>`.
 | A10.5.2 | A10-shared-events.md | aplikace 3.28.0 | platí | Propojit kmotra a svědka zapsaného jménem | Linking a godparent or witness recorded by name | Namentlich eingetragene Paten und Zeugen verknüpfen | Połączenie chrzestnego i świadka zapisanego z nazwiska |
 | A10.6 | A10-shared-events.md | aplikace 3.28.0 | platí | Sloučení osob a stromů | Merging people and trees | Personen und Stammbäume zusammenführen | Scalanie osób i drzew |
 | A10.7 | A10-shared-events.md | aplikace 3.28.0 | platí | Stromy uložené dřív | Trees saved earlier | Früher gespeicherte Stammbäume | Drzewa zapisane wcześniej |
+| A11 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Seznamy osob | Lists of people | Personenlisten | Listy osób |
+| A11.1 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Pevný, automatický a pracovní seznam | Fixed list, automatic list and checklist | Feste Liste, automatische Liste und Arbeitsliste | Lista stała, automatyczna i robocza |
+| A11.2 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Pravidlo seznamu | The rule of a list | Die Regel einer Liste | Reguła listy |
+| A11.2.1 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Doplnit podle pravidla | Add from the rule | Nach Regel ergänzen | Uzupełnij według reguły |
+| A11.2.2 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Zmrazit automatický seznam | Freezing an automatic list | Eine automatische Liste einfrieren | Zamrażanie listy automatycznej |
+| A11.2.3 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Pravidlo, které už nic nenajde | A rule that finds nothing any more | Eine Regel, die nichts mehr findet | Reguła, która nic już nie znajduje |
+| A11.3 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Správa seznamů: Seznamy osob | Managing the lists: Lists of people | Listen verwalten: Personenlisten | Zarządzanie listami: Listy osób |
+| A11.3.1 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Souhrn seznamu | The summary of a list | Die Zusammenfassung einer Liste | Podsumowanie listy |
+| A11.4 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Řazení seznamu | The order of a list | Die Sortierung einer Liste | Sortowanie listy |
+| A11.5 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Přidat do seznamu a odebrat | Add to list and remove | Zur Personenliste hinzufügen und entfernen | Dodaj do listy i usuń |
+| A11.6 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Uložit pohled jako seznam | Saving a view as a list | Eine Ansicht als Liste speichern | Zapisanie widoku jako listy |
+| A11.7 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Kdy osoba přibyla: Přidáno za posledních 30 dní | When a person came: Added in the last 30 days | Wann eine Person hinzukam: In den letzten 30 Tagen hinzugefügt | Kiedy osoba doszła: Dodane w ostatnich 30 dniach |
+| A11.8 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Pracovní seznam: Odškrtávat hotové | A checklist: Tick off done | Arbeitsliste: Erledigtes abhaken | Lista robocza: Odhaczaj gotowe |
+| A11.9 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Export seznamu | Exporting a list | Export einer Liste | Eksport listy |
+| A11.10 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Seznamy v datech stromu | Lists in the data of the tree | Listen in den Daten des Stammbaums | Listy w danych drzewa |
 | S1 | S1-connecting-app-and-research.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Propojení aplikace a výzkumu | Connecting the app and the research | Verbindung von App und Forschung | Połączenie aplikacji i badania |
 | S1.1 | S1-connecting-app-and-research.md | výzkum 1.0.0 | platí | Most výzkumu běží jen na tomto počítači | The research's bridge runs only on this computer | Die Brücke der Forschung läuft nur auf diesem Computer | Most badania działa tylko na tym komputerze |
 | S1.2 | S1-connecting-app-and-research.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Výzkum se otevře v aplikaci odkazem z terminálu | The research opens in the app through a link from the terminal | Die Forschung öffnet sich in der App über einen Link aus dem Terminal | Badanie otwiera się w aplikacji linkiem z terminala |

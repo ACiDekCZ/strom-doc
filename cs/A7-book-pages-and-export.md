@@ -106,9 +106,11 @@ Při exportu se vedle ochrany volí **Obsah**: co se uloží do souboru.
 - **Hranice:** struktura stromu a jména zůstávají vždy. Pracovní dílna výzkumu (fronta, úkoly, koncepty
   vyprávění) se do exportu nedává nikdy. Volba ochrany může zdroje a přílohy vynechat i při Kompletním archivu
   ([A7.2](#A7.2)).
+- **Od aplikace 3.30.0:** volba **Co exportovat** má vedle **Celý strom** a **Jen aktuální pohled** i **Seznam osob**:
+  záloha JSON a GEDCOM jen s osobami seznamu ([A11.9](A11-lists-of-people.md#A11.9)).
 - **Platí od:** aplikace 2.4.0
 
-<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent -->
+<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList -->
 
 <a id="A7.4"></a>
 ## A7.4 Kniha rodu
