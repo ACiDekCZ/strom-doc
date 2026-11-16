@@ -365,6 +365,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S2.2.3 | S2-edits-from-the-app.md | aplikace 3.29.0 | koncept | Který strom se pošle | Which tree is sent | Welcher Stammbaum gesendet wird | Które drzewo zostaje wysłane |
 | S2.3 | S2-edits-from-the-app.md | výzkum 1.5.0 | platí | Co výzkum s poslanými úpravami udělá | What the research does with sent edits | Was die Forschung mit gesendeten Änderungen tut | Co badanie zrobi z wysłanymi zmianami |
 | S2.3.1 | S2-edits-from-the-app.md | aplikace 3.29.0, výzkum 1.34.0 | koncept | Hlavní citace a odebraná citace z aplikace | The main citation and a removed citation from the app | Hauptzitat und entferntes Zitat aus der App | Cytat główny i usunięty cytat z aplikacji |
+| S2.3.2 | S2-edits-from-the-app.md | výzkum 1.35.0 | platí | Poznámka účastníka z aplikace | A participant's note from the app | Notiz eines Beteiligten aus der App | Notatka uczestnika z aplikacji |
 | S2.4 | S2-edits-from-the-app.md | výzkum 1.12.0 | platí | Archiv Stromu a výzkum bez agenta | A Strom archive and a research without an agent | Strom-Archiv und Forschung ohne Agent | Archiwum Strom i badanie bez agenta |
 | S2.5 | S2-edits-from-the-app.md | aplikace 3.11.0, výzkum 1.12.0 | platí | Co výzkum nepřijme | What the research does not accept | Was die Forschung nicht annimmt | Czego badanie nie przyjmie |
 | S2.5.1 | S2-edits-from-the-app.md | aplikace 3.29.0, výzkum 1.34.0 | koncept | Nepřevzaté změny jmenovitě | Changes not taken, by name | Nicht übernommene Änderungen einzeln | Nieprzyjęte zmiany z nazwy |
