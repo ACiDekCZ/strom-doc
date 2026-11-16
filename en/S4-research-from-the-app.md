@@ -26,7 +26,7 @@ through the bridge.
     on a phone the whole screen. On a phone the panel is a strip, and a tap opens the overview.
   - Without following, the panel shows the last known **Awaiting action** with the sentence **As of …. The research
     is not running.**
-- **Controls:** app: the panel, buttons **⤢ Open overview** and **Stop following**; menu **Research → Research
+- **Controls:** app: the panel, buttons **⤢ Open overview** and **End following**; menu **Research → Research
   overview**.
 - **Since:** app 3.5.0
 - **From app 3.22.0:** each section can be expanded, collapsed or hidden, and the choice holds for the panel and the
@@ -39,7 +39,7 @@ through the bridge.
   [R2.3](R2-lines-and-queue.md#R2.3). The rows **At work** in the small panel say it the same way; under a
   direction's heading only how, without its name.
 - **From app 3.27.0:** the **Research overview** opens also without following ([S4.1.5](#S4.1.5)): in the menu
-  **Research** it is always first, second is **Follow live**, while following **Stop following** in its place; in
+  **Research** it is always first, second is **Follow live**, while following **End following** in its place; in
   the Strom archive there is no **Follow live**. From the **Tree overview** it is opened by **Research ›** in the
   heading of **Where to focus**. The button **⤢ Open overview** in the small panel is there only while following.
   - The summary shows only the parts switched on ([S4.1.2](#S4.1.2)): **Last 24 h** people and sources, **This
@@ -68,11 +68,13 @@ The tree can move by itself to the person the agent is working on right now (the
 - **Limits:** at most one move every 8 s. When the tree is zoomed out more than 0.55, it zooms in to 0.8. Moving the
   tree, selecting another person or another view interrupts following (**Back to the agent**); after 20 s without a
   touch it returns by itself. The choice is remembered for the device.
-- **Controls:** app: **Research overview → Follow the agent in the tree** / **Stop following**.
+- **Controls:** app: **Research overview → Follow the agent in the tree** / **Stop following here**.
 - **Since:** app 3.5.0
 - **From app 3.24.0:** following also works in the fan and on the map ([S4.1.3](#S4.1.3)); moving the map pauses it the same way.
+- **From app 3.30.0:** ◎ **Stop following here** stops the jumps only in the window where it is clicked; the other
+  windows keep following, each in its own view ([S4.1.7](#S4.1.7)).
 
-<!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff -->
+<!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff · 3.30.0: spec 097 O1, O3, ZADANI_DEV §6 (◎ v hlavním okně další okna nevypne) -->
 
 <a id="S4.1.2"></a>
 ### S4.1.2 Customizing the panel
@@ -167,8 +169,12 @@ the work with a ring.
 - **Since:** app 3.24.0
 - **From app 3.25.0:** the map's legend says "Hollow marker: a place without a person among the places shown" and a
   place of work without a person on the map "no person on the map yet" (before, "out of the map's range").
+- **From app 3.30.0:** **Follow the agent in** applies only to the main window; other windows follow in the view they
+  show ([S4.1.7](#S4.1.7)). On a computer with a mouse (a window wider than 640 px) the help in Settings says so:
+  "Applies to the main window when following starts and on Back to the agent. Other windows follow in their own
+  view."
 
-<!-- zdroj: app:src/ui/live-follow-ui.ts (hlavička, followIn) · src/live-follow-prefs.ts · src/live-follow-targets.ts TRAIL_MAX=8, TRAIL_MAX_AGE_MS=60 min, fanCenter, sessionNumbers, sessionTone · src/live-follow-map.ts · src/fan-follow-anchor.ts MAX_UP=12 · src/ui/fan-follow-ui.ts · src/ui/map-follow-ui.ts PAN_MARGIN=64, PAN_MS=400, telefon bez čáry · strings.ts settings.groupResearchFollow, researchFollowNote, followView(Help), followFanCenter*, followTrail(Help); live.followIn, mapPaused, legendTitle, legendTrail, legendRecord, legendPerson, legendOut; fan.pin, unpin, centerLabel, workOutside; map workRecord, workPerson, outScope, noCoords, noPlace, locate · CHANGELOG.cs.md 3.24.0, 3.25.0 · spec 043 -->
+<!-- zdroj: app:src/ui/live-follow-ui.ts (hlavička, followIn) · src/live-follow-prefs.ts · src/live-follow-targets.ts TRAIL_MAX=8, TRAIL_MAX_AGE_MS=60 min, fanCenter, sessionNumbers, sessionTone · src/live-follow-map.ts · src/fan-follow-anchor.ts MAX_UP=12 · src/ui/fan-follow-ui.ts · src/ui/map-follow-ui.ts PAN_MARGIN=64, PAN_MS=400, telefon bez čáry · strings.ts settings.groupResearchFollow, researchFollowNote, followView(Help), followFanCenter*, followTrail(Help); live.followIn, mapPaused, legendTitle, legendTrail, legendRecord, legendPerson, legendOut; fan.pin, unpin, centerLabel, workOutside; map workRecord, workPerson, outScope, noCoords, noPlace, locate · CHANGELOG.cs.md 3.24.0, 3.25.0 · spec 043 · 3.30.0: app:e7e79873 src/ui/live-section-edit-ui.ts (isMouseWide → settings.followViewHelpWindows) · src/breakpoints.ts MQ_MOUSE_WIDE · spec 097 O5, ZADANI_DEV §8 -->
 
 <a id="S4.1.4"></a>
 ### S4.1.4 Changes from the research without flicker
@@ -234,7 +240,7 @@ whether the research bridge answers.
   a direction; deciding a conflict, reverting a value and verifying or confirming a fact through the bridge. The
   overview's window ([S4.1.6](#S4.1.6)) gets the new state from the main window, which makes the write.
 - **From app 3.28.0:** the Research overview without following closes with ⤡ and ×; a research panel that was shown
-  beside it shows again once the overview closes. **Stop following** in the open overview only ends following and the
+  beside it shows again once the overview closes. **End following** in the open overview only ends following and the
   overview stays open without following; an end the app makes itself (for example a switch to an archive) closes it.
   A switch to another view closes the overview without following as ⤡ does; a followed research's overview stays.
 
@@ -312,6 +318,76 @@ carries out. The window does not talk to the research bridge.
 - **Since:** app 3.28.0; 3.30.0: the small panel next to the window only with **At work**
 
 <!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) · app:3c2fde77 src/ui/overview-window-view.ts readQueuePage přes akci queue-list do hlavního okna (okno most nevolá) · app:3f9a5ca4 overview-window-view.ts treeVerifyNow (extras.verify), verifyStop → verify-stop, showVerifyBulkDialog → verify-bulk; evidenceHighlightNow (extras.highlight), endEvidenceHighlight → highlight-end, startPersonHighlight quiet · src/ui/research-ui.ts lightsGroup, markOverviewLit (is-lit, aria-current; nic při zavřeném hlavním okně) · research-overview-ui.ts lightsGroup direction (show-in-tree v Teď), changed (showChanged) · research-directions-ui.ts lightsGroup direction (dirShow), direction-found (dirFoundPersons) · strings.ts verify.section, bulkRow, stop, live.showInTree, dirShow, showChanged · spec 079 K3 · prace/1113-app-dorovnani-052-okna (2876d570..27f0bafb) · app:7f307c74 src/overview-columns.ts OVERVIEW_WINDOW_COLS_2 1100, OVERVIEW_WINDOW_COLS_3 1600, OVERVIEW_COLS_HYSTERESIS 24, OVERVIEW_SMALL_COLUMN 0.2, OVERVIEW_COLUMN_MAX 660, partitionContiguous, planOverviewColumns · src/ui/overview-columns-ui.ts (souhrn a pruhy nad sloupci, každý sloupec se posouvá sám, nové rozdělení jen při změně sloupců, sbalení, skrytí, přesunu, Načíst další; lepkavá hlava: pole nebo > 8 řádků; fokus, výběr v poli a oddíl na očích při změně šířky) · e2e/windows-overview-columns.spec.ts · CHANGELOG.cs.md 3.28.0 (e540e4b5) · spec 083 U3 · prace/1113-app-hledani-v-prehledu · 3.30.0: app:965e83f8 src/ui/live-panel-working-only.ts livePanelWorkingOnly (okno Přehledu, isDesktop > 1024 px, ne ukončené), livePanelDrawnSections (jen working), livePanelNothingAtWork · src/ui/research-ui.ts (třída working-only, bez štítků waiting a nových změn, bez samoskládání; overviewWindowOpenChanged, placeLivePanel při přechodu 1024 px; openResearchOverview → focusOverviewWindow) · strings.ts live.nothingAtWork · e2e/windows-overview-panel.spec.ts · CHANGELOG.cs.md 3.30.0 „Panel výzkumu vedle okna Přehledu“ · spec 079 U9 (rozhodnutí 27, 16. 11.) · dirigent:test/vysledek-1116-app-079-panel.md -->
+
+<a id="S4.1.7"></a>
+### S4.1.7 Following the agent in other windows
+
+While research is followed ([S1.4](S1-connecting-app-and-research.md#S1.4)), every other window of the tree
+([A6.8](A6-views.md#A6.8)) follows the agent too, each in its own view. One window can be detached to look at
+something else meanwhile; the other windows keep following. All windows are read-only during that.
+
+- **When:** while the main window follows research live. Every other window joins, also one opened before following
+  was turned on (without a reload) or only during it. Another window does not connect to the research bridge: the
+  main window sends it the agent's state, without the bridge's address.
+- **View:** a window follows in the view it shows. **Follow the agent in** ([S4.1.3](#S4.1.3)) applies only to the
+  main window, and **Back to the agent** does not switch the view of another window.
+  - **Family**, **Fan**, **Map:** the jump after the agent, the marks, the trail and the legend as in the main window
+    ([S4.1.1](#S4.1.1), [S4.1.3](#S4.1.3));
+  - **Table:** the agent's row ([A6.7.18](A6-views.md#A6.7.18));
+  - **Descendants**, **Timeline:** no jumps, the strip says so. Scrolling in them does not pause following. After a
+    switch to Family, Fan or Map the window jumps to the agent at once.
+- **The strip under the window's heading** says how the window follows (with an icon and text). The last button is
+  always **Go to the main window**.
+
+| Window state | Strip | Buttons |
+|---|---|---|
+| following | "Following the agent · read-only"; in Descendants and Timeline "Following the agent · no jumps in this view · read-only" | **Detach this window** |
+| following, the agent is working on nobody of this tree | "The agent is not working now · read-only" | **Detach this window** |
+| paused | "Following paused · read-only" | **Back to the agent**, **Detach this window** |
+| detached | "This window is not following the agent · read-only" | **Follow the agent** |
+| the connection to the bridge dropped | "The connection to the research dropped · trying again" (amber) | **Detach this window**, in a detached window **Follow the agent** |
+
+- **Pause:** a manual move, zoom or choice of a person in the window (in the Table scrolling or a click into the rows)
+  pauses following only in this window. **Back to the agent** brings it back, or it comes back by itself after 20 s
+  without a touch. The strip tells of the pause; another window has no floating pause label and no "Map panning
+  paused". A pause in the main window does not affect the other windows, and a pause in another window does not
+  affect the main one or other windows. Reloading the window (F5) cancels the pause.
+- **Detaching:** **Detach this window** stops the jumps after the agent in this window; the window can be browsed
+  freely and stays read-only. The agent's marks (the card of the person being worked on, the agent's row in the
+  Table, the marks and the trail in the Fan and on the Map) stay in it. **Follow the agent** attaches the window again
+  and it jumps to the agent at once. Detaching survives reloading the window (F5) and is forgotten when following
+  ends.
+- **A choice from another window:** a following window that is not paused only marks a person chosen in another
+  window, even with **Follow selection: switch** ([A6.8.1](A6-views.md#A6.8.1)); the centre stays with the agent. The
+  Table selects that person's row but does not scroll to it. The jump after the agent is not sent to the other
+  windows as a choice of a person. A paused or detached window goes by **Follow selection** as outside following.
+- **End:**
+  - ◎ **Stop following here** in the main window stops the jumps only in the main window; the other windows keep
+    following;
+  - **End following** (the research panel, the **Research** menu, the person menu) and the end of the session end
+    following in all windows: the strip disappears, the tree can be edited again, detaching is forgotten and every
+    other window reports it ("Following the research ended · the tree can be edited").
+- **The main window closed during following:** one of the other windows becomes the main window by itself and
+  following continues in it.
+  - The closing is recognised by 3 s without a message from the main window ([A6.8.2](A6-views.md#A6.8.2)).
+    Reloading the main window (F5) triggers none of this;
+  - order: first the windows following the agent (following and paused), then the detached ones; in each group from
+    the oldest window. The Research overview window ([S4.1.6](#S4.1.6)) does not become the main one. Each window in
+    the order waits 400 ms longer than the one before, and only one becomes the main window;
+  - that window shows "The main window closed · following continues in this window…", reloads as the main window with
+    the same view and with ◎ on if it was on in the closed main window. The other windows report "Another window took
+    over following" and stay as they were (a detached one stays detached);
+  - when this browser has no stored address of the research bridge, no window becomes the main one and the windows
+    show "Following can’t be restored · the main window closed" with **Make this the main window** and **Open Strom**
+    ([A6.8.2](A6-views.md#A6.8.2));
+  - without following, [A6.8.2](A6-views.md#A6.8.2) applies unchanged.
+- **Limits:** other windows exist only on a computer ([A6.8](A6-views.md#A6.8)); a phone and a tablet are unchanged.
+  The main window does not show how many windows are following.
+- **Controls:** app: in the strip of another window **Detach this window**, **Follow the agent**, **Back to the
+  agent**, **Go to the main window**; in the main window ◎ **Stop following here** and **End following**.
+- **Since:** app 3.30.0
+
+<!-- zdroj: app:9cec9c30 (od 3714c539) src/windows/agent-follow-state.ts AgentFollow attached/paused/detached, agentFollowKey (sessionStorage jen detached), setLive (konec sezení zapomene odpojení), detach, attach, setPaused · src/windows/agent-state.ts, agent-mirror.ts, src/ui/agent-window-ui.ts (stav agenta z hlavního okna bez adresy a tokenu mostu, K1.3) · src/windows/sat-states.ts SatStrip, liveStrip (lost › paused › detached › idle › attachedNoJump › attached), STRIP_ICON, AMBER, writeStrip (tlačítka, goToMain poslední) · src/main.ts noJump (descendants, timeline) · src/ui/live-follow-ui.ts (další okno: pohled okna, Zpět pohled nepřepne, bez štítku pauzy ani mapPaused, pauza jen v okně, návrat po 20 s) · src/windows/window-selection.ts (připojené okno výběr jen vyznačí; skok agenta se nerozesílá) · src/windows/takeover.ts TAKEOVER_STEP_MS 400, takeoverOrder (sledující, pak odpojená; okno bez vlastního sledování ne), hasBridge (storedResearchBridge) · src/windows/become-main.ts, window-start.ts (◎ jako v zavřeném hlavním okně) · strings.ts win.agentAttached, agentAttachedNoJump, agentIdle, agentPaused, agentDetached, detach, attach, bridgeLost, followEnded, takingOver, takenOver, takeoverFailed, goToMain; live.followOff, followBack; research.stop · CHANGELOG.cs.md 3.30.0 „Sledování agenta ve všech oknech“ · spec 097 K1.1–K1.4, K2.1–K2.6, Rozhodnutí 16. 11. O1–O5, dotazy 3–5, 8 · app:docs/ZADANI_DEV_sledovani-ve-vsech-oknech.md §1–§4, §6, §7; ZADANI_UIX dotazy 10, 12 · prace/1116-app-097-sledovani-okna -->
 
 <a id="S4.2"></a>
 ## S4.2 The queue in the app

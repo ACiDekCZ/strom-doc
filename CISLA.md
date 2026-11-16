@@ -306,6 +306,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.7.15 | A6-views.md | aplikace 3.27.0 | platí | Aktivní buňka, nabídka buňky a úprava na místě | The active cell, the cell menu and editing in place | Aktive Zelle, Zellenmenü und Bearbeiten an Ort und Stelle | Aktywna komórka, menu komórki i edycja w miejscu |
 | A6.7.16 | A6-views.md | aplikace 3.30.0 | platí | Odkazy na osoby a skoky ‹ › | Links to people and jumps ‹ › | Links zu Personen und Sprünge ‹ › | Odnośniki do osób i skoki ‹ › |
 | A6.7.17 | A6-views.md | aplikace 3.30.0 | platí | Ukotvené řádky | Pinned rows | Angeheftete Zeilen | Przypięte wiersze |
+| A6.7.18 | A6-views.md | aplikace 3.30.0 | platí | Výzkum v Tabulce dalšího okna | The research in the Table of another window | Die Forschung in der Tabelle eines weiteren Fensters | Badanie w tabeli innego okna |
 | A6.8 | A6-views.md | aplikace 3.28.0 | platí | Pohled v samostatném okně | A view in a separate window | Ansicht in einem eigenen Fenster | Widok w osobnym oknie |
 | A6.8.1 | A6-views.md | aplikace 3.28.0 | platí | Sledovat výběr | Follow selection | Auswahl folgen | Śledź wybór |
 | A6.8.2 | A6-views.md | aplikace 3.28.0 | platí | Když hlavní okno chybí | When the main window is missing | Wenn das Hauptfenster fehlt | Gdy brakuje okna głównego |
@@ -391,6 +392,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.1.4 | S4-research-from-the-app.md | aplikace 3.24.0 | platí | Změny z výzkumu bez blikání | Changes from the research without flicker | Änderungen aus der Forschung ohne Flackern | Zmiany z badania bez migania |
 | S4.1.5 | S4-research-from-the-app.md | aplikace 3.27.0 | platí | Přehled výzkumu bez sledování | The Research overview without following | Forschungsübersicht ohne Folgen | Przegląd badania bez śledzenia |
 | S4.1.6 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Přehled výzkumu v samostatném okně | The Research overview in a separate window | Forschungsübersicht in einem eigenen Fenster | Przegląd badania w osobnym oknie |
+| S4.1.7 | S4-research-from-the-app.md | aplikace 3.30.0 | platí | Sledovat agenta v dalších oknech | Following the agent in other windows | Dem Agenten in weiteren Fenstern folgen | Śledzenie agenta w innych oknach |
 | S4.2 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Fronta v aplikaci | The queue in the app | Warteschlange in der App | Kolejka w aplikacji |
 | S4.2.1 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Hledání ve frontě | Searching the queue | Suche in der Warteschlange | Wyszukiwanie w kolejce |
 | S4.2.2 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Udělat jako další a Vrátit | Do next and Undo | Als Nächstes erledigen und Rückgängig | Zrób jako następne i Cofnij |

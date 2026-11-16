@@ -1059,6 +1059,8 @@ rozhodnutí, rozpory pramenů, hypotézy, práci agenta, linie a výměnu se str
   mostu neptá. Stejně funguje Přehled výzkumu bez sledování ([S4.1.5](S4-research-from-the-app.md#S4.1.5)).
 - **Ovládání:** panel **Sloupce** → skupina **Výzkum**; čip **Výzkum ▾**; **Pohled** → oddíl **Výzkum**; **Značky ⓘ**.
 - **Platí od:** aplikace 3.27.0 s výzkumem 1.31.0
+- **Od aplikace 3.30.0:** výzkum v Tabulce dalšího okna, řádek agenta a posun k němu, štítek „Filtr výzkumu se teď
+  nepoužije“: [A6.7.18](#A6.7.18).
 
 <!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 · bez sledování s mostem: app 8d564b35 src/ui/research-ui.ts unfollowedAgentNow (onComputer, researchStatusNow, status.working a queue), src/ui/table-view/table-ui.ts tableResearchAgentChanged · spec 057 K1.12 -->
 
@@ -1138,6 +1140,8 @@ svědka se tak jde na jejich řádek bez hledání a zpět.
     se změnou filtru, řazení, pohledu nebo typu řádků a s ‹;
   - **Zrušit filtry** vypne filtr i hledání a skok provede;
   - × nebo Esc pruh zavře, nic se nezmění.
+  - osoba, jejíž řádek je ukotvený ([A6.7.17](#A6.7.17)): skok vede rovnou na její ukotvený řádek pod záhlavím,
+    bez pruhu.
 - **Události:** v tabulce událostí jména odkazem nejsou; nabídka účastníka začíná **Přejít na {jméno}**
   ([A6.7.10](#A6.7.10)).
 - **Hranice:**
@@ -1150,7 +1154,7 @@ svědka se tak jde na jejich řádek bez hledání a zpět.
   ‹ › na liště a Alt+← / Alt+→ v tabulce.
 - **Platí od:** aplikace 3.30.0
 
-<!-- zdroj: app:0b833e3d src/ui/table-view/table-grid.ts personLinks (osoba bez role účastníka, ne agregát), namesHtml (tv-nm--jump, title celé jméno), linksIn (ne sloupec name), klik jen isMouseLikePointer bez modifikátorů a e.detail 1, jumpedAt + JUMP_DOUBLE_MS (dvojklik po skoku nic), Enter (tableLinkPick), Alt+←/→ onHistory · table-ui.ts tableNameAction (persons, unions), tableJumpStep (přes p1/p2 nebo partner → via partner), tableJumpBy, tablePersonShown, tableRunJump (rowType persons, setExpanded, flash, jumpTo), tableHistory (rowType, scroll, buňka, zavře rozbalený svazek, ruší dočasné zobrazení), tableLinkPick, showTableRowSheet (link.inCell) · table-jump.ts JUMP_HISTORY_MAX 50, JumpHistory, jumpTargetCell (partner jen je-li sloupec vidět, jinak name) · table-notice.ts (role status, Zobrazit dočasně, Zrušit filtry, ×, Esc) · table-bar.ts updateNav (vidět od prvního skoku, aria-disabled) · strings.ts table.link.goTo, pick, inCell, enterHint, hidden, showTemp; table.nav.back, backTo, forward, forwardTo; table.outsideFilter · e2e/table-view-links.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K3.1–K3.3, ZADANI_DEV_tabulka-odkazy-ukotveni D1–D4, D6 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
+<!-- zdroj: app:0b833e3d src/ui/table-view/table-grid.ts personLinks (osoba bez role účastníka, ne agregát), namesHtml (tv-nm--jump, title celé jméno), linksIn (ne sloupec name), klik jen isMouseLikePointer bez modifikátorů a e.detail 1, jumpedAt + JUMP_DOUBLE_MS (dvojklik po skoku nic), Enter (tableLinkPick), Alt+←/→ onHistory · table-ui.ts tableNameAction (persons, unions), tableJumpStep (přes p1/p2 nebo partner → via partner), tableJumpBy, tablePersonShown, tableRunJump (rowType persons, setExpanded, flash, jumpTo), tableHistory (rowType, scroll, buňka, zavře rozbalený svazek, ruší dočasné zobrazení), tableLinkPick, showTableRowSheet (link.inCell) · table-jump.ts JUMP_HISTORY_MAX 50, JumpHistory, jumpTargetCell (partner jen je-li sloupec vidět, jinak name) · table-notice.ts (role status, Zobrazit dočasně, Zrušit filtry, ×, Esc) · table-bar.ts updateNav (vidět od prvního skoku, aria-disabled) · strings.ts table.link.goTo, pick, inCell, enterHint, hidden, showTemp; table.nav.back, backTo, forward, forwardTo; table.outsideFilter · e2e/table-view-links.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K3.1–K3.3, ZADANI_DEV_tabulka-odkazy-ukotveni D1–D4, D6 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md · ukotvená osoba skrytá filtrem: app:9b2b6dca table-ui.ts tablePersonPinned, grid.jumpToPin (bez pruhu) · spec 103 Rozhodnutí 16. 11. (díl C) -->
 
 <a id="A6.7.17"></a>
 ### A6.7.17 Ukotvené řádky
@@ -1180,6 +1184,45 @@ v tabulce daleko od sebe.
 - **Platí od:** aplikace 3.30.0
 
 <!-- zdroj: app:354e3675 src/ui/table-view/table-pins.ts PIN_MAX 10, TablePins (jeden strom a typ řádků; pohled, filtr, hledání je nechají; jen paměť okna, ne v pohledu), prune, ordered (pořadí do změny řazení, filtru, hledání, pohledu; D7 a), pinRanks · table-ui.ts tableRowPinEntry (ne isPhoneBar; many z tableAreaRowKeys, unpin, disabled + limit), tablePinnedLines (podřádky svazků jako v těle, D5 a; outside), showTableRowSheet (tablet), changeTablePins · table-grid.ts .tv-pinrows (role rowgroup, nejvýš třetina těla s vlastním posuvem), tv-outside · table-filterbar.ts štítek pinRow.chip s × (unpinAll; Zrušit filtry ukotvení nechá) · strings.ts table.pinRow.one, many, unpin, chip, unpinAll, zone, rowSr, limit; table.outsideFilter · e2e/table-view-pins.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K4.1–K4.4, D5, D7 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
+
+<a id="A6.7.18"></a>
+### A6.7.18 Výzkum v Tabulce dalšího okna
+
+Tabulka v dalším okně ([A6.8](#A6.8)) ukazuje výzkum tak, jak ho má hlavní okno: sloupce, čipy a pohledy výzkumu,
+značku agenta u osoby, na které pracuje, i jeho frontu ([A6.7.14](#A6.7.14)). S výzkumem mluví jen hlavní okno;
+další okno dostává jeho stav. Při sledování výzkumu Tabulka dalšího okna sleduje agenta
+([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+
+- **Čipy a pohledy:** skupina **Výzkum** je v Tabulce každého okna se stromem výzkumu. Čipy, které platí jen při
+  sledování, jsou živé, když hlavní okno sleduje výzkum, jinak jsou jako v hlavním okně ([A6.7.14](#A6.7.14)).
+  Uložený pohled s filtry výzkumu se v obou oknech otevře stejně.
+- **Filtr výzkumu bez výzkumu** (v každém okně, i v hlavním): pohled, který filtruje podle výzkumu (čip výzkumu nebo
+  filtr sloupce výzkumu), když tabulka údaje výzkumu nemá, ukáže všechny řádky a vedle názvu pohledu řekne „Filtr
+  výzkumu se teď nepoužije“. Na telefonu je tam jen jantarová tečka s tímto textem v nápovědě.
+- **Řádek agenta:** řádek osoby, na které agent pracuje, má v dalším okně podklad v barvě sledování, linku v buňce
+  jména a jméno tučně, i v odpojeném okně. Hlavní okno má dál svislý pruh u jména ([A6.7.14](#A6.7.14)).
+- **Posun k agentovi:** okno, které agenta sleduje a není pozastavené, posune řádek agenta doprostřed, když agent
+  přejde na jinou osobu a její řádek není celý vidět. Posun je plynulý (300 ms, při omezeném pohybu hned), aktivní
+  buňka, výběr ani fokus se nemění a vodorovně se nic neposouvá. Řádek, který je vidět, a ukotvený řádek agenta
+  ([A6.7.17](#A6.7.17)) tabulku neposunou. Pozastavené a odpojené okno neposouvá.
+- **Pauza:** kolečko nad mřížkou, tah posuvníku, stisk v řádcích (buňka, jméno) a klávesy pohybu a posunu v mřížce
+  sledování v okně pozastaví ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Lišta, záhlaví a stavový řádek Tabulky
+  pauzu nespustí, jen prodlouží běžící.
+- **Řádek agenta skrytý filtrem:** v okně, které agenta sleduje (i pozastaveném), se tabulka neposune a stavový řádek
+  řekne „Řádek agenta skrývá filtr“ s **Zobrazit dočasně**. To ukáže dočasný řádek jako u skoku na osobu
+  ([A6.7.16](#A6.7.16)) a posune se k němu. Poznámka zmizí, jakmile je řádek agenta vidět. Dokud je poznámka vidět,
+  stav výzkumu a „Jen ke čtení“ ve stavovém řádku ustoupí (obojí říká pruh okna); v okně do 400 px ustoupí i počet
+  řádků a **Značky ⓘ**. Ukotvený řádek agenta poznámku nemá.
+- **Bubliny výzkumu:** akci z bubliny buňky výzkumu ([A6.7.14](#A6.7.14)) provede hlavní okno: spustí ji, jen když
+  ji jeho bublina u té osoby právě nabízí, a přenese se do popředí (ne u akce, která otevírá terminál výzkumu).
+  Pramen v tabulce pramenů a web archivu se otevřou v dalším okně. Vlastní odpověď na čekající položku se v dalším
+  okně nenabízí; **Čeká na vyřízení ›** otevře panel v hlavním okně. Když je hlavní okno zavřené, akce, které by
+  provedlo, v bublině nejsou.
+- **Ovládání:** aplikace: **Zobrazit dočasně** ve stavovém řádku Tabulky; stav sledování v pruhu okna
+  ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+- **Platí od:** aplikace 3.30.0
+
+<!-- zdroj: app:34513c94 src/windows/agent-state.ts, agent-mirror.ts, src/ui/agent-window-ui.ts (zrcadlo stavu agenta, Tabulka čte vstup výzkumu z hlavního okna) · src/ui/table-view/table-filter.ts researchFilterIdle (čip výzkumu nebo sloupec fromResearch, bez ctx.research) · table-viewbar.ts .tv-view-note (role status) · index.html .tv-view-note na telefonu jen tečka · d24ff2ec src/ui/table-view/table-ui.ts tableAgentRow (jen windowAgentFollow, tj. další okno; attached posune, attached/paused poznámka, ukotvený ne), tableShowAgentRow, tableAgentFollowChanged · table-grid.ts revealKey(center, smooth, keepSelection), REVEAL_GLIDE_MS 300, prefers-reduced-motion · index.html .tv-row.is-agent (--follow-c1-soft, linka, font-weight 600, bez tv-agent-bar) · src/ui/live-follow-ui.ts (pauza Tabulky: kolečko, posuvník, stisk v řádcích, klávesy; lišta, hlava, stavový řádek ne) · table-bar.ts updateAgentNote (tv-status-agent, aria-live polite, showTemp) · 18dbb544 (poznámka: stav výzkumu a jen ke čtení ustoupí; do 400 px počet, Značky, ◎) · b8d21457 src/windows/window-table-research.ts (TABLE_BUBBLE_ACTION, bubbleRunsHere source / web, hlavní okno ověří nabídku, do popředí ne u terminálu, bez odpovědi čekající položky, při zavřeném hlavním okně vynechané) · strings.ts table.agentRowHidden, table.researchFilterOff, table.link.showTemp · CHANGELOG.cs.md 3.30.0 „Výzkum v Tabulce dalšího okna“, „Sledování agenta ve všech oknech“ · spec 097 K1.2, K3.1, K3.2, O4, dotaz 6 · app:docs/ZADANI_DEV_sledovani-ve-vsech-oknech.md §5; ZADANI_UIX dotazy 11, 14, 15 · prace/1116-app-097-sledovani-okna -->
 
 <a id="A6.8"></a>
 ## A6.8 Pohled v samostatném okně
@@ -1215,6 +1258,9 @@ okno zůstane na svém pohledu. Ukládá jen hlavní okno; ostatní okna mu úpr
   **Export ▾**; na záložce pohledu Ctrl+klik (macOS ⌘+klik), prostřední tlačítko nebo pravý klik (Shift+F10) →
   **{pohled} v novém okně**.
 - **Platí od:** aplikace 3.28.0
+- **Od aplikace 3.30.0:** při živém sledování výzkumu sleduje agenta každé okno ve svém pohledu a pruh okna říká,
+  jak okno sleduje, místo „Jen ke čtení · hlavní okno sleduje výzkum“ ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+  Tabulka v okně ukazuje výzkum jako v hlavním okně ([A6.7.18](#A6.7.18)).
 
 <!-- zdroj: app:4b1373a7 src/windows/window-open.ts isDesktopSystem, windowsOffered (role main, ne isViewMode, > MOBILE_MAX 640, ne isPhoneBar), openInNewWindow · src/windows/window-controls.ts openWindow (BLOCKED_TOAST_MS 10 s, win.retry; MANY_WINDOWS 5, manyWindows), INDICATOR_TEXT_MIN_WIDTH 1280, renderMenu (6 pohledů, thisView, overview jen UI.canOpenResearchOverview), wireTabs (ctrl/meta click, auxclick button 1, contextmenu, Shift+F10 / ContextMenu) · src/windows/view-window-state.ts (přenos stavu, F5 satelitu) · src/windows/sat-header.ts · src/windows/satellite.ts readOnly (live, locked) · src/windows/sat-states.ts (live strip readOnlyLive, goToMain; CONFLICT_TOAST_MS) · src/windows/window-drafts.ts (draftKept) · src/windows/window-research-menu.ts (researchInMain) · src/windows/window-title.ts · index.html html.window-satellite .toolbar skryto · strings.ts win.* · CHANGELOG.cs.md 3.28.0 · spec 079 K1.1–K1.4, K1.7 · prace/1112-app-okna-zaklad, 1112-app-okna-pohledy -->
 
@@ -1238,6 +1284,9 @@ v hlavičce okna.
     pohledu v okně (**přepnout** tam, kde není, jako **jen vyznačit**); jinak platí výchozí režim nového pohledu.
 - **Ovládání:** aplikace: v hlavičce okna **Sledovat výběr: {režim} ▾**.
 - **Platí od:** aplikace 3.28.0
+- **Od aplikace 3.30.0:** okno, které při sledování výzkumu sleduje agenta a není pozastavené, osobu vybranou
+  v jiném okně jen vyznačí, i v režimu **přepnout**; skok za agentem se jako výběr osoby neposílá
+  ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
 
 <!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
 
@@ -1260,6 +1309,9 @@ Okno bez hlavního okna nic neztratí a nic se samo nezavře. Zůstane jen ke č
   - obnovení hlavního okna (F5) pruh neukáže.
 - **Ovládání:** aplikace: tlačítka v pruhu a místo obsahu okna.
 - **Platí od:** aplikace 3.28.0
+- **Od aplikace 3.30.0:** když se hlavní okno zavře během sledování výzkumu, stane se hlavním oknem samo jedno
+  z dalších oken a sledování pokračuje v něm ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Když to nejde, okna
+  ukážou „Sledování nejde obnovit · hlavní okno se zavřelo“ s **Udělat hlavním** a **Otevřít Strom**.
 
 <!-- zdroj: app:4b1373a7 src/windows/satellite.ts MAIN_SILENCE_MS 3000, lastHeardAt, treeGone · src/windows/sat-states.ts (closed strip mainClosed, treeGone, treeLocked, SWITCHED_TOAST_MS) · src/windows/become-main.ts (zámek ifAvailable, znovunačtení jako hlavní z IndexedDB) · src/windows/window-research-menu.ts researchMainOnly · strings.ts win.mainClosed, openStrom, makeMain, treeGone, treeGoneNote, treeLocked, treeLockedNote, closeWindow, goToMain, treeSwitched · spec 079 K1.5 · prace/1112-app-okna-zaklad (stavy 1–6) -->
 

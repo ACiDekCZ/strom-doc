@@ -74,11 +74,13 @@ Arbeit im Abschnitt **Jetzt**).
   vergrößert. Ein Verschieben des Stammbaums, die Wahl einer anderen Person oder eine andere Ansicht unterbricht das
   Folgen (**Zurück zum Agenten**); nach 20 s ohne Berührung kehrt es von selbst zurück. Die Auswahl wird für das Gerät
   gespeichert.
-- **Bedienung:** App: **Forschungsübersicht → Agenten im Stammbaum folgen** / **Nicht mehr folgen**.
+- **Bedienung:** App: **Forschungsübersicht → Agenten im Stammbaum folgen** / **Hier nicht mehr folgen**.
 - **Gilt seit:** App 3.5.0
 - **Ab App 3.24.0:** Folgen geht auch im Fächer und auf der Karte ([S4.1.3](#S4.1.3)); das Verschieben der Karte pausiert es ebenso.
+- **Ab App 3.30.0:** ◎ **Hier nicht mehr folgen** stoppt die Sprünge nur in dem Fenster, in dem es geklickt wird; die
+  weiteren Fenster folgen weiter, jedes in seiner eigenen Ansicht ([S4.1.7](#S4.1.7)).
 
-<!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff -->
+<!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff · 3.30.0: spec 097 O1, O3, ZADANI_DEV §6 (◎ v hlavním okně další okna nevypne) -->
 
 <a id="S4.1.2"></a>
 ### S4.1.2 Panel anpassen
@@ -179,8 +181,12 @@ markiert nur, wo gearbeitet wird; die Karte zeigt den Ort der Arbeit mit einem R
 - **Gilt seit:** App 3.24.0
 - **Ab App 3.25.0:** die Legende der Karte sagt „Hohle Markierung: Ort ohne Person unter den gezeigten Orten“ und ein
   Ort der Arbeit ohne Person auf der Karte „noch ohne Person auf der Karte“ (früher „außerhalb des Kartenbereichs“).
+- **Ab App 3.30.0:** **Dem Agenten folgen in** gilt nur für das Hauptfenster; weitere Fenster folgen in der Ansicht,
+  die sie zeigen ([S4.1.7](#S4.1.7)). Am Computer mit Maus (Fenster breiter als 640 px) sagt es die Hilfe in den
+  Einstellungen: „Gilt für das Hauptfenster beim Start des Folgens und bei Zurück zum Agenten. Weitere Fenster folgen
+  in ihrer eigenen Ansicht.“
 
-<!-- zdroj: app:src/ui/live-follow-ui.ts (hlavička, followIn) · src/live-follow-prefs.ts · src/live-follow-targets.ts TRAIL_MAX=8, TRAIL_MAX_AGE_MS=60 min, fanCenter, sessionNumbers, sessionTone · src/live-follow-map.ts · src/fan-follow-anchor.ts MAX_UP=12 · src/ui/fan-follow-ui.ts · src/ui/map-follow-ui.ts PAN_MARGIN=64, PAN_MS=400, telefon bez čáry · strings.ts settings.groupResearchFollow, researchFollowNote, followView(Help), followFanCenter*, followTrail(Help); live.followIn, mapPaused, legendTitle, legendTrail, legendRecord, legendPerson, legendOut; fan.pin, unpin, centerLabel, workOutside; map workRecord, workPerson, outScope, noCoords, noPlace, locate · CHANGELOG.cs.md 3.24.0, 3.25.0 · spec 043 -->
+<!-- zdroj: app:src/ui/live-follow-ui.ts (hlavička, followIn) · src/live-follow-prefs.ts · src/live-follow-targets.ts TRAIL_MAX=8, TRAIL_MAX_AGE_MS=60 min, fanCenter, sessionNumbers, sessionTone · src/live-follow-map.ts · src/fan-follow-anchor.ts MAX_UP=12 · src/ui/fan-follow-ui.ts · src/ui/map-follow-ui.ts PAN_MARGIN=64, PAN_MS=400, telefon bez čáry · strings.ts settings.groupResearchFollow, researchFollowNote, followView(Help), followFanCenter*, followTrail(Help); live.followIn, mapPaused, legendTitle, legendTrail, legendRecord, legendPerson, legendOut; fan.pin, unpin, centerLabel, workOutside; map workRecord, workPerson, outScope, noCoords, noPlace, locate · CHANGELOG.cs.md 3.24.0, 3.25.0 · spec 043 · 3.30.0: app:e7e79873 src/ui/live-section-edit-ui.ts (isMouseWide → settings.followViewHelpWindows) · src/breakpoints.ts MQ_MOUSE_WIDE · spec 097 O5, ZADANI_DEV §8 -->
 
 <a id="S4.1.4"></a>
 ### S4.1.4 Änderungen aus der Forschung ohne Flackern
@@ -335,6 +341,83 @@ das Hauptfenster aus. Mit der Brücke der Forschung spricht das Fenster nicht.
 - **Gilt seit:** App 3.28.0; 3.30.0: das kleine Panel neben dem Fenster nur mit **In Arbeit**
 
 <!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) · app:3c2fde77 src/ui/overview-window-view.ts readQueuePage přes akci queue-list do hlavního okna (okno most nevolá) · app:3f9a5ca4 overview-window-view.ts treeVerifyNow (extras.verify), verifyStop → verify-stop, showVerifyBulkDialog → verify-bulk; evidenceHighlightNow (extras.highlight), endEvidenceHighlight → highlight-end, startPersonHighlight quiet · src/ui/research-ui.ts lightsGroup, markOverviewLit (is-lit, aria-current; nic při zavřeném hlavním okně) · research-overview-ui.ts lightsGroup direction (show-in-tree v Teď), changed (showChanged) · research-directions-ui.ts lightsGroup direction (dirShow), direction-found (dirFoundPersons) · strings.ts verify.section, bulkRow, stop, live.showInTree, dirShow, showChanged · spec 079 K3 · prace/1113-app-dorovnani-052-okna (2876d570..27f0bafb) · app:7f307c74 src/overview-columns.ts OVERVIEW_WINDOW_COLS_2 1100, OVERVIEW_WINDOW_COLS_3 1600, OVERVIEW_COLS_HYSTERESIS 24, OVERVIEW_SMALL_COLUMN 0.2, OVERVIEW_COLUMN_MAX 660, partitionContiguous, planOverviewColumns · src/ui/overview-columns-ui.ts (souhrn a pruhy nad sloupci, každý sloupec se posouvá sám, nové rozdělení jen při změně sloupců, sbalení, skrytí, přesunu, Načíst další; lepkavá hlava: pole nebo > 8 řádků; fokus, výběr v poli a oddíl na očích při změně šířky) · e2e/windows-overview-columns.spec.ts · CHANGELOG.cs.md 3.28.0 (e540e4b5) · spec 083 U3 · prace/1113-app-hledani-v-prehledu · 3.30.0: app:965e83f8 src/ui/live-panel-working-only.ts livePanelWorkingOnly (okno Přehledu, isDesktop > 1024 px, ne ukončené), livePanelDrawnSections (jen working), livePanelNothingAtWork · src/ui/research-ui.ts (třída working-only, bez štítků waiting a nových změn, bez samoskládání; overviewWindowOpenChanged, placeLivePanel při přechodu 1024 px; openResearchOverview → focusOverviewWindow) · strings.ts live.nothingAtWork · e2e/windows-overview-panel.spec.ts · CHANGELOG.cs.md 3.30.0 „Panel výzkumu vedle okna Přehledu“ · spec 079 U9 (rozhodnutí 27, 16. 11.) · dirigent:test/vysledek-1116-app-079-panel.md -->
+
+<a id="S4.1.7"></a>
+### S4.1.7 Dem Agenten in weiteren Fenstern folgen
+
+Beim Verfolgen der Forschung ([S1.4](S1-connecting-app-and-research.md#S1.4)) folgt auch jedes weitere Fenster des
+Stammbaums ([A6.8](A6-views.md#A6.8)) dem Agenten, jedes in seiner eigenen Ansicht. Ein Fenster lässt sich abkoppeln,
+um darin inzwischen etwas anderes anzusehen; die übrigen Fenster folgen weiter. Alle Fenster sind dabei nur lesbar.
+
+- **Wann:** wenn das Hauptfenster die Forschung live verfolgt. Jedes weitere Fenster schließt sich an, auch eines, das
+  vor dem Einschalten des Folgens (ohne Neuladen) oder erst währenddessen geöffnet wurde. Ein weiteres Fenster
+  verbindet sich nicht mit der Brücke der Forschung: den Zustand des Agenten schickt ihm das Hauptfenster, ohne die
+  Adresse der Brücke.
+- **Ansicht:** ein Fenster folgt in der Ansicht, die es gerade zeigt. **Dem Agenten folgen in** ([S4.1.3](#S4.1.3))
+  gilt nur für das Hauptfenster, und **Zurück zum Agenten** wechselt die Ansicht eines weiteren Fensters nicht.
+  - **Familie**, **Fächer**, **Karte:** Sprung zum Agenten, Marken, Spur und Legende wie im Hauptfenster
+    ([S4.1.1](#S4.1.1), [S4.1.3](#S4.1.3));
+  - **Tabelle:** die Zeile des Agenten ([A6.7.18](A6-views.md#A6.7.18));
+  - **Nachkommen**, **Zeitleiste:** ohne Sprünge, der Streifen sagt es. Verschieben darin pausiert das Folgen nicht.
+    Nach dem Wechsel zu Familie, Fächer oder Karte springt das Fenster sofort zum Agenten.
+- **Der Streifen unter dem Kopf des Fensters** sagt, wie das Fenster folgt (mit Symbol und Text). Als letzte
+  Schaltfläche steht immer **Zum Hauptfenster**.
+
+| Zustand des Fensters | Streifen | Schaltflächen |
+|---|---|---|
+| folgt | „Agent wird verfolgt · nur lesen“; in Nachkommen und Zeitleiste „Agent wird verfolgt · in dieser Ansicht ohne Sprünge · nur lesen“ | **Dieses Fenster abkoppeln** |
+| folgt, der Agent arbeitet an niemandem aus diesem Stammbaum | „Der Agent arbeitet gerade nicht · nur lesen“ | **Dieses Fenster abkoppeln** |
+| pausiert | „Folgen pausiert · nur lesen“ | **Zurück zum Agenten**, **Dieses Fenster abkoppeln** |
+| abgekoppelt | „Dieses Fenster folgt dem Agenten nicht · nur lesen“ | **Dem Agenten folgen** |
+| Verbindung zur Brücke unterbrochen | „Die Verbindung zur Forschung ist unterbrochen · neuer Versuch läuft“ (bernsteinfarben) | **Dieses Fenster abkoppeln**, im abgekoppelten Fenster **Dem Agenten folgen** |
+
+- **Pause:** manuelles Verschieben, Zoomen oder die Wahl einer Person im Fenster (in der Tabelle Scrollen oder ein
+  Klick in die Zeilen) pausiert das Folgen nur in diesem Fenster. **Zurück zum Agenten** setzt es fort, oder es kommt
+  von selbst nach 20 s ohne Berührung zurück. Die Pause sagt der Streifen; ein schwebendes Pausenetikett und
+  „Kartenschwenk pausiert“ hat ein weiteres Fenster nicht. Eine Pause im Hauptfenster beeinflusst die weiteren
+  Fenster nicht, und eine Pause in einem weiteren Fenster beeinflusst weder das Hauptfenster noch andere Fenster. Neu
+  laden des Fensters (F5) hebt die Pause auf.
+- **Abkoppeln:** **Dieses Fenster abkoppeln** stoppt die Sprünge zum Agenten in diesem Fenster; das Fenster lässt sich
+  frei durchsehen und bleibt nur lesbar. Die Marken des Agenten (die Karte der Person, an der gearbeitet wird, die
+  Zeile des Agenten in der Tabelle, Marken und Spur im Fächer und auf der Karte) bleiben darin. **Dem Agenten folgen**
+  koppelt das Fenster wieder an, und es springt sofort zum Agenten. Das Abkoppeln übersteht das Neuladen des Fensters
+  (F5) und wird mit dem Ende des Folgens vergessen.
+- **Wahl aus einem anderen Fenster:** ein folgendes Fenster, das nicht pausiert ist, markiert eine in einem anderen
+  Fenster gewählte Person nur, auch mit **Auswahl folgen: wechseln** ([A6.8.1](A6-views.md#A6.8.1)); die Mitte bleibt
+  beim Agenten. Die Tabelle wählt die Zeile dieser Person aus, scrollt aber nicht zu ihr. Der Sprung zum Agenten wird
+  den anderen Fenstern nicht als Wahl einer Person geschickt. Ein pausiertes und ein abgekoppeltes Fenster richten
+  sich nach **Auswahl folgen** wie außerhalb des Folgens.
+- **Ende:**
+  - ◎ **Hier nicht mehr folgen** im Hauptfenster stoppt die Sprünge nur im Hauptfenster; die weiteren Fenster folgen
+    weiter;
+  - **Verfolgung beenden** (Forschungspanel, Menü **Forschung**, Menü der Person) und das Ende der Sitzung beenden das
+    Folgen in allen Fenstern: der Streifen verschwindet, der Stammbaum lässt sich wieder bearbeiten, das Abkoppeln wird
+    vergessen, und jedes weitere Fenster meldet es („Das Verfolgen der Forschung ist beendet · der Baum lässt sich
+    bearbeiten“).
+- **Hauptfenster während des Folgens geschlossen:** eines der weiteren Fenster wird von selbst zum Hauptfenster, und
+  das Folgen geht darin weiter.
+  - Das Schließen wird an 3 s ohne Nachricht vom Hauptfenster erkannt ([A6.8.2](A6-views.md#A6.8.2)). Neu laden des
+    Hauptfensters (F5) löst nichts davon aus;
+  - Reihenfolge: zuerst die Fenster, die dem Agenten folgen (folgende und pausierte), dann die abgekoppelten; in jeder
+    Gruppe ab dem ältesten Fenster. Das Fenster der Forschungsübersicht ([S4.1.6](#S4.1.6)) wird nicht zum
+    Hauptfenster. Jedes Fenster in der Reihenfolge wartet 400 ms länger als das vorige, und nur eines wird zum
+    Hauptfenster;
+  - dieses Fenster zeigt „Das Hauptfenster wurde geschlossen · das Folgen geht in diesem Fenster weiter…“, lädt sich
+    als Hauptfenster neu mit derselben Ansicht und mit ◎ eingeschaltet, wenn es im geschlossenen Hauptfenster
+    eingeschaltet war. Die übrigen Fenster melden „Ein anderes Fenster hat das Folgen übernommen“ und bleiben, wie sie
+    waren (ein abgekoppeltes bleibt abgekoppelt);
+  - hat dieser Browser keine gespeicherte Adresse der Brücke der Forschung, wird kein Fenster zum Hauptfenster, und
+    die Fenster zeigen „Das Folgen lässt sich nicht fortsetzen · das Hauptfenster wurde geschlossen“ mit **Zum
+    Hauptfenster machen** und **Strom öffnen** ([A6.8.2](A6-views.md#A6.8.2));
+  - ohne Folgen gilt [A6.8.2](A6-views.md#A6.8.2) unverändert.
+- **Grenzen:** weitere Fenster gibt es nur am Computer ([A6.8](A6-views.md#A6.8)); Telefon und Tablet sind
+  unverändert. Das Hauptfenster zeigt nicht, wie viele Fenster folgen.
+- **Bedienung:** App: im Streifen eines weiteren Fensters **Dieses Fenster abkoppeln**, **Dem Agenten folgen**,
+  **Zurück zum Agenten**, **Zum Hauptfenster**; im Hauptfenster ◎ **Hier nicht mehr folgen** und **Verfolgung
+  beenden**.
+- **Gilt seit:** App 3.30.0
+
+<!-- zdroj: app:9cec9c30 (od 3714c539) src/windows/agent-follow-state.ts AgentFollow attached/paused/detached, agentFollowKey (sessionStorage jen detached), setLive (konec sezení zapomene odpojení), detach, attach, setPaused · src/windows/agent-state.ts, agent-mirror.ts, src/ui/agent-window-ui.ts (stav agenta z hlavního okna bez adresy a tokenu mostu, K1.3) · src/windows/sat-states.ts SatStrip, liveStrip (lost › paused › detached › idle › attachedNoJump › attached), STRIP_ICON, AMBER, writeStrip (tlačítka, goToMain poslední) · src/main.ts noJump (descendants, timeline) · src/ui/live-follow-ui.ts (další okno: pohled okna, Zpět pohled nepřepne, bez štítku pauzy ani mapPaused, pauza jen v okně, návrat po 20 s) · src/windows/window-selection.ts (připojené okno výběr jen vyznačí; skok agenta se nerozesílá) · src/windows/takeover.ts TAKEOVER_STEP_MS 400, takeoverOrder (sledující, pak odpojená; okno bez vlastního sledování ne), hasBridge (storedResearchBridge) · src/windows/become-main.ts, window-start.ts (◎ jako v zavřeném hlavním okně) · strings.ts win.agentAttached, agentAttachedNoJump, agentIdle, agentPaused, agentDetached, detach, attach, bridgeLost, followEnded, takingOver, takenOver, takeoverFailed, goToMain; live.followOff, followBack; research.stop · CHANGELOG.cs.md 3.30.0 „Sledování agenta ve všech oknech“ · spec 097 K1.1–K1.4, K2.1–K2.6, Rozhodnutí 16. 11. O1–O5, dotazy 3–5, 8 · app:docs/ZADANI_DEV_sledovani-ve-vsech-oknech.md §1–§4, §6, §7; ZADANI_UIX dotazy 10, 12 · prace/1116-app-097-sledovani-okna -->
 
 <a id="S4.2"></a>
 ## S4.2 Warteschlange in der App

@@ -1225,6 +1225,8 @@ Agenten, die Linien und den Austausch mit dem Stammbaum. In den Stammbaum schrei
 - **Bedienung:** Panel **Spalten** → Gruppe **Forschung**; Chip **Forschung ▾**; **Ansicht** → Abschnitt
   **Forschung**; **Zeichen ⓘ**.
 - **Gilt seit:** App 3.27.0 mit Forschung 1.31.0
+- **Ab App 3.30.0:** Forschung in der Tabelle eines weiteren Fensters, die Zeile des Agenten und das Scrollen zu ihr,
+  der Hinweis „Der Forschungsfilter wird gerade nicht angewendet“: [A6.7.18](#A6.7.18).
 
 <!-- zdroj: app:src/ui/table-view/table-research.ts RESEARCH_COLUMNS, RESEARCH_DEFAULT_COLUMNS (rSum, rWait, rConf, rHyp, rAgent), LIVE_ONLY (rTasks, rAgent), NEEDS_AGENT (rWait, rTasks, rAgent), rSum pořadí (čeká 5 › rozpor 4 › otázka 3 › agent 2 › fronta 1), researchLinesOf (živě /directions/people, jinak soubor _STROM_DIRECTION), personLineRole, isOffLine, researchChips, RESEARCH_SIGNAL_CHIPS, RESEARCH_MORE_CHIPS, researchChipOffer (xUnsent, xDecideHere jen research a ne jen ke čtení), researchChipActive (live), unionLineRole, unionResearchCell (UNION_FACTS), sourceImageCell, unionResearchIdCell, sourceResearchIdCell · table-views.ts pohledy Výzkum, Linie, Mimo linie, Výměna s výzkumem · table-research-bubble.ts, table-research-ui.ts · table-grid.ts conflictMarkHtml · table-export.ts (exportNotLive) · strings.ts table.res.*, table.col.r*, uResearchId, srcResearchId, srcImage · commity 53137620, 99b60acb, a2e1dc73, 02e88e9a, 32958eb4, fd9c220f, cf9e63d8, 4635c16e, 5857be6b, 970e6b88, 6b66e037, 9e51ff66 · research: GET /directions/people, funkce directions.places, brána APP_SHOWS_RESEARCH_TABLE (src/core/stromapp.ts), CHANGELOG.cs.md 1.31.0 „Výzkum v tabulce aplikace Strom“ · spec 073 §16, K7.1–K7.8 · bez sledování s mostem: app 8d564b35 src/ui/research-ui.ts unfollowedAgentNow (onComputer, researchStatusNow, status.working a queue), src/ui/table-view/table-ui.ts tableResearchAgentChanged · spec 057 K1.12 -->
 
@@ -1321,6 +1323,8 @@ Zeile. So führt der Weg von Vater, Mutter, Partner, Pate oder Zeuge ohne Suchen
     Zeilenart und mit ‹;
   - **Filter aufheben** schaltet Filter und Suche aus und führt den Sprung aus;
   - × oder Esc schließt den Streifen, nichts ändert sich.
+  - eine Person, deren Zeile angeheftet ist ([A6.7.17](#A6.7.17)): der Sprung führt direkt zu ihrer angehefteten
+    Zeile unter dem Tabellenkopf, ohne Streifen.
 - **Ereignisse:** in der Ereignistabelle sind Namen keine Links; das Menü eines Beteiligten beginnt mit **Zu {Name}
   wechseln** ([A6.7.10](#A6.7.10)).
 - **Grenzen:**
@@ -1334,7 +1338,7 @@ Zeile. So führt der Weg von Vater, Mutter, Partner, Pate oder Zeuge ohne Suchen
   bietet es **Wechseln zu…** an; ‹ › in der Leiste und Alt+← / Alt+→ in der Tabelle.
 - **Gilt seit:** App 3.30.0
 
-<!-- zdroj: app:0b833e3d src/ui/table-view/table-grid.ts personLinks (osoba bez role účastníka, ne agregát), namesHtml (tv-nm--jump, title celé jméno), linksIn (ne sloupec name), klik jen isMouseLikePointer bez modifikátorů a e.detail 1, jumpedAt + JUMP_DOUBLE_MS (dvojklik po skoku nic), Enter (tableLinkPick), Alt+←/→ onHistory · table-ui.ts tableNameAction (persons, unions), tableJumpStep (přes p1/p2 nebo partner → via partner), tableJumpBy, tablePersonShown, tableRunJump (rowType persons, setExpanded, flash, jumpTo), tableHistory (rowType, scroll, buňka, zavře rozbalený svazek, ruší dočasné zobrazení), tableLinkPick, showTableRowSheet (link.inCell) · table-jump.ts JUMP_HISTORY_MAX 50, JumpHistory, jumpTargetCell (partner jen je-li sloupec vidět, jinak name) · table-notice.ts (role status, Zobrazit dočasně, Zrušit filtry, ×, Esc) · table-bar.ts updateNav (vidět od prvního skoku, aria-disabled) · strings.ts table.link.goTo, pick, inCell, enterHint, hidden, showTemp; table.nav.back, backTo, forward, forwardTo; table.outsideFilter · e2e/table-view-links.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K3.1–K3.3, ZADANI_DEV_tabulka-odkazy-ukotveni D1–D4, D6 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
+<!-- zdroj: app:0b833e3d src/ui/table-view/table-grid.ts personLinks (osoba bez role účastníka, ne agregát), namesHtml (tv-nm--jump, title celé jméno), linksIn (ne sloupec name), klik jen isMouseLikePointer bez modifikátorů a e.detail 1, jumpedAt + JUMP_DOUBLE_MS (dvojklik po skoku nic), Enter (tableLinkPick), Alt+←/→ onHistory · table-ui.ts tableNameAction (persons, unions), tableJumpStep (přes p1/p2 nebo partner → via partner), tableJumpBy, tablePersonShown, tableRunJump (rowType persons, setExpanded, flash, jumpTo), tableHistory (rowType, scroll, buňka, zavře rozbalený svazek, ruší dočasné zobrazení), tableLinkPick, showTableRowSheet (link.inCell) · table-jump.ts JUMP_HISTORY_MAX 50, JumpHistory, jumpTargetCell (partner jen je-li sloupec vidět, jinak name) · table-notice.ts (role status, Zobrazit dočasně, Zrušit filtry, ×, Esc) · table-bar.ts updateNav (vidět od prvního skoku, aria-disabled) · strings.ts table.link.goTo, pick, inCell, enterHint, hidden, showTemp; table.nav.back, backTo, forward, forwardTo; table.outsideFilter · e2e/table-view-links.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K3.1–K3.3, ZADANI_DEV_tabulka-odkazy-ukotveni D1–D4, D6 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md · ukotvená osoba skrytá filtrem: app:9b2b6dca table-ui.ts tablePersonPinned, grid.jumpToPin (bez pruhu) · spec 103 Rozhodnutí 16. 11. (díl C) -->
 
 <a id="A6.7.17"></a>
 ### A6.7.17 Angeheftete Zeilen
@@ -1372,6 +1376,53 @@ die in der Tabelle weit voneinander entfernt sind.
 - **Gilt seit:** App 3.30.0
 
 <!-- zdroj: app:354e3675 src/ui/table-view/table-pins.ts PIN_MAX 10, TablePins (jeden strom a typ řádků; pohled, filtr, hledání je nechají; jen paměť okna, ne v pohledu), prune, ordered (pořadí do změny řazení, filtru, hledání, pohledu; D7 a), pinRanks · table-ui.ts tableRowPinEntry (ne isPhoneBar; many z tableAreaRowKeys, unpin, disabled + limit), tablePinnedLines (podřádky svazků jako v těle, D5 a; outside), showTableRowSheet (tablet), changeTablePins · table-grid.ts .tv-pinrows (role rowgroup, nejvýš třetina těla s vlastním posuvem), tv-outside · table-filterbar.ts štítek pinRow.chip s × (unpinAll; Zrušit filtry ukotvení nechá) · strings.ts table.pinRow.one, many, unpin, chip, unpinAll, zone, rowSr, limit; table.outsideFilter · e2e/table-view-pins.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K4.1–K4.4, D5, D7 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
+
+<a id="A6.7.18"></a>
+### A6.7.18 Die Forschung in der Tabelle eines weiteren Fensters
+
+Die Tabelle in einem weiteren Fenster ([A6.8](#A6.8)) zeigt die Forschung so, wie das Hauptfenster sie hat: die
+Spalten, Chips und Ansichten der Forschung, die Marke des Agenten bei der Person, an der er arbeitet, und seine
+Warteschlange ([A6.7.14](#A6.7.14)). Mit der Forschung spricht nur das Hauptfenster; ein weiteres Fenster bekommt
+dessen Zustand. Beim Verfolgen der Forschung folgt die Tabelle eines weiteren Fensters dem Agenten
+([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+
+- **Chips und Ansichten:** die Gruppe **Forschung** gibt es in der Tabelle jedes Fensters mit einem Stammbaum der
+  Forschung. Chips, die nur beim Folgen gelten, sind live, wenn das Hauptfenster die Forschung verfolgt, sonst sind
+  sie wie im Hauptfenster ([A6.7.14](#A6.7.14)). Eine gespeicherte Ansicht mit Forschungsfiltern öffnet sich in beiden
+  Fenstern gleich.
+- **Forschungsfilter ohne Forschung** (in jedem Fenster, auch im Hauptfenster): eine Ansicht, die nach der Forschung
+  filtert (ein Chip der Forschung oder ein Filter einer Forschungsspalte), zeigt alle Zeilen, wenn die Tabelle keine
+  Daten der Forschung hat, und sagt neben dem Namen der Ansicht „Der Forschungsfilter wird gerade nicht angewendet“.
+  Auf dem Telefon steht dort nur ein bernsteinfarbener Punkt mit diesem Text im Tooltip.
+- **Die Zeile des Agenten:** die Zeile der Person, an der der Agent arbeitet, hat in einem weiteren Fenster einen
+  Hintergrund in der Farbe des Folgens, eine Linie in der Namenszelle und den Namen fett, auch in einem abgekoppelten
+  Fenster. Das Hauptfenster behält den senkrechten Balken am Namen ([A6.7.14](#A6.7.14)).
+- **Scrollen zum Agenten:** ein Fenster, das dem Agenten folgt und nicht pausiert ist, scrollt die Zeile des Agenten
+  in die Mitte, wenn der Agent zu einer anderen Person wechselt und deren Zeile nicht ganz sichtbar ist. Das Scrollen
+  ist weich (300 ms, bei reduzierter Bewegung sofort); aktive Zelle, Auswahl und Fokus ändern sich nicht, und
+  waagerecht scrollt nichts. Eine sichtbare Zeile und eine angeheftete Zeile des Agenten ([A6.7.17](#A6.7.17)) scrollen
+  die Tabelle nicht. Ein pausiertes oder abgekoppeltes Fenster scrollt nicht.
+- **Pause:** das Mausrad über dem Raster, das Ziehen der Bildlaufleiste, ein Druck in die Zeilen (Zelle, Name) und die
+  Tasten zum Bewegen und Scrollen im Raster pausieren das Folgen im Fenster
+  ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Leiste, Tabellenkopf und Statuszeile der Tabelle starten keine
+  Pause, sie verlängern nur eine laufende.
+- **Die Zeile des Agenten ausgefiltert:** in einem Fenster, das dem Agenten folgt (auch einem pausierten), scrollt die
+  Tabelle nicht, und die Statuszeile sagt „Die Zeile des Agenten ist ausgefiltert“ mit **Vorübergehend zeigen**. Das
+  zeigt eine vorübergehende Zeile wie beim Sprung zu einer Person ([A6.7.16](#A6.7.16)) und scrollt zu ihr. Der
+  Hinweis verschwindet, sobald die Zeile des Agenten sichtbar ist. Solange der Hinweis zu sehen ist, weichen der
+  Zustand der Forschung und „Nur lesen“ in der Statuszeile (beides sagt der Streifen des Fensters); in einem Fenster
+  bis 400 px weichen auch die Zeilenzahl und **Zeichen ⓘ**. Eine angeheftete Zeile des Agenten hat keinen Hinweis.
+- **Blasen der Forschung:** eine Aktion aus der Blase einer Forschungszelle ([A6.7.14](#A6.7.14)) führt das
+  Hauptfenster aus: es startet sie nur, wenn seine Blase sie bei dieser Person gerade anbietet, und kommt in den
+  Vordergrund (nicht bei einer Aktion, die das Terminal der Forschung öffnet). Eine Quelle in der Quellentabelle und
+  die Website eines Archivs öffnen sich im weiteren Fenster. Eine eigene Antwort auf einen wartenden Eintrag wird im
+  weiteren Fenster nicht angeboten; **Wartet auf Bearbeitung ›** öffnet das Panel im Hauptfenster. Ist das
+  Hauptfenster geschlossen, fehlen in der Blase die Aktionen, die es ausführen würde.
+- **Bedienung:** App: **Vorübergehend zeigen** in der Statuszeile der Tabelle; der Zustand des Folgens im Streifen
+  des Fensters ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+- **Gilt seit:** App 3.30.0
+
+<!-- zdroj: app:34513c94 src/windows/agent-state.ts, agent-mirror.ts, src/ui/agent-window-ui.ts (zrcadlo stavu agenta, Tabulka čte vstup výzkumu z hlavního okna) · src/ui/table-view/table-filter.ts researchFilterIdle (čip výzkumu nebo sloupec fromResearch, bez ctx.research) · table-viewbar.ts .tv-view-note (role status) · index.html .tv-view-note na telefonu jen tečka · d24ff2ec src/ui/table-view/table-ui.ts tableAgentRow (jen windowAgentFollow, tj. další okno; attached posune, attached/paused poznámka, ukotvený ne), tableShowAgentRow, tableAgentFollowChanged · table-grid.ts revealKey(center, smooth, keepSelection), REVEAL_GLIDE_MS 300, prefers-reduced-motion · index.html .tv-row.is-agent (--follow-c1-soft, linka, font-weight 600, bez tv-agent-bar) · src/ui/live-follow-ui.ts (pauza Tabulky: kolečko, posuvník, stisk v řádcích, klávesy; lišta, hlava, stavový řádek ne) · table-bar.ts updateAgentNote (tv-status-agent, aria-live polite, showTemp) · 18dbb544 (poznámka: stav výzkumu a jen ke čtení ustoupí; do 400 px počet, Značky, ◎) · b8d21457 src/windows/window-table-research.ts (TABLE_BUBBLE_ACTION, bubbleRunsHere source / web, hlavní okno ověří nabídku, do popředí ne u terminálu, bez odpovědi čekající položky, při zavřeném hlavním okně vynechané) · strings.ts table.agentRowHidden, table.researchFilterOff, table.link.showTemp · CHANGELOG.cs.md 3.30.0 „Výzkum v Tabulce dalšího okna“, „Sledování agenta ve všech oknech“ · spec 097 K1.2, K3.1, K3.2, O4, dotaz 6 · app:docs/ZADANI_DEV_sledovani-ve-vsech-oknech.md §5; ZADANI_UIX dotazy 11, 14, 15 · prace/1116-app-097-sledovani-okna -->
 
 <a id="A6.8"></a>
 ## A6.8 Ansicht in einem eigenen Fenster
@@ -1415,6 +1466,10 @@ schicken ihm ihre Änderungen und bekommen von ihm den Stammbaum.
   der Leiste der Tabelle nach **Export ▾**; am Reiter einer Ansicht Strg+Klick (macOS ⌘+Klick), mittlere Maustaste
   oder Rechtsklick (Umschalt+F10) → **{Ansicht} in neuem Fenster**.
 - **Gilt seit:** App 3.28.0
+- **Ab App 3.30.0:** beim Live-Verfolgen der Forschung folgt jedes Fenster dem Agenten in seiner eigenen Ansicht, und
+  der Streifen des Fensters sagt, wie das Fenster folgt, statt „Nur lesen · das Hauptfenster verfolgt die Forschung“
+  ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Die Tabelle in einem Fenster zeigt die Forschung wie im
+  Hauptfenster ([A6.7.18](#A6.7.18)).
 
 <!-- zdroj: app:4b1373a7 src/windows/window-open.ts isDesktopSystem, windowsOffered (role main, ne isViewMode, > MOBILE_MAX 640, ne isPhoneBar), openInNewWindow · src/windows/window-controls.ts openWindow (BLOCKED_TOAST_MS 10 s, win.retry; MANY_WINDOWS 5, manyWindows), INDICATOR_TEXT_MIN_WIDTH 1280, renderMenu (6 pohledů, thisView, overview jen UI.canOpenResearchOverview), wireTabs (ctrl/meta click, auxclick button 1, contextmenu, Shift+F10 / ContextMenu) · src/windows/view-window-state.ts (přenos stavu, F5 satelitu) · src/windows/sat-header.ts · src/windows/satellite.ts readOnly (live, locked) · src/windows/sat-states.ts (live strip readOnlyLive, goToMain; CONFLICT_TOAST_MS) · src/windows/window-drafts.ts (draftKept) · src/windows/window-research-menu.ts (researchInMain) · src/windows/window-title.ts · index.html html.window-satellite .toolbar skryto · strings.ts win.* · CHANGELOG.cs.md 3.28.0 · spec 079 K1.1–K1.4, K1.7 · prace/1112-app-okna-zaklad, 1112-app-okna-pohledy -->
 
@@ -1440,6 +1495,9 @@ bewirkt, bestimmt der Schalter **Auswahl folgen** im Kopf des Fensters.
     der Standard der neuen Ansicht.
 - **Bedienung:** App: im Kopf des Fensters **Auswahl folgen: {Modus} ▾**.
 - **Gilt seit:** App 3.28.0
+- **Ab App 3.30.0:** ein Fenster, das beim Verfolgen der Forschung dem Agenten folgt und nicht pausiert ist, markiert
+  eine in einem anderen Fenster gewählte Person nur, auch im Modus **wechseln**; der Sprung zum Agenten wird nicht als
+  Wahl einer Person geschickt ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
 
 <!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
 
@@ -1464,6 +1522,10 @@ nur lesbar.
   - Neuladen des Hauptfensters (F5) zeigt den Streifen nicht.
 - **Bedienung:** App: die Schaltflächen im Streifen und anstelle des Fensterinhalts.
 - **Gilt seit:** App 3.28.0
+- **Ab App 3.30.0:** schließt sich das Hauptfenster während des Verfolgens der Forschung, wird eines der weiteren
+  Fenster von selbst zum Hauptfenster, und das Folgen geht darin weiter ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+  Geht das nicht, zeigen die Fenster „Das Folgen lässt sich nicht fortsetzen · das Hauptfenster wurde geschlossen“
+  mit **Zum Hauptfenster machen** und **Strom öffnen**.
 
 <!-- zdroj: app:4b1373a7 src/windows/satellite.ts MAIN_SILENCE_MS 3000, lastHeardAt, treeGone · src/windows/sat-states.ts (closed strip mainClosed, treeGone, treeLocked, SWITCHED_TOAST_MS) · src/windows/become-main.ts (zámek ifAvailable, znovunačtení jako hlavní z IndexedDB) · src/windows/window-research-menu.ts researchMainOnly · strings.ts win.mainClosed, openStrom, makeMain, treeGone, treeGoneNote, treeLocked, treeLockedNote, closeWindow, goToMain, treeSwitched · spec 079 K1.5 · prace/1112-app-okna-zaklad (stavy 1–6) -->
 

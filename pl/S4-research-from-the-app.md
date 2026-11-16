@@ -68,8 +68,10 @@ Drzewo może samo przechodzić do osoby, nad którą agent właśnie pracuje (pi
 - **Obsługa:** aplikacja: **Przegląd badania → Śledź agenta w drzewie** / **Przestań śledzić**.
 - **Obowiązuje od:** aplikacja 3.5.0
 - **Od aplikacji 3.24.0:** śledzić można także w wachlarzu i na mapie ([S4.1.3](#S4.1.3)); przesunięcie mapy wstrzymuje je tak samo.
+- **Od aplikacji 3.30.0:** ◎ **Przestań śledzić** zatrzymuje przeskoki tylko w oknie, w którym zostanie kliknięte;
+  inne okna śledzą dalej, każde we własnym widoku ([S4.1.7](#S4.1.7)).
 
-<!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff -->
+<!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff · 3.30.0: spec 097 O1, O3, ZADANI_DEV §6 (◎ v hlavním okně další okna nevypne) -->
 
 <a id="S4.1.2"></a>
 ### S4.1.2 Dostosowanie panelu
@@ -161,8 +163,11 @@ pokazuje miejsce pracy pierścieniem.
 - **Obowiązuje od:** aplikacja 3.24.0
 - **Od aplikacji 3.25.0:** legenda mapy mówi „Pusty znacznik: miejsce bez osoby wśród pokazanych miejsc”, a miejsce
   pracy bez osoby na mapie „na razie bez osoby na mapie” (wcześniej „poza zakresem mapy”).
+- **Od aplikacji 3.30.0:** **Śledzenie agenta w** dotyczy tylko okna głównego; inne okna śledzą w widoku, który
+  pokazują ([S4.1.7](#S4.1.7)). Na komputerze z myszą (okno szersze niż 640 px) mówi to pomoc w Ustawieniach:
+  „Dotyczy okna głównego przy włączeniu śledzenia i przy Powrót do agenta. Inne okna śledzą we własnym widoku.”
 
-<!-- zdroj: app:src/ui/live-follow-ui.ts (hlavička, followIn) · src/live-follow-prefs.ts · src/live-follow-targets.ts TRAIL_MAX=8, TRAIL_MAX_AGE_MS=60 min, fanCenter, sessionNumbers, sessionTone · src/live-follow-map.ts · src/fan-follow-anchor.ts MAX_UP=12 · src/ui/fan-follow-ui.ts · src/ui/map-follow-ui.ts PAN_MARGIN=64, PAN_MS=400, telefon bez čáry · strings.ts settings.groupResearchFollow, researchFollowNote, followView(Help), followFanCenter*, followTrail(Help); live.followIn, mapPaused, legendTitle, legendTrail, legendRecord, legendPerson, legendOut; fan.pin, unpin, centerLabel, workOutside; map workRecord, workPerson, outScope, noCoords, noPlace, locate · CHANGELOG.cs.md 3.24.0, 3.25.0 · spec 043 -->
+<!-- zdroj: app:src/ui/live-follow-ui.ts (hlavička, followIn) · src/live-follow-prefs.ts · src/live-follow-targets.ts TRAIL_MAX=8, TRAIL_MAX_AGE_MS=60 min, fanCenter, sessionNumbers, sessionTone · src/live-follow-map.ts · src/fan-follow-anchor.ts MAX_UP=12 · src/ui/fan-follow-ui.ts · src/ui/map-follow-ui.ts PAN_MARGIN=64, PAN_MS=400, telefon bez čáry · strings.ts settings.groupResearchFollow, researchFollowNote, followView(Help), followFanCenter*, followTrail(Help); live.followIn, mapPaused, legendTitle, legendTrail, legendRecord, legendPerson, legendOut; fan.pin, unpin, centerLabel, workOutside; map workRecord, workPerson, outScope, noCoords, noPlace, locate · CHANGELOG.cs.md 3.24.0, 3.25.0 · spec 043 · 3.30.0: app:e7e79873 src/ui/live-section-edit-ui.ts (isMouseWide → settings.followViewHelpWindows) · src/breakpoints.ts MQ_MOUSE_WIDE · spec 097 O5, ZADANI_DEV §8 -->
 
 <a id="S4.1.4"></a>
 ### S4.1.4 Zmiany z badania bez migania
@@ -305,6 +310,74 @@ okno nie rozmawia.
 - **Obowiązuje od:** aplikacja 3.28.0; 3.30.0: mały panel obok okna tylko z **Trwa praca**
 
 <!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) · app:3c2fde77 src/ui/overview-window-view.ts readQueuePage přes akci queue-list do hlavního okna (okno most nevolá) · app:3f9a5ca4 overview-window-view.ts treeVerifyNow (extras.verify), verifyStop → verify-stop, showVerifyBulkDialog → verify-bulk; evidenceHighlightNow (extras.highlight), endEvidenceHighlight → highlight-end, startPersonHighlight quiet · src/ui/research-ui.ts lightsGroup, markOverviewLit (is-lit, aria-current; nic při zavřeném hlavním okně) · research-overview-ui.ts lightsGroup direction (show-in-tree v Teď), changed (showChanged) · research-directions-ui.ts lightsGroup direction (dirShow), direction-found (dirFoundPersons) · strings.ts verify.section, bulkRow, stop, live.showInTree, dirShow, showChanged · spec 079 K3 · prace/1113-app-dorovnani-052-okna (2876d570..27f0bafb) · app:7f307c74 src/overview-columns.ts OVERVIEW_WINDOW_COLS_2 1100, OVERVIEW_WINDOW_COLS_3 1600, OVERVIEW_COLS_HYSTERESIS 24, OVERVIEW_SMALL_COLUMN 0.2, OVERVIEW_COLUMN_MAX 660, partitionContiguous, planOverviewColumns · src/ui/overview-columns-ui.ts (souhrn a pruhy nad sloupci, každý sloupec se posouvá sám, nové rozdělení jen při změně sloupců, sbalení, skrytí, přesunu, Načíst další; lepkavá hlava: pole nebo > 8 řádků; fokus, výběr v poli a oddíl na očích při změně šířky) · e2e/windows-overview-columns.spec.ts · CHANGELOG.cs.md 3.28.0 (e540e4b5) · spec 083 U3 · prace/1113-app-hledani-v-prehledu · 3.30.0: app:965e83f8 src/ui/live-panel-working-only.ts livePanelWorkingOnly (okno Přehledu, isDesktop > 1024 px, ne ukončené), livePanelDrawnSections (jen working), livePanelNothingAtWork · src/ui/research-ui.ts (třída working-only, bez štítků waiting a nových změn, bez samoskládání; overviewWindowOpenChanged, placeLivePanel při přechodu 1024 px; openResearchOverview → focusOverviewWindow) · strings.ts live.nothingAtWork · e2e/windows-overview-panel.spec.ts · CHANGELOG.cs.md 3.30.0 „Panel výzkumu vedle okna Přehledu“ · spec 079 U9 (rozhodnutí 27, 16. 11.) · dirigent:test/vysledek-1116-app-079-panel.md -->
+
+<a id="S4.1.7"></a>
+### S4.1.7 Śledzenie agenta w innych oknach
+
+Podczas śledzenia badania ([S1.4](S1-connecting-app-and-research.md#S1.4)) agenta śledzi też każde inne okno drzewa
+([A6.8](A6-views.md#A6.8)), każde we własnym widoku. Jedno okno można odłączyć i w międzyczasie oglądać w nim coś
+innego; pozostałe okna śledzą dalej. Wszystkie okna są przy tym tylko do odczytu.
+
+- **Kiedy:** gdy okno główne śledzi badanie na żywo. Dołącza każde inne okno, także otwarte przed włączeniem
+  śledzenia (bez odświeżenia) albo dopiero w jego trakcie. Inne okno nie łączy się z mostem badania: stan agenta
+  wysyła mu okno główne, bez adresu mostu.
+- **Widok:** okno śledzi w widoku, który właśnie pokazuje. **Śledzenie agenta w** ([S4.1.3](#S4.1.3)) dotyczy tylko
+  okna głównego, a **Powrót do agenta** nie przełącza widoku innego okna.
+  - **Rodzina**, **Wachlarz**, **Mapa:** przeskok za agentem, znaczniki, ślad i legenda jak w oknie głównym
+    ([S4.1.1](#S4.1.1), [S4.1.3](#S4.1.3));
+  - **Tabela:** wiersz agenta ([A6.7.18](A6-views.md#A6.7.18));
+  - **Potomkowie**, **Oś czasu:** bez przeskoków, mówi to pasek. Przesuwanie w nich nie wstrzymuje śledzenia. Po
+    przełączeniu na Rodzinę, Wachlarz lub Mapę okno od razu przeskakuje do agenta.
+- **Pasek pod nagłówkiem okna** mówi, jak okno śledzi (ikoną i tekstem). Ostatni jest zawsze **Przejdź do okna
+  głównego**.
+
+| Stan okna | Pasek | Przyciski |
+|---|---|---|
+| śledzi | „Śledzenie agenta · tylko do odczytu”; w Potomkach i na Osi czasu „Śledzenie agenta · w tym widoku bez przeskoków · tylko do odczytu” | **Odłącz to okno** |
+| śledzi, agent nie pracuje nad nikim z tego drzewa | „Agent teraz nie pracuje · tylko do odczytu” | **Odłącz to okno** |
+| wstrzymane | „Śledzenie wstrzymane · tylko do odczytu” | **Powrót do agenta**, **Odłącz to okno** |
+| odłączone | „To okno nie śledzi agenta · tylko do odczytu” | **Śledź agenta** |
+| połączenie z mostem przerwane | „Połączenie z badaniem przerwane · ponawianie” (bursztynowo) | **Odłącz to okno**, w odłączonym oknie **Śledź agenta** |
+
+- **Wstrzymanie:** ręczne przesunięcie, powiększenie lub wybór osoby w oknie (w Tabeli przewinięcie lub kliknięcie
+  w wiersze) wstrzymuje śledzenie tylko w tym oknie. Przywraca je **Powrót do agenta** albo wraca samo po 20 s bez
+  dotyku. Wstrzymanie pokazuje pasek; pływającej etykiety wstrzymania ani „Przesuwanie mapy wstrzymane” inne okno nie
+  ma. Wstrzymanie w oknie głównym nie wpływa na inne okna, a wstrzymanie w innym oknie nie wpływa na okno główne ani
+  na pozostałe okna. Odświeżenie okna (F5) wstrzymanie anuluje.
+- **Odłączenie:** **Odłącz to okno** zatrzymuje przeskoki za agentem w tym oknie; okno można swobodnie przeglądać
+  i zostaje tylko do odczytu. Znaczniki agenta (karta osoby, nad którą trwa praca, wiersz agenta w Tabeli, znaczniki
+  i ślad w Wachlarzu i na Mapie) w nim zostają. **Śledź agenta** ponownie dołącza okno i od razu przeskakuje do
+  agenta. Odłączenie przetrwa odświeżenie okna (F5) i zostaje zapomniane wraz z końcem śledzenia.
+- **Wybór z innego okna:** śledzące okno, które nie jest wstrzymane, osobę wybraną w innym oknie tylko zaznacza, także
+  przy **Śledź wybór: przełączaj** ([A6.8.1](A6-views.md#A6.8.1)); centrum zostaje przy agencie. Tabela zaznacza
+  wiersz tej osoby, ale do niego nie przewija. Przeskok za agentem nie jest wysyłany innym oknom jako wybór osoby.
+  Wstrzymane i odłączone okno kieruje się **Śledź wybór** jak poza śledzeniem.
+- **Koniec:**
+  - ◎ **Przestań śledzić** w oknie głównym zatrzymuje przeskoki tylko w oknie głównym; inne okna śledzą dalej;
+  - **Zakończ śledzenie** (panel badania, menu **Badanie**, menu osoby) i koniec sesji kończą śledzenie we wszystkich
+    oknach: pasek znika, drzewo znów można edytować, odłączenie zostaje zapomniane, a każde inne okno to zgłasza
+    („Śledzenie badania zakończone · drzewo można edytować”).
+- **Zamknięcie okna głównego podczas śledzenia:** jedno z innych okien samo staje się oknem głównym i śledzenie trwa
+  w nim.
+  - Zamknięcie rozpoznaje się po 3 s bez wiadomości od okna głównego ([A6.8.2](A6-views.md#A6.8.2)). Odświeżenie okna
+    głównego (F5) niczego z tego nie uruchamia;
+  - kolejność: najpierw okna, które śledzą agenta (śledzące i wstrzymane), potem odłączone; w każdej grupie od
+    najstarszego okna. Okno Przeglądu badania ([S4.1.6](#S4.1.6)) głównym nie zostaje. Każde okno w kolejności czeka
+    o 400 ms dłużej niż poprzednie i głównym zostaje tylko jedno;
+  - to okno pokazuje „Okno główne zamknięte · śledzenie trwa w tym oknie…”, wczytuje się ponownie jako główne z tym
+    samym widokiem i z ◎ włączonym, jeśli był włączony w zamkniętym oknie głównym. Pozostałe okna zgłaszają
+    „Śledzenie przejęło inne okno” i zostają takie, jakie były (odłączone zostaje odłączone);
+  - gdy ta przeglądarka nie ma zapisanego adresu mostu badania, żadne okno nie zostaje głównym, a okna pokazują „Nie
+    można wznowić śledzenia · okno główne zamknięte” z **Ustaw jako główne** i **Otwórz Strom**
+    ([A6.8.2](A6-views.md#A6.8.2));
+  - bez śledzenia obowiązuje [A6.8.2](A6-views.md#A6.8.2) bez zmian.
+- **Granice:** inne okna są tylko na komputerze ([A6.8](A6-views.md#A6.8)); telefon i tablet są bez zmian. Okno
+  główne nie pokazuje, ile okien śledzi.
+- **Obsługa:** aplikacja: na pasku innego okna **Odłącz to okno**, **Śledź agenta**, **Powrót do agenta**,
+  **Przejdź do okna głównego**; w oknie głównym ◎ **Przestań śledzić** i **Zakończ śledzenie**.
+- **Obowiązuje od:** aplikacja 3.30.0
+
+<!-- zdroj: app:9cec9c30 (od 3714c539) src/windows/agent-follow-state.ts AgentFollow attached/paused/detached, agentFollowKey (sessionStorage jen detached), setLive (konec sezení zapomene odpojení), detach, attach, setPaused · src/windows/agent-state.ts, agent-mirror.ts, src/ui/agent-window-ui.ts (stav agenta z hlavního okna bez adresy a tokenu mostu, K1.3) · src/windows/sat-states.ts SatStrip, liveStrip (lost › paused › detached › idle › attachedNoJump › attached), STRIP_ICON, AMBER, writeStrip (tlačítka, goToMain poslední) · src/main.ts noJump (descendants, timeline) · src/ui/live-follow-ui.ts (další okno: pohled okna, Zpět pohled nepřepne, bez štítku pauzy ani mapPaused, pauza jen v okně, návrat po 20 s) · src/windows/window-selection.ts (připojené okno výběr jen vyznačí; skok agenta se nerozesílá) · src/windows/takeover.ts TAKEOVER_STEP_MS 400, takeoverOrder (sledující, pak odpojená; okno bez vlastního sledování ne), hasBridge (storedResearchBridge) · src/windows/become-main.ts, window-start.ts (◎ jako v zavřeném hlavním okně) · strings.ts win.agentAttached, agentAttachedNoJump, agentIdle, agentPaused, agentDetached, detach, attach, bridgeLost, followEnded, takingOver, takenOver, takeoverFailed, goToMain; live.followOff, followBack; research.stop · CHANGELOG.cs.md 3.30.0 „Sledování agenta ve všech oknech“ · spec 097 K1.1–K1.4, K2.1–K2.6, Rozhodnutí 16. 11. O1–O5, dotazy 3–5, 8 · app:docs/ZADANI_DEV_sledovani-ve-vsech-oknech.md §1–§4, §6, §7; ZADANI_UIX dotazy 10, 12 · prace/1116-app-097-sledovani-okna -->
 
 <a id="S4.2"></a>
 ## S4.2 Kolejka w aplikacji
