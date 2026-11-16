@@ -53,7 +53,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | de | Wartet auf Bearbeitung (app) · Was wartet (terminal) | Eine einzige geordnete Liste von allem, worauf die Forschung vom Menschen wartet: wartende Aufgaben, Fragen der Archive, neue Fassungen von Erzählungen, Fragen zu Orten und im Terminal auch Entscheidungen, die nur dort gehen. |
 | pl | Czeka na załatwienie (app) · Co czeka (terminal) | Jedna uporządkowana lista wszystkiego, na co badanie czeka od człowieka: czekające zadania, pytania archiwów, nowe wersje opowieści, pytania o miejsca, a w terminalu także decyzje, które załatwia się tylko tam. |
 
-- **Čísla:** [R6.1](cs/R6-awaiting-action.md#R6.1), R6.1.1, R6.4, R6.5, S2.3
+- **Čísla:** [R6.1](cs/R6-awaiting-action.md#R6.1), R6.1.1, R6.4, R6.5, S2.3, S4.4, S4.4.2, S4.4.3
 
 <a id="reader"></a>
 ### Čtenář
@@ -1342,7 +1342,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Tabelle (Ansicht) · Personen · Verbindungen · Ereignisse · Quellen (Zeilen) | Die Ansicht der App auf den ganzen Stammbaum in Zeilen von Personen, Verbindungen, Ereignissen oder Quellen: Angaben, berechnete Werte, Vollständigkeit, Quellenangaben und Befunde der Prüfung in Spalten, mit Filter, Sortierung, gespeicherten Ansichten und CSV- und XLSX-Export. |
 | pl | Tabela (widok) · Osoby · Związki · Wydarzenia · Źródła (wiersze) | Widok aplikacji na całe drzewo w wierszach osób, związków, wydarzeń lub źródeł: dane, wartości obliczone, kompletność, cytowania i wyniki kontroli w kolumnach, z filtrem, sortowaniem, zapisanymi widokami i eksportem CSV i XLSX. |
 
-- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12, A6.7.13, A6.7.14, A6.7.15
+- **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12, A6.7.13, A6.7.14, A6.7.15, A6.7.16, A6.7.17
 
 <a id="surname-spellings"></a>
 ### Tvary příjmení

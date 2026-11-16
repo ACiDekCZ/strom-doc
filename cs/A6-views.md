@@ -135,6 +135,11 @@ kartu jako dřív.
 - Karta **Normální** má fotku vedle jména. **Podrobná**, **Matriční** a **Vlastní** ji mají v hlavičce vedle jména
   a let, řádky údajů pod ní v plné šířce; karta je o fotku vyšší (**Vlastní** 70 nebo 98 px a 17 px na řádek místo
   56 px).
+- **Od aplikace 3.30.0:** zvolená velikost platí pro každou kartu s avatarem, s fotkou i bez ní. Iniciály karty bez fotky
+  mají velikost a tvar fotky (**Normální** 48 nebo 80 px, v hlavičce karty 44 nebo 72 px) a písmo úměrné (17 a 29 px,
+  v hlavičce 16 a 26 px). Pohled má větší karty, kdykoli v něm je aspoň jedna karta s avatarem (dřív jen s fotkou);
+  zástupná osoba avatar nemá. Export obrázku, plakát i jeho PDF kreslí iniciály stejně. **Malá** vypadá jako dosud. Věta pod volbou:
+  „Osoby bez fotky mají iniciály ve stejné velikosti. Platí pro strom, export obrázku a plakát na tomto zařízení.“
 - **Tvar:** **Kruh** nebo **Zaoblený čtverec** (zaoblení 12 px u velké fotky, 5 px u malé; stejně i iniciály).
   Značky karty stojí na okraji fotky v obou tvarech.
 - **Export:** export obrázku, plakát i jeho PDF po listech ([A7](A7-book-pages-and-export.md)) kreslí karty se
@@ -147,9 +152,9 @@ kartu jako dřív.
   rozměr karty („karta 236 × 96 px“).
 - **Ovládání:** **Nastavení** → **Karta osoby** → **Fotka na kartě** (mezi **Detail karet** a náhledem):
   **Velikost** **Malá** · **Střední** · **Velká**; **Tvar** **Kruh** · **Zaoblený čtverec**.
-- **Platí od:** aplikace 3.29.0
+- **Platí od:** aplikace 3.29.0; 3.30.0: iniciály ve velikosti fotky
 
-<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 · export: app:64ae50ca src/export-image.ts, src/renderer.ts (poster, PDF po listech; výchozí small + circle bajt po bajtu jako dřív), strings.ts cardDensity.photoScope · spec 096 P2 -->
+<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 · export: app:64ae50ca src/export-image.ts, src/renderer.ts (poster, PDF po listech; výchozí small + circle bajt po bajtu jako dřív), strings.ts cardDensity.photoScope · spec 096 P2 · 3.30.0: app:0bed2a88 src/types.ts NORMAL_PHOTO_BOX (avatar = fotka i iniciály), src/renderer.ts viewHasAvatar (dřív viewHasPhoto), src/card-width.ts normalCardTextWidth (126 px u každého avataru), avatarInitialsSize (avatar × 0,36: 17/29, 16/26), src/export-image.ts getPosterCardPhoto (každá karta s avatarem), strings.ts cardDensity.photoScope · e2e/card-photo.spec.ts, poster-card-photo.spec.ts · CHANGELOG.cs.md 3.30.0 „Fotka na kartě“ · spec 103 K2.1–K2.3 · dirigent:test/vysledek-1116-app-103-tabulka.md -->
 
 <a id="A6.2"></a>
 ## A6.2 Pohled Potomci
@@ -484,7 +489,9 @@ Pohled Tabulka vychází z tabulky od Ondřeje Chrpy.
     ukazuje: „Jen ke čtení: úpravy a „Není chyba“ tu nejsou.“ Prohlížení, filtr, řazení a export CSV a XLSX
     fungují; pohled uložit, přejmenovat ani smazat nejde;
   - šipky **↩ ↪** vlevo dole (předchozí a další ústřední osoba) a Alt+← / Alt+→ v Tabulce nejsou: tabulka ústřední
-    osobu neukazuje ani během práce nemění.
+    osobu neukazuje ani během práce nemění;
+  - **od aplikace 3.30.0** vedou Alt+← / Alt+→ v tabulce zpět a vpřed po skocích přes jména osob
+    ([A6.7.16](#A6.7.16)); ústřední osobu ani tak nemění.
 - **Ovládání:** v liště pohledů **Tabulka** (za **Mapa**); na telefonu, tabletu a v okně do 1024 px **Tabulka** na dolní
   liště ([A9.5](A9-using-the-app.md#A9.5); do aplikace 3.27.0 **Více → Pohled → Tabulka**).
   Pohled se pamatuje jako ostatní ([A6.1.1](#A6.1.1)).
@@ -668,8 +675,25 @@ Filtr vybere řádky, hledání je zúží dál, řazení určí pořadí.
   sloupce. Shift + klik přidá sloupec jako další klíč (další klik ho otočí, třetí odebere). Šipka ↑ ↓ u hlavičky
   má číslo pořadí klíče. Prázdné hodnoty jsou vždy na konci, v obou směrech. Čísla v textu se řadí jako čísla.
 - **Hranice:** hledání se do pohledu neukládá ([A6.7.7](#A6.7.7)).
+- **Od aplikace 3.30.0:**
+  - vyloučení se sčítají: každé **Bez „{hodnota}“** z nabídky buňky ([A6.7.15](#A6.7.15)) je samostatný štítek
+    „{Sloupec} ≠ {hodnota} ×“ vedle hlavního filtru sloupce, ve stejném i jiném sloupci. × zruší jen svůj štítek,
+    **Zrušit filtry** všechny. Formulář štítku upravuje jen ten štítek, formulář v hlavičce hlavní filtr sloupce;
+  - druhé **Jen „{hodnota}“** ve sloupci hodnotu přidá: „Otec = A nebo B“ (od čtyř hodnot „A, B +2“), řádek projde
+    s kteroukoli z nich. **Bez** takové hodnoty ji zase odebere (s poslední se z ní stane vyloučení), **Jen**
+    vyloučené hodnoty vyloučení zruší. Ve sloupci s hodnotami ze seznamu se vybrané hodnoty sčítají a ubírají stejně;
+  - štítek „= …“ (a hlavička sloupce, dokud je jeho filtr **je**) má místo textového pole hodnoty sloupce
+    k zaškrtnutí: nahoře zaškrtnuté, pod nimi ostatní v pořadí sloupce, každá jednou (stejná osoba, jinak stejný
+    text bez ohledu na velikost písmen a diakritiku). Zaškrtnutá hodnota přibude, odškrtnutá zmizí a s poslední
+    zmizí štítek. **obsahuje**, **začíná** nebo **není** vrátí textové pole s první zaškrtnutou hodnotou. Na telefonu
+    mají řádky seznamu 48 px;
+  - osoba, jejíž jméno ve stromu ukazuje i jiná osoba, má ve štítku, v seznamu hodnot a v souhrnu filtrů rok
+    narození: „Jan Horák (nar. 1850)“. Ostatní hodnoty jsou beze změny;
+  - pohled si štítky uloží ([A6.7.7](#A6.7.7)), pohled uložený dřív se otevře beze změny a verze dat zůstává.
+    Starší aplikace použije všechna vyloučení a z „A nebo B“ jen první hodnotu;
+  - hodně štítků se zkrátí „…“, **Zrušit filtry** zůstane v řádku.
 
-<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 · je / není: strings.ts table.matchEquals, matchNotEquals (commit 05d9a9ab, T54 F4) -->
+<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 · je / není: strings.ts table.matchEquals, matchNotEquals (commit 05d9a9ab, T54 F4) · 3.30.0: app:ec39d469 table-filter.ts isExclusionItem, addWithoutFilter, addOnlyFilter (or, picked), removeColumnItemAt, mainItemIndex, setColumnFilter(at), equalValues · strings.ts joinOr (od 4 hodnot „A, B +2“), table.filterOr · app:8891a860 table-filter.ts columnEqualValues, equalChoices, equalsOf, equalValueLabel, namesakes, table.nameBorn (nar.), table-filterbar.ts (.tv-ff-values, 48 px na telefonu) · CHANGELOG.cs.md 3.30.0 „Filtry Tabulky“ · spec 103 K1.1–K1.5 · dirigent:test/vysledek-1116-app-103-tabulka.md, vysledek-1116-app-103-odkazy-083-razeni.md -->
 
 <a id="A6.7.7"></a>
 ### A6.7.7 Pohledy tabulky
@@ -810,14 +834,18 @@ Tabulka událostí má řádek na každou událost stromu: kdo, kdy, kde, v jak�
 - **Filtr podle účastníka:** klik na jméno účastníka nabídne „Filtr: kmotr …“ (u osoby stromu i **Otevřít osobu**).
   Filtr je čip „Kmotr: … ×“ (Svědek, Oddávající, křtitel, Přítomen) a nahradí předchozí filtr účastníka. Osobu stromu
   hledá podle osoby, zapsané jméno podle písmen bez ohledu na velikost, diakritiku a mezery.
+  **Od aplikace 3.30.0** začíná nabídka (i list na telefonu a dotykovém zařízení) účastníka, který je osobou stromu,
+  položkou **Přejít na {jméno}**: skok na jeho řádek v tabulce osob ([A6.7.16](#A6.7.16)). Jména ve sloupci
+  **Osoba nebo pár** zůstávají, jak byla.
 - **Kmotr, který se opakuje** ([A5.5](A5-tree-check.md#A5.5)) je v buňce účastníka jako **stopa**.
 - **Ovládání:** vestavěný pohled **Všechny události**; akce u řádku ([A6.7.8](#A6.7.8)) se týkají první osoby řádku.
   **Upravit…** otevře u události osoby úpravu osoby na té události (u sdílené na první kopii), u narození a úmrtí
   úpravu osoby, u události páru její dialog, u sňatku a rozvodu vztahy osoby na tom svazku.
 - **Hranice:** zástupné osoby řádky nemají; narození a úmrtí bez zapsaného údaje řádek nemají.
-- **Platí od:** aplikace 3.27.0; 3.28.0: sčítání lidu u osoby je sdílená událost, společná událost je jeden řádek
+- **Platí od:** aplikace 3.27.0; 3.28.0: sčítání lidu u osoby je sdílená událost, společná událost je jeden řádek;
+  3.30.0: **Přejít na …** v nabídce účastníka
 
-<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES (od 3.28.0 i census, app:34b2174c), shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · 3.28.0: app:80c2ffb9 table-events.ts (shareId → jeden řádek, bez shareId odhad podle shareKey), strings.ts table agePerPerson, sharedDiffers, events.sharedCellChanged · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 -->
+<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES (od 3.28.0 i census, app:34b2174c), shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · 3.28.0: app:80c2ffb9 table-events.ts (shareId → jeden řádek, bez shareId odhad podle shareKey), strings.ts table agePerPerson, sharedDiffers, events.sharedCellChanged · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 · 3.30.0: app:0b833e3d table-ui.ts tableNameAction (goTo první, i v listu isPhoneBar | isCoarsePointer; jména Osoba nebo pár beze změny), strings.ts table.link.goTo · spec 103 rozhodnutí D6 c -->
 
 <a id="A6.7.11"></a>
 ### A6.7.11 Prameny v řádcích
@@ -1052,6 +1080,9 @@ zkopírovat, podle její hodnoty filtrovat a údaj v ní upravit přímo v tabul
     hodnoty k porovnání (značka výzkumu, více jmen, úplnost, počet svazků) nabídne jen **Kopírovat**; vlastní jméno
     nebo titul řádku má jen akce řádku.
   - Filtr se uloží s pohledem ([A6.7.7](#A6.7.7)).
+  - **Od aplikace 3.30.0:** **Bez** přidá další vyloučení vedle dřívějších a druhé **Jen** ve sloupci přidá svou
+    hodnotu („= A nebo B“), místo aby filtr sloupce nahradily ([A6.7.6](#A6.7.6)). Buňka se jménem osoby je odkaz
+    na její řádek ([A6.7.16](#A6.7.16)); nabídka řádku má navíc **Ukotvit řádek** ([A6.7.17](#A6.7.17)).
 - **Úprava na místě:** upravit jde buňku, která stojí za jedním údajem stromu:
   - **Křestní jméno**, **Příjmení** (ukazuje-li příjmení po sňatku, upraví ho), **Rodné příjmení**, **Příjmení po
     sňatku**;
@@ -1082,7 +1113,73 @@ zkopírovat, podle její hodnoty filtrovat a údaj v ní upravit přímo v tabul
   v nabídce řádku **Upravit buňku** (F2). Upravitelná buňka má při najetí myší textový kurzor.
 - **Platí od:** aplikace 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) · pole v buňce: table-grid.ts EDITOR_MIN_WIDTH (text 100, date 100, place 140, select 90), placeEditor, commit 80c2ffb9 · panel klepnutím: commit ee38c7a6 -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) · pole v buňce: table-grid.ts EDITOR_MIN_WIDTH (text 100, date 100, place 140, select 90), placeEditor, commit 80c2ffb9 · panel klepnutím: commit ee38c7a6 · 3.30.0: app:ec39d469 table-ui.ts tableCellChoices (addOnlyFilter, addWithoutFilter) -->
+
+<a id="A6.7.16"></a>
+### A6.7.16 Odkazy na osoby a skoky ‹ ›
+
+V tabulce osob a svazků je jméno osoby stromu v buňce odkazem na její řádek. Z otce, matky, partnera, kmotra nebo
+svědka se tak jde na jejich řádek bez hledání a zpět.
+
+- **Kde:** buňky tabulky osob a svazků, které jmenují osobu stromu: **Otec**, **Matka**, **Partner**, kmotři,
+  svědci, partneři svazku. Vlastní jméno řádku (**Celé jméno**) odkazem není. Jméno vypadá jako text buňky,
+  podtrhne se jen pod ukazatelem myši; text při najetí ukáže celé jméno. Víc jmen v jedné buňce má každé svůj odkaz.
+- **Skok:** vede vždy do tabulky osob (i z tabulky svazků). Řádek osoby je uprostřed, sloupec se posune do
+  zorného pole, buňka je aktivní a řádek krátce blikne. Cílová buňka:
+  - přes partnera buňka **Partner** na řádku toho svazku (svazek se rozbalí) a v ní je vyznačené jméno, odkud se
+    přišlo, dokud je buňka aktivní;
+  - jinak buňka **Celé jméno**; také když sloupec **Partner** není vidět.
+- **‹ ›:** na začátku lišty tabulky od prvního skoku. ‹ vrátí typ řádků, posun a buňku, odkud skok vyšel, a zavře
+  svazek, který skok rozbalil; › skok zopakuje. Text při najetí říká kam („Zpět na Jan Horák“, „Znovu na Marie
+  Vlková“); bez kroku tím směrem je tlačítko vypnuté. Kroky jsou jen skoky přes jména, ne ruční změna typu řádků,
+  pohledu nebo filtru. Paměť má 50 kroků a každé okno ([A6.8](#A6.8)) svou; jiný strom ji začne znovu.
+- **Osoba skrytá filtrem nebo hledáním:** skok se neprovede a pod lištou se objeví pruh „Filtr skrývá: {jméno}.“:
+  - **Zobrazit dočasně** ukáže řádek na jeho místě v řazení, ztlumený s „mimo filtr“, mimo počet řádků. Zmizí
+    se změnou filtru, řazení, pohledu nebo typu řádků a s ‹;
+  - **Zrušit filtry** vypne filtr i hledání a skok provede;
+  - × nebo Esc pruh zavře, nic se nezmění.
+- **Události:** v tabulce událostí jména odkazem nejsou; nabídka účastníka začíná **Přejít na {jméno}**
+  ([A6.7.10](#A6.7.10)).
+- **Hranice:**
+  - skok spustí jen prostý klik myší nebo perem (bez Ctrl, Shift, Alt a bez tažení). Výběr textu, úprava buňky
+    dvojklikem jinde v buňce a F2 fungují jako dřív; dvojklik hned po skoku neudělá nic;
+  - klepnutí prstem otevře panel řádku jako dřív; ten začíná oddílem **Osoby v buňce** s řádkem **Přejít na
+    {jméno}** pro každou osobu buňky;
+  - ústřední osoba stromu se skokem nemění.
+- **Ovládání:** klik na jméno; **Enter** na aktivní buňce s jedním jménem skočí, s více jmény nabídne **Přejít na…**;
+  ‹ › na liště a Alt+← / Alt+→ v tabulce.
+- **Platí od:** aplikace 3.30.0
+
+<!-- zdroj: app:0b833e3d src/ui/table-view/table-grid.ts personLinks (osoba bez role účastníka, ne agregát), namesHtml (tv-nm--jump, title celé jméno), linksIn (ne sloupec name), klik jen isMouseLikePointer bez modifikátorů a e.detail 1, jumpedAt + JUMP_DOUBLE_MS (dvojklik po skoku nic), Enter (tableLinkPick), Alt+←/→ onHistory · table-ui.ts tableNameAction (persons, unions), tableJumpStep (přes p1/p2 nebo partner → via partner), tableJumpBy, tablePersonShown, tableRunJump (rowType persons, setExpanded, flash, jumpTo), tableHistory (rowType, scroll, buňka, zavře rozbalený svazek, ruší dočasné zobrazení), tableLinkPick, showTableRowSheet (link.inCell) · table-jump.ts JUMP_HISTORY_MAX 50, JumpHistory, jumpTargetCell (partner jen je-li sloupec vidět, jinak name) · table-notice.ts (role status, Zobrazit dočasně, Zrušit filtry, ×, Esc) · table-bar.ts updateNav (vidět od prvního skoku, aria-disabled) · strings.ts table.link.goTo, pick, inCell, enterHint, hidden, showTemp; table.nav.back, backTo, forward, forwardTo; table.outsideFilter · e2e/table-view-links.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K3.1–K3.3, ZADANI_DEV_tabulka-odkazy-ukotveni D1–D4, D6 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
+
+<a id="A6.7.17"></a>
+### A6.7.17 Ukotvené řádky
+
+Ukotvený řádek zůstane pod záhlavím tabulky, zatímco se tabulka posouvá. Slouží k porovnání řádků, které jsou
+v tabulce daleko od sebe.
+
+- **Jak se ukotví:** nabídka řádku → **Ukotvit řádek** (za **Upravit…**). Text vybraný přes víc řádků (tažením
+  nebo Shift+klik) a pravý klik do něj nabídne **Ukotvit řádky (n)** pro osoby těch řádků; podřádek svazku se počítá
+  jako jeho osoba. Na ukotveném řádku je místo toho **Uvolnit řádek**.
+- **Jak vypadají:** pod záhlavím v pořadí tabulky, osoba i s podřádky svazků jako v těle tabulky. Jméno ukotveného
+  řádku má plný špendlík, jeho vlastní řádek v těle tabulky obrysový. Zabírají nejvýš třetinu výšky tabulky, víc
+  řádků se posouvá ve vlastním posuvníku. Aktivní buňka, úprava v buňce, klávesnice i akce řádku v nich fungují.
+- **Filtr ukotvený řádek neskryje:** řádek, který filtr nebo hledání skrývá, zůstane ukotvený, ztlumený
+  s „mimo filtr“.
+- **Štítek** „Ukotvené řádky (n) ×“ na začátku řady filtrů: × uvolní všechny. **Zrušit filtry** ukotvení nechá.
+- **Hranice:**
+  - nejvýš 10 řádků; položka, která by mez překročila, je vypnutá s „Ukotvit jde nejvýš 10 řádků.“;
+  - ukotvení platí pro jeden strom a jeden typ řádků v tomto okně: jiný strom nebo typ řádků je uvolní, pohled,
+    filtr ani hledání ne. Do pohledu se neukládá a pohled kvůli němu nemá **změněno**. Po zavření stromu nebo
+    obnovení stránky není;
+  - pořadí ukotvených řádků se po úpravě nemění, dokud se nezmění řazení, filtr, hledání nebo pohled;
+  - řádek, který ze stromu zmizí, se uvolní sám;
+  - jen počítač a tablet (na tabletu v panelu řádku). Telefon, ani otočený na šířku, ukotvení nemá.
+- **Ovládání:** nabídka řádku (pravé tlačítko, Shift+F10) **Ukotvit řádek** / **Ukotvit řádky (n)** / **Uvolnit
+  řádek**; štítek **Ukotvené řádky (n)** s ×.
+- **Platí od:** aplikace 3.30.0
+
+<!-- zdroj: app:354e3675 src/ui/table-view/table-pins.ts PIN_MAX 10, TablePins (jeden strom a typ řádků; pohled, filtr, hledání je nechají; jen paměť okna, ne v pohledu), prune, ordered (pořadí do změny řazení, filtru, hledání, pohledu; D7 a), pinRanks · table-ui.ts tableRowPinEntry (ne isPhoneBar; many z tableAreaRowKeys, unpin, disabled + limit), tablePinnedLines (podřádky svazků jako v těle, D5 a; outside), showTableRowSheet (tablet), changeTablePins · table-grid.ts .tv-pinrows (role rowgroup, nejvýš třetina těla s vlastním posuvem), tv-outside · table-filterbar.ts štítek pinRow.chip s × (unpinAll; Zrušit filtry ukotvení nechá) · strings.ts table.pinRow.one, many, unpin, chip, unpinAll, zone, rowSr, limit; table.outsideFilter · e2e/table-view-pins.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K4.1–K4.4, D5, D7 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
 
 <a id="A6.8"></a>
 ## A6.8 Pohled v samostatném okně

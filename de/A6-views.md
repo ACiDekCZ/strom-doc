@@ -152,6 +152,13 @@ Standardwerte **Klein** und **Kreis** lassen die Karte wie bisher.
 - Die Karte **Normal** hat das Foto neben dem Namen. **Detailliert**, **Matrikel** und **Eigene** haben es im Kopf
   neben Namen und Jahren, die Zeilen der Angaben darunter in voller Breite; die Karte ist um das Foto höher
   (**Eigene** 70 oder 98 px und 17 px pro Zeile statt 56 px).
+- **Ab App 3.30.0:** die gewählte Größe gilt für jede Karte mit Avatar, mit Foto und ohne. Die Initialen einer
+  Karte ohne Foto haben Größe und Form des Fotos (**Normal** 48 oder 80 px, im Kopf der Karte 44 oder 72 px) und eine
+  entsprechende Schrift (17 und 29 px, im Kopf 16 und 26 px). Eine Ansicht hat größere Karten, sobald in ihr
+  mindestens eine Karte mit Avatar ist (vorher nur mit Foto); eine Platzhalterperson hat keinen Avatar. Bildexport,
+  Plakat und sein PDF zeichnen die Initialen ebenso. **Klein** sieht aus wie bisher. Der Satz unter der Einstellung:
+  „Personen ohne Foto erhalten Initialen in derselben Größe. Gilt für den Baum, Bildexport und Plakat auf diesem
+  Gerät.“
 - **Form:** **Kreis** oder **Abgerundetes Quadrat** (Rundung 12 px beim großen Foto, 5 px beim kleinen; ebenso die
   Initialen). Die Marken der Karte stehen in beiden Formen am Rand des Fotos.
 - **Export:** Bildexport, Plakat und sein PDF auf mehreren Blättern ([A7](A7-book-pages-and-export.md)) zeichnen die
@@ -166,9 +173,9 @@ Standardwerte **Klein** und **Kreis** lassen die Karte wie bisher.
   236 × 96 px“).
 - **Bedienung:** **Einstellungen** → **Personenkarte** → **Foto auf der Karte** (zwischen **Kartendetail** und der
   Vorschau): **Größe** **Klein** · **Mittel** · **Groß**; **Form** **Kreis** · **Abgerundetes Quadrat**.
-- **Gilt seit:** App 3.29.0
+- **Gilt seit:** App 3.29.0; 3.30.0: Initialen in der Größe des Fotos
 
-<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 · export: app:64ae50ca src/export-image.ts, src/renderer.ts (poster, PDF po listech; výchozí small + circle bajt po bajtu jako dřív), strings.ts cardDensity.photoScope · spec 096 P2 -->
+<!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 · export: app:64ae50ca src/export-image.ts, src/renderer.ts (poster, PDF po listech; výchozí small + circle bajt po bajtu jako dřív), strings.ts cardDensity.photoScope · spec 096 P2 · 3.30.0: app:0bed2a88 src/types.ts NORMAL_PHOTO_BOX (avatar = fotka i iniciály), src/renderer.ts viewHasAvatar (dřív viewHasPhoto), src/card-width.ts normalCardTextWidth (126 px u každého avataru), avatarInitialsSize (avatar × 0,36: 17/29, 16/26), src/export-image.ts getPosterCardPhoto (každá karta s avatarem), strings.ts cardDensity.photoScope · e2e/card-photo.spec.ts, poster-card-photo.spec.ts · CHANGELOG.cs.md 3.30.0 „Fotka na kartě“ · spec 103 K2.1–K2.3 · dirigent:test/vysledek-1116-app-103-tabulka.md -->
 
 <a id="A6.2"></a>
 ## A6.2 Ansicht Nachkommen
@@ -564,7 +571,9 @@ Tabelle von Ondřej Chrpa.
     nicht.“ Ansehen, Filter, Sortierung und CSV- und XLSX-Export funktionieren; eine Ansicht lässt sich weder
     speichern noch umbenennen noch löschen;
   - die Pfeile **↩ ↪** unten links (die vorige und die nächste zentrale Person) und Alt+← / Alt+→ gibt es in der
-    Tabelle nicht: die Tabelle zeigt die zentrale Person nicht und ändert sie bei der Arbeit nicht.
+    Tabelle nicht: die Tabelle zeigt die zentrale Person nicht und ändert sie bei der Arbeit nicht;
+  - **ab App 3.30.0** führen Alt+← / Alt+→ in der Tabelle zurück und vor durch die Sprünge über Namen von Personen
+    ([A6.7.16](#A6.7.16)); die zentrale Person ändern sie auch so nicht.
 - **Bedienung:** in der Leiste der Ansichten **Tabelle** (nach **Karte**); auf Telefon, Tablet und im Fenster bis
   1024 px **Tabelle** in der unteren Leiste ([A9.5](A9-using-the-app.md#A9.5); bis App 3.27.0 **Mehr → Ansicht → Tabelle**). Die Ansicht wird wie die anderen gespeichert ([A6.1.1](#A6.1.1)).
 - **Gilt seit:** App 3.27.0
@@ -774,8 +783,28 @@ Der Filter wählt die Zeilen aus, die Suche engt sie weiter ein, die Sortierung 
   Reihenfolge des Schlüssels. Leere Werte stehen immer am Ende, in beiden Richtungen. Zahlen im Text werden als Zahlen
   sortiert.
 - **Grenzen:** die Suche wird nicht in der Ansicht gespeichert ([A6.7.7](#A6.7.7)).
+- **Ab App 3.30.0:**
+  - Ausschlüsse summieren sich: jedes **Ohne „{Wert}“** aus dem Zellenmenü ([A6.7.15](#A6.7.15)) ist ein eigener
+    Chip „{Spalte} ≠ {Wert} ×“ neben dem Hauptfilter der Spalte, in derselben und in einer anderen Spalte. × hebt nur
+    seinen Chip auf, **Filter aufheben** alle. Das Formular eines Chips bearbeitet nur diesen Chip, das Formular im
+    Spaltenkopf den Hauptfilter der Spalte;
+  - ein zweites **Nur „{Wert}“** in einer Spalte fügt den Wert hinzu: „Vater = A oder B“ (ab vier Werten „A, B +2“),
+    eine Zeile passt mit jedem davon. **Ohne** zu einem solchen Wert nimmt ihn wieder weg (beim letzten wird daraus
+    ein Ausschluss), **Nur** zu einem ausgeschlossenen Wert hebt den Ausschluss auf. In einer Spalte mit Werten aus
+    einer Liste werden die gewählten Werte ebenso hinzugefügt und weggenommen;
+  - der Chip „= …“ (und der Spaltenkopf, solange sein Filter **ist** lautet) hat statt eines Textfelds die Werte der
+    Spalte zum Ankreuzen: oben die angekreuzten, darunter die übrigen in der Reihenfolge der Spalte, jeder einmal
+    (dieselbe Person, sonst derselbe Text ohne Rücksicht auf Groß- und Kleinschreibung und diakritische Zeichen). Ein
+    angekreuzter Wert kommt hinzu, ein abgewählter verschwindet, und mit dem letzten verschwindet der Chip.
+    **enthält**, **beginnt mit** oder **ist nicht** bringt das Textfeld mit dem ersten angekreuzten Wert zurück. Auf
+    dem Telefon haben die Zeilen der Liste 48 px;
+  - eine Person, deren Namen im Stammbaum auch eine andere Person zeigt, hat im Chip, in der Werteliste und in der
+    Übersicht der Filter das Geburtsjahr: „Jan Horák (* 1850)“. Die übrigen Werte bleiben unverändert;
+  - die Ansicht speichert die Chips ([A6.7.7](#A6.7.7)), eine früher gespeicherte Ansicht öffnet sich unverändert,
+    und die Datenversion bleibt. Eine ältere App wendet alle Ausschlüsse an und von „A oder B“ nur den ersten Wert;
+  - viele Chips werden mit „…“ gekürzt, **Filter aufheben** bleibt in der Zeile.
 
-<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 · je / není: strings.ts table.matchEquals, matchNotEquals (commit 05d9a9ab, T54 F4) -->
+<!-- zdroj: app:src/ui/table-view/table-filter.ts CHIP_ORDER, setChip (Žijící × Zemřelí), personPassesChip (finding: chyba nebo k ověření; unusual; unconfirmed jen researchTree, relN/relB/relD), CHECK_CHIPS, rodChoices, generationSpan, filterKindOf, cellPasses, foldText · table-filterbar.ts SEARCH_DELAY_MS, columnFilterForm, chipChoiceForm · table-state.ts řazení (vzestupně → sestupně → vypnuto; Shift přidá, otočí, odebere; prázdné na konci; Intl.Collator numeric) · strings.ts table.chip.*, chipRod, chipGen, moreN, filters, clearFilters, search, matches, noMatch, checksWait, matchContains, matchStarts, rangeFrom, rangeTo, rangeYears, onlyEmpty, onlyFilled · commity dd1d74bc, e64b8b06, fc746037 · je / není: strings.ts table.matchEquals, matchNotEquals (commit 05d9a9ab, T54 F4) · 3.30.0: app:ec39d469 table-filter.ts isExclusionItem, addWithoutFilter, addOnlyFilter (or, picked), removeColumnItemAt, mainItemIndex, setColumnFilter(at), equalValues · strings.ts joinOr (od 4 hodnot „A, B +2“), table.filterOr · app:8891a860 table-filter.ts columnEqualValues, equalChoices, equalsOf, equalValueLabel, namesakes, table.nameBorn (nar.), table-filterbar.ts (.tv-ff-values, 48 px na telefonu) · CHANGELOG.cs.md 3.30.0 „Filtry Tabulky“ · spec 103 K1.1–K1.5 · dirigent:test/vysledek-1116-app-103-tabulka.md, vysledek-1116-app-103-odkazy-083-razeni.md -->
 
 <a id="A6.7.7"></a>
 ### A6.7.7 Tabellenansichten
@@ -939,6 +968,9 @@ war.
   ersetzt den vorigen Filter nach Beteiligten. Eine Person des Stammbaums wird nach der Person gesucht, ein
   geschriebener Name nach den Buchstaben ohne Rücksicht auf Groß- und Kleinschreibung, diakritische Zeichen und
   Leerzeichen.
+  **Ab App 3.30.0** beginnt das Menü (auch das Panel von unten auf dem Telefon und einem Touch-Gerät) eines
+  Beteiligten, der eine Person des Stammbaums ist, mit dem Eintrag **Zu {Name} wechseln**: ein Sprung zu seiner Zeile
+  in der Personentabelle ([A6.7.16](#A6.7.16)). Die Namen in der Spalte **Person oder Paar** bleiben, wie sie waren.
 - **Ein Pate, der immer wieder auftaucht** ([A5.5](A5-tree-check.md#A5.5)), steht in der Zelle des Beteiligten als
   **Spur**.
 - **Bedienung:** die vorgegebene Ansicht **Alle Ereignisse**; die Zeilenaktionen ([A6.7.8](#A6.7.8)) betreffen die
@@ -947,9 +979,9 @@ war.
   eines Paares dessen Dialog, bei Heirat und Scheidung die Beziehungen der Person in dieser Verbindung.
 - **Grenzen:** Platzhalterpersonen haben keine Zeilen; Geburt und Tod ohne erfasste Angabe haben keine Zeile.
 - **Gilt seit:** App 3.27.0; 3.28.0: eine Volkszählung bei einer Person ist ein gemeinsames Ereignis, ein
-  gemeinsames Ereignis ist eine Zeile
+  gemeinsames Ereignis ist eine Zeile; 3.30.0: **Zu … wechseln** im Menü eines Beteiligten
 
-<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES (od 3.28.0 i census, app:34b2174c), shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · 3.28.0: app:80c2ffb9 table-events.ts (shareId → jeden řádek, bez shareId odhad podle shareKey), strings.ts table agePerPerson, sharedDiffers, events.sharedCellChanged · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 -->
+<!-- zdroj: app:src/ui/table-view/table-events.ts buildEventRows (narození/úmrtí jen se zapsaným údajem, weddingRow: manželství vždy kromě marriageUnrecorded, partnersStart jen se zápisem; divorceRow), SHARED_TYPES (od 3.28.0 i census, app:34b2174c), shareKey (typ, vlastní název, datum, místo, adresa, poznámka, prameny; datum a místo nebo pramen), mergeParticipants, eventEditTarget, MARRIAGE_COUPLE_TYPES · table-columns.ts EVENT_COLUMNS, eventPersons (pokrevní první), eventAgeCell, eventAge (dny < 366), eventValueCell, eventSourceCell, eventPill, DEFAULT_VIEWS.events · table-filter.ts EVENT_CHIP_ORDER, EVENT_KIND_CHIPS, lifeCategory, participantChip, eventHasParticipant (foldName), setParticipantFilter · table-ui.ts tableNameAction, tableRowAction (event → editTableEvent) · table-checks.ts PARTICIPANT_ROLE, recurring (recurringGodparent v buňkách účastníků) · 3.28.0: app:80c2ffb9 table-events.ts (shareId → jeden řádek, bez shareId odhad podle shareKey), strings.ts table agePerPerson, sharedDiffers, events.sharedCellChanged · strings.ts table.rows.events, group.event, participants, source, col.ev*, godparents, witnesses, officiants, others, chip.ev*, chipParticipant.*, filterParticipant.*, evKind.*, ageDays, viewName.events · commity 8de751c2, 63ed9def · spec 073 §14.1 · dirigent:prace/1110-app-tabulka-p2 · 3.30.0: app:0b833e3d table-ui.ts tableNameAction (goTo první, i v listu isPhoneBar | isCoarsePointer; jména Osoba nebo pár beze změny), strings.ts table.link.goTo · spec 103 rozhodnutí D6 c -->
 
 <a id="A6.7.11"></a>
 ### A6.7.11 Quellen in Zeilen
@@ -1218,6 +1250,10 @@ Tabelle bearbeiten.
     Vollständigkeit, Zahl der Verbindungen) bietet nur **Kopieren**; der eigene Name oder Titel der Zeile hat nur die
     Zeilenaktionen.
   - Der Filter wird mit der Ansicht gespeichert ([A6.7.7](#A6.7.7)).
+  - **Ab App 3.30.0:** **Ohne** fügt einen weiteren Ausschluss neben den früheren hinzu, und ein zweites **Nur** in
+    einer Spalte fügt seinen Wert hinzu („= A oder B“), statt den Filter der Spalte zu ersetzen ([A6.7.6](#A6.7.6)).
+    Eine Zelle mit dem Namen einer Person ist ein Link zu ihrer Zeile ([A6.7.16](#A6.7.16)); das Zeilenmenü hat
+    zusätzlich **Zeile anheften** ([A6.7.17](#A6.7.17)).
 - **Bearbeiten an Ort und Stelle:** bearbeiten lässt sich eine Zelle, die für eine Angabe des Stammbaums steht:
   - **Vorname**, **Nachname** (zeigt er den Ehenamen, wird dieser bearbeitet), **Geburtsname**, **Ehename**;
   - **Geschlecht** durch Auswahl (**Männlich**, **Weiblich**, **Unbekannt**) und **Ref.-Nummer**;
@@ -1255,7 +1291,87 @@ Tabelle bearbeiten.
   Maus einen Textcursor.
 - **Gilt seit:** App 3.27.0
 
-<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) · pole v buňce: table-grid.ts EDITOR_MIN_WIDTH (text 100, date 100, place 140, select 90), placeEditor, commit 80c2ffb9 · panel klepnutím: commit ee38c7a6 -->
+<!-- zdroj: app:src/ui/table-view/table-grid.ts copyKey (Ctrl/Cmd+C, copyPlainText), F2, Enter (has-issue → onIssue, has-finds → onFindings, jinak startEditAt, jinak open), Escape, Tab · table-ui.ts showTableRowMenu (cellPart, cell-edit „Upravit buňku“ s F2), tableCellChoices, tableCellSheetBlocks, :1663 úprava na místě ne v jen ke čtení, archivu, na telefonu (isPhoneBar) · table-edit.ts editTargetOf, PERSON_FIELDS (surname: marriedSurname || lastName, birthSurname, marriedSurname, bDate…burPlace, occ), UNION_FIELDS (wDate, wPlace), editChangeOf (normalizeDateInput, první křest a pohřeb, prázdné pole smaže jen údaj, beze jména neuloží) · strings.ts table.cell.copy, only, without, edit, badDate, nameNeeded, editLabel, onlyEmpty, onlyFilled, matchEquals, matchNotEquals, savedToast · commity 05d9a9ab, be9ca8cd, 28aabdc8 · spec 073 U9 (T54 F4, F8, F9) · T54 2. kolo: table-edit.ts PERSON_FIELDS (firstName, gender, refn, dCause, dAgeRec), UNION_FIELDS (wAgeRec, pAgeRec, rec1, rec2, divDate, divPlace, uStatus), WEDDING_FIELDS (ne u unionWithoutWedding), editOptionsOf (GENDERS, UNION_STATUSES v pořadí formuláře svazku), table-grid.ts select (klik myší uloží hned), commity 8fdf52ca, 79764eba (T54 G3, G10) · nabídka u buňky jiného řádku: commit 400ccda8 (T54 G7) · pole v buňce: table-grid.ts EDITOR_MIN_WIDTH (text 100, date 100, place 140, select 90), placeEditor, commit 80c2ffb9 · panel klepnutím: commit ee38c7a6 · 3.30.0: app:ec39d469 table-ui.ts tableCellChoices (addOnlyFilter, addWithoutFilter) -->
+
+<a id="A6.7.16"></a>
+### A6.7.16 Links zu Personen und Sprünge ‹ ›
+
+In der Personen- und der Verbindungstabelle ist der Name einer Person des Stammbaums in einer Zelle ein Link zu ihrer
+Zeile. So führt der Weg von Vater, Mutter, Partner, Pate oder Zeuge ohne Suchen zu deren Zeile und zurück.
+
+- **Wo:** Zellen der Personen- und der Verbindungstabelle, die eine Person des Stammbaums nennen: **Vater**,
+  **Mutter**, **Partner**, Paten, Zeugen, Partner der Verbindung. Der eigene Name der Zeile (**Vollständiger Name**)
+  ist kein Link. Der Name sieht aus wie der Text der Zelle und wird nur unter dem Mauszeiger unterstrichen; der
+  Tooltip zeigt den vollständigen Namen. Mehrere Namen in einer Zelle haben jeder einen eigenen Link.
+- **Sprung:** führt immer in die Personentabelle (auch aus der Verbindungstabelle). Die Zeile der Person steht in der
+  Mitte, die Spalte rollt ins Blickfeld, die Zelle ist aktiv, und die Zeile blinkt kurz. Die Zielzelle:
+  - über einen Partner die Zelle **Partner** in der Zeile dieser Verbindung (die Verbindung klappt auf); in ihr ist
+    der Name markiert, von dem der Sprung kam, solange die Zelle aktiv ist;
+  - sonst die Zelle **Vollständiger Name**; auch wenn die Spalte **Partner** nicht sichtbar ist.
+- **‹ ›:** am Anfang der Leiste der Tabelle ab dem ersten Sprung. ‹ bringt Zeilenart, Bildlaufposition und Zelle
+  zurück, von denen der Sprung ausging, und klappt die Verbindung zu, die der Sprung aufgeklappt hat; › wiederholt den
+  Sprung. Der Tooltip sagt, wohin („Zurück zu Jan Horák“, „Weiter zu Marie Vlková“); ohne Schritt in diese Richtung
+  ist die Schaltfläche ausgeschaltet. Schritte sind nur Sprünge über Namen, keine Änderung von Zeilenart, Ansicht oder
+  Filter von Hand. Der Speicher fasst 50 Schritte, und jedes Fenster ([A6.8](#A6.8)) hat seinen eigenen; ein anderer
+  Stammbaum beginnt ihn neu.
+- **Eine von Filter oder Suche ausgeblendete Person:** der Sprung wird nicht ausgeführt, und unter der Leiste
+  erscheint der Streifen „Vom Filter ausgeblendet: {Name}.“:
+  - **Vorübergehend zeigen** zeigt die Zeile an ihrem Platz in der Sortierung, gedämpft mit „außerhalb des
+    Filters“, außerhalb der Zeilenzahl. Sie verschwindet mit einer Änderung von Filter, Sortierung, Ansicht oder
+    Zeilenart und mit ‹;
+  - **Filter aufheben** schaltet Filter und Suche aus und führt den Sprung aus;
+  - × oder Esc schließt den Streifen, nichts ändert sich.
+- **Ereignisse:** in der Ereignistabelle sind Namen keine Links; das Menü eines Beteiligten beginnt mit **Zu {Name}
+  wechseln** ([A6.7.10](#A6.7.10)).
+- **Grenzen:**
+  - einen Sprung löst nur ein einfacher Klick mit Maus oder Stift aus (ohne Strg, Umschalt, Alt und ohne Ziehen).
+    Textauswahl, Bearbeiten der Zelle per Doppelklick anderswo in der Zelle und F2 funktionieren wie bisher; ein
+    Doppelklick direkt nach einem Sprung bewirkt nichts;
+  - Tippen mit dem Finger öffnet wie bisher das Panel der Zeile; es beginnt mit dem Abschnitt **Personen in der
+    Zelle** mit einer Zeile **Zu {Name} wechseln** für jede Person der Zelle;
+  - die zentrale Person des Stammbaums ändert sich durch einen Sprung nicht.
+- **Bedienung:** Klick auf den Namen; **Enter** auf der aktiven Zelle springt bei einem Namen, bei mehreren Namen
+  bietet es **Wechseln zu…** an; ‹ › in der Leiste und Alt+← / Alt+→ in der Tabelle.
+- **Gilt seit:** App 3.30.0
+
+<!-- zdroj: app:0b833e3d src/ui/table-view/table-grid.ts personLinks (osoba bez role účastníka, ne agregát), namesHtml (tv-nm--jump, title celé jméno), linksIn (ne sloupec name), klik jen isMouseLikePointer bez modifikátorů a e.detail 1, jumpedAt + JUMP_DOUBLE_MS (dvojklik po skoku nic), Enter (tableLinkPick), Alt+←/→ onHistory · table-ui.ts tableNameAction (persons, unions), tableJumpStep (přes p1/p2 nebo partner → via partner), tableJumpBy, tablePersonShown, tableRunJump (rowType persons, setExpanded, flash, jumpTo), tableHistory (rowType, scroll, buňka, zavře rozbalený svazek, ruší dočasné zobrazení), tableLinkPick, showTableRowSheet (link.inCell) · table-jump.ts JUMP_HISTORY_MAX 50, JumpHistory, jumpTargetCell (partner jen je-li sloupec vidět, jinak name) · table-notice.ts (role status, Zobrazit dočasně, Zrušit filtry, ×, Esc) · table-bar.ts updateNav (vidět od prvního skoku, aria-disabled) · strings.ts table.link.goTo, pick, inCell, enterHint, hidden, showTemp; table.nav.back, backTo, forward, forwardTo; table.outsideFilter · e2e/table-view-links.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K3.1–K3.3, ZADANI_DEV_tabulka-odkazy-ukotveni D1–D4, D6 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
+
+<a id="A6.7.17"></a>
+### A6.7.17 Angeheftete Zeilen
+
+Eine angeheftete Zeile bleibt unter dem Tabellenkopf, während die Tabelle rollt. Sie dient zum Vergleich von Zeilen,
+die in der Tabelle weit voneinander entfernt sind.
+
+- **Wie eine Zeile angeheftet wird:** Zeilenmenü → **Zeile anheften** (nach **Bearbeiten…**). Über mehrere Zeilen
+  ausgewählter Text (durch Ziehen oder Umschalt+Klick) und ein Rechtsklick hinein bieten **Zeilen anheften (n)** für
+  die Personen dieser Zeilen an; eine Unterzeile einer Verbindung zählt als ihre Person. Auf einer angehefteten Zeile
+  steht dort stattdessen **Zeile lösen**.
+- **Wie sie aussehen:** unter dem Tabellenkopf in der Reihenfolge der Tabelle, eine Person samt den Unterzeilen ihrer
+  Verbindungen wie im Körper der Tabelle. Der Name einer angehefteten Zeile hat eine gefüllte Stecknadel, ihre eigene
+  Zeile im Körper der Tabelle eine umrissene. Sie nehmen höchstens ein Drittel der Höhe der Tabelle ein, mehr Zeilen
+  rollen in einer eigenen Bildlaufleiste. Aktive Zelle, Bearbeiten in der Zelle, Tastatur und Zeilenaktionen
+  funktionieren in ihnen.
+- **Der Filter blendet eine angeheftete Zeile nicht aus:** eine Zeile, die Filter oder Suche ausblenden, bleibt
+  angeheftet, gedämpft mit „außerhalb des Filters“.
+- **Der Chip** „Angeheftete Zeilen (n) ×“ am Anfang der Reihe der Filter: × löst alle. **Filter aufheben** lässt die
+  Anheftung.
+- **Grenzen:**
+  - höchstens 10 Zeilen; ein Eintrag, der die Grenze überschreiten würde, ist ausgeschaltet mit „Höchstens 10 Zeilen
+    lassen sich anheften.“;
+  - die Anheftung gilt für einen Stammbaum und eine Zeilenart in diesem Fenster: ein anderer Stammbaum oder eine
+    andere Zeilenart löst sie, Ansicht, Filter und Suche nicht. Sie wird nicht in der Ansicht gespeichert, und die
+    Ansicht hat ihretwegen nicht **geändert**. Nach dem Schließen des Stammbaums oder dem Neuladen der Seite ist sie
+    weg;
+  - die Reihenfolge der angehefteten Zeilen ändert sich nach einer Bearbeitung nicht, bis sich Sortierung, Filter,
+    Suche oder Ansicht ändern;
+  - eine Zeile, die aus dem Stammbaum verschwindet, wird von selbst gelöst;
+  - nur Computer und Tablet (auf dem Tablet im Panel der Zeile). Das Telefon hat keine Anheftung, auch nicht im
+    Querformat.
+- **Bedienung:** Zeilenmenü (rechte Maustaste, Umschalt+F10) **Zeile anheften** / **Zeilen anheften (n)** / **Zeile
+  lösen**; Chip **Angeheftete Zeilen (n)** mit ×.
+- **Gilt seit:** App 3.30.0
+
+<!-- zdroj: app:354e3675 src/ui/table-view/table-pins.ts PIN_MAX 10, TablePins (jeden strom a typ řádků; pohled, filtr, hledání je nechají; jen paměť okna, ne v pohledu), prune, ordered (pořadí do změny řazení, filtru, hledání, pohledu; D7 a), pinRanks · table-ui.ts tableRowPinEntry (ne isPhoneBar; many z tableAreaRowKeys, unpin, disabled + limit), tablePinnedLines (podřádky svazků jako v těle, D5 a; outside), showTableRowSheet (tablet), changeTablePins · table-grid.ts .tv-pinrows (role rowgroup, nejvýš třetina těla s vlastním posuvem), tv-outside · table-filterbar.ts štítek pinRow.chip s × (unpinAll; Zrušit filtry ukotvení nechá) · strings.ts table.pinRow.one, many, unpin, chip, unpinAll, zone, rowSr, limit; table.outsideFilter · e2e/table-view-pins.spec.ts · CHANGELOG.cs.md 3.30.0 „Odkazy v Tabulce“ · spec 103 K4.1–K4.4, D5, D7 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
 
 <a id="A6.8"></a>
 ## A6.8 Ansicht in einem eigenen Fenster

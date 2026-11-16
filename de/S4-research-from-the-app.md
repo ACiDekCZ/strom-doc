@@ -54,7 +54,8 @@ zeigen, sendet die Forschung über die Brücke.
   - In der Zeile einer Richtung im Abschnitt **Richtungen** steht bei der Arbeit nur „wird bearbeitet“, wenn der
     Abschnitt **Jetzt** sichtbar ist (aufgeklappt oder eingeklappt); das ganze „Jetzt: …“ steht im Text beim
     Überfahren mit der Maus. Bei ausgeblendetem **Jetzt** sagt die Zeile „Jetzt: …“ ganz.
-- **Ab App 3.28.0:** am Computer öffnet sich die Übersicht auch in einem eigenen Fenster ([S4.1.6](#S4.1.6)).
+- **Ab App 3.28.0:** am Computer öffnet sich die Übersicht auch in einem eigenen Fenster ([S4.1.6](#S4.1.6)). Ab App
+  3.30.0 hat das kleine Panel neben diesem Fenster nur den Kopf und **In Arbeit**.
 - **Ab App 3.28.0:** das kleine Panel merkt sich auf diesem Gerät, ob es eingeklappt ist: eine Wahl für alle
   Forschungen, standardmäßig ausgeklappt. Neuladen der Seite, neues Verfolgen und das Panel einer anderen Forschung
   übernehmen sie; schreiben kann sie nur der Pfeil des Panels. Eine offene Übersicht klappt das Panel hinter sich
@@ -314,11 +315,26 @@ das Hauptfenster aus. Mit der Brücke der Forschung spricht das Fenster nicht.
   **Forschung → Forschungsübersicht** und der Eintrag im Menü ⧉ holen dann nur das Fenster der Übersicht nach vorne
   („Die Forschungsübersicht ist in einem eigenen Fenster · Klick holt sie nach vorne“). Nach dem Schließen des
   Fensters ist alles wie vorher.
+- **Ab App 3.30.0:** solange das Fenster der Übersicht offen ist, zeigt das kleine Panel im Hauptfenster am Computer
+  (Fenster breiter als 1024 px) nur den Kopf und **In Arbeit**. **Wartet auf Bearbeitung**, **Letzte Änderungen**
+  und **Als Nächstes** sind im Fenster der Übersicht.
+  - **In Arbeit** ist immer aufgeklappt, auch wenn es in **Panel anpassen** ([S4.1.2](#S4.1.2)) eingeklappt oder
+    ausgeblendet ist; die Wahl bleibt erhalten und gilt nach dem Schließen des Fensters wieder. Arbeitet der Agent
+    nicht, steht dort „Gerade wird nicht gearbeitet“;
+  - die Marke **Wartet N** im Kopf, die Marken wartender Einträge und neuer Änderungen in der Zusammenfassung des
+    eingeklappten Panels und „Alle Bereiche sind ausgeblendet.“ gibt es dann nicht. Die Streifen unter dem Kopf
+    (etwa **Folgen in**) und die Zahl der Sitzungen unter dem Panel bleiben;
+  - das Panel klappt sich nicht von selbst zu; passt **In Arbeit** nicht hinein, scrollt es;
+  - nach dem Schließen des Fensters der Übersicht ist das Panel ganz, und die Abschnitte sind ein- und aufgeklappt
+    wie vorher. Wird das Fenster auf 1024 px und weniger verschmälert, ist das Panel ganz, nach dem Verbreitern
+    wieder nur **In Arbeit**;
+  - **⤢** im Panel holt das Fenster der Übersicht nach vorne;
+  - Telefon, Tablet, beendetes Verfolgen und ein Panel ohne Verfolgen bleiben unverändert.
 - **Bedienung:** App: ⧉ im Kopf der Übersicht (zwischen ⋯ und ⤡); ⧉ **In neuem Fenster öffnen** neben dem
   Ansichtsumschalter → **Forschungsübersicht**.
-- **Gilt seit:** App 3.28.0
+- **Gilt seit:** App 3.28.0; 3.30.0: das kleine Panel neben dem Fenster nur mit **In Arbeit**
 
-<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) · app:3c2fde77 src/ui/overview-window-view.ts readQueuePage přes akci queue-list do hlavního okna (okno most nevolá) · app:3f9a5ca4 overview-window-view.ts treeVerifyNow (extras.verify), verifyStop → verify-stop, showVerifyBulkDialog → verify-bulk; evidenceHighlightNow (extras.highlight), endEvidenceHighlight → highlight-end, startPersonHighlight quiet · src/ui/research-ui.ts lightsGroup, markOverviewLit (is-lit, aria-current; nic při zavřeném hlavním okně) · research-overview-ui.ts lightsGroup direction (show-in-tree v Teď), changed (showChanged) · research-directions-ui.ts lightsGroup direction (dirShow), direction-found (dirFoundPersons) · strings.ts verify.section, bulkRow, stop, live.showInTree, dirShow, showChanged · spec 079 K3 · prace/1113-app-dorovnani-052-okna (2876d570..27f0bafb) · app:7f307c74 src/overview-columns.ts OVERVIEW_WINDOW_COLS_2 1100, OVERVIEW_WINDOW_COLS_3 1600, OVERVIEW_COLS_HYSTERESIS 24, OVERVIEW_SMALL_COLUMN 0.2, OVERVIEW_COLUMN_MAX 660, partitionContiguous, planOverviewColumns · src/ui/overview-columns-ui.ts (souhrn a pruhy nad sloupci, každý sloupec se posouvá sám, nové rozdělení jen při změně sloupců, sbalení, skrytí, přesunu, Načíst další; lepkavá hlava: pole nebo > 8 řádků; fokus, výběr v poli a oddíl na očích při změně šířky) · e2e/windows-overview-columns.spec.ts · CHANGELOG.cs.md 3.28.0 (e540e4b5) · spec 083 U3 · prace/1113-app-hledani-v-prehledu -->
+<!-- zdroj: app:4b1373a7 src/windows/overview-window.ts (research-state bez adresy a tokenu mostu, OVERVIEW_ACTION_IDS, OVERVIEW_ACTIONS_TO_MAIN, 6g) · src/windows/overview-main.ts · src/ui/research-overview-ui.ts OVERVIEW_WINDOW_COLS_MIN 1100, WINDOW_LEFT (working, waiting, directions), overviewMode 'window', overviewWindowButton (jen canOpenWindows, ne sheet), canOpenResearchOverview · index.html html.window-overview (bez ⤡, ×, ⧉, Follow in) · src/windows/window-controls.ts renderMenu (overview: focusOverviewWindow / openInNewWindow) · strings.ts win.overviewHead, overviewOffNote, noResearch, noResearchNote, overviewInWindow, mainClosed · CHANGELOG.cs.md 3.28.0 · spec 079 P3 (K3), ZADANI_DEV §6 · prace/1113-app-okna-prehled (8a7575f0..4387a662) · app:3c2fde77 src/ui/overview-window-view.ts readQueuePage přes akci queue-list do hlavního okna (okno most nevolá) · app:3f9a5ca4 overview-window-view.ts treeVerifyNow (extras.verify), verifyStop → verify-stop, showVerifyBulkDialog → verify-bulk; evidenceHighlightNow (extras.highlight), endEvidenceHighlight → highlight-end, startPersonHighlight quiet · src/ui/research-ui.ts lightsGroup, markOverviewLit (is-lit, aria-current; nic při zavřeném hlavním okně) · research-overview-ui.ts lightsGroup direction (show-in-tree v Teď), changed (showChanged) · research-directions-ui.ts lightsGroup direction (dirShow), direction-found (dirFoundPersons) · strings.ts verify.section, bulkRow, stop, live.showInTree, dirShow, showChanged · spec 079 K3 · prace/1113-app-dorovnani-052-okna (2876d570..27f0bafb) · app:7f307c74 src/overview-columns.ts OVERVIEW_WINDOW_COLS_2 1100, OVERVIEW_WINDOW_COLS_3 1600, OVERVIEW_COLS_HYSTERESIS 24, OVERVIEW_SMALL_COLUMN 0.2, OVERVIEW_COLUMN_MAX 660, partitionContiguous, planOverviewColumns · src/ui/overview-columns-ui.ts (souhrn a pruhy nad sloupci, každý sloupec se posouvá sám, nové rozdělení jen při změně sloupců, sbalení, skrytí, přesunu, Načíst další; lepkavá hlava: pole nebo > 8 řádků; fokus, výběr v poli a oddíl na očích při změně šířky) · e2e/windows-overview-columns.spec.ts · CHANGELOG.cs.md 3.28.0 (e540e4b5) · spec 083 U3 · prace/1113-app-hledani-v-prehledu · 3.30.0: app:965e83f8 src/ui/live-panel-working-only.ts livePanelWorkingOnly (okno Přehledu, isDesktop > 1024 px, ne ukončené), livePanelDrawnSections (jen working), livePanelNothingAtWork · src/ui/research-ui.ts (třída working-only, bez štítků waiting a nových změn, bez samoskládání; overviewWindowOpenChanged, placeLivePanel při přechodu 1024 px; openResearchOverview → focusOverviewWindow) · strings.ts live.nothingAtWork · e2e/windows-overview-panel.spec.ts · CHANGELOG.cs.md 3.30.0 „Panel výzkumu vedle okna Přehledu“ · spec 079 U9 (rozhodnutí 27, 16. 11.) · dirigent:test/vysledek-1116-app-079-panel.md -->
 
 <a id="S4.2"></a>
 ## S4.2 Warteschlange in der App
@@ -626,6 +642,8 @@ erledigen lässt und was nur in der Forschung, sagt [R6.5](R6-awaiting-action.md
   seit App 3.26.0. Hypothesen seit App 3.27.0 mit Forschung 1.31.0. Mehrere Marken auf dem Kärtchen seit App 3.27.0
   ([S4.4.1](#S4.4.1)).
 - **Ab App 3.28.0:** in der **Forschungsübersicht** hat der Abschnitt ab 10 Einträgen ein Suchfeld ([S4.4.2](#S4.4.2)).
+- **Ab App 3.30.0:** in der **Forschungsübersicht** lässt sich der Abschnitt von den neuesten oder den ältesten
+  Einträgen an ordnen ([S4.4.3](#S4.4.3)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
@@ -716,6 +734,47 @@ gesagt hat, [S4.1.5](#S4.1.5)), und im Fenster der Übersicht ([S4.1.6](#S4.1.6)
 - **Gilt seit:** App 3.28.0
 
 <!-- zdroj: app:8cbada1c src/section-search-match.ts foldSearch2 (ß ł đ ø æ œ), tokenize (mezera, čárka, středník; p/t/h + číslo, samotné číslo), matchDoc (každé slovo; n: úkol, hypotéza, text), textMatches (≥ 5 znaků bez posledního na začátku slova), fieldVisible (≥ 10 nebo text) · src/ui/section-search.ts (×, Escape: nejdřív hledání, prázdné pole zavře Přehled; ↓; searchOpen se vymaže s textem; zavření Přehledu text zahodí) · app:9ebf7f2c src/section-search-filter.ts searchSection, chipCount, sectionPartOpen, toggleSectionPart, sheetOverKeyboard · src/ui/section-search-view.ts mountSectionSearch, paintSearchChip (čárkovaný), appendSearchOutcome (sectionSearchFound, queueSearchNone, sectionSearchNoneKind + sectionSearchAllKinds, queueSearchCancel), searchHitTag, searchSummaryEl (lupa a text), bindSheetSearch, keepSheetOverKeyboard · src/ui/research-overview-ui.ts appendOverviewWaiting (pole jen v rozbaleném oddílu, starší výzkum bez skupin), waitingSearchDoc (what, on, osoby, person, partner, task, hypo, group.name / otázky k místům, host, to), overviewWaitingRow (hit t, p) · app:cd0030b0 src/ui/hypothesis-waiting-ui.ts hypothesisAcceptHeadEl (bulkSelectFound), hypothesisAcceptFootEl (bulkSelectedHidden, bulkDeselectHidden), hwr-id hit h · strings.ts live.waitingSearchPlaceholder, waitingSearchAria, sectionSearchFound, sectionSearchNoneKind, sectionSearchAllKinds, bulkSelectFound, bulkSelectedHidden, bulkDeselectHidden, sectionSearchQuoted, waitingPhaseTodo, waitingPhaseSent, waitingChips · e2e/overview-waiting-search.spec.ts · CHANGELOG.cs.md 3.28.0 (e540e4b5) · spec 083 K1.1–K1.3 · prace/1113-app-hledani-v-prehledu (pole 44 px na telefonu) -->
+
+<a id="S4.4.3"></a>
+### S4.4.3 Reihenfolge in Wartet auf Bearbeitung
+
+Der Abschnitt **Wartet auf Bearbeitung** in der **Forschungsübersicht** lässt sich auch danach ordnen, seit wann ein
+Eintrag wartet. Ein neu hinzugekommener Eintrag steht dann oben und geht zwischen Orten und Gruppen nicht verloren.
+
+- **Reihenfolge:**
+  - **Empfohlen** (Standard): die Reihenfolge der Forschung nach Phasen, Orten und Richtungen wie bisher;
+  - **Neueste zuerst** und **Älteste zuerst**: nach der Zeit, seit der der Eintrag wartet, wie die Forschung sie
+    geschickt hat. Geordnet wird in jeder Phase (**Zu erledigen** und **Wartet auf Antwort**). Gleiche Zeit behält die
+    Reihenfolge der Forschung, Einträge ohne Zeit stehen in beiden Richtungen am Ende.
+- **Gruppen** (Schalter neben der Reihenfolge, nur bei einer Reihenfolge nach Zeit und bei einer Forschung mit
+  Gruppen nach Orten):
+  - eingeschaltet: geordnet wird innerhalb der Gruppen, und jeder Ort steht dort, wo sein neuester (oder ältester)
+    Eintrag steht; auch **Sonstige** und **Orte**, die bei **Empfohlen** am Ende stehen. Die Überschrift eines Orts
+    zeigt die Zeit seines ersten Eintrags;
+  - ausgeschaltet: jede Phase ist eine Liste, und jede Zeile hat ein Etikett ihres Orts (der ganze Name im Text beim
+    Überfahren mit der Maus).
+- **Zeit an der Zeile** (nur bei einer Reihenfolge nach Zeit): bis zu einer Stunde relativ („vor 25 Min.“), heute die
+  Uhrzeit („08:30“), „gestern“, in diesem Jahr der Tag („4.11.“), früher Tag und Jahr („6.10.2025“). Die Zeit
+  aktualisiert sich von selbst.
+- **Etikett „neu“** (bei jeder Reihenfolge): Einträge zu erledigen, die auf diesem Gerät noch nicht im aufgeklappten
+  Abschnitt **Wartet auf Bearbeitung** zu sehen waren (derselbe Vermerk wie bei **N neu**, [S4.1.2](#S4.1.2)). Das
+  Etikett bleibt bis zum Schließen der Übersicht; ein eingeklappter Ort sagt „neu: 2“. Ein Stammbaum, den sich auf
+  diesem Gerät noch niemand angesehen hat, hat nichts Neues.
+- **Grenzen:**
+  - die Wahl der Reihenfolge gibt es ab zwei Einträgen im Abschnitt;
+  - die Reihenfolge und der Schalter **Gruppen** werden auf diesem Gerät für alle Stammbäume gespeichert (anfangs
+    **Empfohlen**, **Gruppen** eingeschaltet); ein anderes Fenster desselben Geräts, auch das Fenster der Übersicht
+    ([S4.1.6](#S4.1.6)), passt sich an;
+  - die Reihenfolge gilt auch mit der Suche ([S4.4.2](#S4.4.2)) und den Chips der Arten. Kopf und Fußzeile der
+    Auswahl der Hypothesen betreffen bei ausgeschalteten Gruppen die Hypothesen der ganzen Phase;
+  - sie gilt in der Übersicht (als Seitenpanel und über dem Stammbaum), im Fenster der Übersicht und auf dem Telefon.
+    Das kleine Panel bleibt unverändert.
+- **Bedienung:** App: **Forschungsübersicht → Wartet auf Bearbeitung**, die Schaltfläche „⇅ Empfohlen ▾“ hinter den
+  Chips der Arten (im Fenster der Übersicht im haftenden Kopf des Abschnitts) mit dem Menü **Empfohlen** · **Neueste
+  zuerst** · **Älteste zuerst**, auf dem Telefon das Blatt **Reihenfolge**; Schalter **Gruppen**.
+- **Gilt seit:** App 3.30.0
+
+<!-- zdroj: app:f3bb5631 src/research-waiting.ts WaitingOrder, WAITING_ORDERS, waitingSince (at), sortWaitingByTime (stejný čas v pořadí výzkumu, bez času na konci), phaseRows (recommended = groupWaiting; skupiny podle první položky, Ostatní a Místa také; bez skupin FLAT_GROUP), waitingPhases (todo i sent) · src/live-time.ts formatWaitingSince (do hodiny relativně, dnes čas, včera, den, den s rokem) · src/ui/waiting-order-ui.ts WAITING_ORDER_KEY strom-live-overview-waiting-order, WAITING_GROUPS_KEY, storedWaitingOrder, watchWaitingOrderStorage (storage event), noteWaitingNew (todoWaiting, waitingSeen; strom bez záznamu nic nového), waitingSideEl, waitingGroupTagEl, ORDER_ICON · src/ui/research-overview-ui.ts overviewWaitingOrderEl (total >= 2; přepínač role switch jen v časovém pořadí a se skupinami; list na telefonu isPhoneBar / sheet) · src/ui/overview-columns-ui.ts (lepkavá hlava v okně) · src/ui/hypothesis-waiting-ui.ts (hlava a pata za fázi) · src/ui/live-section-prefs.ts waitingSeen, noteWaitingSeen · strings.ts live.waitingOrder, waitingOrderRec, waitingOrderNew, waitingOrderOld, waitingGroups, waitingNewTag, waitingNewCount, waitingSinceYesterday, waitingOtherGroup, places.waiting.group · e2e/overview-waiting-order.spec.ts · CHANGELOG.cs.md 3.30.0 „Pořadí v Čeká na vyřízení“ · spec 083 K5.1–K5.4, rozhodnutí H1–H5 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
 
 <a id="S4.5"></a>
 ## S4.5 Aktionen, die die Forschung öffnen
