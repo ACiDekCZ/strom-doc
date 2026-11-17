@@ -252,7 +252,8 @@ Manche Ansichten lassen sich als Liste speichern: nur dort, wo eine Auswahl von 
 
 Ab App 3.30.0 merkt sich der Stammbaum bei jeder Person, wann sie hinzukam. Die Angabe wird nicht von Hand bearbeitet
 und in der Personenkarte nicht gezeigt; sie nutzen die Regel **Hinzugefügt im Zeitraum**, die Sortierung **Nach
-Hinzufügen** und die Gruppierung in der Tabelle ([A6.7.20](A6-views.md#A6.7.20)).
+Hinzufügen**, die Spalte **Hinzugefügt** in der Tabelle ([A6.7.2](A6-views.md#A6.7.2)) und die Gruppierung in der
+Tabelle ([A6.7.20](A6-views.md#A6.7.20)).
 
 - **Wann sie eingetragen wird:**
   - eine neue Person in der App: der Zeitpunkt ihres Entstehens (eine Platzhalterperson erst, wenn aus ihr eine echte
@@ -261,8 +262,8 @@ Hinzufügen** und die Gruppierung in der Tabelle ([A6.7.20](A6-views.md#A6.7.20)
   - Zusammenführen von Stammbäumen: der Zeitpunkt des Zusammenführens bei den Personen, die in den Stammbaum kamen;
     eine zusammengeführte Person behält die frühere Angabe;
   - eine neue Person aus der Forschung: das Datum, das die Forschung bei ihr angibt, sonst der Zeitpunkt des Ladens.
-- Personen aus der Zeit vor 3.30.0 haben die Angabe nicht (im Detail der Liste und in den Gruppen der Tabelle
-  „früher“); nichts wird nachträglich berechnet.
+- Personen aus der Zeit vor 3.30.0 haben die Angabe nicht (im Detail der Liste, in der Spalte **Hinzugefügt** und in
+  den Gruppen der Tabelle „früher“); nichts wird nachträglich berechnet.
 - **In den letzten 30 Tagen hinzugefügt** ist eine vorbereitete automatische Liste jedes Stammbaums, auch eines neuen
   und eines geladenen. Der Zeitraum lässt sich ändern (**Regel bearbeiten…**); der Name ändert sich dann mit dem
   Zeitraum, bis die Liste umbenannt wird. Eine gelöschte kehrt nicht mehr zurück. Leer sagt sie „Noch nichts – das
@@ -271,7 +272,7 @@ Hinzufügen** und die Gruppierung in der Tabelle ([A6.7.20](A6-views.md#A6.7.20)
   ([A7.2](A7-book-pages-and-export.md#A7.2)).
 - **Gilt seit:** App 3.30.0
 
-<!-- zdroj: app:src/data.ts:2636 createPerson (addedAt, ne zástupná), :2847 zástupná osoba při první úpravě, :5435 mergePersons earlierAddedAt · src/ged-parser.ts:6594 stampAddedAt(origin.at) · src/merge/executor.ts:573 (mergedAt), :1962 · src/person-lists-data.ts builtinAdded30, personListsOf (i nový strom a import, personListsDropped), keepPersonListData, stampResearchTree (research.added nebo now) · src/person-lists.ts listDisplayName (jméno podle období do přejmenování) · src/ui/person-lists-ui.ts:41 ADDED_SINCE '3.30', :534 lists.earlier · src/ui/table-view/table-group.ts:238 · src/privacy.ts:373 (stripDetails žijících: delete addedAt) · strings.ts lists.builtin.added30, addedNone, earlier · ZADANI_DEV §8, Q3 · app:714a8ab2 -->
+<!-- zdroj: app:src/data.ts:2636 createPerson (addedAt, ne zástupná), :2847 zástupná osoba při první úpravě, :5435 mergePersons earlierAddedAt · src/ged-parser.ts:6594 stampAddedAt(origin.at) · src/merge/executor.ts:573 (mergedAt), :1962 · src/person-lists-data.ts builtinAdded30, personListsOf (i nový strom a import, personListsDropped), keepPersonListData, stampResearchTree (research.added nebo now) · src/person-lists.ts listDisplayName (jméno podle období do přejmenování) · src/ui/person-lists-ui.ts:41 ADDED_SINCE '3.30', :534 lists.earlier · src/ui/table-view/table-group.ts:238 · src/privacy.ts:373 (stripDetails žijících: delete addedAt) · strings.ts lists.builtin.added30, addedNone, earlier · ZADANI_DEV §8, Q3 · app:714a8ab2 · sloupec Přidáno app:0971647c (table.earlier) -->
 
 <a id="A11.8"></a>
 ## A11.8 Arbeitsliste: Erledigtes abhaken

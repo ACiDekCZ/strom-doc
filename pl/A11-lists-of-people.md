@@ -231,15 +231,16 @@ Niektóre widoki można zapisać jako listę: tylko tam, gdzie wybór osób ma s
 ## A11.7 Kiedy osoba doszła: Dodane w ostatnich 30 dniach
 
 Od aplikacji 3.30.0 drzewo przy każdej osobie pamięta, kiedy do niego doszła. Tej danej nie edytuje się ręcznie
-i karta osoby jej nie pokazuje; używa jej reguła **Dodane w okresie**, sortowanie **Według dodania** i grupowanie
-w Tabeli ([A6.7.20](A6-views.md#A6.7.20)).
+i karta osoby jej nie pokazuje; używa jej reguła **Dodane w okresie**, sortowanie **Według dodania**, kolumna
+**Dodano** w Tabeli ([A6.7.2](A6-views.md#A6.7.2)) i grupowanie w Tabeli ([A6.7.20](A6-views.md#A6.7.20)).
 
 - **Kiedy się zapisuje:**
   - nowa osoba w aplikacji: czas utworzenia (osoba zastępcza dopiero wtedy, gdy staje się z niej rzeczywista osoba);
   - wczytanie pliku GEDCOM: dzień wczytania;
   - scalenie drzew: czas scalenia przy osobach, które do drzewa doszły; scalona osoba zachowuje wcześniejszą daną;
   - nowa osoba z badania: data, którą podaje przy niej badanie, w przeciwnym razie czas wczytania.
-- Osoby sprzed 3.30.0 tej danej nie mają (w szczegółach listy i w grupach Tabeli „wcześniej”); nic się nie dolicza.
+- Osoby sprzed 3.30.0 tej danej nie mają (w szczegółach listy, w kolumnie **Dodano** i w grupach Tabeli „wcześniej”);
+  nic się nie dolicza.
 - **Dodane w ostatnich 30 dniach** to gotowa lista automatyczna każdego drzewa, także nowego i wczytanego. Okres można
   zmienić (**Edytuj regułę…**); nazwa zmienia się wtedy z okresem, dopóki nie zostanie zmieniona ręcznie. Usunięta już
   nie wraca. Pusta mówi „Na razie nic – data dodania jest zapisywana od wersji 3.30.”
@@ -247,7 +248,7 @@ w Tabeli ([A6.7.20](A6-views.md#A6.7.20)).
   ([A7.2](A7-book-pages-and-export.md#A7.2)).
 - **Obowiązuje od:** aplikacja 3.30.0
 
-<!-- zdroj: app:src/data.ts:2636 createPerson (addedAt, ne zástupná), :2847 zástupná osoba při první úpravě, :5435 mergePersons earlierAddedAt · src/ged-parser.ts:6594 stampAddedAt(origin.at) · src/merge/executor.ts:573 (mergedAt), :1962 · src/person-lists-data.ts builtinAdded30, personListsOf (i nový strom a import, personListsDropped), keepPersonListData, stampResearchTree (research.added nebo now) · src/person-lists.ts listDisplayName (jméno podle období do přejmenování) · src/ui/person-lists-ui.ts:41 ADDED_SINCE '3.30', :534 lists.earlier · src/ui/table-view/table-group.ts:238 · src/privacy.ts:373 (stripDetails žijících: delete addedAt) · strings.ts lists.builtin.added30, addedNone, earlier · ZADANI_DEV §8, Q3 · app:714a8ab2 -->
+<!-- zdroj: app:src/data.ts:2636 createPerson (addedAt, ne zástupná), :2847 zástupná osoba při první úpravě, :5435 mergePersons earlierAddedAt · src/ged-parser.ts:6594 stampAddedAt(origin.at) · src/merge/executor.ts:573 (mergedAt), :1962 · src/person-lists-data.ts builtinAdded30, personListsOf (i nový strom a import, personListsDropped), keepPersonListData, stampResearchTree (research.added nebo now) · src/person-lists.ts listDisplayName (jméno podle období do přejmenování) · src/ui/person-lists-ui.ts:41 ADDED_SINCE '3.30', :534 lists.earlier · src/ui/table-view/table-group.ts:238 · src/privacy.ts:373 (stripDetails žijících: delete addedAt) · strings.ts lists.builtin.added30, addedNone, earlier · ZADANI_DEV §8, Q3 · app:714a8ab2 · sloupec Přidáno app:0971647c (table.earlier) -->
 
 <a id="A11.8"></a>
 ## A11.8 Lista robocza: Odhaczaj gotowe

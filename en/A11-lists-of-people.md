@@ -227,8 +227,8 @@ Some views can be saved as a list: only where a choice of people makes sense.
 ## A11.7 When a person came: Added in the last 30 days
 
 From app 3.30.0 the tree remembers for each person when they came into it. The date is not edited by hand and does
-not show on the person's card; the rule **Added in a period**, the sort **By date added** and grouping in the Table
-([A6.7.20](A6-views.md#A6.7.20)) use it.
+not show on the person's card; the rule **Added in a period**, the sort **By date added**, the column **Added** in the
+Table ([A6.7.2](A6-views.md#A6.7.2)) and grouping in the Table ([A6.7.20](A6-views.md#A6.7.20)) use it.
 
 - **When it is recorded:**
   - a new person in the app: the time it is made (a placeholder person only once it becomes a real person);
@@ -236,8 +236,8 @@ not show on the person's card; the rule **Added in a period**, the sort **By dat
   - merging trees: the time of the merge for the people who came into the tree; a merged person keeps the earlier
     date;
   - a new person from the research: the date the research gives for them, otherwise the time of loading.
-- People from before 3.30.0 do not have the date (in the list's detail and in the Table's groups “earlier”); nothing
-  is worked out afterwards.
+- People from before 3.30.0 do not have the date (in the list's detail, in the column **Added** and in the Table's
+  groups “earlier”); nothing is worked out afterwards.
 - **Added in the last 30 days** is a ready-made automatic list of every tree, also a new or loaded one. The period can
   be changed (**Edit rule…**); the name then follows the period until the list is renamed. Once deleted it does not
   come back. Empty, it says “Nothing yet – the date added is recorded from version 3.30.”
@@ -245,7 +245,7 @@ not show on the person's card; the rule **Added in a period**, the sort **By dat
   ([A7.2](A7-book-pages-and-export.md#A7.2)).
 - **Since:** app 3.30.0
 
-<!-- zdroj: app:src/data.ts:2636 createPerson (addedAt, ne zástupná), :2847 zástupná osoba při první úpravě, :5435 mergePersons earlierAddedAt · src/ged-parser.ts:6594 stampAddedAt(origin.at) · src/merge/executor.ts:573 (mergedAt), :1962 · src/person-lists-data.ts builtinAdded30, personListsOf (i nový strom a import, personListsDropped), keepPersonListData, stampResearchTree (research.added nebo now) · src/person-lists.ts listDisplayName (jméno podle období do přejmenování) · src/ui/person-lists-ui.ts:41 ADDED_SINCE '3.30', :534 lists.earlier · src/ui/table-view/table-group.ts:238 · src/privacy.ts:373 (stripDetails žijících: delete addedAt) · strings.ts lists.builtin.added30, addedNone, earlier · ZADANI_DEV §8, Q3 · app:714a8ab2 -->
+<!-- zdroj: app:src/data.ts:2636 createPerson (addedAt, ne zástupná), :2847 zástupná osoba při první úpravě, :5435 mergePersons earlierAddedAt · src/ged-parser.ts:6594 stampAddedAt(origin.at) · src/merge/executor.ts:573 (mergedAt), :1962 · src/person-lists-data.ts builtinAdded30, personListsOf (i nový strom a import, personListsDropped), keepPersonListData, stampResearchTree (research.added nebo now) · src/person-lists.ts listDisplayName (jméno podle období do přejmenování) · src/ui/person-lists-ui.ts:41 ADDED_SINCE '3.30', :534 lists.earlier · src/ui/table-view/table-group.ts:238 · src/privacy.ts:373 (stripDetails žijících: delete addedAt) · strings.ts lists.builtin.added30, addedNone, earlier · ZADANI_DEV §8, Q3 · app:714a8ab2 · sloupec Přidáno app:0971647c (table.earlier) -->
 
 <a id="A11.8"></a>
 ## A11.8 A checklist: Tick off done

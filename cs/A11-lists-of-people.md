@@ -222,22 +222,23 @@ Některé pohledy jdou uložit jako seznam: jen tam, kde výběr osob dává smy
 ## A11.7 Kdy osoba přibyla: Přidáno za posledních 30 dní
 
 Od aplikace 3.30.0 si strom u každé osoby pamatuje, kdy do něj přibyla. Údaj se ručně neupravuje a v kartě osoby se
-neukazuje; používá ho pravidlo **Přidáno za období**, řazení **Podle přidání** a seskupení v Tabulce
-([A6.7.20](A6-views.md#A6.7.20)).
+neukazuje; používá ho pravidlo **Přidáno za období**, řazení **Podle přidání**, sloupec **Přidáno** v Tabulce
+([A6.7.2](A6-views.md#A6.7.2)) a seskupení v Tabulce ([A6.7.20](A6-views.md#A6.7.20)).
 
 - **Kdy se zapíše:**
   - nová osoba v aplikaci: čas vzniku (zástupná osoba, až když z ní je skutečná osoba);
   - načtení souboru GEDCOM: den načtení;
   - sloučení stromů: čas sloučení u osob, které do stromu přišly; sloučená osoba si nechá dřívější údaj;
   - nová osoba z výzkumu: datum, které k ní uvádí výzkum, jinak čas načtení.
-- Osoby z doby před 3.30.0 údaj nemají (v detailu seznamu a ve skupinách Tabulky „dříve“); nic se nedopočítává.
+- Osoby z doby před 3.30.0 údaj nemají (v detailu seznamu, ve sloupci **Přidáno** a ve skupinách Tabulky „dříve“); nic
+  se nedopočítává.
 - **Přidáno za posledních 30 dní** je připravený automatický seznam každého stromu, i nového a načteného. Období jde
   změnit (**Upravit pravidlo…**); jméno se pak mění s obdobím, dokud se nepřejmenuje. Smazaný se už nevrátí.
   Prázdný říká „Zatím nic – údaj o přidání se zapisuje od verze 3.30.“
 - **Hranice:** GEDCOM údaj nenese. Export s ochranou žijících ho u žijících vynechá ([A7.2](A7-book-pages-and-export.md#A7.2)).
 - **Platí od:** aplikace 3.30.0
 
-<!-- zdroj: app:src/data.ts:2636 createPerson (addedAt, ne zástupná), :2847 zástupná osoba při první úpravě, :5435 mergePersons earlierAddedAt · src/ged-parser.ts:6594 stampAddedAt(origin.at) · src/merge/executor.ts:573 (mergedAt), :1962 · src/person-lists-data.ts builtinAdded30, personListsOf (i nový strom a import, personListsDropped), keepPersonListData, stampResearchTree (research.added nebo now) · src/person-lists.ts listDisplayName (jméno podle období do přejmenování) · src/ui/person-lists-ui.ts:41 ADDED_SINCE '3.30', :534 lists.earlier · src/ui/table-view/table-group.ts:238 · src/privacy.ts:373 (stripDetails žijících: delete addedAt) · strings.ts lists.builtin.added30, addedNone, earlier · ZADANI_DEV §8, Q3 · app:714a8ab2 -->
+<!-- zdroj: app:src/data.ts:2636 createPerson (addedAt, ne zástupná), :2847 zástupná osoba při první úpravě, :5435 mergePersons earlierAddedAt · src/ged-parser.ts:6594 stampAddedAt(origin.at) · src/merge/executor.ts:573 (mergedAt), :1962 · src/person-lists-data.ts builtinAdded30, personListsOf (i nový strom a import, personListsDropped), keepPersonListData, stampResearchTree (research.added nebo now) · src/person-lists.ts listDisplayName (jméno podle období do přejmenování) · src/ui/person-lists-ui.ts:41 ADDED_SINCE '3.30', :534 lists.earlier · src/ui/table-view/table-group.ts:238 · src/privacy.ts:373 (stripDetails žijících: delete addedAt) · strings.ts lists.builtin.added30, addedNone, earlier · ZADANI_DEV §8, Q3 · app:714a8ab2 · sloupec Přidáno app:0971647c (table.earlier) -->
 
 <a id="A11.8"></a>
 ## A11.8 Pracovní seznam: Odškrtávat hotové
