@@ -362,6 +362,16 @@ nenapsáno) · `neplatí od <verze>`.
 | A11.8 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Pracovní seznam: Odškrtávat hotové | A checklist: Tick off done | Arbeitsliste: Erledigtes abhaken | Lista robocza: Odhaczaj gotowe |
 | A11.9 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Export seznamu | Exporting a list | Export einer Liste | Eksport listy |
 | A11.10 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Seznamy v datech stromu | Lists in the data of the tree | Listen in den Daten des Stammbaums | Listy w danych drzewa |
+| A12 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Portrét a fotka svazku | The portrait and the couple's photo | Porträt und Paarfoto | Portret i zdjęcie pary |
+| A12.1 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Editor výřezu portrétu | The portrait crop editor | Der Editor für den Porträtausschnitt | Edytor kadrowania portretu |
+| A12.1.1 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Klávesnice, myš a dotyk v editoru | Keyboard, mouse and touch in the editor | Tastatur, Maus und Touch im Editor | Klawiatura, mysz i dotyk w edytorze |
+| A12.2 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Originál a štítek Portrét | The original and the Portrait tag | Das Original und die Markierung Porträt | Oryginał i etykieta Portret |
+| A12.3 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Upravit výřez později | Editing the crop later | Den Ausschnitt später bearbeiten | Późniejsza edycja kadru |
+| A12.4 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Fotka svazku | The couple's photo | Das Paarfoto | Zdjęcie pary |
+| A12.5 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Portréty z fotky svazku | Portraits from the couple's photo | Porträts aus dem Paarfoto | Portrety ze zdjęcia pary |
+| A12.6 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Kde se portrét a fotka svazku ukážou | Where the portrait and the couple's photo appear | Wo Porträt und Paarfoto erscheinen | Gdzie widać portret i zdjęcie pary |
+| A12.7 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Export, ochrana žijících a GEDCOM | Export, privacy of living people and GEDCOM | Export, Schutz lebender Personen und GEDCOM | Eksport, ochrona osób żyjących i GEDCOM |
+| A12.8 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Fotky v datech stromu | Photos in the data of the tree | Fotos in den Daten des Stammbaums | Zdjęcia w danych drzewa |
 | S1 | S1-connecting-app-and-research.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Propojení aplikace a výzkumu | Connecting the app and the research | Verbindung von App und Forschung | Połączenie aplikacji i badania |
 | S1.1 | S1-connecting-app-and-research.md | výzkum 1.0.0 | platí | Most výzkumu běží jen na tomto počítači | The research's bridge runs only on this computer | Die Brücke der Forschung läuft nur auf diesem Computer | Most badania działa tylko na tym komputerze |
 | S1.2 | S1-connecting-app-and-research.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Výzkum se otevře v aplikaci odkazem z terminálu | The research opens in the app through a link from the terminal | Die Forschung öffnet sich in der App über einen Link aus dem Terminal | Badanie otwiera się w aplikacji linkiem z terminala |

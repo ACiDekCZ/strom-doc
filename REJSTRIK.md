@@ -708,6 +708,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [S7.2](cs/S7-reliability-and-verification.md#S7.2), S6.2
 
+<a id="couple-photo"></a>
+### Fotka svazku
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Fotka svazku | Jedna fotka páru (svatební nebo společná) uložená u svazku, ne u osoby. Ukazuje se ve vztazích, v Tabulce svazků, na stránkách osob a v knize rodu; dají se z ní vyříznout portréty obou partnerů. V GEDCOM je to obrázek rodiny (`OBJE` u `FAM`). |
+| en | Couple's photo | One photo of a couple (a wedding or joint photo) kept with the union, not with a person. It appears in the relationships, in the Unions table, on person pages and in the Family book; portraits of both partners can be cut from it. In GEDCOM it is a picture of the family (`OBJE` at `FAM`). |
+| de | Paarfoto | Ein Foto eines Paares (Hochzeitsfoto oder gemeinsames Foto), gespeichert bei der Partnerschaft, nicht bei einer Person. Es erscheint in den Beziehungen, in der Tabelle der Partnerschaften, auf Personenseiten und im Familienbuch; aus ihm lassen sich Porträts beider Partner ausschneiden. In GEDCOM ist es ein Bild der Familie (`OBJE` bei `FAM`). |
+| pl | Zdjęcie pary | Jedno zdjęcie pary (ślubne lub wspólne) zapisane przy związku, nie przy osobie. Widać je w relacjach, w tabeli związków, na stronach osób i w księdze rodu; można z niego wykadrować portrety obojga partnerów. W GEDCOM to obraz rodziny (`OBJE` przy `FAM`). |
+
+- **Čísla:** [A12.4](cs/A12-portrait-and-couple-photo.md#A12.4), A12.5, A12.6, A12.7
+
 <a id="main-citation"></a>
 ### Hlavní citace
 
@@ -1008,6 +1020,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [S7.3](cs/S7-reliability-and-verification.md#S7.3), S7.4, S7.5, S7.6, S7.7
 
+<a id="portrait"></a>
+### Portrét · výřez portrétu
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Portrét · Výřez portrétu | Fotka osoby na kartě a stránce osoby: čtverec 256 px vyříznutý v editoru z celé fotky. Celá fotka zůstane u osoby jako příloha se štítkem **Portrét**, takže výřez jde později změnit; portrét bez ní jde měnit jen uvnitř svého čtverce. |
+| en | Portrait · Portrait crop | A person's photo on the card and the person page: a 256 px square cut in the editor from the whole photo. The whole photo stays with the person as an attachment tagged **Portrait**, so the crop can be changed later; a portrait without it can only change within its square. |
+| de | Porträt · Porträtausschnitt | Das Foto einer Person auf der Karte und der Personenseite: ein Quadrat von 256 px, im Editor aus dem ganzen Foto ausgeschnitten. Das ganze Foto bleibt als Anhang mit der Markierung **Porträt** bei der Person, sodass sich der Ausschnitt später ändern lässt; ein Porträt ohne es lässt sich nur innerhalb seines Quadrats ändern. |
+| pl | Portret · Kadrowanie portretu | Zdjęcie osoby na karcie i stronie osoby: kwadrat 256 px wykadrowany w edytorze z całego zdjęcia. Całe zdjęcie zostaje przy osobie jako załącznik z etykietą **Portret**, więc kadr można później zmienić; portret bez niego można zmieniać tylko w obrębie jego kwadratu. |
+
+- **Čísla:** [A12](cs/A12-portrait-and-couple-photo.md), A12.1, A12.1.1, A12.2, A12.3, A12.8
+
 <a id="send-mode"></a>
 ### Posílat úpravy
 
@@ -1150,7 +1174,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Anhänge (app) | Eine Datei bei einer Person im Stammbaum (JPG, PNG verkleinert; PDF bis 2 MB). Für sich belegt sie nichts. Bei einem Stammbaum mit Forschung geht das Original in voller Qualität in die Forschung. |
 | pl | Załączniki (app) | Plik przy osobie w drzewie (JPG, PNG pomniejszone; PDF do 2 MB). Sam niczego nie dokumentuje. W drzewie z badaniem oryginał w pełnej jakości trafia do badania. |
 
-- **Čísla:** [A3.4](cs/A3-evidence-in-the-app.md#A3.4), A3.4.1
+- **Čísla:** [A3.4](cs/A3-evidence-in-the-app.md#A3.4), A3.4.1, A12.2
 
 <a id="linked-in-the-view-only"></a>
 ### Připojeno jen v zobrazení
