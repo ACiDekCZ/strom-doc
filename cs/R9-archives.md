@@ -367,7 +367,8 @@ vrátí do fronty sám, až jsou ve výzkumu všechny jeho snímky.
     aplikace. Úkol, který mezitím čeká na něco jiného, zůstane beze změny.
 - **Hranice (kdy snímky vrátí úkol):**
   - úkol čekající na snímky vrátí jen jeho kniha, a až jsou všechny;
-  - úkol čekající na web (`--kind web`) vrátí kniha, kterou jmenuje, nebo jediná kniha, ve které pracuje;
+  - úkol čekající na web (`--kind web`) vrátí kniha, kterou jmenuje, nebo jediná kniha, ve které pracuje; od výzkumu
+    1.35.0 místo ní kniha, pod kterou čeká ([R6.8.4](R6-awaiting-action.md#R6.8.4));
   - dopis a dotaz na rodinu vrátí jen kniha, kterou jmenují;
   - úkol čekající na ověření webu člověkem nevrátí nikdy (odpovídá jen člověk).
 - **Jen metodika (metodika, `strom guide` i brief agenta stejně):** agent u ručních snímků řekne knihu, čísla snímků,
@@ -378,7 +379,8 @@ vrátí do fronty sám, až jsou ve výzkumu všechny jeho snímky.
 - **Proč:** snímky jsou to, na co úkol čekal; část snímků úkol nedokončí.
 - **Ovládání:** terminál: `strom task wait T… --images B…:40-45`, `strom media add --inbox --waiting`, v Co čeká
   **Otevřít složku (uloženo M/N)**. Aplikace: Čeká na vyřízení, u položky v tomto pořadí **Mám snímky**,
-  **Otevřít web ↗**, **Odpovědět**, **Probrat s agentem**, **Otevřít složku** (poslední dvě otevřou výzkum v terminálu).
+  **Otevřít web ↗**, **Odpovědět**, **Probrat s agentem**, **Otevřít složku** (poslední dvě otevřou výzkum v terminálu);
+  od aplikace 3.30.0 blok **Dodat** s kroky a odkaz **Snímky nejde získat…** ([S4.4.7](S4-research-from-the-app.md#S4.4.7)).
   Stav snímků ukazuje „1 ze 2 snímků“ a u knihy čipy **uložen** / **chybí**. Weby jednoho archivu čekají v jedné
   skupině **Archiv** pod jménem archivu, s odkazem **Web archivu ↗** a počtem chybějících snímků.
 - **Hranice (skupina archivu):** skupina je archiv výzkumu, ke kterému úkol patří: podle knihy úkolu, adresy archivu,

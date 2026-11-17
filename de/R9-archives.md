@@ -423,7 +423,8 @@ sobald alle ihre Bilder in der Forschung sind.
 - **Grenzen (wann Bilder eine Aufgabe zurückbringen):**
   - eine Aufgabe, die auf Bilder wartet, bringt nur ihr Buch zurück, und erst wenn alle da sind;
   - eine Aufgabe, die auf eine Website wartet (`--kind web`), bringt das Buch zurück, das sie nennt, oder das einzige
-    Buch, in dem sie arbeitet;
+    Buch, in dem sie arbeitet; ab Forschung 1.35.0 stattdessen das Buch, unter dem sie wartet
+    ([R6.8.4](R6-awaiting-action.md#R6.8.4));
   - einen Brief und eine Anfrage an die Familie bringt nur das Buch zurück, das sie nennen;
   - eine Aufgabe, die auf das Prüfen einer Seite durch den Menschen wartet, bringen sie nie zurück (es antwortet nur
     der Mensch).
@@ -437,8 +438,9 @@ sobald alle ihre Bilder in der Forschung sind.
 - **Bedienung:** Terminal: `strom task wait T… --images B…:40-45`, `strom media add --inbox --waiting`, in Was wartet
   **Den Ordner öffnen (M/N gespeichert)**. App: Wartet auf Bearbeitung, beim Eintrag in dieser Reihenfolge
   **Bilder hinzufügen**, **Website öffnen ↗**, **Antworten**, **Mit Agent besprechen**, **Ordner öffnen** (die
-  letzten beiden öffnen die Forschung im Terminal). Den Zustand der Bilder zeigt „1 von 2 Bildern“ und beim Buch die
-  Chips **gespeichert** / **fehlt**. Die Websites eines Archivs warten in einer Gruppe **Archiv** unter dem Namen des
+  letzten beiden öffnen die Forschung im Terminal); ab App 3.30.0 der Block **Liefern** mit Schritten und der Link
+  **Bilder nicht erhältlich…** ([S4.4.7](S4-research-from-the-app.md#S4.4.7)). Den Zustand der Bilder zeigt „1 von
+  2 Bildern“ und beim Buch die Chips **gespeichert** / **fehlt**. Die Websites eines Archivs warten in einer Gruppe **Archiv** unter dem Namen des
   Archivs, mit dem Link **Archiv-Website ↗** und der Zahl der fehlenden Bilder.
 - **Grenzen (Gruppe des Archivs):** die Gruppe ist das Archiv der Forschung, zu dem die Aufgabe gehört: nach dem Buch
   der Aufgabe, der Adresse des Archivs, der Adresse seines Buchs, einer anderen Website desselben Archivs laut Liste

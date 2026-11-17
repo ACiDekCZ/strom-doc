@@ -730,6 +730,26 @@ erledigen lässt und was nur in der Forschung, sagt [R6.5](R6-awaiting-action.md
 - **Ab App 3.30.0 mit Forschung 1.35.0:** die Einträge lassen sich nach Buch gruppieren, mit der Reihenfolge
   **Meiste Aufgaben** und dem Unterabschnitt **Schneller durch Herunterladen** ([S4.4.4](#S4.4.4), [S4.4.5](#S4.4.5));
   die Einstellungen der Bücher in **Forschung für diesen Stammbaum** ([S4.4.6](#S4.4.6)).
+- **Ab App 3.30.0:** Gruppen und der geöffnete Eintrag (auch bei einer Forschung ohne Bücher):
+  - jede Gruppe (Ort, Archiv, Amt, Buch) steht in einer eigenen Leiste mit dem ganzen Namen, darunter Angaben und
+    Aktionen der Gruppe (beim Archiv die von **Archiv-Website ↗**, **Chat**, **Gesendet** und **Text aller
+    Anfragen**, die die Forschung anbietet). Der Name bricht auf höchstens 3 Zeilen um (auf dem Telefon, im kleinen
+    Panel und in einer schmalen Spalte des Fensters der Übersicht auf 4); ein längerer endet mit „…“ und dem Link
+    **mehr**, der den Namen aufklappt und die Gruppe nicht einklappt (**weniger** kürzt ihn wieder). Die Einträge der
+    Gruppe hängen unter der Leiste an einer senkrechten Linie. Eine Liste ohne Gruppen und die Zwischenüberschrift
+    **Ohne Buch** haben keine Linie;
+  - der geöffnete Eintrag zeigt seinen Text ganz und nur einmal, in seiner Zeile. Der Inhalt beginnt mit dem Block
+    **Wartet auf** mit der ganzen Beschreibung des Schritts von Hand, wie die Forschung sie geschrieben hat (Adressen
+    im Text sind Links). Ein Text länger als 10 Zeilen (auf dem Telefon quer 3) endet mit „…“ und **mehr** /
+    **weniger**. Die zweite Zeile des Blocks, **An**, sagt, an wen die Anfrage geht. Ein Eintrag, der nur auf den
+    Menschen wartet, hat keinen Block. Unter dem Block der Zustand der Bilder, Person · Richtung und die Aktionen;
+  - der Text „wartet auf“ hat bis zu 1500 Zeichen (vorher schnitt ihn die App auf 120 ab). Das kleine Panel zeigt ihn
+    in der Zeile auf 2 Zeilen, ganz beim Überfahren mit der Maus;
+  - ein Eintrag einer Website hat im geöffneten Inhalt **Website öffnen ↗** und daneben die Adresse der Website (nicht
+    auf dem Telefon);
+  - ein Eintrag, der auf Bilder wartet, beginnt mit dem Block **Liefern** mit Schritten ([S4.4.7](#S4.4.7)).
+
+<!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
@@ -880,30 +900,41 @@ was sich daraus herunterladen lässt und wohin die Bilder zu speichern sind.
 
   Bei der Reihenfolge **Empfohlen** ist die Wahl **Archiv** | **Buch**; die Gruppen der Bücher stehen nach ihrem
   ersten Eintrag, bei einer Reihenfolge nach Zeit nach der Zeit ihres ersten Eintrags.
-- **Reihenfolge Meiste Aufgaben:** die Gruppen sind immer Bücher (die Wahl der Gruppen verschwindet). Die Bücher gehen
-  von dem, das die meisten Aufgaben brauchen, bei Gleichheit mehr wartende, dann die Nummer des Buchs. Innerhalb eines
-  Buchs stehen die Einträge in der Reihenfolge **Empfohlen**. Einträge ohne Buch stehen am Ende in Gruppen der
-  Archive.
-- **Überschrift des Buchs:**
-  - Titel des Buchs (mit den Jahren), das Etikett **Buch**, **neu: N** bei einem eingeklappten Buch und die Zahl der
-    Einträge. Beim Überfahren mit der Maus Titel, Archiv und wie viele Aufgaben das Buch brauchen (davon
-    zurückgestellt);
-  - zweite Zeile: Archiv · „3 warten“ · „+M in der Warteschlange“ (Aufgaben des Buchs, die nicht warten) · Bilder
-    („240 Bilder · lokal 12 · fehlen 228“) · „N Dateien werden übernommen“ (Dateien, die im Ordner des Buchs liegen
-    und noch nicht übernommen sind) · „Archiv-Website erfordert Anmeldung“. Bei der Reihenfolge **Meiste Aufgaben**
-    stehen die Zahlen vorn und fett;
-  - Aktionen: was sich nach den Bedingungen des Archivs herunterladen lässt
+- **Reihenfolge Meiste Aufgaben:** die Gruppen sind immer Bücher (die Wahl der Gruppen verschwindet).
+  - oben die Bücher zum Herunterladen (ihnen fehlen Bilder, oder die Zahl der Bilder ist nicht bekannt), darunter die
+    vollständig lokalen Bücher. In jedem Teil gehen die Bücher von dem, das die meisten Aufgaben brauchen, bei
+    Gleichheit mehr wartende, dann die Nummer des Buchs. Genauso ist **Schneller durch Herunterladen** geordnet
+    ([S4.4.5](#S4.4.5));
+  - hat eine Phase beide Teile, stehen über ihnen die Zwischenüberschriften „Zum Herunterladen · 2 Bücher“ und
+    „Vollständig lokal · 1 Buch“ (Zahlen in der Phase). Mit nur einem Teil gibt es keine Zwischenüberschrift;
+  - unter der Reihenfolge steht der Satz „Oben Bücher, denen Bilder fehlen: Deren Herunterladen erledigt die meisten
+    Aufgaben auf einmal. Vollständig lokale Bücher stehen darunter.“ Im Menü der Reihenfolge hat **Meiste Aufgaben**
+    die zweite Zeile „Bücher zum Herunterladen oben“;
+  - innerhalb eines Buchs stehen die Einträge in der Reihenfolge **Empfohlen**. Einträge ohne Buch stehen am Ende in
+    Gruppen der Archive.
+- **Leiste des Buchs** (wie die Leiste jeder Gruppe, [S4.4](#S4.4)):
+  - Titel des Buchs (mit den Jahren) ganz, umbrochen, auf höchstens 3 Zeilen (4 auf dem Telefon) und **mehr**. Rechts
+    das Etikett **Buch**, **neu: N** bei einem eingeklappten Buch und die Zahl der Einträge. Beim Überfahren mit der
+    Maus Titel, Archiv und wie viele Aufgaben das Buch brauchen (davon zurückgestellt);
+  - zweite Zeile: Archiv, ganz;
+  - dritte Zeile: „12 Aufgaben“ (wie viele Aufgaben das Buch brauchen) · „3 warten“ · „+M in der Warteschlange“
+    (Aufgaben des Buchs, die nicht warten) · „2 zurückgestellt“ · Bilder („240 Bilder · lokal 12 · fehlen 228“, ein
+    vollständig lokales Buch „240 Bilder · vollständig lokal“) · „N Dateien werden übernommen“ (Dateien, die im
+    Ordner des Buchs liegen und noch nicht übernommen sind) · „Archiv-Website erfordert Anmeldung“. „In der
+    Warteschlange“ und „zurückgestellt“ nur über null. Bei der Reihenfolge **Meiste Aufgaben** sind die Zahl der
+    Aufgaben und „fehlen N“ fett;
+  - Aktionen unter den Angaben: was sich nach den Bedingungen des Archivs herunterladen lässt
     ([R6.8.1](R6-awaiting-action.md#R6.8.1)) – „Ganzes Buch herunterladbar · N Bilder“, „Bilder 31–36
-    herunterladbar · 6 Bilder“ oder „Ausgewählte Bilder … herunterladbar“; **Archiv-Website ↗**; **Ordner öffnen**
-    (der Ordner des Buchs im gemeinsamen Ordner, die Forschung öffnet ihn ohne Terminal und legt ihn bei Bedarf an,
-    [R6.8.2](R6-awaiting-action.md#R6.8.2)); **Chat** (nicht auf dem Telefon). Ein Klick auf eine Aktion klappt das
-    Buch nicht ein;
+    herunterladbar · 6 Bilder“ oder „Ausgewählte Bilder … herunterladbar“; **Archiv-Website ↗**; **Ordner des Buchs
+    öffnen** (der Ordner des Buchs im gemeinsamen Ordner, die Forschung öffnet ihn ohne Terminal und legt ihn bei
+    Bedarf an, [R6.8.2](R6-awaiting-action.md#R6.8.2)); **Chat** (nicht auf dem Telefon). Ein Klick auf eine Aktion
+    klappt das Buch nicht ein;
   - ein Buch, das die Forschung in der Übersicht der Bücher nicht geschickt hat: nur Titel (oder Nummer des Buchs),
     Etikett und Zahl.
 - **Suche** ([S4.4.2](#S4.4.2)) findet Einträge auch nach Titel und Archiv ihres Buchs.
-- **Kleines Panel:** Schaltfläche der Reihenfolge und „Gruppen: Buch ▾“ mit Menü; Überschrift des Buchs nur mit Titel
-  und „N warten“, Zwischenüberschrift **Ohne Buch**; die Aktionen der Bücher gibt es nur in der
-  **Forschungsübersicht**. Die Zahlen der Einträge sind dieselben wie bisher.
+- **Kleines Panel:** Schaltfläche der Reihenfolge und „Gruppen: Buch ▾“ mit Menü; Leiste des Buchs nur mit Titel
+  (höchstens 4 Zeilen und **mehr**) und „N warten“, die Einträge an der Linie, Zwischenüberschrift **Ohne Buch**; die
+  Aktionen der Bücher gibt es nur in der **Forschungsübersicht**. Die Zahlen der Einträge sind dieselben wie bisher.
 - **Grenzen:**
   - die Wahl **Buch** und die Reihenfolge **Meiste Aufgaben** gibt es nur mit einer Forschung, die Bücher schickt,
     und nicht im Strom-Archiv oder in einer Forschung, die auf einen Agenten wartet. Sonst sieht alles aus wie vorher,
@@ -914,8 +945,11 @@ was sich daraus herunterladen lässt und wohin die Bilder zu speichern sind.
   Schalter **Gruppen** (**Archiv** | **Buch** | **Keine Gruppen**); auf dem Telefon (auch quer) und im kleinen Panel
   die Schaltfläche „Gruppen: Buch ▾“ mit Menü (auf dem Telefon ein Blatt). Reihenfolge „⇅ … ▾“ › **Meiste
   Aufgaben**.
+- **Das Buch des Eintrags** bestimmt die Forschung: eine wartende Aufgabe gehört unter das Buch, das durchsucht werden
+  muss ([R6.8.4](R6-awaiting-action.md#R6.8.4)).
 - **Gilt seit:** Forschung 1.35.0, App 3.30.0
 
+<!-- zdroj: app:7d7c0783 src/research-books.ts bookMetaParts (tasks · waiting · inQueue >0 · parked >0 · obrázky · pending · login), bookHeadImagesPieces (missing 0 → wholeOnDisk), research-overview-ui.ts overviewWaitingBookHead (archiv na vlastním řádku, akce v pásu, books.folderBook), research-ui.ts appendPanelWaitingBooks (název 4 řádky + víc, is-grouped) · app:1176f465 src/research-books.ts sortBooksMost (bookWholeOnDisk napřed false, pak tasks ↓, waiting ↓, číslo), research-waiting.ts phaseRows (part download / disk jen při obou částech, počty ve fázi), research-overview-ui.ts :1200 order-note books.mostNote, :1236 books.toDownload / onDiskAll, is-key (tasks, missing), table-headmenu.ts sub books.orderMostSub · strings.ts live.books.tasks, parked, wholeOnDisk, folderBook, toDownload, onDiskAll, mostNote, orderMostSub · research:8d19d4f6 src/core/books.ts bookOfTask (waitTarget) · ZADANI_DEV_knihy-zahlavi.md §1, §2, §4 -->
 <!-- zdroj: app:224a1358, 7c39e663 src/ui/waiting-order-ui.ts shownWaitingGroups (most → book; book bez knih → archive; none v doporučeném → archive), waitingGroupModesFor, storedWaitingGroupMode (klíč přepínače Skupiny) · src/research-waiting.ts phaseRows (by book, afterBooks, most: sortBooksMost, uvnitř doporučené) · src/research-books.ts booksOn, bookOfItem, bookMetaParts, bookImagesText, bookOfferText (whole/range/selected), bookHeadTitle, bookWebUrl, sortBooksMost · src/ui/research-overview-ui.ts overviewWaitingBookHead (štítek Kniha, nové, počet, meta, is-key u most), overviewWaitingBookActions (nabídka, Web archivu, Otevřít složku book?do=folder, Chat), waitingGroupsChoiceEl (segment, compact/sheet) · src/ui/research-ui.ts appendPanelWaitingBooks (malý panel: název, N čeká, Bez knihy, akce jen v přehledu) · research:b1749433 src/core/live.ts /status books (feature books; ne archiv ani čekání na agenta), bookOfTask · strings.ts live.books · dirigent:spec/105-co-nejvic-pomuze U5, K5.1 · app:docs/ZADANI_DEV_knihy-ukolu.md §1–§2 -->
 
 <a id="S4.4.5"></a>
@@ -976,6 +1010,48 @@ Die Einstellungen der Bücher der Forschung ([R6.8.3](R6-awaiting-action.md#R6.8
 - **Gilt seit:** Forschung 1.35.0, App 3.30.0
 
 <!-- zdroj: app:224a1358 src/ui/books-setting-view.ts (pole, (výchozí), Vrátit výchozí, přepínač) · src/ui/research-tree-settings-ui.ts showResearchTreeSettings group books, booksBody, překreslení mimo fokus · src/research-link.ts booksSettings, POST books (400 books.body, 409 directions.archive → skupina zmizí, 503 research.busy) · strings.ts researchTree.booksGroup, booksSum, minTasks*, sameBook*, resetDefault, booksOk, booksBusyErr, booksRetry · research:b1749433 src/core/live.ts POST /books · ZADANI_DEV_knihy-ukolu.md §4 -->
+
+<a id="S4.4.7"></a>
+### S4.4.7 Ein Eintrag, der auf Bilder wartet
+
+Ein geöffneter Eintrag, der auf Bilder wartet, sagt zuerst, was zu liefern ist und wohin, und zeigt dann die Schritte
+in der Reihenfolge, in der sie gemacht werden. Das Ergebnis sind Dateien in einem Ordner, keine Antwort.
+
+- **Welche Einträge es betrifft:** eine Aufgabe, die auf Bilder wartet (Art **Bilder**), und eine Aufgabe, die auf
+  eine Website wartet und der die Forschung den Ordner eines Buchs gegeben hat
+  ([R6.8.4](R6-awaiting-action.md#R6.8.4)); nur wenn sich Bilder über die Brücke hinzufügen lassen. Die übrigen
+  Einträge sind unverändert.
+- **Block Liefern** (am Anfang des Inhalts, vor **Wartet auf**, [S4.4](#S4.4)): ein Satz, welche Bilder als Dateien
+  und in welchen Ordner, zum Beispiel „Bilder 112–113 als Dateien (JPG oder PNG) im Ordner des Buchs …“ mit dem Titel
+  des Buchs:
+  - die Nummern sind die, die noch fehlen; ohne bekannte Nummern hat der Satz keine Nummern („Bilder als Dateien (JPG
+    oder PNG) im Ordner des Buchs …“);
+  - der Ordner des Buchs, wenn die Forschung ihn in der Liste der Bücher mit Ordner hat und der Link in die Forschung
+    ihn öffnen kann; sonst „… im Ordner der Aufgabe“. Der Satz nennt immer den Ordner, den Schritt ② öffnet.
+- **Schritte** (Computer und Tablet), dazwischen Pfeile:
+  1. **Archiv-Website ↗**: die Website des Eintrags, sonst die Website des Buchs oder seines Archivs;
+  2. **Ordner des Buchs öffnen** (die Forschung öffnet ihn ohne Terminal, [R6.8.2](R6-awaiting-action.md#R6.8.2)),
+     sonst **Ordner öffnen** der Aufgabe (öffnet die Forschung im Terminal, mit der Marke Terminal);
+  3. **Bilder hinzufügen**: die einzige Hauptaktion, öffnet die Stelle zum Hochladen der Bilder.
+
+  Ein Schritt, der von hier aus nicht geht, fehlt, und der nächste übernimmt seine Nummer. Ein Pfeil bricht nie von
+  dem Schritt um, zu dem er führt. Unter 380 px Breite stehen die Schritte untereinander ohne Pfeile. Beim Hinzufügen
+  von Bildern und beim Schreiben einer Antwort werden die Schritte ausgeblendet.
+- **Unter dem Block:** der Zustand der Bilder, die Stelle zum Ablegen von Dateien, Person · Richtung und der Link
+  **Bilder nicht erhältlich…**. Er öffnet das Feld **Warum die Bilder nicht erhältlich sind** mit dem Hinweis
+  „Hierher gehört, warum die Bilder nicht geliefert werden können oder was im Archiv fehlt. Eine Lesung des Eintrags
+  gehört nicht hierher: Die Forschung liest die Bilder.“ Das Senden bringt die Aufgabe in die Warteschlange zurück wie
+  jede Antwort ([R6.7](R6-awaiting-action.md#R6.7)). Die übrigen Aktionen (**Mit Agent besprechen** und weitere, die
+  die Forschung anbietet) sind unter **⋯**.
+- **Telefon:** nur der Block **Liefern** mit dem Satz und „Bilder werden am Computer gespeichert.“, ohne Schritte.
+  **Bilder nicht erhältlich…** öffnet das Blatt der Antwort mit derselben Überschrift und demselben Hinweis.
+- **Kleines Panel:** das Fenster **Bilder hinzufügen** beginnt mit demselben Block mit den Schritten untereinander;
+  die Stelle zum Hochladen darunter ist der letzte Schritt.
+- **Bedienung:** App: **Forschungsübersicht → Wartet auf Bearbeitung**, Klick auf einen Eintrag mit Bildern; im
+  kleinen Panel **Bilder hinzufügen**.
+- **Gilt seit:** App 3.30.0
+
+<!-- zdroj: app:449e6962, 429839f0 src/ui/waiting-task-ui.ts waitingTakesImages (waitingActions images přes most), waitingAnswerTexts (answerImagesLabel, answerImagesHint), waitingDeliverEl (věta deliverSentence, phone → deliverPhone bez kroků, kroky deliverSteps web → folder → images, krok ② books.folderBook přes odkaz book jen s book.folder, jinak openFolder task?do=folder se značkou, ③ haveImages waiting-action--primary → openWaitingImages, deliver-pair šipka s krokem, is-column), panel dialog (column, upload: true, title haveImages) · src/research-waiting.ts waitingForImages (images, web s inbox), waitingDeliver (chybějící čísla jen u detail full; kniha jen ze seznamu se složkou), deliverSentence, deliverWebUrl (w.url, jinak bookWebUrl), deliverSteps · src/ui/research-overview-ui.ts appendWaitingTaskActions deliver (answer → link-button cannotGet, ostatní pod ⋯, na telefonu nic pod ⋯) · strings.ts live.waitingTask.deliverLabel, deliverBook, deliverTask, deliverBookAny, deliverTaskAny, deliverPhone, stepAria, cannotGet, answerImagesLabel, answerImagesHint · e2e/waiting-images.spec.ts, overview-waiting-books.spec.ts · ZADANI_DEV_knihy-zahlavi.md §5 · dirigent:prace/1117-app-knihy-zahlavi (D12, D13) -->
 
 <a id="S4.5"></a>
 ## S4.5 Aktionen, die die Forschung öffnen

@@ -65,6 +65,9 @@ archive's permission**, **letter**, **family**, **web**, **other**.
 - **Controls:** terminal: `strom task wait T… --images B…:<from>-<to>`, then `strom media add --inbox`; in **What
   waits** **Open the folder (M/N saved)**. App: **Open folder** (from app 3.23.0; before, **Folder**).
 - Browser-only archives, images from the app and what a person does: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
+- **From app 3.30.0:** the opened item in the app begins with the block **Deliver** (which images and into which
+  folder) with the steps **Archive website ↗** → **Open the book’s folder** or **Open folder** → **Add images**
+  ([S4.4.7](S4-research-from-the-app.md#S4.4.7)).
 - **Since:** research 1.0.0. Waking after saving from 1.15.0.
 
 <!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
@@ -287,6 +290,8 @@ the task to the queue, and the agent deals with it in its next work.
   - from research 1.27.0 a task waiting for a site (`--kind web`) is also returned by the one book it works in: the
     images saved there are what it waited for. A letter and a request to the family still only by the book they
     wait for;
+  - from research 1.35.0 a task waiting for a site is returned, instead of by the one book it works in, by the book
+    it waits under ([R6.8.4](#R6.8.4)). A task that waits without a book is returned only by the book it names;
   - tasks that images returned wrongly before are put back to waiting by the fix `strom fixes show|run|undo
     woken-waits`: the task waits as before, including the sending. A task worked on in the meantime stays. Only a
     person runs the fix in the terminal; it is not in a Strom archive. Until it has run, `strom check` points such
@@ -303,8 +308,9 @@ goes on reading the book online.
 
 - **Enforced by the code:**
   - the tasks counted are open (also in progress), parked and waiting. The book of a task is a book (B…) the task
-    names in where it works, and a book whose images it waits for. A task that names no book is not counted, and no
-    book is guessed for it: the counts are a lower bound, not an estimate;
+    names in where it works, a book whose images it waits for, and at a waiting task the book the agent gave it
+    (`--book`, [R6.8.4](#R6.8.4)). A task that names no book is not counted, and no book is guessed for it: the
+    counts are a lower bound, not an estimate;
   - a book merged into another counts as that other one, a book retracted as none;
   - the order: the most tasks, on a tie the most waiting, then the book's number;
   - at a book: the archive, the years, the access, how many tasks need it (of these waiting and parked), images in
@@ -414,3 +420,46 @@ From how many tasks a book is offered, and whether the queue goes on in the same
 - **Since:** research 1.35.0
 
 <!-- zdroj: research:b1749433 src/core/config.ts BOOKS_MIN_TASKS 5, BOOKS_MIN_TASKS_MAX 999, SETTINGS books.minTasks, queue.sameBook (tree, no|yes), validace „whole number from 1 to 999“ · src/cli/menu-settings.ts booksSettings (1 ui.books.min, 2 ui.books.same), položka Archivy ui.archives.books (poslední) · src/core/live.ts POST /books (config set/unset --for-tree), booksSettings · assets/lang/cs.json ui.books.settings.title, ui.books.min, ui.books.same · CHANGELOG.cs.md 1.35.0 „Knihy v aplikaci Strom a jejich nastavení“ -->
+
+<a id="R6.8.4"></a>
+### R6.8.4 Which book a task waits under
+
+A waiting task belongs under the book that has to be searched, not under the book in which the agent found the trail
+(a note in a register of births that leads to the marriages of another parish). The Strom app shows it under that
+book in the groups by book ([S4.4.4](S4-research-from-the-app.md#S4.4.4)), and images for a task waiting for a site
+are saved into that book's folder.
+
+- **Enforced by the code:** the book of a waiting task, in this order:
+  1. the task waits for images with numbers (`--images`): the book of those images;
+  2. the book the agent gave the task (`strom task wait|edit --book B…`);
+  3. the only book whose number (B…) stands in the text of what the task waits for and that is not among the books
+     the task works in. With more numbers: the next points hold;
+  4. the task waits for a site or for a check of a site (`--kind web`, `--check`), works in one book and besides it
+     names in free text a place or a book that is still to be found: **no book** (in the app under **No book**).
+     Record numbers (B…, R…) do not count as free text;
+  5. otherwise the only book the task works in; none or more: no book.
+- **What it governs:**
+  - the book of the item in the Strom app and the counts of books ([R6.8](#R6.8); the book from `--book` is counted
+    besides the book the task works in);
+  - a task waiting for a site: its folder in the shared folder (in **What waits** **Open the folder**, in the app the
+    block **Deliver**, [S4.4.7](S4-research-from-the-app.md#S4.4.7)) and the task's return after images are saved
+    into it ([R6.7.2](#R6.7.2)). A task without a book has no folder, and the folder of the book in which the trail
+    was found is not offered to it.
+- **Limits:**
+  - only for waiting tasks. The queue, open and parked tasks stay at the book the task works in;
+  - nothing is rewritten: points 3–5 are worked out when reading, the text of the wait and people's answers do not
+    change;
+  - `--book` only at a waiting task and only with a live book (an unknown or retracted one is an error). With
+    `--images` only the same book as for the images, another is an error. A new setting of the wait clears `--book`
+    ([R6.2](#R6.2)). An older strom leaves the field be.
+- **The agent at a task:** `strom task show` shows the line `book B… — the book to be searched`. When a task waiting
+  for a site or for a check of a site has no book, the output of `strom task wait` tells the agent how to give it one
+  once it is created (`strom recordset add`, then `strom task edit T… --book B…`).
+- **Method only:** the agent's guide: the book to be searched, not the one in which the trail was found: `--book B…`.
+- **Why:** better no book than someone else's.
+- **Controls:** terminal: `strom task wait T… --kind web --book B… --on "<what>"`, `strom task edit T… --book B…`,
+  `strom task show T…`. App: **Awaiting action**, groups by book
+  ([S4.4.4](S4-research-from-the-app.md#S4.4.4)).
+- **Since:** research 1.35.0
+
+<!-- zdroj: research:8d19d4f6 src/core/books.ts waitTarget (jen waiting bez awaits: wait.book → jediné živé B… ve waitingOn mimo where (BOOK_ID_IN) → null pro web/check s jednou knihou ve where a volným textem (RECORD_ID) → undefined), bookOfTask (awaits → waitTarget → jediná kniha where), booksOfTask (+ wait.book u waiting) · src/core/inboxwait.ts webWaitBook, inboxWaitOf (web) · src/commands/media.ts wakeWaiting (web: named || webWaitBook) · src/core/waiting.ts:441 book · src/core/live.ts:2180 · src/commands/tasks.ts waitOptions --book (requireRecord recordset, liveBook → chyba vzatá zpět, s --images jen táž kniha), task edit (jen waiting, task.not-waiting), taskDetail řádek book, task wait řádek pro web/check bez knihy · src/core/model.ts wait.book · assets/method/core.md (locate, request) „The book to search, not the one the trail was found in: `--book B…`.“ · CHANGELOG.cs.md 1.35.0 „Čekající úkol pod knihou, kterou je třeba prohledat“ · dirigent:prace/1117-vyzkum-kniha-cile (Návrh A–F, „lepší žádná kniha než cizí“), 1117-research-kniha-cile -->

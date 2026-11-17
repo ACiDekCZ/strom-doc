@@ -678,6 +678,24 @@ with in the app and what only in the research is said in [R6.5](R6-awaiting-acti
 - **From app 3.30.0 with research 1.35.0:** the items can be grouped by book, with the order **Most tasks** and the
   subsection **Faster by downloading** ([S4.4.4](#S4.4.4), [S4.4.5](#S4.4.5)); the books' settings in **Research for
   this tree** ([S4.4.6](#S4.4.6)).
+- **From app 3.30.0:** the groups and the opened item (also with a research without books):
+  - each group (a place, an archive, an office, a book) stands in its own band with its whole name, under it the
+    group's details and actions (at an archive those of **Archive website ↗**, **Chat**, **Sent** and **All queries'
+    text** that the research offers). The name wraps to at most 3 lines (on a phone, in the small panel and in a
+    narrow column of the overview window to 4); a longer one ends with "…" and the link **more**, which unfolds the
+    name and does not collapse the group (**less** shortens it again). The group's items hang under the band on a
+    vertical line. A list without groups and the subheading **No book** have no line;
+  - the opened item shows its text whole and only once, in its row. The body begins with the block **Waiting on**
+    with the whole description of the manual step as the research wrote it (addresses in the text are links). A text
+    longer than 10 lines (on a phone sideways 3) ends with "…" and **more** / **less**. The second line of the block,
+    **To**, says whom the request goes to. An item that waits only for a person has no block. Under the block the
+    state of the images, person · direction and the actions;
+  - the text "waiting on" has up to 1500 characters (before, the app cut it to 120). The small panel shows it in the
+    row on 2 lines, whole on hover;
+  - an item of a site has in the opened body **Open website ↗** and next to it the site's address (not on a phone);
+  - an item waiting for images begins with the block **Deliver** with steps ([S4.4.7](#S4.4.7)).
+
+<!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
@@ -817,27 +835,38 @@ the images.
 
   In the **Recommended** order the choice is **Archive** | **Book**; the groups of books stand by their first item, in
   an order by time by the time of their first item.
-- **The order Most tasks:** the groups are always books (the choice of groups disappears). The books go from the one
-  most tasks need, on a tie more waiting, then the book's number. Within a book the items are in the **Recommended**
-  order. Items without a book are at the end in groups of archives.
-- **The book's heading:**
-  - the book's title (with the years), the tag **Book**, **new: N** at a collapsed book and the number of items. On
-    hover the title, the archive and how many tasks need the book (of these parked);
-  - the second line: the archive · "3 waiting" · "+M in the queue" (the book's tasks that do not wait) · images ("240
-    images · on disk 12 · missing 228") · "N files to be taken in" (files that lie in the book's folder and have not
-    been taken in yet) · "archive website requires sign-in". In the order **Most tasks** the counts are first and
-    in bold;
-  - actions: what can be downloaded by the archive's terms ([R6.8.1](R6-awaiting-action.md#R6.8.1)) – "Whole book can
-    be downloaded · N images", "Images 31–36 can be downloaded · 6 images" or "Selected images … can be downloaded";
-    **Archive website ↗**; **Open folder** (the book's folder in the shared folder, the research opens it without a
-    terminal and creates it if needed, [R6.8.2](R6-awaiting-action.md#R6.8.2)); **Chat** (not on a phone). A click on
-    an action does not collapse the book;
+- **The order Most tasks:** the groups are always books (the choice of groups disappears).
+  - at the top the books to download (they lack images, or the number of images is not known), below them the books
+    whole on disk. In each part the books go from the one most tasks need, on a tie more waiting, then the book's
+    number. **Faster by downloading** is sorted the same way ([S4.4.5](#S4.4.5));
+  - when a phase has both parts, the subheadings "To download · 2 books" and "Whole on disk · 1 book" stand above them
+    (the counts in the phase). With a single part there is no subheading;
+  - under the order stands the sentence "Books missing images come first: downloading them settles the most tasks at
+    once. Books whole on disk follow." In the order menu **Most tasks** has the second line "books to download first";
+  - within a book the items are in the **Recommended** order. Items without a book are at the end in groups of
+    archives.
+- **The book's band** (like the band of every group, [S4.4](#S4.4)):
+  - the book's title (with the years) whole, wrapped, at most on 3 lines (4 on a phone) and **more**. On the right the
+    tag **Book**, **new: N** at a collapsed book and the number of items. On hover the title, the archive and how many
+    tasks need the book (of these parked);
+  - the second line: the archive, whole;
+  - the third line: "12 tasks" (how many tasks need the book) · "3 waiting" · "+M in the queue" (the book's tasks
+    that do not wait) · "2 parked" · images ("240 images · on disk 12 · missing 228", a book whole on disk "240 images
+    · whole book on disk") · "N files to be taken in" (files that lie in the book's folder and have not been taken in
+    yet) · "archive website requires sign-in". "In the queue" and "parked" only above zero. In the order **Most
+    tasks** the number of tasks and "missing N" are in bold;
+  - actions under the details: what can be downloaded by the archive's terms
+    ([R6.8.1](R6-awaiting-action.md#R6.8.1)) – "Whole book can be downloaded · N images", "Images 31–36 can be
+    downloaded · 6 images" or "Selected images … can be downloaded"; **Archive website ↗**; **Open the book’s
+    folder** (the book's folder in the shared folder, the research opens it without a terminal and creates it if
+    needed, [R6.8.2](R6-awaiting-action.md#R6.8.2)); **Chat** (not on a phone). A click on an action does not
+    collapse the book;
   - a book the research did not send in the overview of books: only the title (or the book's number), the tag and the
     count.
 - **Search** ([S4.4.2](#S4.4.2)) also finds items by the title and archive of their book.
-- **Small panel:** the order button and "Groups: Book ▾" with a menu; the book's heading only with the title and
-  "N waiting", the subheading **No book**; the books' actions are only in the **Research overview**. The numbers of
-  items are the same as before.
+- **Small panel:** the order button and "Groups: Book ▾" with a menu; the book's band only with the title (at most 4
+  lines and **more**) and "N waiting", the items on the line, the subheading **No book**; the books' actions are only
+  in the **Research overview**. The numbers of items are the same as before.
 - **Limits:**
   - the choice **Book** and the order **Most tasks** are there only with a research that sends books, and not in a
     Strom archive or a research waiting for an agent. Otherwise everything looks as before, and a saved choice
@@ -846,8 +875,11 @@ the images.
 - **Controls:** app: **Research overview → Awaiting action**, next to the order button the switch **Groups**
   (**Archive** | **Book** | **No groups**); on a phone (also sideways) and in the small panel the button "Groups: Book
   ▾" with a menu (on a phone a sheet). The order "⇅ … ▾" › **Most tasks**.
+- **The item's book** is set by the research: a waiting task belongs under the book that has to be searched
+  ([R6.8.4](R6-awaiting-action.md#R6.8.4)).
 - **Since:** research 1.35.0, app 3.30.0
 
+<!-- zdroj: app:7d7c0783 src/research-books.ts bookMetaParts (tasks · waiting · inQueue >0 · parked >0 · obrázky · pending · login), bookHeadImagesPieces (missing 0 → wholeOnDisk), research-overview-ui.ts overviewWaitingBookHead (archiv na vlastním řádku, akce v pásu, books.folderBook), research-ui.ts appendPanelWaitingBooks (název 4 řádky + víc, is-grouped) · app:1176f465 src/research-books.ts sortBooksMost (bookWholeOnDisk napřed false, pak tasks ↓, waiting ↓, číslo), research-waiting.ts phaseRows (part download / disk jen při obou částech, počty ve fázi), research-overview-ui.ts :1200 order-note books.mostNote, :1236 books.toDownload / onDiskAll, is-key (tasks, missing), table-headmenu.ts sub books.orderMostSub · strings.ts live.books.tasks, parked, wholeOnDisk, folderBook, toDownload, onDiskAll, mostNote, orderMostSub · research:8d19d4f6 src/core/books.ts bookOfTask (waitTarget) · ZADANI_DEV_knihy-zahlavi.md §1, §2, §4 -->
 <!-- zdroj: app:224a1358, 7c39e663 src/ui/waiting-order-ui.ts shownWaitingGroups (most → book; book bez knih → archive; none v doporučeném → archive), waitingGroupModesFor, storedWaitingGroupMode (klíč přepínače Skupiny) · src/research-waiting.ts phaseRows (by book, afterBooks, most: sortBooksMost, uvnitř doporučené) · src/research-books.ts booksOn, bookOfItem, bookMetaParts, bookImagesText, bookOfferText (whole/range/selected), bookHeadTitle, bookWebUrl, sortBooksMost · src/ui/research-overview-ui.ts overviewWaitingBookHead (štítek Kniha, nové, počet, meta, is-key u most), overviewWaitingBookActions (nabídka, Web archivu, Otevřít složku book?do=folder, Chat), waitingGroupsChoiceEl (segment, compact/sheet) · src/ui/research-ui.ts appendPanelWaitingBooks (malý panel: název, N čeká, Bez knihy, akce jen v přehledu) · research:b1749433 src/core/live.ts /status books (feature books; ne archiv ani čekání na agenta), bookOfTask · strings.ts live.books · dirigent:spec/105-co-nejvic-pomuze U5, K5.1 · app:docs/ZADANI_DEV_knihy-ukolu.md §1–§2 -->
 
 <a id="S4.4.5"></a>
@@ -904,6 +936,47 @@ through the bridge into the research, so they hold just as in the terminal.
 - **Since:** research 1.35.0, app 3.30.0
 
 <!-- zdroj: app:224a1358 src/ui/books-setting-view.ts (pole, (výchozí), Vrátit výchozí, přepínač) · src/ui/research-tree-settings-ui.ts showResearchTreeSettings group books, booksBody, překreslení mimo fokus · src/research-link.ts booksSettings, POST books (400 books.body, 409 directions.archive → skupina zmizí, 503 research.busy) · strings.ts researchTree.booksGroup, booksSum, minTasks*, sameBook*, resetDefault, booksOk, booksBusyErr, booksRetry · research:b1749433 src/core/live.ts POST /books · ZADANI_DEV_knihy-ukolu.md §4 -->
+
+<a id="S4.4.7"></a>
+### S4.4.7 An item waiting for images
+
+An opened item that waits for images first says what to deliver and where, and then shows the steps in the order in
+which they are done. The result is files in a folder, not an answer.
+
+- **Which items it concerns:** a task waiting for images (kind **Images**) and a task waiting for a site that the
+  research gave a book's folder ([R6.8.4](R6-awaiting-action.md#R6.8.4)); only when images can be added through the
+  bridge. The other items are unchanged.
+- **The block Deliver** (at the start of the body, before **Waiting on**, [S4.4](#S4.4)): a sentence saying which
+  images as files and into which folder, for example "Images 112–113 as files (JPG or PNG) in the folder of the book
+  …" with the book's title:
+  - the numbers are those still missing; without known numbers the sentence has no numbers ("Images as files (JPG or
+    PNG) in the folder of the book …");
+  - the book's folder when the research has it in the list of books with a folder and the link into the research can
+    open it; otherwise "… in the task’s folder". The sentence always names the folder that step ② opens.
+- **Steps** (computer and tablet), with arrows between them:
+  1. **Archive website ↗**: the item's website, otherwise the website of the book or of its archive;
+  2. **Open the book’s folder** (the research opens it without a terminal, [R6.8.2](R6-awaiting-action.md#R6.8.2)),
+     otherwise **Open folder** of the task (opens the research in the terminal, with the terminal mark);
+  3. **Add images**: the only main action, opens the place for uploading images.
+
+  A step that cannot be done from here is missing and the next one takes its number. An arrow never wraps away from
+  the step it leads to. Below 380 px of width the steps are one under another without arrows. While images are being
+  added and an answer written, the steps hide.
+- **Under the block:** the state of the images, the place for dropping files, person · direction and the link
+  **Images can’t be obtained…**. It opens the field **Why the images can’t be obtained** with the hint "This is for
+  why the images can’t be supplied or what the archive lacks. A reading of the entry does not belong here: the
+  research reads the images." Sending returns the task to the queue like every answer
+  ([R6.7](R6-awaiting-action.md#R6.7)). The other actions (**Discuss with the agent** and others the research offers)
+  are under **⋯**.
+- **Phone:** only the block **Deliver** with the sentence and "Images are saved on the computer.", without steps.
+  **Images can’t be obtained…** opens the answer sheet with the same heading and hint.
+- **Small panel:** the window **Add images** begins with the same block, with the steps one under another; the place
+  for uploading under it is the last step.
+- **Controls:** app: **Research overview → Awaiting action**, a click on an item with images; in the small panel
+  **Add images**.
+- **Since:** app 3.30.0
+
+<!-- zdroj: app:449e6962, 429839f0 src/ui/waiting-task-ui.ts waitingTakesImages (waitingActions images přes most), waitingAnswerTexts (answerImagesLabel, answerImagesHint), waitingDeliverEl (věta deliverSentence, phone → deliverPhone bez kroků, kroky deliverSteps web → folder → images, krok ② books.folderBook přes odkaz book jen s book.folder, jinak openFolder task?do=folder se značkou, ③ haveImages waiting-action--primary → openWaitingImages, deliver-pair šipka s krokem, is-column), panel dialog (column, upload: true, title haveImages) · src/research-waiting.ts waitingForImages (images, web s inbox), waitingDeliver (chybějící čísla jen u detail full; kniha jen ze seznamu se složkou), deliverSentence, deliverWebUrl (w.url, jinak bookWebUrl), deliverSteps · src/ui/research-overview-ui.ts appendWaitingTaskActions deliver (answer → link-button cannotGet, ostatní pod ⋯, na telefonu nic pod ⋯) · strings.ts live.waitingTask.deliverLabel, deliverBook, deliverTask, deliverBookAny, deliverTaskAny, deliverPhone, stepAria, cannotGet, answerImagesLabel, answerImagesHint · e2e/waiting-images.spec.ts, overview-waiting-books.spec.ts · ZADANI_DEV_knihy-zahlavi.md §5 · dirigent:prace/1117-app-knihy-zahlavi (D12, D13) -->
 
 <a id="S4.5"></a>
 ## S4.5 Actions that open the research

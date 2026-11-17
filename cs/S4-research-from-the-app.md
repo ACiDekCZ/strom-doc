@@ -617,6 +617,22 @@ a co jen ve výzkumu, říká [R6.5](R6-awaiting-action.md#R6.5).
 - **Od aplikace 3.30.0 s výzkumem 1.35.0:** položky jdou seskupit podle knihy, s pořadím **Nejvíc úkolů**
   a pododdílem **Urychlit stažením** ([S4.4.4](#S4.4.4), [S4.4.5](#S4.4.5)); nastavení knih v **Výzkumu u stromu**
   ([S4.4.6](#S4.4.6)).
+- **Od aplikace 3.30.0:** skupiny a otevřená položka (i u výzkumu bez knih):
+  - každá skupina (místo, archiv, úřad, kniha) stojí ve vlastním pásu s celým názvem, pod ním údaje a akce skupiny
+    (u archivu ty z **Web archivu ↗**, **Chat**, **Odesláno** a **Text všech dotazů**, které výzkum nabízí). Název
+    se zalomí nejvýš na 3 řádky (na telefonu, v malém panelu a v úzkém sloupci okna Přehledu na 4); delší končí „…“
+    a odkazem **víc**, který název rozvine a skupinu nesbalí (**méně** ho zase zkrátí). Položky skupiny visí pod
+    pásem na svislé lince. Seznam bez skupin a mezititulek **Bez knihy** linku nemají;
+  - otevřená položka ukáže svůj text celý a jen jednou, ve svém řádku. Tělo začíná blokem **Čeká na** s celým
+    zadáním ručního kroku, jak ho napsal výzkum (adresy v textu jsou odkazy). Text delší než 10 řádků (na telefonu
+    na šířku 3) končí „…“ a **víc** / **méně**. Druhý řádek bloku **Adresát** říká, komu žádost jde. Položka, která
+    čeká jen na člověka, blok nemá. Pod blokem stav snímků, osoba · směr a akce;
+  - text „čeká na“ má až 1500 znaků (dřív ho aplikace ořízla na 120). Malý panel ho v řádku ukáže na 2 řádky, celý
+    při najetí;
+  - položka webu má v otevřeném těle **Otevřít web ↗** a vedle adresu webu (ne na telefonu);
+  - položka čekající na snímky začíná blokem **Dodat** s kroky ([S4.4.7](#S4.4.7)).
+
+<!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
@@ -747,23 +763,33 @@ knihy, kterou potřebují. U knihy je vidět, kolik úkolů na ni čeká, co z n
 
   V **Doporučeném** pořadí je volba **Archiv** | **Kniha**; skupiny knih stojí podle své první položky, v časovém
   pořadí podle času první položky.
-- **Pořadí Nejvíc úkolů:** skupiny jsou vždy knihy (volba skupin zmizí). Knihy jdou od té, kterou potřebuje nejvíc
-  úkolů, při shodě víc čekajících, pak číslo knihy. Uvnitř knihy jsou položky v **Doporučeném** pořadí. Položky bez
-  knihy jsou na konci ve skupinách archivů.
-- **Záhlaví knihy:**
-  - název knihy (s roky), štítek **Kniha**, **nové: N** u sbalené knihy a počet položek. Při najetí název, archiv
-    a kolik úkolů knihu potřebuje (z toho odloženo);
-  - druhý řádek: archiv · „3 čekají“ · „+M ve frontě“ (úkoly knihy, které nečekají) · snímky („240 snímků · na disku
-    12 · chybí 228“) · „převezme se N souborů“ (soubory, které leží ve složce knihy a ještě se nepřevzaly) · „web
-    archivu vyžaduje přihlášení“. V pořadí **Nejvíc úkolů** jsou počty první a tučně;
-  - akce: co jde stáhnout podle podmínek archivu ([R6.8.1](R6-awaiting-action.md#R6.8.1)) – „Ke stažení celá kniha
-    · N snímků“, „Ke stažení snímky 31–36 · 6 snímků“ nebo „Ke stažení vybrané snímky …“; **Web archivu ↗**;
-    **Otevřít složku** (složka knihy ve sdílené schránce, výzkum ji otevře bez terminálu a případně vytvoří,
-    [R6.8.2](R6-awaiting-action.md#R6.8.2)); **Chat** (ne na telefonu). Klik na akci knihu nesbalí;
+- **Pořadí Nejvíc úkolů:** skupiny jsou vždy knihy (volba skupin zmizí).
+  - nahoře knihy ke stažení (chybí jim snímky, nebo počet snímků není známý), pod nimi knihy celé na disku. V každé
+    části jdou knihy od té, kterou potřebuje nejvíc úkolů, při shodě víc čekajících, pak číslo knihy. Stejně je
+    seřazené **Urychlit stažením** ([S4.4.5](#S4.4.5));
+  - má-li fáze obě části, stojí nad nimi mezititulky „Ke stažení · 2 knihy“ a „Celé na disku · 1 kniha“ (počty ve
+    fázi). S jedinou částí mezititulek není;
+  - pod řazením stojí věta „Nahoře knihy, kterým chybí snímky: jejich stažením se vyřeší nejvíc úkolů najednou.
+    Knihy celé na disku jsou pod nimi.“ V nabídce řazení má **Nejvíc úkolů** druhý řádek „knihy ke stažení nahoře“;
+  - uvnitř knihy jsou položky v **Doporučeném** pořadí. Položky bez knihy jsou na konci ve skupinách archivů.
+- **Pás knihy** (jako pás každé skupiny, [S4.4](#S4.4)):
+  - název knihy (s roky) celý, zalomený, nejvýš na 3 řádky (4 na telefonu) a **víc**. Vpravo štítek **Kniha**,
+    **nové: N** u sbalené knihy a počet položek. Při najetí název, archiv a kolik úkolů knihu potřebuje (z toho
+    odloženo);
+  - druhý řádek: archiv, celý;
+  - třetí řádek: „12 úkolů“ (kolik úkolů knihu potřebuje) · „3 čekají“ · „+M ve frontě“ (úkoly knihy, které
+    nečekají) · „2 odložené“ · snímky („240 snímků · na disku 12 · chybí 228“, kniha celá na disku „240 snímků · celá
+    na disku“) · „převezme se N souborů“ (soubory, které leží ve složce knihy a ještě se nepřevzaly) · „web archivu
+    vyžaduje přihlášení“. „Ve frontě“ a „odložené“ jen nad nulou. V pořadí **Nejvíc úkolů** je tučně počet úkolů
+    a „chybí N“;
+  - akce pod údaji: co jde stáhnout podle podmínek archivu ([R6.8.1](R6-awaiting-action.md#R6.8.1)) – „Ke stažení
+    celá kniha · N snímků“, „Ke stažení snímky 31–36 · 6 snímků“ nebo „Ke stažení vybrané snímky …“; **Web archivu
+    ↗**; **Otevřít složku knihy** (složka knihy ve sdílené schránce, výzkum ji otevře bez terminálu a případně
+    vytvoří, [R6.8.2](R6-awaiting-action.md#R6.8.2)); **Chat** (ne na telefonu). Klik na akci knihu nesbalí;
   - kniha, kterou výzkum v přehledu knih neposlal: jen název (nebo číslo knihy), štítek a počet.
 - **Hledání** ([S4.4.2](#S4.4.2)) najde položky i podle názvu a archivu jejich knihy.
-- **Malý panel:** tlačítko pořadí a „Skupiny: Kniha ▾“ s nabídkou; záhlaví knihy jen s názvem a „N čeká“,
-  mezititulek **Bez knihy**; akce knih jsou jen v **Přehledu výzkumu**. Počty položek jsou stejné jako dosud.
+- **Malý panel:** tlačítko pořadí a „Skupiny: Kniha ▾“ s nabídkou; pás knihy jen s názvem (nejvýš 4 řádky a **víc**)
+  a „N čeká“, položky na lince, mezititulek **Bez knihy**; akce knih jsou jen v **Přehledu výzkumu**. Počty položek jsou stejné jako dosud.
 - **Hranice:**
   - volba **Kniha** a pořadí **Nejvíc úkolů** jsou jen s výzkumem, který knihy posílá, a ne u Archivu Stromu ani
     u výzkumu, který čeká na agenta. Jinak vše vypadá jako dřív a uložená volba **Kniha** nebo **Nejvíc úkolů** se
@@ -772,8 +798,11 @@ knihy, kterou potřebují. U knihy je vidět, kolik úkolů na ni čeká, co z n
 - **Ovládání:** aplikace: **Přehled výzkumu → Čeká na vyřízení**, vedle tlačítka pořadí přepínač **Skupiny**
   (**Archiv** | **Kniha** | **Bez skupin**); na telefonu (i na šířku) a v malém panelu tlačítko „Skupiny: Kniha ▾“
   s nabídkou (na telefonu list). Pořadí „⇅ … ▾“ › **Nejvíc úkolů**.
+- **Kniha položky** určuje výzkum: čekající úkol patří pod knihu, kterou je třeba prohledat
+  ([R6.8.4](R6-awaiting-action.md#R6.8.4)).
 - **Platí od:** výzkum 1.35.0, aplikace 3.30.0
 
+<!-- zdroj: app:7d7c0783 src/research-books.ts bookMetaParts (tasks · waiting · inQueue >0 · parked >0 · obrázky · pending · login), bookHeadImagesPieces (missing 0 → wholeOnDisk), research-overview-ui.ts overviewWaitingBookHead (archiv na vlastním řádku, akce v pásu, books.folderBook), research-ui.ts appendPanelWaitingBooks (název 4 řádky + víc, is-grouped) · app:1176f465 src/research-books.ts sortBooksMost (bookWholeOnDisk napřed false, pak tasks ↓, waiting ↓, číslo), research-waiting.ts phaseRows (part download / disk jen při obou částech, počty ve fázi), research-overview-ui.ts :1200 order-note books.mostNote, :1236 books.toDownload / onDiskAll, is-key (tasks, missing), table-headmenu.ts sub books.orderMostSub · strings.ts live.books.tasks, parked, wholeOnDisk, folderBook, toDownload, onDiskAll, mostNote, orderMostSub · research:8d19d4f6 src/core/books.ts bookOfTask (waitTarget) · ZADANI_DEV_knihy-zahlavi.md §1, §2, §4 -->
 <!-- zdroj: app:224a1358, 7c39e663 src/ui/waiting-order-ui.ts shownWaitingGroups (most → book; book bez knih → archive; none v doporučeném → archive), waitingGroupModesFor, storedWaitingGroupMode (klíč přepínače Skupiny) · src/research-waiting.ts phaseRows (by book, afterBooks, most: sortBooksMost, uvnitř doporučené) · src/research-books.ts booksOn, bookOfItem, bookMetaParts, bookImagesText, bookOfferText (whole/range/selected), bookHeadTitle, bookWebUrl, sortBooksMost · src/ui/research-overview-ui.ts overviewWaitingBookHead (štítek Kniha, nové, počet, meta, is-key u most), overviewWaitingBookActions (nabídka, Web archivu, Otevřít složku book?do=folder, Chat), waitingGroupsChoiceEl (segment, compact/sheet) · src/ui/research-ui.ts appendPanelWaitingBooks (malý panel: název, N čeká, Bez knihy, akce jen v přehledu) · research:b1749433 src/core/live.ts /status books (feature books; ne archiv ani čekání na agenta), bookOfTask · strings.ts live.books · dirigent:spec/105-co-nejvic-pomuze U5, K5.1 · app:docs/ZADANI_DEV_knihy-ukolu.md §1–§2 -->
 
 <a id="S4.4.5"></a>
@@ -827,6 +856,43 @@ do výzkumu, takže platí stejně jako v terminálu.
 - **Platí od:** výzkum 1.35.0, aplikace 3.30.0
 
 <!-- zdroj: app:224a1358 src/ui/books-setting-view.ts (pole, (výchozí), Vrátit výchozí, přepínač) · src/ui/research-tree-settings-ui.ts showResearchTreeSettings group books, booksBody, překreslení mimo fokus · src/research-link.ts booksSettings, POST books (400 books.body, 409 directions.archive → skupina zmizí, 503 research.busy) · strings.ts researchTree.booksGroup, booksSum, minTasks*, sameBook*, resetDefault, booksOk, booksBusyErr, booksRetry · research:b1749433 src/core/live.ts POST /books · ZADANI_DEV_knihy-ukolu.md §4 -->
+
+<a id="S4.4.7"></a>
+### S4.4.7 Položka čekající na snímky
+
+Otevřená položka, která čeká na snímky, napřed řekne, co dodat a kam, a pak ukáže kroky v pořadí, ve kterém se
+dělají. Výsledkem jsou soubory ve složce, ne odpověď.
+
+- **Kterých položek se týká:** úkol čekající na snímky (druh **Snímky**) a úkol čekající na web, kterému výzkum dal
+  složku knihy ([R6.8.4](R6-awaiting-action.md#R6.8.4)); jen když jde snímky přidat přes most. Ostatní položky jsou
+  beze změny.
+- **Blok Dodat** (na začátku těla, před **Čeká na**, [S4.4](#S4.4)): věta, které snímky jako soubory a do které
+  složky, například „Snímky 112–113 jako soubory (JPG nebo PNG) do složky knihy …“ s názvem knihy:
+  - čísla jsou ta, která ještě chybí; bez známých čísel věta čísla nemá („Snímky jako soubory (JPG nebo PNG) do
+    složky knihy …“);
+  - složka knihy, když ji výzkum má v seznamu knih se složkou a odkaz do výzkumu ji umí otevřít; jinak „… do složky
+    úkolu“. Věta jmenuje vždy tu složku, kterou otevře krok ②.
+- **Kroky** (počítač a tablet), mezi nimi šipky:
+  1. **Web archivu ↗**: web položky, jinak web knihy nebo jejího archivu;
+  2. **Otevřít složku knihy** (výzkum ji otevře bez terminálu, [R6.8.2](R6-awaiting-action.md#R6.8.2)), jinak
+     **Otevřít složku** úkolu (otevře výzkum v terminálu, se značkou terminálu);
+  3. **Mám snímky**: jediná hlavní akce, otevře místo pro nahrání snímků.
+
+  Krok, který odtud nejde, chybí a další vezme jeho číslo. Šipka se nikdy nezalomí od kroku, ke kterému vede. Pod
+  380 px šířky jsou kroky pod sebou bez šipek. Při přidávání snímků a psaní odpovědi se kroky schovají.
+- **Pod blokem:** stav snímků, místo pro přetažení, osoba · směr a odkaz **Snímky nejde získat…**. Ten otevře pole
+  **Proč snímky nejde získat** s nápovědou „Sem patří, proč snímky dodat nejde nebo co v archivu chybí. Čtení zápisu
+  sem nepatří: snímky přečte výzkum.“ Odeslání vrátí úkol do fronty jako každá odpověď
+  ([R6.7](R6-awaiting-action.md#R6.7)). Ostatní akce (**Probrat s agentem** a další, které výzkum nabízí) jsou pod **⋯**.
+- **Telefon:** jen blok **Dodat** s větou a „Snímky se ukládají na počítači.“, bez kroků. **Snímky nejde získat…**
+  otevře list odpovědi s týmž nadpisem a nápovědou.
+- **Malý panel:** okno **Mám snímky** začíná týmž blokem s kroky pod sebou; místo pro nahrání pod ním je poslední
+  krok.
+- **Ovládání:** aplikace: **Přehled výzkumu → Čeká na vyřízení**, klik na položku se snímky; v malém panelu **Mám
+  snímky**.
+- **Platí od:** aplikace 3.30.0
+
+<!-- zdroj: app:449e6962, 429839f0 src/ui/waiting-task-ui.ts waitingTakesImages (waitingActions images přes most), waitingAnswerTexts (answerImagesLabel, answerImagesHint), waitingDeliverEl (věta deliverSentence, phone → deliverPhone bez kroků, kroky deliverSteps web → folder → images, krok ② books.folderBook přes odkaz book jen s book.folder, jinak openFolder task?do=folder se značkou, ③ haveImages waiting-action--primary → openWaitingImages, deliver-pair šipka s krokem, is-column), panel dialog (column, upload: true, title haveImages) · src/research-waiting.ts waitingForImages (images, web s inbox), waitingDeliver (chybějící čísla jen u detail full; kniha jen ze seznamu se složkou), deliverSentence, deliverWebUrl (w.url, jinak bookWebUrl), deliverSteps · src/ui/research-overview-ui.ts appendWaitingTaskActions deliver (answer → link-button cannotGet, ostatní pod ⋯, na telefonu nic pod ⋯) · strings.ts live.waitingTask.deliverLabel, deliverBook, deliverTask, deliverBookAny, deliverTaskAny, deliverPhone, stepAria, cannotGet, answerImagesLabel, answerImagesHint · e2e/waiting-images.spec.ts, overview-waiting-books.spec.ts · ZADANI_DEV_knihy-zahlavi.md §5 · dirigent:prace/1117-app-knihy-zahlavi (D12, D13) -->
 
 <a id="S4.5"></a>
 ## S4.5 Akce, které otevřou výzkum

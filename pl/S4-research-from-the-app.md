@@ -663,6 +663,24 @@ w aplikacji, a co tylko w badaniu, mówi [R6.5](R6-awaiting-action.md#R6.5).
 - **Od aplikacji 3.30.0 z badaniem 1.35.0:** pozycje można pogrupować według księgi, z kolejnością **Najwięcej zadań**
   i podsekcją **Szybciej dzięki pobraniu** ([S4.4.4](#S4.4.4), [S4.4.5](#S4.4.5)); ustawienia ksiąg w oknie **Badanie
   dla drzewa** ([S4.4.6](#S4.4.6)).
+- **Od aplikacji 3.30.0:** grupy i otwarta pozycja (także przy badaniu bez ksiąg):
+  - każda grupa (miejsce, archiwum, urząd, księga) stoi we własnym pasku z pełną nazwą, pod nim dane i działania
+    grupy (przy archiwum te z **Strona archiwum ↗**, **Czat**, **Wysłano** i **Treść wszystkich zapytań**, które
+    badanie oferuje). Nazwa zawija się najwyżej na 3 wiersze (na telefonie, w małym panelu i w wąskiej kolumnie okna
+    Przeglądu na 4); dłuższa kończy się „…” i odnośnikiem **więcej**, który rozwija nazwę i nie zwija grupy
+    (**mniej** znów ją skraca). Pozycje grupy wiszą pod paskiem na pionowej linii. Lista bez grup i śródtytuł **Bez
+    księgi** linii nie mają;
+  - otwarta pozycja pokazuje swój tekst cały i tylko raz, w swoim wierszu. Treść zaczyna się blokiem **Czeka na**
+    z pełnym zleceniem ręcznego kroku, tak jak napisało je badanie (adresy w tekście są odnośnikami). Tekst dłuższy
+    niż 10 wierszy (na telefonie w poziomie 3) kończy się „…” i **więcej** / **mniej**. Drugi wiersz bloku,
+    **Adresat**, mówi, do kogo idzie prośba. Pozycja, która czeka tylko na człowieka, bloku nie ma. Pod blokiem stan
+    skanów, osoba · kierunek i działania;
+  - tekst „czeka na” ma do 1500 znaków (wcześniej aplikacja przycinała go do 120). Mały panel pokazuje go w wierszu
+    na 2 wiersze, cały po najechaniu;
+  - pozycja rodzaju **Internet** ma w otwartej treści **Otwórz stronę ↗** i obok adres strony (nie na telefonie);
+  - pozycja czekająca na skany zaczyna się blokiem **Dostarczyć** z krokami ([S4.4.7](#S4.4.7)).
+
+<!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->
 
@@ -806,25 +824,36 @@ skany.
 
   W kolejności **Zalecana** jest wybór **Archiwum** | **Księga**; grupy ksiąg stoją według swojej pierwszej pozycji,
   w kolejności według czasu według czasu pierwszej pozycji.
-- **Kolejność Najwięcej zadań:** grupy są zawsze księgami (wybór grup znika). Księgi idą od tej, której potrzebuje
-  najwięcej zadań, przy równości więcej czekających, potem numer księgi. Wewnątrz księgi pozycje są w kolejności
-  **Zalecana**. Pozycje bez księgi są na końcu w grupach archiwów.
-- **Nagłówek księgi:**
-  - tytuł księgi (z latami), etykieta **Księga**, **nowe: N** przy zwiniętej księdze i liczba pozycji. Po najechaniu
-    tytuł, archiwum i ile zadań potrzebuje księgi (w tym odłożone);
-  - drugi wiersz: archiwum · „3 czekają” · „+M w kolejce” (zadania księgi, które nie czekają) · skany („240 skanów
-    · na dysku 12 · brak 228”) · „N plików do przejęcia” (pliki, które leżą w folderze księgi i jeszcze nie zostały
-    przejęte) · „strona archiwum wymaga logowania”. W kolejności **Najwięcej zadań** liczby są pierwsze i pogrubione;
-  - działania: co można pobrać według warunków archiwum ([R6.8.1](R6-awaiting-action.md#R6.8.1)) – „Do pobrania cała
-    księga · N skanów”, „Do pobrania skany 31–36 · 6 skanów” albo „Do pobrania wybrane skany …”;
-    **Strona archiwum ↗**; **Otwórz folder** (folder księgi w folderze współdzielonym, badanie otwiera go bez
+- **Kolejność Najwięcej zadań:** grupy są zawsze księgami (wybór grup znika).
+  - na górze księgi do pobrania (brakuje im skanów albo liczba skanów nie jest znana), pod nimi księgi całe na
+    dysku. W każdej części księgi idą od tej, której potrzebuje najwięcej zadań, przy równości więcej czekających,
+    potem numer księgi. Tak samo jest posortowane **Szybciej dzięki pobraniu** ([S4.4.5](#S4.4.5));
+  - gdy faza ma obie części, nad nimi stoją śródtytuły „Do pobrania · 2 księgi” i „Całe na dysku · 1 księga” (liczby
+    w fazie). Przy jednej części śródtytułu nie ma;
+  - pod kolejnością stoi zdanie „Na górze księgi, którym brakuje skanów: ich pobranie załatwia najwięcej zadań naraz.
+    Księgi całe na dysku są niżej.” W menu kolejności **Najwięcej zadań** ma drugi wiersz „księgi do pobrania na
+    górze”;
+  - wewnątrz księgi pozycje są w kolejności **Zalecana**. Pozycje bez księgi są na końcu w grupach archiwów.
+- **Pasek księgi** (jak pasek każdej grupy, [S4.4](#S4.4)):
+  - tytuł księgi (z latami) cały, zawinięty, najwyżej na 3 wiersze (4 na telefonie) i **więcej**. Po prawej
+    etykieta **Księga**, **nowe: N** przy zwiniętej księdze i liczba pozycji. Po najechaniu tytuł, archiwum i ile
+    zadań potrzebuje księgi (w tym odłożone);
+  - drugi wiersz: archiwum, całe;
+  - trzeci wiersz: „12 zadań” (ile zadań potrzebuje księgi) · „3 czekają” · „+M w kolejce” (zadania księgi, które
+    nie czekają) · „2 odłożone” · skany („240 skanów · na dysku 12 · brak 228”, księga cała na dysku „240 skanów ·
+    cała na dysku”) · „N plików do przejęcia” (pliki, które leżą w folderze księgi i jeszcze nie zostały przejęte)
+    · „strona archiwum wymaga logowania”. „W kolejce” i „odłożone” tylko powyżej zera. W kolejności **Najwięcej
+    zadań** pogrubione są liczba zadań i „brak N”;
+  - działania pod danymi: co można pobrać według warunków archiwum ([R6.8.1](R6-awaiting-action.md#R6.8.1)) – „Do
+    pobrania cała księga · N skanów”, „Do pobrania skany 31–36 · 6 skanów” albo „Do pobrania wybrane skany …”;
+    **Strona archiwum ↗**; **Otwórz folder księgi** (folder księgi w folderze współdzielonym, badanie otwiera go bez
     terminala i w razie potrzeby tworzy, [R6.8.2](R6-awaiting-action.md#R6.8.2)); **Czat** (nie na telefonie).
     Kliknięcie w działanie nie zwija księgi;
   - księga, której badanie nie wysłało w przeglądzie ksiąg: tylko tytuł (albo numer księgi), etykieta i liczba.
 - **Wyszukiwanie** ([S4.4.2](#S4.4.2)) znajduje pozycje także według tytułu i archiwum ich księgi.
-- **Mały panel:** przycisk kolejności i „Grupy: Księga ▾” z menu; nagłówek księgi tylko z tytułem i „N czeka”,
-  śródtytuł **Bez księgi**; działania ksiąg są tylko w **Przeglądzie badania**. Liczby pozycji są takie same jak
-  dotąd.
+- **Mały panel:** przycisk kolejności i „Grupy: Księga ▾” z menu; pasek księgi tylko z tytułem (najwyżej 4 wiersze
+  i **więcej**) i „N czeka”, pozycje na linii, śródtytuł **Bez księgi**; działania ksiąg są tylko w **Przeglądzie
+  badania**. Liczby pozycji są takie same jak dotąd.
 - **Granice:**
   - wybór **Księga** i kolejność **Najwięcej zadań** są tylko z badaniem, które wysyła księgi, i nie w Archiwum Strom
     ani w badaniu, które czeka na agenta. W przeciwnym razie wszystko wygląda jak wcześniej, a zapisany wybór
@@ -833,8 +862,11 @@ skany.
 - **Obsługa:** aplikacja: **Przegląd badania → Czeka na załatwienie**, obok przycisku kolejności przełącznik **Grupy**
   (**Archiwum** | **Księga** | **Bez grup**); na telefonie (także w poziomie) i w małym panelu przycisk
   „Grupy: Księga ▾” z menu (na telefonie panel wysuwany). Kolejność „⇅ … ▾” › **Najwięcej zadań**.
+- **Księgę pozycji** określa badanie: czekające zadanie należy do księgi, którą trzeba przeszukać
+  ([R6.8.4](R6-awaiting-action.md#R6.8.4)).
 - **Obowiązuje od:** badanie 1.35.0, aplikacja 3.30.0
 
+<!-- zdroj: app:7d7c0783 src/research-books.ts bookMetaParts (tasks · waiting · inQueue >0 · parked >0 · obrázky · pending · login), bookHeadImagesPieces (missing 0 → wholeOnDisk), research-overview-ui.ts overviewWaitingBookHead (archiv na vlastním řádku, akce v pásu, books.folderBook), research-ui.ts appendPanelWaitingBooks (název 4 řádky + víc, is-grouped) · app:1176f465 src/research-books.ts sortBooksMost (bookWholeOnDisk napřed false, pak tasks ↓, waiting ↓, číslo), research-waiting.ts phaseRows (part download / disk jen při obou částech, počty ve fázi), research-overview-ui.ts :1200 order-note books.mostNote, :1236 books.toDownload / onDiskAll, is-key (tasks, missing), table-headmenu.ts sub books.orderMostSub · strings.ts live.books.tasks, parked, wholeOnDisk, folderBook, toDownload, onDiskAll, mostNote, orderMostSub · research:8d19d4f6 src/core/books.ts bookOfTask (waitTarget) · ZADANI_DEV_knihy-zahlavi.md §1, §2, §4 -->
 <!-- zdroj: app:224a1358, 7c39e663 src/ui/waiting-order-ui.ts shownWaitingGroups (most → book; book bez knih → archive; none v doporučeném → archive), waitingGroupModesFor, storedWaitingGroupMode (klíč přepínače Skupiny) · src/research-waiting.ts phaseRows (by book, afterBooks, most: sortBooksMost, uvnitř doporučené) · src/research-books.ts booksOn, bookOfItem, bookMetaParts, bookImagesText, bookOfferText (whole/range/selected), bookHeadTitle, bookWebUrl, sortBooksMost · src/ui/research-overview-ui.ts overviewWaitingBookHead (štítek Kniha, nové, počet, meta, is-key u most), overviewWaitingBookActions (nabídka, Web archivu, Otevřít složku book?do=folder, Chat), waitingGroupsChoiceEl (segment, compact/sheet) · src/ui/research-ui.ts appendPanelWaitingBooks (malý panel: název, N čeká, Bez knihy, akce jen v přehledu) · research:b1749433 src/core/live.ts /status books (feature books; ne archiv ani čekání na agenta), bookOfTask · strings.ts live.books · dirigent:spec/105-co-nejvic-pomuze U5, K5.1 · app:docs/ZADANI_DEV_knihy-ukolu.md §1–§2 -->
 
 <a id="S4.4.5"></a>
@@ -891,6 +923,45 @@ przez most do badania, więc obowiązują tak samo jak w terminalu.
 - **Obowiązuje od:** badanie 1.35.0, aplikacja 3.30.0
 
 <!-- zdroj: app:224a1358 src/ui/books-setting-view.ts (pole, (výchozí), Vrátit výchozí, přepínač) · src/ui/research-tree-settings-ui.ts showResearchTreeSettings group books, booksBody, překreslení mimo fokus · src/research-link.ts booksSettings, POST books (400 books.body, 409 directions.archive → skupina zmizí, 503 research.busy) · strings.ts researchTree.booksGroup, booksSum, minTasks*, sameBook*, resetDefault, booksOk, booksBusyErr, booksRetry · research:b1749433 src/core/live.ts POST /books · ZADANI_DEV_knihy-ukolu.md §4 -->
+
+<a id="S4.4.7"></a>
+### S4.4.7 Pozycja czekająca na skany
+
+Otwarta pozycja, która czeka na skany, najpierw mówi, co dostarczyć i dokąd, a potem pokazuje kroki w kolejności,
+w jakiej się je wykonuje. Wynikiem są pliki w folderze, a nie odpowiedź.
+
+- **Których pozycji dotyczy:** zadanie czekające na skany (rodzaj **Obrazy**) i zadanie czekające na internet,
+  któremu badanie dało folder księgi ([R6.8.4](R6-awaiting-action.md#R6.8.4)); tylko gdy skany można dodać przez
+  most. Pozostałe pozycje są bez zmian.
+- **Blok Dostarczyć** (na początku treści, przed **Czeka na**, [S4.4](#S4.4)): zdanie, które skany jako pliki i do
+  którego folderu, na przykład „Skany 112–113 jako pliki (JPG lub PNG) do folderu księgi …” z tytułem księgi:
+  - numery są te, których jeszcze brakuje; bez znanych numerów zdanie numerów nie ma („Skany jako pliki (JPG lub
+    PNG) do folderu księgi …”);
+  - folder księgi, gdy badanie ma go na liście ksiąg z folderem, a odnośnik do badania umie go otworzyć;
+    w przeciwnym razie „… do folderu zadania”. Zdanie wymienia zawsze ten folder, który otwiera krok ②.
+- **Kroki** (komputer i tablet), między nimi strzałki:
+  1. **Strona archiwum ↗**: strona pozycji, w przeciwnym razie strona księgi albo jej archiwum;
+  2. **Otwórz folder księgi** (badanie otwiera go bez terminala, [R6.8.2](R6-awaiting-action.md#R6.8.2)),
+     w przeciwnym razie **Otwórz folder** zadania (otwiera badanie w terminalu, z oznaczeniem terminala);
+  3. **Dodaj skany**: jedyne główne działanie, otwiera miejsce do przesłania skanów.
+
+  Kroku, którego stąd nie da się wykonać, nie ma, a następny bierze jego numer. Strzałka nigdy nie przechodzi do
+  innego wiersza niż krok, do którego prowadzi. Poniżej 380 px szerokości kroki są jeden pod drugim, bez strzałek.
+  Przy dodawaniu skanów i pisaniu odpowiedzi kroki się chowają.
+- **Pod blokiem:** stan skanów, miejsce do przeciągnięcia, osoba · kierunek i odnośnik **Skanów nie da się
+  uzyskać…**. Otwiera on pole **Dlaczego skanów nie da się uzyskać** z podpowiedzią „Tu należy wpisać, dlaczego
+  skanów nie da się dostarczyć lub czego brakuje w archiwum. Odczyt wpisu tu nie należy: badanie samo odczyta
+  skany.” Wysłanie przywraca zadanie do kolejki jak każda odpowiedź ([R6.7](R6-awaiting-action.md#R6.7)). Pozostałe
+  działania (**Omów z agentem** i inne, które badanie oferuje) są pod **⋯**.
+- **Telefon:** tylko blok **Dostarczyć** ze zdaniem i „Skany zapisuje się na komputerze.”, bez kroków. **Skanów nie
+  da się uzyskać…** otwiera panel wysuwany odpowiedzi z tym samym nagłówkiem i podpowiedzią.
+- **Mały panel:** okno **Dodaj skany** zaczyna się tym samym blokiem z krokami jeden pod drugim; miejsce do
+  przesłania pod nim jest ostatnim krokiem.
+- **Obsługa:** aplikacja: **Przegląd badania → Czeka na załatwienie**, kliknięcie w pozycję ze skanami; w małym
+  panelu **Dodaj skany**.
+- **Obowiązuje od:** aplikacja 3.30.0
+
+<!-- zdroj: app:449e6962, 429839f0 src/ui/waiting-task-ui.ts waitingTakesImages (waitingActions images přes most), waitingAnswerTexts (answerImagesLabel, answerImagesHint), waitingDeliverEl (věta deliverSentence, phone → deliverPhone bez kroků, kroky deliverSteps web → folder → images, krok ② books.folderBook přes odkaz book jen s book.folder, jinak openFolder task?do=folder se značkou, ③ haveImages waiting-action--primary → openWaitingImages, deliver-pair šipka s krokem, is-column), panel dialog (column, upload: true, title haveImages) · src/research-waiting.ts waitingForImages (images, web s inbox), waitingDeliver (chybějící čísla jen u detail full; kniha jen ze seznamu se složkou), deliverSentence, deliverWebUrl (w.url, jinak bookWebUrl), deliverSteps · src/ui/research-overview-ui.ts appendWaitingTaskActions deliver (answer → link-button cannotGet, ostatní pod ⋯, na telefonu nic pod ⋯) · strings.ts live.waitingTask.deliverLabel, deliverBook, deliverTask, deliverBookAny, deliverTaskAny, deliverPhone, stepAria, cannotGet, answerImagesLabel, answerImagesHint · e2e/waiting-images.spec.ts, overview-waiting-books.spec.ts · ZADANI_DEV_knihy-zahlavi.md §5 · dirigent:prace/1117-app-knihy-zahlavi (D12, D13) -->
 
 <a id="S4.5"></a>
 ## S4.5 Działania, które otwierają badanie

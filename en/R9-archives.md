@@ -394,7 +394,8 @@ research.
     that it came from the app. A task that meanwhile waits for something else stays unchanged.
 - **Limits (when images return a task):**
   - a task waiting for images is returned only by its book, and only once all images are there;
-  - a task waiting for a site (`--kind web`) is returned by the book it names, or by the only book it works in;
+  - a task waiting for a site (`--kind web`) is returned by the book it names, or by the only book it works in; from
+    research 1.35.0 instead of it by the book it waits under ([R6.8.4](R6-awaiting-action.md#R6.8.4));
   - a letter and a request to the family are returned only by the book they name;
   - a task waiting for a person to check a site is never returned (only a person answers).
 - **Method only (the method, `strom guide` and the agent's brief alike):** for images by hand, the agent names the
@@ -407,8 +408,9 @@ research.
 - **Controls:** terminal: `strom task wait T… --images B…:40-45`, `strom media add --inbox --waiting`, in What waits
   **Open the folder (M/N saved)**. App: Awaiting action, at the item in this order **Add images**, **Open
   website ↗**, **Answer**, **Discuss with the agent**, **Open folder** (the last two open the research in the
-  terminal). The state of the images shows "1 of 2 images" and, at the book, the chips **saved** / **missing**. The
-  sites of one archive wait in one group **Archive** under the archive's name, with the link **Archive website ↗**
+  terminal); from app 3.30.0 the block **Deliver** with steps and the link **Images can’t be obtained…**
+  ([S4.4.7](S4-research-from-the-app.md#S4.4.7)). The state of the images shows "1 of 2 images" and, at the book,
+  the chips **saved** / **missing**. The sites of one archive wait in one group **Archive** under the archive's name, with the link **Archive website ↗**
   and the number of images missing.
 - **Limits (the archive's group):** the group is the research's archive the task belongs to: by the task's book, the
   archive's address, the address of its book, another site of the same archive by the list of archives, or the

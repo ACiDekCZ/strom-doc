@@ -105,6 +105,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R6.8.1 | R6-awaiting-action.md | výzkum 1.35.0 | platí | Co z knihy jde stáhnout: podmínky archivu | What can be downloaded from a book: the archive's terms | Was sich aus einem Buch herunterladen lässt: die Bedingungen des Archivs | Co można pobrać z księgi: warunki archiwum |
 | R6.8.2 | R6-awaiting-action.md | výzkum 1.35.0 | platí | Snímky uložené do složky knihy | Images saved to the book's folder | Bilder im Ordner des Buchs | Skany zapisane w folderze księgi |
 | R6.8.3 | R6-awaiting-action.md | výzkum 1.35.0 | platí | Nastavení knih | The books' settings | Einstellungen der Bücher | Ustawienia ksiąg |
+| R6.8.4 | R6-awaiting-action.md | výzkum 1.35.0 | platí | Pod kterou knihou úkol čeká | Which book a task waits under | Unter welchem Buch eine Aufgabe wartet | Pod którą księgą czeka zadanie |
 | R7 | R7-when-the-agent-works.md | výzkum 1.0.0 | platí | Kdy a jak dlouho agent pracuje | When and how long the agent works | Wann und wie lange der Agent arbeitet | Kiedy i jak długo agent pracuje |
 | R7.1 | R7-when-the-agent-works.md | výzkum 1.0.0 | platí | Samostatná práce běží po sezeních | Working alone runs in sessions | Die Arbeit allein läuft in Sitzungen | Samodzielna praca przebiega sesjami |
 | R7.1.1 | R7-when-the-agent-works.md | výzkum 1.0.0 | platí | Proč běh skončí | Why a run ends | Warum ein Lauf endet | Dlaczego przebieg się kończy |
@@ -440,6 +441,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.4.4 | S4-research-from-the-app.md | výzkum 1.35.0, aplikace 3.30.0 | platí | Čeká na vyřízení podle knihy | Awaiting action by book | Wartet auf Bearbeitung nach Buch | Czeka na załatwienie według księgi |
 | S4.4.5 | S4-research-from-the-app.md | výzkum 1.35.0, aplikace 3.30.0 | platí | Urychlit stažením | Faster by downloading | Schneller durch Herunterladen | Szybciej dzięki pobraniu |
 | S4.4.6 | S4-research-from-the-app.md | výzkum 1.35.0, aplikace 3.30.0 | platí | Výzkum u stromu › Knihy | Research for this tree › Books | Forschung für diesen Stammbaum › Bücher | Badanie dla drzewa › Księgi |
+| S4.4.7 | S4-research-from-the-app.md | aplikace 3.30.0 | platí | Položka čekající na snímky | An item waiting for images | Ein Eintrag, der auf Bilder wartet | Pozycja czekająca na skany |
 | S4.5 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Akce, které otevřou výzkum | Actions that open the research | Aktionen, die die Forschung öffnen | Działania, które otwierają badanie |
 | S4.5.1 | S4-research-from-the-app.md | aplikace 3.21.0 | platí | Značky akcí | Action marks | Marken der Aktionen | Oznaczenia działań |
 | S4.5.2 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Kde akce jsou | Where the actions are | Wo die Aktionen sind | Gdzie są działania |

@@ -63,6 +63,9 @@ Rodzaj oczekiwania wyznacza sekcję, grupę i możliwe akcje: **skany**, **witry
 - **Obsługa:** terminal: `strom task wait T… --images B…:<od>-<do>`, potem `strom media add --inbox`; w **Co czeka**
   **Otwórz folder (zapisano M/N)**. Aplikacja: **Otwórz folder** (od aplikacji 3.23.0; wcześniej **Folder**).
 - Archiwa tylko przez przeglądarkę, skany z aplikacji i co robi człowiek: [R9.6](R9-archives.md#R9.6), [R9.9](R9-archives.md#R9.9).
+- **Od aplikacji 3.30.0:** otwarta pozycja w aplikacji zaczyna się blokiem **Dostarczyć** (które skany i do którego
+  folderu) z krokami **Strona archiwum ↗** → **Otwórz folder księgi** albo **Otwórz folder** → **Dodaj skany**
+  ([S4.4.7](S4-research-from-the-app.md#S4.4.7)).
 - **Obowiązuje od:** badanie 1.0.0. Budzenie po zapisaniu od 1.15.0.
 
 <!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
@@ -281,6 +284,8 @@ zadanie do kolejki, a agent przetwarza ją przy następnej pracy.
     którą zadanie czeka, a nie księga, w której tylko pracuje;
   - od badania 1.27.0 zadanie czekające na internet (`--kind web`) przywraca także jedyna księga, w której pracuje:
     zapisane tam skany są tym, na co czekało. List i zapytanie do rodziny nadal tylko księga, na którą czekają;
+  - od badania 1.35.0 zadanie czekające na internet przywraca zamiast jedynej księgi, w której pracuje, księga, pod
+    którą czeka ([R6.8.4](#R6.8.4)). Zadanie, które czeka bez księgi, przywraca tylko księga, którą wymienia;
   - zadania, które skany przywróciły wcześniej niesłusznie, przywraca do czekania poprawka `strom fixes show|run|undo
     woken-waits`: zadanie czeka jak przedtem, także z wysłaniem. Zadanie, nad którym w międzyczasie pracowano,
     zostaje. Poprawkę uruchamia tylko człowiek w terminalu, w Archiwum Strom jej nie ma. Dopóki nie zostanie
@@ -297,8 +302,9 @@ agent czyta księgę dalej online.
 
 - **Pilnuje kod:**
   - liczą się zadania otwarte (także rozpoczęte), odłożone i czekające. Księga zadania to księga (B…), którą zadanie
-    wymienia w tym, gdzie pracuje, oraz księga, na której skany czeka. Zadanie, które księgi nie wymienia, się nie
-    liczy i księga nie jest mu dopowiadana: liczby są dolną granicą, nie szacunkiem;
+    wymienia w tym, gdzie pracuje, księga, na której skany czeka, a przy czekającym zadaniu księga, którą dał mu
+    agent (`--book`, [R6.8.4](#R6.8.4)). Zadanie, które księgi nie wymienia, się nie liczy i księga nie jest mu
+    dopowiadana: liczby są dolną granicą, nie szacunkiem;
   - księga scalona z inną liczy się jako ta druga, księga wycofana jako żadna;
   - kolejność: najwięcej zadań, przy równości najwięcej czekających, potem numer księgi;
   - przy księdze: archiwum, lata, dostęp, ile zadań jej potrzebuje (w tym czekające i odłożone), skany łącznie, na
@@ -408,3 +414,46 @@ Od ilu zadań księga jest proponowana i czy kolejka kontynuuje w tej samej ksi�
 - **Obowiązuje od:** badanie 1.35.0
 
 <!-- zdroj: research:b1749433 src/core/config.ts BOOKS_MIN_TASKS 5, BOOKS_MIN_TASKS_MAX 999, SETTINGS books.minTasks, queue.sameBook (tree, no|yes), validace „whole number from 1 to 999“ · src/cli/menu-settings.ts booksSettings (1 ui.books.min, 2 ui.books.same), položka Archivy ui.archives.books (poslední) · src/core/live.ts POST /books (config set/unset --for-tree), booksSettings · assets/lang/cs.json ui.books.settings.title, ui.books.min, ui.books.same · CHANGELOG.cs.md 1.35.0 „Knihy v aplikaci Strom a jejich nastavení“ -->
+
+<a id="R6.8.4"></a>
+### R6.8.4 Pod którą księgą czeka zadanie
+
+Czekające zadanie należy do księgi, którą trzeba przeszukać, a nie do księgi, w której agent znalazł ślad (notatka
+w księdze urodzeń, która prowadzi do księgi ślubów innej parafii). Pod tą księgą pokazuje je aplikacja Strom
+w grupach według księgi ([S4.4.4](S4-research-from-the-app.md#S4.4.4)) i do jej folderu zapisuje się skany dla
+zadania czekającego na internet.
+
+- **Pilnuje kod:** księga czekającego zadania, w tej kolejności:
+  1. zadanie czeka na skany z numerami (`--images`): księga tych skanów;
+  2. księga, którą zadaniu dał agent (`strom task wait|edit --book B…`);
+  3. jedyna księga, której numer (B…) stoi w tekście tego, na co zadanie czeka, i która nie jest wśród ksiąg,
+     w których zadanie pracuje. Numerów więcej: obowiązują kolejne punkty;
+  4. zadanie czeka na internet albo na sprawdzenie witryny (`--kind web`, `--check`), pracuje w jednej księdze i obok
+     niej wymienia wolnym tekstem miejsce albo księgę, której dopiero się szuka: **bez księgi** (w aplikacji pod
+     **Bez księgi**). Numery rekordów (B…, R…) nie liczą się jako wolny tekst;
+  5. w przeciwnym razie jedyna księga, w której zadanie pracuje; żadna albo więcej: bez księgi.
+- **Co od tego zależy:**
+  - księga pozycji w aplikacji Strom i liczby ksiąg ([R6.8](#R6.8); księga z `--book` liczy się obok księgi, w której
+    zadanie pracuje);
+  - zadanie czekające na internet: jego folder w folderze współdzielonym (w **Co czeka** **Otwórz folder**,
+    w aplikacji blok **Dostarczyć**, [S4.4.7](S4-research-from-the-app.md#S4.4.7)) i powrót zadania po zapisaniu do
+    niego skanów ([R6.7.2](#R6.7.2)). Zadanie bez księgi folderu nie ma, a folder księgi, w której znaleziono ślad,
+    nie jest mu proponowany.
+- **Granice:**
+  - tylko dla czekających zadań. Kolejka, zadania otwarte i odłożone zostają przy księdze, w której zadanie pracuje;
+  - nic się nie nadpisuje: punkty 3–5 oblicza się przy odczycie, tekst oczekiwania ani odpowiedzi ludzi się nie
+    zmieniają;
+  - `--book` tylko przy czekającym zadaniu i tylko z istniejącą księgą (nieznana albo wycofana to błąd). Z `--images`
+    tylko ta sama księga co przy skanach, inna to błąd. Nowe ustawienie oczekiwania `--book` usuwa ([R6.2](#R6.2)).
+    Starszy strom pole zostawia bez zmian.
+- **Agent przy zadaniu:** `strom task show` pokazuje wiersz `book B… — the book to be searched`. Gdy zadanie czekające
+  na internet albo na sprawdzenie witryny księgi nie ma, wypis `strom task wait` mówi agentowi, jak ją dać, gdy
+  zostanie założona (`strom recordset add`, potem `strom task edit T… --book B…`).
+- **Tylko metodyka:** przewodnik agenta: księga do przeszukania, nie ta, w której znaleziono ślad: `--book B…`.
+- **Dlaczego:** lepiej żadna księga niż cudza.
+- **Obsługa:** terminal: `strom task wait T… --kind web --book B… --on "<co>"`, `strom task edit T… --book B…`,
+  `strom task show T…`. Aplikacja: **Czeka na załatwienie**, grupy według księgi
+  ([S4.4.4](S4-research-from-the-app.md#S4.4.4)).
+- **Obowiązuje od:** badanie 1.35.0
+
+<!-- zdroj: research:8d19d4f6 src/core/books.ts waitTarget (jen waiting bez awaits: wait.book → jediné živé B… ve waitingOn mimo where (BOOK_ID_IN) → null pro web/check s jednou knihou ve where a volným textem (RECORD_ID) → undefined), bookOfTask (awaits → waitTarget → jediná kniha where), booksOfTask (+ wait.book u waiting) · src/core/inboxwait.ts webWaitBook, inboxWaitOf (web) · src/commands/media.ts wakeWaiting (web: named || webWaitBook) · src/core/waiting.ts:441 book · src/core/live.ts:2180 · src/commands/tasks.ts waitOptions --book (requireRecord recordset, liveBook → chyba vzatá zpět, s --images jen táž kniha), task edit (jen waiting, task.not-waiting), taskDetail řádek book, task wait řádek pro web/check bez knihy · src/core/model.ts wait.book · assets/method/core.md (locate, request) „The book to search, not the one the trail was found in: `--book B…`.“ · CHANGELOG.cs.md 1.35.0 „Čekající úkol pod knihou, kterou je třeba prohledat“ · dirigent:prace/1117-vyzkum-kniha-cile (Návrh A–F, „lepší žádná kniha než cizí“), 1117-research-kniha-cile -->

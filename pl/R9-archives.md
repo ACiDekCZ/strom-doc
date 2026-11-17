@@ -396,7 +396,7 @@ nich folder. Zadanie wraca do kolejki samo, gdy w badaniu są wszystkie jego ska
 - **Granice (kiedy skany przywracają zadanie):**
   - zadanie czekające na skany przywraca tylko jego księga, i to dopiero gdy są wszystkie;
   - zadanie czekające na witrynę (`--kind web`) przywraca księga, którą wymienia, albo jedyna księga, w której
-    pracuje;
+    pracuje; od badania 1.35.0 zamiast niej księga, pod którą czeka ([R6.8.4](R6-awaiting-action.md#R6.8.4));
   - list i zapytanie do rodziny przywraca tylko księga, którą wymieniają;
   - zadania czekającego na sprawdzenie witryny przez człowieka skany nie przywracają nigdy (odpowiada tylko człowiek).
 - **Tylko metodyka (metodyka, `strom guide` i brief agenta jednakowo):** przy ręcznych skanach agent podaje księgę,
@@ -409,7 +409,8 @@ nich folder. Zadanie wraca do kolejki samo, gdy w badaniu są wszystkie jego ska
 - **Obsługa:** terminal: `strom task wait T… --images B…:40-45`, `strom media add --inbox --waiting`, w Co czeka
   **Otwórz folder (zapisano M/N)**. Aplikacja: Czeka na załatwienie, przy pozycji w tej kolejności **Dodaj
   skany**, **Otwórz stronę ↗**, **Odpowiedz**, **Omów z agentem**, **Otwórz folder** (dwa ostatnie otwierają badanie
-  w terminalu). Stan skanów pokazuje „1 z 2 skanów”, a przy księdze chipy **zapisany** / **brak**. Witryny jednego
+  w terminalu); od aplikacji 3.30.0 blok **Dostarczyć** z krokami i odnośnik **Skanów nie da się uzyskać…**
+  ([S4.4.7](S4-research-from-the-app.md#S4.4.7)). Stan skanów pokazuje „1 z 2 skanów”, a przy księdze chipy **zapisany** / **brak**. Witryny jednego
   archiwum czekają w jednej grupie **Archiwum** pod nazwą archiwum, z odnośnikiem **Strona archiwum ↗** i liczbą
   brakujących skanów.
 - **Granice (grupa archiwum):** grupą jest archiwum badania, do którego należy zadanie: według księgi zadania, adresu
