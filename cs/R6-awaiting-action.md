@@ -328,9 +328,9 @@ Co výzkum z knihy nabídne, říkají podmínky archivu. Seznam archivů, kter�
   - rozhoduje adresa knihy, jinak adresa jejího archivu;
   - potřebné snímky znají jen úkoly, které na snímky čekají. Kniha bez čekajícího úkolu se tak mimo archivy, které
     dovolují celou knihu, nenabídne.
-- **Příklady ze seznamu:** celá kniha: eBadatelna SOA Praha (stahovat mohou registrovaní), Východočeské archivy
-  (ARON), Landesarchiv Nordrhein-Westfalen, APERTUS (Rheinland-Pfalz), AGAD; jen vybrané snímky: DigiArchiv SOA
-  Třeboň (písemná odpověď archivu); nic: FamilySearch, Archion. Moravský zemský archiv v seznamu údaj nemá
+- **Příklady ze seznamu:** celá kniha: eBadatelna SOA Praha (stahovat mohou registrovaní) a další archivy, jejichž
+  podmínky to dovolují; jen vybrané snímky: DigiArchiv SOA Třeboň (písemná odpověď archivu); nic: FamilySearch,
+  Archion. Moravský zemský archiv v seznamu údaj nemá
   (doslovná citace chybí): nabízejí se potřebné snímky ([R9.10.1](R9-archives.md#R9.10.1)).
 - **Hranice:** podmínky archivu mají přednost před nabídkou. Celou knihu aplikace i terminál nabídnou, jen když to
   podmínky říkají.

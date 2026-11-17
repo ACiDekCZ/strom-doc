@@ -368,9 +368,9 @@ wörtlichen Zitat der Bedingungen, ihrer Seite oder einer schriftlichen Antwort 
   - es entscheidet die Adresse des Buchs, sonst die Adresse seines Archivs;
   - die benötigten Bilder kennen nur Aufgaben, die auf Bilder warten. Ein Buch ohne wartende Aufgabe wird daher außer
     bei Archiven, die das ganze Buch erlauben, nicht angeboten.
-- **Beispiele aus der Liste:** das ganze Buch: eBadatelna SOA Praha (herunterladen dürfen Registrierte),
-  Východočeské archivy (ARON), Landesarchiv Nordrhein-Westfalen, APERTUS (Rheinland-Pfalz), AGAD; nur ausgewählte
-  Bilder: DigiArchiv SOA Třeboň (schriftliche Antwort des Archivs); nichts: FamilySearch, Archion. Moravský zemský
+- **Beispiele aus der Liste:** das ganze Buch: eBadatelna SOA Praha (herunterladen dürfen Registrierte) und
+  weitere Archive, deren Bedingungen es erlauben; nur ausgewählte Bilder: DigiArchiv SOA Třeboň (schriftliche
+  Antwort des Archivs); nichts: FamilySearch, Archion. Moravský zemský
   archiv hat in der Liste keine Angabe (das wörtliche Zitat fehlt): angeboten werden die benötigten Bilder
   ([R9.10.1](R9-archives.md#R9.10.1)).
 - **Grenzen:** die Bedingungen des Archivs gehen dem Angebot vor. Das ganze Buch bieten App und Terminal nur an, wenn

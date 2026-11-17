@@ -348,9 +348,9 @@ archiwum.
   - rozstrzyga adres księgi, w przeciwnym razie adres jej archiwum;
   - potrzebne skany znają tylko zadania, które na skany czekają. Księga bez czekającego zadania nie zostaje więc
     zaproponowana poza archiwami, które pozwalają na całą księgę.
-- **Przykłady z listy:** cała księga: eBadatelna SOA Praha (pobierać mogą zarejestrowani), Východočeské archivy
-  (ARON), Landesarchiv Nordrhein-Westfalen, APERTUS (Rheinland-Pfalz), AGAD; tylko wybrane skany: DigiArchiv SOA
-  Třeboň (pisemna odpowiedź archiwum); nic: FamilySearch, Archion. Moravský zemský archiv nie ma na liście tej
+- **Przykłady z listy:** cała księga: eBadatelna SOA Praha (pobierać mogą zarejestrowani) i inne archiwa,
+  których warunki na to pozwalają; tylko wybrane skany: DigiArchiv SOA Třeboň (pisemna odpowiedź archiwum); nic:
+  FamilySearch, Archion. Moravský zemský archiv nie ma na liście tej
   informacji (brak dosłownego cytatu): proponowane są potrzebne skany ([R9.10.1](R9-archives.md#R9.10.1)).
 - **Granice:** warunki archiwum mają pierwszeństwo przed propozycją. Całą księgę aplikacja i terminal zaproponują
   tylko wtedy, gdy mówią tak warunki.

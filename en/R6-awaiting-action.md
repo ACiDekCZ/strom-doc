@@ -353,9 +353,9 @@ written answer of the archive.
   - the book's address decides, otherwise the address of its archive;
   - only tasks that wait for images know which images are needed. A book without a waiting task is therefore not
     offered, except at archives that allow the whole book.
-- **Examples from the list:** the whole book: eBadatelna SOA Praha (registered users may download), Východočeské
-  archivy (ARON), Landesarchiv Nordrhein-Westfalen, APERTUS (Rheinland-Pfalz), AGAD; only selected images: DigiArchiv
-  SOA Třeboň (a written answer of the archive); nothing: FamilySearch, Archion. Moravský zemský archiv has no entry in
+- **Examples from the list:** the whole book: eBadatelna SOA Praha (registered users may download) and other
+  archives whose terms allow it; only selected images: DigiArchiv SOA Třeboň (a written answer of the
+  archive); nothing: FamilySearch, Archion. Moravský zemský archiv has no entry in
   the list (the word-for-word quotation is missing): the images needed are offered
   ([R9.10.1](R9-archives.md#R9.10.1)).
 - **Limits:** the archive's terms come before the offer. The app and the terminal offer the whole book only when the
