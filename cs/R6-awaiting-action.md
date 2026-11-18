@@ -62,6 +62,8 @@ určuje oddíl, skupinu a možné akce: **snímky**, **ověřit web**, **svolen�
 - **Od aplikace 3.30.0:** otevřená položka v aplikaci začíná blokem **Dodat** (které snímky a do které složky) s kroky
   **Web archivu ↗** → **Otevřít složku knihy** nebo **Otevřít složku** → **Mám snímky**
   ([S4.4.7](S4-research-from-the-app.md#S4.4.7)).
+- **Od výzkumu 1.35.0:** čekání na snímky zapsané jinak (snímky jen ve slovech, víc knih, kniha, kterou výzkum
+  nemá) `strom task wait` nezapíše a `strom task audit` takové úkoly najde a opraví ([R6.9](#R6.9)).
 - **Platí od:** výzkum 1.0.0. Probuzení po uložení od 1.15.0.
 
 <!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
@@ -431,3 +433,97 @@ web.
 - **Platí od:** výzkum 1.35.0
 
 <!-- zdroj: research:8d19d4f6 src/core/books.ts waitTarget (jen waiting bez awaits: wait.book → jediné živé B… ve waitingOn mimo where (BOOK_ID_IN) → null pro web/check s jednou knihou ve where a volným textem (RECORD_ID) → undefined), bookOfTask (awaits → waitTarget → jediná kniha where), booksOfTask (+ wait.book u waiting) · src/core/inboxwait.ts webWaitBook, inboxWaitOf (web) · src/commands/media.ts wakeWaiting (web: named || webWaitBook) · src/core/waiting.ts:441 book · src/core/live.ts:2180 · src/commands/tasks.ts waitOptions --book (requireRecord recordset, liveBook → chyba vzatá zpět, s --images jen táž kniha), task edit (jen waiting, task.not-waiting), taskDetail řádek book, task wait řádek pro web/check bez knihy · src/core/model.ts wait.book · assets/method/core.md (locate, request) „The book to search, not the one the trail was found in: `--book B…`.“ · CHANGELOG.cs.md 1.35.0 „Čekající úkol pod knihou, kterou je třeba prohledat“ · dirigent:prace/1117-vyzkum-kniha-cile (Návrh A–F, „lepší žádná kniha než cizí“), 1117-research-kniha-cile -->
+
+<a id="R6.9"></a>
+## R6.9 Kontrola zápisu čekání: `strom task audit`
+
+Úkol čekající na snímky, které člověk uloží ručně, se vrátí do fronty sám jen tehdy, když je jeho čekání zapsané
+tak, jak ho strom potřebuje: snímky jedné knihy výzkumu podle čísel (`--images B…:<čísla>`), nebo podle knihy
+(`--kind web --book B…`). Jedna kniha na úkol, kniha je ve výzkumu (B…) a má složku ve sdílené schránce.
+`strom task audit` najde čekající úkoly zapsané jinak a ke každému řekne opravu.
+
+- **Hlídá kód:**
+  - kontrolují se čekající úkoly, které nejsou vzaté zpět, nečekají na prověření ani na povolení a nečekají na
+    dopis, rodinu ani na jiné;
+  - nálezy:
+
+    | Kód | Co je špatně |
+    |---|---|
+    | `images-as-text` | snímky knihy jsou jen ve slovech, bez knihy a čísel; i čekání podle knihy, jehož text jmenuje přesná čísla snímků té knihy |
+    | `several-books` | jedno čekání chce snímky dvou nebo více knih |
+    | `book-unknown` | kniha, kterou výzkum nemá (B…) |
+    | `folder-missing` | úkolu chybí jeho složka ve sdílené schránce; jen když se čekání jinak nemění |
+
+  - odhad („≈ sn. 160“, „asi“, „cca“) není číslo snímku. Slova pro snímky se poznají česky, německy, anglicky
+    a polsky;
+  - u každého nálezu je oprava, kterou strom navrhne: celá (`whole`), zčásti (`part`) nebo žádná (`none`, opravu
+    napíše agent), a přesné příkazy ([R6.9.1](#R6.9.1));
+  - jen čte, zdarma, bez sítě. Úkol, u kterého člověk čekání nechal, jak je, se nevypíše ([R6.9.1](#R6.9.1)).
+- **Agent u úkolu:** nález se agentovi řekne, když čekání zapisuje, a strom takové čekání nezapíše
+  ([R6.9.2](#R6.9.2)).
+- **Ovládání:** terminál:
+  - `strom task audit`: všechny čekající úkoly s nálezem; na konci kontrolní seznam čekání (`each wait: …`).
+    Bez nálezu „every waiting task's wait is as strom needs it“;
+  - `strom task audit T…`: jeden úkol; `--all` i úkoly, které člověk nechal, jak jsou; `--json`.
+
+  Aplikace: značka a oprava v **Čeká na vyřízení** ([S4.4.8](S4-research-from-the-app.md#S4.4.8)).
+- **Platí od:** výzkum 1.35.0
+
+<!-- zdroj: research:61c95c53, 1fe47bf3, 15312d00, 6775c199 src/core/taskaudit.ts audited (waiting, ne retracted, awaitsCheck, awaitsPermission, ne letter/family/other), findingsOf (images-as-text, several-books, book-unknown, folder-missing jen se sdílenou schránkou a bez jiného přepisu), fixOf (can whole/part/none), odhad ≈/asi/cca není číslo, slova snímků cs/de/en/pl, WAIT_CHECKLIST · src/commands/tasks.ts task audit (--all, --json, „every waiting task's wait is as strom needs it“, each wait: checklist) · strom help task audit („Reads only, free, no network.“) · CHANGELOG.cs.md 1.35.0 · app:docs/ZADANI_VYZKUM_kontrola-ukolu.md „Odpověď výzkumu (U2)“ · dirigent:spec/109 K1.3 -->
+
+<a id="R6.9.1"></a>
+### R6.9.1 Oprava v jednom kroku a cesta zpět
+
+Oprava se zapíše jednou operací a jde vzít zpět, dokud se nic z ní nezměnilo. Co člověk chce nechat, jak je, může
+nechat.
+
+- **Hlídá kód:**
+  - `--fix` (operace `task.audit-fix`, jeden commit): úkol čeká na snímky jedné knihy, podle čísel, jinak podle
+    knihy. Každá další kniha dostane vlastní úkol se stejným co, proč a hotovo, když, oddělený od původního. Text
+    čekání se rozdělí tak, aby se žádné slovo neztratilo: nadpis seznamu jde s každým úkolem, závěr a části bez
+    knihy zůstanou u původního, položka knihy zůstane celá;
+  - kniha, kterou výzkum nemá, zůstane čekáním ve slovech ve vlastním úkolu: napřed kniha
+    (`strom recordset add`), pak `--images`. Když jsou všechny knihy neznámé, strom nic nemění a opravu napíše agent;
+  - oprava založí složky a vezme snímky, které v nich už leží: úkol, který má všechny snímky, se vrátí do fronty;
+  - `--expect <stamp>`: zapíše jen úkol, který je stejný jako při návrhu opravy, jinak odmítne (`audit.changed`).
+    Úkol, který už nečeká, nebo oprava bez změny se odmítne (`audit.none`);
+  - `--unfix` (operace `task.audit-unfix`) vrátí opravu, dokud se žádný z jejích úkolů nezměnil, jinak
+    `audit.changed`. Oddělené úkoly se vezmou zpět (nikdy se nesmažou), původní úkol čeká přesně jako dřív. Uložené
+    snímky zůstanou zaregistrované;
+  - `--keep` (operace `task.audit-keep`): člověk nechá čekání, jak je. Jen člověk, agentovi strom `--keep`
+    i `--unkeep` odmítne (`audit.person-only`). Platí, dokud se čekání nezmění a nové nálezy jsou mezi těmi, které
+    člověk nechal. Zapíše se, kdo a kde to dal (terminál nebo aplikace). `--unkeep` (operace `task.audit-unkeep`) to
+    vezme zpět.
+- **Historie úkolu:** `strom task show T…` ukáže řádek „audit  kept as it is …“ nebo „fixed by the audit … (T…
+  split off) — undone by strom task audit T… --unfix“.
+- **Aplikace:** most dává u čekající položky nález (`audit`: druhy, oprava, razítko), náhled opravy
+  (`GET <token>/waiting/<T…>/fix`) a zápis (`POST <token>/waiting/<T…>` s `do: fix|unfix|keep|unkeep`
+  a `expect`), funkce `tasks.audit`. Platí i v Archivu Stromu
+  ([S4.4.8](S4-research-from-the-app.md#S4.4.8), [S4.4.9](S4-research-from-the-app.md#S4.4.9)).
+- **Ovládání:** terminál: `strom task audit T… --fix`, `--unfix`, `--keep`, `--unkeep`, `--expect <stamp>`,
+  `--dry-run`. Aplikace: **Opravit**, **Vrátit** v oznámení, **Nechat, jak je**.
+- **Platí od:** výzkum 1.35.0
+
+<!-- zdroj: research:61c95c53, 15312d00, 6775c199 src/core/taskaudit.ts fixOf (wait-images / wait-book, split, left book-unknown, jen neznámé → nic), applyAuditFix (atomicky, expect → audit.changed, bez změn audit.none, before, rozdělení textu, splitFrom, op task.audit-fix), takeWaiting, sealAuditFix, undoAuditFix (audit.changed, dropped + retracted, original přesně, snímky zůstanou, op task.audit-unfix), keepAudit (auditKept at, by, givenIn, kinds, wait; podmnožina druhů; op task.audit-keep / task.audit-unkeep) · src/commands/tasks.ts task audit (--fix, --unfix, --keep, --unkeep, --expect jen s fix/keep, audit.person-only, STROM_FOR_APP → by app), task show řádky audit · strom help task audit · app:docs/ZADANI_VYZKUM_kontrola-ukolu.md „Odpověď výzkumu (U2)“ (most, kódy 409/404/503/423/507, i v archivu) · dirigent:spec/109 K1.5 -->
+
+<a id="R6.9.2"></a>
+### R6.9.2 Čekání se nezapíše špatně a agent se to dozví
+
+Strom čekání s nálezem nezapíše a agentovi řekne, co u úkolu ještě není, jak má být.
+
+- **Hlídá kód:**
+  - `strom task wait` a `strom task edit` s `--on`, `--kind`, `--url` nebo `--book` čekání s nálezem odmítnou
+    (`task.wait-images`) a dají přesné příkazy. Chybějící složka se neodmítá;
+  - po `strom task wait` dostane agent řádek „check the task's wait: …“ s kontrolním seznamem, když čekání ještě
+    není, jak má být. `strom task park`, jehož důvod jmenuje snímky knihy výzkumu, agentovi řekne, že ručně
+    ukládané snímky jsou čekání, ne odložení, s přesným příkazem;
+  - `strom session close` řekne totéž za úkoly sezení (`--json`: `audit`); `strom session finish` ne;
+  - `strom chat --task T…` u úkolu s nálezem začne pro agenta větou „Jeho čekání není zapsané tak, jak ho strom
+    potřebuje (…). Spusť `strom task audit T…`, navrhni mi opravu a zapiš ji, až s ní tady budu souhlasit.“
+- **Hranice:** agent opravu zapíše až po souhlasu člověka v rozhovoru. Nechat čekání, jak je, smí jen člověk
+  ([R6.9.1](#R6.9.1)).
+- **Ovládání:** terminál: `strom task wait`, `strom task edit`, `strom task park`, `strom session close`,
+  `strom chat --task T…`. Aplikace: **Probrat s agentem** u nálezu ([S4.4.8](S4-research-from-the-app.md#S4.4.8)).
+- **Platí od:** výzkum 1.35.0
+
+<!-- zdroj: research:61c95c53, 15312d00 src/core/taskaudit.ts refuseWait (task.wait-images, kromě folder-missing, waitCommands), WAIT_CHECKLIST · src/commands/tasks.ts checkWaitLine, parkedForImages · src/commands/session.ts:373 session close (check of each wait, --json audit) · assets/lang/cs.json ui.chat.task.audit.say, ui.chat.task.audit.images/books/unknown/folder.say · CHANGELOG.cs.md 1.35.0 · app:docs/ZADANI_VYZKUM_kontrola-ukolu.md „Odpověď výzkumu (U2)“ K1.1, K1.2, V11 · dirigent:spec/109 K1.1, K1.2 -->

@@ -66,6 +66,9 @@ Rodzaj oczekiwania wyznacza sekcję, grupę i możliwe akcje: **skany**, **witry
 - **Od aplikacji 3.30.0:** otwarta pozycja w aplikacji zaczyna się blokiem **Dostarczyć** (które skany i do którego
   folderu) z krokami **Strona archiwum ↗** → **Otwórz folder księgi** albo **Otwórz folder** → **Dodaj skany**
   ([S4.4.7](S4-research-from-the-app.md#S4.4.7)).
+- **Od badania 1.35.0:** czekania na skany zapisanego inaczej (skany tylko w słowach, kilka ksiąg, księga, której
+  badanie nie ma) `strom task wait` nie zapisze, a `strom task audit` takie zadania znajduje i poprawia
+  ([R6.9](#R6.9)).
 - **Obowiązuje od:** badanie 1.0.0. Budzenie po zapisaniu od 1.15.0.
 
 <!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
@@ -457,3 +460,104 @@ zadania czekającego na internet.
 - **Obowiązuje od:** badanie 1.35.0
 
 <!-- zdroj: research:8d19d4f6 src/core/books.ts waitTarget (jen waiting bez awaits: wait.book → jediné živé B… ve waitingOn mimo where (BOOK_ID_IN) → null pro web/check s jednou knihou ve where a volným textem (RECORD_ID) → undefined), bookOfTask (awaits → waitTarget → jediná kniha where), booksOfTask (+ wait.book u waiting) · src/core/inboxwait.ts webWaitBook, inboxWaitOf (web) · src/commands/media.ts wakeWaiting (web: named || webWaitBook) · src/core/waiting.ts:441 book · src/core/live.ts:2180 · src/commands/tasks.ts waitOptions --book (requireRecord recordset, liveBook → chyba vzatá zpět, s --images jen táž kniha), task edit (jen waiting, task.not-waiting), taskDetail řádek book, task wait řádek pro web/check bez knihy · src/core/model.ts wait.book · assets/method/core.md (locate, request) „The book to search, not the one the trail was found in: `--book B…`.“ · CHANGELOG.cs.md 1.35.0 „Čekající úkol pod knihou, kterou je třeba prohledat“ · dirigent:prace/1117-vyzkum-kniha-cile (Návrh A–F, „lepší žádná kniha než cizí“), 1117-research-kniha-cile -->
+
+<a id="R6.9"></a>
+## R6.9 Kontrola zapisu czekania: `strom task audit`
+
+Zadanie czekające na skany, które człowiek zapisuje ręcznie, wraca do kolejki samo tylko wtedy, gdy jego czekanie
+jest zapisane tak, jak potrzebuje tego strom: skany jednej księgi badania według numerów (`--images B…:<numery>`)
+albo według księgi (`--kind web --book B…`). Jedna księga na zadanie; księga jest w badaniu (B…) i ma folder
+w folderze współdzielonym. `strom task audit` znajduje czekające zadania zapisane inaczej i do każdego podaje
+poprawkę.
+
+- **Pilnuje kod:**
+  - sprawdzane są czekające zadania, które nie są wycofane, nie czekają na sprawdzenie ani na zgodę i nie czekają na
+    list, rodzinę ani na inne;
+  - ustalenia:
+
+    | Kod | Co jest źle |
+    |---|---|
+    | `images-as-text` | skany księgi są tylko w słowach, bez księgi i numerów; także czekanie według księgi, którego tekst wymienia dokładne numery skanów tej księgi |
+    | `several-books` | jedno czekanie chce skanów dwóch lub więcej ksiąg |
+    | `book-unknown` | księga, której badanie nie ma (B…) |
+    | `folder-missing` | zadaniu brakuje jego folderu w folderze współdzielonym; tylko gdy czekanie poza tym się nie zmienia |
+
+  - szacunek („≈ sk. 160”, „około”, „ok.”) nie jest numerem skanu. Słowa oznaczające skany rozpoznaje się po czesku,
+    niemiecku, angielsku i polsku;
+  - przy każdym ustaleniu jest poprawka, którą strom proponuje: cała (`whole`), częściowa (`part`) lub żadna
+    (`none`, poprawkę napisze agent), i dokładne polecenia ([R6.9.1](#R6.9.1));
+  - tylko czyta, za darmo, bez sieci. Zadanie, przy którym człowiek zostawił czekanie bez zmian, nie jest wypisywane
+    ([R6.9.1](#R6.9.1)).
+- **Agent przy zadaniu:** agent dowiaduje się o ustaleniu, gdy zapisuje czekanie, a strom takiego czekania nie
+  zapisze ([R6.9.2](#R6.9.2)).
+- **Obsługa:** terminal:
+  - `strom task audit`: wszystkie czekające zadania z ustaleniem; na końcu lista kontrolna czekania (`each wait: …`).
+    Bez ustalenia „every waiting task's wait is as strom needs it”;
+  - `strom task audit T…`: jedno zadanie; `--all` także zadania, które człowiek zostawił bez zmian; `--json`.
+
+  Aplikacja: oznaczenie i poprawka w **Czeka na załatwienie** ([S4.4.8](S4-research-from-the-app.md#S4.4.8)).
+- **Obowiązuje od:** badanie 1.35.0
+
+<!-- zdroj: research:61c95c53, 1fe47bf3, 15312d00, 6775c199 src/core/taskaudit.ts audited (waiting, ne retracted, awaitsCheck, awaitsPermission, ne letter/family/other), findingsOf (images-as-text, several-books, book-unknown, folder-missing jen se sdílenou schránkou a bez jiného přepisu), fixOf (can whole/part/none), odhad ≈/asi/cca není číslo, slova snímků cs/de/en/pl, WAIT_CHECKLIST · src/commands/tasks.ts task audit (--all, --json, „every waiting task's wait is as strom needs it“, each wait: checklist) · strom help task audit („Reads only, free, no network.“) · CHANGELOG.cs.md 1.35.0 · app:docs/ZADANI_VYZKUM_kontrola-ukolu.md „Odpověď výzkumu (U2)“ · dirigent:spec/109 K1.3 -->
+
+<a id="R6.9.1"></a>
+### R6.9.1 Poprawka w jednym kroku i droga z powrotem
+
+Poprawka zapisuje się jedną operacją i można ją wycofać, dopóki nic z niej się nie zmieniło. Co człowiek chce
+zostawić bez zmian, może zostawić.
+
+- **Pilnuje kod:**
+  - `--fix` (operacja `task.audit-fix`, jeden commit): zadanie czeka na skany jednej księgi, według numerów,
+    w przeciwnym razie według księgi. Każda kolejna księga dostaje własne zadanie z tym samym co, dlaczego i gotowe,
+    gdy, oddzielone od pierwotnego. Tekst czekania dzieli się tak, żeby żadne słowo nie zginęło: nagłówek listy idzie
+    z każdym zadaniem, zakończenie i części bez księgi zostają przy pierwotnym, pozycja księgi zostaje cała;
+  - księga, której badanie nie ma, zostaje czekaniem w słowach we własnym zadaniu: najpierw księga
+    (`strom recordset add`), potem `--images`. Gdy wszystkie księgi są nieznane, strom niczego nie zmienia, a poprawkę
+    napisze agent;
+  - poprawka tworzy foldery i bierze skany, które już w nich leżą: zadanie, które ma wszystkie skany, wraca do
+    kolejki;
+  - `--expect <stamp>`: zapisuje tylko zadanie, które jest takie samo jak przy propozycji poprawki, w przeciwnym
+    razie odmawia (`audit.changed`). Zadanie, które już nie czeka, lub poprawka bez zmiany zostaje odrzucona
+    (`audit.none`);
+  - `--unfix` (operacja `task.audit-unfix`) wycofuje poprawkę, dopóki żadne z jej zadań się nie zmieniło,
+    w przeciwnym razie `audit.changed`. Oddzielone zadania zostają wycofane (nigdy usunięte), pierwotne zadanie czeka
+    dokładnie jak wcześniej. Zapisane skany zostają zarejestrowane;
+  - `--keep` (operacja `task.audit-keep`): człowiek zostawia czekanie bez zmian. Tylko człowiek; agentowi strom
+    `--keep` i `--unkeep` odmawia (`audit.person-only`). Obowiązuje, dopóki czekanie się nie zmieni, a nowe ustalenia
+    są wśród tych, które człowiek zostawił. Zapisuje się, kto to dał i gdzie (terminal lub aplikacja). `--unkeep`
+    (operacja `task.audit-unkeep`) to wycofuje.
+- **Historia zadania:** `strom task show T…` pokazuje wiersz „audit  kept as it is …” lub „fixed by the audit … (T…
+  split off) — undone by strom task audit T… --unfix”.
+- **Aplikacja:** most podaje przy czekającej pozycji ustalenie (`audit`: rodzaje, poprawka, stempel), podgląd
+  poprawki (`GET <token>/waiting/<T…>/fix`) i zapis (`POST <token>/waiting/<T…>` z `do: fix|unfix|keep|unkeep`
+  i `expect`), funkcja `tasks.audit`. Dotyczy to także Archiwum Strom
+  ([S4.4.8](S4-research-from-the-app.md#S4.4.8), [S4.4.9](S4-research-from-the-app.md#S4.4.9)).
+- **Obsługa:** terminal: `strom task audit T… --fix`, `--unfix`, `--keep`, `--unkeep`, `--expect <stamp>`,
+  `--dry-run`. Aplikacja: **Poprawić**, **Cofnij** w powiadomieniu, **Pozostawić bez zmian**.
+- **Obowiązuje od:** badanie 1.35.0
+
+<!-- zdroj: research:61c95c53, 15312d00, 6775c199 src/core/taskaudit.ts fixOf (wait-images / wait-book, split, left book-unknown, jen neznámé → nic), applyAuditFix (atomicky, expect → audit.changed, bez změn audit.none, before, rozdělení textu, splitFrom, op task.audit-fix), takeWaiting, sealAuditFix, undoAuditFix (audit.changed, dropped + retracted, original přesně, snímky zůstanou, op task.audit-unfix), keepAudit (auditKept at, by, givenIn, kinds, wait; podmnožina druhů; op task.audit-keep / task.audit-unkeep) · src/commands/tasks.ts task audit (--fix, --unfix, --keep, --unkeep, --expect jen s fix/keep, audit.person-only, STROM_FOR_APP → by app), task show řádky audit · strom help task audit · app:docs/ZADANI_VYZKUM_kontrola-ukolu.md „Odpověď výzkumu (U2)“ (most, kódy 409/404/503/423/507, i v archivu) · dirigent:spec/109 K1.5 -->
+
+<a id="R6.9.2"></a>
+### R6.9.2 Czekanie nie zapisze się źle, a agent się o tym dowie
+
+Strom nie zapisze czekania z ustaleniem i mówi agentowi, co przy zadaniu jeszcze nie jest takie, jak być powinno.
+
+- **Pilnuje kod:**
+  - `strom task wait` i `strom task edit` z `--on`, `--kind`, `--url` lub `--book` odrzucają czekanie z ustaleniem
+    (`task.wait-images`) i podają dokładne polecenia. Brakujący folder nie jest odrzucany;
+  - po `strom task wait` agent dostaje wiersz „check the task's wait: …” z listą kontrolną, gdy czekanie nie jest
+    jeszcze takie, jak być powinno. `strom task park`, którego powód wymienia skany księgi badania, mówi agentowi, że
+    ręcznie zapisywane skany to czekanie, a nie odłożenie, z dokładnym poleceniem;
+  - `strom session close` mówi to samo za zadania sesji (`--json`: `audit`); `strom session finish` nie;
+  - `strom chat --task T…` przy zadaniu z ustaleniem zaczyna się dla agenta zdaniem „Jego oczekiwanie nie jest
+    zapisane tak, jak potrzebuje tego strom (…). Uruchom `strom task audit T…`, zaproponuj mi poprawkę i zapisz ją
+    dopiero, gdy się tu na nią zgodzę.”
+- **Granice:** agent zapisuje poprawkę dopiero po zgodzie człowieka w rozmowie. Zostawić czekanie bez zmian może
+  tylko człowiek ([R6.9.1](#R6.9.1)).
+- **Obsługa:** terminal: `strom task wait`, `strom task edit`, `strom task park`, `strom session close`,
+  `strom chat --task T…`. Aplikacja: **Omów z agentem** przy ustaleniu
+  ([S4.4.8](S4-research-from-the-app.md#S4.4.8)).
+- **Obowiązuje od:** badanie 1.35.0
+
+<!-- zdroj: research:61c95c53, 15312d00 src/core/taskaudit.ts refuseWait (task.wait-images, kromě folder-missing, waitCommands), WAIT_CHECKLIST · src/commands/tasks.ts checkWaitLine, parkedForImages · src/commands/session.ts:373 session close (check of each wait, --json audit) · assets/lang/cs.json ui.chat.task.audit.say, ui.chat.task.audit.images/books/unknown/folder.say · CHANGELOG.cs.md 1.35.0 · app:docs/ZADANI_VYZKUM_kontrola-ukolu.md „Odpověď výzkumu (U2)“ K1.1, K1.2, V11 · dirigent:spec/109 K1.1, K1.2 -->

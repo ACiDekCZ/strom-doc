@@ -73,8 +73,10 @@ The tree can move by itself to the person the agent is working on right now (the
 - **From app 3.24.0:** following also works in the fan and on the map ([S4.1.3](#S4.1.3)); moving the map pauses it the same way.
 - **From app 3.30.0:** ◎ **Stop following here** stops the jumps only in the window where it is clicked; the other
   windows keep following, each in its own view ([S4.1.7](#S4.1.7)).
+- **From app 3.30.0:** the arc around the portrait of the person the agent works on also shows beside the research
+  marks on the card ([S4.4.1](#S4.4.1)).
 
-<!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff · 3.30.0: spec 097 O1, O3, ZADANI_DEV §6 (◎ v hlavním okně další okna nevypne) -->
+<!-- zdroj: app:src/ui/live-follow-ui.ts:7, :26 ZOOM_FAR, :27 ZOOM_READABLE, :32 gap 8000 / idle 20_000 · strings.ts live.followOn, live.followOff · 3.30.0: spec 097 O1, O3, ZADANI_DEV §6 (◎ v hlavním okně další okna nevypne) · oblouk vedle značek: app:16cba085 src/card-signals.ts showAgent -->
 
 <a id="S4.1.2"></a>
 ### S4.1.2 Customizing the panel
@@ -539,8 +541,14 @@ work uses the AI subscription.
   overview**; menu **Research → Work on the queue…** ([S4.5.2](#S4.5.2)). Terminal: `strom run --tasks N`,
   `strom run --loop` ([R7.1](R7-when-the-agent-works.md#R7.1)).
 - **Since:** app 3.28.0 (research 1.32.0); in **Now** and **More (n)** from app 3.29.0
+- **From app 3.30.0:** after **Open terminal**, **Now** shows **Starting work on the queue…** with “The agent starts
+  in the research terminal.”, and both **Work on the queue…** buttons say that it is starting and open nothing again.
+  The row goes as soon as the research confirms the link ([S4.5.4](#S4.5.4)) or a session or run starts; the
+  session's row then takes its place. Without confirmation within 30 s **Now** asks **Did the queue work not
+  start?** (“The terminal did not respond within 30 s.”) with **Try again** and the hint, and the buttons are free
+  again.
 
-<!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) · 3.29.0: app:a0a66d45 Teď nabízí Pracovat na frontě… (bez práce agenta a běhu; okno přehledu; fokus zpět) · 3c8f4128 src/ui/queue-work-dialog.ts Další (n) (pořadí: ruční další, místo ve frontě; bez odložených a mimo linie, které se neberou; queue.page; zbytek, Přehled výzkumu ›; sbalené při otevření) · strings.ts live.queueWorkMore, queueWorkLess, queueWorkByQueue, queueWorkByQueueHint, queueWorkRest, queueWorkRestUnknown, queueWorkOverview, queueTagNext -->
+<!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) · 3.29.0: app:a0a66d45 Teď nabízí Pracovat na frontě… (bez práce agenta a běhu; okno přehledu; fokus zpět) · 3c8f4128 src/ui/queue-work-dialog.ts Další (n) (pořadí: ruční další, místo ve frontě; bez odložených a mimo linie, které se neberou; queue.page; zbytek, Přehled výzkumu ›; sbalené při otevření) · strings.ts live.queueWorkMore, queueWorkLess, queueWorkByQueue, queueWorkByQueueHint, queueWorkRest, queueWorkRestUnknown, queueWorkOverview, queueTagNext · 3.30.0: app:574e7ef9 src/ui/queue-start.ts (QUEUE_START_MS 30 s, důkaz handoff nebo sezení/běh, silent → queueNotStarted, proven bez sezení zmizí potichu) · src/ui/research-overview-ui.ts (live-now-starting, terminalSilent) · strings.ts busy.queueStarting, queueStartingSub, queueNotStarted, terminalSilent -->
 
 <a id="S4.3"></a>
 ## S4.3 Directions in the app
@@ -694,6 +702,8 @@ with in the app and what only in the research is said in [R6.5](R6-awaiting-acti
     row on 2 lines, whole on hover;
   - an item of a site has in the opened body **Open website ↗** and next to it the site's address (not on a phone);
   - an item waiting for images begins with the block **Deliver** with steps ([S4.4.7](#S4.4.7)).
+- **From app 3.30.0 with research 1.35.0:** a task whose wait for images is not written the way strom needs it has
+  a mark and, in the open item, a fix in one step ([S4.4.8](#S4.4.8), [S4.4.9](#S4.4.9)).
 
 <!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
@@ -731,8 +741,15 @@ question). With one mark the card behaves as before. Two or three marks stand st
     below 0.55 every card, in every **Card detail**, has one dot instead of the marks. A printed tree has no marks.
 - **Controls:** app: a click on the marks in the corner of the portrait; **Settings → Person card → Show on card**.
 - **Since:** app 3.27.0
+- **From app 3.30.0:** the agent at a person and the marks show together:
+  - the turning arc around the portrait of the person the agent works on also shows beside one or more marks; the
+    marks stay in the corner. A card without a portrait has a ring around the mark's dot instead of the arc;
+  - a screen reader hears both, what waits and “research is working on this person”;
+  - the menu of a person with a mark also offers **Follow the research ›**;
+  - the tick after the agent's work ends shows only on a card without a mark;
+  - the card preview in **Settings → Person card** shows the arc and the mark together.
 
-<!-- zdroj: app:16461aca, 85c1f704, abf7620f src/card-signals.ts ACTION_ORDER (waiting, conflict, question), presentActions (zapnuté v Na kartě ukázat), stackChoices (waiting, story, knows, agent), ACTION_GLYPH · src/card-signal-marks.ts cardActionMarksHtml (stoh n2/n3, tečky), stackAriaLabel, stackTipHtml (tipClickChoose / tipClickKnows), stackMenuItemsHtml (menuAnswer / dotyk menuWaiting, story.compare, menuKnows, menuAgent; bez značky výzkumu), placeStackMenu · index.html .card-signal-stack, #tree-canvas.zoom-far (src/zoom.ts ZOOM_FAR = 0.55; index.html:13732-13741 jedna tečka u všech Detailů karet, e2e/card-signals.spec.ts:353), body.view-mode-print bez značek, compact dvě tečky · strings.ts card.stackLabel, stackWaiting, stackMenuLabel, tipClickChoose, cardDensity.cardWaiting, cardConflict, cardQuestion, compact · CHANGELOG.cs.md 3.27.0 „Více značek na kartě“ · dirigent:prace/1111-app-karta-vice-znacek -->
+<!-- zdroj: app:16461aca, 85c1f704, abf7620f src/card-signals.ts ACTION_ORDER (waiting, conflict, question), presentActions (zapnuté v Na kartě ukázat), stackChoices (waiting, story, knows, agent), ACTION_GLYPH · src/card-signal-marks.ts cardActionMarksHtml (stoh n2/n3, tečky), stackAriaLabel, stackTipHtml (tipClickChoose / tipClickKnows), stackMenuItemsHtml (menuAnswer / dotyk menuWaiting, story.compare, menuKnows, menuAgent; bez značky výzkumu), placeStackMenu · index.html .card-signal-stack, #tree-canvas.zoom-far (src/zoom.ts ZOOM_FAR = 0.55; index.html:13732-13741 jedna tečka u všech Detailů karet, e2e/card-signals.spec.ts:353), body.view-mode-print bez značek, compact dvě tečky · strings.ts card.stackLabel, stackWaiting, stackMenuLabel, tipClickChoose, cardDensity.cardWaiting, cardConflict, cardQuestion, compact · CHANGELOG.cs.md 3.27.0 „Více značek na kartě“ · dirigent:prace/1111-app-karta-vice-znacek · 3.30.0: app:16cba085 src/card-signals.ts showAgent i se značkou, doneSince jen bez značky · src/renderer.ts (oblouk vedle značky, kompaktní kroužek kolem tečky, aria-label obojí) · src/ui/card-fields-ui.ts náhled · src/ui/card-signals-ui.ts signal-agent (card.menuAgent) · strings.ts card.ariaAgent, card.menuAgent · CHANGELOG.cs.md 3.30.0 „Agent při práci i vedle odznaku“ · spec 109 -->
 
 <a id="S4.4.2"></a>
 ### S4.4.2 Searching Awaiting action
@@ -978,6 +995,87 @@ which they are done. The result is files in a folder, not an answer.
 
 <!-- zdroj: app:449e6962, 429839f0 src/ui/waiting-task-ui.ts waitingTakesImages (waitingActions images přes most), waitingAnswerTexts (answerImagesLabel, answerImagesHint), waitingDeliverEl (věta deliverSentence, phone → deliverPhone bez kroků, kroky deliverSteps web → folder → images, krok ② books.folderBook přes odkaz book jen s book.folder, jinak openFolder task?do=folder se značkou, ③ haveImages waiting-action--primary → openWaitingImages, deliver-pair šipka s krokem, is-column), panel dialog (column, upload: true, title haveImages) · src/research-waiting.ts waitingForImages (images, web s inbox), waitingDeliver (chybějící čísla jen u detail full; kniha jen ze seznamu se složkou), deliverSentence, deliverWebUrl (w.url, jinak bookWebUrl), deliverSteps · src/ui/research-overview-ui.ts appendWaitingTaskActions deliver (answer → link-button cannotGet, ostatní pod ⋯, na telefonu nic pod ⋯) · strings.ts live.waitingTask.deliverLabel, deliverBook, deliverTask, deliverBookAny, deliverTaskAny, deliverPhone, stepAria, cannotGet, answerImagesLabel, answerImagesHint · e2e/waiting-images.spec.ts, overview-waiting-books.spec.ts · ZADANI_DEV_knihy-zahlavi.md §5 · dirigent:prace/1117-app-knihy-zahlavi (D12, D13) -->
 
+<a id="S4.4.8"></a>
+### S4.4.8 A task not recorded as needed
+
+For waiting tasks the research checks whether the wait for images is written the way strom needs it: images of one
+book of the research, one book per task ([R6.9](R6-awaiting-action.md#R6.9)). When it is not, saved images do not
+bring the task back to the queue. At such an item the app shows the finding and offers a fix in one step. The item
+keeps waiting, the counts do not change.
+
+- **Mark:** the item's row has a warning triangle with an exclamation mark before its title (bubble and screen reader
+  **Task not recorded as needed**). The small panel has only the mark (**Task not recorded as needed – opens in the
+  overview**).
+- **Block in the open item** (**Research overview**, in its own window too): under the waiting text and the state of
+  the images, above the item's actions, the heading **Task not recorded as needed** and a sentence saying what is
+  wrong:
+
+  | Research finding | Sentence |
+  |---|---|
+  | images only in text | **Images are only described in text, with no book – saved images do not bring the task back.** |
+  | several books in one wait | **Waits for images from two books**, with an unknown book **; the research does not know one of them.** |
+  | a book the research does not know | **The research does not know the book – the task has no folder for images.** |
+  | the folder is missing | **The folder for images is missing – the fix creates it.** |
+
+  When the research offers no fix and has an agent, the sentence ends **The agent adds the book to the research.**
+  A finding the app does not know has the heading only.
+- **Block actions:**
+  - **Fix**, only when the research offers a whole or partial fix: shows the preview of the fix ([S4.4.9](#S4.4.9));
+  - **Discuss with the agent** (the mark AI and terminal, [S4.5.1](#S4.5.1)) opens a conversation about the task: the
+    agent gets the finding and proposes a fix. Only with a research that has an agent, not on a phone. At an item
+    with a finding this action is not under **⋯**;
+  - **Leave as is** writes at once, without a preview, that the wait is right as it is. The finding goes and the
+    notice **The finding is no longer offered** has **Undo** for 8 s. The research offers the finding again when the
+    task's wait changes.
+- **Limits:**
+  - research not available (following has ended or the bridge does not answer): **Fix** and **Leave as is** do not
+    work and under them stands **The research is not available – the fix cannot be written now.**;
+  - a finding that has gone meanwhile: the notice **The finding no longer applies – the task is recorded
+    correctly.**;
+  - a click just after the rows move (another finding was fixed or went) does nothing, so that another item is not
+    hit;
+  - a research without the check: the items are as before, without the mark and the block.
+- **Controls:** app: **Research overview → Awaiting action**, a click on an item with the mark. Terminal:
+  `strom task audit` ([R6.9](R6-awaiting-action.md#R6.9)).
+- **Since:** app 3.30.0, research 1.35.0
+
+<!-- zdroj: app:929d7813, ed7f7a04, 287ebc72, 01a1e760 src/research-audit.ts TASKS_AUDIT_FEATURE tasks.audit, auditExplain (text; books + BooksUnknown; unknown; folder; agentAdds jen fix none s agentem; neznámý druh jen nadpis) · src/ui/waiting-task-ui.ts waitingAuditShown, waitingAuditMarkEl (trojúhelník, title), waitingAuditEl (auditFix jen fix ≠ none, discuss s researchLinkMark task chat jen s agentem a ne sheet, auditKeep), keepWaitingAudit (toast auditKept 8000 ms, Vrátit → unkeep), waitingAuditGone (auditGone), auditResearchUnavailable (ended, lostSince), shiftHeld · src/ui/research-overview-ui.ts:1899 značka v hlavičce, :2088 blok v detailu, :2192 a :2462 chat ne pod ⋯ · src/ui/research-ui.ts panel auditMarkPanel · strings.ts live.waitingAudit.* · CHANGELOG.cs.md 3.30.0 „Kontrola úkolu“ · ZADANI_DEV_kontrola-ukolu.md · dirigent:spec/109 K1.4–K1.6, prace/1117-app-109-kontrola (D1 složka, D2 neznámý kód) -->
+
+<a id="S4.4.9"></a>
+### S4.4.9 Preview of the fix and Undo
+
+**Fix** writes nothing at once. It first shows what the fix changes and writes only with the second **Fix** under the
+preview.
+
+- **Preview** (in place of the block's actions; **Loading preview…** until the research sends it):
+  - **What changes**: **This task** “will wait for images 112–113 of the book …”, “will wait for images of the book
+    …; image numbers are not known” or “the folder … will be created”; **New task** for each further book (“for
+    images … of the book …”, “for the book …”; for a book that is not in the research, “the book is not in the
+    research, the new task keeps waiting as text”);
+  - **What remains**: what the fix does not do, for example “The book … is missing from the research – the agent adds
+    it.” At the first such book there is **Discuss with the agent**;
+  - under the preview “The fix changes only what the task waits for and can be undone.” and **Cancel** · **Fix**.
+    **Cancel** or Esc closes the preview and returns the focus to **Fix** in the block. Only one preview is open at a
+    time.
+- **After writing** (**Fixing…**): the notice **Fixed** with **Undo** for 8 s. When the images already lie in the
+  folder and the task has them all, **Fixed – the images are already saved, the task continues.** **Undo** takes the
+  fix back without a preview (**Undone – the task waits as before.**). When the task has changed meanwhile, **Undo is
+  no longer possible – the task has changed meanwhile.** Once the notice has gone, the fix can be undone only in the
+  terminal (`strom task audit T… --unfix`, [R6.9.1](R6-awaiting-action.md#R6.9.1)).
+- **Limits:**
+  - the preview holds for the task as it was when the preview showed. When the task has changed meanwhile: **The task
+    has changed meanwhile.** **The preview does not match the current state.** with **Reload**. Other refusals stand
+    under the preview: **The research is writing right now – another attempt is possible shortly.**, **The research
+    is locked – the fix cannot be written now.**, **No space left on the research disk – the fix was not
+    written.**;
+  - on a phone (up to 640 px) the preview is a sheet from below with **Cancel** · **Fix** at the bottom, without
+    **Discuss with the agent**;
+  - in the separate window of the **Research overview** the main window shows the notice.
+- **Controls:** app: **Fix** in the block **Task not recorded as needed**; **Undo** in the notice.
+- **Since:** app 3.30.0, research 1.35.0
+
+<!-- zdroj: app:929d7813, ed7f7a04, 287ebc72, 01a1e760 src/ui/waiting-task-ui.ts openWaitingAuditFix (GET waiting/<T>/fix, auditLoading, jeden náhled), náhled (auditChanges, auditThisTask, auditNewTask, auditRemains, chat u první knihy, ne sheet; auditFixNote), confirmWaitingAuditFix (auditBusy, expect = stamp), writeWaitingAuditFix (toast auditFixed / auditFixedWoke 8000 ms, Vrátit = waitingWrite.undo), undoWaitingAuditFix (unfix, auditUndone, auditUndoFailed), cancelWaitingAuditFix (Esc, fokus na audit-fix), auditErrorText (409 auditErr409 + auditReload, 503, locked, disk), AUDIT_SHEET_ID (telefon) · src/research-audit.ts auditChangeLines (wait-images, wait-book, folder, split), auditLeftLines · src/research-link.ts postWaitingAudit (do fix/unfix/keep/unkeep, expect) · strings.ts live.waitingAudit.* · ZADANI_DEV_kontrola-ukolu.md §2 · dirigent:prace/1117-app-109-kontrola (D3 texty náhledu z op/images/title, D5 Vrátit jen v toastu) -->
+
 <a id="S4.5"></a>
 ## S4.5 Actions that open the research
 
@@ -996,13 +1094,20 @@ or paid.
     places, history).
   - When the same active direction already exists, **Find ancestors** only says **This research is there already:
     “…” — the agent goes on with it.**
-  - The app does not know whether the terminal opened. It shows **Opening the research…** and the hint **If nothing
-    happens, Strom Research is not running yet.**
+  - The element that opened the link says **Opening the research…** (for the agent's work **Opening the agent…**,
+    for a link without a terminal **Loading…**) until the research confirms that it has taken the link
+    ([S4.5.4](#S4.5.4)), at most 10 s (work on the queue 30 s, [S4.2.3](#S4.2.3)). A second click meanwhile opens
+    nothing again. Without confirmation the element is freed and under it stands **Did the terminal not open?** with
+    **Try again** and the hint **If nothing opened, Strom Research needs to be started.** For a link without a
+    terminal it says **If nothing happens, Strom Research is not running yet.**
+  - The browser's system dialog that asks before opening the link is not visible to the app. Confirmed late, it
+    clears the sentence after the limit by itself ([S4.5.4](#S4.5.4)).
 - **Controls:** app: **Settings → Data and privacy → Strom Research on this computer**.
 - **Since:** app 3.4.0 (research 1.6.0). Refusal in a Strom archive from research 1.14.0, while waiting for an agent
-  from 1.15.0.
+  from 1.15.0. Waiting for the opening from app 3.30.0; up to 3.29.0 the app did not know whether the terminal opened
+  and only showed the notice **Opening the research…** with a hint.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts researchLinkAvailable, launchResearchLink, :841 onComputer · strings.ts research.linksSetting, research.openingQuietHint · index.html linksSetting · research:v1.25.2 src/commands/links.ts:128 refusedHere, :153 inTerminal, :351 ui.research.exists · src/core/links.ts (hlavička) · assets/lang/cs.json ui.link.asks, ui.link.go, ui.link.cost, ui.link.tasks, ui.archive.refuse, ui.waiting.refuse -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts researchLinkAvailable, launchResearchLink, :841 onComputer · strings.ts research.linksSetting, research.openingQuietHint · index.html linksSetting · research:v1.25.2 src/commands/links.ts:128 refusedHere, :153 inTerminal, :351 ui.research.exists · src/core/links.ts (hlavička) · assets/lang/cs.json ui.link.asks, ui.link.go, ui.link.cost, ui.link.tasks, ui.archive.refuse, ui.waiting.refuse · 3.30.0: app:574e7ef9, f63cc742 src/ui/research-ui.ts launchResearchLink → src/ui/research-open-busy.ts openResearchBusy (openingResearch / openingAgent / generic podle značky, BUSY_TIMEOUTS.terminal 10 s, queueWork 30 s, notOpened + notOpenedHint, bez terminálu research.openingQuietHint, retry) · strings.ts busy.* · CHANGELOG.cs.md 3.30.0 „Tlačítka, která čekají“ · ZADANI_DEV_tlacitka-cekani.md §3.1 -->
 
 <a id="S4.5.1"></a>
 ### S4.5.1 Action marks
@@ -1015,15 +1120,15 @@ Each research action has one of three marks according to what it opens.
 | terminal | the terminal shows or asks; a click pays nothing | **Open the research**, sending edits, **Review again…**, **Find ancestors**, **Park**, **Drop**, direction actions, **Finish and stop**, **Undo last send**, settings, **Research check** |
 | AI and terminal | the agent's work, paid by the AI subscription | **Continue with the agent**, **Ask the agent**, **Work on this direction**, a conversation about a task or a conflict, research of places, the history of a place |
 
-- **Limits:** for the agent's work the app shows while opening **Opening the agent…** and **Tell the agent what to
-  find out. The agent's work uses the AI subscription.** A conversation can open the agent's app instead of the
-  terminal when the research is set up that way.
-- **Since:** app 3.21.0
+- **Limits:** for the agent's work the element says while opening **Opening the agent…** ([S4.5](#S4.5)). A
+  conversation can open the agent's app instead of the terminal when the research is set up that way.
+- **Since:** app 3.21.0. Up to 3.29.0 the app showed, while opening the agent's work, the notice **Opening the
+  agent…** with **Tell the agent what to find out. The agent's work uses the AI subscription.**
 - **From app 3.28.0:** **Work on the queue…** and **Open terminal** in its dialog have the mark AI and terminal
   ([S4.2.3](#S4.2.3)). Searching the queue, **Do next** and **Undo** have no mark: they go through the bridge and
   open nothing ([S4.2.1](#S4.2.1), [S4.2.2](#S4.2.2)).
 
-<!-- zdroj: app:v3.21.2 src/research-link.ts:66 RESEARCH_LINK_MARKS, researchLinkMark (task do=chat, conflict do=agent, experiment do=off, fixes paid) · strings.ts research.openingAgent, research.openingAgentHint · research:v1.25.2 src/commands/links.ts:373 whereToTalk · 3.28.0: app 9cf43b22 researchLinkMark('work') u queue-work-btn, research-item-queue-work, Otevřít terminál; ZADANI_DEV_fronta-hledani „Značení akcí“ -->
+<!-- zdroj: app:v3.21.2 src/research-link.ts:66 RESEARCH_LINK_MARKS, researchLinkMark (task do=chat, conflict do=agent, experiment do=off, fixes paid) · strings.ts research.openingAgent, research.openingAgentHint · research:v1.25.2 src/commands/links.ts:373 whereToTalk · 3.28.0: app 9cf43b22 researchLinkMark('work') u queue-work-btn, research-item-queue-work, Otevřít terminál; ZADANI_DEV_fronta-hledani „Značení akcí“ · 3.30.0: app:574e7ef9 research-open-busy.ts busy.openingAgent na prvku; research.openingAgentHint se už nepoužívá -->
 
 <a id="S4.5.2"></a>
 ### S4.5.2 Where the actions are
@@ -1071,6 +1176,44 @@ with it now.
 - **Since:** research 1.29.0, app 3.25.0
 
 <!-- zdroj: research:c2a690ea src/cli/menu-links.ts (odkaz task bez do, úkol open) · assets/lang/cs.json ui.link.open.title/why/done/pick/chat/ahead/keep/already/kept/busy/estimate/estimate.none, ui.chat.task.open.say · strom help chat (--task: „a task in the queue (open): gone through now, taken up in the conversation“) · commit 9bd14e84 · test/cli/link-open-task.test.ts · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 7; klik v aplikaci neověřen) · app:6bd8609e strings.ts read.openTaskN, src/__tests__/read-source-state-view.test.ts:75 (researchLinkMark task) -->
+
+<a id="S4.5.4"></a>
+### S4.5.4 The research confirms a link it has taken
+
+The research tells the app that it has taken a link: the terminal has come up, or an action that needs no terminal is
+done. The app then stops waiting at once and speaks up only when nothing opened ([S4.5](#S4.5)).
+
+- **Enforced by the code:**
+  - the app gives each research link a new handoff number (`&handoff=<uuid>`). The research takes only a number in
+    the form of a UUID; another value it quietly leaves out and carries out the link as without it. Nothing is ever
+    started from the number;
+  - `strom link open` writes the number to `.strom/handoffs/` in every copy of that tree's research on the computer.
+    For a link that opens a terminal, as soon as the terminal comes up, before the first question. For a link without
+    a terminal (detail, images, book, following and others) only after the action is done;
+  - the number is not written when the terminal could not be opened, for a refused link (unknown research, archive,
+    window with a message) or for a link to a new research from the app's tree (`new?app=…`): that has no research
+    and no bridge yet. A browser system dialog closed without opening does not start strom at all;
+  - the research bridge gives in `GET /status` (`handoffs`, also with `parts=1`) the numbers of the links taken in
+    the last minute, the newest first, at most 64; older numbers and their files go. It reads them at every request,
+    not only when the research's state changes. This holds in a Strom archive and in a research waiting for an agent
+    too;
+  - after handing over the link the app asks the bridge every second until the limit. A confirmation that comes
+    within a minute after the limit (the browser dialog confirmed late) clears the sentence **Did the terminal not
+    open?**;
+  - a bridge that did not answer a request less than 30 s ago counts as not available: the sentence shows at once,
+    without waiting;
+  - the same link opened again within 400 ms does nothing.
+- **Limits:**
+  - a research without the confirmation: a new agent session counts as the confirmation, otherwise the app waits
+    only until the limit;
+  - a link to a new research (`new?app=…`) ends quietly after the limit; the app then waits until the research takes
+    the tree;
+  - without a running bridge nothing is reported, and the written file lapses by itself.
+- **Controls:** app: every action with the mark terminal or AI and terminal ([S4.5.1](#S4.5.1)). Terminal:
+  `strom link open '<link>'`.
+- **Since:** app 3.30.0, research 1.35.0
+
+<!-- zdroj: research:fbae81fc src/core/handoffs.ts (HANDOFF tvar UUID, HANDOFF_MS 60 s, HANDOFF_MAX 64, handoffsNow úklid, noteHandoff) · src/core/links.ts parseLink (handoff malými písmeny, jiná hodnota vynechána), linkText · src/commands/links.ts link open noteTaken (tty hned; bez terminálu done: true; researchesWithId) · src/core/live.ts withHandoffs (/status i parts=1, mimo stav), BRIDGE_FEATURES handoffs · test/cli/link-handoffs.test.ts · CHANGELOG.cs.md 1.35.0 (odkaz aplikace Strom … výzkum aplikaci potvrdí) · app:574e7ef9, f63cc742 src/ui/research-open-busy.ts (handoffProven: handoffs s feature handoffs, jinak nové sezení; OPEN_ASK_MS 1000, OPEN_LATE_ASK_MS 2000, OPEN_LATE_WATCH_MS 60 s, OPEN_REPEAT_MS 400, bridgeDown 30 s, quietLimit new?app=) · src/research-link.ts HANDOFFS_FEATURE · app:docs/ZADANI_VYZKUM_tlacitka-cekani.md „Odpověď výzkumu“ -->
 
 <a id="S4.6"></a>
 ## S4.6 What is only in the terminal
