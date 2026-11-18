@@ -490,8 +490,8 @@ Kroky u úkolu, který čeká na snímky archivu, kam agent nesmí:
 <a id="R9.10"></a>
 ## R9.10 Příklady
 
-Úrovně a meze jsou ze seznamu archivů výzkumu 1.27.0, DigiArchiv SOA Třeboň z výzkumu 1.28.0. Rodina Horákových je
-vymyšlená.
+Úrovně a meze jsou ze seznamu archivů výzkumu 1.27.0, DigiArchiv SOA Třeboň z výzkumu 1.28.0, BLHA z výzkumu
+1.35.0. Rodina Horákových je vymyšlená.
 
 <a id="R9.10.1"></a>
 ### R9.10.1 Moravský zemský archiv (Acta Publica)
@@ -572,3 +572,23 @@ vymyšlená.
 - **Platí od:** výzkum 1.28.0
 
 <!-- zdroj: research:assets/archives.json digi.ceskearchivy.cz (manual, browserOnly, terms https://digi.ceskearchivy.cz/Uvod, quote, robots 403, scope, checked 2026-11-05), www.ceskearchivy.cz (stejné terms/quote) · src/core/terms.ts allows (browserOnly + manual) · CHANGELOG.cs.md 1.28.0 · znalosti/archivy-cz.md „SOA v Třeboni (DigiArchiv)“ (odpověď archivu 5. 11. 2026) · commit 805b871d -->
+
+<a id="R9.10.7"></a>
+### R9.10.7 Brandenburgisches Landeshauptarchiv (BLHA)
+
+- Archiv: omezeno, jen přes prohlížeč člověka. Týká se duplikátů matrik (Rep. 5KB) v online přístupu archivu
+  (blha-recherche.brandenburg.de); snímky jdou z obrazového serveru blha-digi.brandenburg.de. Robots.txt zavírá celý
+  web, takže požadavky stromu samého ani stahovač tam nevedou.
+- Archiv odpověděl 18. 11. 2026 (doslovná citace je v seznamu): člověk smí ve svém prohlížeči ukládat jednotlivé
+  snímky lidským tempem a nechat je číst AI asistenta na svém počítači, snímky jsou pod licencí CC-0. Nejvýš dva
+  požadavky najednou. Nikdy prohledávání databáze archivu ani celá kniha.
+- Úkol: křest Anny Vlkové v duplikátu matriky. S Claude Code, rozšířením a svolením **přes prohlížeč** agent otevře
+  prohlížeč knihy, přejde na snímek a uloží ten zobrazený `strom media save`, tempem člověka (10 s). Adresa prohlížeče
+  snímek nejmenuje.
+- Bez svolení nebo s jiným agentem: úkol čeká na snímky; Co čeká řekne, s čím by je agent uložil sám.
+- Kniha: seznam u archivu údaj o celé knize nemá, takže se nabízejí jen potřebné snímky
+  ([R6.8.1](R6-awaiting-action.md#R6.8.1)).
+- Citace: „BLHA, Rep. 5KB Nr. <n>“, kde n je číslo knihy ze signatury „5KB <n>“, s číslem snímku v knize.
+- **Platí od:** výzkum 1.35.0
+
+<!-- zdroj: research:465c54ea assets/archives.json blha-recherche.brandenburg.de (restricted, browserOnly, terms robots.txt, quoteFrom reply, replied 2026-11-18, robots Disallow / zrušeno odpovědí pro jednotlivé snímky, nejvýš 2 požadavky, imagesFrom blha-digi.brandenburg.de, scope: nikdy prohledávání databáze ani celá kniha, adresa prohlížeče snímek nejmenuje, citace „BLHA, Rep. 5KB Nr. <n>“; bez wholeBook), blha-digi.brandenburg.de (restricted, IIIF, po jednom), blha.brandenburg.de (unknown, pace 10 s) · src/core/net.ts HUMAN_PACE 10 s · src/commands/archives.ts paceFor · src/core/terms.ts allows (browserOnly + restricted) · src/core/books.ts downloadOf (bez údaje range) · CHANGELOG.cs.md 1.35.0 (BLHA podle odpovědi z 18. 11. 2026) · commit d013df1c -->

@@ -528,8 +528,8 @@ Kroki przy zadaniu, które czeka na skany archiwum, do którego agentowi nie wol
 <a id="R9.10"></a>
 ## R9.10 Przykłady
 
-Poziomy i ograniczenia pochodzą z listy archiwów badania 1.27.0, DigiArchiv SOA Třeboň z badania 1.28.0. Rodzina
-Horáków jest zmyślona.
+Poziomy i ograniczenia pochodzą z listy archiwów badania 1.27.0, DigiArchiv SOA Třeboň z badania 1.28.0, BLHA
+z badania 1.35.0. Rodzina Horáków jest zmyślona.
 
 <a id="R9.10.1"></a>
 ### R9.10.1 Moravský zemský archiv (Acta Publica)
@@ -616,3 +616,24 @@ Horáków jest zmyślona.
 - **Obowiązuje od:** badanie 1.28.0
 
 <!-- zdroj: research:assets/archives.json digi.ceskearchivy.cz (manual, browserOnly, terms https://digi.ceskearchivy.cz/Uvod, quote, robots 403, scope, checked 2026-11-05), www.ceskearchivy.cz (stejné terms/quote) · src/core/terms.ts allows (browserOnly + manual) · CHANGELOG.cs.md 1.28.0 · znalosti/archivy-cz.md „SOA v Třeboni (DigiArchiv)“ (odpověď archivu 5. 11. 2026) · commit 805b871d -->
+
+<a id="R9.10.7"></a>
+### R9.10.7 Brandenburgisches Landeshauptarchiv (BLHA)
+
+- Archiwum: ograniczone, tylko przez przeglądarkę człowieka. Dotyczy duplikatów ksiąg metrykalnych (Rep. 5KB)
+  w dostępie online archiwum (blha-recherche.brandenburg.de); skany pochodzą z serwera obrazów
+  blha-digi.brandenburg.de. Robots.txt zamyka całą witrynę, więc nie prowadzą tam ani własne zapytania stromu, ani
+  program pobierający.
+- Archiwum odpowiedziało 18.11.2026 (dosłowny cytat jest w liście): człowiek może w swojej przeglądarce zapisywać
+  pojedyncze skany w ludzkim tempie i dać je przeczytać asystentowi AI na swoim komputerze; skany są na licencji
+  CC-0. Najwyżej dwa zapytania naraz. Nigdy przeszukiwanie bazy danych archiwum ani cała księga.
+- Zadanie: chrzest Anny Vlkovej w duplikacie księgi metrykalnej. Z Claude Code, rozszerzeniem i zgodą **przez
+  przeglądarkę** agent otwiera przeglądarkę księgi, przechodzi do skanu i zapisuje pokazany przez `strom media save`,
+  w tempie człowieka (10 s). Adres przeglądarki nie nazywa skanu.
+- Bez zgody albo z innym agentem: zadanie czeka na skany; Co czeka mówi, czym agent zapisałby je sam.
+- Księga: lista nie ma przy archiwum informacji o całej księdze, więc oferowane są tylko potrzebne skany
+  ([R6.8.1](R6-awaiting-action.md#R6.8.1)).
+- Cytat: „BLHA, Rep. 5KB Nr. <n>”, gdzie n to numer księgi z sygnatury „5KB <n>”, z numerem skanu w księdze.
+- **Obowiązuje od:** badanie 1.35.0
+
+<!-- zdroj: research:465c54ea assets/archives.json blha-recherche.brandenburg.de (restricted, browserOnly, terms robots.txt, quoteFrom reply, replied 2026-11-18, robots Disallow / zrušeno odpovědí pro jednotlivé snímky, nejvýš 2 požadavky, imagesFrom blha-digi.brandenburg.de, scope: nikdy prohledávání databáze ani celá kniha, adresa prohlížeče snímek nejmenuje, citace „BLHA, Rep. 5KB Nr. <n>“; bez wholeBook), blha-digi.brandenburg.de (restricted, IIIF, po jednom), blha.brandenburg.de (unknown, pace 10 s) · src/core/net.ts HUMAN_PACE 10 s · src/commands/archives.ts paceFor · src/core/terms.ts allows (browserOnly + restricted) · src/core/books.ts downloadOf (bez údaje range) · CHANGELOG.cs.md 1.35.0 (BLHA podle odpovědi z 18. 11. 2026) · commit d013df1c -->

@@ -530,7 +530,7 @@ The steps for a task that waits for images of an archive where the agent may not
 ## R9.10 Examples
 
 The levels and limits are from the list of archives of the research 1.27.0, DigiArchiv SOA Třeboň from the research
-1.28.0. The Horák family is made up.
+1.28.0, BLHA from the research 1.35.0. The Horák family is made up.
 
 <a id="R9.10.1"></a>
 ### R9.10.1 Moravský zemský archiv (Acta Publica)
@@ -619,3 +619,26 @@ The levels and limits are from the list of archives of the research 1.27.0, Digi
 - **Since:** research 1.28.0
 
 <!-- zdroj: research:assets/archives.json digi.ceskearchivy.cz (manual, browserOnly, terms https://digi.ceskearchivy.cz/Uvod, quote, robots 403, scope, checked 2026-11-05), www.ceskearchivy.cz (stejné terms/quote) · src/core/terms.ts allows (browserOnly + manual) · CHANGELOG.cs.md 1.28.0 · znalosti/archivy-cz.md „SOA v Třeboni (DigiArchiv)“ (odpověď archivu 5. 11. 2026) · commit 805b871d -->
+
+<a id="R9.10.7"></a>
+### R9.10.7 Brandenburgisches Landeshauptarchiv (BLHA)
+
+- Archive: restricted, only through a person's browser. It concerns the duplicate registers (Rep. 5KB) in the
+  archive's online access (blha-recherche.brandenburg.de); the images come from the image server
+  blha-digi.brandenburg.de. Robots.txt closes the whole site, so neither strom's own requests nor the downloader go
+  there.
+- The archive replied on 18 November 2026 (the verbatim quote is in the list): a person may save single images in
+  their browser at a human pace and let the AI assistant on their computer read them; the images are under the CC-0
+  licence. At most two requests at once. Never a search of the archive's database, never a whole book.
+- Task: the baptism of Anna Vlková in a duplicate register. With Claude Code, the extension and the permission
+  **through the browser**, the agent opens the book's viewer, goes to the image and saves the one shown with
+  `strom media save`, at a person's pace (10 s). The viewer's address does not name the image.
+- Without the permission or with another agent: the task waits for images; What waits says with what the agent would
+  save them itself.
+- Book: the list has no entry on a whole book for the archive, so only the needed images are offered
+  ([R6.8.1](R6-awaiting-action.md#R6.8.1)).
+- Citation: “BLHA, Rep. 5KB Nr. <n>”, where n is the book's number from the reference “5KB <n>”, with the number of
+  the image in the book.
+- **Since:** research 1.35.0
+
+<!-- zdroj: research:465c54ea assets/archives.json blha-recherche.brandenburg.de (restricted, browserOnly, terms robots.txt, quoteFrom reply, replied 2026-11-18, robots Disallow / zrušeno odpovědí pro jednotlivé snímky, nejvýš 2 požadavky, imagesFrom blha-digi.brandenburg.de, scope: nikdy prohledávání databáze ani celá kniha, adresa prohlížeče snímek nejmenuje, citace „BLHA, Rep. 5KB Nr. <n>“; bez wholeBook), blha-digi.brandenburg.de (restricted, IIIF, po jednom), blha.brandenburg.de (unknown, pace 10 s) · src/core/net.ts HUMAN_PACE 10 s · src/commands/archives.ts paceFor · src/core/terms.ts allows (browserOnly + restricted) · src/core/books.ts downloadOf (bez údaje range) · CHANGELOG.cs.md 1.35.0 (BLHA podle odpovědi z 18. 11. 2026) · commit d013df1c -->

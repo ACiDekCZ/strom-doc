@@ -176,6 +176,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R9.10.4 | R9-archives.md | výzkum 1.14.0 | koncept | Matricula | Matricula | Matricula | Matricula |
 | R9.10.5 | R9-archives.md | výzkum 1.27.0 | koncept | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach |
 | R9.10.6 | R9-archives.md | výzkum 1.28.0 | koncept | DigiArchiv SOA Třeboň | DigiArchiv SOA Třeboň | DigiArchiv SOA Třeboň | DigiArchiv SOA Třeboň |
+| R9.10.7 | R9-archives.md | výzkum 1.35.0 | platí | Brandenburgisches Landeshauptarchiv (BLHA) | Brandenburgisches Landeshauptarchiv (BLHA) | Brandenburgisches Landeshauptarchiv (BLHA) | Brandenburgisches Landeshauptarchiv (BLHA) |
 | R10 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Osoby: ztotožnění, jména a hypotézy | People: identification, names and hypotheses | Personen: Identifizierung, Namen und Hypothesen | Osoby: identyfikacja, imiona i hipotezy |
 | R10.1 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Jmenovec není hledaná osoba | A namesake is not the person sought | Ein Namensvetter ist nicht die gesuchte Person | Imiennik to nie poszukiwana osoba |
 | R10.2 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Dva záznamy jedné osoby: sloučení | Two records of one person: merging | Zwei Einträge einer Person: Zusammenführen | Dwa wpisy jednej osoby: scalenie |
@@ -360,6 +361,9 @@ nenapsáno) · `neplatí od <verze>`.
 | A9.6 | A9-using-the-app.md | aplikace 3.28.0 | platí | Minimapa a legenda stromu jdou sbalit | The minimap and the tree legend fold away | Minikarte und Stammbaum-Legende lassen sich einklappen | Minimapę i legendę drzewa można zwinąć |
 | A9.7 | A9-using-the-app.md | aplikace 3.30.0 | platí | Akce, která chvíli trvá | An action that takes a while | Eine Aktion, die eine Weile dauert | Działanie, które chwilę trwa |
 | A9.7.1 | A9-using-the-app.md | aplikace 3.30.0 | platí | Dlouhá akce: průběh v oznámení | A long action: progress in a notice | Eine lange Aktion: Fortschritt in einer Meldung | Długie działanie: postęp w powiadomieniu |
+| A9.7.2 | A9-using-the-app.md | aplikace 3.30.0 | platí | Zápis do výzkumu, který se ukáže hned | A write to the research shown at once | Ein Schreiben in die Forschung, sofort sichtbar | Zapis do badania widoczny od razu |
+| A9.7.3 | A9-using-the-app.md | aplikace 3.30.0 | platí | Výpočet a soubory v aplikaci | Calculations and files in the app | Berechnungen und Dateien in der App | Obliczenia i pliki w aplikacji |
+| A9.7.4 | A9-using-the-app.md | aplikace 3.30.0 | platí | Když výzkum nebo služba mlčí | When the research or a service is silent | Wenn die Forschung oder ein Dienst schweigt | Gdy badanie lub usługa milczy |
 | A10 | A10-shared-events.md | aplikace 3.28.0 | platí | Jedna událost u více osob | One event of several people | Ein Ereignis mehrerer Personen | Jedno wydarzenie wielu osób |
 | A10.1 | A10-shared-events.md | aplikace 3.28.0 | platí | Společná událost: Spolu s | A shared event: Shared with | Ein gemeinsames Ereignis: Gemeinsam mit | Wspólne wydarzenie: Razem z |
 | A10.1.1 | A10-shared-events.md | aplikace 3.28.0 | platí | Přidat osobu | Add a person | Person hinzufügen | Dodaj osobę |

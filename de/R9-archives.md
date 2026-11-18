@@ -565,7 +565,7 @@ Schritte bei einer Aufgabe, die auf Bilder eines Archivs wartet, wohin der Agent
 ## R9.10 Beispiele
 
 Stufen und Grenzen stammen aus der Liste der Archive der Forschung 1.27.0, DigiArchiv SOA Třeboň aus der Forschung
-1.28.0. Die Familie Horák ist erfunden.
+1.28.0, BLHA aus der Forschung 1.35.0. Die Familie Horák ist erfunden.
 
 <a id="R9.10.1"></a>
 ### R9.10.1 Moravský zemský archiv (Acta Publica)
@@ -655,3 +655,27 @@ Stufen und Grenzen stammen aus der Liste der Archive der Forschung 1.27.0, DigiA
 - **Gilt seit:** Forschung 1.28.0
 
 <!-- zdroj: research:assets/archives.json digi.ceskearchivy.cz (manual, browserOnly, terms https://digi.ceskearchivy.cz/Uvod, quote, robots 403, scope, checked 2026-11-05), www.ceskearchivy.cz (stejné terms/quote) · src/core/terms.ts allows (browserOnly + manual) · CHANGELOG.cs.md 1.28.0 · znalosti/archivy-cz.md „SOA v Třeboni (DigiArchiv)“ (odpověď archivu 5. 11. 2026) · commit 805b871d -->
+
+<a id="R9.10.7"></a>
+### R9.10.7 Brandenburgisches Landeshauptarchiv (BLHA)
+
+- Archiv: eingeschränkt, nur über den Browser eines Menschen. Es betrifft die Kirchenbuchduplikate (Rep. 5KB) im
+  Online-Zugang des Archivs (blha-recherche.brandenburg.de); die Bilder kommen vom Bildserver
+  blha-digi.brandenburg.de. Robots.txt schließt die ganze Website, daher führen weder die eigenen Anfragen von strom
+  noch der Downloader dorthin.
+- Das Archiv hat am 18. 11. 2026 geantwortet (das wörtliche Zitat steht in der Liste): ein Mensch darf in seinem
+  Browser einzelne Bilder in menschlichem Tempo speichern und sie vom KI-Assistenten auf seinem Computer lesen
+  lassen; die Bilder stehen unter der Lizenz CC-0. Höchstens zwei Anfragen gleichzeitig. Nie eine Suche in der
+  Datenbank des Archivs, nie ein ganzes Buch.
+- Aufgabe: die Taufe von Anna Vlková in einem Kirchenbuchduplikat. Mit Claude Code, der Erweiterung und der Erlaubnis
+  **über den Browser** öffnet der Agent den Viewer des Buchs, geht zum Bild und speichert das angezeigte mit
+  `strom media save`, im Tempo eines Menschen (10 s). Die Adresse des Viewers nennt das Bild nicht.
+- Ohne Erlaubnis oder mit einem anderen Agenten: die Aufgabe wartet auf Bilder; Was wartet sagt, womit der Agent sie
+  selbst speichern würde.
+- Buch: die Liste hat beim Archiv keine Angabe zum ganzen Buch, daher werden nur die benötigten Bilder angeboten
+  ([R6.8.1](R6-awaiting-action.md#R6.8.1)).
+- Zitation: „BLHA, Rep. 5KB Nr. <n>“, wobei n die Nummer des Buchs aus der Signatur „5KB <n>“ ist, mit der Nummer
+  des Bilds im Buch.
+- **Gilt seit:** Forschung 1.35.0
+
+<!-- zdroj: research:465c54ea assets/archives.json blha-recherche.brandenburg.de (restricted, browserOnly, terms robots.txt, quoteFrom reply, replied 2026-11-18, robots Disallow / zrušeno odpovědí pro jednotlivé snímky, nejvýš 2 požadavky, imagesFrom blha-digi.brandenburg.de, scope: nikdy prohledávání databáze ani celá kniha, adresa prohlížeče snímek nejmenuje, citace „BLHA, Rep. 5KB Nr. <n>“; bez wholeBook), blha-digi.brandenburg.de (restricted, IIIF, po jednom), blha.brandenburg.de (unknown, pace 10 s) · src/core/net.ts HUMAN_PACE 10 s · src/commands/archives.ts paceFor · src/core/terms.ts allows (browserOnly + restricted) · src/core/books.ts downloadOf (bez údaje range) · CHANGELOG.cs.md 1.35.0 (BLHA podle odpovědi z 18. 11. 2026) · commit d013df1c -->
