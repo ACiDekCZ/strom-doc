@@ -169,13 +169,17 @@ Značení linií označí karty ve stromu podle toho, do které linie osoba pat�
 | **Štítek s písmenem** | štítek přes levou hranu karty | písmeno: O otcovská, M mateřská, P potomci |
 | **Proužek** | svislý proužek u levé hrany | otcovská plný, mateřská čárkovaný, potomci tečkovaný |
 | **Roh** | trojúhelník v levém horním rohu | otcovská plný, mateřská šrafovaný, potomci obrysový |
-| **Vypnuto** | bez značky | – |
+| **Bez tvaru** | bez značky; se zapnutým podbarvením značí linii jen podklad karty | – |
 
 - **Barvy:** otcovská modrá, mateřská růžová, potomci okrová. Jedna pevná paleta, bez volby. Barvy se liší i světlostí
   (otcovská tmavá, potomci střední, mateřská světlá), takže se rozliší i při slabším barvocitu a v šedi. Tmavý vzhled
-  má vlastní odstíny.
-- **Podbarvit karty barvou linie** (výchozí vypnuto) jemně podbarví kartu barvou linie, vedle zvolené značky. Při
-  **Vypnuto** je volba neaktivní; zaškrtnutí se pamatuje a po výběru tvaru platí znovu.
+  má vlastní odstíny; jeho podbarvení mají světlost karty a liší se odstínem, takže se tři linie a podbarvená karta
+  od nepodbarvené rozliší i bez tvaru. Text karty má na každém podbarvení kontrast aspoň 4,5:1.
+- **Podbarvit karty barvou linie** (výchozí vypnuto) jemně podbarví kartu barvou linie. Je to samostatný přepínač,
+  platí s každým tvarem i s **Bez tvaru**:
+  - tvar s podbarvením: značka i podklad;
+  - **Bez tvaru** s podbarvením: kartu značí jen podklad;
+  - **Bez tvaru** bez podbarvení: karty linii neznačí vůbec.
 - **Kdo značku má:**
   - otcovská a mateřská linie: rodič, všichni jeho předci a sourozenci každého z nich (tety, strýcové, prastrýcové…);
   - potomci: všichni potomci ústřední osoby;
@@ -187,25 +191,26 @@ Značení linií označí karty ve stromu podle toho, do které linie osoba pat�
 - **Rodiče stejného pohlaví** (oba rodiče ústřední osoby známí, oba muži nebo obě ženy): linie se jmenují
   **Linie 1. rodiče** a **Linie 2. rodiče**, štítek nese 1 a 2, barvy zůstávají.
 - **Legenda stromu** (pohledy Rodina a Potomci, nastavení **Legenda stromu**): prstence pohlaví, vzorek každé linie ve
-  zvoleném tvaru s názvem a řádek „Bez značky: zaměřená osoba, partneři, sourozenci, bratranci“. Při **Vypnuto** část
+  zvoleném tvaru s názvem a řádek „Bez značky: zaměřená osoba, partneři, sourozenci, bratranci“. Při **Bez tvaru**
+  s podbarvením jsou vzorky čtverečky podbarvení orámované barvou linie (stejně v Nastavení), bez podbarvení část
   o liniích chybí. Sbalení legendy: [A9.6](A9-using-the-app.md#A9.6).
 - **Čtečka obrazovky** čte u karty linii slovy („otcovská linie“, „otcovská i mateřská linie“, „potomek“,
   „linie 1. rodiče“).
 - **Stejné značení jinde:** Časová osa má znak linie před jménem ([A6.3](#A6.3)), Tabulka sloupec **Linie**
   ([A6.7.2](#A6.7.2)); Vějíř v barvách **Linie** ([A6.4](#A6.4)) a cesta předků na Mapě ([A6.5.5](#A6.5.5)) mají
-  stejné odstíny.
+  stejné odstíny. Při **Bez tvaru** Časová osa ani Tabulka znak nemají.
 - **Export a tisk:** export obrázku a plakát kreslí zvolený tvar i podbarvení, vždy ve světlých barvách. V tisku
   z prohlížeče mají všechny karty stejný šedý rámeček; pohlaví ukazuje prstenec u fotky nebo iniciál, linii značka.
-  Značka se tiskne i bez tisku pozadí, podbarvení se netiskne.
+  Značka se tiskne i bez tisku pozadí, podbarvení se netiskne (**Bez tvaru** s podbarvením tisk neoznačí).
 - **Hranice:** značka je jen vrstva na okraji karty, rozměr ani obsah karty nemění. Linie se počítá znovu při každé
   změně ústřední osoby. Volba patří zařízení, se stromem se neukládá.
 - **Ovládání:** **Nastavení** → **Zobrazení stromu** → **Značení linií**: **Oblouček** · **Štítek s písmenem** ·
-  **Proužek** · **Roh** · **Vypnuto**; pod tím **Podbarvit karty barvou linie**. Každá volba má náhled karty.
+  **Proužek** · **Roh** · **Bez tvaru**; pod tím **Podbarvit karty barvou linie**. Každá volba má náhled karty.
 - **Platí od:** barvy větví aplikace 1.8.0 (oranžová, modrá a zelená); 3.30.0: **Značení linií** místo přepínače
   **Barvy větví**, nové barvy, tvary, podbarvení, obě značky, linie 1. a 2. rodiče. Zapnuté **Barvy větví** se
-  převezmou jako **Oblouček**, vypnuté jako **Vypnuto**.
+  převezmou jako **Oblouček**, vypnuté jako **Bez tvaru** bez podbarvení.
 
-<!-- zdroj: app:0e403ec6 src/branch-colors.ts classifyBranches (collectAncestorSide: předci + sourozenci každého předka; collectDescendants přes childIds; obě strany se sčítají R4; descendant jen mimo strany; focus smazán; numbered = oba rodiče známí a stejného pohlaví R5), src/settings.ts getBranchMarker (výchozí arc; branchColors false → off), isBranchTintOn (jen se značkou), isBranchTintChosen, save (migrace při prvním zápisu), src/renderer.ts renderCards (!isPlaceholder, viewMode ≠ timeline), src/branch-marker-attrs.ts (čtečka ariaPaternal/ariaBoth/ariaSlot1), index.html tokeny --branch-paternal #234e8c / --branch-maternal #d0679a / --branch-descendant #8a6400, tmavé #9cc2f2 / #f6a9cb / #e3b552, --branch-*-tint, CSS tvarů (arc, tag, stripe, corner; R4 .branch-paternal.branch-maternal) · app:c8afe382 index.html #branch-marker-setting (skupina settings.groupTree), #branch-tint-toggle, src/ui/branch-marker-ui.ts syncBranchLegend, src/ui/misc.ts (legenda jen family/descendants, isBranchLegendEnabled) · app:b94f3816 src/branch-marker-svg.ts, src/ui/export-image-ui.ts treeCardDrawing (branchMarker, branchTint, numbered; světlé hex), index.html @media print (R6: border 2px #999, white background, tiskové --branch-*, print-color-adjust) · strings.ts branchColors.* (settingLabel, markerArc…markerOff, defaultTag, tintLabel, legendPaternal…legendSlot2, legendNone, letterPaternal O, letterMaternal M, letterDescendant P) · barvy větví: app:6f86ad39 (v1.8.0) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii K1–K4, app:docs/ZADANI_DEV_linie-na-kartach.md R1–R6 · prace/1119-app-112-linie -->
+<!-- zdroj: app:0e403ec6 src/branch-colors.ts classifyBranches (collectAncestorSide: předci + sourozenci každého předka; collectDescendants přes childIds; obě strany se sčítají R4; descendant jen mimo strany; focus smazán; numbered = oba rodiče známí a stejného pohlaví R5), src/settings.ts getBranchMarker (výchozí arc; branchColors false → off), isBranchTintOn (jen se značkou), isBranchTintChosen, save (migrace při prvním zápisu), src/renderer.ts renderCards (!isPlaceholder, viewMode ≠ timeline), src/branch-marker-attrs.ts (čtečka ariaPaternal/ariaBoth/ariaSlot1), index.html tokeny --branch-paternal #234e8c / --branch-maternal #d0679a / --branch-descendant #8a6400, tmavé #9cc2f2 / #f6a9cb / #e3b552, --branch-*-tint, CSS tvarů (arc, tag, stripe, corner; R4 .branch-paternal.branch-maternal) · app:c8afe382 index.html #branch-marker-setting (skupina settings.groupTree), #branch-tint-toggle, src/ui/branch-marker-ui.ts syncBranchLegend, src/ui/misc.ts (legenda jen family/descendants, isBranchLegendEnabled) · app:b94f3816 src/branch-marker-svg.ts, src/ui/export-image-ui.ts treeCardDrawing (branchMarker, branchTint, numbered; světlé hex), index.html @media print (R6: border 2px #999, white background, tiskové --branch-*, print-color-adjust) · strings.ts branchColors.* (settingLabel, markerArc…markerOff, defaultTag, tintLabel, legendPaternal…legendSlot2, legendNone, letterPaternal O, letterMaternal M, letterDescendant P) · barvy větví: app:6f86ad39 (v1.8.0) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii K1–K4, app:docs/ZADANI_DEV_linie-na-kartach.md R1–R6 · prace/1119-app-112-linie · Bez tvaru: app:999c373f src/types.ts BRANCH_MARKERS (none), src/settings.ts getBranchMarker (uložené off → none; branchColors false → none), isBranchTintOn (samostatně), isBranchMarkingOn, src/ui/branch-marker-ui.ts syncBranchLegend (none jen s podbarvením), src/branch-marker-attrs.ts, src/export-image.ts buildTreeSvg (none + tint = výplň karty), strings.ts branchColors.markerNone, tintHint · app:34aca82c index.html tmavé --branch-*-tint #172a41 / #3b1e2c / #372600 (světlost karty), světlé --text-faint #6a6254, .branch-swatch[data-shape="none"] rámeček var(--sw), src/__tests__/branch-tint-contrast.test.ts (4,5:1) · test/vysledek-1119-app-112-podbarveni -->
 
 <a id="A6.1.6"></a>
 ### A6.1.6 Zpět na výchozí osobu: ⌂
@@ -271,6 +276,7 @@ a bratranců.
 - **Od aplikace 3.30.0:** se zapnutým **Značením linií** ([A6.1.5](#A6.1.5)) stojí před jménem osoby znak linie ve
   zvoleném tvaru (osoba v obou liniích dva znaky, u rodičů stejného pohlaví 1 a 2); najetí na znak řekne linii
   slovy. Pruh života má dál barvu pohlaví a nepodbarvuje se. Plakát časové osy kreslí znak stejně.
+  Při **Bez tvaru** znak není.
 
 <!-- zdroj: app:src/timeline.ts computeTimelineModel, :59 TimelineHistory · strings.ts timeline.omitted · CHANGELOG.cs.md 3.19.0 -->
 <!-- zdroj: app:cecd72a4 src/renderer.ts timelineBranchSigns (znak legendy před jménem, title linie slovy, dvě značky R4, číslice R5; plakát SVG) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii -->
@@ -295,6 +301,8 @@ Vějíř ukazuje předky ústřední osoby v kruhových výsečích, generaci po
   - **Od aplikace 3.30.0:** **Linie** v barvách **Značení linií** ([A6.1.5](#A6.1.5)): otcova strana modrá (otcův
     otec modrý, otcova matka modrozelená), matčina růžová (matčin otec růžový, matčina matka malinová), rodiče
     v jemném odstínu své strany, potomci v tvaru Oboustranný okroví. Do 3.29.0 jiné odstíny.
+  - **Od aplikace 3.30.0:** **Rody** barví podle strany vějíře, s legendou po stranách a zvýrazněním rodu
+    ([A6.4.1](#A6.4.1)).
 - **Původní osoba** vrátí vějíř na osobu, ze které se vyšlo.
 - **Platí od:** vějíř aplikace 1.8.0; nový vějíř s tvary, barvami a implexem aplikace 3.20.0
 - **Od aplikace 3.27.0:** svazek bez data sňatku se řadí podle nejpozdějšího možného data sňatku: dřívějšího z konce
@@ -302,6 +310,51 @@ Vějíř ukazuje předky ústřední osoby v kruhových výsečích, generaci po
   těchto dat jde za ostatní. Stejné pořadí mají partneři vedle osoby a značky pořadí manželství („1. ∞“) na kartách.
 
 <!-- zdroj: app:src/fan-chart.ts FAN_MIN_GENERATIONS, FAN_MAX_GENERATIONS, FAN_DEFAULT_GENERATIONS, parentSlots, repeatOf · strings.ts fan.shapeHalf, fan.shapeFull, fan.shapeTwo, fan.colorGender, fan.colorLine, fan.colorRod, fan.legendRepeats, fan.originPerson, fan.showFirst, fanChart.kekuleHint · settings fanKekule (výchozí false) · spec 029 · CHANGELOG.cs.md 3.20.0 · 3.30.0: app:cecd72a4 src/fan-colors.ts LINE_HUE [258, 232, 352, 5], PARENT_LINE_HUE, DESCENDANT_LINE_HUE 82, parentLineColor, descLineColor (dřív 50/95/215/320, rodiče 70/250, potomci 150) · 3.27.0: app:ad1ca16c src/marriage-order.ts marriageKey (BOUND 0.5, qualifier „<“; bez sňatku min(endDate, narození dětí)), marriageDates, compareMarriages, marriagesInOrder (partneři vedle osoby, značka „1. ∞“) · src/fan-chart.ts familiesOf · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T50, T13) -->
+
+<a id="A6.4.1"></a>
+### A6.4.1 Barvy rodů a zvýraznění rodu
+
+V barvách **Rody** má každý rod ve vějíři svou barvu a barva říká, na které straně vějíře rod je: otcova strana
+studené odstíny modré a zelené, matčina teplé růžové a oranžové, potomci (tvar Oboustranný) okrové.
+
+- **Strana rodu:** rod ústřední osoby patří na otcovu stranu. Rod, který je ve vějíři jen mezi potomky, patří
+  k potomkům. Ostatní rody patří na stranu, kde jsou nejblíž středu (v nejnižším prstenci); při shodě na otcovu.
+- **Pořadí rodů:** podle počtu výsečí ve vějíři (opakovaná osoba se počítá pokaždé), pak podle velikosti ve stromu.
+  Prvních deset rodů s aspoň dvěma výsečemi a rod ústřední osoby má sytý odstín, ostatní tlumený.
+- **Šedá** jsou jen osoby bez rodu, neznámí (?) a prázdná místa (+). Každý rod ve vějíři má barvu.
+- **Sousedé:** když odstíny strany dojdou, opakují se, ale nikdy na sousedních výsečích (vedle sebe, přes generaci,
+  ani přes šev celého kruhu) a nově přidělený odstín ani o jednu výseč dál. Odstín jiné strany si rod vezme, jen
+  když žádný vlastní není dost odlišný.
+- **Paměť barev:** okno si pamatuje odstín každého rodu, i rodu, který právě není vidět. Při přecentrování a po
+  návratu na dřívější střed mají rody stejné barvy. Zapamatovaný odstín ustoupí jen sousedovi se stejným odstínem,
+  takže se po návratu může stejný odstín objevit o jednu výseč dál. Nový rod dostane nejdřív odstín, který si
+  žádný rod nepamatuje. Paměť zmizí po odchodu z pohledu nebo ze stromu; další okno ([A6.8](#A6.8)) ji převezme
+  z hlavního okna.
+- **Legenda:** skupiny **Otcova strana**, **Matčina strana** a **Potomci**; v každé nejdřív rod ústřední osoby
+  („· střed“), pak rody podle počtu osob ve vějíři („7×“). V hlavní části je nejvýš dvacet rodů s aspoň dvěma
+  výsečemi a rod ústřední osoby.
+  - **Ostatní · N rodů** sbalí menší rody do jednoho řádku s dvoubarevným vzorkem a počtem osob (osoby bez rodu
+    se počítají sem). Rozbalené ukáže menší rody v jejich barvách, podle počtu a jména. Rozbalení se pamatuje
+    na zařízení.
+  - **bez rodu** je uvnitř **Ostatní**, a když **Ostatní** chybí, samostatný řádek.
+  - Řádky jsou tlačítka v jedné zastávce klávesy Tab (šipky, Home, End). Najetí myší na řádek rod náhledově
+    zvýrazní.
+- **Zvýraznění rodu:** klik na řádek legendy nebo **Zvýraznit rod {rod}** v nabídce výseče zvýrazní rod stromu
+  ([A6.6](#A6.6)), stejně jako v pohledu Rodina. Výseče rodu mají přerušovaný obrys, ostatní jsou potlačené.
+  Zvýraznění zůstane při přecentrování. Zruší ho druhý klik, **Zrušit zvýraznění rodu**, × u štítku nebo Esc.
+  Vějíř se při přizpůsobení vyhne pásu se štítkem zvýraznění; přiblížený pohled zůstane, jak je.
+- **Telefon:** ťuknutí na řádek v listu legendy rod zvýrazní (nebo zruší) a list zavře. Čip barev pak místo teček
+  ukazuje vzorek a jméno rodu. **Tablet:** řádky legendy mají velikost ovládacího prvku.
+- **Obrázek, plakát a tisk:** zvýraznění se přenese (přerušovaný obrys, ostatní výplně světlejší), podtitul uvádí
+  „zvýrazněn rod {rod}“, když je některá osoba rodu nakreslená. Legenda plakátu je po stranách, zvýrazněný rod
+  tučně a podtržený. Štítky zvýraznění se netisknou.
+- **Hranice:** vějíř na stránce osoby má jen barvy pohlaví.
+- **Ovládání:** **Barvy** › **Rody**; řádky legendy; v nabídce výseče **Zvýraznit rod {rod}** / **Zrušit zvýraznění
+  rodu**; × u štítku; Esc.
+- **Platí od:** aplikace 3.30.0 (barvy **Rody** od aplikace 3.20.0; do 3.29.0 barevně jen deset největších rodů,
+  ostatní šedě)
+
+<!-- zdroj: app:src/fan-rod-assign.ts (strany P/M/D: rod středu P, jen potomci D, jinak nejnižší prstenec, shoda P; pořadí počet výsečí › velikost › id; FAN_ROD_MAX_STRONG 10, FAN_ROD_LEGEND_MAIN 20, tier S/T; opakování odstínů ne na sousedních výsečích ani o jednu dál, výpůjčka jiné strany) · src/fan-colors.ts paleta P/M/D světlá, tmavá, tisk, fanRodLegend, fanRodOtherSwatch (K1.7), legendOther, legendNoRod · src/ui/fan-view.ts legenda (FAN_STORAGE_KEYS.legendOtherOpen, náhled jen při (hover: hover)), setRodSelection(…, 'legend'), forgetRodColors · strings.ts fan.legendFatherSide, legendMotherSide, legendDescendants, legendOther, legendNoRod, legendCentre, colorsChipRod, menuHighlightRod, menuUnhighlightRod, posterHighlighted · app:1d9dad0f, 7231dd13 (legenda po stranách), 77282e4e (telefon, tablet), b31c74a9 (štítky se netisknou), defe20a6, 7821ea72 (vějíř mimo štítek), 1ad91795 (paleta P/M/D), a265a3cc (paměť barev při návratu, další okna) · dirigent:spec/114-vejir-barvy-rodu · test/vysledek-1119-app-vejir-rody, vysledek-1119-app-vejir-barvy-vse · CHANGELOG.cs.md 3.30.0 -->
 
 <a id="A6.5"></a>
 ## A6.5 Mapa
@@ -653,8 +706,8 @@ Sloupce jsou ve skupinách. Které jsou vidět a v jakém pořadí, je část po
 - **Od aplikace 3.30.0:** u osob ve skupině **Osoba** sloupec **Linie**, ve výchozím stavu skrytý: linie osoby vůči
   ústřední osobě stromu ([A6.1.5](#A6.1.5)) slovy, **Otcovská**, **Otcovská i mateřská**, **Mateřská**, **Potomek**
   (u rodičů stejného pohlaví **Linie 1. rodiče**, **Linie 1. i 2. rodiče**, **Linie 2. rodiče**), před textem znak
-  ve zvoleném tvaru (při **Vypnuto** jen text). Osoba bez linie má buňku prázdnou. Řadí se v tomto pořadí, prázdné
-  na konci; filtr podle hodnot. Se sloupcem **Linie** skupiny **Výzkum** ([A6.7.14](#A6.7.14)) nesouvisí.
+  ve zvoleném tvaru (při **Bez tvaru** jen text). Osoba bez linie má buňku prázdnou. Řadí se v tomto pořadí, prázdné
+  na konci; filtr podle hodnot. Se sloupcem **Linie výzkumu** skupiny **Výzkum** ([A6.7.14](#A6.7.14)) nesouvisí.
 - **Hranice:** sbalená skupina je úzký pruh; ukazuje nejvyšší úroveň nálezu ve svých buňkách. Na telefonu je
   ukotvené jméno užší a hlavičku jde jen číst, ne měnit.
 - **Ovládání:**
@@ -674,7 +727,7 @@ Sloupce jsou ve skupinách. Které jsou vidět a v jakém pořadí, je část po
   posunout, ukotvené sloupce se posouvaly jen v rámci své skupiny a posun, který nešel, byl zašedlý.
 
 <!-- zdroj: app:4b1373a7 src/ui/table-view/table-state.ts normalizeColumns (zamčený sloupec ukotvený, kdekoli v ukotvené části), columnRun (ukotvená část: [0, pinned − 1]; mimo ni skupina), canMoveColumn, moveColumnBy · table-headmenu.ts headMenuItems (moveLeft/moveRight jen canMove; Skrýt ne u zamčeného; Uvolnit ne u zamčeného) · table-colpanel.ts (šipka jen pro možný posun) · commit 19dbb595 (dřív columnRun locked = 1, disabled/aria-disabled) · dirigent:spec/082-tester-3.28 K2.1 -->
-<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) · 3.30.0: app:45f7ca2a table-columns.ts:732 uPhoto (group uextra, skrytý) · app:0971647c table-columns.ts addedCell (dateCell, sortKey + zlomek dne, bez údaje emptyCell s textem earlier), sloupec added (group person, nenabízí se ve výchozím stavu), strings.ts table.col.added, table.earlier · e2e/person-list-table.spec.ts, src/__tests__/table-view-added.test.ts · app:cecd72a4 table-columns.ts lineage (group person, skrytý, getFocusPersonId, řazení paternal → both → maternal → descendant, prázdné poslední, filtr hodnot), table-grid.ts lineageHtml (znak ve zvoleném tvaru), strings.ts branchColors.tableColumn, tableBoth, tableDescendant, tableSlotBoth -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) · 3.30.0: app:45f7ca2a table-columns.ts:732 uPhoto (group uextra, skrytý) · app:0971647c table-columns.ts addedCell (dateCell, sortKey + zlomek dne, bez údaje emptyCell s textem earlier), sloupec added (group person, nenabízí se ve výchozím stavu), strings.ts table.col.added, table.earlier · e2e/person-list-table.spec.ts, src/__tests__/table-view-added.test.ts · app:cecd72a4 table-columns.ts lineage (group person, skrytý, getFocusPersonId, řazení paternal → both → maternal → descendant, prázdné poslední, filtr hodnot), table-grid.ts lineageHtml (znak ve zvoleném tvaru), strings.ts branchColors.tableColumn, tableBoth, tableDescendant, tableSlotBoth · app:675e1c5e strings.ts table.col.rLine „Linie výzkumu“ (do 3.29.0 „Linie“), src/__tests__/table-column-labels-unique.test.ts -->
 
 <a id="A6.7.3"></a>
 ### A6.7.3 Dopočtené a náhradní hodnoty
@@ -1124,13 +1177,13 @@ rozhodnutí, rozpory pramenů, hypotézy, práci agenta, linie a výměnu se str
   | **Hypotézy** | počet otevřených hypotéz; „rozhodl agent“ |
   | **Úkoly výzkumu** | úkoly osoby ve frontě („2 · nejbližší 3. ve frontě“, „1 · právě běží“) |
   | **Agent** | „pracuje: {úkol}“, „ve frontě“, „hotovo“ |
-  | **Linie** | místo osoby mezi liniemi (níže) |
+  | **Linie výzkumu** (do aplikace 3.29.0 **Linie**) | místo osoby mezi liniemi (níže) |
   | **Materiály**, **Strom tu končí**, **Hledáno bez výsledku**, **Výměna s výzkumem**, **Původně v rodokmenu**, **Příběh**, **Kde se vyřizuje**, **Nové od výzkumu**, **Dostupnost pramenů**, **Farnost (výzkum)**, **Odhad narození** | co výzkum ví o materiálech osoby, o kraji stromu, o výměně se stromem, o pramenech a místech |
 
-- **Svazky:** **ID výzkumu** (F…), **Linie** (podle partnera z linie), **Agent** („pracuje na páru: …“) a **Rozpory**
-  (rozpory ke sňatku a rozvodu u obou partnerů). **Prameny:** **ID výzkumu** (S…) a **Obraz**: „v počítači výzkumu“,
-  „sken chybí v počítači výzkumu“ (zvýrazněné), „online (archiv)“.
-- **Linie:** v linii (partner osoby z linie „· partner“; vedlejší větev přidaná k linii patří do té linie),
+- **Svazky:** **ID výzkumu** (F…), **Linie výzkumu** (podle partnera z linie), **Agent** („pracuje na páru: …“) a
+  **Rozpory** (rozpory ke sňatku a rozvodu u obou partnerů). **Prameny:** **ID výzkumu** (S…) a **Obraz**: „v počítači
+  výzkumu“, „sken chybí v počítači výzkumu“ (zvýrazněné), „online (archiv)“.
+- **Linie výzkumu:** v linii (partner osoby z linie „· partner“; vedlejší větev přidaná k linii patří do té linie),
   „vedlejší větev: {jméno}“, „ostrov“, „mimo linie“. **Mimo linie** jsou vedlejší větve nepřidané k linii, ostrovy a
   ostatní ([R2.3](R2-lines-and-queue.md#R2.3)). Linie bere tabulka živě z výzkumu, jinak ze souboru výzkumu; řadí se
   v pořadí linií výzkumu, pak větve, ostrovy a mimo linie, uvnitř podle generace. Sloupec i čipy linií jsou jen
@@ -1149,7 +1202,7 @@ rozhodnutí, rozpory pramenů, hypotézy, práci agenta, linie a výměnu se str
   | Pohled | Co ukazuje |
   |---|---|
   | **Výzkum** | osoby se signálem: jméno, Výzkum, Čeká na rozhodnutí, Rozpory, Hypotézy, Agent, Úkoly výzkumu, narození, úmrtí; řazeno od nejnaléhavějšího, pak podle jména |
-  | **Linie: {linie}** (pro každou linii) a **Mimo linie** | jméno, Linie, generace, Výzkum, narození, úmrtí, Rozpory, Agent; čip linie; řazeno podle linie |
+  | **Linie: {linie}** (pro každou linii) a **Mimo linie** | jméno, Linie výzkumu, generace, Výzkum, narození, úmrtí, Rozpory, Agent; čip linie; řazeno podle linie |
   | **Výměna s výzkumem** | osoby s výměnou: jméno, Výměna s výzkumem, Původně v rodokmenu, Nové od výzkumu, Rozpory, narození |
 
   Svazky jsou v nich sbalené a řádek pokrytí zapnutý. Prázdný pohled řekne „Výzkum teď nic nepotřebuje“ nebo „Strom a
@@ -1531,8 +1584,8 @@ středem. Určuje to skupina **Hlavní okno** v přepínači **Výběr** v hlavi
 
 | Volba | Co se stane v hlavním okně |
 |---|---|
-| **jen vyznačit** (výchozí) | osoba se vyznačí jako v režimu **jen vyznačit** ([A6.8.1](#A6.8.1)); střed zůstane |
-| **zaměřit** | osoba se stane středem hlavního okna jako po **Zaměřit** u karty a strom se kolem ní překreslí, i když ji předtím nekreslil |
+| **jen vyznačit** (výchozí na Časové ose a na Mapě) | osoba se vyznačí jako v režimu **jen vyznačit** ([A6.8.1](#A6.8.1)); střed zůstane |
+| **zaměřit** (výchozí v Tabulce) | osoba se stane středem hlavního okna jako po **Zaměřit** u karty a strom se kolem ní překreslí, i když ji předtím nekreslil |
 
 - **Kde:** volbu mají Tabulka, Časová osa a Mapa dalšího okna (na Mapě výběr osoby u místa; klik na samotné místo nic
   nepošle). Rodina, Potomci a Vějíř dalšího okna mění klikem vlastní střed a v hlavním okně osobu jen vyznačí.
@@ -1552,15 +1605,19 @@ středem. Určuje to skupina **Hlavní okno** v přepínači **Výběr** v hlavi
     vyznačí.“ Po pozastavení nebo konci sledování se nic zpětně nepřepne: **zaměřit** platí od dalšího výběru;
   - osoba, která mezitím ve stromu není: střed zůstane, „Vybraná osoba už ve stromu není.“ Oznámení bez × zmizí
     po 6 s;
+  - osoba, kterou Tabulka hlavního okna vynechá (filtr, hledání nebo seznam; ne připnutý řádek ani řádek ukázaný
+    jen dočasně): střed zůstane, osoba se nevyznačí a oznámení bez jména „Vybraná osoba je v tomto okně skrytá.“
+    zmizí po 6 s. Rodina, Potomci a Vějíř nikoho neskrývají;
   - osoba, která už je středem: nic se nestane;
   - při **vypnuto** ve skupině **Toto okno** a když hlavní okno není otevřené, je skupina **Hlavní okno** zašedlá
     s poznámkou „Nedostupné – sdílení výběru je v tomto okně vypnuté.“ nebo „Hlavní okno není otevřené.“; volba
     zůstane uložená;
   - volba platí pro jedno okno a jeho Tabulku, Časovou osu i Mapu, vydrží obnovení okna (F5); každé další okno má
-    svou.
+    svou. Dokud se nezvolí, rozhoduje pohled: Tabulka zaměří, Časová osa a Mapa vyznačí. Zvolené **jen vyznačit**
+    platí i v Tabulce a vydrží obnovení okna.
 - **Ovládání:** aplikace: v hlavičce dalšího okna **Výběr ▾** → **Hlavní okno** · výběr v tomto okně: **jen
   vyznačit**, **zaměřit**. Zavřený přepínač ukazuje, co je zvolené (v úzkém okně zkráceně ikonami); celé znění má
   v bublině.
 - **Platí od:** aplikace 3.30.0
 
-<!-- zdroj: app:e7d3bb11 src/windows/follow-mode.ts SendMode mark|focus, SENDING table/timeline/map, sendModeKey (sessionStorage okna), getSendModeChoice · src/windows/sat-header.ts followControlParts (FOLLOW_LABEL_MIN_WIDTH 1280, FOLLOW_BOTH_MIN_WIDTH 1100), followSendGroupState (off, no-main, agent), sendModeName = contextMenu.focus malým písmenem, followControlAria · src/windows/satellite.ts sendMode (followSelection && sendModeAvailable), post select intent, seq · app:edaec740 src/windows/window-focus.ts WINDOW_FOCUS_DELAY_MS 200, take (seq), fire (deleted, hidden, followingAgent, focusId), run push/replace, endRun · src/windows/window-selection.ts wireMainSelection (markNotice not-in-view, VIEW_STEP_EVENT, onSendEnded), src/windows/window-start.ts mainFocusDeps (hidden: () => false, drawn family/descendants/fan) · src/ui/window-notice.ts PLAIN_NOTICE_MS 6000 · strings.ts satFollow.*, mainNotice.* · CHANGELOG.cs.md 3.30.0 · dirigent:spec/110 (rozhodnutí 18. 11. 17:35 a 17:45: „Zaměřit“ = nový střed) · app:docs/ZADANI_DEV_vyber-z-okna.md §1–§7 · skrytá osoba (§7) zatím nenapojená -->
+<!-- zdroj: app:e7d3bb11 src/windows/follow-mode.ts SendMode mark|focus, SENDING table/timeline/map, sendModeKey (sessionStorage okna), getSendModeChoice · src/windows/sat-header.ts followControlParts (FOLLOW_LABEL_MIN_WIDTH 1280, FOLLOW_BOTH_MIN_WIDTH 1100), followSendGroupState (off, no-main, agent), sendModeName = contextMenu.focus malým písmenem, followControlAria · src/windows/satellite.ts sendMode (followSelection && sendModeAvailable), post select intent, seq · app:edaec740 src/windows/window-focus.ts WINDOW_FOCUS_DELAY_MS 200, take (seq), fire (deleted, hidden, followingAgent, focusId), run push/replace, endRun · src/windows/window-selection.ts wireMainSelection (markNotice not-in-view, VIEW_STEP_EVENT, onSendEnded), src/windows/window-start.ts mainFocusDeps (hidden: () => false, drawn family/descendants/fan) · src/ui/window-notice.ts PLAIN_NOTICE_MS 6000 · strings.ts satFollow.*, mainNotice.* · CHANGELOG.cs.md 3.30.0 · dirigent:spec/110 (rozhodnutí 18. 11. 17:35 a 17:45: „Zaměřit“ = nový střed) · app:docs/ZADANI_DEV_vyber-z-okna.md §1–§7 · app:6be873dc src/windows/follow-mode.ts defaultSendMode (table → focus, jinak mark), parseSendMode, setSendMode (ukládá focus i mark) · app:4927ccab src/ui/table-view/table-ui.ts tableHidesPerson (filtr, hledání, seznam; ne pinOutside, tempShown, sources), src/windows/window-start.ts mainFocusDeps hidden, src/windows/window-focus.ts { kind: 'hidden' }, strings.ts mainNotice (skrytá osoba), e2e/windows-send-focus.spec.ts -->

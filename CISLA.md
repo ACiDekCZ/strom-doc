@@ -198,6 +198,8 @@ nenapsáno) · `neplatí od <verze>`.
 | R11.5.2 | R11-material-from-the-user.md | výzkum 1.20.0 | platí | Titulek, druh, datum a osoby z terminálu | Title, kind, date and people from the terminal | Titel, Art, Datum und Personen aus dem Terminal | Tytuł, rodzaj, data i osoby z terminala |
 | R11.5.3 | R11-material-from-the-user.md | výzkum 1.35.0 | platí | Třídění materiálu: `strom material sort` | Sorting material: `strom material sort` | Material sortieren: `strom material sort` | Porządkowanie materiału: `strom material sort` |
 | R11.5.4 | R11-material-from-the-user.md | výzkum 1.35.0 | platí | Materiál přes most | Material through the bridge | Material über die Brücke | Materiał przez most |
+| R11.5.5 | R11-material-from-the-user.md | výzkum 1.35.0 | platí | Běh třídění z aplikace | A sorting run from the app | Ein Lauf des Sortierens aus der App | Przebieg porządkowania z aplikacji |
+| R11.5.6 | R11-material-from-the-user.md | výzkum 1.35.0 | platí | Smazat natrvalo: `strom input delete` | Delete permanently: `strom input delete` | Endgültig löschen: `strom input delete` | Usuń trwale: `strom input delete` |
 | R12 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Kde agent pracuje a co strom hlídá | Where the agent works and what strom watches | Wo der Agent arbeitet und was strom überwacht | Gdzie agent pracuje i czego strom pilnuje |
 | R12.1 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Způsoby práce: tabulka | Ways of working: a table | Arten zu arbeiten: eine Tabelle | Sposoby pracy: tabela |
 | R12.2 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Prohlížeč v aplikaci Claude | The browser in the Claude app | Der Browser in der App Claude | Przeglądarka w aplikacji Claude |
@@ -266,6 +268,13 @@ nenapsáno) · `neplatí od <verze>`.
 | A3.5.7 | A3-evidence-in-the-app.md | aplikace 3.30.0 | platí | Projít a hromadné úpravy | Go through and bulk edits | Durchgehen und Sammeländerungen | Przejrzyj i zmiany zbiorcze |
 | A3.5.8 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Roztřídit agentem | Sort with the agent | Mit dem Agenten sortieren | Uporządkuj agentem |
 | A3.5.9 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Netýká se rodiny | Not about the family | Betrifft nicht die Familie | Nie dotyczy rodziny |
+| A3.5.10 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Pruh třídění a konec návrhu | The sorting band and the end of the proposal | Das Band des Sortierens und das Ende des Vorschlags | Pasek porządkowania i koniec propozycji |
+| A3.5.11 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Co roztřídit: dávky a co se nepošle | What to sort: batches and what is not sent | Was sortieren: Stapel und was nicht gesendet wird | Co uporządkować: partie i co się nie wysyła |
+| A3.5.12 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Běh po dávkách | A run in batches | Ein Lauf in Stapeln | Przebieg partiami |
+| A3.5.13 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Rub a portrét v návrhu | Back and portrait in the proposal | Rückseite und Porträt im Vorschlag | Rewers i portret w propozycji |
+| A3.5.14 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Agent nezařadil, Stejný obsah a Zdroj pramene | Not assigned by the agent, Same content and File of a source | Vom Agenten nicht zugeordnet, Gleicher Inhalt und Datei einer Quelle | Agent nie przypisał, Ta sama treść i Plik źródła |
+| A3.5.15 | A3-evidence-in-the-app.md | aplikace 3.30.0 | platí | Přidat materiály… v okně | Add materials… in the window | Materialien hinzufügen… im Fenster | Dodaj materiały… w oknie |
+| A3.5.16 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Smazat natrvalo | Delete permanently | Endgültig löschen | Usuń trwale |
 | A3.6 | A3-evidence-in-the-app.md | aplikace 3.3.0 | platí | Prameny osoby | Sources of a person | Quellen einer Person | Źródła osoby |
 | A3.7 | A3-evidence-in-the-app.md | aplikace 3.4.0 | platí | Kde chybí doklady | Where evidence is missing | Wo Belege fehlen | Gdzie brakuje dowodów |
 | A3.8 | A3-evidence-in-the-app.md | aplikace 3.14.0 | platí | Obraz jen ve výzkumu | Image only in the research | Bild nur in der Forschung | Obraz tylko w badaniu |
@@ -306,6 +315,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.2 | A6-views.md | aplikace 1.4.0 | platí | Pohled Potomci | The Descendants view | Ansicht Nachkommen | Widok Potomkowie |
 | A6.3 | A6-views.md | aplikace 1.5.0 | platí | Časová osa | Timeline | Zeitleiste | Oś czasu |
 | A6.4 | A6-views.md | aplikace 1.8.0 | platí | Vějíř | Fan | Fächer | Wachlarz |
+| A6.4.1 | A6-views.md | aplikace 3.30.0 | platí | Barvy rodů a zvýraznění rodu | Family line colours and highlighting a family line | Stammlinienfarben und Hervorheben einer Stammlinie | Kolory rodów i wyróżnienie rodu |
 | A6.5 | A6-views.md | aplikace 1.10.0 | platí | Mapa | Map | Karte | Mapa |
 | A6.5.1 | A6-views.md | aplikace 1.10.0 | platí | Odkud mapa bere polohu místa | Where the map gets a place's location | Woher die Karte die Lage eines Ortes nimmt | Skąd mapa bierze położenie miejsca |
 | A6.5.2 | A6-views.md | aplikace 3.25.0 | platí | Místa mimo mapu dohledat ve výzkumu | Looking up places off the map in the research | Orte ohne Karte in der Forschung suchen | Odszukanie miejsc poza mapą w badaniu |

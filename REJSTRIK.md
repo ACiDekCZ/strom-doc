@@ -648,6 +648,18 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
+<a id="not-assigned-by-agent"></a>
+### Agent nezařadil
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Agent nezařadil (app) · `left` (most) | Štítek a filtr u souboru, ke kterému agent při třídění nic nenavrhl. Soubor zůstane bez titulku a osoby a příští třídění ho nepošle, pokud se nevybere ručně. |
+| en | Not assigned by the agent (app) · `left` (bridge) | A tag and a filter at a file the agent proposed nothing for when sorting. The file stays without title and person and the next sorting does not send it unless it is selected by hand. |
+| de | Vom Agenten nicht zugeordnet (app) · `left` (Brücke) | Etikett und Filter bei einer Datei, zu der der Agent beim Sortieren nichts vorgeschlagen hat. Die Datei bleibt ohne Titel und Person, und das nächste Sortieren sendet sie nicht, außer sie wird von Hand ausgewählt. |
+| pl | Agent nie przypisał (app) · `left` (most) | Etykieta i filtr przy pliku, do którego agent przy porządkowaniu nic nie zaproponował. Plik zostaje bez tytułu i osoby, a następne porządkowanie go nie wyśle, chyba że zostanie zaznaczony ręcznie. |
+
+- **Čísla:** [A3.5.14](cs/A3-evidence-in-the-app.md#A3.5.14), A3.5.10, A3.5.11, R11.5.4
+
 <a id="strom-archive"></a>
 ### Archiv Stromu
 
@@ -934,7 +946,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Materialien (app) · Material senden… | Jede Datei des Stammbaums (Anhang, ganzes Foto eines Porträts, Paarfoto, Beleg einer Quelle) und eine Datei der Forschung. Dieselbe Datei ist im Stammbaum einmal und trägt ihre Stellen. Eine Datei lässt sich der Forschung auch senden, ohne sie dem Stammbaum hinzuzufügen. |
 | pl | Materiały (app) · Wyślij materiał… | Każdy plik drzewa (załącznik, całe zdjęcie portretu, zdjęcie pary, dowód źródła) i plik badania. Ten sam plik jest w drzewie raz i niesie swoje miejsca. Plik można wysłać do badania także bez dodania do drzewa. |
 
-- **Čísla:** [A3.5](cs/A3-evidence-in-the-app.md#A3.5), A3.5.1–A3.5.9, R11, R11.4, R11.5
+- **Čísla:** [A3.5](cs/A3-evidence-in-the-app.md#A3.5), A3.5.1–A3.5.16, R11, R11.4, R11.5, R11.5.6
 
 <a id="research-bridge"></a>
 ### Most výzkumu
@@ -946,7 +958,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Brücke | Ein kleiner Server, den die Forschung auf diesem Computer startet (`127.0.0.1`, ein zufälliger Port, ein geheimer Schlüssel in der Adresse); darüber spricht die App mit der Forschung. |
 | pl | most | Mały serwer, który badanie uruchamia na tym komputerze (`127.0.0.1`, losowy port, tajny klucz w adresie); aplikacja rozmawia przez niego z badaniem. |
 
-- **Čísla:** [S1.1](cs/S1-connecting-app-and-research.md#S1.1), S1.5, S1.7
+- **Čísla:** [S1.1](cs/S1-connecting-app-and-research.md#S1.1), S1.5, S1.7, R13.2
 
 <a id="possible-duplicate"></a>
 ### Možná duplicitní osoba
@@ -1306,7 +1318,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Stammlinie | Die männliche Linie vom ältesten bekannten Träger des Namens, bestimmt durch den Stammvater, nicht durch den Nachnamen. Die App berechnet sie aus den Daten des Stammbaums. |
 | pl | Ród | Linia męska od najstarszego znanego nosiciela nazwiska, wyznaczona przez założyciela, nie przez nazwisko. Aplikacja liczy ją z danych drzewa. |
 
-- **Čísla:** [A4.1](cs/A4-surnames-and-families.md#A4.1), A4.1.1, A4.2, A4.4
+- **Čísla:** [A4.1](cs/A4-surnames-and-families.md#A4.1), A4.1.1, A4.2, A4.4, A6.4.1
 
 <a id="sort-with-agent"></a>
 ### Roztřídit agentem
@@ -1318,7 +1330,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Mit dem Agenten sortieren… (app) · `strom material sort` | Der Agent der Forschung schlägt zu Dateien Titel, Datum, Art und Verknüpfungen mit Begründung vor. Nichts wird geschrieben, bevor ein Mensch den Vorschlag annimmt; Titel und Verknüpfungen von Menschen ändert der Agent nicht. |
 | pl | Uporządkuj agentem… (app) · `strom material sort` | Agent badania proponuje dla plików tytuł, datę, rodzaj i połączenia z uzasadnieniem. Nic się nie zapisze, dopóki człowiek nie przyjmie propozycji; tytułów i połączeń nadanych przez człowieka agent nie zmienia. |
 
-- **Čísla:** [A3.5.8](cs/A3-evidence-in-the-app.md#A3.5.8), R11.5.3
+- **Čísla:** [A3.5.8](cs/A3-evidence-in-the-app.md#A3.5.8), A3.5.10–A3.5.13, R11.5.3, R11.5.5
 
 <a id="list-of-people"></a>
 ### Seznam osob
@@ -1392,6 +1404,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A8.1](cs/A8-merging-trees.md#A8.1), A2.1.1, A2.8, A8.2, A8.3, S6.7
 
+<a id="delete-permanently"></a>
+### Smazat natrvalo
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Smazat natrvalo… (app) · `strom input delete` | Smaže soubory výzkumu z archivu i ze stromu; jen člověk, po výčtu toho, co na soubory odkazuje. V aplikaci to nejde vrátit; soubor zůstane jen v dřívější záloze. Skrytí ani odebrání ze stromu soubor nesmaže. |
+| en | Delete permanently… (app) · `strom input delete` | Deletes files of the research from the archive and from the tree; only a person, after a list of what refers to the files. It cannot be undone in the app; a file stays only in an earlier backup. Hiding or removing from the tree does not delete a file. |
+| de | Endgültig löschen… (app) · `strom input delete` | Löscht Dateien der Forschung aus dem Archiv und aus dem Stammbaum; nur ein Mensch, nach einer Liste dessen, was auf die Dateien verweist. In der App lässt es sich nicht rückgängig machen; eine Datei bleibt nur in einer früheren Sicherung. Ausblenden oder Entfernen aus dem Stammbaum löscht keine Datei. |
+| pl | Usuń trwale… (app) · `strom input delete` | Usuwa pliki badania z archiwum i z drzewa; tylko człowiek, po wykazie tego, co odwołuje się do plików. W aplikacji nie da się tego cofnąć; plik zostaje tylko we wcześniejszej kopii zapasowej. Ukrycie ani usunięcie z drzewa pliku nie kasuje. |
+
+- **Čísla:** [A3.5.16](cs/A3-evidence-in-the-app.md#A3.5.16), R11.5, R11.5.4, R11.5.6
+
 <a id="paired-phones"></a>
 ### Spárované telefony
 
@@ -1451,6 +1475,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Ten sam identyfikator w pliku | Powód dopasowania przy scalaniu: osoby mają ten sam identyfikator programu (na przykład `_UID` lub identyfikator FamilySearch), a imię, płeć i rok urodzenia temu nie przeczą. |
 
 - **Čísla:** [S6.7](cs/S6-tree-from-another-program.md#S6.7), A8.2
+
+<a id="same-content"></a>
+### Stejný obsah
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Stejný obsah (app) · `sameAs` (most) | Štítek u souboru se stejným obsahem jako starší soubor. Třídění pošle jen starší; kopie jde skrýt jako Duplikát. |
+| en | Same content (app) · `sameAs` (bridge) | A tag at a file with the same content as an older file. Sorting sends only the older one; the copy can be hidden as Duplicate. |
+| de | Gleicher Inhalt (app) · `sameAs` (Brücke) | Etikett bei einer Datei mit gleichem Inhalt wie eine ältere Datei. Das Sortieren sendet nur die ältere; die Kopie lässt sich als Duplikat ausblenden. |
+| pl | Ta sama treść (app) · `sameAs` (most) | Etykieta przy pliku z tą samą treścią co starszy plik. Porządkowanie wyśle tylko starszy; kopię można ukryć jako Duplikat. |
+
+- **Čísla:** [A3.5.14](cs/A3-evidence-in-the-app.md#A3.5.14), A3.5.10, A3.5.11, R11.5.4
 
 <a id="research-on-this-computer"></a>
 ### Strom Research na tomto počítači
@@ -1643,6 +1679,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Osoba zastępcza | Osoba bez imienia i nazwiska („?”), którą aplikacja dodaje za brakującego rodzica albo przejmuje z pliku. Przy scalaniu się jej nie paruje. |
 
 - **Čísla:** [A2.1.1](cs/A2-loading-a-family-tree.md#A2.1.1), A2.3, A2.5, A8.2
+
+<a id="file-of-a-source"></a>
+### Zdroj pramene
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Zdroj pramene (app) · `uses.of` (most) | Soubor, ze kterého výzkum udělal pramen. Je zařazený přes pramen: třídění ho nepošle a **Kde je použit** ukáže prameny první. |
+| en | File of a source (app) · `uses.of` (bridge) | A file the research made a source of. It is sorted through the source: sorting does not send it and **Where used** shows the sources first. |
+| de | Datei einer Quelle (app) · `uses.of` (Brücke) | Eine Datei, aus der die Forschung eine Quelle gemacht hat. Sie ist über die Quelle eingeordnet: das Sortieren sendet sie nicht, und **Wo verwendet** zeigt die Quellen zuerst. |
+| pl | Plik źródła (app) · `uses.of` (most) | Plik, z którego badanie zrobiło źródło. Jest uporządkowany przez źródło: porządkowanie go nie wyśle, a **Gdzie użyto** pokazuje źródła jako pierwsze. |
+
+- **Čísla:** [A3.5.14](cs/A3-evidence-in-the-app.md#A3.5.14), A3.5.3, A3.5.11, R11.5.4
 
 <a id="lineage-markers"></a>
 ### Značení linií
