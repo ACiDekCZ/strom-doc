@@ -359,10 +359,12 @@ something else meanwhile; the other windows keep following. All windows are read
   Table, the marks and the trail in the Fan and on the Map) stay in it. **Follow the agent** attaches the window again
   and it jumps to the agent at once. Detaching survives reloading the window (F5) and is forgotten when following
   ends.
-- **A choice from another window:** a following window that is not paused only marks a person chosen in another
-  window, even with **Follow selection: switch** ([A6.8.1](A6-views.md#A6.8.1)); the centre stays with the agent. The
-  Table selects that person's row but does not scroll to it. The jump after the agent is not sent to the other
-  windows as a choice of a person. A paused or detached window goes by **Follow selection** as outside following.
+- **A choice from another window:** a following window that is not paused only marks a person chosen in another window,
+  even with **Selection** → **This window**: **switch** ([A6.8.1](A6-views.md#A6.8.1)); the centre stays with the agent.
+  The Table selects that person's row but does not scroll to it. The jump after the agent is not sent to the other
+  windows as a choice of a person. A paused or detached window goes by the choice **This window** as outside following.
+  A choice sent to the main window with **focus** is only marked by a main window following the agent
+  ([A6.8.4](A6-views.md#A6.8.4)).
 - **End:**
   - ◎ **Stop following here** in the main window stops the jumps only in the main window; the other windows keep
     following;

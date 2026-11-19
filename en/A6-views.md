@@ -225,6 +225,42 @@ edge of the card.
 
 <!-- zdroj: app:0e403ec6 src/branch-colors.ts classifyBranches (collectAncestorSide: předci + sourozenci každého předka; collectDescendants přes childIds; obě strany se sčítají R4; descendant jen mimo strany; focus smazán; numbered = oba rodiče známí a stejného pohlaví R5), src/settings.ts getBranchMarker (výchozí arc; branchColors false → off), isBranchTintOn (jen se značkou), isBranchTintChosen, save (migrace při prvním zápisu), src/renderer.ts renderCards (!isPlaceholder, viewMode ≠ timeline), src/branch-marker-attrs.ts (čtečka ariaPaternal/ariaBoth/ariaSlot1), index.html tokeny --branch-paternal #234e8c / --branch-maternal #d0679a / --branch-descendant #8a6400, tmavé #9cc2f2 / #f6a9cb / #e3b552, --branch-*-tint, CSS tvarů (arc, tag, stripe, corner; R4 .branch-paternal.branch-maternal) · app:c8afe382 index.html #branch-marker-setting (skupina settings.groupTree), #branch-tint-toggle, src/ui/branch-marker-ui.ts syncBranchLegend, src/ui/misc.ts (legenda jen family/descendants, isBranchLegendEnabled) · app:b94f3816 src/branch-marker-svg.ts, src/ui/export-image-ui.ts treeCardDrawing (branchMarker, branchTint, numbered; světlé hex), index.html @media print (R6: border 2px #999, white background, tiskové --branch-*, print-color-adjust) · strings.ts branchColors.* (settingLabel, markerArc…markerOff, defaultTag, tintLabel, legendPaternal…legendSlot2, legendNone, letterPaternal O, letterMaternal M, letterDescendant P) · barvy větví: app:6f86ad39 (v1.8.0) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii K1–K4, app:docs/ZADANI_DEV_linie-na-kartach.md R1–R6 · prace/1119-app-112-linie -->
 
+<a id="A6.1.6"></a>
+### A6.1.6 Back to the default person: ⌂
+
+The button ⌂ at the start of **Focused on** focuses the tree's default person ([A6.1.1](#A6.1.1)), wherever the
+centre is. It does the same as **Focus** at a card: a new step of the history and the notice "Focused on {name} ·
+↩ Back"; **↩ Back**, the arrow ↩ at the bottom left or Alt+← returns the previous centre.
+
+| Tree setting (**Default person and view**) | Whom ⌂ focuses |
+|---|---|
+| **Specific person:** | that person; when they are no longer in the tree, the tree's first person |
+| **Last focused** | the person the tree focused on when it opened (or when this tree was switched to) |
+| no setting | the tree's first person |
+
+- **Where ⌂ is:**
+  - Family: in **Focused on** on a computer, in the bar on a tablet and on a phone held sideways, in the person panel
+    on a phone;
+  - Descendants: at the start of the view's badge;
+  - Fan: top left; with a fixed centre ([S4.1.3](S4-research-from-the-app.md#S4.1.3)) before **Centre: {name} ·
+    Release**, and it releases the fixed centre first.
+- **The default person is the centre already:** ⌂ stays in its place, filled and dimmed, with the tooltip "Default
+  person is in focus: {name}". Neither a click nor the key does anything.
+- **Tooltip:** "Focus default person: {name}", for the tree's first person with the addition " – first person in the
+  tree", for **Last focused** " – focused when the tree opened", and "(H)".
+- **Keys:** H (outside a text field and an open menu); also ⌘1 on a Mac and Ctrl+1 on Windows and Linux, when the
+  browser passes them to the app. In a browser tab the browser usually takes them itself to switch to the first tab.
+  Overview of the keys: [A9.8](A9-using-the-app.md#A9.8).
+- **While following the research** ⌂ and H act as another choice of a person: they interrupt following the agent in
+  the main window (**Back to the agent**, [S4.1.1](S4-research-from-the-app.md#S4.1.1)). When the default person is
+  the centre already, they do not.
+- **Limits:** an empty tree has no ⌂. The Map, the Timeline, the Table and other windows ([A6.8](#A6.8)) have no ⌂,
+  and H does nothing there.
+- **Controls:** ⌂ at **Focused on** (Descendants: in the badge, Fan: top left); the key H.
+- **Since:** app 3.30.0
+
+<!-- zdroj: app:e52adde6 src/default-person.ts defaultTarget (specific, first, opened, fallbackFirst; prázdný strom null), startupPerson · src/ui/default-focus.ts FALLBACK_TO_FIRST = true, rememberOpenedFocus, isAtDefault (Vějíř: liveFollowPinned ?? focus), isDefaultFocusContext (hlavní okno, HOME_VIEWS family/descendants/fan), focusDefaultPerson (unpinFanCenter, TreeRenderer.focusFromTab → showFocusToast) · app:b6df0770 §3 telefon (panel osoby), §6 defaultFocusKey (H/h bez Ctrl/⌘/Alt mimo pole; ⌘1 / Ctrl+1 podle code Digit1 i z pole), src/ui/misc.ts defaultFocusKeyHeld, §7 Potomci (#descendants-badge), Vějíř (pilulka vlevo nahoře, pin), §9 pauza sledování · strings.ts focus.focusedOn, focusHome, focusHomeFirst, focusHomeOpened, focusHomeAt, focusToast, focusToastBack · CHANGELOG.cs.md 3.30.0 „Zpět na výchozí osobu“ · dirigent:spec/111 K1.1–K1.6 · app:docs/ZADANI_DEV_vychozi-osoba.md §1–§9 · ⌘1 / Ctrl+1 v kartě prohlížeče neměřeno (spec 111 Otevřené) -->
+
 <a id="A6.2"></a>
 ## A6.2 The Descendants view
 
@@ -1507,9 +1543,10 @@ from it.
   row type, filters, search, saved view, sorting and the selected row; for Family the zoom, for the Fan the rings,
   for the Map the places and the zoom. Then the window has its own state. Reloading the window (F5) keeps its view
   and person.
-- **What the window has:** instead of the app's toolbar it has a heading: the tree's name, the view switch (below
-  960 px as "{view} ▾"), **Follow selection** ([A6.8.1](#A6.8.1)), **Undo**, **Redo** and ⧉ **Open another window**. It has no
-  tree switcher, no **Research** menu, no Settings and no small research panel.
+- **What the window has:** instead of the app's toolbar it has a heading: the tree's name, the view switch (below 960 px
+  as "{view} ▾"), **Follow selection** ([A6.8.1](#A6.8.1)), **Undo**, **Redo** and ⧉ **Open another window**. It has no
+  tree switcher, no **Research** menu, no Settings and no small research panel. From app 3.30.0 the switch **Selection**
+  ([A6.8.4](#A6.8.4)) stands in place of **Follow selection**.
 - **Edits:** in the window a person can be edited (the person menu, **Edit**) and so can a Table cell. The main
   window saves them, they can be undone as its steps and show in all windows at once. **Undo** and **Redo** in the window's heading
   undo and redo the main window's steps. When the tree changed in another window meanwhile, the edit is not applied:
@@ -1564,6 +1601,9 @@ switch **Follow selection** in the window's heading.
 - **From app 3.30.0:** a window that follows the agent while research is followed and is not paused only marks a
   person chosen in another window, also in the mode **switch**; the jump after the agent is not sent as a choice of a
   person ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+- **From app 3.30.0:** the switch is called **Selection ▾**, and these modes are in its group **This window** ·
+  selection from other windows. The second group **Main window** says what a choice in this window does in the main
+  window ([A6.8.4](#A6.8.4)).
 
 <!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
 
@@ -1612,3 +1652,49 @@ other. Other windows connect to it."
 - **Since:** app 3.28.0
 
 <!-- zdroj: app:4b1373a7 src/windows/window-role.ts (Web Lock strom-main ifAvailable → main, jinak second-tab) · src/windows/second-tab.ts (secondTabSatelliteKind table) · src/windows/window-link.ts (předání odkazu hlavnímu jednou) · src/windows/window-start.ts openLinkFromWindow · strings.ts win.alreadyOpen, alreadyOpenNote, switchThere, openAsWindow, switchFailed, tabCanClose, linkForwarded · CHANGELOG.cs.md 3.28.0 · spec 079 K1.6 · prace/1112-app-okna-zaklad (7d22e396) -->
+
+<a id="A6.8.4"></a>
+### A6.8.4 What a choice in another window does in the main window
+
+A person chosen in the Table, on the Timeline or on the Map of another window is marked in the main window, or
+becomes its centre. This is set by the group **Main window** in the switch **Selection** in the heading of the other
+window.
+
+| Choice | What happens in the main window |
+|---|---|
+| **mark only** (default) | the person is marked as in the mode **mark only** ([A6.8.1](#A6.8.1)); the centre stays |
+| **focus** | the person becomes the centre of the main window as after **Focus** at a card, and the tree is redrawn around them, even when it did not draw them before |
+
+- **Where:** the choice is in the Table, the Timeline and the Map of another window (on the Map a choice of a person
+  at a place; a click on the place alone sends nothing). Family, Descendants and the Fan of another window move their
+  own centre with a click and only mark the person in the main window.
+- **Running down the rows:** the arrow keys and a click do the same. The main window marks the person at once and
+  changes its centre only 200 ms after the last choice, and only to the last person chosen. Running down the rows
+  with the arrow keys thus changes the centre once.
+- **Notice and return:** at the bottom middle of the main window's tree stands "Centre chosen in another window" with
+  the button **↶ {name}** (the centre before the first choice) and ×. A run of choices from one window is one step of
+  the main window's history: one step back (↩ at the bottom left, Alt+←) or ↶ returns the centre from before it. The run
+  ends with a step of the main window's own (Focus, Go to, ↩, ↪, another view), with the notice closed, with the choice
+  switched to **mark only** and with the other window closed. Switching the choice does not return the centre.
+- **A person the main window does not draw** (with **mark only**): the view Family, Descendants or Fan of the main
+  window says "{name} is not in this view." with **Go to** (the person becomes the centre) and ×.
+- **Limits:**
+  - a main window that follows the research agent only marks the person; the centre stays with the agent
+    ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Once per run it says "Following the agent – a selection from
+    another window is only marked."; the other window has "(agent)" at the choice and in its menu "The main window
+    is following the agent – the selection is only marked there." After a pause or the end of following nothing is
+    switched back: **focus** holds from the next choice;
+  - a person who is no longer in the tree: the centre stays, "The selected person is no longer in the tree." A notice
+    without × goes after 6 s;
+  - a person who is the centre already: nothing happens;
+  - with **off** in the group **This window** and when the main window is not open, the group **Main window** is
+    greyed out with the note "Unavailable – selection sharing is off in this window." or "The main window is not
+    open."; the choice stays stored;
+  - the choice holds for one window and its Table, Timeline and Map, and survives the window's reload (F5); each
+    other window has its own.
+- **Controls:** app: in the heading of another window **Selection ▾** → **Main window** · selection in this window:
+  **mark only**, **focus**. The closed switch shows what is chosen (in a narrow window shortened to icons); its
+  tooltip has the whole wording.
+- **Since:** app 3.30.0
+
+<!-- zdroj: app:e7d3bb11 src/windows/follow-mode.ts SendMode mark|focus, SENDING table/timeline/map, sendModeKey (sessionStorage okna), getSendModeChoice · src/windows/sat-header.ts followControlParts (FOLLOW_LABEL_MIN_WIDTH 1280, FOLLOW_BOTH_MIN_WIDTH 1100), followSendGroupState (off, no-main, agent), sendModeName = contextMenu.focus malým písmenem, followControlAria · src/windows/satellite.ts sendMode (followSelection && sendModeAvailable), post select intent, seq · app:edaec740 src/windows/window-focus.ts WINDOW_FOCUS_DELAY_MS 200, take (seq), fire (deleted, hidden, followingAgent, focusId), run push/replace, endRun · src/windows/window-selection.ts wireMainSelection (markNotice not-in-view, VIEW_STEP_EVENT, onSendEnded), src/windows/window-start.ts mainFocusDeps (hidden: () => false, drawn family/descendants/fan) · src/ui/window-notice.ts PLAIN_NOTICE_MS 6000 · strings.ts satFollow.*, mainNotice.* · CHANGELOG.cs.md 3.30.0 · dirigent:spec/110 (rozhodnutí 18. 11. 17:35 a 17:45: „Zaměřit“ = nový střed) · app:docs/ZADANI_DEV_vyber-z-okna.md §1–§7 · skrytá osoba (§7) zatím nenapojená -->

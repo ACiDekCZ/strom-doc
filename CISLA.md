@@ -301,6 +301,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.1.3 | A6-views.md | aplikace 3.28.0 | platí | Děti a sourozenci najednou | Children and siblings at once | Kinder und Geschwister auf einmal | Dzieci i rodzeństwo naraz |
 | A6.1.4 | A6-views.md | aplikace 3.29.0 | koncept | Fotka na kartě | Photo on the card | Foto auf der Karte | Zdjęcie na karcie |
 | A6.1.5 | A6-views.md | aplikace 3.30.0 | koncept | Značení linií | Lineage markers | Linienmarkierung | Oznaczenie linii |
+| A6.1.6 | A6-views.md | aplikace 3.30.0 | platí | Zpět na výchozí osobu: ⌂ | Back to the default person: ⌂ | Zurück zur Standardperson: ⌂ | Powrót do osoby domyślnej: ⌂ |
 | A6.2 | A6-views.md | aplikace 1.4.0 | platí | Pohled Potomci | The Descendants view | Ansicht Nachkommen | Widok Potomkowie |
 | A6.3 | A6-views.md | aplikace 1.5.0 | platí | Časová osa | Timeline | Zeitleiste | Oś czasu |
 | A6.4 | A6-views.md | aplikace 1.8.0 | platí | Vějíř | Fan | Fächer | Wachlarz |
@@ -337,6 +338,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.8.1 | A6-views.md | aplikace 3.28.0 | platí | Sledovat výběr | Follow selection | Auswahl folgen | Śledź wybór |
 | A6.8.2 | A6-views.md | aplikace 3.28.0 | platí | Když hlavní okno chybí | When the main window is missing | Wenn das Hauptfenster fehlt | Gdy brakuje okna głównego |
 | A6.8.3 | A6-views.md | aplikace 3.28.0 | platí | Druhá karta aplikace | A second tab of the app | Ein zweiter Tab der App | Druga karta aplikacji |
+| A6.8.4 | A6-views.md | aplikace 3.30.0 | platí | Co výběr v dalším okně udělá v hlavním okně | What a choice in another window does in the main window | Was eine Wahl in einem weiteren Fenster im Hauptfenster bewirkt | Co wybór w kolejnym oknie zrobi w oknie głównym |
 | A7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Kniha, stránky a export | Book, pages and export | Buch, Seiten und Export | Księga, strony i eksport |
 | A7.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Kdo je žijící osoba | Who is a living person | Wer eine lebende Person ist | Kto jest osobą żyjącą |
 | A7.2 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Ochrana žijících | Privacy of living people | Schutz lebender Personen | Ochrona osób żyjących |
@@ -365,6 +367,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A9.7.2 | A9-using-the-app.md | aplikace 3.30.0 | platí | Zápis do výzkumu, který se ukáže hned | A write to the research shown at once | Ein Schreiben in die Forschung, sofort sichtbar | Zapis do badania widoczny od razu |
 | A9.7.3 | A9-using-the-app.md | aplikace 3.30.0 | platí | Výpočet a soubory v aplikaci | Calculations and files in the app | Berechnungen und Dateien in der App | Obliczenia i pliki w aplikacji |
 | A9.7.4 | A9-using-the-app.md | aplikace 3.30.0 | platí | Když výzkum nebo služba mlčí | When the research or a service is silent | Wenn die Forschung oder ein Dienst schweigt | Gdy badanie lub usługa milczy |
+| A9.8 | A9-using-the-app.md | aplikace 3.30.0 | platí | Klávesové zkratky | Keyboard shortcuts | Tastenkürzel | Skróty klawiszowe |
 | A10 | A10-shared-events.md | aplikace 3.28.0 | platí | Jedna událost u více osob | One event of several people | Ein Ereignis mehrerer Personen | Jedno wydarzenie wielu osób |
 | A10.1 | A10-shared-events.md | aplikace 3.28.0 | platí | Společná událost: Spolu s | A shared event: Shared with | Ein gemeinsames Ereignis: Gemeinsam mit | Wspólne wydarzenie: Razem z |
 | A10.1.1 | A10-shared-events.md | aplikace 3.28.0 | platí | Přidat osobu | Add a person | Person hinzufügen | Dodaj osobę |

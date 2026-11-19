@@ -300,10 +300,14 @@ výzkumu.
 - **Hranice:** na telefonu není okno v nabídce **Více**; otevře se od osoby. Když výzkum neběží, okno ukazuje stav
   z doby, kdy běžel, a řekne, co jde upravit: titulky a vazby souborů stromu se zapíšou se stromem, materiál mimo
   strom až s běžícím výzkumem.
+- **Řadit ▾** v liště okna řadí Mřížku i Seznam stejně, uvnitř skupin: **Výchozí pořadí**, nebo sloupec (**Titulek**,
+  **Druh**, **Datum**, **Osoby**, **Pramen**, u archivu **Ve stromu**, **Použito**) a **Vzestupně** / **Sestupně**.
+  Klik na záhlaví Seznamu mění totéž řazení. Řazení se pamatuje na tomto zařízení. Na tabletu a v okně do 1024 px je
+  v **Filtry**.
 - **Ovládání:** viz [A3.5](#A3.5); výběr souborů: **Vybrat**, Ctrl/Cmd+A vybere, co filtry ukazují.
 - **Platí od:** aplikace 3.30.0
 
-<!-- zdroj: app:1ebf7896 src/ui/materials-ui.ts, src/ui/materials-window.ts (skupiny, Kde soubory jsou) · app:a1127378 sloupce seznamu, Ctrl/Cmd+A · app:b198b1c2 src/media-uses.ts materialPersonLabel (Neznámá osoba) · app:e6e16634 staleEdit · app:prace/1117-app-102-materialy D1 (telefon: bez řádku Materiály ve Více) · strings.ts materials.groupAdded, groupPerson, groupBatch, groupDate, whereTitle, whereApp, whereArchiveResearch, whereEncryptedResearch, search, showHidden, unknownPerson, staleEdit -->
+<!-- zdroj: app:c9775287 src/materials-overview.ts chooseSort, sortOverviewGroups (uvnitř skupin), src/ui/materials-window.ts mwSortChipHtml, mwSortMenu, mwSortColumns (intree jen model archive), mwSetSort → writeListPrefs (localStorage), filtry ≤ 1024 · strings.ts materials.sortBy, sortChip, sortDefault, sortAscending, sortDescending · app:1ebf7896 src/ui/materials-ui.ts, src/ui/materials-window.ts (skupiny, Kde soubory jsou) · app:a1127378 sloupce seznamu, Ctrl/Cmd+A · app:b198b1c2 src/media-uses.ts materialPersonLabel (Neznámá osoba) · app:e6e16634 staleEdit · app:prace/1117-app-102-materialy D1 (telefon: bez řádku Materiály ve Více) · strings.ts materials.groupAdded, groupPerson, groupBatch, groupDate, whereTitle, whereApp, whereArchiveResearch, whereEncryptedResearch, search, showHidden, unknownPerson, staleEdit -->
 
 <a id="A3.5.2"></a>
 ### A3.5.2 Titulek, druh a datum
@@ -454,6 +458,11 @@ najednou.
 - Přijaté se zapíše: soubory stromu jedním krokem **Zpět** se stromem, materiál mimo strom do archivu. Pramen
   výzkumu, který strom ještě nemá, přijde do stromu s číslem výzkumu a zápis ho nezdvojí. Přijatý návrh jde u
   řádku **Vrátit**.
+- **Co se pošle:** z dávky, z filtru i z celého okna jen soubory bez vlastního titulku nebo bez osoby; pruh i dialog
+  počítají jen je. Ručně vybrané soubory jdou všechny.
+- **Celé okno** (bez filtru a hledání): místo pruhu pod každou dávkou je jeden pruh „N souborů bez titulku nebo osoby ·
+  Roztřídit agentem“ s ×. Zavřený se do zavření okna nevrátí. Není, když tytéž soubory nabízí pruh jediné dávky
+  nebo když je třídění rozběhnuté či čeká jeho návrh.
 - **Hranice:**
   - jen u výzkumu 1.35.0 a novějšího, který má agenta, a jen když výzkum běží; u Archivu Stromu a u výzkumu, který
     čeká na agenta, není nabídka vůbec;
@@ -464,7 +473,7 @@ najednou.
 - **Ovládání:** okno **Materiály**: výběr, pruh nad dávkou nebo nad filtrem; konec dávky z aplikace.
 - **Platí od:** aplikace 3.30.0, výzkum 1.35.0
 
-<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu -->
+<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu · app:8a8131be src/material-sort.ts sortNeedy, sortWholeOffered (narrowed, remembered, jedna dávka se stejným počtem), materials-window.ts sortWholeClosed, strings.ts agentSort.stripWhole, closeWhole · app:a947b426 sortCandidates (dávka, filtr, celé okno: jen bez titulku nebo osoby; výběr vše) -->
 
 <a id="A3.6"></a>
 ## A3.6 Prameny osoby

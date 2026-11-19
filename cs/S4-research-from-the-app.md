@@ -330,10 +330,11 @@ ostatní okna sledují dál. Všechna okna jsou při tom jen ke čtení.
   ke čtení. Značky agenta (karta osoby, na které se pracuje, řádek agenta v Tabulce, značky a stopa ve Vějíři a na
   Mapě) v něm zůstanou. **Sledovat agenta** okno znovu připojí a hned skočí na agenta. Odpojení vydrží obnovení okna
   (F5) a zapomene se s koncem sledování.
-- **Výběr z jiného okna:** připojené okno, které není pozastavené, osobu vybranou v jiném okně jen vyznačí, i když
-  má **Sledovat výběr: přepnout** ([A6.8.1](A6-views.md#A6.8.1)); střed zůstane u agenta. Tabulka řádek té osoby
-  vybere, ale neposune se k němu. Skok za agentem se ostatním oknům jako výběr osoby neposílá. Pozastavené
-  a odpojené okno se řídí **Sledovat výběr** jako mimo sledování.
+- **Výběr z jiného okna:** připojené okno, které není pozastavené, osobu vybranou v jiném okně jen vyznačí, i když má
+  **Výběr** → **Toto okno**: **přepnout** ([A6.8.1](A6-views.md#A6.8.1)); střed zůstane u agenta. Tabulka řádek té osoby
+  vybere, ale neposune se k němu. Skok za agentem se ostatním oknům jako výběr osoby neposílá. Pozastavené a odpojené
+  okno se řídí volbou **Toto okno** jako mimo sledování. Výběr poslaný do hlavního okna s volbou **zaměřit** hlavní okno
+  při sledování agenta jen vyznačí ([A6.8.4](A6-views.md#A6.8.4)).
 - **Konec:**
   - ◎ **Přestat sledovat** v hlavním okně zastaví skoky jen v hlavním okně; další okna sledují dál;
   - **Ukončit sledování** (panel výzkumu, nabídka **Výzkum**, nabídka osoby) i konec sezení ukončí sledování ve

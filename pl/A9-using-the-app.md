@@ -35,6 +35,7 @@ osoby; to, co dotyczy całego drzewa, jest na pasku narzędzi i w menu **Akcje**
 | śledzenie badania | **Śledź na żywo**; koniec **Zakończ śledzenie** | [S1.4](S1-connecting-app-and-research.md#S1.4), [A9.3](#A9.3) |
 | wysyłanie zmian do badania | **Badanie → Więcej → Badanie dla tego drzewa… → Wysyłanie zmian** | [S2.2](S2-edits-from-the-app.md#S2.2) |
 | zasady i pojęcia | **Akcje → Jak działa Strom** | [A1.7](A1-the-app-in-brief.md#A1.7) |
+| powrót do osoby domyślnej drzewa | ⌂ na początku **W centrum**; klawisz H | [A6.1.6](A6-views.md#A6.1.6), [A9.8](#A9.8) |
 | działanie, które chwilę trwa | stan na przycisku (kółko i to, co się dzieje); długie działanie w powiadomieniu z postępem | [A9.7](#A9.7) |
 
 - **Granice:**
@@ -320,3 +321,31 @@ Miejsca, które dawniej czekały bez końca albo milczały, mają limit. Po nim 
   mostu milczała, a wyszukanie miejsca bez odpowiedzi mówiło „nie znaleziono”.
 
 <!-- zdroj: app:79a05311 src/research-images.ts MISSING_LIST_TIMEOUT_MS 15 s (c69425d0, i pro export) · src/quality-bridge.ts, src/ui/duplicate-verdicts-ui.ts (ea76fa71: 15 s, treeManager.verdictsSilent pod hlavičkou skupiny + retry) · src/history-bridge.ts HISTORY_READ_TIMEOUT_MS 15 s, HISTORY_WRITE_TIMEOUT_MS · src/ui/history-manage-ui.ts, history-ui.ts, history-kinds-ui.ts errTimeout · src/ui/map-tiles.ts TILE_TIMEOUT_MS 15 s, tilesFailed · src/geocode.ts GEOCODE_TIMEOUT_MS 10 s, GeocodeFailure network|timeout|limit · src/ui/busy.ts serviceFailText (errNetwork, serviceTimeout, serviceLimit) · src/ui/places-find-ui.ts (věta ve výsledcích, searchOther), src/ui/map-ui.ts (70d3368b: běh se zastaví, zbylá místa ne „nenalezena“) · strings.ts busy.errOffline, errBusy, errTimeout, errNetwork, serviceTimeout, serviceLimit, searchOther, tilesFailed · ZADANI_DEV_tlacitka-cekani §10.2, §10.3 · dirigent:prace/1118-app-tlacitka-b (díl 7) -->
+
+<a id="A9.8"></a>
+## A9.8 Skróty klawiszowe
+
+Klawisze okna głównego aplikacji na komputerze. Na Macu obowiązuje ⌘ zamiast Ctrl.
+
+| Klawisz | Co robi | Gdzie i kiedy | Reguła |
+|---|---|---|---|
+| Esc | zamyka okno dialogowe albo menu na wierzchu | wszędzie | – |
+| Alt+← / Alt+→ | poprzednia / następna osoba w centrum | poza Tabelą; w Tabeli skoki po imionach | [A6.7.16](A6-views.md#A6.7.16) |
+| Ctrl+F, / | kursor do **Szukaj osoby...** | / tylko poza polem tekstowym | [A4.8](A4-surnames-and-families.md#A4.8) |
+| Ctrl+S | **Zapisz do pliku** | nie przy zablokowanym drzewie i w kopii tylko do odczytu | [S8](S8-where-the-data-are.md) |
+| Ctrl+Z; Ctrl+Shift+Z albo Ctrl+Y | **Cofnij**; **Ponów** | poza polem tekstowym | – |
+| Delete, Backspace | usunąć osobę w centrum (po potwierdzeniu) | Rodzina i Potomkowie, poza polem tekstowym; nie przy zablokowanej osobie i w drzewie tylko do odczytu | – |
+| + albo =; −; 0 | przybliżyć; oddalić; domyślne przybliżenie | poza polem tekstowym | – |
+| H | ustawić w centrum osobę domyślną | Rodzina, Potomkowie, Wachlarz; poza polem tekstowym i otwartym menu | [A6.1.6](A6-views.md#A6.1.6) |
+| ⌘1 (Mac), Ctrl+1 (Windows, Linux) | to samo co H, także z pola tekstowego | tylko gdy przeglądarka przekaże go aplikacji | [A6.1.6](A6-views.md#A6.1.6) |
+
+- **Granice:**
+  - przy otwartym oknie dialogowym obowiązują tylko Esc i klawisze tego okna;
+  - ⌘1 / Ctrl+1 w karcie przeglądarki zwykle bierze przeglądarka (pierwsza karta);
+  - Tabela, okna i okna dialogowe mają też własne klawisze, przy swoich regułach (na przykład
+    [A6.7.15](A6-views.md#A6.7.15), [A11](A11-lists-of-people.md)).
+- **Obsługa:** klawiatura; aplikacja nie ma przeglądu klawiszy, dymek ⌂ podaje jego klawisz.
+- **Obowiązuje od:** aplikacja 3.30.0 (przegląd; każdy skrót obowiązuje od wersji w swojej regule, H i ⌘1 / Ctrl+1 od
+  3.30.0)
+
+<!-- zdroj: app:401eaca4 src/ui/misc.ts keydown (Esc a dialogStack; dialog otevřený → return; Alt+←/→ goBack/goForward, v Tabulce ne; Ctrl/⌘+F a „/“ toolbarSearchPicker.focusInput; ⌘S / Ctrl+S saveTreeCopy, ne isViewMode/isLocked; defaultFocusKey H a mod1 + defaultFocusKeyHeld; typing → return; Ctrl/⌘+Z, Shift+Z, Y; Delete/Backspace confirmDelete jen family/descendants, ne isReadOnly, ne isPersonLocked; + = − 0 ZoomPan) · app:b6df0770 spec 111 §6, §8 (přehled v aplikaci ne) -->

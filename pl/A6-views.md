@@ -219,6 +219,42 @@ karty.
 
 <!-- zdroj: app:0e403ec6 src/branch-colors.ts classifyBranches (collectAncestorSide: předci + sourozenci každého předka; collectDescendants přes childIds; obě strany se sčítají R4; descendant jen mimo strany; focus smazán; numbered = oba rodiče známí a stejného pohlaví R5), src/settings.ts getBranchMarker (výchozí arc; branchColors false → off), isBranchTintOn (jen se značkou), isBranchTintChosen, save (migrace při prvním zápisu), src/renderer.ts renderCards (!isPlaceholder, viewMode ≠ timeline), src/branch-marker-attrs.ts (čtečka ariaPaternal/ariaBoth/ariaSlot1), index.html tokeny --branch-paternal #234e8c / --branch-maternal #d0679a / --branch-descendant #8a6400, tmavé #9cc2f2 / #f6a9cb / #e3b552, --branch-*-tint, CSS tvarů (arc, tag, stripe, corner; R4 .branch-paternal.branch-maternal) · app:c8afe382 index.html #branch-marker-setting (skupina settings.groupTree), #branch-tint-toggle, src/ui/branch-marker-ui.ts syncBranchLegend, src/ui/misc.ts (legenda jen family/descendants, isBranchLegendEnabled) · app:b94f3816 src/branch-marker-svg.ts, src/ui/export-image-ui.ts treeCardDrawing (branchMarker, branchTint, numbered; světlé hex), index.html @media print (R6: border 2px #999, white background, tiskové --branch-*, print-color-adjust) · strings.ts branchColors.* (settingLabel, markerArc…markerOff, defaultTag, tintLabel, legendPaternal…legendSlot2, legendNone, letterPaternal O, letterMaternal M, letterDescendant P) · barvy větví: app:6f86ad39 (v1.8.0) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii K1–K4, app:docs/ZADANI_DEV_linie-na-kartach.md R1–R6 · prace/1119-app-112-linie -->
 
+<a id="A6.1.6"></a>
+### A6.1.6 Powrót do osoby domyślnej: ⌂
+
+Przycisk ⌂ na początku **W centrum** ustawia w centrum osobę domyślną drzewa ([A6.1.1](#A6.1.1)), gdziekolwiek jest
+centrum. Robi to samo co Ustaw w centrum przy karcie: nowy krok historii i powiadomienie „W centrum: {imię} · ↩ Wróć”;
+**↩ Wróć**, strzałka ↩ w lewym dolnym rogu albo Alt+← przywraca poprzednie centrum.
+
+| Ustawienie drzewa (**Domyślna osoba i widok**) | Kogo ⌂ ustawi w centrum |
+|---|---|
+| **Konkretna osoba:** | tę osobę; gdy nie ma jej już w drzewie, pierwszą osobę drzewa |
+| **Ostatnio wyświetlana** | osobę, na której drzewo stanęło przy otwarciu (albo przy przełączeniu na to drzewo) |
+| bez ustawienia | pierwszą osobę drzewa |
+
+- **Gdzie jest ⌂:**
+  - Rodzina: w **W centrum** na komputerze, na pasku na tablecie i na telefonie trzymanym poziomo, w panelu osoby na
+    telefonie;
+  - Potomkowie: na początku plakietki widoku;
+  - Wachlarz: w lewym górnym rogu; przy przypiętym środku ([S4.1.3](S4-research-from-the-app.md#S4.1.3)) przed
+    **Środek: {imię} · Odpiąć**, a przypięcie najpierw zwalnia.
+- **Osoba domyślna już jest w centrum:** ⌂ zostaje na miejscu, wypełniony i przygaszony, z dymkiem „Osoba domyślna
+  jest w centrum: {imię}”. Ani kliknięcie, ani klawisz nic nie robią.
+- **Dymek:** „Ustaw w centrum osobę domyślną: {imię}”, przy pierwszej osobie drzewa z dopiskiem „ – pierwsza osoba
+  w drzewie”, przy **Ostatnio wyświetlana** „ – w centrum przy otwarciu”, oraz „(H)”.
+- **Klawisze:** H (poza polem tekstowym i otwartym menu); do tego ⌘1 na Macu i Ctrl+1 w Windows i Linuksie, gdy
+  przeglądarka przekaże je aplikacji. W karcie przeglądarki przeglądarka zwykle używa ich sama do przejścia na
+  pierwszą kartę. Przegląd klawiszy: [A9.8](A9-using-the-app.md#A9.8).
+- **Podczas śledzenia badania** ⌂ i H działają jak inny wybór osoby: przerywają śledzenie agenta w oknie głównym
+  (**Wróć do agenta**, [S4.1.1](S4-research-from-the-app.md#S4.1.1)). Gdy osoba domyślna już jest w centrum, nie
+  przerywają.
+- **Granice:** puste drzewo ⌂ nie ma. Mapa, Oś czasu, Tabela i kolejne okna ([A6.8](#A6.8)) ⌂ nie mają, a H nic w nich
+  nie robi.
+- **Obsługa:** ⌂ przy **W centrum** (Potomkowie: w plakietce, Wachlarz: w lewym górnym rogu); klawisz H.
+- **Obowiązuje od:** aplikacja 3.30.0
+
+<!-- zdroj: app:e52adde6 src/default-person.ts defaultTarget (specific, first, opened, fallbackFirst; prázdný strom null), startupPerson · src/ui/default-focus.ts FALLBACK_TO_FIRST = true, rememberOpenedFocus, isAtDefault (Vějíř: liveFollowPinned ?? focus), isDefaultFocusContext (hlavní okno, HOME_VIEWS family/descendants/fan), focusDefaultPerson (unpinFanCenter, TreeRenderer.focusFromTab → showFocusToast) · app:b6df0770 §3 telefon (panel osoby), §6 defaultFocusKey (H/h bez Ctrl/⌘/Alt mimo pole; ⌘1 / Ctrl+1 podle code Digit1 i z pole), src/ui/misc.ts defaultFocusKeyHeld, §7 Potomci (#descendants-badge), Vějíř (pilulka vlevo nahoře, pin), §9 pauza sledování · strings.ts focus.focusedOn, focusHome, focusHomeFirst, focusHomeOpened, focusHomeAt, focusToast, focusToastBack · CHANGELOG.cs.md 3.30.0 „Zpět na výchozí osobu“ · dirigent:spec/111 K1.1–K1.6 · app:docs/ZADANI_DEV_vychozi-osoba.md §1–§9 · ⌘1 / Ctrl+1 v kartě prohlížeče neměřeno (spec 111 Otevřené) -->
+
 <a id="A6.2"></a>
 ## A6.2 Widok Potomkowie
 
@@ -1470,9 +1506,10 @@ i dostają od niego drzewo.
 - **Co okno przejmuje:** drzewo, osobę w centrum i to, co pokazuje widok: w Tabeli typ wierszy, filtry,
   wyszukiwanie, zapisany widok, sortowanie i wybrany wiersz; w Rodzinie powiększenie, w Wachlarzu kręgi, na Mapie
   miejsca i powiększenie. Potem okno ma własny stan. Odświeżenie okna (F5) zachowuje jego widok i osobę.
-- **Co okno ma:** zamiast paska aplikacji nagłówek: nazwę drzewa, przełącznik widoków (poniżej 960 px jako
-  „{widok} ▾”), **Śledź wybór** ([A6.8.1](#A6.8.1)), **Cofnij**, **Ponów** i ⧉ **Otwórz kolejne okno**. Przełącznika
-  drzew, menu **Badanie**, Ustawień ani małego panelu badania okno nie ma.
+- **Co okno ma:** zamiast paska aplikacji nagłówek: nazwę drzewa, przełącznik widoków (poniżej 960 px jako „{widok} ▾”),
+  **Śledź wybór** ([A6.8.1](#A6.8.1)), **Cofnij**, **Ponów** i ⧉ **Otwórz kolejne okno**. Przełącznika drzew, menu
+  **Badanie**, Ustawień ani małego panelu badania okno nie ma. Od aplikacji 3.30.0 zamiast **Śledź wybór** jest
+  przełącznik **Wybór** ([A6.8.4](#A6.8.4)).
 - **Zmiany:** w oknie można edytować osobę (menu osoby, **Edytuj**) i komórkę Tabeli. Zapisuje je okno główne, można
   je cofnąć jako jego kroki i od razu pokazują się we wszystkich oknach. **Cofnij** i **Ponów** w nagłówku okna cofają
   i ponawiają kroki okna głównego. Gdy drzewo w międzyczasie zmieniło się w innym oknie, zmiana nie zostaje
@@ -1528,6 +1565,8 @@ w nagłówku okna.
 - **Od aplikacji 3.30.0:** okno, które podczas śledzenia badania śledzi agenta i nie jest wstrzymane, osobę wybraną
   w innym oknie tylko zaznacza, także w trybie **przełączaj**; przeskok za agentem nie jest wysyłany jako wybór osoby
   ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+- **Od aplikacji 3.30.0:** przełącznik nazywa się **Wybór ▾**, a te tryby są w jego grupie **To okno** · wybór
+  z innych okien. Druga grupa **Okno główne** mówi, co wybór w tym oknie zrobi w oknie głównym ([A6.8.4](#A6.8.4)).
 
 <!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
 
@@ -1575,3 +1614,49 @@ Kolejne okna łączą się z nim.”
 - **Obowiązuje od:** aplikacja 3.28.0
 
 <!-- zdroj: app:4b1373a7 src/windows/window-role.ts (Web Lock strom-main ifAvailable → main, jinak second-tab) · src/windows/second-tab.ts (secondTabSatelliteKind table) · src/windows/window-link.ts (předání odkazu hlavnímu jednou) · src/windows/window-start.ts openLinkFromWindow · strings.ts win.alreadyOpen, alreadyOpenNote, switchThere, openAsWindow, switchFailed, tabCanClose, linkForwarded · CHANGELOG.cs.md 3.28.0 · spec 079 K1.6 · prace/1112-app-okna-zaklad (7d22e396) -->
+
+<a id="A6.8.4"></a>
+### A6.8.4 Co wybór w kolejnym oknie zrobi w oknie głównym
+
+Osoba wybrana w Tabeli, na Osi czasu albo na Mapie kolejnego okna zostaje w oknie głównym zaznaczona albo staje się
+jego centrum. Określa to grupa **Okno główne** w przełączniku **Wybór** w nagłówku kolejnego okna.
+
+| Wybór | Co się dzieje w oknie głównym |
+|---|---|
+| **tylko zaznaczaj** (domyślnie) | osoba zostaje zaznaczona jak w trybie **tylko zaznaczaj** ([A6.8.1](#A6.8.1)); centrum zostaje |
+| **ustaw w centrum** | osoba staje się centrum okna głównego jak po Ustaw w centrum przy karcie, a drzewo jest wokół niej przerysowane, także gdy wcześniej jej nie rysowało |
+
+- **Gdzie:** wybór mają Tabela, Oś czasu i Mapa kolejnego okna (na Mapie wybór osoby przy miejscu; kliknięcie samego
+  miejsca nic nie wysyła). Rodzina, Potomkowie i Wachlarz kolejnego okna zmieniają kliknięciem własne centrum,
+  a w oknie głównym osobę tylko zaznaczają.
+- **Przechodzenie po wierszach:** strzałki i kliknięcie robią to samo. Okno główne zaznacza osobę od razu, a centrum
+  zmienia dopiero 200 ms po ostatnim wyborze i tylko na ostatnio wybraną osobę. Przejście wierszy strzałkami zmienia
+  więc centrum raz.
+- **Powiadomienie i powrót:** na dole pośrodku drzewa okna głównego jest „Środek wybrany w innym oknie” z przyciskiem
+  **↶ {imię}** (centrum sprzed pierwszego wyboru) i ×. Seria wyborów z jednego okna to w historii okna głównego jeden
+  krok: jeden krok wstecz (↩ w lewym dolnym rogu, Alt+←) albo ↶ przywraca centrum sprzed niej. Seria kończy się
+  własnym krokiem w oknie głównym (Ustaw w centrum, Przejdź do, ↩, ↪, inny widok), zamknięciem powiadomienia,
+  przełączeniem wyboru na **tylko zaznaczaj** i zamknięciem kolejnego okna. Przełączenie wyboru centrum nie
+  przywraca.
+- **Osoba, której okno główne nie rysuje** (przy **tylko zaznaczaj**): widok Rodzina, Potomkowie albo Wachlarz okna
+  głównego mówi „{imię} – brak w tym widoku.” z **Przejdź do** (osoba staje się centrum) i ×.
+- **Granice:**
+  - okno główne, które śledzi agenta badania, osobę tylko zaznacza; centrum zostaje przy agencie
+    ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Raz na serię mówi „Śledzenie agenta – wybór z innego okna jest
+    tylko zaznaczany.”; kolejne okno ma przy wyborze „(agent)”, a w menu „Okno główne śledzi agenta – wybór jest tam
+    tylko zaznaczany.” Po wstrzymaniu lub końcu śledzenia nic się wstecz nie przełącza: **ustaw w centrum** obowiązuje
+    od następnego wyboru;
+  - osoba, której tymczasem nie ma w drzewie: centrum zostaje, „Wybranej osoby nie ma już w drzewie.” Powiadomienie
+    bez × znika po 6 s;
+  - osoba, która już jest centrum: nic się nie dzieje;
+  - przy **wyłączone** w grupie **To okno** i gdy okno główne nie jest otwarte, grupa **Okno główne** jest wyszarzona
+    z uwagą „Niedostępne – udostępnianie wyboru jest w tym oknie wyłączone.” albo „Okno główne nie jest otwarte.”;
+    wybór zostaje zapisany;
+  - wybór dotyczy jednego okna i jego Tabeli, Osi czasu i Mapy, przetrwa odświeżenie okna (F5); każde kolejne okno ma
+    własny.
+- **Obsługa:** aplikacja: w nagłówku kolejnego okna **Wybór ▾** → **Okno główne** · wybór w tym oknie: **tylko
+  zaznaczaj**, **ustaw w centrum**. Zamknięty przełącznik pokazuje, co jest wybrane (w wąskim oknie skrótowo
+  ikonami); całe brzmienie ma w dymku.
+- **Obowiązuje od:** aplikacja 3.30.0
+
+<!-- zdroj: app:e7d3bb11 src/windows/follow-mode.ts SendMode mark|focus, SENDING table/timeline/map, sendModeKey (sessionStorage okna), getSendModeChoice · src/windows/sat-header.ts followControlParts (FOLLOW_LABEL_MIN_WIDTH 1280, FOLLOW_BOTH_MIN_WIDTH 1100), followSendGroupState (off, no-main, agent), sendModeName = contextMenu.focus malým písmenem, followControlAria · src/windows/satellite.ts sendMode (followSelection && sendModeAvailable), post select intent, seq · app:edaec740 src/windows/window-focus.ts WINDOW_FOCUS_DELAY_MS 200, take (seq), fire (deleted, hidden, followingAgent, focusId), run push/replace, endRun · src/windows/window-selection.ts wireMainSelection (markNotice not-in-view, VIEW_STEP_EVENT, onSendEnded), src/windows/window-start.ts mainFocusDeps (hidden: () => false, drawn family/descendants/fan) · src/ui/window-notice.ts PLAIN_NOTICE_MS 6000 · strings.ts satFollow.*, mainNotice.* · CHANGELOG.cs.md 3.30.0 · dirigent:spec/110 (rozhodnutí 18. 11. 17:35 a 17:45: „Zaměřit“ = nový střed) · app:docs/ZADANI_DEV_vyber-z-okna.md §1–§7 · skrytá osoba (§7) zatím nenapojená -->

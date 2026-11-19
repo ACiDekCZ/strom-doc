@@ -1522,7 +1522,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | zentrale Person | Die Person, um die herum eine Ansicht die Umgebung zeigt; sie wechselt mit einem Klick auf eine Karte. Die Ansicht zeigt nicht den ganzen Stammbaum, nur die Umgebung dieser Person. |
 | pl | osoba w centrum | Osoba, wokół której widok pokazuje otoczenie; zmienia się kliknięciem karty. Widok nie pokazuje całego drzewa, tylko otoczenie tej osoby. |
 
-- **Čísla:** [A6.1](cs/A6-views.md#A6.1), A1.3, A6.1.1, A6.6
+- **Čísla:** [A6.1](cs/A6-views.md#A6.1), A1.3, A6.1.1, A6.1.6, A6.6
 
 <a id="duplicate-verdict"></a>
 ### Verdikt výzkumu u duplicity

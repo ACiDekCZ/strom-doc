@@ -349,10 +349,15 @@ einem Archiv auch die Dateien der Forschung.
   Forschung nicht, zeigt das Fenster den Stand aus der Zeit, als sie lief, und sagt, was sich bearbeiten lässt: Titel
   und Verknüpfungen der Dateien des Stammbaums werden mit dem Stammbaum geschrieben, Material außerhalb des
   Stammbaums erst bei laufender Forschung.
+- **Sortieren ▾** in der Leiste des Fensters sortiert Raster und Liste gleich, innerhalb der Gruppen:
+  **Standardreihenfolge** oder eine Spalte (**Titel**, **Art**, **Datum**, **Personen**, **Quelle**, bei einem Archiv
+  **Im Stammbaum**, **Verwendet**) und **Aufsteigend** / **Absteigend**. Ein Klick auf eine Kopfzeile der Liste ändert
+  dieselbe Sortierung. Die Sortierung wird auf diesem Gerät gemerkt. Auf dem Tablet und in einem Fenster bis 1024 px
+  ist sie in **Filter**.
 - **Bedienung:** siehe [A3.5](#A3.5); Dateien auswählen: **Auswählen**, Strg/Cmd+A wählt aus, was die Filter zeigen.
 - **Gilt seit:** App 3.30.0
 
-<!-- zdroj: app:1ebf7896 src/ui/materials-ui.ts, src/ui/materials-window.ts (skupiny, Kde soubory jsou) · app:a1127378 sloupce seznamu, Ctrl/Cmd+A · app:b198b1c2 src/media-uses.ts materialPersonLabel (Neznámá osoba) · app:e6e16634 staleEdit · app:prace/1117-app-102-materialy D1 (telefon: bez řádku Materiály ve Více) · strings.ts materials.groupAdded, groupPerson, groupBatch, groupDate, whereTitle, whereApp, whereArchiveResearch, whereEncryptedResearch, search, showHidden, unknownPerson, staleEdit -->
+<!-- zdroj: app:c9775287 src/materials-overview.ts chooseSort, sortOverviewGroups (uvnitř skupin), src/ui/materials-window.ts mwSortChipHtml, mwSortMenu, mwSortColumns (intree jen model archive), mwSetSort → writeListPrefs (localStorage), filtry ≤ 1024 · strings.ts materials.sortBy, sortChip, sortDefault, sortAscending, sortDescending · app:1ebf7896 src/ui/materials-ui.ts, src/ui/materials-window.ts (skupiny, Kde soubory jsou) · app:a1127378 sloupce seznamu, Ctrl/Cmd+A · app:b198b1c2 src/media-uses.ts materialPersonLabel (Neznámá osoba) · app:e6e16634 staleEdit · app:prace/1117-app-102-materialy D1 (telefon: bez řádku Materiály ve Více) · strings.ts materials.groupAdded, groupPerson, groupBatch, groupDate, whereTitle, whereApp, whereArchiveResearch, whereEncryptedResearch, search, showHidden, unknownPerson, staleEdit -->
 
 <a id="A3.5.2"></a>
 ### A3.5.2 Titel, Art und Datum
@@ -521,6 +526,12 @@ Vorschlag angenommen ist.
   Material außerhalb des Stammbaums ins Archiv. Eine Quelle der Forschung, die der Stammbaum noch nicht hat, kommt mit
   der Nummer der Forschung in den Stammbaum, und das Schreiben verdoppelt sie nicht. Ein angenommener Vorschlag lässt
   sich in seiner Zeile mit **Rückgängig** zurücknehmen.
+- **Was geschickt wird:** aus einem Stapel, aus einem Filter und aus dem ganzen Fenster nur Dateien ohne eigenen Titel
+  oder ohne Person; Leiste und Dialog zählen nur diese. Von Hand ausgewählte Dateien gehen alle.
+- **Das ganze Fenster** (ohne Filter und Suche): statt einer Leiste unter jedem Stapel gibt es eine Leiste „N Dateien
+  ohne Titel oder Person · Mit dem Agenten sortieren“ mit ×. Geschlossen kommt sie bis zum Schließen des Fensters
+  nicht zurück. Sie fehlt, wenn dieselben Dateien die Leiste eines einzigen Stapels anbietet oder wenn das Sortieren
+  läuft oder sein Vorschlag wartet.
 - **Grenzen:**
   - nur bei der Forschung 1.35.0 und neuer, die einen Agenten hat, und nur bei laufender Forschung; beim
     Strom-Archiv und bei einer Forschung, die auf einen Agenten wartet, gibt es das Angebot gar nicht;
@@ -533,7 +544,7 @@ Vorschlag angenommen ist.
   eines Stapels aus der App.
 - **Gilt seit:** App 3.30.0, Forschung 1.35.0
 
-<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu -->
+<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu · app:8a8131be src/material-sort.ts sortNeedy, sortWholeOffered (narrowed, remembered, jedna dávka se stejným počtem), materials-window.ts sortWholeClosed, strings.ts agentSort.stripWhole, closeWhole · app:a947b426 sortCandidates (dávka, filtr, celé okno: jen bez titulku nebo osoby; výběr vše) -->
 
 <a id="A3.6"></a>
 ## A3.6 Quellen einer Person

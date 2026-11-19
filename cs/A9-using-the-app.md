@@ -34,6 +34,7 @@ co se týká celého stromu, je v liště a v menu **Akce**.
 | sledování výzkumu | **Sledovat živě**; konec **Ukončit sledování** | [S1.4](S1-connecting-app-and-research.md#S1.4), [A9.3](#A9.3) |
 | posílání úprav do výzkumu | **Výzkum → Další → Výzkum u tohoto stromu… → Posílat úpravy** | [S2.2](S2-edits-from-the-app.md#S2.2) |
 | pravidla a pojmy | **Akce → Jak Strom funguje** | [A1.7](A1-the-app-in-brief.md#A1.7) |
+| zpět na výchozí osobu stromu | ⌂ na začátku **Zaměřeno na**; klávesa H | [A6.1.6](A6-views.md#A6.1.6), [A9.8](#A9.8) |
 | akce, která chvíli trvá | stav na tlačítku (kolečko a co se děje); dlouhá akce v oznámení s průběhem | [A9.7](#A9.7) |
 
 - **Hranice:**
@@ -301,3 +302,30 @@ Místa, která dřív čekala bez konce nebo mlčela, mají limit. Po něm řekn
   mlčel a hledání místa bez odpovědi řeklo „nenalezeno“.
 
 <!-- zdroj: app:79a05311 src/research-images.ts MISSING_LIST_TIMEOUT_MS 15 s (c69425d0, i pro export) · src/quality-bridge.ts, src/ui/duplicate-verdicts-ui.ts (ea76fa71: 15 s, treeManager.verdictsSilent pod hlavičkou skupiny + retry) · src/history-bridge.ts HISTORY_READ_TIMEOUT_MS 15 s, HISTORY_WRITE_TIMEOUT_MS · src/ui/history-manage-ui.ts, history-ui.ts, history-kinds-ui.ts errTimeout · src/ui/map-tiles.ts TILE_TIMEOUT_MS 15 s, tilesFailed · src/geocode.ts GEOCODE_TIMEOUT_MS 10 s, GeocodeFailure network|timeout|limit · src/ui/busy.ts serviceFailText (errNetwork, serviceTimeout, serviceLimit) · src/ui/places-find-ui.ts (věta ve výsledcích, searchOther), src/ui/map-ui.ts (70d3368b: běh se zastaví, zbylá místa ne „nenalezena“) · strings.ts busy.errOffline, errBusy, errTimeout, errNetwork, serviceTimeout, serviceLimit, searchOther, tilesFailed · ZADANI_DEV_tlacitka-cekani §10.2, §10.3 · dirigent:prace/1118-app-tlacitka-b (díl 7) -->
+
+<a id="A9.8"></a>
+## A9.8 Klávesové zkratky
+
+Klávesy hlavního okna aplikace na počítači. Na Macu platí ⌘ místo Ctrl.
+
+| Klávesa | Co udělá | Kde a kdy | Pravidlo |
+|---|---|---|---|
+| Esc | zavře dialog nebo nabídku navrchu | všude | – |
+| Alt+← / Alt+→ | předchozí / další ústřední osoba | mimo Tabulku; v Tabulce skoky přes jména | [A6.7.16](A6-views.md#A6.7.16) |
+| Ctrl+F, / | kurzor do **Hledat osobu...** | / jen mimo textové pole | [A4.8](A4-surnames-and-families.md#A4.8) |
+| Ctrl+S | **Uložit do souboru** | ne u zamčeného stromu a v kopii jen ke čtení | [S8](S8-where-the-data-are.md) |
+| Ctrl+Z; Ctrl+Shift+Z nebo Ctrl+Y | **Vrátit**; **Znovu** | mimo textové pole | – |
+| Delete, Backspace | smazat ústřední osobu (po potvrzení) | Rodina a Potomci, mimo textové pole; ne u zamčené osoby a ve stromu jen ke čtení | – |
+| + nebo =; −; 0 | přiblížit; oddálit; výchozí přiblížení | mimo textové pole | – |
+| H | zaměřit výchozí osobu | Rodina, Potomci, Vějíř; mimo textové pole a otevřenou nabídku | [A6.1.6](A6-views.md#A6.1.6) |
+| ⌘1 (Mac), Ctrl+1 (Windows, Linux) | totéž co H, i z textového pole | jen když ji prohlížeč aplikaci předá | [A6.1.6](A6-views.md#A6.1.6) |
+
+- **Hranice:**
+  - s otevřeným dialogem platí jen Esc a klávesy dialogu;
+  - ⌘1 / Ctrl+1 bere v kartě prohlížeče obvykle prohlížeč (první karta);
+  - Tabulka, okna a dialogy mají ještě vlastní klávesy, u svých pravidel (například [A6.7.15](A6-views.md#A6.7.15),
+    [A11](A11-lists-of-people.md)).
+- **Ovládání:** klávesnice; aplikace přehled kláves nemá, zkratku ⌂ uvádí jeho bublina.
+- **Platí od:** aplikace 3.30.0 (přehled; každá zkratka platí od verze ve svém pravidle, H a ⌘1 / Ctrl+1 od 3.30.0)
+
+<!-- zdroj: app:401eaca4 src/ui/misc.ts keydown (Esc a dialogStack; dialog otevřený → return; Alt+←/→ goBack/goForward, v Tabulce ne; Ctrl/⌘+F a „/“ toolbarSearchPicker.focusInput; ⌘S / Ctrl+S saveTreeCopy, ne isViewMode/isLocked; defaultFocusKey H a mod1 + defaultFocusKeyHeld; typing → return; Ctrl/⌘+Z, Shift+Z, Y; Delete/Backspace confirmDelete jen family/descendants, ne isReadOnly, ne isPersonLocked; + = − 0 ZoomPan) · app:b6df0770 spec 111 §6, §8 (přehled v aplikaci ne) -->

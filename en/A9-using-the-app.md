@@ -35,6 +35,7 @@ person menu; what concerns the whole tree is in the bar and in the **Actions** m
 | following the research | **Follow live**; the end **End following** | [S1.4](S1-connecting-app-and-research.md#S1.4), [A9.3](#A9.3) |
 | sending edits to the research | **Research → Other actions → Research for this tree… → Sending changes** | [S2.2](S2-edits-from-the-app.md#S2.2) |
 | rules and terms | **Actions → How Strom works** | [A1.7](A1-the-app-in-brief.md#A1.7) |
+| back to the tree's default person | ⌂ at the start of **Focused on**; the key H | [A6.1.6](A6-views.md#A6.1.6), [A9.8](#A9.8) |
 | an action that takes a while | the state on the button (a wheel and what is happening); a long action in a notice with progress | [A9.7](#A9.7) |
 
 - **Limits:**
@@ -320,3 +321,30 @@ again**.
   stayed silent without the bridge, and looking up a place without an answer said “not found”.
 
 <!-- zdroj: app:79a05311 src/research-images.ts MISSING_LIST_TIMEOUT_MS 15 s (c69425d0, i pro export) · src/quality-bridge.ts, src/ui/duplicate-verdicts-ui.ts (ea76fa71: 15 s, treeManager.verdictsSilent pod hlavičkou skupiny + retry) · src/history-bridge.ts HISTORY_READ_TIMEOUT_MS 15 s, HISTORY_WRITE_TIMEOUT_MS · src/ui/history-manage-ui.ts, history-ui.ts, history-kinds-ui.ts errTimeout · src/ui/map-tiles.ts TILE_TIMEOUT_MS 15 s, tilesFailed · src/geocode.ts GEOCODE_TIMEOUT_MS 10 s, GeocodeFailure network|timeout|limit · src/ui/busy.ts serviceFailText (errNetwork, serviceTimeout, serviceLimit) · src/ui/places-find-ui.ts (věta ve výsledcích, searchOther), src/ui/map-ui.ts (70d3368b: běh se zastaví, zbylá místa ne „nenalezena“) · strings.ts busy.errOffline, errBusy, errTimeout, errNetwork, serviceTimeout, serviceLimit, searchOther, tilesFailed · ZADANI_DEV_tlacitka-cekani §10.2, §10.3 · dirigent:prace/1118-app-tlacitka-b (díl 7) -->
+
+<a id="A9.8"></a>
+## A9.8 Keyboard shortcuts
+
+The keys of the app's main window on a computer. On a Mac ⌘ holds instead of Ctrl.
+
+| Key | What it does | Where and when | Rule |
+|---|---|---|---|
+| Esc | closes the dialog or menu on top | everywhere | – |
+| Alt+← / Alt+→ | previous / next central person | outside the Table; in the Table jumps over names | [A6.7.16](A6-views.md#A6.7.16) |
+| Ctrl+F, / | cursor into **Search person...** | / only outside a text field | [A4.8](A4-surnames-and-families.md#A4.8) |
+| Ctrl+S | **Save to file** | not with a locked tree and in a read-only copy | [S8](S8-where-the-data-are.md) |
+| Ctrl+Z; Ctrl+Shift+Z or Ctrl+Y | **Undo**; **Redo** | outside a text field | – |
+| Delete, Backspace | delete the central person (after a confirmation) | Family and Descendants, outside a text field; not for a locked person and in a read-only tree | – |
+| + or =; −; 0 | zoom in; zoom out; default zoom | outside a text field | – |
+| H | focus the default person | Family, Descendants, Fan; outside a text field and an open menu | [A6.1.6](A6-views.md#A6.1.6) |
+| ⌘1 (Mac), Ctrl+1 (Windows, Linux) | the same as H, also from a text field | only when the browser passes it to the app | [A6.1.6](A6-views.md#A6.1.6) |
+
+- **Limits:**
+  - with a dialog open only Esc and the dialog's keys hold;
+  - in a browser tab ⌘1 / Ctrl+1 is usually taken by the browser (the first tab);
+  - the Table, the windows and the dialogs have keys of their own, at their rules (for example
+    [A6.7.15](A6-views.md#A6.7.15), [A11](A11-lists-of-people.md)).
+- **Controls:** the keyboard; the app has no overview of the keys, the tooltip of ⌂ names its key.
+- **Since:** app 3.30.0 (the overview; each key holds since the version in its rule, H and ⌘1 / Ctrl+1 since 3.30.0)
+
+<!-- zdroj: app:401eaca4 src/ui/misc.ts keydown (Esc a dialogStack; dialog otevřený → return; Alt+←/→ goBack/goForward, v Tabulce ne; Ctrl/⌘+F a „/“ toolbarSearchPicker.focusInput; ⌘S / Ctrl+S saveTreeCopy, ne isViewMode/isLocked; defaultFocusKey H a mod1 + defaultFocusKeyHeld; typing → return; Ctrl/⌘+Z, Shift+Z, Y; Delete/Backspace confirmDelete jen family/descendants, ne isReadOnly, ne isPersonLocked; + = − 0 ZoomPan) · app:b6df0770 spec 111 §6, §8 (přehled v aplikaci ne) -->

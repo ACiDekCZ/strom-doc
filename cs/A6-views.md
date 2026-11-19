@@ -207,6 +207,40 @@ Značení linií označí karty ve stromu podle toho, do které linie osoba pat�
 
 <!-- zdroj: app:0e403ec6 src/branch-colors.ts classifyBranches (collectAncestorSide: předci + sourozenci každého předka; collectDescendants přes childIds; obě strany se sčítají R4; descendant jen mimo strany; focus smazán; numbered = oba rodiče známí a stejného pohlaví R5), src/settings.ts getBranchMarker (výchozí arc; branchColors false → off), isBranchTintOn (jen se značkou), isBranchTintChosen, save (migrace při prvním zápisu), src/renderer.ts renderCards (!isPlaceholder, viewMode ≠ timeline), src/branch-marker-attrs.ts (čtečka ariaPaternal/ariaBoth/ariaSlot1), index.html tokeny --branch-paternal #234e8c / --branch-maternal #d0679a / --branch-descendant #8a6400, tmavé #9cc2f2 / #f6a9cb / #e3b552, --branch-*-tint, CSS tvarů (arc, tag, stripe, corner; R4 .branch-paternal.branch-maternal) · app:c8afe382 index.html #branch-marker-setting (skupina settings.groupTree), #branch-tint-toggle, src/ui/branch-marker-ui.ts syncBranchLegend, src/ui/misc.ts (legenda jen family/descendants, isBranchLegendEnabled) · app:b94f3816 src/branch-marker-svg.ts, src/ui/export-image-ui.ts treeCardDrawing (branchMarker, branchTint, numbered; světlé hex), index.html @media print (R6: border 2px #999, white background, tiskové --branch-*, print-color-adjust) · strings.ts branchColors.* (settingLabel, markerArc…markerOff, defaultTag, tintLabel, legendPaternal…legendSlot2, legendNone, letterPaternal O, letterMaternal M, letterDescendant P) · barvy větví: app:6f86ad39 (v1.8.0) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii K1–K4, app:docs/ZADANI_DEV_linie-na-kartach.md R1–R6 · prace/1119-app-112-linie -->
 
+<a id="A6.1.6"></a>
+### A6.1.6 Zpět na výchozí osobu: ⌂
+
+Tlačítko ⌂ na začátku **Zaměřeno na** zaměří výchozí osobu stromu ([A6.1.1](#A6.1.1)), ať je střed kdekoli. Udělá
+totéž co **Zaměřit** u karty: nový krok historie a oznámení „Zaměřeno na {jméno} · ↩ Zpět“; **↩ Zpět**, šipka ↩
+vlevo dole nebo Alt+← vrátí předchozí střed.
+
+| Nastavení stromu (**Výchozí osoba a pohled**) | Koho ⌂ zaměří |
+|---|---|
+| **Konkrétní osoba:** | tu osobu; když už ve stromu není, první osobu stromu |
+| **Naposledy zobrazená** | osobu, na kterou se strom zaměřil při otevření (nebo při přepnutí na tento strom) |
+| bez nastavení | první osobu stromu |
+
+- **Kde ⌂ je:**
+  - Rodina: v **Zaměřeno na** na počítači, v liště na tabletu a na telefonu na šířku, v panelu osoby na telefonu;
+  - Potomci: na začátku odznaku pohledu;
+  - Vějíř: vlevo nahoře; u zafixovaného středu ([S4.1.3](S4-research-from-the-app.md#S4.1.3)) před **Střed: {jméno} ·
+    Uvolnit** a zafixování nejdřív uvolní.
+- **Výchozí osoba už je středem:** ⌂ zůstane na místě, vyplněný a ztlumený, s bublinou „Výchozí osoba je zaměřená:
+  {jméno}“. Klik ani klávesa nic neudělají.
+- **Bublina:** „Zaměřit výchozí osobu: {jméno}“, u první osoby stromu s dovětkem „– první osoba stromu“, u
+  **Naposledy zobrazená** „– zaměřená při otevření“, a „(H)“.
+- **Klávesy:** H (mimo textové pole a otevřenou nabídku); navíc ⌘1 na Macu a Ctrl+1 ve Windows a Linuxu, když je
+  prohlížeč aplikaci předá. V kartě prohlížeče je prohlížeč obvykle použije sám pro přepnutí na první kartu.
+  Přehled kláves: [A9.8](A9-using-the-app.md#A9.8).
+- **Při sledování výzkumu** se ⌂ i H chovají jako jiný výběr osoby: sledování agenta v hlavním okně přeruší
+  (**Zpět k agentovi**, [S4.1.1](S4-research-from-the-app.md#S4.1.1)). Když je výchozí osoba už středem, nepřeruší.
+- **Hranice:** prázdný strom ⌂ nemá. Mapa, Časová osa, Tabulka a další okna ([A6.8](#A6.8)) ⌂ nemají a H v nich nic
+  nedělá.
+- **Ovládání:** ⌂ u **Zaměřeno na** (Potomci: v odznaku, Vějíř: vlevo nahoře); klávesa H.
+- **Platí od:** aplikace 3.30.0
+
+<!-- zdroj: app:e52adde6 src/default-person.ts defaultTarget (specific, first, opened, fallbackFirst; prázdný strom null), startupPerson · src/ui/default-focus.ts FALLBACK_TO_FIRST = true, rememberOpenedFocus, isAtDefault (Vějíř: liveFollowPinned ?? focus), isDefaultFocusContext (hlavní okno, HOME_VIEWS family/descendants/fan), focusDefaultPerson (unpinFanCenter, TreeRenderer.focusFromTab → showFocusToast) · app:b6df0770 §3 telefon (panel osoby), §6 defaultFocusKey (H/h bez Ctrl/⌘/Alt mimo pole; ⌘1 / Ctrl+1 podle code Digit1 i z pole), src/ui/misc.ts defaultFocusKeyHeld, §7 Potomci (#descendants-badge), Vějíř (pilulka vlevo nahoře, pin), §9 pauza sledování · strings.ts focus.focusedOn, focusHome, focusHomeFirst, focusHomeOpened, focusHomeAt, focusToast, focusToastBack · CHANGELOG.cs.md 3.30.0 „Zpět na výchozí osobu“ · dirigent:spec/111 K1.1–K1.6 · app:docs/ZADANI_DEV_vychozi-osoba.md §1–§9 · ⌘1 / Ctrl+1 v kartě prohlížeče neměřeno (spec 111 Otevřené) -->
+
 <a id="A6.2"></a>
 ## A6.2 Pohled Potomci
 
@@ -1390,7 +1424,8 @@ okno zůstane na svém pohledu. Ukládá jen hlavní okno; ostatní okna mu úpr
   okno vlastní stav. Obnovení okna (F5) drží jeho pohled i osobu.
 - **Co okno umí:** místo lišty aplikace má hlavičku: název stromu, přepínač pohledů (pod 960 px jako „{pohled} ▾“),
   **Sledovat výběr** ([A6.8.1](#A6.8.1)), **Vrátit**, **Znovu** a ⧉ **Otevřít další okno**. Přepínač stromů, nabídku **Výzkum**,
-  Nastavení ani malý panel výzkumu okno nemá.
+  Nastavení ani malý panel výzkumu okno nemá. Od aplikace 3.30.0 je místo **Sledovat výběr** přepínač **Výběr**
+  ([A6.8.4](#A6.8.4)).
 - **Úpravy:** v okně jde upravovat osobu (nabídka osoby, **Upravit**) i buňku Tabulky. Uloží je hlavní okno, jdou
   vrátit jako jeho kroky a hned se ukážou ve všech oknech. **Vrátit** a **Znovu** v hlavičce okna vrací a opakují kroky hlavního okna. Když se
   strom mezitím změnil v jiném okně, úprava se nepoužije: „Strom se mezitím změnil v jiném okně. Úprava se nepoužila,
@@ -1439,6 +1474,8 @@ v hlavičce okna.
 - **Od aplikace 3.30.0:** okno, které při sledování výzkumu sleduje agenta a není pozastavené, osobu vybranou
   v jiném okně jen vyznačí, i v režimu **přepnout**; skok za agentem se jako výběr osoby neposílá
   ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+- **Od aplikace 3.30.0:** přepínač se jmenuje **Výběr ▾** a tyto režimy jsou v jeho skupině **Toto okno** · výběr
+  z jiných oken. Druhá skupina **Hlavní okno** říká, co udělá výběr v tomto okně v hlavním okně ([A6.8.4](#A6.8.4)).
 
 <!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
 
@@ -1485,3 +1522,45 @@ k němu připojí.“
 - **Platí od:** aplikace 3.28.0
 
 <!-- zdroj: app:4b1373a7 src/windows/window-role.ts (Web Lock strom-main ifAvailable → main, jinak second-tab) · src/windows/second-tab.ts (secondTabSatelliteKind table) · src/windows/window-link.ts (předání odkazu hlavnímu jednou) · src/windows/window-start.ts openLinkFromWindow · strings.ts win.alreadyOpen, alreadyOpenNote, switchThere, openAsWindow, switchFailed, tabCanClose, linkForwarded · CHANGELOG.cs.md 3.28.0 · spec 079 K1.6 · prace/1112-app-okna-zaklad (7d22e396) -->
+
+<a id="A6.8.4"></a>
+### A6.8.4 Co výběr v dalším okně udělá v hlavním okně
+
+Osoba vybraná v Tabulce, na Časové ose nebo na Mapě dalšího okna se v hlavním okně vyznačí, nebo se stane jeho
+středem. Určuje to skupina **Hlavní okno** v přepínači **Výběr** v hlavičce dalšího okna.
+
+| Volba | Co se stane v hlavním okně |
+|---|---|
+| **jen vyznačit** (výchozí) | osoba se vyznačí jako v režimu **jen vyznačit** ([A6.8.1](#A6.8.1)); střed zůstane |
+| **zaměřit** | osoba se stane středem hlavního okna jako po **Zaměřit** u karty a strom se kolem ní překreslí, i když ji předtím nekreslil |
+
+- **Kde:** volbu mají Tabulka, Časová osa a Mapa dalšího okna (na Mapě výběr osoby u místa; klik na samotné místo nic
+  nepošle). Rodina, Potomci a Vějíř dalšího okna mění klikem vlastní střed a v hlavním okně osobu jen vyznačí.
+- **Přeskakování po řádcích:** šipky i klik dělají totéž. Hlavní okno osobu vyznačí hned, střed změní až 200 ms po
+  posledním výběru a jen na poslední vybranou osobu. Projití řádků šipkami tak změní střed jednou.
+- **Oznámení a návrat:** dole uprostřed stromu hlavního okna stojí „Střed vybrán v dalším okně“ s tlačítkem **↶
+  {jméno}** (střed před prvním výběrem) a ×. Série výběrů z jednoho okna je v historii hlavního okna jeden krok: jeden
+  krok zpět (↩ vlevo dole, Alt+←) nebo ↶ vrátí střed, který byl před ní. Série končí vlastním krokem v hlavním okně
+  (Zaměřit, Přejít na, ↩, ↪, jiný pohled), zavřením oznámení, přepnutím volby na **jen vyznačit** a zavřením dalšího
+  okna. Přepnutí volby střed nevrací.
+- **Osoba, kterou hlavní okno nekreslí** (při **jen vyznačit**): pohled Rodina, Potomci nebo Vějíř hlavního okna řekne
+  „{jméno} v tomto pohledu není.“ s **Přejít na** (osoba se stane středem) a ×.
+- **Hranice:**
+  - hlavní okno, které sleduje agenta výzkumu, osobu jen vyznačí; střed zůstane u agenta
+    ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Jednou za sérii řekne „Sleduje se agent – výběr z dalšího okna se
+    jen vyznačí.“; další okno má u volby „(agent)“ a v nabídce „Hlavní okno sleduje agenta – výběr se tam jen
+    vyznačí.“ Po pozastavení nebo konci sledování se nic zpětně nepřepne: **zaměřit** platí od dalšího výběru;
+  - osoba, která mezitím ve stromu není: střed zůstane, „Vybraná osoba už ve stromu není.“ Oznámení bez × zmizí
+    po 6 s;
+  - osoba, která už je středem: nic se nestane;
+  - při **vypnuto** ve skupině **Toto okno** a když hlavní okno není otevřené, je skupina **Hlavní okno** zašedlá
+    s poznámkou „Nedostupné – sdílení výběru je v tomto okně vypnuté.“ nebo „Hlavní okno není otevřené.“; volba
+    zůstane uložená;
+  - volba platí pro jedno okno a jeho Tabulku, Časovou osu i Mapu, vydrží obnovení okna (F5); každé další okno má
+    svou.
+- **Ovládání:** aplikace: v hlavičce dalšího okna **Výběr ▾** → **Hlavní okno** · výběr v tomto okně: **jen
+  vyznačit**, **zaměřit**. Zavřený přepínač ukazuje, co je zvolené (v úzkém okně zkráceně ikonami); celé znění má
+  v bublině.
+- **Platí od:** aplikace 3.30.0
+
+<!-- zdroj: app:e7d3bb11 src/windows/follow-mode.ts SendMode mark|focus, SENDING table/timeline/map, sendModeKey (sessionStorage okna), getSendModeChoice · src/windows/sat-header.ts followControlParts (FOLLOW_LABEL_MIN_WIDTH 1280, FOLLOW_BOTH_MIN_WIDTH 1100), followSendGroupState (off, no-main, agent), sendModeName = contextMenu.focus malým písmenem, followControlAria · src/windows/satellite.ts sendMode (followSelection && sendModeAvailable), post select intent, seq · app:edaec740 src/windows/window-focus.ts WINDOW_FOCUS_DELAY_MS 200, take (seq), fire (deleted, hidden, followingAgent, focusId), run push/replace, endRun · src/windows/window-selection.ts wireMainSelection (markNotice not-in-view, VIEW_STEP_EVENT, onSendEnded), src/windows/window-start.ts mainFocusDeps (hidden: () => false, drawn family/descendants/fan) · src/ui/window-notice.ts PLAIN_NOTICE_MS 6000 · strings.ts satFollow.*, mainNotice.* · CHANGELOG.cs.md 3.30.0 · dirigent:spec/110 (rozhodnutí 18. 11. 17:35 a 17:45: „Zaměřit“ = nový střed) · app:docs/ZADANI_DEV_vyber-z-okna.md §1–§7 · skrytá osoba (§7) zatím nenapojená -->

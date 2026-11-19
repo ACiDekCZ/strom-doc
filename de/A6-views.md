@@ -235,6 +235,43 @@ ist **Bogen** am linken Rand der Karte.
 
 <!-- zdroj: app:0e403ec6 src/branch-colors.ts classifyBranches (collectAncestorSide: předci + sourozenci každého předka; collectDescendants přes childIds; obě strany se sčítají R4; descendant jen mimo strany; focus smazán; numbered = oba rodiče známí a stejného pohlaví R5), src/settings.ts getBranchMarker (výchozí arc; branchColors false → off), isBranchTintOn (jen se značkou), isBranchTintChosen, save (migrace při prvním zápisu), src/renderer.ts renderCards (!isPlaceholder, viewMode ≠ timeline), src/branch-marker-attrs.ts (čtečka ariaPaternal/ariaBoth/ariaSlot1), index.html tokeny --branch-paternal #234e8c / --branch-maternal #d0679a / --branch-descendant #8a6400, tmavé #9cc2f2 / #f6a9cb / #e3b552, --branch-*-tint, CSS tvarů (arc, tag, stripe, corner; R4 .branch-paternal.branch-maternal) · app:c8afe382 index.html #branch-marker-setting (skupina settings.groupTree), #branch-tint-toggle, src/ui/branch-marker-ui.ts syncBranchLegend, src/ui/misc.ts (legenda jen family/descendants, isBranchLegendEnabled) · app:b94f3816 src/branch-marker-svg.ts, src/ui/export-image-ui.ts treeCardDrawing (branchMarker, branchTint, numbered; světlé hex), index.html @media print (R6: border 2px #999, white background, tiskové --branch-*, print-color-adjust) · strings.ts branchColors.* (settingLabel, markerArc…markerOff, defaultTag, tintLabel, legendPaternal…legendSlot2, legendNone, letterPaternal O, letterMaternal M, letterDescendant P) · barvy větví: app:6f86ad39 (v1.8.0) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii K1–K4, app:docs/ZADANI_DEV_linie-na-kartach.md R1–R6 · prace/1119-app-112-linie -->
 
+<a id="A6.1.6"></a>
+### A6.1.6 Zurück zur Standardperson: ⌂
+
+Die Schaltfläche ⌂ am Anfang von **Fokussiert auf** fokussiert die Standardperson des Stammbaums ([A6.1.1](#A6.1.1)),
+wo auch immer die Mitte ist. Sie tut dasselbe wie Fokussieren an einer Karte: ein neuer Schritt des Verlaufs und die
+Meldung „Fokus auf {Name} · ↩ Zurück“; **↩ Zurück**, der Pfeil ↩ unten links oder Alt+← bringt die vorige Mitte
+zurück.
+
+| Stammbaum-Einstellung (**Standardperson und -ansicht**) | Wen ⌂ fokussiert |
+|---|---|
+| **Bestimmte Person:** | diese Person; ist sie nicht mehr im Stammbaum, die erste Person des Stammbaums |
+| **Zuletzt fokussiert** | die Person, auf die der Stammbaum beim Öffnen fokussiert hat (oder beim Wechsel zu diesem Stammbaum) |
+| ohne Einstellung | die erste Person des Stammbaums |
+
+- **Wo ⌂ ist:**
+  - Familie: in **Fokussiert auf** am Computer, in der Leiste auf dem Tablet und auf dem Telefon quer, im Personenpanel
+    auf dem Telefon;
+  - Nachkommen: am Anfang der Plakette der Ansicht;
+  - Fächer: oben links; bei einer fixierten Mitte ([S4.1.3](S4-research-from-the-app.md#S4.1.3)) vor **Mitte: {Name} ·
+    Lösen**, und die Fixierung wird zuerst gelöst.
+- **Die Standardperson ist schon die Mitte:** ⌂ bleibt an seinem Platz, gefüllt und gedämpft, mit dem Tooltip
+  „Standardperson ist im Fokus: {Name}“. Weder ein Klick noch die Taste tun etwas.
+- **Tooltip:** „Standardperson fokussieren: {Name}“, bei der ersten Person des Stammbaums mit dem Zusatz „ – erste
+  Person im Stammbaum“, bei **Zuletzt fokussiert** „ – beim Öffnen fokussiert“, und „(H)“.
+- **Tasten:** H (außerhalb eines Textfelds und eines offenen Menüs); dazu ⌘1 auf dem Mac und Strg+1 unter Windows und
+  Linux, wenn der Browser sie an die App weitergibt. In einem Browser-Tab nimmt der Browser sie meist selbst zum
+  Wechsel auf den ersten Tab. Übersicht der Tasten: [A9.8](A9-using-the-app.md#A9.8).
+- **Beim Verfolgen der Forschung** wirken ⌂ und H wie eine andere Wahl einer Person: sie unterbrechen das Folgen des
+  Agenten im Hauptfenster (**Zurück zum Agenten**, [S4.1.1](S4-research-from-the-app.md#S4.1.1)). Ist die
+  Standardperson schon die Mitte, nicht.
+- **Grenzen:** ein leerer Stammbaum hat kein ⌂. Karte, Zeitleiste, Tabelle und weitere Fenster ([A6.8](#A6.8)) haben
+  kein ⌂, und H tut dort nichts.
+- **Bedienung:** ⌂ bei **Fokussiert auf** (Nachkommen: in der Plakette, Fächer: oben links); die Taste H.
+- **Gilt seit:** App 3.30.0
+
+<!-- zdroj: app:e52adde6 src/default-person.ts defaultTarget (specific, first, opened, fallbackFirst; prázdný strom null), startupPerson · src/ui/default-focus.ts FALLBACK_TO_FIRST = true, rememberOpenedFocus, isAtDefault (Vějíř: liveFollowPinned ?? focus), isDefaultFocusContext (hlavní okno, HOME_VIEWS family/descendants/fan), focusDefaultPerson (unpinFanCenter, TreeRenderer.focusFromTab → showFocusToast) · app:b6df0770 §3 telefon (panel osoby), §6 defaultFocusKey (H/h bez Ctrl/⌘/Alt mimo pole; ⌘1 / Ctrl+1 podle code Digit1 i z pole), src/ui/misc.ts defaultFocusKeyHeld, §7 Potomci (#descendants-badge), Vějíř (pilulka vlevo nahoře, pin), §9 pauza sledování · strings.ts focus.focusedOn, focusHome, focusHomeFirst, focusHomeOpened, focusHomeAt, focusToast, focusToastBack · CHANGELOG.cs.md 3.30.0 „Zpět na výchozí osobu“ · dirigent:spec/111 K1.1–K1.6 · app:docs/ZADANI_DEV_vychozi-osoba.md §1–§9 · ⌘1 / Ctrl+1 v kartě prohlížeče neměřeno (spec 111 Otevřené) -->
+
 <a id="A6.2"></a>
 ## A6.2 Ansicht Nachkommen
 
@@ -1623,7 +1660,7 @@ schicken ihm ihre Änderungen und bekommen von ihm den Stammbaum.
 - **Was das Fenster hat:** statt der Leiste der App einen Kopf: Name des Stammbaums, Ansichtsumschalter (unter
   960 px als „{Ansicht} ▾“), **Auswahl folgen** ([A6.8.1](#A6.8.1)), **Rückgängig**, **Wiederholen** und ⧉ **Weiteres Fenster
   öffnen**. Stammbaum-Umschalter, Menü **Forschung**, Einstellungen und das kleine Forschungspanel hat das Fenster
-  nicht.
+  nicht. Ab App 3.30.0 steht statt **Auswahl folgen** der Schalter **Auswahl** ([A6.8.4](#A6.8.4)).
 - **Änderungen:** im Fenster lässt sich eine Person bearbeiten (Menü der Person, **Bearbeiten**) und eine Zelle der
   Tabelle. Das Hauptfenster speichert sie, sie lassen sich als seine Schritte rückgängig machen und erscheinen sofort in allen Fenstern.
   **Rückgängig** und **Wiederholen** im Kopf des Fensters nehmen Schritte des Hauptfensters zurück oder wiederholen sie. Wurde
@@ -1680,6 +1717,9 @@ bewirkt, bestimmt der Schalter **Auswahl folgen** im Kopf des Fensters.
 - **Ab App 3.30.0:** ein Fenster, das beim Verfolgen der Forschung dem Agenten folgt und nicht pausiert ist, markiert
   eine in einem anderen Fenster gewählte Person nur, auch im Modus **wechseln**; der Sprung zum Agenten wird nicht als
   Wahl einer Person geschickt ([S4.1.7](S4-research-from-the-app.md#S4.1.7)).
+- **Ab App 3.30.0:** der Schalter heißt **Auswahl ▾**, und diese Modi stehen in seiner Gruppe **Dieses Fenster** ·
+  Auswahl aus anderen Fenstern. Die zweite Gruppe **Hauptfenster** sagt, was eine Wahl in diesem Fenster im
+  Hauptfenster bewirkt ([A6.8.4](#A6.8.4)).
 
 <!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
 
@@ -1729,3 +1769,51 @@ speichert, damit sich Änderungen nicht gegenseitig überschreiben. Weitere Fens
 - **Gilt seit:** App 3.28.0
 
 <!-- zdroj: app:4b1373a7 src/windows/window-role.ts (Web Lock strom-main ifAvailable → main, jinak second-tab) · src/windows/second-tab.ts (secondTabSatelliteKind table) · src/windows/window-link.ts (předání odkazu hlavnímu jednou) · src/windows/window-start.ts openLinkFromWindow · strings.ts win.alreadyOpen, alreadyOpenNote, switchThere, openAsWindow, switchFailed, tabCanClose, linkForwarded · CHANGELOG.cs.md 3.28.0 · spec 079 K1.6 · prace/1112-app-okna-zaklad (7d22e396) -->
+
+<a id="A6.8.4"></a>
+### A6.8.4 Was eine Wahl in einem weiteren Fenster im Hauptfenster bewirkt
+
+Eine in der Tabelle, in der Zeitleiste oder auf der Karte eines weiteren Fensters gewählte Person wird im Hauptfenster
+markiert oder wird zu seiner Mitte. Das bestimmt die Gruppe **Hauptfenster** im Schalter **Auswahl** im Kopf des
+weiteren Fensters.
+
+| Wahl | Was im Hauptfenster geschieht |
+|---|---|
+| **nur markieren** (Standard) | die Person wird markiert wie im Modus **nur markieren** ([A6.8.1](#A6.8.1)); die Mitte bleibt |
+| **fokussieren** | die Person wird zur Mitte des Hauptfensters wie nach Fokussieren an einer Karte, und der Baum wird um sie neu gezeichnet, auch wenn er sie vorher nicht zeichnete |
+
+- **Wo:** die Wahl haben Tabelle, Zeitleiste und Karte eines weiteren Fensters (auf der Karte die Wahl einer Person an
+  einem Ort; ein Klick auf den Ort allein schickt nichts). Familie, Nachkommen und Fächer eines weiteren Fensters
+  ändern mit einem Klick ihre eigene Mitte und markieren die Person im Hauptfenster nur.
+- **Durch die Zeilen gehen:** Pfeiltasten und Klick tun dasselbe. Das Hauptfenster markiert die Person sofort und
+  ändert die Mitte erst 200 ms nach der letzten Wahl, und nur auf die zuletzt gewählte Person. Ein Durchgehen der
+  Zeilen mit den Pfeiltasten ändert die Mitte so einmal.
+- **Meldung und Rückkehr:** unten in der Mitte des Stammbaums im Hauptfenster steht „Mitte in anderem Fenster gewählt“
+  mit der Schaltfläche **↶ {Name}** (die Mitte vor der ersten Wahl) und ×. Eine Reihe von Wahlen aus einem Fenster ist
+  im Verlauf des Hauptfensters ein Schritt: ein Schritt zurück (↩ unten links, Alt+←) oder ↶ bringt die Mitte von
+  davor zurück. Die Reihe endet mit einem eigenen Schritt im Hauptfenster (Fokussieren, Gehe zu, ↩, ↪, eine andere
+  Ansicht), mit dem Schließen der Meldung, mit dem Umstellen der Wahl auf **nur markieren** und mit dem Schließen des
+  weiteren Fensters. Das Umstellen der Wahl bringt die Mitte nicht zurück.
+- **Eine Person, die das Hauptfenster nicht zeichnet** (bei **nur markieren**): die Ansicht Familie, Nachkommen oder
+  Fächer des Hauptfensters sagt „{Name} ist in dieser Ansicht nicht enthalten.“ mit **Gehe zu** (die Person wird zur
+  Mitte) und ×.
+- **Grenzen:**
+  - ein Hauptfenster, das dem Agenten der Forschung folgt, markiert die Person nur; die Mitte bleibt beim Agenten
+    ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Einmal je Reihe sagt es „Agent wird verfolgt – eine Auswahl aus
+    einem anderen Fenster wird nur markiert.“; das weitere Fenster hat bei der Wahl „(Agent)“ und im Menü „Das
+    Hauptfenster folgt dem Agenten – die Auswahl wird dort nur markiert.“ Nach einer Pause oder dem Ende des Folgens
+    wird nichts nachträglich umgestellt: **fokussieren** gilt ab der nächsten Wahl;
+  - eine Person, die inzwischen nicht mehr im Stammbaum ist: die Mitte bleibt, „Die gewählte Person ist nicht mehr im
+    Baum.“ Eine Meldung ohne × verschwindet nach 6 s;
+  - eine Person, die schon die Mitte ist: nichts geschieht;
+  - bei **aus** in der Gruppe **Dieses Fenster** und wenn das Hauptfenster nicht geöffnet ist, ist die Gruppe
+    **Hauptfenster** ausgegraut mit dem Hinweis „Nicht verfügbar – das Teilen der Auswahl ist in diesem Fenster aus.“
+    oder „Das Hauptfenster ist nicht geöffnet.“; die Wahl bleibt gespeichert;
+  - die Wahl gilt für ein Fenster und seine Tabelle, Zeitleiste und Karte und übersteht das Neuladen des Fensters
+    (F5); jedes weitere Fenster hat seine eigene.
+- **Bedienung:** App: im Kopf eines weiteren Fensters **Auswahl ▾** → **Hauptfenster** · Auswahl in diesem Fenster:
+  **nur markieren**, **fokussieren**. Der geschlossene Schalter zeigt, was gewählt ist (in einem schmalen Fenster
+  verkürzt mit Symbolen); den ganzen Wortlaut hat sein Tooltip.
+- **Gilt seit:** App 3.30.0
+
+<!-- zdroj: app:e7d3bb11 src/windows/follow-mode.ts SendMode mark|focus, SENDING table/timeline/map, sendModeKey (sessionStorage okna), getSendModeChoice · src/windows/sat-header.ts followControlParts (FOLLOW_LABEL_MIN_WIDTH 1280, FOLLOW_BOTH_MIN_WIDTH 1100), followSendGroupState (off, no-main, agent), sendModeName = contextMenu.focus malým písmenem, followControlAria · src/windows/satellite.ts sendMode (followSelection && sendModeAvailable), post select intent, seq · app:edaec740 src/windows/window-focus.ts WINDOW_FOCUS_DELAY_MS 200, take (seq), fire (deleted, hidden, followingAgent, focusId), run push/replace, endRun · src/windows/window-selection.ts wireMainSelection (markNotice not-in-view, VIEW_STEP_EVENT, onSendEnded), src/windows/window-start.ts mainFocusDeps (hidden: () => false, drawn family/descendants/fan) · src/ui/window-notice.ts PLAIN_NOTICE_MS 6000 · strings.ts satFollow.*, mainNotice.* · CHANGELOG.cs.md 3.30.0 · dirigent:spec/110 (rozhodnutí 18. 11. 17:35 a 17:45: „Zaměřit“ = nový střed) · app:docs/ZADANI_DEV_vyber-z-okna.md §1–§7 · skrytá osoba (§7) zatím nenapojená -->

@@ -35,6 +35,7 @@ der Person; was den ganzen Stammbaum betrifft, steht in der Leiste und im Menü 
 | Verfolgen der Forschung | **Live verfolgen**; Ende **Verfolgung beenden** | [S1.4](S1-connecting-app-and-research.md#S1.4), [A9.3](#A9.3) |
 | Senden der Änderungen an die Forschung | **Forschung → Weitere Aktionen → Forschung für diesen Stammbaum… → Änderungen senden** | [S2.2](S2-edits-from-the-app.md#S2.2) |
 | Regeln und Begriffe | **Aktionen → So funktioniert Strom** | [A1.7](A1-the-app-in-brief.md#A1.7) |
+| zurück zur Standardperson des Stammbaums | ⌂ am Anfang von **Fokussiert auf**; die Taste H | [A6.1.6](A6-views.md#A6.1.6), [A9.8](#A9.8) |
 | eine Aktion, die eine Weile dauert | der Zustand auf der Schaltfläche (ein Rad und was gerade geschieht); eine lange Aktion in einer Meldung mit Fortschritt | [A9.7](#A9.7) |
 
 - **Grenzen:**
@@ -348,3 +349,31 @@ bieten **Erneut versuchen** an.
   Duplikaten schwieg ohne Brücke, und die Suche eines Orts ohne Antwort sagte „nicht gefunden“.
 
 <!-- zdroj: app:79a05311 src/research-images.ts MISSING_LIST_TIMEOUT_MS 15 s (c69425d0, i pro export) · src/quality-bridge.ts, src/ui/duplicate-verdicts-ui.ts (ea76fa71: 15 s, treeManager.verdictsSilent pod hlavičkou skupiny + retry) · src/history-bridge.ts HISTORY_READ_TIMEOUT_MS 15 s, HISTORY_WRITE_TIMEOUT_MS · src/ui/history-manage-ui.ts, history-ui.ts, history-kinds-ui.ts errTimeout · src/ui/map-tiles.ts TILE_TIMEOUT_MS 15 s, tilesFailed · src/geocode.ts GEOCODE_TIMEOUT_MS 10 s, GeocodeFailure network|timeout|limit · src/ui/busy.ts serviceFailText (errNetwork, serviceTimeout, serviceLimit) · src/ui/places-find-ui.ts (věta ve výsledcích, searchOther), src/ui/map-ui.ts (70d3368b: běh se zastaví, zbylá místa ne „nenalezena“) · strings.ts busy.errOffline, errBusy, errTimeout, errNetwork, serviceTimeout, serviceLimit, searchOther, tilesFailed · ZADANI_DEV_tlacitka-cekani §10.2, §10.3 · dirigent:prace/1118-app-tlacitka-b (díl 7) -->
+
+<a id="A9.8"></a>
+## A9.8 Tastenkürzel
+
+Die Tasten des Hauptfensters der App am Computer. Auf dem Mac gilt ⌘ statt Strg.
+
+| Taste | Was sie tut | Wo und wann | Regel |
+|---|---|---|---|
+| Esc | schließt den obersten Dialog oder das oberste Menü | überall | – |
+| Alt+← / Alt+→ | vorige / nächste zentrale Person | außerhalb der Tabelle; in der Tabelle Sprünge über Namen | [A6.7.16](A6-views.md#A6.7.16) |
+| Strg+F, / | Cursor in **Person suchen...** | / nur außerhalb eines Textfelds | [A4.8](A4-surnames-and-families.md#A4.8) |
+| Strg+S | **In Datei speichern** | nicht bei einem gesperrten Stammbaum und in einer Kopie nur zum Lesen | [S8](S8-where-the-data-are.md) |
+| Strg+Z; Strg+Umschalt+Z oder Strg+Y | **Rückgängig**; **Wiederholen** | außerhalb eines Textfelds | – |
+| Entf, Rücktaste | die zentrale Person löschen (nach Bestätigung) | Familie und Nachkommen, außerhalb eines Textfelds; nicht bei einer gesperrten Person und in einem Stammbaum nur zum Lesen | – |
+| + oder =; −; 0 | vergrößern; verkleinern; Standardgröße | außerhalb eines Textfelds | – |
+| H | die Standardperson fokussieren | Familie, Nachkommen, Fächer; außerhalb eines Textfelds und eines offenen Menüs | [A6.1.6](A6-views.md#A6.1.6) |
+| ⌘1 (Mac), Strg+1 (Windows, Linux) | dasselbe wie H, auch aus einem Textfeld | nur wenn der Browser es an die App weitergibt | [A6.1.6](A6-views.md#A6.1.6) |
+
+- **Grenzen:**
+  - bei offenem Dialog gelten nur Esc und die Tasten des Dialogs;
+  - ⌘1 / Strg+1 nimmt in einem Browser-Tab meist der Browser (der erste Tab);
+  - Tabelle, Fenster und Dialoge haben eigene Tasten, bei ihren Regeln (zum Beispiel [A6.7.15](A6-views.md#A6.7.15),
+    [A11](A11-lists-of-people.md)).
+- **Bedienung:** die Tastatur; die App hat keine Übersicht der Tasten, der Tooltip von ⌂ nennt seine Taste.
+- **Gilt seit:** App 3.30.0 (die Übersicht; jede Taste gilt seit der Version in ihrer Regel, H und ⌘1 / Strg+1 seit
+  3.30.0)
+
+<!-- zdroj: app:401eaca4 src/ui/misc.ts keydown (Esc a dialogStack; dialog otevřený → return; Alt+←/→ goBack/goForward, v Tabulce ne; Ctrl/⌘+F a „/“ toolbarSearchPicker.focusInput; ⌘S / Ctrl+S saveTreeCopy, ne isViewMode/isLocked; defaultFocusKey H a mod1 + defaultFocusKeyHeld; typing → return; Ctrl/⌘+Z, Shift+Z, Y; Delete/Backspace confirmDelete jen family/descendants, ne isReadOnly, ne isPersonLocked; + = − 0 ZoomPan) · app:b6df0770 spec 111 §6, §8 (přehled v aplikaci ne) -->
