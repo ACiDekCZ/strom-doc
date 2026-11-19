@@ -462,9 +462,20 @@ zaznaczone pliki jednocześnie.
   agent otworzy, trafia do dostawcy modelu, i że porządkowanie zużywa subskrypcję lub kredyt. Pliki wysyła tylko
   przycisk **Uporządkuj agentem** w oknie, raz.
 - Okno można zamknąć; postęp i gotowa propozycja są w pasku okna **Materiały**.
+  - **Od aplikacji 3.30.0:** pasek pokazuje „Oczekiwanie na agenta…”, potem „Agent porządkuje · k z n” ze wskaźnikiem,
+    ile plików agent już ocenił. Badanie, które liczby ocenionych nie podaje, ma „Agent porządkuje · N plików” z paskiem
+    bez liczby; przy ograniczeniu ruchu w systemie ten pasek stoi. Pod tym „Okno można zamknąć, propozycja poczeka
+    w Materiałach.”
 - **Propozycja agenta** ma **Propozycje**, **Nieprzypisane** i **Załatwione**, a przy każdym pliku **Przyjmij**,
   **Edytuj**, **Odrzuć**; dalej **Przyjmij wybrane** i **Przyjmij wszystkie**. Pewność propozycji: pewne,
   prawdopodobne, niepewne.
+  - **Od aplikacji 3.30.0:** w **Nieprzypisane** przy pliku bez propozycji stoi cichym wierszem, dlaczego propozycji
+    nie ma: „Czytelnik nic nie powiedział o pliku”, „Plik ma już wszystko, co zaproponowano”, „Propozycji nie dało się
+    użyć”, „Agent pominął plik” albo „Nie udało się odczytać pliku”. Co czytelnik napisał o pliku, stoi pod tym w jednym
+    wierszu, w całości po najechaniu. Badanie, które powodu nie podaje, albo powód, którego aplikacja nie zna: wiersz
+    bez powodu jak wcześniej.
+  - Pliki tekstowe (.txt, .md) agent czyta według treści, nie jako obraz
+    ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
 - Tytuł, data i rodzaj od człowieka zostają; propozycja agenta zostanie użyta tylko wtedy, gdy wybierze się **Użyj
   propozycji**.
 - Przyjęte się zapisze: pliki drzewa jednym krokiem **Cofnij** razem z drzewem, materiał spoza drzewa do archiwum.
@@ -480,7 +491,7 @@ zaznaczone pliki jednocześnie.
 - **Obsługa:** okno **Materiały**: zaznaczenie, pasek nad partią lub nad filtrem; koniec partii z aplikacji.
 - **Obowiązuje od:** aplikacja 3.30.0, badanie 1.35.0
 
-<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem -->
+<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu -->
 
 <a id="A3.6"></a>
 ## A3.6 Źródła osoby

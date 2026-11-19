@@ -1632,6 +1632,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A2.1.1](cs/A2-loading-a-family-tree.md#A2.1.1), A2.3, A2.5, A8.2
 
+<a id="lineage-markers"></a>
+### Značení linií
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Značení linií | Značka na kartě osoby, která říká její linii vůči zaměřené osobě: otcovská (modrá), mateřská (růžová), potomci (okrová). Není to linie výzkumu. |
+| en | Lineage markers | A marker on a person's card that says their lineage relative to the focused person: paternal (blue), maternal (pink), descendants (ochre). Not a line of the research. |
+| de | Linienmarkierung | Eine Markierung auf der Karte einer Person, die ihre Linie relativ zur fokussierten Person angibt: väterlich (blau), mütterlich (rosa), Nachkommen (ocker). Keine Linie der Forschung. |
+| pl | Oznaczenie linii | Znak na karcie osoby, który mówi o jej linii względem wybranej osoby: ojcowska (niebieska), matczyna (różowa), potomkowie (ochra). To nie linia badania. |
+
+- **Čísla:** [A6.1.5](cs/A6-views.md#A6.1.5), A6.3, A6.4, A6.7.2
+
 <a id="surname-display"></a>
 ### Zobrazení příjmení
 

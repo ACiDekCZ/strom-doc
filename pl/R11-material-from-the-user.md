@@ -234,12 +234,21 @@ badania nic się nie zapisuje.
   - porządkowanie z aplikacji most uruchomi tylko z własnym podpisem, a ten jest ważny raz. Rekord, który tylko
     podaje się za porządkowanie z aplikacji, nigdy się nie uruchomi;
   - w kolejce czekają najwyżej 3 porządkowania.
+- **Od badania 1.35.0:**
+  - plik tekstowy (.txt, .md, .markdown, .text albo typ text/plain lub markdown) czytelnik czyta jako tekst i ocenia
+    według tego, co mówi: najwyżej pierwsze 20 000 znaków. Przy dłuższym czytelnik wie, że dostał tylko początek i jak
+    duży jest plik. Czyta się jako UTF-8, ze znacznikiem kodowania UTF-16 jako UTF-16, a to, co nie jest UTF-8, jako windows-1252;
+  - w trakcie porządkowania `strom material show` mówi, ile plików czytelnicy już ocenili („N of M files done”);
+    aplikacja pokazuje z tego „k z n”;
+  - przy ukończonym porządkowaniu każdy plik bez propozycji ma powód: czytelnik nic o nim nie powiedział, plik ma już
+    wszystko, co zaproponowano, propozycji nie dało się użyć, agent pominął plik albo pliku nie dało się odczytać
+    (z wynikiem czytelnika). Co czytelnik napisał o pliku, stoi przy powodzie.
 - **Granice:** tylko badanie z agentem: Archiwum Strom i badanie, które czeka na agenta, materiału nie porządkują.
 - **Obsługa:** terminal: `strom material sort I… [--text …] [--queue]`, `strom material show`, `strom material
   cancel`; aplikacja: **Uporządkuj agentem…** ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8)).
 - **Obowiązuje od:** badanie 1.35.0
 
-<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort -->
+<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort · research:ae866bb7 src/core/sort.ts SORT_TEXT_FILE_MAX=20_000, SORT_TEXT_TYPES, isTextFile, textOfFile (UTF-8 / UTF-16 BOM, jinak windows-1252; cut), řádek „read as text (only its first … characters: the file is … KB)“, unproposedOf (nothing-said, nothing-new, dropped, left-out, reader-failed + outcome; said) · src/commands/material.ts filesDone (+ group.length po čtenáři), show „N of M files done“, „no proposal: why (outcome)“ -->
 
 <a id="R11.5.4"></a>
 ### R11.5.4 Materiał przez most

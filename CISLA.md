@@ -300,6 +300,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.1.2 | A6-views.md | aplikace 3.27.0 | platí | Rozestupy: Normální a Husté | Spacing: Normal and Dense | Abstände: Normal und Dicht | Odstępy: Normalne i Gęste |
 | A6.1.3 | A6-views.md | aplikace 3.28.0 | platí | Děti a sourozenci najednou | Children and siblings at once | Kinder und Geschwister auf einmal | Dzieci i rodzeństwo naraz |
 | A6.1.4 | A6-views.md | aplikace 3.29.0 | koncept | Fotka na kartě | Photo on the card | Foto auf der Karte | Zdjęcie na karcie |
+| A6.1.5 | A6-views.md | aplikace 3.30.0 | koncept | Značení linií | Lineage markers | Linienmarkierung | Oznaczenie linii |
 | A6.2 | A6-views.md | aplikace 1.4.0 | platí | Pohled Potomci | The Descendants view | Ansicht Nachkommen | Widok Potomkowie |
 | A6.3 | A6-views.md | aplikace 1.5.0 | platí | Časová osa | Timeline | Zeitleiste | Oś czasu |
 | A6.4 | A6-views.md | aplikace 1.8.0 | platí | Vějíř | Fan | Fächer | Wachlarz |

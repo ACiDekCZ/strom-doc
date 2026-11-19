@@ -171,6 +171,60 @@ defaults **Small** and **Circle** leave the card as before.
 
 <!-- zdroj: app:28480ea1 src/types.ts NORMAL_PHOTO_BOX (188×64/34, 200×64/48, 236×96/80), src/settings.ts (zařízení, výchozí small + circle), src/ui/card-fields-ui.ts, src/renderer.ts · b71d561a src/card-width.ts cardAvatarSize (30/44/72), výška Vlastní 70/98 + 17 na řádek · strings.ts cardDensity.photoTitle, photoSize, photoSmall, photoMedium, photoLarge, photoShape, photoCircle, photoRounded, photoCompact, size · CHANGELOG.cs.md 3.29.0 „Fotka na kartě“ · dirigent:test/vysledek-1115-app-096-fotka.md · spec 096 P1 · export: app:64ae50ca src/export-image.ts, src/renderer.ts (poster, PDF po listech; výchozí small + circle bajt po bajtu jako dřív), strings.ts cardDensity.photoScope · spec 096 P2 · 3.30.0: app:0bed2a88 src/types.ts NORMAL_PHOTO_BOX (avatar = fotka i iniciály), src/renderer.ts viewHasAvatar (dřív viewHasPhoto), src/card-width.ts normalCardTextWidth (126 px u každého avataru), avatarInitialsSize (avatar × 0,36: 17/29, 16/26), src/export-image.ts getPosterCardPhoto (každá karta s avatarem), strings.ts cardDensity.photoScope · e2e/card-photo.spec.ts, poster-card-photo.spec.ts · CHANGELOG.cs.md 3.30.0 „Fotka na kartě“ · spec 103 K2.1–K2.3 · dirigent:test/vysledek-1116-app-103-tabulka.md -->
 
+<a id="A6.1.5"></a>
+### A6.1.5 Lineage markers
+
+The lineage markers mark the cards in the tree by the lineage the person belongs to relative to the central person
+(in the settings "focused person"): **paternal**, **maternal**, **descendants**. The default is **Arc** on the left
+edge of the card.
+
+| Option | What the marker looks like | Second sign besides the colour |
+|---|---|---|
+| **Arc** (default) | a strip along the left edge of the card | none |
+| **Letter tag** | a tag over the left edge of the card | a letter: P paternal, M maternal, D descendants |
+| **Stripe** | a vertical stripe at the left edge | paternal solid, maternal dashed, descendants dotted |
+| **Corner** | a triangle in the top left corner | paternal filled, maternal hatched, descendants outlined |
+| **Off** | no marker | – |
+
+- **Colours:** paternal blue, maternal pink, descendants ochre. One fixed palette, without a choice. The colours also
+  differ in lightness (paternal dark, descendants medium, maternal light), so they can be told apart with weaker colour
+  vision and in grey too. The dark appearance has its own shades.
+- **Tint cards in lineage colour** (off by default) lightly tints the card in the lineage colour, beside the chosen
+  marker. With **Off** the option is inactive; the tick is remembered and applies again after a shape is chosen.
+- **Who has a marker:**
+  - the paternal and the maternal lineage: the parent, all their ancestors and the siblings of each of them (aunts,
+    uncles, great-uncles…);
+  - descendants: all descendants of the central person;
+  - without a marker are the central person, partners (partners of descendants and step-parents too), the central
+    person's siblings, cousins and placeholder persons (an empty place for an unknown parent).
+- **A person in both lineages** (for example an ancestor from a marriage of relatives) has both markers: **Arc**,
+  **Stripe** and **Corner** split into a paternal and a maternal half, **Letter tag** two tags one above the other. Up
+  to 3.29.0 the person got only the paternal one.
+- **Parents of the same sex** (both parents of the central person known, both men or both women): the lineages are
+  called **First parent's line** and **Second parent's line**, the tag carries 1 and 2, the colours stay.
+- **Tree legend** (the Family and Descendants views, the setting **Tree legend**): the gender rings, a sample of each
+  lineage in the chosen shape with its name and the row "No marker: focused person, partners, siblings, cousins".
+  With **Off** the part about the lineages is missing. Folding the legend: [A9.6](A9-using-the-app.md#A9.6).
+- **A screen reader** reads the lineage at the card in words ("paternal line", "paternal and maternal line",
+  "descendant", "first parent's line").
+- **The same markers elsewhere:** the Timeline has a lineage sign before the name ([A6.3](#A6.3)), the Table the
+  column **Lineage** ([A6.7.2](#A6.7.2)); the Fan in the colours **Lines** ([A6.4](#A6.4)) and the ancestors' path on
+  the Map ([A6.5.5](#A6.5.5)) have the same shades.
+- **Export and printing:** the image export and the poster draw the chosen shape and the tint, always in the light
+  colours. In printing from the browser all cards have the same grey frame; the gender is shown by the ring at the
+  photo or the initials, the lineage by the marker. The marker is printed even without printing backgrounds, the tint
+  is not printed.
+- **Limits:** the marker is only a layer on the edge of the card; it changes neither the size nor the content of the
+  card. The lineage is computed again at each change of the central person. The option belongs to the device and is
+  not saved with the tree.
+- **Controls:** **Settings** → **Tree view** → **Lineage markers**: **Arc** · **Letter tag** · **Stripe** ·
+  **Corner** · **Off**; below it **Tint cards in lineage colour**. Each option has a card preview.
+- **Since:** branch colours app 1.8.0 (orange, blue and green); 3.30.0: **Lineage markers** instead of the switch
+  **Branch colours**, new colours, shapes, the tint, both markers, the first and second parent's lines. **Branch
+  colours** switched on are taken over as **Arc**, switched off as **Off**.
+
+<!-- zdroj: app:0e403ec6 src/branch-colors.ts classifyBranches (collectAncestorSide: předci + sourozenci každého předka; collectDescendants přes childIds; obě strany se sčítají R4; descendant jen mimo strany; focus smazán; numbered = oba rodiče známí a stejného pohlaví R5), src/settings.ts getBranchMarker (výchozí arc; branchColors false → off), isBranchTintOn (jen se značkou), isBranchTintChosen, save (migrace při prvním zápisu), src/renderer.ts renderCards (!isPlaceholder, viewMode ≠ timeline), src/branch-marker-attrs.ts (čtečka ariaPaternal/ariaBoth/ariaSlot1), index.html tokeny --branch-paternal #234e8c / --branch-maternal #d0679a / --branch-descendant #8a6400, tmavé #9cc2f2 / #f6a9cb / #e3b552, --branch-*-tint, CSS tvarů (arc, tag, stripe, corner; R4 .branch-paternal.branch-maternal) · app:c8afe382 index.html #branch-marker-setting (skupina settings.groupTree), #branch-tint-toggle, src/ui/branch-marker-ui.ts syncBranchLegend, src/ui/misc.ts (legenda jen family/descendants, isBranchLegendEnabled) · app:b94f3816 src/branch-marker-svg.ts, src/ui/export-image-ui.ts treeCardDrawing (branchMarker, branchTint, numbered; světlé hex), index.html @media print (R6: border 2px #999, white background, tiskové --branch-*, print-color-adjust) · strings.ts branchColors.* (settingLabel, markerArc…markerOff, defaultTag, tintLabel, legendPaternal…legendSlot2, legendNone, letterPaternal O, letterMaternal M, letterDescendant P) · barvy větví: app:6f86ad39 (v1.8.0) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii K1–K4, app:docs/ZADANI_DEV_linie-na-kartach.md R1–R6 · prace/1119-app-112-linie -->
+
 <a id="A6.2"></a>
 ## A6.2 The Descendants view
 
@@ -198,8 +252,13 @@ The Timeline shows the people of the view as life bars on an axis of years.
 - Under the axis of years runs a row of history for the central person (events of the time and the places of their
   life, symbols of kinds). Without the research or without such events there is no row.
 - **Since:** timeline app 1.5.0; the row of history app 3.19.0
+- **From app 3.30.0:** with the **Lineage markers** on ([A6.1.5](#A6.1.5)) a lineage sign in the chosen shape stands
+  before the person's name (a person in both lineages two signs, with parents of the same sex 1 and 2); hovering over
+  the sign says the lineage in words. The life bar keeps the gender colour and is not tinted. The timeline poster
+  draws the sign the same way.
 
 <!-- zdroj: app:src/timeline.ts computeTimelineModel, :59 TimelineHistory · strings.ts timeline.omitted · CHANGELOG.cs.md 3.19.0 -->
+<!-- zdroj: app:cecd72a4 src/renderer.ts timelineBranchSigns (znak legendy před jménem, title linie slovy, dvě značky R4, číslice R5; plakát SVG) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii -->
 
 <a id="A6.4"></a>
 ## A6.4 Fan
@@ -220,6 +279,10 @@ The Fan shows the central person's ancestors in circular segments, generation by
   shown only for the central person.
 - **Colours:** **Gender** · **Lines** (the four lines of the grandparents: father's father, father's mother, mother's
   father, mother's mother) · **Family lines** ([A4](A4-surnames-and-families.md)).
+  - **From app 3.30.0:** **Lines** in the colours of the **Lineage markers** ([A6.1.5](#A6.1.5)): the father's side
+    blue (father's father blue, father's mother teal), the mother's side pink (mother's father pink, mother's mother
+    raspberry), the parents in a light shade of their side, the descendants in the shape Two-way ochre. Up to 3.29.0
+    other shades.
 - **Original person** returns the fan to the person it started from.
 - **Since:** fan app 1.8.0; the new fan with shapes, colours and pedigree collapse app 3.20.0
 - **From app 3.27.0:** a union without a date of marriage is ordered by the latest date the marriage can have
@@ -227,7 +290,7 @@ The Fan shows the central person's ancestors in circular segments, generation by
   1982” comes before a marriage in 1982. A union without these dates comes after the others. The partners next to a
   person and the marriage-order marks (“1. ∞”) on the cards follow the same order.
 
-<!-- zdroj: app:src/fan-chart.ts FAN_MIN_GENERATIONS, FAN_MAX_GENERATIONS, FAN_DEFAULT_GENERATIONS, parentSlots, repeatOf · strings.ts fan.shapeHalf, fan.shapeFull, fan.shapeTwo, fan.colorGender, fan.colorLine, fan.colorRod, fan.legendRepeats, fan.originPerson, fan.showFirst, fanChart.kekuleHint · settings fanKekule (výchozí false) · spec 029 · CHANGELOG.cs.md 3.20.0 · 3.27.0: app:ad1ca16c src/marriage-order.ts marriageKey (BOUND 0.5, qualifier „<“; bez sňatku min(endDate, narození dětí)), marriageDates, compareMarriages, marriagesInOrder (partneři vedle osoby, značka „1. ∞“) · src/fan-chart.ts familiesOf · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T50, T13) -->
+<!-- zdroj: app:src/fan-chart.ts FAN_MIN_GENERATIONS, FAN_MAX_GENERATIONS, FAN_DEFAULT_GENERATIONS, parentSlots, repeatOf · strings.ts fan.shapeHalf, fan.shapeFull, fan.shapeTwo, fan.colorGender, fan.colorLine, fan.colorRod, fan.legendRepeats, fan.originPerson, fan.showFirst, fanChart.kekuleHint · settings fanKekule (výchozí false) · spec 029 · CHANGELOG.cs.md 3.20.0 · 3.30.0: app:cecd72a4 src/fan-colors.ts LINE_HUE [258, 232, 352, 5], PARENT_LINE_HUE, DESCENDANT_LINE_HUE 82, parentLineColor, descLineColor (dřív 50/95/215/320, rodiče 70/250, potomci 150) · 3.27.0: app:ad1ca16c src/marriage-order.ts marriageKey (BOUND 0.5, qualifier „<“; bez sňatku min(endDate, narození dětí)), marriageDates, compareMarriages, marriagesInOrder (partneři vedle osoby, značka „1. ∞“) · src/fan-chart.ts familiesOf · CHANGELOG.cs.md 3.27.0 · dirigent:prace/1109-app-tester-vlna1 (T50, T13) -->
 
 <a id="A6.5"></a>
 ## A6.5 Map
@@ -419,8 +482,9 @@ line by surname ([A4](A4-surnames-and-families.md)).
 - **Limits:**
   - the quarters are father's father, father's mother, mother's father and mother's mother, in the same hues as the
     colours **Lines** in the Fan ([A6.4](#A6.4)). Each quarter also has its own line pattern (the first a solid
-    line), so the family lines can be told apart with weaker colour vision too. Pairs that a weaker red–green vision
-    merges differ in lightness and in pattern as well. The light and the dark appearance have their own shades;
+    line), so the family lines can be told apart with weaker colour vision too. The two quarters of the same side (the
+    father's blue and teal, the mother's pink and raspberry) differ in lightness and in pattern. The light and the
+    dark appearance have their own shades;
   - an eighth has its quarter's colour, the second eighth of the same quarter a darker shade. The eighth's number
     (1–8) stands on the longest visible line of each eighth;
   - the lines from parents and grandparents are the trunk: in the text colour and wider. The parents' points have the
@@ -453,8 +517,10 @@ line by surname ([A4](A4-surnames-and-families.md)).
 - **Controls:** app: the map → **◷ Over time** → the path to a person ([A6.5.4](#A6.5.4)) → the legend **Family
   lines**.
 - **Since:** app 3.28.0
+- **From app 3.30.0:** the quarters in the shades of the **Lineage markers** ([A6.1.5](#A6.1.5)): the father's side
+  blue and teal, the mother's pink and raspberry. Up to 3.29.0 other shades.
 
-<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml, offTimeline (count 0: is-unknown, is-off-timeline, swatch is-empty, app caea192a) · strings.ts map.linesOffTimeline, map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
+<!-- zdroj: app:src/map-line-colors.ts (LINE_HUE z fan-colors.ts jako vějíř Linie, tabulka OKLCH světlý/tmavý, QUARTER_DASH, lineCap, LINE_WIDTH base 3 / fresh 4 / trunk 4.5, pathLineOpacity max(0.55, 1 − věk/60·0.45), LINE_FOCUS_DIM, pointFill, lineSwatch; hlavička: dvojice 50↔95 a 215↔320 se liší světlostí i vzorem; app:cecd72a4 LINE_HUE 258/232/352/5, tabulka OKLCH q0–q3, e1–e7 (dvojice téže strany se liší světlostí)) · src/map-lines.ts lineClassOf (gen ≤ 2 kmen), pointClassOf (rodiče kmen), branchSurname (rodné příjmení, jinak křestní), quarters/eighths · src/ui/map-path-ui.ts drawMapPathLayer (čísla osmin na nejdelší viditelné čáře, LEGEND_WIDTH) · src/ui/map-lines-legend-ui.ts mapLinesLegendHtml (eighthsOff < 2 známé osminy, řádky, neznámý, kmen, pata), mapLinesImplexText, toggleMapLineFocus, setMapLineHover, setMapLineMode (připnutí pryč), setMapLineColors, setMapLegendCollapsed, openMapLinesSheet / closeMapLinesSheets, mapLinesUndatedHtml, offTimeline (count 0: is-unknown, is-off-timeline, swatch is-empty, app caea192a) · strings.ts map.linesOffTimeline, map.linesTitle, linesChip, linesQuarters, linesEighths, linesCollapse, linesRow, linesUnknown, linesTrunk, linesOff, linesImplex, pathUndated, pathUndatedList, pathUndatedTitle, lineE8–lineE15; fan.lineFatherFather… · app 388e5a87, b01693bc, 5853882e, 8e27df4a, 34e82d43 (app:81f2adf0) · spec 054 K1.1, K1.2 · CHANGELOG.cs.md 3.28.0 -->
 
 <a id="A6.5.6"></a>
 ### A6.5.6 Playing the path to a person
@@ -610,6 +676,12 @@ The columns are in groups. Which are visible and in what order is part of the vi
   was added to the tree ([A11.7](A11-lists-of-people.md#A11.7)), in the app's language. A person without the date has
   "earlier" in grey italics; the cell is empty, so it is at the end in both directions of sorting and **Only empty**
   finds it. It sorts by the moment of adding (within a day by the time), the date filter by year.
+- **From app 3.30.0:** for persons, the column **Lineage** in the group **Person**, hidden by default: the person's
+  lineage relative to the tree's central person ([A6.1.5](#A6.1.5)) in words, **Paternal**, **Paternal and
+  maternal**, **Maternal**, **Descendant** (with parents of the same sex **First parent's line**, **First and second
+  parent's line**, **Second parent's line**), before the text a sign in the chosen shape (with **Off** only the
+  text). A person without a lineage has an empty cell. It sorts in this order, empty ones at the end; the filter by
+  values. It has nothing to do with the column **Line** of the group **Research** ([A6.7.14](#A6.7.14)).
 - **Limits:** a collapsed group is a narrow strip; it shows the highest level of a finding in its cells. On a phone
   the pinned name is narrower and the header can only be read, not changed.
 - **Controls:**
@@ -629,7 +701,7 @@ The columns are in groups. Which are visible and in what order is part of the vi
   moved, pinned columns moved only within their group, and a move that could not be made was greyed out.
 
 <!-- zdroj: app:4b1373a7 src/ui/table-view/table-state.ts normalizeColumns (zamčený sloupec ukotvený, kdekoli v ukotvené části), columnRun (ukotvená část: [0, pinned − 1]; mimo ni skupina), canMoveColumn, moveColumnBy · table-headmenu.ts headMenuItems (moveLeft/moveRight jen canMove; Skrýt ne u zamčeného; Uvolnit ne u zamčeného) · table-colpanel.ts (šipka jen pro možný posun) · commit 19dbb595 (dřív columnRun locked = 1, disabled/aria-disabled) · dirigent:spec/082-tester-3.28 K2.1 -->
-<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) · 3.30.0: app:45f7ca2a table-columns.ts:732 uPhoto (group uextra, skrytý) · app:0971647c table-columns.ts addedCell (dateCell, sortKey + zlomek dne, bez údaje emptyCell s textem earlier), sloupec added (group person, nenabízí se ve výchozím stavu), strings.ts table.col.added, table.earlier · e2e/person-list-table.spec.ts, src/__tests__/table-view-added.test.ts -->
+<!-- zdroj: app:src/ui/table-view/table-columns.ts PERSON_GROUPS, UNION_GROUPS, katalog sloupců (surname marriedSurname || lastName, birthSurname lastName, researchId /^P\d{1,7}$/, eventValues nejnovější první, sortKey jména), pinnedWidth 156 na telefonu · table-state.ts MIN_COLUMN_WIDTH, BAND_WIDTH, lockedColumn · table-checks.ts bandSeverity · table-colpanel.ts panelGroups · table-headmenu.ts headMenuItems · strings.ts table.group.*, col.*, columns, columnsCount, searchColumn, all, pinnedLabel, resetColumns, done, coverageRow, sortAsc, sortDesc, sortAdd, sortAddHint, filterColumn, pin, unpin, moveLeft, moveRight, hide, collapseGroup, expandGroup, computedFrom · commity 89602f35, 49b96d92, e4a35406 · refn (skupina person, textCell p.refn; commit 7e648e24, T54 F3), question, crossTree (crossTreeCell), personStatus (personStatusCell, cardStatus, CARD_STATUS_CLASSES), strings.ts table.col.refn, question, crossTree, personStatus · „Celé jméno“ (id `name`) a sloupec firstName, záhlaví „Ref. číslo“ bez „(REFN)“: commity 79764eba, 8fdf52ca (T54 G10, G3) · 3.30.0: app:45f7ca2a table-columns.ts:732 uPhoto (group uextra, skrytý) · app:0971647c table-columns.ts addedCell (dateCell, sortKey + zlomek dne, bez údaje emptyCell s textem earlier), sloupec added (group person, nenabízí se ve výchozím stavu), strings.ts table.col.added, table.earlier · e2e/person-list-table.spec.ts, src/__tests__/table-view-added.test.ts · app:cecd72a4 table-columns.ts lineage (group person, skrytý, getFocusPersonId, řazení paternal → both → maternal → descendant, prázdné poslední, filtr hodnot), table-grid.ts lineageHtml (znak ve zvoleném tvaru), strings.ts branchColors.tableColumn, tableBoth, tableDescendant, tableSlotBoth -->
 
 <a id="A6.7.3"></a>
 ### A6.7.3 Computed and substitute values

@@ -239,13 +239,23 @@ written to the research.
   - the bridge starts a sorting from the app only with its own signature, and it is good once. A record that only
     pretends to be a sorting from the app never starts;
   - at most 3 sortings wait in the queue.
+- **From research 1.35.0:**
+  - a text file (.txt, .md, .markdown, .text or the type text/plain or markdown) is read by the reader as text and
+    judged by what it says: at most the first 20 000 characters. With a longer one the reader knows it got only the
+    beginning and how large the file is. Text in UTF-8, or in UTF-16 with a byte order mark; otherwise it is read as
+    windows-1252;
+  - during the sorting `strom material show` tells how many files the readers have already judged ("N of M files
+    done"); the app shows "k of n" from it;
+  - in a finished sorting every file without a proposal has a reason: the reader said nothing about it, the file
+    already has everything proposed, the proposal could not be used, the agent left the file out, or the file could
+    not be read (with the reader's outcome). What the reader wrote about the file stands at the reason.
 - **Limits:** only a research with an agent: the Strom archive and a research waiting for an agent do not sort
   material.
 - **Controls:** terminal: `strom material sort I… [--text …] [--queue]`, `strom material show`, `strom material
   cancel`; app: **Sort with the agent…** ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8)).
 - **Since:** research 1.35.0
 
-<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort -->
+<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort · research:ae866bb7 src/core/sort.ts SORT_TEXT_FILE_MAX=20_000, SORT_TEXT_TYPES, isTextFile, textOfFile (UTF-8 / UTF-16 BOM, jinak windows-1252; cut), řádek „read as text (only its first … characters: the file is … KB)“, unproposedOf (nothing-said, nothing-new, dropped, left-out, reader-failed + outcome; said) · src/commands/material.ts filesDone (+ group.length po čtenáři), show „N of M files done“, „no proposal: why (outcome)“ -->
 
 <a id="R11.5.4"></a>
 ### R11.5.4 Material through the bridge

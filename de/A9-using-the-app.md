@@ -166,7 +166,9 @@ die Einstellungen **Minikarte** und **Stammbaum-Legende**.
   - **Telefon** (hochkant und quer): die Legende ist immer ein Chip. Tippen öffnet sie als Blatt von unten (quer als
     Feld rechts) mit der Überschrift „◯ Legende“ und **Fertig**. Es schließen **Fertig**, Tippen daneben, Ziehen nach
     unten (quer nach rechts) und Esc. Nach dem Neuladen der Seite öffnet es sich nicht von selbst, und das Telefon
-    liest und schreibt die Wahl des Geräts nicht.
+    liest und schreibt die Wahl des Geräts nicht;
+  - ab App 3.30.0 zeigt die Legende neben den Geschlechtsringen auch die **Linienmarkierung** in der gewählten Form
+    ([A6.1.5](A6-views.md#A6.1.5)).
 - **Grenzen:** ohne Speicher des Browsers (privates Fenster) gilt die Wahl, bis die Seite geschlossen wird.
 - **Bedienung:** Reiter über der Minikarte; **◯** in der Legende, Chip „◯ Legende“. Ausschalten: Einstellungen
   **Minikarte**, **Stammbaum-Legende**.

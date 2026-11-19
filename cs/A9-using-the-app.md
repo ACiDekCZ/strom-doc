@@ -150,7 +150,9 @@ Sbalení není vypnutí: zda se prvek ukazuje vůbec, dál rozhodují nastavení
     neukázala; čtečka obrazovky čte „Legenda, nová značka“. Po rozbalení tečka zmizí;
   - **telefon** (na výšku i na šířku): legenda je vždy čip. Klepnutí ji otevře jako list zespodu (na šířku jako
     panel vpravo) s nadpisem „◯ Legenda“ a **Hotovo**. Zavře ho **Hotovo**, klepnutí vedle, tažení dolů (na šířku
-    doprava) a Esc. Po obnovení stránky se sám neotevře a volbu zařízení telefon nečte ani nepíše.
+    doprava) a Esc. Po obnovení stránky se sám neotevře a volbu zařízení telefon nečte ani nepíše;
+  - od aplikace 3.30.0 ukazuje legenda vedle prstenců pohlaví i **Značení linií** ve zvoleném tvaru
+    ([A6.1.5](A6-views.md#A6.1.5)).
 - **Hranice:** bez úložiště prohlížeče (soukromé okno) platí volba do zavření stránky.
 - **Ovládání:** ouško nad minimapou; **◯** v legendě, čip „◯ Legenda“. Vypnutí: nastavení **Minimapa**, **Legenda
   stromu**.

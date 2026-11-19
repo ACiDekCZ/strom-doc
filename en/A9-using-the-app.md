@@ -156,7 +156,9 @@ all trees. Folding is not switching off: whether the element shows at all is sti
   - **phone** (upright and sideways): the legend is always a chip. A tap opens it as a sheet from the bottom
     (sideways as a panel on the right) with the heading "◯ Legend" and **Done**. It is closed by **Done**, a tap
     beside it, dragging down (sideways to the right) and Esc. After the page is reloaded it does not open by itself,
-    and the phone neither reads nor writes the device's choice.
+    and the phone neither reads nor writes the device's choice;
+  - from app 3.30.0 the legend shows, beside the gender rings, also the **Lineage markers** in the chosen shape
+    ([A6.1.5](A6-views.md#A6.1.5)).
 - **Limits:** without the browser's storage (private window) the choice lasts until the page is closed.
 - **Controls:** the tab above the minimap; **◯** in the legend, the chip "◯ Legend". Switching off: the settings
   **Minimap**, **Tree legend**.

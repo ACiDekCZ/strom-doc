@@ -440,8 +440,16 @@ najednou.
   otevře, odchází k poskytovateli modelu a že třídění čerpá předplatné nebo kredit. Soubory pošle jen tlačítko
   **Roztřídit agentem** v dialogu, jednou.
 - Okno jde zavřít; průběh a hotový návrh jsou v pruhu okna **Materiály**.
+  - **Od aplikace 3.30.0:** pruh ukazuje „Čeká se na agenta…“, pak „Agent třídí · k z n“ s ukazatelem, kolik
+    souborů agent už posoudil. Výzkum, který počet posouzených neříká, má „Agent třídí · N souborů“ s pruhem bez
+    čísla; při omezení pohybu v systému ten pruh stojí. Pod tím „Okno jde zavřít, návrh počká v Materiálech.“
 - **Návrh agenta** má **Návrhy**, **Nepřiřazeno** a **Vyřízeno** a u každého souboru **Přijmout**, **Upravit**,
   **Odmítnout**; dál **Přijmout vybrané** a **Přijmout vše**. Jistota návrhu: jistě, asi, nejisté.
+  - **Od aplikace 3.30.0:** v **Nepřiřazeno** stojí u souboru bez návrhu tichým řádkem, proč návrh nemá: „Čtenář
+    k souboru nic neřekl“, „Vše navržené už soubor má“, „Návrh nešel použít“, „Agent soubor vynechal“ nebo „Soubor
+    se nepodařilo přečíst“. Co k souboru čtenář napsal, stojí pod tím na jednom řádku, celé při najetí. Výzkum,
+    který důvod neříká, nebo důvod, který aplikace nezná: řádek bez důvodu jako dřív.
+  - Textové soubory (.txt, .md) agent čte podle obsahu, ne jako obrázek ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
 - Titulek, datum a druh od člověka zůstanou; návrh agenta se použije, jen když se zvolí **Použít návrh**.
 - Přijaté se zapíše: soubory stromu jedním krokem **Zpět** se stromem, materiál mimo strom do archivu. Pramen
   výzkumu, který strom ještě nemá, přijde do stromu s číslem výzkumu a zápis ho nezdvojí. Přijatý návrh jde u
@@ -456,7 +464,7 @@ najednou.
 - **Ovládání:** okno **Materiály**: výběr, pruh nad dávkou nebo nad filtrem; konec dávky z aplikace.
 - **Platí od:** aplikace 3.30.0, výzkum 1.35.0
 
-<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem -->
+<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu -->
 
 <a id="A3.6"></a>
 ## A3.6 Prameny osoby

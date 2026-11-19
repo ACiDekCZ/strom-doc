@@ -225,12 +225,21 @@ druh a vazby na osoby, svazky, jejich události a prameny stromu, s důvodem a j
   - třídění z aplikace spustí most jen s vlastním podpisem, a ten platí jednou. Záznam, který se za třídění
     z aplikace jen vydává, se nikdy nespustí;
   - ve frontě čekají nejvýš 3 třídění.
+- **Od výzkumu 1.35.0:**
+  - textový soubor (.txt, .md, .markdown, .text nebo typ text/plain či markdown) čtenář čte jako text a posoudí
+    podle toho, co říká: nejvýš prvních 20 000 znaků. U delšího čtenář ví, že dostal jen začátek a jak je soubor
+    velký. Čte se jako UTF-8, se značkou kódování UTF-16 jako UTF-16, a co UTF-8 není, jako windows-1252;
+  - během třídění `strom material show` řekne, kolik souborů čtenáři už posoudili („N of M files done“); aplikace
+    z toho ukazuje „k z n“;
+  - u hotového třídění má každý soubor bez návrhu důvod: čtenář k němu nic neřekl, vše navržené už soubor má,
+    návrh nešel použít, agent soubor vynechal, nebo soubor nešel přečíst (s výsledkem čtenáře). Co čtenář o souboru
+    napsal, stojí u důvodu.
 - **Hranice:** jen výzkum s agentem: Archiv Stromu a výzkum, který čeká na agenta, materiál netřídí.
 - **Ovládání:** terminál: `strom material sort I… [--text …] [--queue]`, `strom material show`, `strom material
   cancel`; aplikace: **Roztřídit agentem…** ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8)).
 - **Platí od:** výzkum 1.35.0
 
-<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort -->
+<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort · research:ae866bb7 src/core/sort.ts SORT_TEXT_FILE_MAX=20_000, SORT_TEXT_TYPES, isTextFile, textOfFile (UTF-8 / UTF-16 BOM, jinak windows-1252; cut), řádek „read as text (only its first … characters: the file is … KB)“, unproposedOf (nothing-said, nothing-new, dropped, left-out, reader-failed + outcome; said) · src/commands/material.ts filesDone (+ group.length po čtenáři), show „N of M files done“, „no proposal: why (outcome)“ -->
 
 <a id="R11.5.4"></a>
 ### R11.5.4 Materiál přes most

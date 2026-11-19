@@ -501,9 +501,20 @@ Vorschlag angenommen ist.
   oder Guthaben nutzt. Die Dateien sendet nur die Schaltfläche **Mit dem Agenten sortieren** im Dialog, einmal.
 - Das Fenster lässt sich schließen; der Fortschritt und der fertige Vorschlag sind im Band des Fensters
   **Materialien**.
+  - **Ab App 3.30.0:** das Band zeigt „Warten auf den Agenten…“, dann „Der Agent sortiert · k von n“ mit einer
+    Anzeige, wie viele Dateien der Agent schon beurteilt hat. Eine Forschung, die die Zahl der beurteilten nicht
+    nennt, hat „Der Agent sortiert · N Dateien“ mit einem Balken ohne Zahl; bei reduzierter Bewegung im System steht
+    dieser Balken still. Darunter „Das Fenster lässt sich schließen, der Vorschlag wartet in den Materialien.“
 - **Vorschlag des Agenten** hat **Vorschläge**, **Nicht zugeordnet** und **Erledigt** und bei jeder Datei
   **Annehmen**, **Bearbeiten**, **Ablehnen**; außerdem **Ausgewählte annehmen** und **Alle annehmen**. Die Sicherheit
   eines Vorschlags: sicher, wahrscheinlich, unsicher.
+  - **Ab App 3.30.0:** unter **Nicht zugeordnet** steht bei einer Datei ohne Vorschlag in einer leisen Zeile, warum
+    sie keinen hat: „Der Leser sagte nichts zur Datei“, „Die Datei hat schon alles Vorgeschlagene“, „Der Vorschlag
+    ließ sich nicht verwenden“, „Der Agent hat die Datei ausgelassen“ oder „Die Datei ließ sich nicht lesen“. Was der
+    Leser zur Datei schrieb, steht darunter in einer Zeile, ganz beim Überfahren. Eine Forschung, die den Grund nicht
+    nennt, oder ein Grund, den die App nicht kennt: eine Zeile ohne Grund wie bisher.
+  - Textdateien (.txt, .md) liest der Agent nach ihrem Inhalt, nicht als Bild
+    ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
 - Titel, Datum und Art von einem Menschen bleiben; der Vorschlag des Agenten wird nur verwendet, wenn **Vorschlag
   übernehmen** gewählt wird.
 - Angenommenes wird geschrieben: die Dateien des Stammbaums in einem Schritt **Rückgängig** mit dem Stammbaum,
@@ -522,7 +533,7 @@ Vorschlag angenommen ist.
   eines Stapels aus der App.
 - **Gilt seit:** App 3.30.0, Forschung 1.35.0
 
-<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem -->
+<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu -->
 
 <a id="A3.6"></a>
 ## A3.6 Quellen einer Person

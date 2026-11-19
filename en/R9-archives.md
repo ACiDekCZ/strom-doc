@@ -425,8 +425,23 @@ research.
   by the number in the file name ([R6.8.2](R6-awaiting-action.md#R6.8.2)).
 - **From research 1.35.0:** a task comes back by itself only when its wait is written by image numbers or a book of the
   research; a wait written otherwise is found by `strom task audit` ([R6.9](R6-awaiting-action.md#R6.9)).
+- **From research 1.35.0 (files in the folder):**
+  - a copy that a file manager or a browser made beside a file carries the number of the original file: "33 2.jpg",
+    "33 kopie.jpg", "33 copy.jpg", "33 - Copy (2).jpg" and "33 (1).jpg" are image 33, "33a 2.jpg" image 33a. A bare
+    " 2" to " 9" after the name is taken as a copy suffix only after a name that is only a number (with a letter,
+    if any);
+  - files are not numbered by their order when some file has a name that is only a number (`1.jpg` is image 1, not
+    the missing 33): the order does not override a number a person gave; it does override a name from the portal or
+    the date and time of a screenshot;
+  - a file that is the same scan as an image already taken in under another number or in another book is neither
+    taken in nor deleted: it is put aside as `<file>.same-as-M…` (under this name it is never taken in again), and
+    the listing of `strom media add --inbox`, the bridge's log and the JSON output say which image it was for, which
+    image it is, and that one of the two numbers is wrong. When renaming is not possible, the file stays lying and
+    the same is said;
+  - `.jp2` files from the portal of Moravský zemský archiv are counted back ([R6.8.2](R6-awaiting-action.md#R6.8.2))
+    in the folder of a waiting task too.
 
-<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/commands/media.ts:403-478 (same sha under its number → 200 same: true, added []; another number/book → 409 waiting.image-same) · src/core/waiting.ts actionsOf, archiveGroup · src/core/waitkind.ts waitGroupOf (repo: before archive:, host:) · assets/method/waiting.md "Images saved by hand" (the one exception, 7bd55fa1) · assets/method/reading.md · src/commands/guide.ts rule 7 · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask · 1.33.0: research:bfa01a34 src/commands/media.ts media view (snímek, na který úkol čeká: kdo a další krok) -->
+<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/commands/media.ts:403-478 (same sha under its number → 200 same: true, added []; another number/book → 409 waiting.image-same) · src/core/waiting.ts actionsOf, archiveGroup · src/core/waitkind.ts waitGroupOf (repo: before archive:, host:) · assets/method/waiting.md "Images saved by hand" (the one exception, 7bd55fa1) · assets/method/reading.md · src/commands/guide.ts rule 7 · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask · 1.33.0: research:bfa01a34 src/commands/media.ts media view (snímek, na který úkol čeká: kdo a další krok) · research:dddeb8a6 src/core/media.ts copyless (COPY_WORD copy/kopie/kopia/…, COPY_PAREN, COPY_BARE jen za číslem), namedByNumber · src/core/inboxwait.ts numberFiles (pořadí jen bez souboru pojmenovaného samým číslem; times .jp2 i u čekajících), bookTimes · src/commands/media.ts registerImages clashed, takeFiles (kolize → rename `${f}.same-as-${same}`, jinak leží; SetAside), asideLine (live.log, výpis ⚠, aside v JSON) · research:18fd10ec COPY_BARE \p{Nd}+\p{L}? („33a 2.jpg“) · CHANGELOG.cs.md 1.35.0 (research:e263eacb) -->
 
 <a id="R9.7"></a>
 ## R9.7 An automatic session and a chat

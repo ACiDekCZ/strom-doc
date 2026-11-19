@@ -468,8 +468,19 @@ kind and links (people, event, source) with a short reason. Nothing is written u
   says that what the agent opens goes to the model provider and that sorting uses the subscription or credit. Only
   the button **Sort with the agent** in the dialog sends the files, once.
 - The window can be closed; the progress and the finished proposal are in the band of the window **Materials**.
+  - **From app 3.30.0:** the band shows "Waiting for the agent…", then "The agent is sorting · k of n" with a bar
+    showing how many files the agent has already assessed. A research that does not tell the number assessed has
+    "The agent is sorting · N files" with a bar without a number; with reduced motion set in the system that bar
+    stands still. Below it "The window can be closed; the proposal waits in Materials."
 - **The agent's proposal** has **Proposals**, **Unassigned** and **Done**, and at each file **Accept**, **Edit**,
   **Reject**; further **Accept selected** and **Accept all**. The certainty of a proposal: sure, likely, uncertain.
+  - **From app 3.30.0:** in **Unassigned** a file without a proposal has a quiet row saying why it has none: "The
+    reader said nothing about the file", "The file already has everything proposed", "The proposal could not be
+    used", "The agent left the file out" or "The file could not be read". What the reader wrote about the file stands
+    below it on one line, in full on hovering. A research that does not give the reason, or a reason the app does not
+    know: a row without a reason as before.
+  - The agent reads text files (.txt, .md) by their content, not as an image
+    ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
 - A title, date and kind set by a person stay; the agent's proposal is used only when **Use the proposal** is chosen.
 - What is accepted is written: the tree's files in one step of **Undo** with the tree, material outside the tree to
   the archive. A source of the research the tree does not have yet comes into the tree with the research's number,
@@ -485,7 +496,7 @@ kind and links (people, event, source) with a short reason. Nothing is written u
   from the app.
 - **Since:** app 3.30.0, research 1.35.0
 
-<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem -->
+<!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu -->
 
 <a id="A3.6"></a>
 ## A3.6 Sources of a person

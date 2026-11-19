@@ -155,7 +155,9 @@ drzewa**.
   - **telefon** (pionowo i poziomo): legenda jest zawsze chipem. Stuknięcie otwiera ją jako panel od dołu (poziomo
     jako panel po prawej) z nagłówkiem „◯ Legenda” i **Gotowe**. Zamyka go **Gotowe**, stuknięcie obok, przeciągnięcie
     w dół (poziomo w prawo) i Esc. Po odświeżeniu strony sam się nie otwiera, a telefon wyboru urządzenia nie czyta
-    ani nie zapisuje.
+    ani nie zapisuje;
+  - od aplikacji 3.30.0 legenda pokazuje obok obwódek płci także **Oznaczenie linii** w wybranym kształcie
+    ([A6.1.5](A6-views.md#A6.1.5)).
 - **Granice:** bez pamięci przeglądarki (okno prywatne) wybór obowiązuje do zamknięcia strony.
 - **Obsługa:** uszko nad minimapą; **◯** w legendzie, chip „◯ Legenda”. Wyłączenie: ustawienia **Minimapa**,
   **Legenda drzewa**.

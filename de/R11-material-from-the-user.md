@@ -260,13 +260,24 @@ Begründung und Sicherheit. In die Forschung wird nichts geschrieben.
   - ein Sortieren aus der App startet die Brücke nur mit ihrer eigenen Signatur, und die gilt einmal. Ein Eintrag,
     der sich nur als Sortieren aus der App ausgibt, startet nie;
   - in der Warteschlange warten höchstens 3 Sortierungen.
+- **Ab Forschung 1.35.0:**
+  - eine Textdatei (.txt, .md, .markdown, .text oder der Typ text/plain oder markdown) liest der Leser als Text und
+    beurteilt sie nach dem, was sie sagt: höchstens die ersten 20 000 Zeichen. Bei einer längeren weiß der Leser,
+    dass er nur den Anfang bekam und wie groß die Datei ist. Text in UTF-8 oder, mit Byte-Order-Mark, in UTF-16;
+    sonst wird er als windows-1252 gelesen;
+  - während des Sortierens sagt `strom material show`, wie viele Dateien die Leser schon beurteilt haben („N of M
+    files done“); die App zeigt daraus „k von n“;
+  - bei einem fertigen Sortieren hat jede Datei ohne Vorschlag einen Grund: der Leser sagte nichts zu ihr, die Datei
+    hat schon alles Vorgeschlagene, der Vorschlag ließ sich nicht verwenden, der Agent hat die Datei ausgelassen,
+    oder die Datei ließ sich nicht lesen (mit dem Ergebnis des Lesers). Was der Leser über die Datei schrieb, steht
+    beim Grund.
 - **Grenzen:** nur eine Forschung mit Agent: das Strom-Archiv und eine Forschung, die auf einen Agenten wartet,
   sortieren kein Material.
 - **Bedienung:** Terminal: `strom material sort I… [--text …] [--queue]`, `strom material show`, `strom material
   cancel`; App: **Mit dem Agenten sortieren…** ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8)).
 - **Gilt seit:** Forschung 1.35.0
 
-<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort -->
+<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort · research:ae866bb7 src/core/sort.ts SORT_TEXT_FILE_MAX=20_000, SORT_TEXT_TYPES, isTextFile, textOfFile (UTF-8 / UTF-16 BOM, jinak windows-1252; cut), řádek „read as text (only its first … characters: the file is … KB)“, unproposedOf (nothing-said, nothing-new, dropped, left-out, reader-failed + outcome; said) · src/commands/material.ts filesDone (+ group.length po čtenáři), show „N of M files done“, „no proposal: why (outcome)“ -->
 
 <a id="R11.5.4"></a>
 ### R11.5.4 Material über die Brücke
