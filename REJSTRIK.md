@@ -934,7 +934,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Materialien (app) · Material senden… | Jede Datei des Stammbaums (Anhang, ganzes Foto eines Porträts, Paarfoto, Beleg einer Quelle) und eine Datei der Forschung. Dieselbe Datei ist im Stammbaum einmal und trägt ihre Stellen. Eine Datei lässt sich der Forschung auch senden, ohne sie dem Stammbaum hinzuzufügen. |
 | pl | Materiały (app) · Wyślij materiał… | Każdy plik drzewa (załącznik, całe zdjęcie portretu, zdjęcie pary, dowód źródła) i plik badania. Ten sam plik jest w drzewie raz i niesie swoje miejsca. Plik można wysłać do badania także bez dodania do drzewa. |
 
-- **Čísla:** [A3.5](cs/A3-evidence-in-the-app.md#A3.5), A3.5.1–A3.5.8, R11, R11.4, R11.5
+- **Čísla:** [A3.5](cs/A3-evidence-in-the-app.md#A3.5), A3.5.1–A3.5.9, R11, R11.4, R11.5
 
 <a id="research-bridge"></a>
 ### Most výzkumu
@@ -1031,6 +1031,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Nieobsługiwane | Liczba części pliku GEDCOM, których aplikacja nie zna i nie przeniosła; z nazwy podaje je wiersz Pominięte rekordy. Osoby i relacje do nich nie należą. |
 
 - **Čísla:** [A2.1](cs/A2-loading-a-family-tree.md#A2.1), A2.1.1, A2.2, A2.5
+
+<a id="not-about-the-family"></a>
+### Netýká se rodiny
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Netýká se rodiny · Skrýt jako Netýká se rodiny (app) · `unrelated` (terminál) | Značka agenta při třídění u souboru, který se rodiny zjevně netýká (snímek obrazovky, účtenka, omylem poslaný soubor): bez návrhu, jen s důvodem a jistotou. Skryje ho jen člověk; skrytý soubor zůstane ve výzkumu a jde vrátit. |
+| en | Not about the family · Hide as Not about the family (app) · `unrelated` (terminal) | The agent's mark when sorting a file plainly not about the family (a screenshot, a receipt, a file sent by mistake): no proposal, only a reason and a certainty. Only a person hides it; a hidden file stays in the research and can be restored. |
+| de | Betrifft nicht die Familie · Als „Betrifft nicht die Familie“ ausblenden (app) · `unrelated` (terminal) | Die Markierung des Agenten beim Sortieren einer Datei, die offensichtlich nicht die Familie betrifft (ein Bildschirmfoto, eine Quittung, eine versehentlich geschickte Datei): kein Vorschlag, nur Begründung und Sicherheit. Ausblenden kann sie nur ein Mensch; eine ausgeblendete Datei bleibt in der Forschung und lässt sich wiederherstellen. |
+| pl | Nie dotyczy rodziny · Ukryj jako Nie dotyczy rodziny (app) · `unrelated` (terminal) | Znacznik agenta przy porządkowaniu pliku, który wyraźnie nie dotyczy rodziny (zrzut ekranu, paragon, plik wysłany przez pomyłkę): bez propozycji, tylko z uzasadnieniem i pewnością. Ukrywa go tylko człowiek; ukryty plik zostaje w badaniu i można go przywrócić. |
+
+- **Čísla:** [A3.5.9](cs/A3-evidence-in-the-app.md#A3.5.9), A3.5.8, R11.5.3
 
 <a id="remove-from-tree"></a>
 ### Odstranit ze stromu

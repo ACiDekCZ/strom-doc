@@ -518,6 +518,8 @@ Vorschlag angenommen ist.
     ließ sich nicht verwenden“, „Der Agent hat die Datei ausgelassen“ oder „Die Datei ließ sich nicht lesen“. Was der
     Leser zur Datei schrieb, steht darunter in einer Zeile, ganz beim Überfahren. Eine Forschung, die den Grund nicht
     nennt, oder ein Grund, den die App nicht kennt: eine Zeile ohne Grund wie bisher.
+  - **Ab App 3.30.0:** eine Datei, von der der Agent sagt, dass sie nicht die Familie betrifft, steht unter
+    **Nicht zugeordnet** zuerst, markiert mit **Betrifft nicht die Familie** ([A3.5.9](#A3.5.9)).
   - Textdateien (.txt, .md) liest der Agent nach ihrem Inhalt, nicht als Bild
     ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
 - Titel, Datum und Art von einem Menschen bleiben; der Vorschlag des Agenten wird nur verwendet, wenn **Vorschlag
@@ -545,6 +547,40 @@ Vorschlag angenommen ist.
 - **Gilt seit:** App 3.30.0, Forschung 1.35.0
 
 <!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu · app:8a8131be src/material-sort.ts sortNeedy, sortWholeOffered (narrowed, remembered, jedna dávka se stejným počtem), materials-window.ts sortWholeClosed, strings.ts agentSort.stripWhole, closeWhole · app:a947b426 sortCandidates (dávka, filtr, celé okno: jen bez titulku nebo osoby; výběr vše) -->
+
+<a id="A3.5.9"></a>
+### A3.5.9 Betrifft nicht die Familie
+
+Sagt der Agent beim Sortieren ([A3.5.8](#A3.5.8)), dass eine Datei offensichtlich nicht die Familie betrifft (ein
+Bildschirmfoto, eine Quittung, ein Urlaubsfoto fremder Leute, eine versehentlich geschickte Datei), ist die Datei im
+**Vorschlag des Agenten** unter **Nicht zugeordnet** mit **Betrifft nicht die Familie** markiert. Ausblenden kann
+sie nur ein Mensch; weder die App noch die Forschung blendet sie von selbst aus oder löscht sie.
+
+- Eine solche Datei hat keinen vorgeschlagenen Titel, kein Datum, keine Art und keine Verknüpfungen. Ihre Zeile zeigt
+  die Sicherheit (sicher, wahrscheinlich, unsicher: wie sicher es ist, dass die Datei nicht zur Familie gehört) und
+  „Warum nicht: …“ mit dem, was der Agent auf der Datei sah.
+- Der Agent markiert so nur eine Datei offensichtlich außerhalb der Familie; eine Datei, die er nur nicht zuordnen
+  kann, bleibt ohne Markierung unter **Nicht zugeordnet** ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
+- Diese Dateien stehen unter **Nicht zugeordnet** zuerst. Darüber steht **Als „Betrifft nicht die Familie“
+  ausblenden (N)**, bei jeder **Ausblenden…**. Beides öffnet den Dialog **Datei ausblenden?** mit dem vorgewählten
+  Grund **Betrifft nicht die Familie** (änderbar auf **Duplikat** oder **Ohne Grund**); erst die Schaltfläche
+  **Ausblenden** blendet die Datei aus. Die Meldung hat **Rückgängig**. Nach dem Dialog, auch einem abgebrochenen,
+  kehrt der Vorschlag des Agenten zu **Nicht zugeordnet** zurück.
+- Eine ausgeblendete Datei zeigt in ihrer Zeile „Ausgeblendet · betrifft nicht die Familie“ und
+  **Wiederherstellen**. Sie bleibt mit ihrem Original in der Forschung und ist in **Ausgeblendete zeigen** zu sehen
+  ([A3.5.1](#A3.5.1)). **Von Hand durchgehen (N)** lässt ausgeblendete Dateien aus.
+- **Grenzen:**
+  - ausblenden lässt sich nur eine Datei der Forschung außerhalb des Stammbaums, die noch nicht ausgeblendet ist.
+    Eine Datei im Stammbaum hat die Markierung ohne **Ausblenden…**; aus dem Stammbaum nimmt sie **Aus dem
+    Stammbaum entfernen…** ([A3.5.6](#A3.5.6));
+  - **Ausblenden…** und **Wiederherstellen** wirken nur bei laufender Forschung; sonst sind sie deaktiviert;
+  - eine Forschung, die die Markierung nicht sendet, lässt **Nicht zugeordnet** wie bisher.
+- **Bedienung:** Fenster **Materialien** → Band des Vorschlags → **Vorschlag des Agenten** → **Nicht zugeordnet**;
+  Terminal: `strom material show <id>`, Ausblenden `strom input hide I… --why unrelated`
+  ([R11.5.2](R11-material-from-the-user.md#R11.5.2)).
+- **Gilt seit:** App 3.30.0, Forschung 1.35.0
+
+<!-- zdroj: app:f2bebc4c (v 401eaca4) src/materials.ts SortProposal.unrelated, parseSortProposal · src/material-sort.ts sortRows (unrelated: bez polí a vazeb), sortUnrelatedHideable (origin ≠ tree, file, !hidden, bez places) · src/ui/material-sort-ui.ts (Nepřiřazeno: unrelated první, msp-flag reason.unrelated, conf, unassignedWhy + why; hideUnrelated, hide, restore, hiddenLabel; hideCan: caps.assign, jinak null; bridgeUp && base, jinak vypnuto; reopen na tab unassigned; Projít ručně bez skrytých) · src/ui/material-actions-ui.ts openHideDialog (důvod unrelated předvybraný, ctx.back) · strings.ts materials.agentSort.hideUnrelated, unassignedWhy, reviewByHand, materials.hide, hideTitle, reasonLabel, reason, hideConfirm, hiddenLabel, hiddenToastResearch, restore · research:f36b3941 (ve vydání 1.35.0) src/core/sort.ts unrelated -->
 
 <a id="A3.6"></a>
 ## A3.6 Quellen einer Person

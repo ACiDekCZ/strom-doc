@@ -249,13 +249,19 @@ written to the research.
   - in a finished sorting every file without a proposal has a reason: the reader said nothing about it, the file
     already has everything proposed, the proposal could not be used, the agent left the file out, or the file could
     not be read (with the reader's outcome). What the reader wrote about the file stands at the reason.
+  - a file plainly not about the family (a screenshot, a receipt, a file sent by mistake) the reader marks
+    `unrelated: yes`, with a reason and a certainty. The reader's instruction: only a file plainly outside the family,
+    never a file it merely cannot place. The research proposes no title, date, kind or link for such a file (what the
+    reader wrote anyway is dropped). `strom material show` says "unrelated (not of the family)" at it. The research
+    never hides or deletes the file by itself; only a person hides it: in the app
+    ([A3.5.9](A3-evidence-in-the-app.md#A3.5.9)), in the terminal `strom input hide I… --why unrelated`.
 - **Limits:** only a research with an agent: the Strom archive and a research waiting for an agent do not sort
   material.
 - **Controls:** terminal: `strom material sort I… [--text …] [--queue]`, `strom material show`, `strom material
   cancel`; app: **Sort with the agent…** ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8)).
 - **Since:** research 1.35.0
 
-<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort · research:ae866bb7 src/core/sort.ts SORT_TEXT_FILE_MAX=20_000, SORT_TEXT_TYPES, isTextFile, textOfFile (UTF-8 / UTF-16 BOM, jinak windows-1252; cut), řádek „read as text (only its first … characters: the file is … KB)“, unproposedOf (nothing-said, nothing-new, dropped, left-out, reader-failed + outcome; said) · src/commands/material.ts filesDone (+ group.length po čtenáři), show „N of M files done“, „no proposal: why (outcome)“ -->
+<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort · research:ae866bb7 src/core/sort.ts SORT_TEXT_FILE_MAX=20_000, SORT_TEXT_TYPES, isTextFile, textOfFile (UTF-8 / UTF-16 BOM, jinak windows-1252; cut), řádek „read as text (only its first … characters: the file is … KB)“, unproposedOf (nothing-said, nothing-new, dropped, left-out, reader-failed + outcome; said) · src/commands/material.ts filesDone (+ group.length po čtenáři), show „N of M files done“, „no proposal: why (outcome)“ · research:f36b3941 (ve vydání 1.35.0) src/core/sort.ts pokyn čtenáři „unrelated: yes“ (jen soubor zjevně mimo rodinu, nikdy jen nezařazený), YES, keptProposals (unrelated: jen why a sure, ostatní dropped „unrelated“) · src/commands/material.ts show „· unrelated (not of the family)“ · src/core/live.ts GET /material/sort/<id> unrelated?: true („the person hides it, never strom“) · CHANGELOG.md 1.35.0 -->
 
 <a id="R11.5.4"></a>
 ### R11.5.4 Material through the bridge

@@ -478,6 +478,8 @@ zaznaczone pliki jednocześnie.
     użyć”, „Agent pominął plik” albo „Nie udało się odczytać pliku”. Co czytelnik napisał o pliku, stoi pod tym w jednym
     wierszu, w całości po najechaniu. Badanie, które powodu nie podaje, albo powód, którego aplikacja nie zna: wiersz
     bez powodu jak wcześniej.
+  - **Od aplikacji 3.30.0:** plik, o którym agent powie, że nie dotyczy rodziny, stoi w **Nieprzypisane** pierwszy,
+    ze znacznikiem **Nie dotyczy rodziny** ([A3.5.9](#A3.5.9)).
   - Pliki tekstowe (.txt, .md) agent czyta według treści, nie jako obraz
     ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
 - Tytuł, data i rodzaj od człowieka zostają; propozycja agenta zostanie użyta tylko wtedy, gdy wybierze się **Użyj
@@ -501,6 +503,36 @@ zaznaczone pliki jednocześnie.
 - **Obowiązuje od:** aplikacja 3.30.0, badanie 1.35.0
 
 <!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu · app:8a8131be src/material-sort.ts sortNeedy, sortWholeOffered (narrowed, remembered, jedna dávka se stejným počtem), materials-window.ts sortWholeClosed, strings.ts agentSort.stripWhole, closeWhole · app:a947b426 sortCandidates (dávka, filtr, celé okno: jen bez titulku nebo osoby; výběr vše) -->
+
+<a id="A3.5.9"></a>
+### A3.5.9 Nie dotyczy rodziny
+
+Gdy agent podczas porządkowania ([A3.5.8](#A3.5.8)) powie, że plik wyraźnie nie dotyczy rodziny (zrzut ekranu,
+paragon, cudze zdjęcie z wakacji, plik wysłany przez pomyłkę), plik ma w **Propozycja agenta** w **Nieprzypisane**
+znacznik **Nie dotyczy rodziny**. Ukryć go może tylko człowiek; ani aplikacja, ani badanie same go nie ukryją ani
+nie usuną.
+
+- Taki plik nie ma propozycji tytułu, daty, rodzaju ani połączeń. Wiersz pokazuje pewność (pewne, prawdopodobne,
+  niepewne: na ile pewne jest, że plik do rodziny nie należy) i „Dlaczego nie: …” z tym, co agent na pliku zobaczył.
+- Agent oznacza tak tylko plik wyraźnie spoza rodziny; plik, którego tylko nie umie przypisać, zostaje
+  w **Nieprzypisane** bez znacznika ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
+- Te pliki stoją w **Nieprzypisane** pierwsze. Nad nimi jest **Ukryj jako Nie dotyczy rodziny (N)**, przy każdym
+  **Ukryj…**. Oba otwierają okno **Ukryć plik?** z wybranym powodem **Nie dotyczy rodziny** (można go zmienić na
+  **Duplikat** lub **Bez powodu**); plik ukrywa dopiero przycisk **Ukryj**. Powiadomienie ma **Cofnij**. Po oknie,
+  także anulowanym, propozycja agenta wraca na **Nieprzypisane**.
+- Ukryty plik ma w wierszu „Ukryte · nie dotyczy rodziny” i **Przywróć**. Zostaje w badaniu razem z oryginałem i jest
+  widoczny w **Pokaż ukryte** ([A3.5.1](#A3.5.1)). **Przejrzyj ręcznie (N)** pomija ukryte pliki.
+- **Granice:**
+  - ukryć można tylko plik badania spoza drzewa, który nie jest jeszcze ukryty. Plik w drzewie ma znacznik bez
+    **Ukryj…**; z drzewa usuwa go **Usuń z drzewa…** ([A3.5.6](#A3.5.6));
+  - **Ukryj…** i **Przywróć** działają tylko przy działającym badaniu; inaczej są wyłączone;
+  - badanie, które znacznika nie wysyła, zostawia **Nieprzypisane** jak wcześniej.
+- **Obsługa:** okno **Materiały** → pasek propozycji → **Propozycja agenta** → **Nieprzypisane**; terminal:
+  `strom material show <id>`, ukrycie `strom input hide I… --why unrelated`
+  ([R11.5.2](R11-material-from-the-user.md#R11.5.2)).
+- **Obowiązuje od:** aplikacja 3.30.0, badanie 1.35.0
+
+<!-- zdroj: app:f2bebc4c (v 401eaca4) src/materials.ts SortProposal.unrelated, parseSortProposal · src/material-sort.ts sortRows (unrelated: bez polí a vazeb), sortUnrelatedHideable (origin ≠ tree, file, !hidden, bez places) · src/ui/material-sort-ui.ts (Nepřiřazeno: unrelated první, msp-flag reason.unrelated, conf, unassignedWhy + why; hideUnrelated, hide, restore, hiddenLabel; hideCan: caps.assign, jinak null; bridgeUp && base, jinak vypnuto; reopen na tab unassigned; Projít ručně bez skrytých) · src/ui/material-actions-ui.ts openHideDialog (důvod unrelated předvybraný, ctx.back) · strings.ts materials.agentSort.hideUnrelated, unassignedWhy, reviewByHand, materials.hide, hideTitle, reasonLabel, reason, hideConfirm, hiddenLabel, hiddenToastResearch, restore · research:f36b3941 (ve vydání 1.35.0) src/core/sort.ts unrelated -->
 
 <a id="A3.6"></a>
 ## A3.6 Źródła osoby

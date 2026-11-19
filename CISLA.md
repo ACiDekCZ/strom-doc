@@ -265,6 +265,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A3.5.6 | A3-evidence-in-the-app.md | aplikace 3.30.0 | platí | Odstranit ze stromu a Vrátit | Remove from the tree and Restore | Aus dem Stammbaum entfernen und Wiederherstellen | Usuń z drzewa i Przywróć |
 | A3.5.7 | A3-evidence-in-the-app.md | aplikace 3.30.0 | platí | Projít a hromadné úpravy | Go through and bulk edits | Durchgehen und Sammeländerungen | Przejrzyj i zmiany zbiorcze |
 | A3.5.8 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Roztřídit agentem | Sort with the agent | Mit dem Agenten sortieren | Uporządkuj agentem |
+| A3.5.9 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Netýká se rodiny | Not about the family | Betrifft nicht die Familie | Nie dotyczy rodziny |
 | A3.6 | A3-evidence-in-the-app.md | aplikace 3.3.0 | platí | Prameny osoby | Sources of a person | Quellen einer Person | Źródła osoby |
 | A3.7 | A3-evidence-in-the-app.md | aplikace 3.4.0 | platí | Kde chybí doklady | Where evidence is missing | Wo Belege fehlen | Gdzie brakuje dowodów |
 | A3.8 | A3-evidence-in-the-app.md | aplikace 3.14.0 | platí | Obraz jen ve výzkumu | Image only in the research | Bild nur in der Forschung | Obraz tylko w badaniu |

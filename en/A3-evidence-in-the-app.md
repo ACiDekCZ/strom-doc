@@ -483,6 +483,8 @@ kind and links (people, event, source) with a short reason. Nothing is written u
     used", "The agent left the file out" or "The file could not be read". What the reader wrote about the file stands
     below it on one line, in full on hovering. A research that does not give the reason, or a reason the app does not
     know: a row without a reason as before.
+  - **From app 3.30.0:** a file the agent says is not about the family stands first in **Unassigned**, marked
+    **Not about the family** ([A3.5.9](#A3.5.9)).
   - The agent reads text files (.txt, .md) by their content, not as an image
     ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
 - A title, date and kind set by a person stay; the agent's proposal is used only when **Use the proposal** is chosen.
@@ -507,6 +509,36 @@ kind and links (people, event, source) with a short reason. Nothing is written u
 - **Since:** app 3.30.0, research 1.35.0
 
 <!-- zdroj: app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu · app:8a8131be src/material-sort.ts sortNeedy, sortWholeOffered (narrowed, remembered, jedna dávka se stejným počtem), materials-window.ts sortWholeClosed, strings.ts agentSort.stripWhole, closeWhole · app:a947b426 sortCandidates (dávka, filtr, celé okno: jen bez titulku nebo osoby; výběr vše) -->
+
+<a id="A3.5.9"></a>
+### A3.5.9 Not about the family
+
+When the agent says while sorting ([A3.5.8](#A3.5.8)) that a file is plainly not about the family (a screenshot, a
+receipt, a stranger's holiday photo, a file sent by mistake), the file is marked **Not about the family** in **The
+agent's proposal** under **Unassigned**. Only a person can hide it; neither the app nor the research hides or deletes
+it by itself.
+
+- Such a file has no proposed title, date, kind or links. Its row shows the certainty (sure, likely, uncertain: how
+  sure it is that the file is not the family's) and "Why not: …" with what the agent saw on the file.
+- The agent marks only a file plainly outside the family; a file it merely cannot place stays under **Unassigned**
+  without the mark ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
+- These files stand first under **Unassigned**. Above them is **Hide as Not about the family (N)**, at each one
+  **Hide…**. Both open the dialog **Hide the file?** with the reason **Not about the family** preselected (it can be
+  changed to **Duplicate** or **No reason**); only the button **Hide** hides the file. The notice has **Undo**. After
+  the dialog, even a cancelled one, the agent's proposal comes back on **Unassigned**.
+- A hidden file says "Hidden · not about the family" in its row, with **Restore**. It stays in the research with its
+  original and is seen in **Show hidden** ([A3.5.1](#A3.5.1)). **Go through by hand (N)** leaves hidden files out.
+- **Limits:**
+  - only a research file outside the tree that is not hidden yet can be hidden. A file in the tree has the mark
+    without **Hide…**; **Remove from the tree…** takes it out of the tree ([A3.5.6](#A3.5.6));
+  - **Hide…** and **Restore** work only while the research runs; otherwise they are disabled;
+  - a research that does not send the mark leaves **Unassigned** as before.
+- **Controls:** the window **Materials** → the proposal's band → **The agent's proposal** → **Unassigned**;
+  terminal: `strom material show <id>`, hiding `strom input hide I… --why unrelated`
+  ([R11.5.2](R11-material-from-the-user.md#R11.5.2)).
+- **Since:** app 3.30.0, research 1.35.0
+
+<!-- zdroj: app:f2bebc4c (v 401eaca4) src/materials.ts SortProposal.unrelated, parseSortProposal · src/material-sort.ts sortRows (unrelated: bez polí a vazeb), sortUnrelatedHideable (origin ≠ tree, file, !hidden, bez places) · src/ui/material-sort-ui.ts (Nepřiřazeno: unrelated první, msp-flag reason.unrelated, conf, unassignedWhy + why; hideUnrelated, hide, restore, hiddenLabel; hideCan: caps.assign, jinak null; bridgeUp && base, jinak vypnuto; reopen na tab unassigned; Projít ručně bez skrytých) · src/ui/material-actions-ui.ts openHideDialog (důvod unrelated předvybraný, ctx.back) · strings.ts materials.agentSort.hideUnrelated, unassignedWhy, reviewByHand, materials.hide, hideTitle, reasonLabel, reason, hideConfirm, hiddenLabel, hiddenToastResearch, restore · research:f36b3941 (ve vydání 1.35.0) src/core/sort.ts unrelated -->
 
 <a id="A3.6"></a>
 ## A3.6 Sources of a person
