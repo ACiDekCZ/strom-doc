@@ -1068,7 +1068,8 @@ w jednym kroku. Pozycja czeka dalej, liczby się nie zmieniają.
 
 Większość działań badania w aplikacji to link `strom-research://`. Link otwiera terminal badania na tym samym
 komputerze. Terminal mówi, o co prosi aplikacja, i pyta. Bez potwierdzenia w terminalu nic się nie zapisze ani nie
-zapłaci.
+zapłaci. Wyjątkiem jest tylko praca agenta w ramach subskrypcji lub kredytu AI, gdy badanie jest tak ustawione
+([S4.5.5](#S4.5.5)).
 
 - **Granice:**
   - Działanie jest widoczne tylko na komputerze (nie na urządzeniu dotykowym), tylko gdy badanie zgłosiło link i tylko
@@ -1076,7 +1077,9 @@ zapłaci.
   - Link niesie tylko numery rekordów i stałe wartości, żadnych imion ani nazwisk ani dowolnego tekstu.
   - Terminal zaczyna od **Prośba z aplikacji Strom: … / Badanie: …** i pyta **Kontynuować?** Przy pracy
     agenta dopisuje **Agent pracuje w ramach subskrypcji lub kredytu AI swojego konta.**, przy zlecaniu zadań
-    **Badanie zapisze zadania dla agenta – teraz niczego się nie szuka i za nic się nie płaci.**
+    **Badanie zapisze zadania dla agenta – teraz niczego się nie szuka i za nic się nie płaci.** Przy
+    **Uruchamianie agenta z aplikacji Strom: bez potwierdzenia** praca agenta uruchamia się bez pytania
+    ([S4.5.5](#S4.5.5)).
   - Archiwum Strom i badanie, które czeka na agenta, odrzucają pracę agenta (rozmowa, sprawdzenie, szukanie,
     miejsca, dzieje).
   - Gdy taka sama aktywna linia już jest, **Szukaj przodków** tylko mówi **Taka linia badania już jest: „…” –
@@ -1164,6 +1167,8 @@ Każde działanie badania ma jedno z trzech oznaczeń według tego, co otwiera.
   przy źródle ([R8.8.3](R8-reading-scans.md#R8.8.3)). Terminal: `strom chat --task T…` bierze zadanie z kolejki od razu
   do rozmowy.
 - **Obowiązuje od:** badanie 1.29.0, aplikacja 3.25.0
+- **Od badania 1.36.0:** przy **Uruchamianie agenta z aplikacji Strom: bez potwierdzenia** rozmowa zaczyna się bez
+  pytania tylko wtedy, gdy cena podobnych sesji nie jest jeszcze znana. Ze znaną ceną pyta dalej ([S4.5.5](#S4.5.5)).
 
 <!-- zdroj: research:c2a690ea src/cli/menu-links.ts (odkaz task bez do, úkol open) · assets/lang/cs.json ui.link.open.title/why/done/pick/chat/ahead/keep/already/kept/busy/estimate/estimate.none, ui.chat.task.open.say · strom help chat (--task: „a task in the queue (open): gone through now, taken up in the conversation“) · commit 9bd14e84 · test/cli/link-open-task.test.ts · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 7; klik v aplikaci neověřen) · app:6bd8609e strings.ts read.openTaskN, src/__tests__/read-source-state-view.test.ts:75 (researchLinkMark task) -->
 
@@ -1206,6 +1211,42 @@ wykonane. Aplikacja przestaje więc od razu czekać i odzywa się tylko wtedy, g
 
 <!-- zdroj: research:fbae81fc src/core/handoffs.ts (HANDOFF tvar UUID, HANDOFF_MS 60 s, HANDOFF_MAX 64, handoffsNow úklid, noteHandoff) · src/core/links.ts parseLink (handoff malými písmeny, jiná hodnota vynechána), linkText · src/commands/links.ts link open noteTaken (tty hned; bez terminálu done: true; researchesWithId) · src/core/live.ts withHandoffs (/status i parts=1, mimo stav), BRIDGE_FEATURES handoffs · test/cli/link-handoffs.test.ts · CHANGELOG.cs.md 1.35.0 (odkaz aplikace Strom … výzkum aplikaci potvrdí) · app:574e7ef9, f63cc742 src/ui/research-open-busy.ts (handoffProven: handoffs s feature handoffs, jinak nové sezení; OPEN_ASK_MS 1000, OPEN_LATE_ASK_MS 2000, OPEN_LATE_WATCH_MS 60 s, OPEN_REPEAT_MS 400, bridgeDown 30 s, quietLimit new?app=) · src/research-link.ts HANDOFFS_FEATURE · app:docs/ZADANI_VYZKUM_tlacitka-cekani.md „Odpověď výzkumu“ · app:c3e09951 (79a05311) src/ui/research-open-busy.ts unprovable (poslední status bez feature handoffs → quietEnd: po limitu bez věty a bez pozdního hlídání; most dole → věta hned; opts.proof fronty beze změny) · dirigent:prace/1118-app-tlacitka-n1 (N2, Milan 18. 11.) -->
 
+<a id="S4.5.5"></a>
+### S4.5.5 Uruchamianie agenta z aplikacji bez potwierdzenia
+
+Ustawienie badania **Uruchamianie agenta z aplikacji Strom** decyduje, czy terminal przed pracą agenta, o którą
+poprosiła aplikacja, zapyta **Kontynuować?** Domyślnie jest **z potwierdzeniem**: terminal mówi, o co prosi
+aplikacja, że agent pracuje w ramach subskrypcji lub kredytu AI, i czeka na tak ([S4.5](#S4.5)). **Bez potwierdzenia**
+praca agenta uruchamia się od razu, a terminal mówi o tym jedną linią: **▶ Uruchamianie bez potwierdzenia
+(badanie …): …** i gdzie pytanie włącza się z powrotem.
+
+- **Pilnuje kod:**
+  - bez pytania uruchamiają się tylko działania, które uruchamiają agenta w ramach subskrypcji lub kredytu AI:
+    rozmowa z agentem (także o osobie lub linii), rozmowa o zadaniu w kolejce ([S4.5.3](#S4.5.3)) lub w **Czeka na
+    załatwienie**, sprzeczność pozostawiona agentowi ([R5.6](R5-conflicts.md#R5.6)), praca nad kolejką
+    ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)) i ustalanie miejsc;
+  - nadal pytane są:
+    - pytanie, które podaje cenę w pieniądzach: szacunek przy zadaniu w kolejce, ustalanie miejsc ze zmierzoną ceną
+      sesji;
+    - każdy link, który otwiera agent lub skrypt bez terminala człowieka;
+    - wysłanie prośby, zgody archiwów i hostów (`strom allow`), usuwanie, zlecanie zadań agentowi i dzieje miejsca;
+    - warunek samodzielnej pracy (`run.gate`): praca nad kolejką pyta go jak dotąd
+      ([R7.4](R7-when-the-agent-works.md#R7.4), [R7.4.1](R7-when-the-agent-works.md#R7.4.1));
+  - gdy w badaniu działa już inna sesja lub przebieg, nic więcej się nie uruchomi, także bez potwierdzenia;
+  - ustawienie dotyczy wszystkich badań na tym komputerze, nie jednego drzewa. W Archiwum Strom menu go nie oferuje;
+  - **bez potwierdzenia** włącza tylko człowiek: terminal mówi, co jest nadal pytane, i chce drugiego tak (Enter =
+    nie). Gdy ustawienie zmienia agent lub polecenie bez terminala, człowieka pyta okno systemu; bez okna strom
+    ustawienie odrzuca. Powrót do **z potwierdzeniem** może zrobić każdy, bez pytania;
+  - aplikacja Strom tego ustawienia nie ma i go nie zmienia. Wartość pokazuje `strom config` i raport `strom error`
+    ([R13](R13-reporting-a-problem.md#R13)).
+- **Obsługa:** terminal: menu **Ustawienia** → **Język, agent, model, co agent może sam, opowieści… (kreator
+  ustawień)** → **Uruchamianie agenta z aplikacji Strom: …** → **Pytać przed uruchomieniem (domyślnie)** lub
+  **Uruchamiać bez potwierdzenia**; `strom config set run.confirm no`, z powrotem `strom config unset run.confirm`.
+  Obowiązującą wartość pokazuje `strom config where`.
+- **Obowiązuje od:** badanie 1.36.0
+
+<!-- zdroj: research:8aa0f374 src/core/config.ts run.confirm (ask|no, tree: false, env žádná), Settings.runConfirm · src/cli/menu-links.ts asksToStart (priced || runConfirm !== no || !ctx.interactive || isAgent → asks; jinak ui.link.noconfirm) u openTask (priced = taskEstimate), waitingDo chat, placesRun (priced = est.session.usd || fronta), workRun, workOn · src/commands/links.ts conflict do=agent, chat (direction/person) · placeSearch dál asks (placeCost), review/research ui.link.tasks dál asks · src/commands/setup.ts setUserSetting run.confirm no → requireHumanYes (ui.consent.run.confirm), FALLBACKS run.confirm ask · src/cli/context.ts requireHuman (terminál → humanYes, jinak okno systému, jinak odmítnutí) · src/cli/menu-settings.ts runConfirmStep (ui.runconfirm.*, ui.runconfirm.about; jen !archive), unset pro ask · src/core/report.ts CONFIG_PLAIN runConfirm · cs.json ui.settings.runconfirm, ui.runconfirm.*, ui.link.noconfirm · strom help link · CHANGELOG.cs.md 1.36.0 „Agent z aplikace Strom bez potvrzení“ · test/cli/run-confirm.test.ts, test/cli/gates.test.ts · spec 123 K1.1–K1.5 (K1.4 bez zápisu do logu výzkumu: rozhodnutí dirigenta 20. 11.) -->
+
 <a id="S4.6"></a>
 ## S4.6 Co jest tylko w terminalu
 
@@ -1217,7 +1258,8 @@ zawsze w terminalu badania, nawet gdy zaczyna się kliknięciem w aplikacji.
     warunek, wybór agenta, ustawienia kolejki i pozycje **Tylko tutaj w terminalu**
     ([R6.1.1](R6-awaiting-action.md#R6.1.1)).
   - Potwierdza się w terminalu: wszystko z oznaczeniem terminal lub AI ([S4.5.1](#S4.5.1)), w 3.21.2 także akcje
-    linii i kolejki.
+    linii i kolejki. Od badania 1.36.0 pracę agenta bez ceny w pieniądzach można uruchamiać bez potwierdzenia
+    ([S4.5.5](#S4.5.5)); włącza to tylko człowiek, w terminalu.
   - Na telefonie linków nie ma; odpowiada się w badaniu na komputerze ([S5](S5-phone.md)).
 - **Obowiązuje od:** aplikacja 3.4.0 (badanie 1.6.0)
 - **Od aplikacji 3.22.0:** z badaniem 1.26.0 bez terminala działają linie ([S4.3.1](#S4.3.1)), praca poza liniami

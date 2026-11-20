@@ -984,7 +984,8 @@ fronty. Aplikace u takové položky ukáže nález a nabídne opravu v jednom kr
 ## S4.5 Akce, které otevřou výzkum
 
 Většina akcí výzkumu v aplikaci je odkaz `strom-research://`. Odkaz otevře terminál výzkumu na tomtéž počítači.
-Terminál řekne, co aplikace žádá, a zeptá se. Bez potvrzení v terminálu se nic nezapíše ani nezaplatí.
+Terminál řekne, co aplikace žádá, a zeptá se. Bez potvrzení v terminálu se nic nezapíše ani nezaplatí. Výjimkou je
+jen práce agenta na předplatné nebo kredit AI, když se tak výzkum nastaví ([S4.5.5](#S4.5.5)).
 
 - **Hranice:**
   - Akce je vidět jen na počítači (ne na dotykovém zařízení), jen když výzkum odkaz ohlásil a jen když je zapnuté
@@ -992,7 +993,8 @@ Terminál řekne, co aplikace žádá, a zeptá se. Bez potvrzení v terminálu 
   - Odkaz nese jen čísla záznamů a pevné hodnoty, žádná jména ani volný text.
   - Terminál začne **Aplikace Strom žádá: … / Výzkum: …** a zeptá se **Pokračovat?** U práce agenta
     připíše **Agent pracuje na předplatné nebo kredit AI.**, u zadání úkolů **Výzkum zapíše úkoly pro agenta – teď
-    se nic nehledá a nic se neplatí.**
+    se nic nehledá a nic se neplatí.** Při **Spouštění agenta z aplikace Strom: bez potvrzení** se práce agenta
+    spustí bez dotazu ([S4.5.5](#S4.5.5)).
   - Archiv Stromu a výzkum, který čeká na agenta, práci agenta odmítnou (rozhovor, prověření, hledání, místa, dějiny).
   - Když stejná aktivní linie už je, **Hledat předky** jen řekne **Taková linie výzkumu už je: „…“ – agent v ní
     pokračuje.**
@@ -1074,6 +1076,8 @@ Každá akce výzkumu má jednu ze tří značek podle toho, co otevře.
 - **Ovládání:** aplikace: **Otevřít úkol T…** (značka terminál) po založení úkolu z nového čtení a v řádku u pramene
   ([R8.8.3](R8-reading-scans.md#R8.8.3)). Terminál: `strom chat --task T…` vezme úkol z fronty rovnou do rozhovoru.
 - **Platí od:** výzkum 1.29.0, aplikace 3.25.0
+- **Od výzkumu 1.36.0:** při **Spouštění agenta z aplikace Strom: bez potvrzení** začne rozhovor bez dotazu, jen když
+  cena podobných sezení zatím není známá. Se známou cenou se ptá dál ([S4.5.5](#S4.5.5)).
 
 <!-- zdroj: research:c2a690ea src/cli/menu-links.ts (odkaz task bez do, úkol open) · assets/lang/cs.json ui.link.open.title/why/done/pick/chat/ahead/keep/already/kept/busy/estimate/estimate.none, ui.chat.task.open.say · strom help chat (--task: „a task in the queue (open): gone through now, taken up in the conversation“) · commit 9bd14e84 · test/cli/link-open-task.test.ts · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 7; klik v aplikaci neověřen) · app:6bd8609e strings.ts read.openTaskN, src/__tests__/read-source-state-view.test.ts:75 (researchLinkMark task) -->
 
@@ -1111,6 +1115,39 @@ tak přestane čekat hned a ozve se, jen když se nic neotevřelo ([S4.5](#S4.5)
 
 <!-- zdroj: research:fbae81fc src/core/handoffs.ts (HANDOFF tvar UUID, HANDOFF_MS 60 s, HANDOFF_MAX 64, handoffsNow úklid, noteHandoff) · src/core/links.ts parseLink (handoff malými písmeny, jiná hodnota vynechána), linkText · src/commands/links.ts link open noteTaken (tty hned; bez terminálu done: true; researchesWithId) · src/core/live.ts withHandoffs (/status i parts=1, mimo stav), BRIDGE_FEATURES handoffs · test/cli/link-handoffs.test.ts · CHANGELOG.cs.md 1.35.0 (odkaz aplikace Strom … výzkum aplikaci potvrdí) · app:574e7ef9, f63cc742 src/ui/research-open-busy.ts (handoffProven: handoffs s feature handoffs, jinak nové sezení; OPEN_ASK_MS 1000, OPEN_LATE_ASK_MS 2000, OPEN_LATE_WATCH_MS 60 s, OPEN_REPEAT_MS 400, bridgeDown 30 s, quietLimit new?app=) · src/research-link.ts HANDOFFS_FEATURE · app:docs/ZADANI_VYZKUM_tlacitka-cekani.md „Odpověď výzkumu“ · app:c3e09951 (79a05311) src/ui/research-open-busy.ts unprovable (poslední status bez feature handoffs → quietEnd: po limitu bez věty a bez pozdního hlídání; most dole → věta hned; opts.proof fronty beze změny) · dirigent:prace/1118-app-tlacitka-n1 (N2, Milan 18. 11.) -->
 
+<a id="S4.5.5"></a>
+### S4.5.5 Spouštění agenta z aplikace bez potvrzení
+
+Volba výzkumu **Spouštění agenta z aplikace Strom** určuje, jestli se terminál před prací agenta, o kterou požádala
+aplikace, zeptá **Pokračovat?** Výchozí je **s potvrzením**: terminál řekne, co aplikace žádá, že agent pracuje na
+předplatné nebo kredit AI, a čeká na ano ([S4.5](#S4.5)). **Bez potvrzení** se práce agenta spustí hned a terminál to
+řekne jednou řádkou: **▶ Spouští se bez potvrzení (výzkum …): …** a kde se dotaz znovu zapíná.
+
+- **Hlídá kód:**
+  - bez dotazu se spustí jen akce, které pouští agenta na předplatné nebo kredit AI: rozhovor s agentem (i o osobě
+    nebo linii), rozhovor o úkolu ve frontě ([S4.5.3](#S4.5.3)) nebo v **Čeká na vyřízení**, rozpor ponechaný agentovi
+    ([R5.6](R5-conflicts.md#R5.6)), práce na frontě ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)) a určení míst;
+  - dál se ptá:
+    - dotaz, který řekne cenu v penězích: odhad u úkolu ve frontě, určení míst se změřenou cenou sezení;
+    - každý odkaz, který otevře agent nebo skript bez terminálu člověka;
+    - odeslání žádosti, souhlasy archivů a hostů (`strom allow`), mazání, zadání úkolů pro agenta a dějiny místa;
+    - podmínka samostatné práce (`run.gate`): práce na frontě se jí ptá jako dosud
+      ([R7.4](R7-when-the-agent-works.md#R7.4), [R7.4.1](R7-when-the-agent-works.md#R7.4.1));
+  - když na výzkumu už běží jiné sezení nebo běh, nic dalšího se nespustí ani bez potvrzení;
+  - volba platí pro všechny výzkumy na tomto počítači, ne pro jeden strom. V Archivu Stromu ji menu nenabízí;
+  - **bez potvrzení** zapne jen člověk: terminál řekne, co se dál ptá, a chce druhé ano (Enter = ne). Když nastavení
+    spouští agent nebo příkaz bez terminálu, ptá se člověka okno systému; bez okna strom nastavení odmítne.
+    Zpět na **s potvrzením** smí kdokoli, bez dotazu;
+  - aplikace Strom volbu nemá ani nemění. Hodnotu ukazuje `strom config` a zpráva `strom error`
+    ([R13](R13-reporting-a-problem.md#R13)).
+- **Ovládání:** terminál: menu **Nastavení** → **Jazyk, agent, model, co smí agent sám, příběhy… (průvodce
+  nastavením)** → **Spouštění agenta z aplikace Strom: …** → **Ptát se před spuštěním (výchozí)** nebo **Spouštět bez
+  potvrzení**; `strom config set run.confirm no`, zpět `strom config unset run.confirm`. Platnou hodnotu ukáže
+  `strom config where`.
+- **Platí od:** výzkum 1.36.0
+
+<!-- zdroj: research:8aa0f374 src/core/config.ts run.confirm (ask|no, tree: false, env žádná), Settings.runConfirm · src/cli/menu-links.ts asksToStart (priced || runConfirm !== no || !ctx.interactive || isAgent → asks; jinak ui.link.noconfirm) u openTask (priced = taskEstimate), waitingDo chat, placesRun (priced = est.session.usd || fronta), workRun, workOn · src/commands/links.ts conflict do=agent, chat (direction/person) · placeSearch dál asks (placeCost), review/research ui.link.tasks dál asks · src/commands/setup.ts setUserSetting run.confirm no → requireHumanYes (ui.consent.run.confirm), FALLBACKS run.confirm ask · src/cli/context.ts requireHuman (terminál → humanYes, jinak okno systému, jinak odmítnutí) · src/cli/menu-settings.ts runConfirmStep (ui.runconfirm.*, ui.runconfirm.about; jen !archive), unset pro ask · src/core/report.ts CONFIG_PLAIN runConfirm · cs.json ui.settings.runconfirm, ui.runconfirm.*, ui.link.noconfirm · strom help link · CHANGELOG.cs.md 1.36.0 „Agent z aplikace Strom bez potvrzení“ · test/cli/run-confirm.test.ts, test/cli/gates.test.ts · spec 123 K1.1–K1.5 (K1.4 bez zápisu do logu výzkumu: rozhodnutí dirigenta 20. 11.) -->
+
 <a id="S4.6"></a>
 ## S4.6 Co je jen v terminálu
 
@@ -1122,6 +1159,8 @@ v terminálu výzkumu, i když to začne kliknutím v aplikaci.
     podmínka, volba agenta, nastavení fronty a položky **Jen tady v terminálu**
     ([R6.1.1](R6-awaiting-action.md#R6.1.1)).
   - Potvrzují se v terminálu: vše se značkou terminál nebo AI ([S4.5.1](#S4.5.1)), v 3.21.2 i akce linií a fronty.
+    Práci agenta bez ceny v penězích jde od výzkumu 1.36.0 spouštět bez potvrzení ([S4.5.5](#S4.5.5)); tuto volbu
+    zapíná jen člověk v terminálu.
   - Na telefonu odkazy nejsou; odpovídá se ve výzkumu na počítači ([S5](S5-phone.md)).
 - **Platí od:** aplikace 3.4.0 (výzkum 1.6.0)
 - **Od aplikace 3.22.0:** s výzkumem 1.26.0 jdou bez terminálu linie ([S4.3.1](#S4.3.1)), práce mimo linie po

@@ -1162,7 +1162,8 @@ und bietet eine Korrektur in einem Schritt an. Der Eintrag wartet weiter, die Za
 
 Die meisten Aktionen der Forschung in der App sind ein Link `strom-research://`. Der Link öffnet das Terminal der
 Forschung auf demselben Computer. Das Terminal sagt, worum die App bittet, und fragt nach. Ohne Bestätigung im
-Terminal wird nichts geschrieben und nichts bezahlt.
+Terminal wird nichts geschrieben und nichts bezahlt. Ausgenommen ist nur die Arbeit des Agenten auf das Abonnement
+oder KI-Guthaben, wenn die Forschung so eingestellt ist ([S4.5.5](#S4.5.5)).
 
 - **Grenzen:**
   - Eine Aktion ist nur am Computer zu sehen (nicht auf einem Touch-Gerät), nur wenn die Forschung den Link gemeldet
@@ -1171,7 +1172,8 @@ Terminal wird nichts geschrieben und nichts bezahlt.
   - Das Terminal beginnt mit **Die Strom-App bittet um: … / Forschung: …** und fragt **Fortfahren?** Bei
     Arbeit des Agenten fügt es **Der Agent arbeitet auf das eigene Abonnement oder KI-Guthaben.** hinzu, bei der
     Vergabe von Aufgaben **Die Forschung schreibt Aufgaben für den Agenten – jetzt wird nichts gesucht und nichts
-    bezahlt.**
+    bezahlt.** Bei **Agent aus der Strom-App starten: ohne Rückfrage** startet die Arbeit des Agenten ohne Frage
+    ([S4.5.5](#S4.5.5)).
   - Das Strom-Archiv und eine Forschung, die auf einen Agenten wartet, lehnen Arbeit des Agenten ab (Gespräch,
     Prüfung, Suche, Orte, Geschichte).
   - Gibt es dieselbe aktive Linie schon, sagt **Vorfahren suchen** nur **Diese Forschung gibt es schon: „…“ –
@@ -1261,6 +1263,9 @@ Aufgabe und fragt, was jetzt mit ihr geschehen soll.
   in der Zeile bei der Quelle ([R8.8.3](R8-reading-scans.md#R8.8.3)). Terminal: `strom chat --task T…` nimmt die
   Aufgabe aus der Warteschlange direkt ins Gespräch.
 - **Gilt seit:** Forschung 1.29.0, App 3.25.0
+- **Ab Forschung 1.36.0:** Bei **Agent aus der Strom-App starten: ohne Rückfrage** beginnt das Gespräch nur dann ohne
+  Frage, wenn der Preis ähnlicher Sitzungen noch nicht bekannt ist. Mit bekanntem Preis wird weiter gefragt
+  ([S4.5.5](#S4.5.5)).
 
 <!-- zdroj: research:c2a690ea src/cli/menu-links.ts (odkaz task bez do, úkol open) · assets/lang/cs.json ui.link.open.title/why/done/pick/chat/ahead/keep/already/kept/busy/estimate/estimate.none, ui.chat.task.open.say · strom help chat (--task: „a task in the queue (open): gone through now, taken up in the conversation“) · commit 9bd14e84 · test/cli/link-open-task.test.ts · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 7; klik v aplikaci neověřen) · app:6bd8609e strings.ts read.openTaskN, src/__tests__/read-source-state-view.test.ts:75 (researchLinkMark task) -->
 
@@ -1306,6 +1311,45 @@ geöffnet hat ([S4.5](#S4.5)).
 
 <!-- zdroj: research:fbae81fc src/core/handoffs.ts (HANDOFF tvar UUID, HANDOFF_MS 60 s, HANDOFF_MAX 64, handoffsNow úklid, noteHandoff) · src/core/links.ts parseLink (handoff malými písmeny, jiná hodnota vynechána), linkText · src/commands/links.ts link open noteTaken (tty hned; bez terminálu done: true; researchesWithId) · src/core/live.ts withHandoffs (/status i parts=1, mimo stav), BRIDGE_FEATURES handoffs · test/cli/link-handoffs.test.ts · CHANGELOG.cs.md 1.35.0 (odkaz aplikace Strom … výzkum aplikaci potvrdí) · app:574e7ef9, f63cc742 src/ui/research-open-busy.ts (handoffProven: handoffs s feature handoffs, jinak nové sezení; OPEN_ASK_MS 1000, OPEN_LATE_ASK_MS 2000, OPEN_LATE_WATCH_MS 60 s, OPEN_REPEAT_MS 400, bridgeDown 30 s, quietLimit new?app=) · src/research-link.ts HANDOFFS_FEATURE · app:docs/ZADANI_VYZKUM_tlacitka-cekani.md „Odpověď výzkumu“ · app:c3e09951 (79a05311) src/ui/research-open-busy.ts unprovable (poslední status bez feature handoffs → quietEnd: po limitu bez věty a bez pozdního hlídání; most dole → věta hned; opts.proof fronty beze změny) · dirigent:prace/1118-app-tlacitka-n1 (N2, Milan 18. 11.) -->
 
+<a id="S4.5.5"></a>
+### S4.5.5 Den Agenten aus der App ohne Bestätigung starten
+
+Die Einstellung der Forschung **Agent aus der Strom-App starten** bestimmt, ob das Terminal vor Arbeit des Agenten,
+um die die App gebeten hat, **Fortfahren?** fragt. Standard ist **mit Rückfrage**: Das Terminal sagt, worum die App
+bittet, dass der Agent auf das Abonnement oder KI-Guthaben arbeitet, und wartet auf ein Ja ([S4.5](#S4.5)). **Ohne
+Rückfrage** startet die Arbeit des Agenten sofort, und das Terminal sagt es in einer Zeile: **▶ Startet ohne Rückfrage
+(Forschung …): …** und wo die Rückfrage wieder eingeschaltet wird.
+
+- **Prüft der Code:**
+  - ohne Frage starten nur Aktionen, die den Agenten auf das Abonnement oder KI-Guthaben starten: ein Gespräch mit dem
+    Agenten (auch zu einer Person oder Richtung), ein Gespräch zu einer Aufgabe in der Warteschlange
+    ([S4.5.3](#S4.5.3)) oder in **Wartet auf Bearbeitung**, ein dem Agenten überlassener Widerspruch
+    ([R5.6](R5-conflicts.md#R5.6)), die Arbeit an der Warteschlange ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)) und
+    die Bestimmung der Orte;
+  - weiter gefragt wird:
+    - eine Frage, die einen Preis in Geld nennt: die Schätzung einer Aufgabe in der Warteschlange, die Bestimmung der
+      Orte mit gemessenem Preis der Sitzungen;
+    - jeder Link, den ein Agent oder ein Skript ohne Terminal eines Menschen öffnet;
+    - das Absenden einer Anfrage, Zustimmungen zu Archiven und Hosts (`strom allow`), Löschen, die Vergabe von Aufgaben
+      an den Agenten und die Geschichte eines Ortes;
+    - die Bedingung der Alleinarbeit (`run.gate`): Die Arbeit an der Warteschlange fragt sie wie bisher
+      ([R7.4](R7-when-the-agent-works.md#R7.4), [R7.4.1](R7-when-the-agent-works.md#R7.4.1));
+  - läuft in der Forschung schon eine andere Sitzung oder ein Lauf, startet nichts weiter, auch ohne Rückfrage nicht;
+  - die Einstellung gilt für alle Forschungen auf diesem Computer, nicht für einen Baum. Im Strom-Archiv bietet das
+    Menü sie nicht an;
+  - **ohne Rückfrage** schaltet nur der Mensch ein: Das Terminal sagt, was weiter gefragt wird, und will ein zweites
+    Ja (Enter = nein). Stellt es ein Agent oder ein Befehl ohne Terminal ein, fragt ein Systemfenster den Menschen;
+    ohne Fenster lehnt strom die Einstellung ab. Zurück zu **mit Rückfrage** darf jeder, ohne Frage;
+  - die Strom-App hat diese Einstellung nicht und ändert sie nicht. Den Wert zeigen `strom config` und der Bericht
+    `strom error` ([R13](R13-reporting-a-problem.md#R13)).
+- **Bedienung:** Terminal: Menü **Einstellungen** → **Sprache, Agent, Modell, was der Agent allein darf, Geschichten…
+  (die Einrichtung)** → **Agent aus der Strom-App starten: …** → **Vor dem Start fragen (Standard)** oder **Ohne
+  Rückfrage starten**; `strom config set run.confirm no`, zurück `strom config unset run.confirm`. Den geltenden Wert
+  zeigt `strom config where`.
+- **Gilt seit:** Forschung 1.36.0
+
+<!-- zdroj: research:8aa0f374 src/core/config.ts run.confirm (ask|no, tree: false, env žádná), Settings.runConfirm · src/cli/menu-links.ts asksToStart (priced || runConfirm !== no || !ctx.interactive || isAgent → asks; jinak ui.link.noconfirm) u openTask (priced = taskEstimate), waitingDo chat, placesRun (priced = est.session.usd || fronta), workRun, workOn · src/commands/links.ts conflict do=agent, chat (direction/person) · placeSearch dál asks (placeCost), review/research ui.link.tasks dál asks · src/commands/setup.ts setUserSetting run.confirm no → requireHumanYes (ui.consent.run.confirm), FALLBACKS run.confirm ask · src/cli/context.ts requireHuman (terminál → humanYes, jinak okno systému, jinak odmítnutí) · src/cli/menu-settings.ts runConfirmStep (ui.runconfirm.*, ui.runconfirm.about; jen !archive), unset pro ask · src/core/report.ts CONFIG_PLAIN runConfirm · cs.json ui.settings.runconfirm, ui.runconfirm.*, ui.link.noconfirm · strom help link · CHANGELOG.cs.md 1.36.0 „Agent z aplikace Strom bez potvrzení“ · test/cli/run-confirm.test.ts, test/cli/gates.test.ts · spec 123 K1.1–K1.5 (K1.4 bez zápisu do logu výzkumu: rozhodnutí dirigenta 20. 11.) -->
+
 <a id="S4.6"></a>
 ## S4.6 Was nur im Terminal geht
 
@@ -1317,7 +1361,8 @@ immer im Terminal der Forschung bestätigt, auch wenn es mit einem Klick in der 
     ([R7.1](R7-when-the-agent-works.md#R7.1)), die Bedingung, die Wahl des Agenten, die Einstellungen der
     Warteschlange und die Einträge **Nur hier im Terminal** ([R6.1.1](R6-awaiting-action.md#R6.1.1)).
   - Im Terminal bestätigt werden: alles mit der Marke Terminal oder KI ([S4.5.1](#S4.5.1)), in 3.21.2 auch Aktionen
-    der Linien und der Warteschlange.
+    der Linien und der Warteschlange. Ab Forschung 1.36.0 kann die Arbeit des Agenten ohne Preis in Geld ohne
+    Bestätigung starten ([S4.5.5](#S4.5.5)); das schaltet nur der Mensch ein, im Terminal.
   - Auf dem Telefon gibt es keine Links; geantwortet wird in der Forschung am Computer ([S5](S5-phone.md)).
 - **Gilt seit:** App 3.4.0 (Forschung 1.6.0)
 - **Ab App 3.22.0:** mit der Forschung 1.26.0 gehen ohne Terminal die Linien ([S4.3.1](#S4.3.1)), die Arbeit

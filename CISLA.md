@@ -486,6 +486,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.5.2 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Kde akce jsou | Where the actions are | Wo die Aktionen sind | Gdzie są działania |
 | S4.5.3 | S4-research-from-the-app.md | výzkum 1.29.0, aplikace 3.25.0 | platí | Otevřít úkol ve frontě | Opening a task in the queue | Eine Aufgabe in der Warteschlange öffnen | Otwarcie zadania w kolejce |
 | S4.5.4 | S4-research-from-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Výzkum potvrdí převzatý odkaz | The research confirms a link it has taken | Die Forschung bestätigt einen übernommenen Link | Badanie potwierdza przejęty link |
+| S4.5.5 | S4-research-from-the-app.md | výzkum 1.36.0 | platí | Spouštění agenta z aplikace bez potvrzení | Starting the agent from the app without confirmation | Den Agenten aus der App ohne Bestätigung starten | Uruchamianie agenta z aplikacji bez potwierdzenia |
 | S4.6 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Co je jen v terminálu | What is only in the terminal | Was nur im Terminal geht | Co jest tylko w terminalu |
 | S5 | S5-phone.md | výzkum 1.18.0, aplikace 3.14.0 | platí | Telefon | Phone | Telefon | Telefon |
 | S5.1 | S5-phone.md | výzkum 1.18.0, aplikace 3.14.0 | platí | Propojení s telefonem patří počítači a zapíná ho jen člověk | The phone connection belongs to the computer and only a person turns it on | Die Verbindung mit dem Telefon gehört dem Computer und nur ein Mensch schaltet sie ein | Połączenie z telefonem należy do komputera i włącza je tylko człowiek |

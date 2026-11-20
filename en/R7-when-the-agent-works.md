@@ -69,6 +69,8 @@ session is one task. A run starts one or more sessions in a row; between them it
   3.28.0 **Work on the queue…** ([S4.2.3](S4-research-from-the-app.md#S4.2.3)); terminal:
   `strom link open "<link>"`.
 - **Since:** research 1.32.0
+- **From research 1.36.0:** with **Starting the agent from the Strom app: without the question** the work starts
+  without asking for a yes; the condition still asks ([S4.5.5](S4-research-from-the-app.md#S4.5.5)).
 
 <!-- zdroj: research:src/cli/menu-links.ts workRun (WORK_LIST=5, agentCliHere, busyIn, taskQueue s RUN_TURNS, loop jen s run.gate, choose výchozí „Teď nic“, asks … false, run --tasks | --loop) · src/core/links.ts LINK_WORK_DOS, LINK_WORK_MAX=100, LINK_WORK_DEFAULT=5 · src/commands/links.ts case "work" · cs.json ui.link.work.*, ui.link.what.work.*, ui.run.next, ui.run.limit, ui.link.cost · CHANGELOG.cs.md 1.32.0 · spec 052 K6.2 (cesta terminál, most agenta nespouští) -->
 

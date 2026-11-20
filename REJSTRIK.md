@@ -1140,6 +1140,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [S4.5.4](cs/S4-research-from-the-app.md#S4.5.4), S4.5, S4.2.3
 
+<a id="start-without-question"></a>
+### Spouštění agenta z aplikace Strom
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Spouštění agenta z aplikace Strom: s potvrzením · bez potvrzení (`run.confirm` ask · no) | Volba výzkumu pro celý počítač. **S potvrzením** (výchozí) se terminál před prací agenta, o kterou požádala aplikace, zeptá **Pokračovat?**; **bez potvrzení** ji spustí hned a řekne to jednou řádkou. Dotaz s cenou v penězích, souhlasy, mazání, odeslání žádosti a podmínka samostatné práce se ptají dál. Zapíná jen člověk. |
+| en | Starting the agent from the Strom app: asked first · without the question (`run.confirm` ask · no) | A research setting for the whole computer. **Asked first** (the default): before agent's work that the app asked for, the terminal asks **Go on?**; **without the question** it starts the work at once and says so in one line. A question with a price in money, consents, deletions, a request sent and the condition of working alone still ask. Only a person turns it on. |
+| de | Agent aus der Strom-App starten: mit Rückfrage · ohne Rückfrage (`run.confirm` ask · no) | Eine Einstellung der Forschung für den ganzen Computer. **Mit Rückfrage** (Standard) fragt das Terminal vor Arbeit des Agenten, um die die App gebeten hat, **Fortfahren?**; **ohne Rückfrage** startet es sie sofort und sagt es in einer Zeile. Eine Frage mit einem Preis in Geld, Zustimmungen, Löschen, das Absenden einer Anfrage und die Bedingung der Alleinarbeit fragen weiter. Einschalten kann es nur der Mensch. |
+| pl | Uruchamianie agenta z aplikacji Strom: z potwierdzeniem · bez potwierdzenia (`run.confirm` ask · no) | Ustawienie badania dla całego komputera. **Z potwierdzeniem** (domyślnie) terminal przed pracą agenta, o którą poprosiła aplikacja, pyta **Kontynuować?**; **bez potwierdzenia** uruchamia ją od razu i mówi o tym jedną linią. Pytanie z ceną w pieniądzach, zgody, usuwanie, wysłanie prośby i warunek samodzielnej pracy pytają dalej. Włącza je tylko człowiek. |
+
+- **Čísla:** [S4.5.5](cs/S4-research-from-the-app.md#S4.5.5), S4.5, R7.1.2, R5.6
+
 <a id="send-mode"></a>
 ### Posílat úpravy
 

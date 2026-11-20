@@ -1083,7 +1083,8 @@ preview.
 
 Most research actions in the app are a `strom-research://` link. The link opens the research's terminal on the same
 computer. The terminal says what the app asks for and asks. Without confirmation in the terminal nothing is written
-or paid.
+or paid. The only exception is the agent's work on the subscription or AI credit, when the research is set so
+([S4.5.5](#S4.5.5)).
 
 - **Limits:**
   - An action is visible only on a computer (not on a touch device), only when the research has announced the link and
@@ -1091,7 +1092,8 @@ or paid.
   - The link carries only record numbers and fixed values, no names and no free text.
   - The terminal begins **The Strom app asks for: … / Research: …** and asks **Go on?** For the agent's work
     it adds **The agent works on the subscription or AI credit of its account.**, for assigning tasks **The research
-    writes tasks for the agent — nothing is searched and nothing is paid now.**
+    writes tasks for the agent — nothing is searched and nothing is paid now.** With **Starting the agent from the
+    Strom app: without the question** the agent's work starts without asking ([S4.5.5](#S4.5.5)).
   - A Strom archive and a research waiting for an agent refuse the agent's work (conversation, review, search,
     places, history).
   - When the same active direction already exists, **Find ancestors** only says **This research is there already:
@@ -1177,6 +1179,9 @@ with it now.
   the source ([R8.8.3](R8-reading-scans.md#R8.8.3)). Terminal: `strom chat --task T…` takes the task from the queue
   straight into a conversation.
 - **Since:** research 1.29.0, app 3.25.0
+- **From research 1.36.0:** with **Starting the agent from the Strom app: without the question** the conversation
+  starts without asking only while the price of similar sessions is not known yet. With a known price it still asks
+  ([S4.5.5](#S4.5.5)).
 
 <!-- zdroj: research:c2a690ea src/cli/menu-links.ts (odkaz task bez do, úkol open) · assets/lang/cs.json ui.link.open.title/why/done/pick/chat/ahead/keep/already/kept/busy/estimate/estimate.none, ui.chat.task.open.say · strom help chat (--task: „a task in the queue (open): gone through now, taken up in the conversation“) · commit 9bd14e84 · test/cli/link-open-task.test.ts · dirigent:prace/1107-vyzkum-drobnosti-ukoly/karta.md Výsledek (Popis chování 7; klik v aplikaci neověřen) · app:6bd8609e strings.ts read.openTaskN, src/__tests__/read-source-state-view.test.ts:75 (researchLinkMark task) -->
 
@@ -1220,6 +1225,45 @@ done. The app then stops waiting at once and speaks up only when nothing opened 
 
 <!-- zdroj: research:fbae81fc src/core/handoffs.ts (HANDOFF tvar UUID, HANDOFF_MS 60 s, HANDOFF_MAX 64, handoffsNow úklid, noteHandoff) · src/core/links.ts parseLink (handoff malými písmeny, jiná hodnota vynechána), linkText · src/commands/links.ts link open noteTaken (tty hned; bez terminálu done: true; researchesWithId) · src/core/live.ts withHandoffs (/status i parts=1, mimo stav), BRIDGE_FEATURES handoffs · test/cli/link-handoffs.test.ts · CHANGELOG.cs.md 1.35.0 (odkaz aplikace Strom … výzkum aplikaci potvrdí) · app:574e7ef9, f63cc742 src/ui/research-open-busy.ts (handoffProven: handoffs s feature handoffs, jinak nové sezení; OPEN_ASK_MS 1000, OPEN_LATE_ASK_MS 2000, OPEN_LATE_WATCH_MS 60 s, OPEN_REPEAT_MS 400, bridgeDown 30 s, quietLimit new?app=) · src/research-link.ts HANDOFFS_FEATURE · app:docs/ZADANI_VYZKUM_tlacitka-cekani.md „Odpověď výzkumu“ · app:c3e09951 (79a05311) src/ui/research-open-busy.ts unprovable (poslední status bez feature handoffs → quietEnd: po limitu bez věty a bez pozdního hlídání; most dole → věta hned; opts.proof fronty beze změny) · dirigent:prace/1118-app-tlacitka-n1 (N2, Milan 18. 11.) -->
 
+<a id="S4.5.5"></a>
+### S4.5.5 Starting the agent from the app without confirmation
+
+The research's setting **Starting the agent from the Strom app** decides whether the terminal asks **Go on?** before
+agent's work that the app asked for. The default is **asked first**: the terminal says what the app asks for, that the
+agent works on the subscription or AI credit, and waits for a yes ([S4.5](#S4.5)). **Without the question** the
+agent's work starts at once and the terminal says so in one line: **▶ Started without the question (research …): …**
+and where the question is turned on again.
+
+- **Enforced by the code:**
+  - only actions that start the agent on the subscription or AI credit start without asking: a conversation with the
+    agent (also about a person or a direction), a conversation about a task in the queue ([S4.5.3](#S4.5.3)) or in
+    **Awaiting action**, a conflict left to the agent ([R5.6](R5-conflicts.md#R5.6)), the work on the queue
+    ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)) and the identification of places;
+  - still asked:
+    - a question that says a price in money: the estimate of a task in the queue, the identification of places with
+      a measured price of sessions;
+    - every link opened by an agent or by a script without a person's terminal;
+    - a request sent, consents of archives and hosts (`strom allow`), deletions, assigning tasks to the agent and the
+      history of a place;
+    - the condition of working alone (`run.gate`): the work on the queue asks it as before
+      ([R7.4](R7-when-the-agent-works.md#R7.4), [R7.4.1](R7-when-the-agent-works.md#R7.4.1));
+  - when another session or run is already running in the research, nothing more starts, not even without the
+    question;
+  - the setting applies to every research on this computer, not to one tree. In a Strom archive the menu does not
+    offer it;
+  - only a person turns on **without the question**: the terminal says what is still asked and wants a second yes
+    (Enter = no). When an agent or a command without a terminal sets it, a system window asks the person; without a
+    window strom refuses the setting. Anyone may go back to **asked first**, without a question;
+  - the Strom app has no such setting and does not change it. The value is shown by `strom config` and by the report
+    `strom error` ([R13](R13-reporting-a-problem.md#R13)).
+- **Controls:** terminal: the menu **Settings** → **Language, agent, model, what the agent may do alone, stories… (the
+  setup)** → **Starting the agent from the Strom app: …** → **Ask before it starts (default)** or **Start without the
+  question**; `strom config set run.confirm no`, back `strom config unset run.confirm`. The value in force is shown by
+  `strom config where`.
+- **Since:** research 1.36.0
+
+<!-- zdroj: research:8aa0f374 src/core/config.ts run.confirm (ask|no, tree: false, env žádná), Settings.runConfirm · src/cli/menu-links.ts asksToStart (priced || runConfirm !== no || !ctx.interactive || isAgent → asks; jinak ui.link.noconfirm) u openTask (priced = taskEstimate), waitingDo chat, placesRun (priced = est.session.usd || fronta), workRun, workOn · src/commands/links.ts conflict do=agent, chat (direction/person) · placeSearch dál asks (placeCost), review/research ui.link.tasks dál asks · src/commands/setup.ts setUserSetting run.confirm no → requireHumanYes (ui.consent.run.confirm), FALLBACKS run.confirm ask · src/cli/context.ts requireHuman (terminál → humanYes, jinak okno systému, jinak odmítnutí) · src/cli/menu-settings.ts runConfirmStep (ui.runconfirm.*, ui.runconfirm.about; jen !archive), unset pro ask · src/core/report.ts CONFIG_PLAIN runConfirm · cs.json ui.settings.runconfirm, ui.runconfirm.*, ui.link.noconfirm · strom help link · CHANGELOG.cs.md 1.36.0 „Agent z aplikace Strom bez potvrzení“ · test/cli/run-confirm.test.ts, test/cli/gates.test.ts · spec 123 K1.1–K1.5 (K1.4 bez zápisu do logu výzkumu: rozhodnutí dirigenta 20. 11.) -->
+
 <a id="S4.6"></a>
 ## S4.6 What is only in the terminal
 
@@ -1231,7 +1275,8 @@ research's terminal, even when it starts with a click in the app.
     the condition, the choice of agent, the queue settings and the items **Only here in the terminal (not in the
     Strom app)** ([R6.1.1](R6-awaiting-action.md#R6.1.1)).
   - Confirmed in the terminal: everything with the mark terminal or AI ([S4.5.1](#S4.5.1)), in 3.21.2 also the
-    actions of directions and of the queue.
+    actions of directions and of the queue. From research 1.36.0 the agent's work without a price in money can start
+    without confirmation ([S4.5.5](#S4.5.5)); only a person turns this on, in the terminal.
   - On a phone there are no links; answers are given in the research on the computer ([S5](S5-phone.md)).
 - **Since:** app 3.4.0 (research 1.6.0)
 - **From app 3.22.0:** with research 1.26.0 directions ([S4.3.1](#S4.3.1)), work outside the directions by branches

@@ -65,6 +65,8 @@ jeden úkol. Běh spustí jedno nebo víc sezení za sebou; mezi nimi se může 
   3.28.0 **Pracovat na frontě…** ([S4.2.3](S4-research-from-the-app.md#S4.2.3)); terminál:
   `strom link open "<odkaz>"`.
 - **Platí od:** výzkum 1.32.0
+- **Od výzkumu 1.36.0:** při **Spouštění agenta z aplikace Strom: bez potvrzení** se práce spustí bez dotazu na ano;
+  podmínka se ptá dál ([S4.5.5](S4-research-from-the-app.md#S4.5.5)).
 
 <!-- zdroj: research:src/cli/menu-links.ts workRun (WORK_LIST=5, agentCliHere, busyIn, taskQueue s RUN_TURNS, loop jen s run.gate, choose výchozí „Teď nic“, asks … false, run --tasks | --loop) · src/core/links.ts LINK_WORK_DOS, LINK_WORK_MAX=100, LINK_WORK_DEFAULT=5 · src/commands/links.ts case "work" · cs.json ui.link.work.*, ui.link.what.work.*, ui.run.next, ui.run.limit, ui.link.cost · CHANGELOG.cs.md 1.32.0 · spec 052 K6.2 (cesta terminál, most agenta nespouští) -->
 
