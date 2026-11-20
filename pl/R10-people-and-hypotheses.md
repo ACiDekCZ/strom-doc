@@ -283,6 +283,9 @@ zapisuje się tak, jak stoją w akcie; ujednolica się tylko daty.
   - pełne imię i nazwisko z aktu uzupełnia imię bez nazwiska („Marie”) i osoba pokazuje się potem pod nim. To samo
     imię i nazwisko podane ponownie tylko dodaje cytat;
   - kobieta pokazuje się pod nazwiskiem rodowym; nazwisko po ślubie zostaje obok;
+  - z kilku nazwisk po ślubie obecne jest to z ostatniego małżeństwa albo to, które użytkownik wybrał w aplikacji.
+    Pozostałe zostają nazwiskami po ślubie; plik dla aplikacji podaje obecne jako ostatnie
+    ([A4.6.1](A4-surnames-and-families.md#A4.6.1), [A4.6.2](A4-surnames-and-families.md#A4.6.2));
   - tytuł pisany razem z imieniem i nazwiskiem („inż.”, „dr”, „mł.”) trafia do przedrostka lub przyrostka
     (`--prefix`, `--suffix`), nie do imienia ani nazwiska;
   - **imię i nazwisko, pod którym osoba się pokazuje** (rozwiedziona kobieta z powrotem przy nazwisku rodowym), to
@@ -301,9 +304,9 @@ zapisuje się tak, jak stoją w akcie; ujednolica się tylko daty.
   "…"` (`--clear` przywraca imię i nazwisko z urodzenia). Formy nazwiska w aplikacji:
   [A4.5](A4-surnames-and-families.md#A4.5), [A4.6](A4-surnames-and-families.md#A4.6).
 - **Obowiązuje od:** badanie 1.0.0; przedrostek i przyrostek 1.13.0; imię i nazwisko, pod którym osoba się pokazuje,
-  1.27.0; nienazwane dziecko 1.27.0
+  1.27.0; nienazwane dziecko 1.27.0; obecne nazwisko po ślubie 1.36.0
 
-<!-- zdroj: research:src/core/model.ts NAME_KINDS · research:src/commands/people.ts name add (description), name primary (od v1.27.0), TITLE_OPTIONS (od v1.13.0) · research:assets/method/recording.md "The names a record gives", "A child the record does not name" (od v1.27.0), "People named wrongly by the weaker record" · research:assets/method/intake.md krok 4 -->
+<!-- zdroj: research:src/core/model.ts NAME_KINDS · research:src/commands/people.ts name add (description), name primary (od v1.27.0), TITLE_OPTIONS (od v1.13.0) · research:assets/method/recording.md "The names a record gives", "A child the record does not name" (od v1.27.0), "People named wrongly by the weaker record" · research:assets/method/intake.md krok 4 · aktuální jméno po sňatku: research:5476514e src/core/married.ts marriedInOrder, src/gedcom/export.ts, src/core/sync.ts name.now (spec 010 K4.1, K4.2) -->
 
 <a id="R10.5.1"></a>
 ### R10.5.1 Błędne imię i notatka zostają wycofane

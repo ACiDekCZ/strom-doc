@@ -304,6 +304,9 @@ hat seinen eigenen Datensatz. Namen werden so erfasst, wie sie im Eintrag stehen
   - ein Name ohne Familiennamen („Marie“) wird um den vollen Namen aus dem Eintrag ergänzt, und die Person wird dann
     mit ihm gezeigt. Derselbe Name noch einmal fügt nur eine Zitation hinzu;
   - eine Frau wird mit ihrem Geburtsnamen gezeigt; der Ehename bleibt daneben;
+  - von mehreren Namen nach der Heirat ist der aktuelle der aus der letzten Ehe oder der, den der Benutzer in der App
+    gewählt hat. Die anderen bleiben Namen nach der Heirat; die Datei für die App gibt den aktuellen zuletzt
+    ([A4.6.1](A4-surnames-and-families.md#A4.6.1), [A4.6.2](A4-surnames-and-families.md#A4.6.2));
   - ein mit dem Namen geschriebener Titel („Ing.“, „MUDr.“, „ml.“) kommt in das Präfix oder Suffix des Namens
     (`--prefix`, `--suffix`), nicht in den Vornamen oder den Familiennamen;
   - **der Name, mit dem eine Person gezeigt wird** (eine geschiedene Frau wieder mit ihrem Geburtsnamen), ist eine
@@ -323,9 +326,9 @@ hat seinen eigenen Datensatz. Namen werden so erfasst, wie sie im Eintrag stehen
   "…"` (`--clear` stellt den Geburtsnamen wieder her). Formen des Nachnamens in der App:
   [A4.5](A4-surnames-and-families.md#A4.5), [A4.6](A4-surnames-and-families.md#A4.6).
 - **Gilt seit:** Forschung 1.0.0; Präfix und Suffix 1.13.0; der Name, mit dem eine Person gezeigt wird, 1.27.0; ein
-  nicht benanntes Kind 1.27.0
+  nicht benanntes Kind 1.27.0; der aktuelle Name nach der Heirat 1.36.0
 
-<!-- zdroj: research:src/core/model.ts NAME_KINDS · research:src/commands/people.ts name add (description), name primary (od v1.27.0), TITLE_OPTIONS (od v1.13.0) · research:assets/method/recording.md "The names a record gives", "A child the record does not name" (od v1.27.0), "People named wrongly by the weaker record" · research:assets/method/intake.md krok 4 -->
+<!-- zdroj: research:src/core/model.ts NAME_KINDS · research:src/commands/people.ts name add (description), name primary (od v1.27.0), TITLE_OPTIONS (od v1.13.0) · research:assets/method/recording.md "The names a record gives", "A child the record does not name" (od v1.27.0), "People named wrongly by the weaker record" · research:assets/method/intake.md krok 4 · aktuální jméno po sňatku: research:5476514e src/core/married.ts marriedInOrder, src/gedcom/export.ts, src/core/sync.ts name.now (spec 010 K4.1, K4.2) -->
 
 <a id="R10.5.1"></a>
 ### R10.5.1 Ein falscher Name und eine Notiz werden zurückgezogen

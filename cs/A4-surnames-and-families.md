@@ -190,6 +190,65 @@ Když je u ženy příjmení po sňatku prázdné, editor osoby nabídne „Náv
 
 <!-- zdroj: app:src/married-suggestion.ts:46 suggestionHusband · :65 wifeSurnameOf · :83 suggestMarriedSurname · src/person-name.ts:46 surnameDisplay · :79 shownNameParts · src/ui/person-modal.ts:1483 refreshMarriedSurname · strings.ts person.*, settings.surnameDisplay, name.* -->
 
+<a id="A4.6.1"></a>
+### A4.6.1 Více sňatků: příjmení z posledního sňatku
+
+Osoba, která má víc jmen po sňatku, má jako **Příjmení po sňatku** to z posledního sňatku, ne poslední zapsané.
+Ostatní jména po sňatku jsou v **Další tvary jména**.
+
+Marie Horáková má dva sňatky: roku 1880 (manžel Jan Vlk) a roku 1900 (manžel Josef Jaworski). Výzkum zapsal
+nejdřív „Marie Jaworska“, potom „Marie Vlková“. **Příjmení po sňatku** je Jaworska, „Marie Vlková“ je v **Další tvary
+jména**.
+
+- **Hranice:**
+  - Sňatek je svazek, který je nebo byl sňatkem (i rozvedený); svazek bez sňatku (**Partneři**, **Odloučení**) se
+    nepočítá.
+  - Vyhrává jméno, jehož příjmení patří partnerovi ze sňatku s nejpozdějším datem. Sňatky bez data přicházejí na
+    řadu až po nich, od posledního v pořadí sňatků ([A6.4](A6-views.md#A6.4)).
+  - Příjmení patří partnerovi i přechýlené (Vlk → Vlková, Jaworski → Jaworska), bez ohledu na velikost písmen
+    a diakritiku, i ve stromu, kde pravidla tvarů ([A4.5](#A4.5)) ženský tvar nedávají.
+  - Jméno, které žádnému partnerovi nepatří, přichází na řadu až za nimi; když nepatří žádné, platí poslední
+    zapsané.
+  - Nevybraná jména po sňatku zůstávají v **Další tvary jména** i se svými křestními jmény. Nic se nemaže.
+  - Platí při načtení stromu z výzkumu i souboru GEDCOM jiného programu (`NAME` s `TYPE married` i `_MARNM`).
+    Výzkum řadí jména po sňatku ve svém souboru pro aplikaci podle stejného pravidla, aktuální na konec, a aplikace
+    jeho pořadí bere, jak je. U staršího výzkumu a u souboru jiného programu pravidlo počítá aplikace sama. Starší
+    aplikace bere poslední zapsané jméno, takže od výzkumu dostane také to aktuální.
+- **Proč:** jména po sňatku přibývají v pořadí, v jakém je výzkum najde: novější příjmení třeba z úmrtního zápisu
+  dřív než starší z oddacího. Poslední zapsané tak nemusí být to z posledního sňatku.
+- **Ovládání:** jiné příjmení po sňatku se zvolí ručně ([A4.6.2](#A4.6.2)).
+- **Platí od:** aplikace 3.31.0, výzkum 1.36.0 (dřív platilo poslední zapsané jméno po sňatku)
+
+<!-- zdroj: app:bb706ed0 src/married-suggestion.ts marriagePartnersLatestFirst (married|divorced; s datem od nejpozdějšího, pak bez data od posledního v marriagesInOrder), surnameOfSpouse (surnameKey, wifeSurnameOf, feminineForm, masculineFormIn), lastMarriageSurnameIndex (bez shody Infinity, shoda → poslední v pořadí souboru) · src/ged-parser.ts readMarriedSurname (TYPE married, _MARNM), chooseLastMarriageName (nevybrané do nameVariants s křestními), MARRIED_LAST_TAG (se značkou bez přepočtu) · test src/__tests__/married-surname-last-marriage.test.ts · research:5476514e src/core/married.ts marriagesOf (union partners|separated mimo), marriedInOrder, namesInOrder · src/gedcom/export.ts (Strom soubor: jména po sňatku na konci, aktuální poslední; HEAD _STROM_MARRIED_LAST) · spec 010 K4.1, K4.3, K4.4 · dirigent:prace/1120-app-010-posledni-snatek, 1120-vyzkum-010-posledni-snatek -->
+
+<a id="A4.6.2"></a>
+### A4.6.2 Ruční změna příjmení po sňatku
+
+Změna **Příjmení po sňatku** na jiné příjmení (v editoru osoby nebo v tabulce) je volba uživatele: dřívější příjmení
+po sňatku zůstane v **Další tvary jména** a zvolené z nich odejde.
+
+- **Hranice:**
+  - Oprava pravopisu (stejné příjmení, jiná jen diakritika nebo velikost písmen) ani vymazání pole do dalších tvarů
+    nic nepřidá.
+  - Dřívější jméno si nechá svá vlastní křestní jména, pokud je mělo.
+  - Výzkum volbu převezme jako aktuální jméno po sňatku a drží ji proti pravidlu [A4.6.1](#A4.6.1), i po nových
+    záznamech a novém sňatku, dokud se v aplikaci nezvolí jiné. Ostatní jména po sňatku ve výzkumu zůstávají.
+  - Jméno po sňatku, které výzkum ještě nemá, výzkum přidá a rovnou ho vezme jako aktuální.
+  - Volbou je jen změna proti verzi, kterou aplikace od výzkumu dostala. Aplikace, která novější verzi ještě
+    nenačetla, nic nevolí.
+  - Jméno, kterým se osoba ve výzkumu ukazuje (`strom name primary`, [R10.5](R10-people-and-hypotheses.md#R10.5)),
+    má přednost před volbou z aplikace.
+  - Volba jména, které výzkum mezitím odebral nebo odvolal ([R10.5.1](R10-people-and-hypotheses.md#R10.5.1)), se
+    nepřevezme.
+  - S výzkumem starším než 1.36.0 se ruční volba při dalším načtení stromu vrátí podle pravidla
+    [A4.6.1](#A4.6.1).
+- **Proč:** aktuální nemusí být příjmení z posledního sňatku, třeba po rozvodu ponechané příjmení.
+- **Ovládání:** volbu nastaví jen aplikace (pole **Příjmení po sňatku**); terminál pro ni příkaz nemá. Při převzetí
+  ukáže `strom sync` řádek „aktuální jméno po sňatku — …“, `strom sync undo I…` volbu vrátí.
+- **Platí od:** aplikace 3.31.0, výzkum 1.36.0
+
+<!-- zdroj: app:bb706ed0 src/data.ts updatePerson (marriedBefore/marriedNow, surnameKey: oprava pravopisu nic nepřidá, vymazání nic nepřidá, dřívější s marriedFirstName do nameVariants, zvolené z nameVariants pryč) · src/ui/table-view/table-ui.ts updatePerson · research:5476514e src/core/sync.ts name.now (porovnání se základem _STROM_HEAD, off: odebrané od základu nebo retractedNames, shown/primaryName přednost), apply name.now (addName kind married, marriedNow), undo name.now · src/core/married.ts marriedInOrder (primary > marriedNow > pravidlo) · assets/lang/cs.json ui.sync.name.now, ui.sync.do.name.now · strings.ts person.marriedSurname, nameVariants „Další tvary jména“ · spec 010 K4.2, K4.4 · ZADANI_VYZKUM_prijmeni-posledni-snatek.md „Odpověď výzkumu“ (odchylky) · Name.marriedNow a HEAD _STROM_MARRIED_LAST se nepopisují (vnitřní) -->
+
 <a id="A4.7"></a>
 ## A4.7 Tvary příjmení stromu a návrhy z výzkumu
 

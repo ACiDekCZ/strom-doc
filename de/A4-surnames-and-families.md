@@ -219,6 +219,73 @@ aus, und derselbe Vorschlag wird nicht mehr angeboten.
 
 <!-- zdroj: app:src/married-suggestion.ts:46 suggestionHusband · :65 wifeSurnameOf · :83 suggestMarriedSurname · src/person-name.ts:46 surnameDisplay · :79 shownNameParts · src/ui/person-modal.ts:1483 refreshMarriedSurname · strings.ts person.*, settings.surnameDisplay, name.* -->
 
+<a id="A4.6.1"></a>
+### A4.6.1 Mehrere Ehen: der Nachname aus der letzten Ehe
+
+Eine Person mit mehreren Namen nach der Heirat hat als **Ehename** den aus der letzten Ehe, nicht den zuletzt
+geschriebenen. Die anderen Namen nach der Heirat stehen unter **Andere Schreibweisen des Namens**.
+
+Marie Horáková hat zwei Ehen: 1880 (Ehemann Jan Vlk) und 1900 (Ehemann Josef Jaworski). Die Forschung schrieb
+zuerst „Marie Jaworska“, dann „Marie Vlková“. Der **Ehename** ist Jaworska, „Marie Vlková“ steht unter **Andere
+Schreibweisen des Namens**.
+
+- **Grenzen:**
+  - Eine Ehe ist eine Verbindung, die eine Ehe ist oder war (auch eine geschiedene); eine Verbindung ohne Ehe
+    (**Partner**, **Getrennt**) zählt nicht.
+  - Es gewinnt der Name, dessen Nachname zum Partner der Ehe mit dem spätesten Datum gehört. Ehen ohne Datum kommen
+    erst danach an die Reihe, von der letzten in der Reihenfolge der Ehen an ([A6.4](A6-views.md#A6.4)).
+  - Ein Nachname gehört zum Partner auch in der weiblichen Form (Vlk → Vlková, Jaworski → Jaworska), unabhängig von
+    Groß- und Kleinschreibung und diakritischen Zeichen, auch in einem Stammbaum, in dem die Regeln der Formen
+    ([A4.5](#A4.5)) keine weibliche Form ergeben.
+  - Ein Name, der zu keinem Partner gehört, kommt erst nach ihnen an die Reihe; gehört keiner, gilt der zuletzt
+    geschriebene.
+  - Die nicht gewählten Namen nach der Heirat bleiben unter **Andere Schreibweisen des Namens**, mit ihren eigenen
+    Vornamen. Nichts wird gelöscht.
+  - Es gilt beim Laden eines Stammbaums aus der Forschung und einer GEDCOM-Datei eines anderen Programms (`NAME` mit
+    `TYPE married` und `_MARNM`). Die Forschung ordnet die Namen nach der Heirat in ihrer Datei für die App nach
+    derselben Regel, den aktuellen zuletzt, und die App übernimmt ihre Reihenfolge, wie sie ist. Bei einer älteren
+    Forschung und bei einer Datei eines anderen Programms ermittelt die App die Regel selbst. Eine ältere App nimmt
+    den zuletzt geschriebenen Namen und bekommt so von der Forschung ebenfalls den aktuellen.
+- **Warum:** Namen nach der Heirat kommen in der Reihenfolge hinzu, in der die Forschung sie findet: ein neuerer
+  Nachname etwa aus einem Sterbeeintrag vor einem älteren aus dem Traueintrag. Der zuletzt geschriebene muss also
+  nicht der aus der letzten Ehe sein.
+- **Bedienung:** ein anderer Ehename wird von Hand gewählt ([A4.6.2](#A4.6.2)).
+- **Gilt seit:** App 3.31.0, Forschung 1.36.0 (vorher galt der zuletzt geschriebene Name nach der Heirat)
+
+<!-- zdroj: app:bb706ed0 src/married-suggestion.ts marriagePartnersLatestFirst (married|divorced; s datem od nejpozdějšího, pak bez data od posledního v marriagesInOrder), surnameOfSpouse (surnameKey, wifeSurnameOf, feminineForm, masculineFormIn), lastMarriageSurnameIndex (bez shody Infinity, shoda → poslední v pořadí souboru) · src/ged-parser.ts readMarriedSurname (TYPE married, _MARNM), chooseLastMarriageName (nevybrané do nameVariants s křestními), MARRIED_LAST_TAG (se značkou bez přepočtu) · test src/__tests__/married-surname-last-marriage.test.ts · research:5476514e src/core/married.ts marriagesOf (union partners|separated mimo), marriedInOrder, namesInOrder · src/gedcom/export.ts (Strom soubor: jména po sňatku na konci, aktuální poslední; HEAD _STROM_MARRIED_LAST) · spec 010 K4.1, K4.3, K4.4 · dirigent:prace/1120-app-010-posledni-snatek, 1120-vyzkum-010-posledni-snatek -->
+
+<a id="A4.6.2"></a>
+### A4.6.2 Den Ehenamen von Hand ändern
+
+Die Änderung des **Ehename** auf einen anderen Nachnamen (im Personeneditor oder in der Tabelle) ist eine Wahl des
+Benutzers: Der frühere Ehename bleibt unter **Andere Schreibweisen des Namens**, und der gewählte verlässt sie.
+
+- **Grenzen:**
+  - Eine Korrektur der Schreibung (derselbe Nachname, nur diakritische Zeichen oder Groß- und Kleinschreibung
+    anders) und das Leeren des Feldes fügen den anderen Schreibweisen nichts hinzu.
+  - Der frühere Name behält seine eigenen Vornamen, wenn er welche hatte.
+  - Die Forschung übernimmt die Wahl als aktuellen Namen nach der Heirat und hält sie gegen die Regel
+    [A4.6.1](#A4.6.1), auch nach neuen Einträgen und einer neuen Ehe, bis in der App ein anderer gewählt wird. Die
+    anderen Namen nach der Heirat bleiben in der Forschung.
+  - Einen Namen nach der Heirat, den die Forschung noch nicht hat, fügt die Forschung hinzu und nimmt ihn gleich als
+    aktuellen.
+  - Eine Wahl ist nur eine Änderung gegenüber der Version, die die App von der Forschung bekam. Eine App, die eine
+    neuere Version noch nicht geladen hat, wählt nichts.
+  - Der Name, mit dem die Person in der Forschung gezeigt wird (`strom name primary`,
+    [R10.5](R10-people-and-hypotheses.md#R10.5)), hat Vorrang vor der Wahl aus der App.
+  - Die Wahl eines Namens, den die Forschung inzwischen entfernt oder zurückgezogen hat
+    ([R10.5.1](R10-people-and-hypotheses.md#R10.5.1)), wird nicht übernommen.
+  - Mit einer Forschung älter als 1.36.0 kehrt die Wahl beim nächsten Laden des Stammbaums zur Regel
+    [A4.6.1](#A4.6.1) zurück.
+- **Warum:** Der aktuelle Nachname muss nicht der aus der letzten Ehe sein, etwa ein nach einer Scheidung behaltener
+  Nachname.
+- **Bedienung:** die Wahl setzt nur die App (Feld **Ehename**); das Terminal hat dafür keinen Befehl. Bei der
+  Übernahme zeigt `strom sync` die Zeile „aktueller Name nach der Heirat — …“, `strom sync undo I…` nimmt die Wahl
+  zurück.
+- **Gilt seit:** App 3.31.0, Forschung 1.36.0
+
+<!-- zdroj: app:bb706ed0 src/data.ts updatePerson (marriedBefore/marriedNow, surnameKey: oprava pravopisu nic nepřidá, vymazání nic nepřidá, dřívější s marriedFirstName do nameVariants, zvolené z nameVariants pryč) · src/ui/table-view/table-ui.ts updatePerson · research:5476514e src/core/sync.ts name.now (porovnání se základem _STROM_HEAD, off: odebrané od základu nebo retractedNames, shown/primaryName přednost), apply name.now (addName kind married, marriedNow), undo name.now · src/core/married.ts marriedInOrder (primary > marriedNow > pravidlo) · assets/lang/cs.json ui.sync.name.now, ui.sync.do.name.now · strings.ts person.marriedSurname, nameVariants „Další tvary jména“ · spec 010 K4.2, K4.4 · ZADANI_VYZKUM_prijmeni-posledni-snatek.md „Odpověď výzkumu“ (odchylky) · Name.marriedNow a HEAD _STROM_MARRIED_LAST se nepopisují (vnitřní) -->
+
 <a id="A4.7"></a>
 ## A4.7 Namensschreibweisen des Stammbaums und Vorschläge aus der Forschung
 
