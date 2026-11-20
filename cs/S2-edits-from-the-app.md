@@ -391,10 +391,14 @@ změní nebo zmizí.
   přeškrtnuté a přidané nebo změněné zvýrazněné (změněný řádek: starý přeškrtnutý, pak nový). Odstavec, který
   výzkum jen přidal, nic nepřeškrtne. Mezery na konci řádku a konce řádků z Windows nejsou změna. Poznámka jen na
   jedné straně má dál **tady → z výzkumu**. Načtou se tatáž data jako dřív.
+- **Číslo snímku nebo folium navíc:** pramen, kterému verze výzkumu k umístění jen přidala číslo snímku nebo folium
+  (tady chybělo, umístění je jinak stejné), nedá řádek u žádné své citace. Pod seznamem je jen věta „U 3 pramenů
+  přibylo číslo snímku.“ (u folia „U 3 pramenů přibylo folium.“) a mezi změny se nepočítá. Změněné umístění, změněné
+  číslo snímku i jeho odebrání dávají řádek dál.
 - **Hranice:** u stromu, který z výzkumu jen načítá ([S2.2](#S2.2)), a když se z posledního poslání něco
   nezapsalo, dialog řekne, že načtení tyto úpravy přepíše; tlačítka jsou **Načíst a přepsat** a **Otevřít jako
   kopii**.
 - **Ovládání:** aplikace: **Načíst verzi výzkumu**
-- **Platí od:** aplikace 3.9.0; poznámka po řádcích od 3.29.0
+- **Platí od:** aplikace 3.9.0; poznámka po řádcích od 3.29.0; číslo snímku nebo folium navíc od 3.31.0
 
-<!-- zdroj: app:src/ui/research-load-ui.ts askResearchLoad (ROWS_SHOWN 8, overwrite: sendMode off nebo nezapsané z posledního poslání → loadOverwrite + research.openCopy), src/ui/research-ui.ts:2377 · 03352a9c src/line-diff.ts diffLines (LCS po řádcích, mezery na konci a CRLF nejsou změna), research-load-ui.ts notes · strings.ts sync.loadTitle, loadColChange, loadMore, loadAdded, loadBackupNote, loadOverwrite, loadOverNotWritten · CHANGELOG.cs.md 3.29.0 „Načíst verzi výzkumu?“ · v3.9.0 (loadColChange) -->
+<!-- zdroj: app:src/ui/research-load-ui.ts askResearchLoad (ROWS_SHOWN 8, overwrite: sendMode off nebo nezapsané z posledního poslání → loadOverwrite + research.openCopy), src/ui/research-ui.ts:2377 · 03352a9c src/line-diff.ts diffLines (LCS po řádcích, mezery na konci a CRLF nejsou změna), research-load-ui.ts notes · strings.ts sync.loadTitle, loadColChange, loadMore, loadAdded, loadBackupNote, loadOverwrite, loadOverNotWritten · CHANGELOG.cs.md 3.29.0 „Načíst verzi výzkumu?“ · v3.9.0 (loadColChange) · 3.31.0: app:2e68d373 src/research-changes.ts placeNumberAdded, pageMoved, diffValues numbersAdded; src/ui/research-load-ui.ts (věta pod seznamem, nepočítá se); strings.ts sync.loadImageNumbers, loadFolioNumbers · CHANGELOG.cs.md 3.31.0 „Načtení verze výzkumu“ -->

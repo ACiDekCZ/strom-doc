@@ -421,10 +421,14 @@ what changes or goes in the app.
   through and added or changed lines are marked (a changed line: the old one struck through, then the new one).
   A paragraph the research only added strikes nothing through. Spaces at the end of a line and Windows line ends
   are no change. A note on one side only keeps **here → from research**. The same data is loaded as before.
+- **An image number or folio added:** a source to whose place the research's version only adds an image number or a
+  folio (missing here, the location otherwise the same) gives no row at any of its citations. Below the list there is
+  only the sentence "Image number added in 3 sources." (for a folio "Folio added in 3 sources."), and it does not count
+  as a change. A changed location, a changed image number and its removal still give a row.
 - **Limits:** for a tree that only loads from the research ([S2.2](#S2.2)), and when something of the last send was
   not written, the dialog says that loading overwrites those edits; the buttons are **Load and overwrite** and
   **Open as copy**.
 - **Controls:** app: **Load the research's version**
-- **Since:** app 3.9.0; a note line by line from 3.29.0
+- **Since:** app 3.9.0; a note line by line from 3.29.0; an image number or folio added from 3.31.0
 
-<!-- zdroj: app:src/ui/research-load-ui.ts askResearchLoad (ROWS_SHOWN 8, overwrite: sendMode off nebo nezapsané z posledního poslání → loadOverwrite + research.openCopy), src/ui/research-ui.ts:2377 · 03352a9c src/line-diff.ts diffLines (LCS po řádcích, mezery na konci a CRLF nejsou změna), research-load-ui.ts notes · strings.ts sync.loadTitle, loadColChange, loadMore, loadAdded, loadBackupNote, loadOverwrite, loadOverNotWritten · CHANGELOG.cs.md 3.29.0 „Načíst verzi výzkumu?“ · v3.9.0 (loadColChange) -->
+<!-- zdroj: app:src/ui/research-load-ui.ts askResearchLoad (ROWS_SHOWN 8, overwrite: sendMode off nebo nezapsané z posledního poslání → loadOverwrite + research.openCopy), src/ui/research-ui.ts:2377 · 03352a9c src/line-diff.ts diffLines (LCS po řádcích, mezery na konci a CRLF nejsou změna), research-load-ui.ts notes · strings.ts sync.loadTitle, loadColChange, loadMore, loadAdded, loadBackupNote, loadOverwrite, loadOverNotWritten · CHANGELOG.cs.md 3.29.0 „Načíst verzi výzkumu?“ · v3.9.0 (loadColChange) · 3.31.0: app:2e68d373 src/research-changes.ts placeNumberAdded, pageMoved, diffValues numbersAdded; src/ui/research-load-ui.ts (věta pod seznamem, nepočítá se); strings.ts sync.loadImageNumbers, loadFolioNumbers · CHANGELOG.cs.md 3.31.0 „Načtení verze výzkumu“ -->
