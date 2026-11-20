@@ -1356,6 +1356,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A3.5.8](cs/A3-evidence-in-the-app.md#A3.5.8), A3.5.10–A3.5.13, R11.5.3, R11.5.5
 
+<a id="census-records"></a>
+### Sčítání lidu
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Sčítání lidu | Pramen, který zapisuje jednu domácnost v jednom roce: kdo bydlel v domě, vztah k přednostovi, věk, často rodiště a povolání. Výzkum ho použije, jen když ho člověk zapne; vypnuté sčítání úkoly sčítání odloží. Domácnost je jedna společná událost. |
+| en | Census records | A source that records one household in one year: who lived in the house, the relation to the head, age, often birthplace and occupation. The research uses it only once a person switches it on; switched off, census tasks are set aside. A household is one shared event. |
+| de | Volkszählungen | Eine Quelle, die einen Haushalt in einem Jahr festhält: wer im Haus wohnte, das Verhältnis zum Haushaltsvorstand, Alter, oft Geburtsort und Beruf. Die Forschung nutzt sie nur, wenn ein Mensch sie einschaltet; ausgeschaltet werden Volkszählungsaufgaben zurückgestellt. Ein Haushalt ist ein gemeinsames Ereignis. |
+| pl | Spisy ludności | Źródło zapisujące jedno gospodarstwo domowe w jednym roku: kto mieszkał w domu, pokrewieństwo z głową gospodarstwa, wiek, często miejsce urodzenia i zawód. Badanie używa go tylko wtedy, gdy człowiek je włączy; po wyłączeniu zadania spisu są odłożone. Gospodarstwo domowe to jedno wspólne wydarzenie. |
+
+- **Čísla:** [R9.12](cs/R9-archives.md#R9.12), R9.12.1, R9.12.2, R9.12.3, R9.12.4, S4.2.4, S4.4.10
+
 <a id="list-of-people"></a>
 ### Seznam osob
 
@@ -1498,7 +1510,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Gemeinsam mit · gemeinsames Ereignis | Ein Ereignis mehrerer Personen (Volkszählung, Wohnort, Auswanderung…), einmal eingetragen: Jede Person hat eine Kopie mit demselben Datum, Ort, Haus, derselben Notiz und denselben Quellen und mit eigenem Alter und eigener Rolle. Eine Änderung gilt für alle Kopien. |
 | pl | Razem z · wspólne wydarzenie | Wydarzenie kilku osób (spis ludności, miejsce zamieszkania, emigracja…) zapisane raz: każda osoba ma kopię z tą samą datą, miejscem, domem, notatką i źródłami oraz z własnym wiekiem i rolą. Zmiana dotyczy wszystkich kopii. |
 
-- **Čísla:** [A10.1](cs/A10-shared-events.md#A10.1), A10.1.1, A10.2, A10.6, A10.7, A2.1, A2.7, A6.7.10, A8.4, R11.3, S2.3
+- **Čísla:** [A10.1](cs/A10-shared-events.md#A10.1), A10.1.1, A10.2, A10.6, A10.7, A2.1, A2.7, A6.7.10, A8.4, R11.3, R9.12.3, S2.3
 
 <a id="same-id-in-the-file"></a>
 ### Stejné ID v souboru

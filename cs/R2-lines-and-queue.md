@@ -100,11 +100,11 @@ Otevřené úkoly všech běžících linií tvoří jednu frontu. Agent vždy b
   **hned** ([R2.3.1](#R2.3.1)) a vezme je příští sezení; dvě zkoušky po sobě jdou v pořadí zadání, starší první
   ([S7.5.1](S7-reliability-and-verification.md#S7.5.1)). `strom task list --kind <druh>` ukáže jen úkoly jednoho
   druhu práce: `verify` (ověřování), `records` (matriky), `material` (materiál), `places` (místa), `enrich` (zdroje
-  mimo matriky), `request` (dotazy), `story` (vyprávění), `history` (dějiny), `other` (ostatní); neznámý druh
-  skončí chybou se seznamem druhů. V aplikaci řada **Druh úkolu** ve **Frontě**
-  ([S4.2.4](S4-research-from-the-app.md#S4.2.4)).
+  mimo matriky), `request` (dotazy), `story` (vyprávění), `history` (dějiny), `census` (sčítání lidu,
+  [R9.12](R9-archives.md#R9.12)), `other` (ostatní); neznámý druh skončí chybou se seznamem druhů. V aplikaci řada
+  **Druh úkolu** ve **Frontě** ([S4.2.4](S4-research-from-the-app.md#S4.2.4)).
 
-<!-- zdroj: 1.36.0: research:7116bb60 src/core/taskkind.ts (TASK_KINDS, taskKind), src/commands/task.ts list --kind, src/core/verify.ts verifyBulk try (priority 3, queueAt next) · CHANGELOG.cs.md 1.36.0 · research:src/core/queue.ts rankTasks (řazení :374-396), LEVEL_ORDER :52, linksFirst (hypolinks.ts:453), placesFirst · verze klíčů: git log -S na „a.blocked - b.blocked“ (v1.0.0), „a.story - b.story“ (v1.1.0), „a.first - b.first“ (v1.17.0), „a.hist - b.hist“ (v1.22.0), „a.offLine - b.offLine“ a placesFirst (v1.25.0) · 1.32.0: src/core/live.ts searchQueue, queueAsk (GET /queue?q=, q nikdy v logu mostu), funkce queue.search · CHANGELOG.cs.md 1.32.0 · 1.33.0: research:c50f80f5 task list --all (= --state all), strom help task list -->
+<!-- zdroj: 1.36.0: research:7116bb60 src/core/taskkind.ts (TASK_KINDS, taskKind; census: research:c7b117cd), src/commands/task.ts list --kind, src/core/verify.ts verifyBulk try (priority 3, queueAt next) · CHANGELOG.cs.md 1.36.0 · research:src/core/queue.ts rankTasks (řazení :374-396), LEVEL_ORDER :52, linksFirst (hypolinks.ts:453), placesFirst · verze klíčů: git log -S na „a.blocked - b.blocked“ (v1.0.0), „a.story - b.story“ (v1.1.0), „a.first - b.first“ (v1.17.0), „a.hist - b.hist“ (v1.22.0), „a.offLine - b.offLine“ a placesFirst (v1.25.0) · 1.32.0: src/core/live.ts searchQueue, queueAsk (GET /queue?q=, q nikdy v logu mostu), funkce queue.search · CHANGELOG.cs.md 1.32.0 · 1.33.0: research:c50f80f5 task list --all (= --state all), strom help task list -->
 
 <a id="R2.2.1"></a>
 ### R2.2.1 Strategie fronty

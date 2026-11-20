@@ -551,8 +551,8 @@ Przy badaniu, które przy zadaniach podaje rodzaj pracy, **Kolejka** w Przegląd
 **Rodzaj zadania**: chip dla każdego rodzaju, który ma zadanie w kolejce, z liczbą („Weryfikacja 12”). Rodzaj ustala
 badanie ([R2.2](R2-lines-and-queue.md#R2.2)).
 
-- **Rodzaje** w tej kolejności: **Weryfikacja**, **Metryki**, **Materiał**, **Miejsca**, **Źródła poza metrykami**,
-  **Zapytania**, **Opowieści**, **Historia**, **Inne**.
+- **Rodzaje** w tej kolejności: **Weryfikacja**, **Metryki**, **Spis ludności**, **Materiał**, **Miejsca**, **Źródła
+  poza metrykami**, **Zapytania**, **Opowieści**, **Historia**, **Inne**.
 - **Granice:**
   - wybrany chip zawęża kolejkę do zadań tego rodzaju i pokazuje ×; drugie kliknięcie wybór anuluje („Pokaż wszystkie
     rodzaje zadań”). Wybrany rodzaj zostaje w rzędzie także z zerem, gdy zniknie jego ostatnie zadanie;
@@ -560,7 +560,9 @@ badanie ([R2.2](R2-lines-and-queue.md#R2.2)).
     Weryfikacja”; bez wyniku „Wśród zadań rodzaju Weryfikacja nic nie znaleziono.” z **Szukaj we wszystkich rodzajach
     zadań**;
   - wybór obowiązuje dla badania, przy którym powstał, dopóki nie zostanie anulowany albo śledzenie się nie skończy;
-  - przy starszym badaniu rząd się nie pokazuje, a kolejka jest jak dotąd.
+  - przy starszym badaniu rząd się nie pokazuje, a kolejka jest jak dotąd;
+  - **Spis ludności** jest tylko przy badaniu, które oferuje spisy ludności ([R9.12](R9-archives.md#R9.12)); zadania
+    spisu nie są wtedy pod **Inne**. Odłożonych zadań spisu ([R9.12.4](R9-archives.md#R9.12.4)) w kolejce nie ma.
 - **Z sekcji Weryfikacja:** wiersz „Czeka na weryfikację” w Co wie badanie › **Weryfikacja**
   ([S7.5](S7-reliability-and-verification.md#S7.5)) ma **Pokaż w kolejce**. Otwiera **Kolejkę** w Przeglądzie badania
   zawężoną do **Weryfikacja**. Zostaje w aplikacji i nie ma oznaczenia.
@@ -568,7 +570,7 @@ badanie ([R2.2](R2-lines-and-queue.md#R2.2)).
   **Weryfikacja** → **Pokaż w kolejce**. Terminal: `strom task list --kind verify` ([R2.2](R2-lines-and-queue.md#R2.2)).
 - **Obowiązuje od:** aplikacja 3.31.0, badanie 1.36.0
 
-<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 -->
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 · sčítání: app:6edc7dc7 src/research-link.ts QUEUE_TASK_KINDS (census za records), CENSUS_FEATURE · src/research-queue-pages.ts queuePageQuery (kind=census jen s funkcí census, other + known=census) · strings.ts live.taskKinds.census · research:c7b117cd src/core/taskkind.ts (census, KINDS_065, kindMatches known) -->
 
 <a id="S4.3"></a>
 ## S4.3 Linie w aplikacji
@@ -1093,6 +1095,31 @@ w jednym kroku. Pozycja czeka dalej, liczby się nie zmieniają.
 - **Obowiązuje od:** aplikacja 3.30.0, badanie 1.35.0
 
 <!-- zdroj: app:929d7813, ed7f7a04, 287ebc72, 01a1e760 src/ui/waiting-task-ui.ts openWaitingAuditFix (GET waiting/<T>/fix, auditLoading, jeden náhled), náhled (auditChanges, auditThisTask, auditNewTask, auditRemains, chat u první knihy, ne sheet; auditFixNote), confirmWaitingAuditFix (auditBusy, expect = stamp), writeWaitingAuditFix (toast auditFixed / auditFixedWoke 8000 ms, Vrátit = waitingWrite.undo), undoWaitingAuditFix (unfix, auditUndone, auditUndoFailed), cancelWaitingAuditFix (Esc, fokus na audit-fix), auditErrorText (409 auditErr409 + auditReload, 503, locked, disk), AUDIT_SHEET_ID (telefon) · src/research-audit.ts auditChangeLines (wait-images, wait-book, folder, split), auditLeftLines · src/research-link.ts postWaitingAudit (do fix/unfix/keep/unkeep, expect) · strings.ts live.waitingAudit.* · ZADANI_DEV_kontrola-ukolu.md §2 · dirigent:prace/1117-app-109-kontrola (D3 texty náhledu z op/images/title, D5 Vrátit jen v toastu) -->
+
+<a id="S4.4.10"></a>
+### S4.4.10 Badanie dla drzewa › Spisy ludności
+
+Spisy ludności jako źródło badania ([R9.12](R9-archives.md#R9.12)) można włączać i wyłączać także w aplikacji. Zapis
+idzie przez most od razu po kliknięciu, w obu kierunkach, i jest decyzją człowieka w aplikacji: okno systemu się nie
+pokazuje.
+
+- **Grupa Źródła** z przełącznikiem **Spisy ludności** i zdaniem „Badanie może używać spisów ludności jako źródła:
+  gospodarstwo domowe w jednym roku pokazuje, kto mieszkał razem i skąd kto pochodził. Większość archiwów spisy tylko
+  wyświetla, dlatego arkusze dostarcza się zwykle ręcznie jako zrzuty ekranu.”
+- **Granice:**
+  - tylko przy badaniu, które oferuje spisy ludności; przy starszym badaniu grupy nie ma. Nie w Archiwum Strom ani
+    w badaniu, które czeka na agenta; gdy badanie w międzyczasie przełączy się na Archiwum Strom, grupa znika;
+  - po kliknięciu nowy stan pokazuje się od razu, przerywany i zablokowany, dopóki badanie nie potwierdzi zapisu;
+  - wyłączone z odłożonymi zadaniami ([R9.12.4](R9-archives.md#R9.12.4)): pod wierszem „Odłożone: 3 zadania spisu.
+    Wrócą po włączeniu.”;
+  - bez mostu przełącznik jest nieaktywny: „Badanie nie działa. Zmienić to będzie można, gdy zacznie działać.”;
+  - odmowa podaje powód pod wierszem, a przełącznik zostaje, jak był (np. „Badanie jest teraz zajęte. Za chwilę będzie
+    można spróbować ponownie.”, zablokowane badanie, pełny dysk).
+- **Obsługa:** aplikacja: **Badanie → Więcej → Badanie dla tego drzewa… → Źródła → Spisy ludności**. Terminal:
+  [R9.12](R9-archives.md#R9.12).
+- **Obowiązuje od:** badanie 1.36.0, aplikacja 3.31.0
+
+<!-- zdroj: app:6edc7dc7 src/research-link.ts CENSUS_FEATURE census, LiveCensus {on, held}, sanitizeCensus · src/history-bridge.ts postBridgeCensus, censusReply (held, invalid, archive 409 census.archive, busy, locked, full) · app:80d6358c src/ui/research-tree-settings-ui.ts renderResearchCensusRow (jen s funkcí census, ne archiv ani výzkum bez agenta, gone po 409; pend přerušovaně a zamčeno; censusHeld jen vypnuto a held > 0; bez mostu storiesBridgeDown), setResearchCensus · strings.ts history.censusSection, censusTitle, censusDesc, censusHeld, storiesBridgeDown, errBusy · e2e/research-census.spec.ts · research:c7b117cd src/core/live.ts POST /census (config set census --for-tree v prostředí aplikace, bez okna) · CHANGELOG.cs.md 3.31.0 „Sčítání lidu z výzkumu“ · dirigent:spec/106 K1.1, K1.4 -->
 
 <a id="S4.5"></a>
 ## S4.5 Działania, które otwierają badanie

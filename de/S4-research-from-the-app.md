@@ -610,8 +610,8 @@ Forschungsübersicht unter den Chips der Richtungen eine Reihe **Aufgabenart**: 
 in der Warteschlange hat, mit der Anzahl („Prüfung 12“). Die Art bestimmt die Forschung
 ([R2.2](R2-lines-and-queue.md#R2.2)).
 
-- **Arten** in dieser Reihenfolge: **Prüfung**, **Kirchenbücher**, **Material**, **Orte**, **Quellen außer
-  Kirchenbüchern**, **Anfragen**, **Erzählungen**, **Zeitgeschehen**, **Sonstiges**.
+- **Arten** in dieser Reihenfolge: **Prüfung**, **Kirchenbücher**, **Volkszählung**, **Material**, **Orte**,
+  **Quellen außer Kirchenbüchern**, **Anfragen**, **Erzählungen**, **Zeitgeschehen**, **Sonstiges**.
 - **Grenzen:**
   - der gewählte Chip schränkt die Warteschlange auf Aufgaben dieser Art ein und zeigt ×; ein zweiter Klick hebt die
     Wahl auf („Alle Aufgabenarten zeigen“). Die gewählte Art bleibt auch mit null in der Reihe, wenn ihre letzte
@@ -620,7 +620,10 @@ in der Warteschlange hat, mit der Anzahl („Prüfung 12“). Die Art bestimmt d
     „12 Aufgaben gefunden · Art Prüfung“; ohne Ergebnis „Unter den Aufgaben der Art Prüfung nichts gefunden.“ mit
     **In allen Aufgabenarten suchen**;
   - die Wahl gilt für die Forschung, bei der sie getroffen wurde, bis sie aufgehoben wird oder das Verfolgen endet;
-  - mit einer älteren Forschung erscheint die Reihe nicht, und die Warteschlange ist wie bisher.
+  - mit einer älteren Forschung erscheint die Reihe nicht, und die Warteschlange ist wie bisher;
+  - **Volkszählung** gibt es nur mit einer Forschung, die Volkszählungen anbietet ([R9.12](R9-archives.md#R9.12));
+    die Aufgaben der Volkszählungen stehen dann nicht unter **Sonstiges**. Zurückgestellte Aufgaben der
+    Volkszählungen ([R9.12.4](R9-archives.md#R9.12.4)) sind nicht in der Warteschlange.
 - **Aus dem Abschnitt Prüfung:** die Zeile „Warten auf Prüfung“ in Was die Forschung weiß › **Prüfung**
   ([S7.5](S7-reliability-and-verification.md#S7.5)) hat **In der Warteschlange zeigen**. Das öffnet die
   **Warteschlange** in der Forschungsübersicht, eingeschränkt auf **Prüfung**. Es bleibt in der App und hat keine Marke.
@@ -629,7 +632,7 @@ in der Warteschlange hat, mit der Anzahl („Prüfung 12“). Die Art bestimmt d
   ([R2.2](R2-lines-and-queue.md#R2.2)).
 - **Gilt seit:** App 3.31.0, Forschung 1.36.0
 
-<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 -->
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 · sčítání: app:6edc7dc7 src/research-link.ts QUEUE_TASK_KINDS (census za records), CENSUS_FEATURE · src/research-queue-pages.ts queuePageQuery (kind=census jen s funkcí census, other + known=census) · strings.ts live.taskKinds.census · research:c7b117cd src/core/taskkind.ts (census, KINDS_065, kindMatches known) -->
 
 <a id="S4.3"></a>
 ## S4.3 Linien in der App
@@ -1190,6 +1193,33 @@ und bietet eine Korrektur in einem Schritt an. Der Eintrag wartet weiter, die Za
 - **Gilt seit:** App 3.30.0, Forschung 1.35.0
 
 <!-- zdroj: app:929d7813, ed7f7a04, 287ebc72, 01a1e760 src/ui/waiting-task-ui.ts openWaitingAuditFix (GET waiting/<T>/fix, auditLoading, jeden náhled), náhled (auditChanges, auditThisTask, auditNewTask, auditRemains, chat u první knihy, ne sheet; auditFixNote), confirmWaitingAuditFix (auditBusy, expect = stamp), writeWaitingAuditFix (toast auditFixed / auditFixedWoke 8000 ms, Vrátit = waitingWrite.undo), undoWaitingAuditFix (unfix, auditUndone, auditUndoFailed), cancelWaitingAuditFix (Esc, fokus na audit-fix), auditErrorText (409 auditErr409 + auditReload, 503, locked, disk), AUDIT_SHEET_ID (telefon) · src/research-audit.ts auditChangeLines (wait-images, wait-book, folder, split), auditLeftLines · src/research-link.ts postWaitingAudit (do fix/unfix/keep/unkeep, expect) · strings.ts live.waitingAudit.* · ZADANI_DEV_kontrola-ukolu.md §2 · dirigent:prace/1117-app-109-kontrola (D3 texty náhledu z op/images/title, D5 Vrátit jen v toastu) -->
+
+<a id="S4.4.10"></a>
+### S4.4.10 Forschung für diesen Stammbaum › Volkszählungen
+
+Volkszählungen als Quelle der Forschung ([R9.12](R9-archives.md#R9.12)) lassen sich auch in der App ein- und
+ausschalten. Geschrieben wird über die Brücke sofort nach dem Klick, in beide Richtungen, und es ist die Entscheidung
+des Menschen in der App: ein Systemfenster erscheint nicht.
+
+- **Gruppe Quellen** mit dem Schalter **Volkszählungen** und dem Satz „Die Forschung darf Volkszählungen als Quelle
+  nutzen: ein Haushalt in einem Jahr zeigt, wer zusammen wohnte und woher jemand kam. Die meisten Archive zeigen
+  Volkszählungen nur an, die Bögen werden daher meist von Hand als Bildschirmfoto geliefert.“
+- **Grenzen:**
+  - nur mit einer Forschung, die Volkszählungen anbietet; mit einer älteren Forschung gibt es die Gruppe nicht. Nicht
+    beim Strom-Archiv und nicht bei einer Forschung, die auf einen Agenten wartet; wechselt die Forschung inzwischen
+    zum Strom-Archiv, verschwindet die Gruppe;
+  - nach dem Klick erscheint der neue Zustand sofort, gestrichelt und gesperrt, bis die Forschung das Schreiben
+    bestätigt;
+  - ausgeschaltet mit zurückgestellten Aufgaben ([R9.12.4](R9-archives.md#R9.12.4)): unter der Zeile „Zurückgestellt:
+    3 Volkszählungsaufgaben. Beim Einschalten kommen diese zurück.“;
+  - ohne Brücke ist der Schalter inaktiv: „Die Forschung läuft nicht. Ändern lässt es sich, sobald sie läuft.“;
+  - eine Ablehnung nennt den Grund unter der Zeile, und der Schalter bleibt, wie er war (z. B. „Die Forschung ist
+    beschäftigt. Gleich geht es wieder.“, gesperrte Forschung, voller Datenträger).
+- **Bedienung:** App: **Forschung → Weitere Aktionen → Forschung für diesen Stammbaum… → Quellen →
+  Volkszählungen**. Terminal: [R9.12](R9-archives.md#R9.12).
+- **Gilt seit:** Forschung 1.36.0, App 3.31.0
+
+<!-- zdroj: app:6edc7dc7 src/research-link.ts CENSUS_FEATURE census, LiveCensus {on, held}, sanitizeCensus · src/history-bridge.ts postBridgeCensus, censusReply (held, invalid, archive 409 census.archive, busy, locked, full) · app:80d6358c src/ui/research-tree-settings-ui.ts renderResearchCensusRow (jen s funkcí census, ne archiv ani výzkum bez agenta, gone po 409; pend přerušovaně a zamčeno; censusHeld jen vypnuto a held > 0; bez mostu storiesBridgeDown), setResearchCensus · strings.ts history.censusSection, censusTitle, censusDesc, censusHeld, storiesBridgeDown, errBusy · e2e/research-census.spec.ts · research:c7b117cd src/core/live.ts POST /census (config set census --for-tree v prostředí aplikace, bez okna) · CHANGELOG.cs.md 3.31.0 „Sčítání lidu z výzkumu“ · dirigent:spec/106 K1.1, K1.4 -->
 
 <a id="S4.5"></a>
 ## S4.5 Aktionen, die die Forschung öffnen

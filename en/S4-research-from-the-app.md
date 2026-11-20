@@ -564,8 +564,8 @@ With a research that gives the kind of work of its tasks, the **Queue** in the R
 type** under the direction chips: a chip for each type that has a task in the queue, with its count (“Verification
 12”). The type is set by the research ([R2.2](R2-lines-and-queue.md#R2.2)).
 
-- **Types** in this order: **Verification**, **Registers**, **Material**, **Places**, **Beyond the registers**,
-  **Requests**, **Stories**, **History**, **Other**.
+- **Types** in this order: **Verification**, **Registers**, **Census**, **Material**, **Places**, **Beyond the
+  registers**, **Requests**, **Stories**, **History**, **Other**.
 - **Limits:**
   - the chosen chip narrows the queue to tasks of that type and shows ×; a second click clears the choice (“Show all
     task types”). The chosen type stays in the row even at zero when its last task goes;
@@ -573,7 +573,9 @@ type** under the direction chips: a chip for each type that has a task in the qu
     found · type Verification”; with no result “Nothing found among tasks of type Verification.” with **Search all
     task types**;
   - the choice holds for the research it was made with, until it is cleared or following ends;
-  - with an older research the row is not shown and the queue is as before.
+  - with an older research the row is not shown and the queue is as before;
+  - **Census** only with a research that offers census records ([R9.12](R9-archives.md#R9.12)); census tasks are then
+    not under **Other**. Census tasks set aside ([R9.12.4](R9-archives.md#R9.12.4)) are not in the queue.
 - **From the section Verifying:** the row “Waiting to be verified” in What the research knows › **Verifying**
   ([S7.5](S7-reliability-and-verification.md#S7.5)) has **Show in the queue**. It opens the **Queue** in the Research
   overview narrowed to **Verification**. It stays in the app and has no mark.
@@ -581,7 +583,7 @@ type** under the direction chips: a chip for each type that has a task in the qu
   **Verifying** → **Show in the queue**. Terminal: `strom task list --kind verify` ([R2.2](R2-lines-and-queue.md#R2.2)).
 - **Since:** app 3.31.0, research 1.36.0
 
-<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 -->
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 · sčítání: app:6edc7dc7 src/research-link.ts QUEUE_TASK_KINDS (census za records), CENSUS_FEATURE · src/research-queue-pages.ts queuePageQuery (kind=census jen s funkcí census, other + known=census) · strings.ts live.taskKinds.census · research:c7b117cd src/core/taskkind.ts (census, KINDS_065, kindMatches known) -->
 
 <a id="S4.3"></a>
 ## S4.3 Directions in the app
@@ -1108,6 +1110,32 @@ preview.
 - **Since:** app 3.30.0, research 1.35.0
 
 <!-- zdroj: app:929d7813, ed7f7a04, 287ebc72, 01a1e760 src/ui/waiting-task-ui.ts openWaitingAuditFix (GET waiting/<T>/fix, auditLoading, jeden náhled), náhled (auditChanges, auditThisTask, auditNewTask, auditRemains, chat u první knihy, ne sheet; auditFixNote), confirmWaitingAuditFix (auditBusy, expect = stamp), writeWaitingAuditFix (toast auditFixed / auditFixedWoke 8000 ms, Vrátit = waitingWrite.undo), undoWaitingAuditFix (unfix, auditUndone, auditUndoFailed), cancelWaitingAuditFix (Esc, fokus na audit-fix), auditErrorText (409 auditErr409 + auditReload, 503, locked, disk), AUDIT_SHEET_ID (telefon) · src/research-audit.ts auditChangeLines (wait-images, wait-book, folder, split), auditLeftLines · src/research-link.ts postWaitingAudit (do fix/unfix/keep/unkeep, expect) · strings.ts live.waitingAudit.* · ZADANI_DEV_kontrola-ukolu.md §2 · dirigent:prace/1117-app-109-kontrola (D3 texty náhledu z op/images/title, D5 Vrátit jen v toastu) -->
+
+<a id="S4.4.10"></a>
+### S4.4.10 Research for this tree › Census records
+
+Census records as a source of the research ([R9.12](R9-archives.md#R9.12)) can be switched on and off in the app as
+well. The change is written through the bridge right after the click, both ways, and it is the person's decision in
+the app: no system window is shown.
+
+- **The group Sources** with the switch **Census records** and the sentence “The research may use census records as
+  a source: a household in one year shows who lived together and where each person came from. Most archives only
+  display census records, so the sheets are mostly supplied by hand as screenshots.”
+- **Limits:**
+  - only with a research that offers census records; with an older research the group is not there. Not with the
+    Strom archive nor with a research waiting for an agent; when the research switches to the Strom archive meanwhile,
+    the group disappears;
+  - after the click the new state shows at once, dashed and locked, until the research confirms the write;
+  - off with tasks set aside ([R9.12.4](R9-archives.md#R9.12.4)): under the row “Set aside: 3 census tasks. They come
+    back when this is switched on.”;
+  - without the bridge the switch is inactive: “The research isn't running. This can be changed once it runs.”;
+  - a refusal gives its reason under the row and the switch stays as it was (e.g. “The research is busy. It will work
+    again shortly.”, a locked research, a full disk).
+- **Controls:** app: **Research → Other actions → Research for this tree… → Sources → Census records**. Terminal:
+  [R9.12](R9-archives.md#R9.12).
+- **Since:** research 1.36.0, app 3.31.0
+
+<!-- zdroj: app:6edc7dc7 src/research-link.ts CENSUS_FEATURE census, LiveCensus {on, held}, sanitizeCensus · src/history-bridge.ts postBridgeCensus, censusReply (held, invalid, archive 409 census.archive, busy, locked, full) · app:80d6358c src/ui/research-tree-settings-ui.ts renderResearchCensusRow (jen s funkcí census, ne archiv ani výzkum bez agenta, gone po 409; pend přerušovaně a zamčeno; censusHeld jen vypnuto a held > 0; bez mostu storiesBridgeDown), setResearchCensus · strings.ts history.censusSection, censusTitle, censusDesc, censusHeld, storiesBridgeDown, errBusy · e2e/research-census.spec.ts · research:c7b117cd src/core/live.ts POST /census (config set census --for-tree v prostředí aplikace, bez okna) · CHANGELOG.cs.md 3.31.0 „Sčítání lidu z výzkumu“ · dirigent:spec/106 K1.1, K1.4 -->
 
 <a id="S4.5"></a>
 ## S4.5 Actions that open the research

@@ -178,6 +178,11 @@ nenapsáno) · `neplatí od <verze>`.
 | R9.10.5 | R9-archives.md | výzkum 1.27.0 | koncept | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach | Szukaj w Archiwach |
 | R9.10.6 | R9-archives.md | výzkum 1.28.0 | koncept | DigiArchiv SOA Třeboň | DigiArchiv SOA Třeboň | DigiArchiv SOA Třeboň | DigiArchiv SOA Třeboň |
 | R9.10.7 | R9-archives.md | výzkum 1.35.0 | platí | Brandenburgisches Landeshauptarchiv (BLHA) | Brandenburgisches Landeshauptarchiv (BLHA) | Brandenburgisches Landeshauptarchiv (BLHA) | Brandenburgisches Landeshauptarchiv (BLHA) |
+| R9.12 | R9-archives.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Sčítání lidu jako pramen | Census records as a source | Volkszählungen als Quelle | Spisy ludności jako źródło |
+| R9.12.1 | R9-archives.md | výzkum 1.36.0 | platí | Návrh zapnout sčítání | Proposal to switch census records on | Vorschlag, Volkszählungen einzuschalten | Propozycja włączenia spisów ludności |
+| R9.12.2 | R9-archives.md | výzkum 1.36.0 | platí | Kdy a kde agent sčítání hledá | When and where the agent looks for census records | Wann und wo der Agent Volkszählungen sucht | Kiedy i gdzie agent szuka spisów ludności |
+| R9.12.3 | R9-archives.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Domácnost: jedna společná událost | A household: one shared event | Ein Haushalt: ein gemeinsames Ereignis | Gospodarstwo domowe: jedno wspólne wydarzenie |
+| R9.12.4 | R9-archives.md | výzkum 1.36.0 | platí | Vypnuté sčítání: odložené úkoly | Census records off: tasks set aside | Volkszählungen aus: zurückgestellte Aufgaben | Spisy ludności wyłączone: odłożone zadania |
 | R10 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Osoby: ztotožnění, jména a hypotézy | People: identification, names and hypotheses | Personen: Identifizierung, Namen und Hypothesen | Osoby: identyfikacja, imiona i hipotezy |
 | R10.1 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Jmenovec není hledaná osoba | A namesake is not the person sought | Ein Namensvetter ist nicht die gesuchte Person | Imiennik to nie poszukiwana osoba |
 | R10.2 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Dva záznamy jedné osoby: sloučení | Two records of one person: merging | Zwei Einträge einer Person: Zusammenführen | Dwa wpisy jednej osoby: scalenie |
@@ -497,6 +502,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.4.7 | S4-research-from-the-app.md | aplikace 3.30.0 | platí | Položka čekající na snímky | An item waiting for images | Ein Eintrag, der auf Bilder wartet | Pozycja czekająca na skany |
 | S4.4.8 | S4-research-from-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Úkol, který není zapsaný, jak má | A task not recorded as needed | Eine Aufgabe, die nicht wie nötig erfasst ist | Zadanie, które nie jest zapisane tak, jak trzeba |
 | S4.4.9 | S4-research-from-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Náhled opravy a Vrátit | Preview of the fix and Undo | Vorschau der Korrektur und Rückgängig | Podgląd poprawki i Cofnij |
+| S4.4.10 | S4-research-from-the-app.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Výzkum u stromu › Sčítání lidu | Research for this tree › Census records | Forschung für diesen Stammbaum › Volkszählungen | Badanie dla drzewa › Spisy ludności |
 | S4.5 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Akce, které otevřou výzkum | Actions that open the research | Aktionen, die die Forschung öffnen | Działania, które otwierają badanie |
 | S4.5.1 | S4-research-from-the-app.md | aplikace 3.21.0 | platí | Značky akcí | Action marks | Marken der Aktionen | Oznaczenia działań |
 | S4.5.2 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Kde akce jsou | Where the actions are | Wo die Aktionen sind | Gdzie są działania |

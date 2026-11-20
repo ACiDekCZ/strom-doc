@@ -517,15 +517,17 @@ S výzkumem, který u úkolů uvádí druh práce, má **Fronta** v Přehledu v�
 čip pro každý druh, který má ve frontě úkol, s počtem („Ověřování 12“). Druh určuje výzkum
 ([R2.2](R2-lines-and-queue.md#R2.2)).
 
-- **Druhy** v tomto pořadí: **Ověřování**, **Matriky**, **Materiál**, **Místa**, **Zdroje mimo matriky**, **Dotazy**,
-  **Vyprávění**, **Dějiny**, **Ostatní**.
+- **Druhy** v tomto pořadí: **Ověřování**, **Matriky**, **Sčítání lidu**, **Materiál**, **Místa**, **Zdroje mimo
+  matriky**, **Dotazy**, **Vyprávění**, **Dějiny**, **Ostatní**.
 - **Hranice:**
   - vybraný čip zúží frontu na úkoly toho druhu a ukáže ×; druhé kliknutí výběr zruší („Ukázat všechny druhy
     úkolů“). Vybraný druh zůstane v řadě i s nulou, když jeho poslední úkol zmizí;
   - filtr se skládá s linií nebo větví a s hledáním ve frontě ([S4.2.1](#S4.2.1)): „Nalezeno 12 úkolů · druh
     Ověřování“; bez výsledku „Mezi úkoly druhu Ověřování nic nenalezeno.“ s **Hledat ve všech druzích úkolů**;
   - volba platí pro výzkum, u kterého vznikla, dokud ji člověk nezruší nebo neskončí sledování;
-  - se starším výzkumem se řada neukazuje a fronta je jako dřív.
+  - se starším výzkumem se řada neukazuje a fronta je jako dřív;
+  - **Sčítání lidu** je jen s výzkumem, který sčítání nabízí ([R9.12](R9-archives.md#R9.12)); úkoly sčítání pak
+    nejsou pod **Ostatní**. Odložené úkoly sčítání ([R9.12.4](R9-archives.md#R9.12.4)) ve frontě nejsou.
 - **Z oddílu Ověřování:** řádek „Čeká na ověření“ v Co ví výzkum › **Ověřování**
   ([S7.5](S7-reliability-and-verification.md#S7.5)) má **Ukázat ve frontě**. Otevře **Frontu** v Přehledu výzkumu
   zúženou na **Ověřování**. Zůstává v aplikaci a nemá značku.
@@ -533,7 +535,7 @@ S výzkumem, který u úkolů uvádí druh práce, má **Fronta** v Přehledu v�
   **Ukázat ve frontě**. Terminál: `strom task list --kind verify` ([R2.2](R2-lines-and-queue.md#R2.2)).
 - **Platí od:** aplikace 3.31.0, výzkum 1.36.0
 
-<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 -->
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 · sčítání: app:6edc7dc7 src/research-link.ts QUEUE_TASK_KINDS (census za records), CENSUS_FEATURE · src/research-queue-pages.ts queuePageQuery (kind=census jen s funkcí census, other + known=census) · strings.ts live.taskKinds.census · research:c7b117cd src/core/taskkind.ts (census, KINDS_065, kindMatches known) -->
 
 <a id="S4.3"></a>
 ## S4.3 Linie v aplikaci
@@ -1009,6 +1011,30 @@ fronty. Aplikace u takové položky ukáže nález a nabídne opravu v jednom kr
 - **Platí od:** aplikace 3.30.0, výzkum 1.35.0
 
 <!-- zdroj: app:929d7813, ed7f7a04, 287ebc72, 01a1e760 src/ui/waiting-task-ui.ts openWaitingAuditFix (GET waiting/<T>/fix, auditLoading, jeden náhled), náhled (auditChanges, auditThisTask, auditNewTask, auditRemains, chat u první knihy, ne sheet; auditFixNote), confirmWaitingAuditFix (auditBusy, expect = stamp), writeWaitingAuditFix (toast auditFixed / auditFixedWoke 8000 ms, Vrátit = waitingWrite.undo), undoWaitingAuditFix (unfix, auditUndone, auditUndoFailed), cancelWaitingAuditFix (Esc, fokus na audit-fix), auditErrorText (409 auditErr409 + auditReload, 503, locked, disk), AUDIT_SHEET_ID (telefon) · src/research-audit.ts auditChangeLines (wait-images, wait-book, folder, split), auditLeftLines · src/research-link.ts postWaitingAudit (do fix/unfix/keep/unkeep, expect) · strings.ts live.waitingAudit.* · ZADANI_DEV_kontrola-ukolu.md §2 · dirigent:prace/1117-app-109-kontrola (D3 texty náhledu z op/images/title, D5 Vrátit jen v toastu) -->
+
+<a id="S4.4.10"></a>
+### S4.4.10 Výzkum u stromu › Sčítání lidu
+
+Sčítání lidu jako pramen výzkumu ([R9.12](R9-archives.md#R9.12)) jde zapnout a vypnout i v aplikaci. Zapisuje se přes
+most hned po kliknutí, oběma směry, a je to rozhodnutí člověka v aplikaci: okno systému se neukazuje.
+
+- **Skupina Prameny** s přepínačem **Sčítání lidu** a větou „Výzkum smí jako pramen použít sčítání lidu: domácnost
+  v jednom roce ukáže, kdo s kým bydlel a odkud kdo přišel. Většina archivů sčítání jen zobrazuje, archy se proto
+  většinou dodávají ručně snímkem obrazovky.“
+- **Hranice:**
+  - jen s výzkumem, který sčítání nabízí; se starším výzkumem skupina není. Ne u Archivu Stromu ani u výzkumu, který
+    čeká na agenta; když se výzkum mezitím přepne na Archiv Stromu, skupina zmizí;
+  - po kliknutí se nový stav ukáže hned, přerušovaně a zamčený, dokud výzkum zápis nepotvrdí;
+  - vypnuto s odloženými úkoly ([R9.12.4](R9-archives.md#R9.12.4)): pod řádkem „Odloženo: 3 úkoly sčítání. Po
+    zapnutí se vrátí.“;
+  - bez mostu je přepínač neaktivní: „Výzkum neběží. Změnit to půjde, až poběží.“;
+  - odmítnutí řekne důvod pod řádkem a přepínač zůstane, jak byl (např. „Výzkum je teď zaneprázdněný. Za chvíli to
+    půjde znovu.“, zamčený výzkum, plný disk).
+- **Ovládání:** aplikace: **Výzkum → Další → Výzkum u tohoto stromu… → Prameny → Sčítání lidu**. Terminál:
+  [R9.12](R9-archives.md#R9.12).
+- **Platí od:** výzkum 1.36.0, aplikace 3.31.0
+
+<!-- zdroj: app:6edc7dc7 src/research-link.ts CENSUS_FEATURE census, LiveCensus {on, held}, sanitizeCensus · src/history-bridge.ts postBridgeCensus, censusReply (held, invalid, archive 409 census.archive, busy, locked, full) · app:80d6358c src/ui/research-tree-settings-ui.ts renderResearchCensusRow (jen s funkcí census, ne archiv ani výzkum bez agenta, gone po 409; pend přerušovaně a zamčeno; censusHeld jen vypnuto a held > 0; bez mostu storiesBridgeDown), setResearchCensus · strings.ts history.censusSection, censusTitle, censusDesc, censusHeld, storiesBridgeDown, errBusy · e2e/research-census.spec.ts · research:c7b117cd src/core/live.ts POST /census (config set census --for-tree v prostředí aplikace, bez okna) · CHANGELOG.cs.md 3.31.0 „Sčítání lidu z výzkumu“ · dirigent:spec/106 K1.1, K1.4 -->
 
 <a id="S4.5"></a>
 ## S4.5 Akce, které otevřou výzkum
