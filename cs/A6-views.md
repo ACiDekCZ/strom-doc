@@ -270,9 +270,12 @@ a bratranců.
 - Pruh žijící osoby sahá do dneška. Zemřelá osoba bez data úmrtí má pruh do poslední známé události a otevřený
   konec.
 - Rok sňatku se bere z data začátku svazku. Osa je zaokrouhlená na desetiletí.
-- Pod osou let běží řádek dějin ústřední osoby (události doby a míst jejího života, symboly druhů). Bez výzkumu
-  nebo bez takových událostí řádek není.
-- **Platí od:** časová osa aplikace 1.5.0; řádek dějin aplikace 3.19.0
+- Pod osou let běží řádek dějin ([A6.3.1](#A6.3.1)). Bez výzkumu nebo bez událostí dějin řádek není.
+- Společná událost dvou a více řádků ([A10.2](A10-shared-events.md#A10.2)) je jedna značka přes řádky jejích osob
+  s popiskem; jména osob řekne najetí na popisek. Když je nad prvním řádkem řádek dějin, popisek značky z prvního
+  řádku nestojí v něm, ale níž vedle značky.
+- **Platí od:** časová osa aplikace 1.5.0; řádek dějin aplikace 3.19.0, přes celou osu aplikace 3.31.0; značka
+  společné události aplikace 3.28.0
 - **Od aplikace 3.30.0:** se zapnutým **Značením linií** ([A6.1.5](#A6.1.5)) stojí před jménem osoby znak linie ve
   zvoleném tvaru (osoba v obou liniích dva znaky, u rodičů stejného pohlaví 1 a 2); najetí na znak řekne linii
   slovy. Pruh života má dál barvu pohlaví a nepodbarvuje se. Plakát časové osy kreslí znak stejně.
@@ -280,6 +283,88 @@ a bratranců.
 
 <!-- zdroj: app:src/timeline.ts computeTimelineModel, :59 TimelineHistory · strings.ts timeline.omitted · CHANGELOG.cs.md 3.19.0 -->
 <!-- zdroj: app:cecd72a4 src/renderer.ts timelineBranchSigns (znak legendy před jménem, title linie slovy, dvě značky R4, číslice R5; plakát SVG) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii -->
+<!-- zdroj: app:55ac8a08 src/timeline-chart.ts sharedMarkSvg (jedna značka přes řádky, popisek jednou, jména v title) · app:f8531340 placeSharedLabels · app:cc6f3104 placeSharedLabels topTaken (s řádkem dějin popisek značky z prvního řádku níž, ne v řádku dějin) · dirigent:spec/085 §2e -->
+
+<a id="A6.3.1"></a>
+### A6.3.1 Řádek dějin přes celou osu
+
+Řádek dějin ukazuje dějiny celé doby a všech osob na ose: každou událost země nebo kraje, kde v jejím roce žila
+aspoň jedna osoba s řádkem.
+
+- **Které události:** události rozsahu země nebo kraj (**Dějiny regionu**). Událost se bere, když osoba v roce
+  události žila v místě, ke kterému výzkum událost přiřadil. U období stačí jeden jeho rok a jen v letech života
+  osoby. Kde osoba v kterém roce žila, se určuje stejně jako u dějin na kartě osoby.
+- Každá událost je v řádku jednou, i když se týká víc osob. Osoba bez řádku (bez roku narození, zástupná) se
+  nepočítá.
+- **Skrytí:** událost skrytá v celém stromu nebo pro celý kraj není nikde. Událost skrytá u jednoho místa se ukáže přes jiné
+  místo osoby, které ji neskrývá.
+- **Podoba:** podklad řádku jde přes celou osu. Život ústřední osoby je tenká čára dole v řádku. Období mají proužky
+  ve dvou stopách.
+- **Shluky:** události blízko sebe tvoří shluk (na počítači do 16 px, na telefonu do 22 px). Shluk má symbol druhu, který
+  v něm je nejčastěji (při shodě ten dřív), v barvě původu. Víc událostí ukáže odznak s počtem. Dva shluky, jejichž
+  značky by se dotkly, se spojí.
+- **Země nebo kraj** se v popisku a v detailu jmenuje, jen když jsou události řádku aspoň ze dvou zemí nebo krajů.
+- **Detail shluku:** najetí ukáže řádek na událost (rok, druh, země nebo kraj, text).
+  - Počítač: klik otevře okno u shluku. V něm každá událost s roky, symbolem, textem, „druh · země nebo kraj“ a
+    „Týká se:“ s nejvýš dvěma jmény a „a N další“; ústřední osoba je první. Jméno otevře kartu osoby na řádku
+    události. Esc, klik vedle nebo posun okno zavře.
+  - Telefon a dotyková obrazovka: spodní list „Dějiny 1880–1891“ s událostmi a pod **Otevřít v kartě osoby** řádek
+    pro každou osobu, které se shluk týká (nejvýš čtyři a „a N další ›“). Osoba otevře kartu na první události
+    shluku, která se jí týká.
+- **Kdy řádek je:** strom má výzkum s dějinami, v Nastavení je zapnuté **Dějiny v časové ose života** a v časové
+  ose karty osoby čip **Dějiny**. Původ vypnutý v Nastavení (**Dějiny regionu**, **Dějiny místa**, **Z pramenů
+  výzkumu**) se nekreslí.
+- **Hranice:** řádek dějin je jen na obrazovce. Tisk a plakát časové osy ho nekreslí.
+- **Ovládání:** aplikace: pohled **Časová osa**, řádek **Dějiny ▾** ([A6.3.2](#A6.3.2))
+- **Platí od:** aplikace 3.31.0 (do té doby řádek dějin jen ústřední osoby)
+
+<!-- zdroj: app:e843ab70 src/history.ts computeTimelineHistory (místa života personResidence, livedYear v letech života, období jeden rok, jednou na osobu, skrytí treeHidden/regionHidden/hidingFor, scope region → řádek, place/local → čáry; kinds z Nastavení) · src/timeline.ts timelineHistoryRow (jen řádky, které se kreslí; region jen při ≥ 2), timelineClusterKind, timelinePeriodTracks · app:a7391d4f src/timeline-chart.ts historyRowSvg (podklad přes celou osu, tl-hist-life, jen obrazovka) · app:79312e31 clusterTimelineHistory clearance, historyClusterClearance · app:1d2f8b55 src/ui/timeline-history-ui.ts showTimelineHistoryPopover, timelineConcernPersons (max 2, ústřední první), showTimelineHistorySheet, timelineClusterPersons (4 a „a N další ›“) · src/ui/history-ui.ts historyTimelineSource (vrstva, výzkum, čip Dějiny karty) · strings.ts history.timelineRowLabel, timelineClusterAria, timelineEventLine, timelineYearsTitle, timelineConcerns, timelinePeopleMore, openInCard, settingLabel, kindRegion, kindPlace, kindLocal · dirigent:spec/121 K1.1–K1.4, Rozhodnutí 20. 11. · prace/1120-app-121-casova-osa -->
+
+<a id="A6.3.2"></a>
+### A6.3.2 Volby dějin: druhy a země
+
+Popisek řádku **Dějiny ▾** otevře volby dějin časové osy. Volby platí pro strom a pamatuje si je zařízení.
+
+- **Druhy dějin:** **Vše** a devět druhů (válka, epidemie, sčítání, stát a hranice, vystěhovalectví, právo,
+  hospodářství, pohroma, jiné), každý se symbolem a počtem událostí na ose. Počet sčítá řádek dějin i místní dějiny
+  na čarách osob; událost na víc čarách je jedna. Druh bez události jde zvolit, filtr zůstane pro jiné osy.
+- **Země nebo kraj:** jen při aspoň dvou zemích nebo krajích v řádku. **Všechny** a země a kraje podle počtu
+  událostí, jedna volba. Platí jen pro řádek dějin.
+- **Na čarách osob:** volba **Místní dějiny na čarách osob** ([A6.3.3](#A6.3.3)).
+- **Filtr v popisku:** „Dějiny · 3 druhy“ (zvolené druhy, které na ose jsou), „Dějiny · země nebo kraj“, při obou
+  „Dějiny · 2 filtry“. Popisek s filtrem je podbarvený.
+- **Nic nezbude:** řádek napíše „Žádné dějiny pro zvolené druhy“ (na telefonu „Žádné dějiny“) a **Zrušit filtr**.
+  **Zrušit filtr** zruší druhy i zemi najednou; místní dějiny na čarách zůstanou.
+- **Hranice:** volby nejsou data stromu: nejdou do exportu, GEDCOM ani zálohy. Země, kterou výzkum už nezná, se
+  nepoužije. Další okno ([A6.8](#A6.8)) převezme změnu.
+- **Ovládání:** aplikace: **Dějiny ▾** → **Druhy dějin**, **Země nebo kraj**, **Na čarách osob**, **Zrušit filtr**.
+  Na počítači okno pod popiskem, na telefonu a dotykové obrazovce spodní list.
+- **Platí od:** aplikace 3.31.0
+
+<!-- zdroj: app:3e3e4949 src/ui/timeline-history-ui.ts showTimelineHistoryOptions, drawTimelineHistoryOptions (oblast jen hist.regions ≥ 2 nebo uložená; místní off/none), clearTimelineHistoryFilter · src/timeline.ts filterTimelineHistory (oblast jen řádek), timelineHistoryRowState, toggleTimelineKind, clearTimelineFilter (local zůstane), timelineFilterKindCount · app:601f52d4 timelineHistoryFacets (počty jednou podle id, řádek + místní), .tl-hist-btn.is-filtered · src/timeline-chart.ts historyFilterText · src/settings.ts getTimelineHistory/setTimelineHistory (lifelineByTree.timeline, jen zařízení), TimelineHistoryOptions · src/history.ts timelineHistoryRegion (neznámá oblast → všechny) · strings.ts history.timelineOptKinds, timelineOptRegion, timelineOptAllRegions, timelineOptLines, timelineFilterKinds, timelineFilterBoth, timelineClearFilter, timelineEmptyFilter, timelineEmptyFilterShort, kinds.* · dirigent:spec/121 K3.1 -->
+
+<a id="A6.3.3"></a>
+### A6.3.3 Místní dějiny na čarách osob
+
+Volba **Místní dějiny na čarách osob** kreslí dějiny místa a nálezy z pramenů výzkumu přímo na pruh života osoby,
+v roce události.
+
+- **Které události:** **Dějiny místa** a **Z pramenů výzkumu** ([R4.7](R4-places.md#R4.7)) v obci, kde osoba v roce
+  události žila. U období od prvního roku, kdy tam žila; pod pruhem pak proužek do konce období (nejdál do konce
+  pruhu).
+- **Podoba:** symbol druhu v rámečku v barvě původu. Symbol blíž než 10 px k tečce události nebo ke značce společné
+  události ustoupí o 11 px vedle. Symboly blízko sebe se seskupí jako v řádku dějin, s odznakem počtu. Pod 1,5 px na
+  rok (dlouhá osa na telefonu) má čára jeden symbol se všemi událostmi.
+- **Detail:** najetí ukáže řádek na událost s místem a u nálezu pramen. Klik na počítači otevře kartu osoby na řádku
+  události. Na telefonu a dotykové obrazovce spodní list s událostmi a **Otevřít v kartě osoby ›**.
+- **Výchozí:** vypnuto. Volba platí pro strom a pamatuje se ([A6.3.2](#A6.3.2)). Filtr druhů platí i pro ni.
+- **Hranice:** když jsou v Nastavení vypnuté **Dějiny místa** i **Z pramenů výzkumu**, volba nejde zapnout.
+  Bez místních dějin na ose volba napíše „Na ose nejsou místní dějiny.“ Symboly jsou jen na obrazovce, tisk a plakát
+  je nekreslí. Klávesnice na ně nejde (Tab).
+- **Ovládání:** aplikace: **Dějiny ▾** → **Místní dějiny na čarách osob**
+- **Platí od:** aplikace 3.31.0
+
+<!-- zdroj: app:967b6b97 src/history.ts computeTimelineHistory (place/local → čáry, rok příchodu moved, year2, source) · src/timeline.ts layoutTimelineLocal, timelineLocalX (LOCAL_CLEAR_PX 10, LOCAL_STEP_PX 11), LOCAL_DENSE_PX_PER_YEAR 1.5, timelineLocalOptionState (off/none), timelineHistoryRow (filtr druhů i na čáry) · src/timeline-chart.ts localSvg (jen screen, tl-loc-box, tl-loc-period, title se zdrojem LOCAL_SOURCE_MAX 60, role img mimo Tab) · src/ui/timeline-history-ui.ts openTimelineHistory, showTimelineLocalSheet · src/settings.ts TimelineHistoryOptions.local (výchozí false) · strings.ts history.timelineOptLocal, timelineOptLocalHint, timelineOptLocalOff, timelineOptLocalNone, timelineLocalAria, timelineLocalSource, openInCard · dirigent:spec/121 K2.1–K2.3 -->
 
 <a id="A6.4"></a>
 ## A6.4 Vějíř

@@ -285,9 +285,12 @@ Oś czasu pokazuje osoby widoku jako paski życia na osi lat.
 - Pasek osoby żyjącej sięga do dziś. Zmarła osoba bez daty zgonu ma pasek do ostatniego znanego zdarzenia i otwarty
   koniec.
 - Rok ślubu bierze się z daty początku związku. Oś jest zaokrąglona do dziesięcioleci.
-- Pod osią lat biegnie wiersz historii osoby w centrum (wydarzenia epoki i miejsc jej życia, symbole rodzajów). Bez
-  badania lub bez takich wydarzeń wiersza nie ma.
-- **Obowiązuje od:** oś czasu aplikacja 1.5.0; wiersz historii aplikacja 3.19.0
+- Pod osią lat biegnie wiersz historii ([A6.3.1](#A6.3.1)). Bez badania lub bez wydarzeń historii wiersza nie ma.
+- Wspólne wydarzenie dwóch lub więcej wierszy ([A10.2](A10-shared-events.md#A10.2)) jest jednym znacznikiem przez
+  wiersze jego osób, z etykietą; najechanie na etykietę podaje osoby. Gdy nad pierwszym wierszem leży wiersz historii,
+  etykieta znacznika z pierwszego wiersza nie stoi w nim, lecz niżej obok znacznika.
+- **Obowiązuje od:** oś czasu aplikacja 1.5.0; wiersz historii aplikacja 3.19.0, przez całą oś aplikacja 3.31.0;
+  znacznik wspólnego wydarzenia aplikacja 3.28.0
 - **Od aplikacji 3.30.0:** przy włączonym **Oznaczeniu linii** ([A6.1.5](#A6.1.5)) przed imieniem osoby stoi znak
   linii w wybranym kształcie (osoba w obu liniach dwa znaki, przy rodzicach tej samej płci 1 i 2); najechanie na znak
   podaje linię słowami. Pasek życia ma nadal kolor płci i nie jest podbarwiany. Plakat osi czasu rysuje znak tak samo.
@@ -295,6 +298,94 @@ Oś czasu pokazuje osoby widoku jako paski życia na osi lat.
 
 <!-- zdroj: app:src/timeline.ts computeTimelineModel, :59 TimelineHistory · strings.ts timeline.omitted · CHANGELOG.cs.md 3.19.0 -->
 <!-- zdroj: app:cecd72a4 src/renderer.ts timelineBranchSigns (znak legendy před jménem, title linie slovy, dvě značky R4, číslice R5; plakát SVG) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii -->
+<!-- zdroj: app:55ac8a08 src/timeline-chart.ts sharedMarkSvg (jedna značka přes řádky, popisek jednou, jména v title) · app:f8531340 placeSharedLabels · app:cc6f3104 placeSharedLabels topTaken (s řádkem dějin popisek značky z prvního řádku níž, ne v řádku dějin) · dirigent:spec/085 §2e -->
+
+<a id="A6.3.1"></a>
+### A6.3.1 Wiersz historii przez całą oś
+
+Wiersz historii pokazuje historię całego okresu i wszystkich osób na osi: każde wydarzenie kraju lub regionu, gdzie
+w jego roku żyła co najmniej jedna osoba z wierszem.
+
+- **Które wydarzenia:** wydarzenia o zasięgu kraj lub region (**Historia regionu**). Wydarzenie się bierze, gdy
+  osoba w roku wydarzenia żyła w miejscu, do którego badanie przypisało wydarzenie. Przy okresie wystarczy jeden jego
+  rok i tylko w latach życia osoby. Gdzie osoba w którym roku żyła, określa się tak samo jak przy historii w karcie
+  osoby.
+- Każde wydarzenie jest w wierszu raz, nawet gdy dotyczy więcej osób. Osoba bez wiersza (bez roku urodzenia,
+  zastępcza) się nie liczy.
+- **Ukrycie:** wydarzenie ukryte w całym drzewie lub dla całego regionu nie ma go nigdzie. Wydarzenie ukryte przy
+  jednym miejscu pokaże inne miejsce osoby, które go nie ukrywa.
+- **Wygląd:** tło wiersza biegnie przez całą oś. Życie osoby w centrum to cienka linia na dole wiersza. Okresy mają
+  paski na dwóch torach.
+- **Grupy:** bliskie wydarzenia tworzą grupę (na komputerze 16 px, na telefonie 22 px). Grupa ma symbol rodzaju,
+  który jest w niej najczęstszy (przy remisie wcześniejszy), w kolorze pochodzenia. Więcej wydarzeń pokazuje
+  plakietkę z liczbą. Dwie grupy, których znaki by się stykały, łączą się.
+- **Kraj lub region** podaje się w etykiecie i w szczegółach tylko wtedy, gdy wydarzenia wiersza pochodzą z co
+  najmniej dwóch krajów lub regionów.
+- **Szczegóły grupy:** najechanie pokazuje wiersz na wydarzenie (rok, rodzaj, kraj lub region, tekst).
+  - Komputer: kliknięcie otwiera okienko przy grupie. W nim każde wydarzenie z latami, symbolem, tekstem, „rodzaj ·
+    kraj lub region” i „Dotyczy:” z najwyżej dwoma imionami i „i N innych”; osoba w centrum jest pierwsza. Imię
+    otwiera kartę osoby na wierszu wydarzenia. Esc, kliknięcie obok lub przewinięcie zamyka okienko.
+  - Telefon i ekran dotykowy: dolny arkusz „Historia 1880–1891” z wydarzeniami i pod **Otwórz w karcie osoby**
+    wiersz dla każdej osoby, której grupa dotyczy (najwyżej cztery i „i N innych ›”). Osoba otwiera kartę na
+    pierwszym wydarzeniu grupy, które jej dotyczy.
+- **Kiedy wiersz jest:** drzewo ma badanie z historią, w Ustawieniach jest włączone **Historia na osi czasu życia**,
+  a na osi czasu karty osoby chip **Historia**. Pochodzenia wyłączone w Ustawieniach (**Historia regionu**,
+  **Historia miejsca**, **Ze źródeł badania**) się nie rysują.
+- **Granice:** wiersz historii jest tylko na ekranie. Druk i plakat osi czasu go nie rysują.
+- **Obsługa:** aplikacja: widok **Oś czasu**, wiersz **Historia ▾** ([A6.3.2](#A6.3.2))
+- **Obowiązuje od:** aplikacja 3.31.0 (do tego czasu wiersz historii tylko osoby w centrum)
+
+<!-- zdroj: app:e843ab70 src/history.ts computeTimelineHistory (místa života personResidence, livedYear v letech života, období jeden rok, jednou na osobu, skrytí treeHidden/regionHidden/hidingFor, scope region → řádek, place/local → čáry; kinds z Nastavení) · src/timeline.ts timelineHistoryRow (jen řádky, které se kreslí; region jen při ≥ 2), timelineClusterKind, timelinePeriodTracks · app:a7391d4f src/timeline-chart.ts historyRowSvg (podklad přes celou osu, tl-hist-life, jen obrazovka) · app:79312e31 clusterTimelineHistory clearance, historyClusterClearance · app:1d2f8b55 src/ui/timeline-history-ui.ts showTimelineHistoryPopover, timelineConcernPersons (max 2, ústřední první), showTimelineHistorySheet, timelineClusterPersons (4 a „a N další ›“) · src/ui/history-ui.ts historyTimelineSource (vrstva, výzkum, čip Dějiny karty) · strings.ts history.timelineRowLabel, timelineClusterAria, timelineEventLine, timelineYearsTitle, timelineConcerns, timelinePeopleMore, openInCard, settingLabel, kindRegion, kindPlace, kindLocal · dirigent:spec/121 K1.1–K1.4, Rozhodnutí 20. 11. · prace/1120-app-121-casova-osa -->
+
+<a id="A6.3.2"></a>
+### A6.3.2 Opcje historii: rodzaje i kraj
+
+Etykieta wiersza **Historia ▾** otwiera opcje historii osi czasu. Opcje obowiązują dla drzewa i pamięta je
+urządzenie.
+
+- **Rodzaje wydarzeń:** **Wszystko** i dziewięć rodzajów (wojna, epidemia, spis ludności, państwo i granice,
+  emigracja, prawo, gospodarka, klęska, inne), każdy z symbolem i liczbą wydarzeń na osi. Liczba sumuje wiersz
+  historii i historię lokalną na liniach życia; wydarzenie na kilku liniach to jedno. Rodzaj bez wydarzenia da się
+  wybrać, filtr zostaje dla innych osi.
+- **Kraj lub region:** tylko przy co najmniej dwóch krajach lub regionach w wierszu. **Wszystkie** i kraje oraz
+  regiony według liczby wydarzeń, jeden wybór. Dotyczy tylko wiersza historii.
+- **Na liniach życia:** opcja **Historia lokalna na liniach życia** ([A6.3.3](#A6.3.3)).
+- **Filtr w etykiecie:** „Historia · 3 rodzaje” (wybrane rodzaje, które oś ma), „Historia · kraj lub region”, przy
+  obu „Historia · 2 filtry”. Etykieta z filtrem jest podbarwiona.
+- **Nic nie zostaje:** wiersz napisze „Brak wydarzeń dla wybranych rodzajów” (na telefonie „Brak wydarzeń”) i
+  **Wyczyść filtr**. **Wyczyść filtr** usuwa rodzaje i kraj naraz; historia lokalna na liniach życia zostaje.
+- **Granice:** opcje nie są danymi drzewa: nie idą do eksportu, GEDCOM ani kopii zapasowej. Kraju, którego badanie
+  już nie zna, się nie używa. Kolejne okno ([A6.8](#A6.8)) przejmie zmianę.
+- **Obsługa:** aplikacja: **Historia ▾** → **Rodzaje wydarzeń**, **Kraj lub region**, **Na liniach życia**,
+  **Wyczyść filtr**. Na komputerze okienko pod etykietą, na telefonie i ekranie dotykowym dolny arkusz.
+- **Obowiązuje od:** aplikacja 3.31.0
+
+<!-- zdroj: app:3e3e4949 src/ui/timeline-history-ui.ts showTimelineHistoryOptions, drawTimelineHistoryOptions (oblast jen hist.regions ≥ 2 nebo uložená; místní off/none), clearTimelineHistoryFilter · src/timeline.ts filterTimelineHistory (oblast jen řádek), timelineHistoryRowState, toggleTimelineKind, clearTimelineFilter (local zůstane), timelineFilterKindCount · app:601f52d4 timelineHistoryFacets (počty jednou podle id, řádek + místní), .tl-hist-btn.is-filtered · src/timeline-chart.ts historyFilterText · src/settings.ts getTimelineHistory/setTimelineHistory (lifelineByTree.timeline, jen zařízení), TimelineHistoryOptions · src/history.ts timelineHistoryRegion (neznámá oblast → všechny) · strings.ts history.timelineOptKinds, timelineOptRegion, timelineOptAllRegions, timelineOptLines, timelineFilterKinds, timelineFilterBoth, timelineClearFilter, timelineEmptyFilter, timelineEmptyFilterShort, kinds.* · dirigent:spec/121 K3.1 -->
+
+<a id="A6.3.3"></a>
+### A6.3.3 Historia lokalna na liniach życia
+
+Opcja **Historia lokalna na liniach życia** rysuje historię miejsca i znaleziska ze źródeł badania wprost na pasku
+życia osoby, w roku wydarzenia.
+
+- **Które wydarzenia:** **Historia miejsca** i **Ze źródeł badania** ([R4.7](R4-places.md#R4.7)) w miejscowości,
+  w której osoba w roku wydarzenia żyła. Przy okresie od pierwszego roku, w którym tam żyła; pod paskiem biegnie
+  wtedy pasek do końca okresu (najdalej do końca paska życia).
+- **Wygląd:** symbol rodzaju w ramce w kolorze pochodzenia. Symbol bliżej niż 10 px od kropki wydarzenia lub od
+  znacznika wspólnego wydarzenia odsuwa się o 11 px w bok. Bliskie symbole grupują się jak w wierszu historii,
+  z plakietką liczby. Poniżej 1,5 px na rok (długa oś na telefonie) linia ma jeden symbol ze wszystkimi wydarzeniami.
+- **Szczegóły:** najechanie pokazuje wiersz na wydarzenie z miejscem, a przy znalezisku źródło. Kliknięcie na
+  komputerze otwiera kartę osoby na wierszu wydarzenia. Na telefonie i ekranie dotykowym dolny arkusz z wydarzeniami
+  i **Otwórz w karcie osoby ›**.
+- **Domyślnie:** wyłączone. Opcja obowiązuje dla drzewa i jest zapamiętana ([A6.3.2](#A6.3.2)). Filtr rodzajów
+  dotyczy także jej.
+- **Granice:** gdy w Ustawieniach są wyłączone **Historia miejsca** i **Ze źródeł badania**, opcji nie da się
+  włączyć. Bez historii lokalnej na osi opcja napisze „Na osi nie ma historii lokalnej.” Symbole są tylko na ekranie;
+  druk i plakat ich nie rysują. Klawiatura do nich nie dochodzi (Tab).
+- **Obsługa:** aplikacja: **Historia ▾** → **Historia lokalna na liniach życia**
+- **Obowiązuje od:** aplikacja 3.31.0
+
+<!-- zdroj: app:967b6b97 src/history.ts computeTimelineHistory (place/local → čáry, rok příchodu moved, year2, source) · src/timeline.ts layoutTimelineLocal, timelineLocalX (LOCAL_CLEAR_PX 10, LOCAL_STEP_PX 11), LOCAL_DENSE_PX_PER_YEAR 1.5, timelineLocalOptionState (off/none), timelineHistoryRow (filtr druhů i na čáry) · src/timeline-chart.ts localSvg (jen screen, tl-loc-box, tl-loc-period, title se zdrojem LOCAL_SOURCE_MAX 60, role img mimo Tab) · src/ui/timeline-history-ui.ts openTimelineHistory, showTimelineLocalSheet · src/settings.ts TimelineHistoryOptions.local (výchozí false) · strings.ts history.timelineOptLocal, timelineOptLocalHint, timelineOptLocalOff, timelineOptLocalNone, timelineLocalAria, timelineLocalSource, openInCard · dirigent:spec/121 K2.1–K2.3 -->
 
 <a id="A6.4"></a>
 ## A6.4 Wachlarz

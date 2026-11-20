@@ -319,6 +319,9 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.1.6 | A6-views.md | aplikace 3.30.0 | platí | Zpět na výchozí osobu: ⌂ | Back to the default person: ⌂ | Zurück zur Standardperson: ⌂ | Powrót do osoby domyślnej: ⌂ |
 | A6.2 | A6-views.md | aplikace 1.4.0 | platí | Pohled Potomci | The Descendants view | Ansicht Nachkommen | Widok Potomkowie |
 | A6.3 | A6-views.md | aplikace 1.5.0 | platí | Časová osa | Timeline | Zeitleiste | Oś czasu |
+| A6.3.1 | A6-views.md | aplikace 3.31.0 | platí | Řádek dějin přes celou osu | The history row across the whole timeline | Die Zeile der Geschichte über die ganze Zeitleiste | Wiersz historii przez całą oś |
+| A6.3.2 | A6-views.md | aplikace 3.31.0 | platí | Volby dějin: druhy a země | History options: kinds and country | Optionen der Geschichte: Arten und Land | Opcje historii: rodzaje i kraj |
+| A6.3.3 | A6-views.md | aplikace 3.31.0 | platí | Místní dějiny na čarách osob | Local history on the life lines | Ortsgeschichte auf den Lebenslinien | Historia lokalna na liniach życia |
 | A6.4 | A6-views.md | aplikace 1.8.0 | platí | Vějíř | Fan | Fächer | Wachlarz |
 | A6.4.1 | A6-views.md | aplikace 3.30.0 | platí | Barvy rodů a zvýraznění rodu | Family line colours and highlighting a family line | Stammlinienfarben und Hervorheben einer Stammlinie | Kolory rodów i wyróżnienie rodu |
 | A6.4.2 | A6-views.md | aplikace 3.31.0 | platí | Vzhled vějíře | Fan appearance | Darstellung des Fächers | Wygląd wachlarza |
@@ -365,6 +368,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A7.4 | A7-book-pages-and-export.md | aplikace 3.19.0 | platí | Kniha rodu | Family book | Familienbuch | Księga rodu |
 | A7.4.1 | A7-book-pages-and-export.md | aplikace 3.19.0 | platí | Výběr osob do knihy a stránek | Choice of people for the book and the pages | Auswahl der Personen für Buch und Seiten | Wybór osób do księgi i stron |
 | A7.5 | A7-book-pages-and-export.md | aplikace 3.20.0 | platí | Stránky rodu a stránky stromu | Family pages and tree pages | Familienseiten und Seiten des Stammbaums | Strony rodu i strony drzewa |
+| A7.5.1 | A7-book-pages-and-export.md | aplikace 3.31.0 | platí | Dějiny na časové ose rodu | History on the timeline of a line | Geschichte auf der Zeitleiste der Stammlinie | Historia na osi czasu rodu |
 | A7.6 | A7-book-pages-and-export.md | aplikace 3.18.0 | platí | Stránka osoby | Person page | Personenseite | Strona osoby |
 | A7.7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Uložené HTML (samostatný soubor) | Saved HTML (a standalone file) | Gespeichertes HTML (eigenständige Datei) | Zapisany HTML (samodzielny plik) |
 | A7.8 | A7-book-pages-and-export.md | aplikace 2.8.0 | platí | Vyprávění | Stories | Erzählungen | Opowieść |

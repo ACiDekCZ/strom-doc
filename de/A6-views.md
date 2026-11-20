@@ -304,9 +304,14 @@ Die Zeitleiste zeigt die Personen der Ansicht als Lebensbalken auf einer Jahresa
 - Der Balken einer lebenden Person reicht bis heute. Eine verstorbene Person ohne Sterbedatum hat einen Balken bis
   zum letzten bekannten Ereignis und ein offenes Ende.
 - Das Jahr der Hochzeit stammt aus dem Anfangsdatum der Partnerschaft. Die Achse ist auf Jahrzehnte gerundet.
-- Unter der Jahresachse läuft die Zeile der Geschichte der zentralen Person (Ereignisse der Zeit und der Orte ihres
-  Lebens, Symbole der Arten). Ohne Forschung oder ohne solche Ereignisse gibt es die Zeile nicht.
-- **Gilt seit:** Zeitleiste App 1.5.0; Zeile der Geschichte App 3.19.0
+- Unter der Jahresachse läuft die Zeile der Geschichte ([A6.3.1](#A6.3.1)). Ohne Forschung oder ohne Ereignisse der
+  Geschichte gibt es die Zeile nicht.
+- Ein gemeinsames Ereignis von zwei oder mehr Zeilen ([A10.2](A10-shared-events.md#A10.2)) ist eine Markierung über
+  die Zeilen seiner Personen, mit Beschriftung; Überfahren der Beschriftung nennt die Personen. Liegt über der ersten
+  Zeile die Zeile der Geschichte, steht die Beschriftung einer Markierung aus der ersten Zeile nicht in ihr, sondern
+  tiefer neben der Markierung.
+- **Gilt seit:** Zeitleiste App 1.5.0; Zeile der Geschichte App 3.19.0, über die ganze Zeitleiste App 3.31.0;
+  Markierung eines gemeinsamen Ereignisses App 3.28.0
 - **Ab App 3.30.0:** mit eingeschalteter **Linienmarkierung** ([A6.1.5](#A6.1.5)) steht vor dem Namen der Person ein
   Linienzeichen in der gewählten Form (eine Person in beiden Linien zwei Zeichen, bei Eltern gleichen Geschlechts 1
   und 2); Überfahren des Zeichens nennt die Linie in Worten. Der Lebensbalken behält die Farbe des Geschlechts und
@@ -314,6 +319,103 @@ Die Zeitleiste zeigt die Personen der Ansicht als Lebensbalken auf einer Jahresa
 
 <!-- zdroj: app:src/timeline.ts computeTimelineModel, :59 TimelineHistory · strings.ts timeline.omitted · CHANGELOG.cs.md 3.19.0 -->
 <!-- zdroj: app:cecd72a4 src/renderer.ts timelineBranchSigns (znak legendy před jménem, title linie slovy, dvě značky R4, číslice R5; plakát SVG) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii -->
+<!-- zdroj: app:55ac8a08 src/timeline-chart.ts sharedMarkSvg (jedna značka přes řádky, popisek jednou, jména v title) · app:f8531340 placeSharedLabels · app:cc6f3104 placeSharedLabels topTaken (s řádkem dějin popisek značky z prvního řádku níž, ne v řádku dějin) · dirigent:spec/085 §2e -->
+
+<a id="A6.3.1"></a>
+### A6.3.1 Die Zeile der Geschichte über die ganze Zeitleiste
+
+Die Zeile der Geschichte zeigt die Geschichte der ganzen Zeit und aller Personen auf der Zeitleiste: jedes Ereignis
+eines Landes oder einer Region, in dem oder der in seinem Jahr mindestens eine Person mit Zeile lebte.
+
+- **Welche Ereignisse:** Ereignisse des Umfangs Land oder Region (**Regionalgeschichte**). Ein Ereignis wird
+  genommen, wenn die Person im Jahr des Ereignisses an einem Ort lebte, dem die Forschung das Ereignis zugeordnet
+  hat. Bei einem Zeitraum genügt eines seiner Jahre, und nur in den Lebensjahren der Person. Wo eine Person in
+  welchem Jahr lebte, wird wie bei der Geschichte in der Personenkarte bestimmt.
+- Jedes Ereignis steht einmal in der Zeile, auch wenn es mehrere Personen betrifft. Eine Person ohne Zeile (ohne
+  Geburtsjahr, Platzhalter) zählt nicht.
+- **Ausblenden:** Ein im ganzen Stammbaum oder für die ganze Region ausgeblendetes Ereignis ist nirgends. Ein an
+  einem Ort ausgeblendetes Ereignis zeigt ein anderer Ort der Person, der es nicht ausblendet.
+- **Aussehen:** Der Hintergrund der Zeile reicht über die ganze Achse. Das Leben der zentralen Person ist eine dünne
+  Linie unten in der Zeile. Zeiträume haben Streifen auf zwei Spuren.
+- **Gruppen:** Nahe Ereignisse bilden eine Gruppe (am Computer 16 px, am Telefon 22 px). Eine Gruppe hat das Symbol
+  der Art, die in ihr am häufigsten ist (bei Gleichstand die frühere), in der Farbe ihrer Herkunft. Mehr Ereignisse
+  zeigen ein Abzeichen mit der Anzahl. Zwei Gruppen, deren Zeichen sich berühren würden, werden eins.
+- **Das Land oder die Region** wird in der Beschriftung und im Detail nur genannt, wenn die Ereignisse der Zeile aus
+  mindestens zwei Ländern oder Regionen stammen.
+- **Detail einer Gruppe:** Überfahren zeigt eine Zeile je Ereignis (Jahr, Art, Land oder Region, Text).
+  - Computer: Ein Klick öffnet ein Fenster an der Gruppe. Darin jedes Ereignis mit Jahren, Symbol, Text, „Art · Land
+    oder Region“ und „Betrifft:“ mit höchstens zwei Namen und „und N weitere“; die zentrale Person steht vorn. Ein
+    Name öffnet die Personenkarte in der Zeile des Ereignisses. Esc, ein Klick daneben oder Scrollen schließt das
+    Fenster.
+  - Telefon und Touchscreen: ein unteres Blatt „Geschichte 1880–1891“ mit den Ereignissen und unter **In der
+    Personenkarte öffnen** eine Zeile für jede Person, die die Gruppe betrifft (höchstens vier und „und N weitere ›“).
+    Eine Person öffnet die Karte beim ersten Ereignis der Gruppe, das sie betrifft.
+- **Wann es die Zeile gibt:** Der Stammbaum hat eine Forschung mit Geschichte, in den Einstellungen ist
+  **Zeitgeschehen im Lebenslauf** eingeschaltet und in der Zeitleiste der Personenkarte der Chip **Zeitgeschehen**.
+  In den Einstellungen ausgeschaltete Herkünfte (**Regionalgeschichte**, **Ortsgeschichte**, **Aus
+  Forschungsquellen**) werden nicht gezeichnet.
+- **Grenzen:** Die Zeile der Geschichte gibt es nur auf dem Bildschirm. Druck und Plakat der Zeitleiste zeichnen sie
+  nicht.
+- **Bedienung:** App: Ansicht **Zeitleiste**, Zeile **Geschichte ▾** ([A6.3.2](#A6.3.2))
+- **Gilt seit:** App 3.31.0 (bis dahin die Zeile der Geschichte nur der zentralen Person)
+
+<!-- zdroj: app:e843ab70 src/history.ts computeTimelineHistory (místa života personResidence, livedYear v letech života, období jeden rok, jednou na osobu, skrytí treeHidden/regionHidden/hidingFor, scope region → řádek, place/local → čáry; kinds z Nastavení) · src/timeline.ts timelineHistoryRow (jen řádky, které se kreslí; region jen při ≥ 2), timelineClusterKind, timelinePeriodTracks · app:a7391d4f src/timeline-chart.ts historyRowSvg (podklad přes celou osu, tl-hist-life, jen obrazovka) · app:79312e31 clusterTimelineHistory clearance, historyClusterClearance · app:1d2f8b55 src/ui/timeline-history-ui.ts showTimelineHistoryPopover, timelineConcernPersons (max 2, ústřední první), showTimelineHistorySheet, timelineClusterPersons (4 a „a N další ›“) · src/ui/history-ui.ts historyTimelineSource (vrstva, výzkum, čip Dějiny karty) · strings.ts history.timelineRowLabel, timelineClusterAria, timelineEventLine, timelineYearsTitle, timelineConcerns, timelinePeopleMore, openInCard, settingLabel, kindRegion, kindPlace, kindLocal · dirigent:spec/121 K1.1–K1.4, Rozhodnutí 20. 11. · prace/1120-app-121-casova-osa -->
+
+<a id="A6.3.2"></a>
+### A6.3.2 Optionen der Geschichte: Arten und Land
+
+Die Beschriftung der Zeile **Geschichte ▾** öffnet die Optionen der Geschichte der Zeitleiste. Die Optionen gelten
+für den Stammbaum, und das Gerät merkt sie sich.
+
+- **Arten von Ereignissen:** **Alle** und neun Arten (Krieg, Epidemie, Volkszählung, Staat und Grenzen,
+  Auswanderung, Recht, Wirtschaft, Katastrophe, Sonstiges), jede mit Symbol und der Anzahl der Ereignisse auf der
+  Zeitleiste. Die Anzahl zählt die Zeile der Geschichte und die Ortsgeschichte auf den Lebenslinien zusammen; ein
+  Ereignis auf mehreren Linien ist eines. Eine Art ohne Ereignis lässt sich wählen; der Filter bleibt für andere
+  Zeitleisten.
+- **Land oder Region:** nur, wenn die Ereignisse der Zeile aus mindestens zwei Ländern
+  oder Regionen stammen. **Alle** und jedes Land
+  oder jede Region nach der Anzahl der Ereignisse, eine Wahl. Gilt nur für die Zeile der Geschichte.
+- **Auf den Lebenslinien:** die Option **Ortsgeschichte auf den Lebenslinien** ([A6.3.3](#A6.3.3)).
+- **Der Filter in der Beschriftung:** „Geschichte · 3 Arten“ (die gewählten Arten, die die Zeitleiste hat),
+  „Geschichte · Land oder Region“, bei beiden „Geschichte · 2 Filter“. Eine Beschriftung mit Filter ist getönt.
+- **Nichts bleibt:** Die Zeile schreibt „Keine Ereignisse für die gewählten Arten“ (am Telefon „Keine Ereignisse“)
+  und **Filter aufheben**. **Filter aufheben** hebt Arten und Land auf einmal auf; die Ortsgeschichte auf den
+  Lebenslinien bleibt.
+- **Grenzen:** Die Optionen sind keine Daten des Stammbaums: Sie gehen in keinen Export, kein GEDCOM und keine
+  Sicherung. Ein Land, das die Forschung nicht mehr kennt, wird nicht verwendet. Ein weiteres Fenster ([A6.8](#A6.8))
+  übernimmt die Änderung.
+- **Bedienung:** App: **Geschichte ▾** → **Arten von Ereignissen**, **Land oder Region**, **Auf den Lebenslinien**,
+  **Filter aufheben**. Am Computer ein Fenster unter der Beschriftung, am Telefon und Touchscreen ein unteres Blatt.
+- **Gilt seit:** App 3.31.0
+
+<!-- zdroj: app:3e3e4949 src/ui/timeline-history-ui.ts showTimelineHistoryOptions, drawTimelineHistoryOptions (oblast jen hist.regions ≥ 2 nebo uložená; místní off/none), clearTimelineHistoryFilter · src/timeline.ts filterTimelineHistory (oblast jen řádek), timelineHistoryRowState, toggleTimelineKind, clearTimelineFilter (local zůstane), timelineFilterKindCount · app:601f52d4 timelineHistoryFacets (počty jednou podle id, řádek + místní), .tl-hist-btn.is-filtered · src/timeline-chart.ts historyFilterText · src/settings.ts getTimelineHistory/setTimelineHistory (lifelineByTree.timeline, jen zařízení), TimelineHistoryOptions · src/history.ts timelineHistoryRegion (neznámá oblast → všechny) · strings.ts history.timelineOptKinds, timelineOptRegion, timelineOptAllRegions, timelineOptLines, timelineFilterKinds, timelineFilterBoth, timelineClearFilter, timelineEmptyFilter, timelineEmptyFilterShort, kinds.* · dirigent:spec/121 K3.1 -->
+
+<a id="A6.3.3"></a>
+### A6.3.3 Ortsgeschichte auf den Lebenslinien
+
+Die Option **Ortsgeschichte auf den Lebenslinien** zeichnet die Ortsgeschichte und die Funde der Forschung aus
+Quellen direkt auf den Lebensbalken der Person, im Jahr des Ereignisses.
+
+- **Welche Ereignisse:** **Ortsgeschichte** und **Aus Forschungsquellen** ([R4.7](R4-places.md#R4.7)) im Ort, in
+  dem die Person im Jahr des Ereignisses lebte. Bei einem Zeitraum ab dem ersten Jahr, in dem sie dort lebte; unter
+  dem Balken läuft dann ein Streifen bis zum Ende des Zeitraums (höchstens bis zum Ende des Balkens).
+- **Aussehen:** das Symbol der Art in einem Rahmen in der Farbe der Herkunft. Ein Symbol näher als 10 px am Punkt
+  eines Ereignisses oder an der Markierung eines gemeinsamen Ereignisses rückt 11 px zur Seite. Nahe Symbole
+  gruppieren sich wie in der Zeile der Geschichte, mit Abzeichen der Anzahl. Unter 1,5 px pro Jahr (lange Achse am
+  Telefon) hat eine Linie ein Symbol mit allen Ereignissen.
+- **Detail:** Überfahren zeigt eine Zeile je Ereignis mit dem Ort und bei einem Fund die Quelle. Ein Klick am
+  Computer öffnet die Personenkarte in der Zeile des Ereignisses. Am Telefon und Touchscreen ein unteres Blatt mit den
+  Ereignissen und **In der Personenkarte öffnen ›**.
+- **Standard:** aus. Die Option gilt für den Stammbaum und wird gemerkt ([A6.3.2](#A6.3.2)). Der Filter der Arten
+  gilt auch für sie.
+- **Grenzen:** Sind in den Einstellungen **Ortsgeschichte** und **Aus Forschungsquellen** beide aus, lässt sich die
+  Option nicht einschalten. Ohne Ortsgeschichte auf der Zeitleiste schreibt die Option „Auf der Zeitleiste gibt es
+  keine Ortsgeschichte.“ Die Symbole gibt es nur auf dem Bildschirm; Druck und Plakat zeichnen sie nicht. Die
+  Tastatur erreicht sie nicht (Tab).
+- **Bedienung:** App: **Geschichte ▾** → **Ortsgeschichte auf den Lebenslinien**
+- **Gilt seit:** App 3.31.0
+
+<!-- zdroj: app:967b6b97 src/history.ts computeTimelineHistory (place/local → čáry, rok příchodu moved, year2, source) · src/timeline.ts layoutTimelineLocal, timelineLocalX (LOCAL_CLEAR_PX 10, LOCAL_STEP_PX 11), LOCAL_DENSE_PX_PER_YEAR 1.5, timelineLocalOptionState (off/none), timelineHistoryRow (filtr druhů i na čáry) · src/timeline-chart.ts localSvg (jen screen, tl-loc-box, tl-loc-period, title se zdrojem LOCAL_SOURCE_MAX 60, role img mimo Tab) · src/ui/timeline-history-ui.ts openTimelineHistory, showTimelineLocalSheet · src/settings.ts TimelineHistoryOptions.local (výchozí false) · strings.ts history.timelineOptLocal, timelineOptLocalHint, timelineOptLocalOff, timelineOptLocalNone, timelineLocalAria, timelineLocalSource, openInCard · dirigent:spec/121 K2.1–K2.3 -->
 
 <a id="A6.4"></a>
 ## A6.4 Fächer

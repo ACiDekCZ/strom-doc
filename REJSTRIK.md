@@ -102,7 +102,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | pl | Historia miejsca (app) · Historia miejsc (app, zarządzanie) | Udokumentowane wydarzenia w miejscu i okolicy mniej więcej do 10 km. Szuka się ich tylko wtedy, gdy człowiek je włączy lub poprosi o miejsce. |
 
 - **Genealogicky:** místní dějiny (local history) jako kontext.
-- **Čísla:** [R4.7](cs/R4-places.md#R4.7), R4.6
+- **Čísla:** [R4.7](cs/R4-places.md#R4.7), R4.6, [A6.3.3](cs/A6-views.md#A6.3.3), A7.5.1
 
 <a id="todays-name"></a>
 ### Dnešní název a starý název

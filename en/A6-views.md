@@ -291,9 +291,13 @@ The Timeline shows the people of the view as life bars on an axis of years.
 - The bar of a living person reaches today. A deceased person without a date of death has a bar up to the last known
   event and an open end.
 - The year of a marriage is taken from the start date of the union. The axis is rounded to decades.
-- Under the axis of years runs a row of history for the central person (events of the time and the places of their
-  life, symbols of kinds). Without the research or without such events there is no row.
-- **Since:** timeline app 1.5.0; the row of history app 3.19.0
+- Under the axis of years runs the history row ([A6.3.1](#A6.3.1)). Without the research or without events of
+  history there is no row.
+- A shared event of two rows or more ([A10.2](A10-shared-events.md#A10.2)) is one mark across the rows of its people,
+  with a label; hovering over the label names the people. When the history row lies above the first row, the label
+  of a mark from the first row does not stand in it but lower, beside the mark.
+- **Since:** timeline app 1.5.0; the history row app 3.19.0, across the whole timeline app 3.31.0; the mark of a
+  shared event app 3.28.0
 - **From app 3.30.0:** with the **Lineage markers** on ([A6.1.5](#A6.1.5)) a lineage sign in the chosen shape stands
   before the person's name (a person in both lineages two signs, with parents of the same sex 1 and 2); hovering over
   the sign says the lineage in words. The life bar keeps the gender colour and is not tinted. The timeline poster
@@ -301,6 +305,95 @@ The Timeline shows the people of the view as life bars on an axis of years.
 
 <!-- zdroj: app:src/timeline.ts computeTimelineModel, :59 TimelineHistory · strings.ts timeline.omitted · CHANGELOG.cs.md 3.19.0 -->
 <!-- zdroj: app:cecd72a4 src/renderer.ts timelineBranchSigns (znak legendy před jménem, title linie slovy, dvě značky R4, číslice R5; plakát SVG) · CHANGELOG.cs.md 3.30.0 „Značení linií“ · dirigent:spec/112-znaceni-linii -->
+<!-- zdroj: app:55ac8a08 src/timeline-chart.ts sharedMarkSvg (jedna značka přes řádky, popisek jednou, jména v title) · app:f8531340 placeSharedLabels · app:cc6f3104 placeSharedLabels topTaken (s řádkem dějin popisek značky z prvního řádku níž, ne v řádku dějin) · dirigent:spec/085 §2e -->
+
+<a id="A6.3.1"></a>
+### A6.3.1 The history row across the whole timeline
+
+The history row shows the history of the whole period and of all people on the timeline: each event of a country or
+region where at least one person with a row lived in its year.
+
+- **Which events:** events of the scope country or region (**Regional history**). An event is taken when the person
+  lived, in the year of the event, in a place the research assigned the event to. For a period one of its years is
+  enough, and only within the years of the person's life. Where a person lived in which year is decided as for
+  history on the person card.
+- Each event is in the row once, even when it concerns more people. A person without a row (without a year of
+  birth, a placeholder) does not count.
+- **Hiding:** an event hidden in the whole tree or for the whole region is nowhere. An event hidden at one place is
+  shown by another place of the person that does not hide it.
+- **Look:** the row's tint spans the whole axis. The life of the central person is a thin line at the bottom of the
+  row. Periods have stripes on two tracks.
+- **Clusters:** events close together form a cluster (16 px on a computer, 22 px on a phone). A cluster has the
+  symbol of the kind most frequent in it (on a tie the earlier one), in the colour of its origin. More events show a
+  badge with the count. Two clusters whose marks would touch merge.
+- **The country or region** is named in the label and the detail only when the row's events come from at least two
+  countries or regions.
+- **A cluster's detail:** hovering shows a line per event (year, kind, country or region, text).
+  - Computer: a click opens a popover at the cluster. In it each event with its years, symbol, text, "kind · country
+    or region" and "Concerns:" with at most two names and "and N more"; the central person comes first. A name opens
+    the person card on the event's row. Esc, a click beside it or scrolling closes the popover.
+  - Phone and touch screen: a bottom sheet "History 1880–1891" with the events and under **Open in the person card**
+    a row for each person the cluster concerns (at most four and "and N more ›"). A person opens the card on the
+    first event of the cluster that concerns them.
+- **When the row is there:** the tree has a research with history, **History in the life timeline** is on in
+  Settings and the chip **History** in the timeline of the person card. Origins switched off in Settings (**Regional
+  history**, **Local history**, **From research sources**) are not drawn.
+- **Limits:** the history row is on the screen only. Printing and the timeline poster do not draw it.
+- **Controls:** app: the **Timeline** view, the row **History ▾** ([A6.3.2](#A6.3.2))
+- **Since:** app 3.31.0 (until then the history row of the central person only)
+
+<!-- zdroj: app:e843ab70 src/history.ts computeTimelineHistory (místa života personResidence, livedYear v letech života, období jeden rok, jednou na osobu, skrytí treeHidden/regionHidden/hidingFor, scope region → řádek, place/local → čáry; kinds z Nastavení) · src/timeline.ts timelineHistoryRow (jen řádky, které se kreslí; region jen při ≥ 2), timelineClusterKind, timelinePeriodTracks · app:a7391d4f src/timeline-chart.ts historyRowSvg (podklad přes celou osu, tl-hist-life, jen obrazovka) · app:79312e31 clusterTimelineHistory clearance, historyClusterClearance · app:1d2f8b55 src/ui/timeline-history-ui.ts showTimelineHistoryPopover, timelineConcernPersons (max 2, ústřední první), showTimelineHistorySheet, timelineClusterPersons (4 a „a N další ›“) · src/ui/history-ui.ts historyTimelineSource (vrstva, výzkum, čip Dějiny karty) · strings.ts history.timelineRowLabel, timelineClusterAria, timelineEventLine, timelineYearsTitle, timelineConcerns, timelinePeopleMore, openInCard, settingLabel, kindRegion, kindPlace, kindLocal · dirigent:spec/121 K1.1–K1.4, Rozhodnutí 20. 11. · prace/1120-app-121-casova-osa -->
+
+<a id="A6.3.2"></a>
+### A6.3.2 History options: kinds and country
+
+The row's label **History ▾** opens the timeline's history options. The options hold for the tree and the device
+remembers them.
+
+- **Kinds of history:** **All** and nine kinds (war, epidemic, census, state and borders, emigration, law, economy,
+  disaster, other), each with its symbol and the number of events on the timeline. The number counts the history row
+  and the local history on the life lines together; an event on several lines is one. A kind without an event can be
+  chosen; the filter stays for other timelines.
+- **Country or region:** only with at least two countries or regions in the row. **All** and the countries and
+  regions by the number of events, one choice. It applies to the history row only.
+- **On the life lines:** the option **Local history on the life lines** ([A6.3.3](#A6.3.3)).
+- **The filter in the label:** "History · 3 kinds" (the chosen kinds the timeline has), "History · country or
+  region", with both "History · 2 filters". A label with a filter is tinted.
+- **Nothing left:** the row says "No history for the chosen kinds" (on a phone "No history") and **Clear filter**.
+  **Clear filter** drops the kinds and the country at once; local history on the life lines stays.
+- **Limits:** the options are not data of the tree: they go into no export, GEDCOM or backup. A country the research
+  no longer knows is not used. Another window ([A6.8](#A6.8)) takes over the change.
+- **Controls:** app: **History ▾** → **Kinds of history**, **Country or region**, **On the life lines**, **Clear
+  filter**. On a computer a popover under the label, on a phone and a touch screen a bottom sheet.
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:3e3e4949 src/ui/timeline-history-ui.ts showTimelineHistoryOptions, drawTimelineHistoryOptions (oblast jen hist.regions ≥ 2 nebo uložená; místní off/none), clearTimelineHistoryFilter · src/timeline.ts filterTimelineHistory (oblast jen řádek), timelineHistoryRowState, toggleTimelineKind, clearTimelineFilter (local zůstane), timelineFilterKindCount · app:601f52d4 timelineHistoryFacets (počty jednou podle id, řádek + místní), .tl-hist-btn.is-filtered · src/timeline-chart.ts historyFilterText · src/settings.ts getTimelineHistory/setTimelineHistory (lifelineByTree.timeline, jen zařízení), TimelineHistoryOptions · src/history.ts timelineHistoryRegion (neznámá oblast → všechny) · strings.ts history.timelineOptKinds, timelineOptRegion, timelineOptAllRegions, timelineOptLines, timelineFilterKinds, timelineFilterBoth, timelineClearFilter, timelineEmptyFilter, timelineEmptyFilterShort, kinds.* · dirigent:spec/121 K3.1 -->
+
+<a id="A6.3.3"></a>
+### A6.3.3 Local history on the life lines
+
+The option **Local history on the life lines** draws local history and the research's findings from records right
+on the person's life bar, in the year of the event.
+
+- **Which events:** **Local history** and **From research sources** ([R4.7](R4-places.md#R4.7)) in the place where
+  the person lived in the year of the event. For a period from the first year the person lived there; under the bar
+  a stripe then runs to the end of the period (at most to the end of the bar).
+- **Look:** the kind's symbol in a box in the colour of its origin. A symbol closer than 10 px to an event's dot or
+  to a shared event's mark steps 11 px aside. Symbols close together group as in the history row, with a count
+  badge. Below 1.5 px per year (a long axis on a phone) a line has one symbol with all its events.
+- **Detail:** hovering shows a line per event with the place and, for a finding, its source. A click on a computer
+  opens the person card on the event's row. On a phone and a touch screen a bottom sheet with the events and **Open in
+  the person card ›**.
+- **Default:** off. The option holds for the tree and is remembered ([A6.3.2](#A6.3.2)). The filter of kinds applies
+  to it too.
+- **Limits:** when **Local history** and **From research sources** are both off in Settings, the option cannot be
+  switched on. Without local history on the timeline the option says "There is no local history on the timeline."
+  The symbols are on the screen only; printing and the poster do not draw them. The keyboard does not reach them
+  (Tab).
+- **Controls:** app: **History ▾** → **Local history on the life lines**
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:967b6b97 src/history.ts computeTimelineHistory (place/local → čáry, rok příchodu moved, year2, source) · src/timeline.ts layoutTimelineLocal, timelineLocalX (LOCAL_CLEAR_PX 10, LOCAL_STEP_PX 11), LOCAL_DENSE_PX_PER_YEAR 1.5, timelineLocalOptionState (off/none), timelineHistoryRow (filtr druhů i na čáry) · src/timeline-chart.ts localSvg (jen screen, tl-loc-box, tl-loc-period, title se zdrojem LOCAL_SOURCE_MAX 60, role img mimo Tab) · src/ui/timeline-history-ui.ts openTimelineHistory, showTimelineLocalSheet · src/settings.ts TimelineHistoryOptions.local (výchozí false) · strings.ts history.timelineOptLocal, timelineOptLocalHint, timelineOptLocalOff, timelineOptLocalNone, timelineLocalAria, timelineLocalSource, openInCard · dirigent:spec/121 K2.1–K2.3 -->
 
 <a id="A6.4"></a>
 ## A6.4 Fan
