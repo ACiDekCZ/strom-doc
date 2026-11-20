@@ -51,7 +51,8 @@ Research** a z něj větší **Přehled výzkumu**. Oba jen čtou. Co ukazují, 
   šipka panelu. Otevřený Přehled už panel za sebou nerozbalí. Telefon volbu nečte ani nepíše (pruh otevírá Přehled
   jako dřív). Bez úložiště prohlížeče (soukromé okno) platí do zavření stránky.
 - **Od aplikace 3.31.0:** na telefonu drženém na šířku se rozbalený panel sledovaného výzkumu sbalí do proužku, když
-  se objeví ukazatel načítání fotek **Fotky k / n** nebo oznámení (ne pilulka **Zpět** ani potvrzení zaměření).
+  se objeví ukazatel načítání fotek **Fotky k / n**
+  ([S1.4.1](S1-connecting-app-and-research.md#S1.4.1)) nebo oznámení (ne pilulka **Zpět** ani potvrzení zaměření).
   Sám se znovu nerozbalí, ani když ukazatel nebo oznámení zmizí; rozbalí ho ťuknutí na hlavičku. Sbalení se
   nepamatuje jako volba zařízení. Na počítači, tabletu a telefonu na výšku se nic nemění.
 
@@ -508,6 +509,31 @@ předplatné AI.
   **Zkusit znovu** a radou a tlačítka jsou zase volná.
 
 <!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) · 3.29.0: app:a0a66d45 Teď nabízí Pracovat na frontě… (bez práce agenta a běhu; okno přehledu; fokus zpět) · 3c8f4128 src/ui/queue-work-dialog.ts Další (n) (pořadí: ruční další, místo ve frontě; bez odložených a mimo linie, které se neberou; queue.page; zbytek, Přehled výzkumu ›; sbalené při otevření) · strings.ts live.queueWorkMore, queueWorkLess, queueWorkByQueue, queueWorkByQueueHint, queueWorkRest, queueWorkRestUnknown, queueWorkOverview, queueTagNext · 3.30.0: app:574e7ef9 src/ui/queue-start.ts (QUEUE_START_MS 30 s, důkaz handoff nebo sezení/běh, silent → queueNotStarted, proven bez sezení zmizí potichu) · src/ui/research-overview-ui.ts (live-now-starting, terminalSilent) · strings.ts busy.queueStarting, queueStartingSub, queueNotStarted, terminalSilent -->
+
+<a id="S4.2.4"></a>
+### S4.2.4 Fronta podle druhu úkolu
+
+S výzkumem, který u úkolů uvádí druh práce, má **Fronta** v Přehledu výzkumu pod čipy linií řadu **Druh úkolu**:
+čip pro každý druh, který má ve frontě úkol, s počtem („Ověřování 12“). Druh určuje výzkum
+([R2.2](R2-lines-and-queue.md#R2.2)).
+
+- **Druhy** v tomto pořadí: **Ověřování**, **Matriky**, **Materiál**, **Místa**, **Zdroje mimo matriky**, **Dotazy**,
+  **Vyprávění**, **Dějiny**, **Ostatní**.
+- **Hranice:**
+  - vybraný čip zúží frontu na úkoly toho druhu a ukáže ×; druhé kliknutí výběr zruší („Ukázat všechny druhy
+    úkolů“). Vybraný druh zůstane v řadě i s nulou, když jeho poslední úkol zmizí;
+  - filtr se skládá s linií nebo větví a s hledáním ve frontě ([S4.2.1](#S4.2.1)): „Nalezeno 12 úkolů · druh
+    Ověřování“; bez výsledku „Mezi úkoly druhu Ověřování nic nenalezeno.“ s **Hledat ve všech druzích úkolů**;
+  - volba platí pro výzkum, u kterého vznikla, dokud ji člověk nezruší nebo neskončí sledování;
+  - se starším výzkumem se řada neukazuje a fronta je jako dřív.
+- **Z oddílu Ověřování:** řádek „Čeká na ověření“ v Co ví výzkum › **Ověřování**
+  ([S7.5](S7-reliability-and-verification.md#S7.5)) má **Ukázat ve frontě**. Otevře **Frontu** v Přehledu výzkumu
+  zúženou na **Ověřování**. Zůstává v aplikaci a nemá značku.
+- **Ovládání:** aplikace: **Přehled výzkumu** → **Fronta** → řada **Druh úkolu**; Co ví výzkum › **Ověřování** →
+  **Ukázat ve frontě**. Terminál: `strom task list --kind verify` ([R2.2](R2-lines-and-queue.md#R2.2)).
+- **Platí od:** aplikace 3.31.0, výzkum 1.36.0
+
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 -->
 
 <a id="S4.3"></a>
 ## S4.3 Linie v aplikaci

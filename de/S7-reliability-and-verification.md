@@ -138,8 +138,11 @@ den Linien.
 - **Bedienung:** App: Personenkarte → Marke der Angabe → **Prüfen** (oder **Vorrangig prüfen**) → **Prüfung
   starten**. Terminal: `strom verify facts P…|F…|E… [--fact …] [--dry-run]`.
 - **Gilt seit:** Forschung 1.30.0, App 3.26.0
+- **Ab App 3.31.0:** die Vorschau sagt statt „Läuft im Hintergrund der Recherche. Das Ergebnis erscheint bei der
+  Angabe.“ nun „Wird geprüft, wenn die Recherche arbeitet. Das Ergebnis erscheint bei der Angabe.“ Die Prüfung wartet
+  nicht im Hintergrund, eine Sitzung der Forschung nimmt sie.
 
-<!-- zdroj: app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) · research:4ac323ef src/core/verify.ts askedFor (úkol přeřazený člověkem, queueAt next, do konce sezení na něm → asked v souboru, /status, verify status) · app:src/verify-offer.ts (asked: Verify first se nenabízí) · CHANGELOG.cs.md 1.31.0 -->
+<!-- zdroj: app:f19d34cb strings.ts verify.previewNote (065 K7.3) · app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) · research:4ac323ef src/core/verify.ts askedFor (úkol přeřazený člověkem, queueAt next, do konce sezení na něm → asked v souboru, /status, verify status) · app:src/verify-offer.ts (asked: Verify first se nenabízí) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="S7.4"></a>
 ## S7.4 Angaben prüfen bei einer Person
@@ -177,8 +180,11 @@ im Menü der Person.
   **Angaben prüfen (N)** oder **Vorrangig prüfen**; Menü der Person → **Angaben prüfen · N**, oder **Vorrangig
   prüfen** unter **Wird geprüft · N**; dann im Fenster **Prüfen (N)**. Terminal: `strom verify facts P…`.
 - **Gilt seit:** Forschung 1.30.0, App 3.26.0
+- **Ab App 3.31.0:** unter der Schätzung steht im Fenster „Günstig = einen bekannten Eintrag lesen. Teurer = der
+  Eintrag wird erst gesucht. Wird geprüft, wenn die Recherche arbeitet; Ergebnisse erscheinen bei den Angaben.“
+  (vorher „Läuft im Hintergrund der Recherche“).
 
-<!-- zdroj: app:7cf409bd src/ui/verify-person-ui.ts personVerifyMenu (pending + prioritize), verifyCardTipActions (st-verify-first), renderPersonVerifyRow (jen pending řádek), showVerifyPersonDialog prioritize (titulek verify.prioritize) · src/ui/card-signals-ui.ts signal-verify-first · src/ui/context-menu.ts · research:a4a2f6c0 src/core/verify.ts verifyAsk (osoba: držené úkoly na začátek) · app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) · app:0fbda127 src/verify-ui-model.ts PERSON_VERIFY_KINDS, personVerifyAskCount, src/ui/verify-person-ui.ts others (start po údajích) -->
+<!-- zdroj: app:f19d34cb strings.ts verify.estimateNote (065 K7.3) · app:7cf409bd src/ui/verify-person-ui.ts personVerifyMenu (pending + prioritize), verifyCardTipActions (st-verify-first), renderPersonVerifyRow (jen pending řádek), showVerifyPersonDialog prioritize (titulek verify.prioritize) · src/ui/card-signals-ui.ts signal-verify-first · src/ui/context-menu.ts · research:a4a2f6c0 src/core/verify.ts verifyAsk (osoba: držené úkoly na začátek) · app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) · app:0fbda127 src/verify-ui-model.ts PERSON_VERIFY_KINDS, personVerifyAskCount, src/ui/verify-person-ui.ts others (start po údajích) -->
 
 <a id="S7.5"></a>
 ## S7.5 Angaben im Baum prüfen
@@ -212,8 +218,53 @@ ungeprüfte Angaben (wahrscheinlich, möglich, Hinweis, aus dem Stammbaum).
   [--order ancestors|weakest|oldest] [--try N] [--budget …] [--dry-run]`, `strom verify status`,
   `strom verify stop [--bulk]`.
 - **Gilt seit:** Forschung 1.30.0, App 3.26.0
+- **Ab App 3.31.0 mit Forschung 1.36.0:** die Probe kommt an den Anfang der Warteschlange, und die Meldung nach dem
+  Start bietet **Jetzt bearbeiten** ([S7.5.1](#S7.5.1)). Unter der Schätzung sagt das Fenster „Wird geprüft, wenn die
+  Recherche arbeitet; Fortschritt und Anhalten unter „Was die Forschung weiß › Prüfung“.“ Die Zeile „Warten auf
+  Prüfung“ hat **In der Warteschlange zeigen** ([S4.2.4](S4-research-from-the-app.md#S4.2.4)).
 
-<!-- zdroj: app:7b0471f8 src/ui/verify-person-ui.ts verifyRowsHtml, treeVerifyBlock, showVerifyBulkDialog · src/ui/research-actions-ui.ts:371 (nabídka výzkumu) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · src/verify-ui-model.ts VERIFY_TRY_PEOPLE 5 · strings.ts verify.bulkRow, bulkRowSub, bulkTitle, bulkSub, scope, order, scopeLine, scopeSurname, scopeTree, orderAncestors, orderWeakest, orderOldest, tryFirst, tryFirstSub, tryN, startN, bulkNote, section, pendingRow, pendingRowSub, stop, stopped · research:6c6e7c3b strom help verify bulk, verify stop, verify status · src/core/verify.ts (žijící) · research:94d75934 src/core/verify.ts verifyBulk (origin import nebo tree → search) -->
+<!-- zdroj: app:f19d34cb, 53ef9cbe (065 K7.1–K7.4) · app:7b0471f8 src/ui/verify-person-ui.ts verifyRowsHtml, treeVerifyBlock, showVerifyBulkDialog · src/ui/research-actions-ui.ts:371 (nabídka výzkumu) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · src/verify-ui-model.ts VERIFY_TRY_PEOPLE 5 · strings.ts verify.bulkRow, bulkRowSub, bulkTitle, bulkSub, scope, order, scopeLine, scopeSurname, scopeTree, orderAncestors, orderWeakest, orderOldest, tryFirst, tryFirstSub, tryN, startN, bulkNote, section, pendingRow, pendingRowSub, stop, stopped · research:6c6e7c3b strom help verify bulk, verify stop, verify status · src/core/verify.ts (žijící) · research:94d75934 src/core/verify.ts verifyBulk (origin import nebo tree → search) -->
+
+<a id="S7.5.1"></a>
+### S7.5.1 Die Probe am Anfang der Warteschlange und Jetzt bearbeiten
+
+Die Probe **Zuerst an 5 Personen ausprobieren** kommt an den Anfang der Warteschlange der Forschung, wie **Prüfen** bei
+einer Person. Arbeitet die Forschung gerade nicht, bietet die App an, sie sofort zu bearbeiten.
+
+- **Im Fenster:** unter der Option der Probe steht „Die Aufgaben kommen an den Anfang der Warteschlange der Recherche.
+  Nach 5 Personen hält die Prüfung an und zeigt das Ergebnis.“ und unter der Schätzung „Wird geprüft, wenn die
+  Recherche arbeitet; Fortschritt und Anhalten unter „Was die Forschung weiß › Prüfung“.“
+- **Nach dem Start** sagt eine Meldung, wann die Probe bearbeitet wird:
+  - die Forschung arbeitet: „12 Angaben zur Prüfung sind als Nächstes in der Warteschlange der Recherche.“;
+  - die Forschung arbeitet nicht: „12 Angaben zur Prüfung stehen am Anfang der Warteschlange. Die Recherche arbeitet
+    gerade nicht.“ mit **Jetzt bearbeiten** (Marken KI und Terminal, [S4.5.1](S4-research-from-the-app.md#S4.5.1));
+    die Meldung steht 15 s und lässt sich schließen;
+  - sonst (die Forschung kann nicht an gewählten Aufgaben arbeiten, hat keinen eingerichteten Agenten oder hat nicht
+    gesagt, ob sie arbeitet): „12 Angaben zur Prüfung stehen am Anfang der Warteschlange; geprüft wird bei der
+    nächsten Arbeit der Recherche.“
+- **Jetzt bearbeiten** öffnet das Terminal der Forschung wie **An der Warteschlange arbeiten…**
+  ([S4.2.3](S4-research-from-the-app.md#S4.2.3)): „Diese Aufgaben, in dieser Reihenfolge:“, dann „Eine Sitzung je
+  Aufgabe (N Sitzungen), dann Ende; was nicht fertig wird, geht zurück in die Warteschlange.“ Gestartet wird erst auf
+  ein Ja ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)).
+- **Prüft der Code:**
+  - die Aufgaben der Probe bekommen in der Warteschlange einen Platz wie ein manuelles **sofort**
+    ([R2.3.1](R2-lines-and-queue.md#R2.3.1)); die nächste Sitzung nimmt sie. Der Rest eines Umfangs ohne Probe kommt
+    weiter erst nach der Arbeit an den Linien ([S7.5](#S7.5));
+  - zwei Proben nacheinander gehen in der Reihenfolge der Eingabe, die ältere zuerst;
+  - das Terminal nimmt nur Aufgaben, die noch warten und an denen niemand arbeitet; die übrigen lässt es aus („N
+    Aufgaben des Links warten nicht mehr (erledigt, zurückgenommen oder von einem anderen gehalten): ausgelassen.“).
+    Wartet keine, startet nichts.
+- **Wo der Fortschritt ist:** Was die Forschung weiß › **Prüfung** („Warten auf Prüfung: N Angaben“, **Anhalten**,
+  **In der Warteschlange zeigen**), in der **Warteschlange** die Art **Prüfung**
+  ([S4.2.4](S4-research-from-the-app.md#S4.2.4)); Terminal `strom verify status`.
+- **Grenzen:** mit einer älteren Forschung kommt die Probe wie andere Aufgaben der Prüfung nach der Arbeit an den
+  Linien, und die Meldung sagt „N Angaben sind zur Prüfung eingereiht.“
+- **Bedienung:** App: **Angaben im Baum prüfen…** → **Zuerst an 5 Personen ausprobieren** → **An 5 ausprobieren** →
+  Meldung → **Jetzt bearbeiten**. Terminal: `strom verify bulk --scope … --try N` („ein Versuch, vorn in der
+  Warteschlange: die nächste Sitzung nimmt ihn“).
+- **Gilt seit:** App 3.31.0, Forschung 1.36.0
+
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.1–K7.3 · prace/1119-app-065-p7, 1119-research-065-p7-drobnosti · app:f19d34cb src/ui/verify-person-ui.ts (tryHead: verify.tryFirst → tryFirstSubHead; bulkNote(knowsTitle › section); showVerifyBulkStarted: BULK_PROCESS_MS 15 s, closable, activeResearchNoAgent, work do=tasks workTasks, researchLinkFlags) · src/research-verify.ts verifyBulkStartedKind (plain / next / head / process: working false, work.tasks, workTaskIds) · src/verify-ui-model.ts VERIFY_TRY_PEOPLE 5 · strings.ts verify.tryFirstSubHead, bulkNote, bulkStartedIdle, bulkStartedNext, bulkStartedHead, processNow, bulkStarted · research:7116bb60 src/core/verify.ts verifyBulk (try → priority 3, queueAt next, first), src/commands/verify.ts (working), src/cli/menu-links.ts workOn (jen open a nedržené, asks výchozí ne, run --task), src/core/links.ts (task= jen s do=tasks, 1–100) · cs.json ui.verify.bulk.first, ui.link.work.picked.head, ui.link.work.picked, ui.link.work.picked.gone, ui.link.work.picked.none · CHANGELOG.cs.md 1.36.0 (dvě zkoušky v pořadí zadání) -->
 
 <a id="S7.6"></a>
 ## S7.6 Prüfung von selbst in der Warteschlange der Forschung

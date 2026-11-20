@@ -118,8 +118,12 @@ strom načte bez nich a nic, co výzkum má, neodebere.
 - **Hranice:** **Zkusit znovu** načte verzi z výzkumu jako každé načtení: když se strom mezitím změnil, zeptá se.
 - **Ovládání:** aplikace: oznámení → **Zkusit znovu**.
 - **Platí od:** aplikace 3.30.0, výzkum 1.35.0
+- **Od aplikace 3.31.0:** při otevření přes **Sledovat živě** přicházejí fotky po stromu
+  ([S1.4.1](S1-connecting-app-and-research.md#S1.4.1)). Fotky, které nepřišly, tam ohlásí „Některé fotky se
+  nenačetly (N).“ se **Zkusit znovu**; samo se to po 5 s a 30 s
+  neopakuje. Zápisy stromu do jejich příchodu jen přidávají stejně.
 
-<!-- zdroj: app:6bbc2f82 src/ui/research-ui.ts noteResearchMediaMissed (zápisy jen přidávají), 61ef1bdd MEDIA_RETRY_MS=[5000, 30000], researchMediaMissed, tellResearchMediaMissed, researchRetryMedia · strings.ts sync.mediaMissed, sync.retry -->
+<!-- zdroj: app:src/ui/research-ui.ts startLiveFollow onDone (failed → noteResearchMediaMissed, bez researchMediaMissed a MEDIA_RETRY_MS), src/ui/image-load-chip.ts showFailed · spec 116 · app:6bbc2f82 src/ui/research-ui.ts noteResearchMediaMissed (zápisy jen přidávají), 61ef1bdd MEDIA_RETRY_MS=[5000, 30000], researchMediaMissed, tellResearchMediaMissed, researchRetryMedia · strings.ts sync.mediaMissed, sync.retry -->
 
 <a id="S8.6"></a>
 ## S8.6 Balík a odebrání stromu: skeny a rodinné fotky

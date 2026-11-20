@@ -121,8 +121,10 @@ Výzkum pak údaj ověří podle originálu záznamu: na pozadí, mimo práci na
 - **Ovládání:** aplikace: karta osoby → značka údaje → **Ověřit** (nebo **Ověřit přednostně**) → **Spustit
   ověření**. Terminál: `strom verify facts P…|F…|E… [--fact …] [--dry-run]`.
 - **Platí od:** výzkum 1.30.0, aplikace 3.26.0
+- **Od aplikace 3.31.0:** náhled místo „Běží na pozadí výzkumu. Výsledek se ukáže u údaje.“ říká „Ověří se při práci
+  výzkumu. Výsledek se ukáže u údaje.“ Ověření nečeká na pozadí, vezme ho sezení výzkumu.
 
-<!-- zdroj: app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) · research:4ac323ef src/core/verify.ts askedFor (úkol přeřazený člověkem, queueAt next, do konce sezení na něm → asked v souboru, /status, verify status) · app:src/verify-offer.ts (asked: Verify first se nenabízí) · CHANGELOG.cs.md 1.31.0 -->
+<!-- zdroj: app:f19d34cb strings.ts verify.previewNote (065 K7.3) · app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) · research:4ac323ef src/core/verify.ts askedFor (úkol přeřazený člověkem, queueAt next, do konce sezení na něm → asked v souboru, /status, verify status) · app:src/verify-offer.ts (asked: Verify first se nenabízí) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="S7.4"></a>
 ## S7.4 Ověřit údaje u osoby
@@ -156,8 +158,10 @@ a v bublině značky na kartičce, nebo položkou **Ověřit údaje · N** v nab
   **Ověřit údaje (N)** nebo **Ověřit přednostně**; nabídka osoby → **Ověřit údaje · N**, nebo **Ověřit přednostně**
   pod **Ověřuje se · N**; pak v okně **Ověřit (N)**. Terminál: `strom verify facts P…`.
 - **Platí od:** výzkum 1.30.0, aplikace 3.26.0
+- **Od aplikace 3.31.0:** pod odhadem v okně stojí „Levné = přečíst známý záznam. Dražší = záznam se teprve hledá.
+  Ověří se při práci výzkumu, výsledek se ukáže u údajů.“ (dřív „Běží na pozadí výzkumu“).
 
-<!-- zdroj: app:7cf409bd src/ui/verify-person-ui.ts personVerifyMenu (pending + prioritize), verifyCardTipActions (st-verify-first), renderPersonVerifyRow (jen pending řádek), showVerifyPersonDialog prioritize (titulek verify.prioritize) · src/ui/card-signals-ui.ts signal-verify-first · src/ui/context-menu.ts · research:a4a2f6c0 src/core/verify.ts verifyAsk (osoba: držené úkoly na začátek) · app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) · app:0fbda127 src/verify-ui-model.ts PERSON_VERIFY_KINDS, personVerifyAskCount, src/ui/verify-person-ui.ts others (start po údajích) -->
+<!-- zdroj: app:f19d34cb strings.ts verify.estimateNote (065 K7.3) · app:7cf409bd src/ui/verify-person-ui.ts personVerifyMenu (pending + prioritize), verifyCardTipActions (st-verify-first), renderPersonVerifyRow (jen pending řádek), showVerifyPersonDialog prioritize (titulek verify.prioritize) · src/ui/card-signals-ui.ts signal-verify-first · src/ui/context-menu.ts · research:a4a2f6c0 src/core/verify.ts verifyAsk (osoba: držené úkoly na začátek) · app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) · app:0fbda127 src/verify-ui-model.ts PERSON_VERIFY_KINDS, personVerifyAskCount, src/ui/verify-person-ui.ts others (start po údajích) -->
 
 <a id="S7.5"></a>
 ## S7.5 Ověřit údaje ve stromu
@@ -187,8 +191,45 @@ rozsah, pořadí a odhad ceny předem a ověřuje jen neověřené údaje (pravd
   [--order ancestors|weakest|oldest] [--try N] [--budget …] [--dry-run]`, `strom verify status`,
   `strom verify stop [--bulk]`.
 - **Platí od:** výzkum 1.30.0, aplikace 3.26.0
+- **Od aplikace 3.31.0 s výzkumem 1.36.0:** zkouška jde na začátek fronty a hláška po spuštění nabídne **Zpracovat
+  hned** ([S7.5.1](#S7.5.1)). Okno pod odhadem říká „Ověří se při práci výzkumu; průběh a zastavení v „Co ví výzkum ›
+  Ověřování“.“ Řádek „Čeká na ověření“ má **Ukázat ve frontě** ([S4.2.4](S4-research-from-the-app.md#S4.2.4)).
 
-<!-- zdroj: app:7b0471f8 src/ui/verify-person-ui.ts verifyRowsHtml, treeVerifyBlock, showVerifyBulkDialog · src/ui/research-actions-ui.ts:371 (nabídka výzkumu) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · src/verify-ui-model.ts VERIFY_TRY_PEOPLE 5 · strings.ts verify.bulkRow, bulkRowSub, bulkTitle, bulkSub, scope, order, scopeLine, scopeSurname, scopeTree, orderAncestors, orderWeakest, orderOldest, tryFirst, tryFirstSub, tryN, startN, bulkNote, section, pendingRow, pendingRowSub, stop, stopped · research:6c6e7c3b strom help verify bulk, verify stop, verify status · src/core/verify.ts (žijící) · research:94d75934 src/core/verify.ts verifyBulk (origin import nebo tree → search) -->
+<!-- zdroj: app:f19d34cb, 53ef9cbe (065 K7.1–K7.4) · app:7b0471f8 src/ui/verify-person-ui.ts verifyRowsHtml, treeVerifyBlock, showVerifyBulkDialog · src/ui/research-actions-ui.ts:371 (nabídka výzkumu) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · src/verify-ui-model.ts VERIFY_TRY_PEOPLE 5 · strings.ts verify.bulkRow, bulkRowSub, bulkTitle, bulkSub, scope, order, scopeLine, scopeSurname, scopeTree, orderAncestors, orderWeakest, orderOldest, tryFirst, tryFirstSub, tryN, startN, bulkNote, section, pendingRow, pendingRowSub, stop, stopped · research:6c6e7c3b strom help verify bulk, verify stop, verify status · src/core/verify.ts (žijící) · research:94d75934 src/core/verify.ts verifyBulk (origin import nebo tree → search) -->
+
+<a id="S7.5.1"></a>
+### S7.5.1 Zkouška na začátku fronty a Zpracovat hned
+
+Zkouška **Nejdřív vyzkoušet na 5 osobách** jde ve frontě výzkumu na začátek, jako **Ověřit** u osoby. Když výzkum
+zrovna nepracuje, aplikace nabídne zpracovat ji hned.
+
+- **V okně:** pod volbou zkoušky stojí „Úkoly jdou na začátek fronty výzkumu. Po 5 osobách se ověřování zastaví
+  a ukáže výsledek.“ a pod odhadem „Ověří se při práci výzkumu; průběh a zastavení v „Co ví výzkum › Ověřování“.“
+- **Po spuštění** řekne hláška, kdy se zkouška zpracuje:
+  - výzkum pracuje: „12 údajů k ověření je další na řadě ve frontě výzkumu.“;
+  - výzkum nepracuje: „12 údajů k ověření je na začátku fronty. Výzkum teď nepracuje.“ s **Zpracovat hned**
+    (značka AI a terminálu, [S4.5.1](S4-research-from-the-app.md#S4.5.1)); hláška stojí 15 s a jde zavřít;
+  - jinak (výzkum neumí práci na vybraných úkolech, nemá nastaveného agenta, nebo neřekl, zda pracuje): „12 údajů
+    k ověření je na začátku fronty; ověří se při příští práci výzkumu.“
+- **Zpracovat hned** otevře terminál výzkumu jako **Pracovat na frontě…** ([S4.2.3](S4-research-from-the-app.md#S4.2.3)):
+  „Tyto úkoly, v tomto pořadí:“, pak „Každý úkol jedno sezení (N sezení), pak konec; co se nedokončí, vrátí se do
+  fronty.“ Spustí se až na **ano** ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)).
+- **Hlídá kód:**
+  - úkoly zkoušky dostanou ve frontě místo jako ruční **hned** ([R2.3.1](R2-lines-and-queue.md#R2.3.1)); vezme je
+    příští sezení. Zbytek rozsahu bez zkoušky jde dál až po práci na liniích ([S7.5](#S7.5));
+  - dvě zkoušky po sobě jdou v pořadí zadání, starší první;
+  - terminál vezme jen úkoly, které ještě čekají a nikdo na nich nepracuje; ostatní vynechá („Úkoly z odkazu, které
+    už nečekají (hotové, vzaté zpět nebo je má jiný), vynechány: N.“). Když nečeká žádný, nic se nespustí.
+- **Kde je průběh:** Co ví výzkum › **Ověřování** („Čeká na ověření: N údajů“, **Zastavit**, **Ukázat ve frontě**),
+  ve **Frontě** druh **Ověřování** ([S4.2.4](S4-research-from-the-app.md#S4.2.4)); terminál `strom verify status`.
+- **Hranice:** se starším výzkumem jde zkouška po práci na liniích jako ostatní úkoly ověřování a hláška říká
+  „N údajů je zařazeno k ověření.“
+- **Ovládání:** aplikace: **Ověřit údaje ve stromu…** → **Nejdřív vyzkoušet na 5 osobách** → **Vyzkoušet na 5** →
+  hláška → **Zpracovat hned**. Terminál: `strom verify bulk --scope … --try N` („zkouška, na začátku fronty: vezme
+  ji příští sezení“).
+- **Platí od:** aplikace 3.31.0, výzkum 1.36.0
+
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.1–K7.3 · prace/1119-app-065-p7, 1119-research-065-p7-drobnosti · app:f19d34cb src/ui/verify-person-ui.ts (tryHead: verify.tryFirst → tryFirstSubHead; bulkNote(knowsTitle › section); showVerifyBulkStarted: BULK_PROCESS_MS 15 s, closable, activeResearchNoAgent, work do=tasks workTasks, researchLinkFlags) · src/research-verify.ts verifyBulkStartedKind (plain / next / head / process: working false, work.tasks, workTaskIds) · src/verify-ui-model.ts VERIFY_TRY_PEOPLE 5 · strings.ts verify.tryFirstSubHead, bulkNote, bulkStartedIdle, bulkStartedNext, bulkStartedHead, processNow, bulkStarted · research:7116bb60 src/core/verify.ts verifyBulk (try → priority 3, queueAt next, first), src/commands/verify.ts (working), src/cli/menu-links.ts workOn (jen open a nedržené, asks výchozí ne, run --task), src/core/links.ts (task= jen s do=tasks, 1–100) · cs.json ui.verify.bulk.first, ui.link.work.picked.head, ui.link.work.picked, ui.link.work.picked.gone, ui.link.work.picked.none · CHANGELOG.cs.md 1.36.0 (dvě zkoušky v pořadí zadání) -->
 
 <a id="S7.6"></a>
 ## S7.6 Ověřování samo ve frontě výzkumu

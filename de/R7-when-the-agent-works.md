@@ -75,8 +75,15 @@ kann er eine Bedingung fragen ([R7.4](#R7.4)).
 - **Gilt seit:** Forschung 1.32.0
 - **Ab Forschung 1.36.0:** Bei **Agent aus der Strom-App starten: ohne Rückfrage** startet die Arbeit ohne Frage nach
   einem Ja; die Bedingung fragt weiter ([S4.5.5](S4-research-from-the-app.md#S4.5.5)).
+- **Ab Forschung 1.36.0:** der Link kann Aufgaben nennen (`do=tasks` mit `task=T…,T…`, nur Nummern von Aufgaben,
+  höchstens 100, nie mit `n`): **Jetzt bearbeiten** nach einer Probe der Prüfung
+  ([S7.5.1](S7-reliability-and-verification.md#S7.5.1)). Das Terminal zeigt „Diese Aufgaben, in dieser Reihenfolge:“
+  und „Eine Sitzung je Aufgabe (N Sitzungen), dann Ende; was nicht fertig wird, geht zurück in die Warteschlange.“
+  Nach einem Ja startet es `strom run --task` mit diesen Aufgaben in der Reihenfolge des Links. Aufgaben, die nicht mehr
+  warten (erledigt, zurückgenommen oder von einem anderen gehalten), lässt es aus und sagt, wie viele; wartet keine,
+  startet nichts.
 
-<!-- zdroj: research:src/cli/menu-links.ts workRun (WORK_LIST=5, agentCliHere, busyIn, taskQueue s RUN_TURNS, loop jen s run.gate, choose výchozí „Teď nic“, asks … false, run --tasks | --loop) · src/core/links.ts LINK_WORK_DOS, LINK_WORK_MAX=100, LINK_WORK_DEFAULT=5 · src/commands/links.ts case "work" · cs.json ui.link.work.*, ui.link.what.work.*, ui.run.next, ui.run.limit, ui.link.cost · CHANGELOG.cs.md 1.32.0 · spec 052 K6.2 (cesta terminál, most agenta nespouští) -->
+<!-- zdroj: 1.36.0: research:7116bb60 src/cli/menu-links.ts workOn, src/core/links.ts (task= jen s do=tasks, ne s n, 1–LINK_WORK_MAX) · cs.json ui.link.work.picked.* · research:src/cli/menu-links.ts workRun (WORK_LIST=5, agentCliHere, busyIn, taskQueue s RUN_TURNS, loop jen s run.gate, choose výchozí „Teď nic“, asks … false, run --tasks | --loop) · src/core/links.ts LINK_WORK_DOS, LINK_WORK_MAX=100, LINK_WORK_DEFAULT=5 · src/commands/links.ts case "work" · cs.json ui.link.work.*, ui.link.what.work.*, ui.run.next, ui.run.limit, ui.link.cost · CHANGELOG.cs.md 1.32.0 · spec 052 K6.2 (cesta terminál, most agenta nespouští) -->
 
 <a id="R7.2"></a>
 ## R7.2 Jede Sitzung hat ein Zeitlimit

@@ -128,8 +128,13 @@ fingerprint, the app loads the tree without them and removes nothing the researc
   meantime, it asks.
 - **Controls:** app: the notice → **Try again**.
 - **Since:** app 3.30.0, research 1.35.0
+- **From app 3.31.0:** when the tree is opened with **Follow live**, the photos come after the tree
+  ([S1.4.1](S1-connecting-app-and-research.md#S1.4.1)). Photos that did not come are reported there by “Some photos
+  did not load (N).” with **Try again**; it is not retried by
+  itself after 5 s and 30 s. Until they come, the tree's writes still only
+  add.
 
-<!-- zdroj: app:6bbc2f82 src/ui/research-ui.ts noteResearchMediaMissed (zápisy jen přidávají), 61ef1bdd MEDIA_RETRY_MS=[5000, 30000], researchMediaMissed, tellResearchMediaMissed, researchRetryMedia · strings.ts sync.mediaMissed, sync.retry -->
+<!-- zdroj: app:src/ui/research-ui.ts startLiveFollow onDone (failed → noteResearchMediaMissed, bez researchMediaMissed a MEDIA_RETRY_MS), src/ui/image-load-chip.ts showFailed · spec 116 · app:6bbc2f82 src/ui/research-ui.ts noteResearchMediaMissed (zápisy jen přidávají), 61ef1bdd MEDIA_RETRY_MS=[5000, 30000], researchMediaMissed, tellResearchMediaMissed, researchRetryMedia · strings.ts sync.mediaMissed, sync.retry -->
 
 <a id="S8.6"></a>
 ## S8.6 The pack and removing a tree: scans and family photos

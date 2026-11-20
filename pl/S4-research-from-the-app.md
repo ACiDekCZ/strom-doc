@@ -54,7 +54,7 @@ most.
   tylko strzałka panelu. Otwarty Przegląd nie rozwija już panelu za sobą. Telefon wyboru nie czyta ani nie zapisuje
   (pasek otwiera przegląd jak dotąd). Bez pamięci przeglądarki (okno prywatne) obowiązuje do zamknięcia strony.
 - **Od aplikacji 3.31.0:** na telefonie trzymanym poziomo rozwinięty panel śledzonego badania zwija się do paska,
-  gdy pojawi się wskaźnik wczytywania zdjęć **Zdjęcia k / n** albo powiadomienie (nie pigułka **Cofnij** ani
+  gdy pojawi się wskaźnik wczytywania zdjęć **Zdjęcia k / n** ([S1.4.1](S1-connecting-app-and-research.md#S1.4.1)) albo powiadomienie (nie pigułka **Cofnij** ani
   potwierdzenie ustawienia w centrum). Sam się ponownie nie rozwinie, nawet gdy wskaźnik albo powiadomienie
   zniknie; rozwija go stuknięcie w nagłówek. Zwinięcie nie jest zapamiętywane jako wybór urządzenia. Na komputerze,
   tablecie i telefonie trzymanym pionowo nic się nie zmienia.
@@ -543,6 +543,32 @@ Praca agenta zużywa subskrypcję AI.
   znów wolne.
 
 <!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) · 3.29.0: app:a0a66d45 Teď nabízí Pracovat na frontě… (bez práce agenta a běhu; okno přehledu; fokus zpět) · 3c8f4128 src/ui/queue-work-dialog.ts Další (n) (pořadí: ruční další, místo ve frontě; bez odložených a mimo linie, které se neberou; queue.page; zbytek, Přehled výzkumu ›; sbalené při otevření) · strings.ts live.queueWorkMore, queueWorkLess, queueWorkByQueue, queueWorkByQueueHint, queueWorkRest, queueWorkRestUnknown, queueWorkOverview, queueTagNext · 3.30.0: app:574e7ef9 src/ui/queue-start.ts (QUEUE_START_MS 30 s, důkaz handoff nebo sezení/běh, silent → queueNotStarted, proven bez sezení zmizí potichu) · src/ui/research-overview-ui.ts (live-now-starting, terminalSilent) · strings.ts busy.queueStarting, queueStartingSub, queueNotStarted, terminalSilent -->
+
+<a id="S4.2.4"></a>
+### S4.2.4 Kolejka według rodzaju zadania
+
+Przy badaniu, które przy zadaniach podaje rodzaj pracy, **Kolejka** w Przeglądzie badania ma pod chipami linii rząd
+**Rodzaj zadania**: chip dla każdego rodzaju, który ma zadanie w kolejce, z liczbą („Weryfikacja 12”). Rodzaj ustala
+badanie ([R2.2](R2-lines-and-queue.md#R2.2)).
+
+- **Rodzaje** w tej kolejności: **Weryfikacja**, **Metryki**, **Materiał**, **Miejsca**, **Źródła poza metrykami**,
+  **Zapytania**, **Opowieści**, **Historia**, **Inne**.
+- **Granice:**
+  - wybrany chip zawęża kolejkę do zadań tego rodzaju i pokazuje ×; drugie kliknięcie wybór anuluje („Pokaż wszystkie
+    rodzaje zadań”). Wybrany rodzaj zostaje w rzędzie także z zerem, gdy zniknie jego ostatnie zadanie;
+  - filtr łączy się z linią lub gałęzią i z wyszukiwaniem w kolejce ([S4.2.1](#S4.2.1)): „Znaleziono 12 zadań · rodzaj
+    Weryfikacja”; bez wyniku „Wśród zadań rodzaju Weryfikacja nic nie znaleziono.” z **Szukaj we wszystkich rodzajach
+    zadań**;
+  - wybór obowiązuje dla badania, przy którym powstał, dopóki nie zostanie anulowany albo śledzenie się nie skończy;
+  - przy starszym badaniu rząd się nie pokazuje, a kolejka jest jak dotąd.
+- **Z sekcji Weryfikacja:** wiersz „Czeka na weryfikację” w Co wie badanie › **Weryfikacja**
+  ([S7.5](S7-reliability-and-verification.md#S7.5)) ma **Pokaż w kolejce**. Otwiera **Kolejkę** w Przeglądzie badania
+  zawężoną do **Weryfikacja**. Zostaje w aplikacji i nie ma oznaczenia.
+- **Obsługa:** aplikacja: **Przegląd badania** → **Kolejka** → rząd **Rodzaj zadania**; Co wie badanie ›
+  **Weryfikacja** → **Pokaż w kolejce**. Terminal: `strom task list --kind verify` ([R2.2](R2-lines-and-queue.md#R2.2)).
+- **Obowiązuje od:** aplikacja 3.31.0, badanie 1.36.0
+
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 -->
 
 <a id="S4.3"></a>
 ## S4.3 Linie w aplikacji

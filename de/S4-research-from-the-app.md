@@ -62,7 +62,7 @@ zeigen, sendet die Forschung über die Brücke.
   nicht mehr aus. Das Telefon liest und schreibt die Wahl nicht (der Streifen öffnet die Übersicht wie bisher). Ohne
   Speicher des Browsers (privates Fenster) gilt sie, bis die Seite geschlossen wird.
 - **Ab App 3.31.0:** auf einem quer gehaltenen Telefon klappt das ausgeklappte Panel einer verfolgten Forschung zum
-  Streifen ein, wenn die Anzeige des Ladens der Fotos **Fotos k / n** oder eine Meldung erscheint (nicht die Pille
+  Streifen ein, wenn die Anzeige des Ladens der Fotos **Fotos k / n** ([S1.4.1](S1-connecting-app-and-research.md#S1.4.1)) oder eine Meldung erscheint (nicht die Pille
   **Rückgängig** und nicht die Bestätigung des Fokus). Von selbst klappt es nicht wieder aus, auch nicht, wenn die
   Anzeige oder die Meldung verschwindet; ein Tippen auf den Kopf klappt es aus. Das Einklappen wird nicht als Wahl
   des Geräts gemerkt. Am Computer, auf dem Tablet und auf einem hochkant gehaltenen Telefon ändert sich nichts.
@@ -601,6 +601,35 @@ Aus der App lässt sich um selbstständige Arbeit des Agenten an der Warteschlan
   sich in 30 s nicht gemeldet.“) mit **Erneut versuchen** und dem Rat, und die Schaltflächen sind wieder frei.
 
 <!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) · 3.29.0: app:a0a66d45 Teď nabízí Pracovat na frontě… (bez práce agenta a běhu; okno přehledu; fokus zpět) · 3c8f4128 src/ui/queue-work-dialog.ts Další (n) (pořadí: ruční další, místo ve frontě; bez odložených a mimo linie, které se neberou; queue.page; zbytek, Přehled výzkumu ›; sbalené při otevření) · strings.ts live.queueWorkMore, queueWorkLess, queueWorkByQueue, queueWorkByQueueHint, queueWorkRest, queueWorkRestUnknown, queueWorkOverview, queueTagNext · 3.30.0: app:574e7ef9 src/ui/queue-start.ts (QUEUE_START_MS 30 s, důkaz handoff nebo sezení/běh, silent → queueNotStarted, proven bez sezení zmizí potichu) · src/ui/research-overview-ui.ts (live-now-starting, terminalSilent) · strings.ts busy.queueStarting, queueStartingSub, queueNotStarted, terminalSilent -->
+
+<a id="S4.2.4"></a>
+### S4.2.4 Warteschlange nach Aufgabenart
+
+Mit einer Forschung, die bei den Aufgaben die Art der Arbeit angibt, hat die **Warteschlange** in der
+Forschungsübersicht unter den Chips der Richtungen eine Reihe **Aufgabenart**: ein Chip für jede Art, die eine Aufgabe
+in der Warteschlange hat, mit der Anzahl („Prüfung 12“). Die Art bestimmt die Forschung
+([R2.2](R2-lines-and-queue.md#R2.2)).
+
+- **Arten** in dieser Reihenfolge: **Prüfung**, **Kirchenbücher**, **Material**, **Orte**, **Quellen außer
+  Kirchenbüchern**, **Anfragen**, **Erzählungen**, **Zeitgeschehen**, **Sonstiges**.
+- **Grenzen:**
+  - der gewählte Chip schränkt die Warteschlange auf Aufgaben dieser Art ein und zeigt ×; ein zweiter Klick hebt die
+    Wahl auf („Alle Aufgabenarten zeigen“). Die gewählte Art bleibt auch mit null in der Reihe, wenn ihre letzte
+    Aufgabe verschwindet;
+  - der Filter verbindet sich mit Richtung oder Zweig und mit der Suche in der Warteschlange ([S4.2.1](#S4.2.1)):
+    „12 Aufgaben gefunden · Art Prüfung“; ohne Ergebnis „Unter den Aufgaben der Art Prüfung nichts gefunden.“ mit
+    **In allen Aufgabenarten suchen**;
+  - die Wahl gilt für die Forschung, bei der sie getroffen wurde, bis sie aufgehoben wird oder das Verfolgen endet;
+  - mit einer älteren Forschung erscheint die Reihe nicht, und die Warteschlange ist wie bisher.
+- **Aus dem Abschnitt Prüfung:** die Zeile „Warten auf Prüfung“ in Was die Forschung weiß › **Prüfung**
+  ([S7.5](S7-reliability-and-verification.md#S7.5)) hat **In der Warteschlange zeigen**. Das öffnet die
+  **Warteschlange** in der Forschungsübersicht, eingeschränkt auf **Prüfung**. Es bleibt in der App und hat keine Marke.
+- **Bedienung:** App: **Forschungsübersicht** → **Warteschlange** → Reihe **Aufgabenart**; Was die Forschung weiß ›
+  **Prüfung** → **In der Warteschlange zeigen**. Terminal: `strom task list --kind verify`
+  ([R2.2](R2-lines-and-queue.md#R2.2)).
+- **Gilt seit:** App 3.31.0, Forschung 1.36.0
+
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 -->
 
 <a id="S4.3"></a>
 ## S4.3 Linien in der App

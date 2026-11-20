@@ -71,8 +71,14 @@ session is one task. A run starts one or more sessions in a row; between them it
 - **Since:** research 1.32.0
 - **From research 1.36.0:** with **Starting the agent from the Strom app: without the question** the work starts
   without asking for a yes; the condition still asks ([S4.5.5](S4-research-from-the-app.md#S4.5.5)).
+- **From research 1.36.0:** the link can name tasks (`do=tasks` with `task=T…,T…`, task numbers only, at most 100,
+  never with `n`): **Process now** after a trial of verification ([S7.5.1](S7-reliability-and-verification.md#S7.5.1)).
+  The terminal shows “These tasks, in this order:” and “One session for each task (N sessions), then it ends; what is
+  not finished goes back to the queue.” After a yes it starts `strom run --task` with those tasks in the link's
+  order. Tasks that no longer wait (done, taken back or held by another) are left out and their number said; when
+  none waits, nothing starts.
 
-<!-- zdroj: research:src/cli/menu-links.ts workRun (WORK_LIST=5, agentCliHere, busyIn, taskQueue s RUN_TURNS, loop jen s run.gate, choose výchozí „Teď nic“, asks … false, run --tasks | --loop) · src/core/links.ts LINK_WORK_DOS, LINK_WORK_MAX=100, LINK_WORK_DEFAULT=5 · src/commands/links.ts case "work" · cs.json ui.link.work.*, ui.link.what.work.*, ui.run.next, ui.run.limit, ui.link.cost · CHANGELOG.cs.md 1.32.0 · spec 052 K6.2 (cesta terminál, most agenta nespouští) -->
+<!-- zdroj: 1.36.0: research:7116bb60 src/cli/menu-links.ts workOn, src/core/links.ts (task= jen s do=tasks, ne s n, 1–LINK_WORK_MAX) · cs.json ui.link.work.picked.* · research:src/cli/menu-links.ts workRun (WORK_LIST=5, agentCliHere, busyIn, taskQueue s RUN_TURNS, loop jen s run.gate, choose výchozí „Teď nic“, asks … false, run --tasks | --loop) · src/core/links.ts LINK_WORK_DOS, LINK_WORK_MAX=100, LINK_WORK_DEFAULT=5 · src/commands/links.ts case "work" · cs.json ui.link.work.*, ui.link.what.work.*, ui.run.next, ui.run.limit, ui.link.cost · CHANGELOG.cs.md 1.32.0 · spec 052 K6.2 (cesta terminál, most agenta nespouští) -->
 
 <a id="R7.2"></a>
 ## R7.2 Each session has a time limit

@@ -102,8 +102,15 @@ before all others.
   ([S4.2.1](S4-research-from-the-app.md#S4.2.1)).
 - **From research 1.35.0:** with `queue.sameBook yes`, between keys 7 and 8 the next task of the book the last
   session worked in goes first ([R2.2.4](#R2.2.4)).
+- **From research 1.36.0:** the tasks of a trial of bulk verification (`strom verify bulk --try N`) get a place like
+  a task **Do next** ([R2.3.1](#R2.3.1)) and the next session takes them; two trials in a row go in the order they were
+  given, the older first ([S7.5.1](S7-reliability-and-verification.md#S7.5.1)). `strom task list --kind <type>` shows
+  only the tasks of one kind of work: `verify` (verification), `records` (registers), `material` (material), `places`
+  (places), `enrich` (beyond the registers), `request` (requests), `story` (stories), `history` (history), `other`
+  (other); an unknown type ends with an error listing the types. In the app the row **Task type** in the **Queue**
+  ([S4.2.4](S4-research-from-the-app.md#S4.2.4)).
 
-<!-- zdroj: research:src/core/queue.ts rankTasks (řazení :374-396), LEVEL_ORDER :52, linksFirst (hypolinks.ts:453), placesFirst · verze klíčů: git log -S na „a.blocked - b.blocked“ (v1.0.0), „a.story - b.story“ (v1.1.0), „a.first - b.first“ (v1.17.0), „a.hist - b.hist“ (v1.22.0), „a.offLine - b.offLine“ a placesFirst (v1.25.0) · 1.32.0: src/core/live.ts searchQueue, queueAsk (GET /queue?q=, q nikdy v logu mostu), funkce queue.search · CHANGELOG.cs.md 1.32.0 · 1.33.0: research:c50f80f5 task list --all (= --state all), strom help task list -->
+<!-- zdroj: 1.36.0: research:7116bb60 src/core/taskkind.ts (TASK_KINDS, taskKind), src/commands/task.ts list --kind, src/core/verify.ts verifyBulk try (priority 3, queueAt next) · CHANGELOG.cs.md 1.36.0 · research:src/core/queue.ts rankTasks (řazení :374-396), LEVEL_ORDER :52, linksFirst (hypolinks.ts:453), placesFirst · verze klíčů: git log -S na „a.blocked - b.blocked“ (v1.0.0), „a.story - b.story“ (v1.1.0), „a.first - b.first“ (v1.17.0), „a.hist - b.hist“ (v1.22.0), „a.offLine - b.offLine“ a placesFirst (v1.25.0) · 1.32.0: src/core/live.ts searchQueue, queueAsk (GET /queue?q=, q nikdy v logu mostu), funkce queue.search · CHANGELOG.cs.md 1.32.0 · 1.33.0: research:c50f80f5 task list --all (= --state all), strom help task list -->
 
 <a id="R2.2.1"></a>
 ### R2.2.1 The queue strategy

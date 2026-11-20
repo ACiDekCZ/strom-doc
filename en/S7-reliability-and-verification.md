@@ -132,8 +132,11 @@ on the lines.
 - **Controls:** app: the person card → the fact's mark → **Verify** (or **Verify first**) → **Start verifying**.
   Terminal: `strom verify facts P…|F…|E… [--fact …] [--dry-run]`.
 - **Since:** research 1.30.0, app 3.26.0
+- **From app 3.31.0:** instead of “Runs in the research's background. The result shows at the fact.” the preview
+  says “Verified when the research works. The result shows at the fact.” The verification does not wait in the
+  background, a session of the research takes it.
 
-<!-- zdroj: app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) · research:4ac323ef src/core/verify.ts askedFor (úkol přeřazený člověkem, queueAt next, do konce sezení na něm → asked v souboru, /status, verify status) · app:src/verify-offer.ts (asked: Verify first se nenabízí) · CHANGELOG.cs.md 1.31.0 -->
+<!-- zdroj: app:f19d34cb strings.ts verify.previewNote (065 K7.3) · app:7cf409bd src/verify-offer.ts verifyOffer (prioritize: pending wait, position > 1, step, researchVerifies) · src/verify-ui-model.ts factOffer (čekání spuštěné tady: position null) · src/ui/verify-ui.ts (tlačítko prioritize → verifyOpenPreview; verifyStart: pozice z odpovědi) · strings.ts verify.prioritize, verify.pending · research:a4a2f6c0 src/core/verify.ts verifyAsk (držený úkol → queueAt next; doing nebo už next beze změny), verifyWait (wait / asked / images / permission, position) · app:7b0471f8 src/verify-offer.ts verifyOffer (Verify jen u nedoložených, s feature verify, ne archiv, ne čekající; cost low/high) · src/verify-ui-model.ts verifyFactKind (BIRT, BAPM, MARR, DEAT, BURI) · strings.ts verify.btn, previewHead, what, how, estimate1, howRead, howSearch, costLow, costHigh, sessions, previewNote, previewNoteSearch, start, pending, failed, nothing, noResearch · app:669c08f0 strings.ts verify.busy, locked, whyArchive, whyRetracted, whyGone, whyMerged, whyOld, whyRefused (odmítnutí podle kódu) · research:6c6e7c3b strom help verify facts (první ve frontě; bez přečteného originálu se záznam hledá) · research:4ac323ef src/core/verify.ts askedFor (úkol přeřazený člověkem, queueAt next, do konce sezení na něm → asked v souboru, /status, verify status) · app:src/verify-offer.ts (asked: Verify first se nenabízí) · CHANGELOG.cs.md 1.31.0 -->
 
 <a id="S7.4"></a>
 ## S7.4 Verify facts at a person
@@ -170,8 +173,11 @@ person card and in the tip at the mark on the card, or with the item **Verify fa
   **Verify facts (N)** or **Verify first**; the person's menu → **Verify facts · N**, or **Verify first** under
   **Verifying · N**; then in the window **Verify (N)**. Terminal: `strom verify facts P…`.
 - **Since:** research 1.30.0, app 3.26.0
+- **From app 3.31.0:** under the estimate the window says “Low = read a known record. Higher = the record is still to
+  be found. Verified when the research works; results show at the facts.” (before: “Runs in the research's
+  background”).
 
-<!-- zdroj: app:7cf409bd src/ui/verify-person-ui.ts personVerifyMenu (pending + prioritize), verifyCardTipActions (st-verify-first), renderPersonVerifyRow (jen pending řádek), showVerifyPersonDialog prioritize (titulek verify.prioritize) · src/ui/card-signals-ui.ts signal-verify-first · src/ui/context-menu.ts · research:a4a2f6c0 src/core/verify.ts verifyAsk (osoba: držené úkoly na začátek) · app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) · app:0fbda127 src/verify-ui-model.ts PERSON_VERIFY_KINDS, personVerifyAskCount, src/ui/verify-person-ui.ts others (start po údajích) -->
+<!-- zdroj: app:f19d34cb strings.ts verify.estimateNote (065 K7.3) · app:7cf409bd src/ui/verify-person-ui.ts personVerifyMenu (pending + prioritize), verifyCardTipActions (st-verify-first), renderPersonVerifyRow (jen pending řádek), showVerifyPersonDialog prioritize (titulek verify.prioritize) · src/ui/card-signals-ui.ts signal-verify-first · src/ui/context-menu.ts · research:a4a2f6c0 src/core/verify.ts verifyAsk (osoba: držené úkoly na začátek) · app:7b0471f8 src/verify-ui-model.ts personVerifyAskCount · strings.ts verify.menu, menuPending, personTitle, estimate, startN, bulkStarted · app:7eb903a3 src/ui/verify-person-ui.ts renderPersonVerifyRow, personVerifyMenu (karta osoby nad #events-section; jinak personPending), verifyCardTipActions · strings.ts verify.personBtn, personPending, events.title · dirigent:prace/1109-app-jeden-rodic/karta.md Výsledek (6f58068a: menu = náhled = toast; i bydliště, i doložené) · app:0fbda127 src/verify-ui-model.ts PERSON_VERIFY_KINDS, personVerifyAskCount, src/ui/verify-person-ui.ts others (start po údajích) -->
 
 <a id="S7.5"></a>
 ## S7.5 Verify facts in the tree
@@ -205,8 +211,51 @@ facts in the tree** shows the scope, the order and the cost estimate first and v
   [--order ancestors|weakest|oldest] [--try N] [--budget …] [--dry-run]`, `strom verify status`,
   `strom verify stop [--bulk]`.
 - **Since:** research 1.30.0, app 3.26.0
+- **From app 3.31.0 with research 1.36.0:** the trial goes to the head of the queue and the notice after the start
+  offers **Process now** ([S7.5.1](#S7.5.1)). Under the estimate the window says “Verified when the research works;
+  progress and Stop in “What the research knows › Verifying”.” The row “Waiting to be verified” has **Show in the
+  queue** ([S4.2.4](S4-research-from-the-app.md#S4.2.4)).
 
-<!-- zdroj: app:7b0471f8 src/ui/verify-person-ui.ts verifyRowsHtml, treeVerifyBlock, showVerifyBulkDialog · src/ui/research-actions-ui.ts:371 (nabídka výzkumu) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · src/verify-ui-model.ts VERIFY_TRY_PEOPLE 5 · strings.ts verify.bulkRow, bulkRowSub, bulkTitle, bulkSub, scope, order, scopeLine, scopeSurname, scopeTree, orderAncestors, orderWeakest, orderOldest, tryFirst, tryFirstSub, tryN, startN, bulkNote, section, pendingRow, pendingRowSub, stop, stopped · research:6c6e7c3b strom help verify bulk, verify stop, verify status · src/core/verify.ts (žijící) · research:94d75934 src/core/verify.ts verifyBulk (origin import nebo tree → search) -->
+<!-- zdroj: app:f19d34cb, 53ef9cbe (065 K7.1–K7.4) · app:7b0471f8 src/ui/verify-person-ui.ts verifyRowsHtml, treeVerifyBlock, showVerifyBulkDialog · src/ui/research-actions-ui.ts:371 (nabídka výzkumu) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · src/verify-ui-model.ts VERIFY_TRY_PEOPLE 5 · strings.ts verify.bulkRow, bulkRowSub, bulkTitle, bulkSub, scope, order, scopeLine, scopeSurname, scopeTree, orderAncestors, orderWeakest, orderOldest, tryFirst, tryFirstSub, tryN, startN, bulkNote, section, pendingRow, pendingRowSub, stop, stopped · research:6c6e7c3b strom help verify bulk, verify stop, verify status · src/core/verify.ts (žijící) · research:94d75934 src/core/verify.ts verifyBulk (origin import nebo tree → search) -->
+
+<a id="S7.5.1"></a>
+### S7.5.1 The trial at the head of the queue and Process now
+
+The trial **Try on 5 people first** goes to the head of the research's queue, like **Verify** at a person. When the
+research is not working at the moment, the app offers to process it now.
+
+- **In the window:** under the trial option stands “Its tasks go to the head of the research's queue. After 5 people
+  it stops and shows the result.” and under the estimate “Verified when the research works; progress and Stop in
+  “What the research knows › Verifying”.”
+- **After the start** a notice says when the trial will be processed:
+  - the research is working: “12 facts to verify are next in the research's queue.”;
+  - the research is not working: “12 facts to verify are at the head of the queue. The research is not working now.”
+    with **Process now** (the AI and terminal marks, [S4.5.1](S4-research-from-the-app.md#S4.5.1)); the notice stays
+    15 s and can be closed;
+  - otherwise (the research cannot work on chosen tasks, has no agent set up, or has not said whether it is working):
+    “12 facts to verify are at the head of the queue; verified when the research works next.”
+- **Process now** opens the research's terminal like **Work on the queue…** ([S4.2.3](S4-research-from-the-app.md#S4.2.3)):
+  “These tasks, in this order:”, then “One session for each task (N sessions), then it ends; what is not finished goes
+  back to the queue.” It starts only on a yes ([R7.1.2](R7-when-the-agent-works.md#R7.1.2)).
+- **Enforced by the code:**
+  - the trial's tasks get a place in the queue like a manual **Do next** ([R2.3.1](R2-lines-and-queue.md#R2.3.1));
+    the next session takes them. The rest of a scope without a trial still goes after the work on the lines
+    ([S7.5](#S7.5));
+  - two trials in a row go in the order they were given, the older first;
+  - the terminal takes only tasks that are still waiting and that nobody is working on; it leaves out the others (“N
+    tasks of the link no longer wait (done, taken back or held by another): left out.”). When none is waiting,
+    nothing starts.
+- **Where the progress is:** What the research knows › **Verifying** (“Waiting to be verified: N facts”, **Stop**,
+  **Show in the queue**), in the **Queue** the type **Verification** ([S4.2.4](S4-research-from-the-app.md#S4.2.4));
+  terminal `strom verify status`.
+- **Limits:** with an older research the trial goes after the work on the lines like other verification tasks and the
+  notice says “N facts queued for verification.”
+- **Controls:** app: **Verify facts in the tree…** → **Try on 5 people first** → **Try on 5** → the notice →
+  **Process now**. Terminal: `strom verify bulk --scope … --try N` (“a try, first in the queue: the next session
+  takes it”).
+- **Since:** app 3.31.0, research 1.36.0
+
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.1–K7.3 · prace/1119-app-065-p7, 1119-research-065-p7-drobnosti · app:f19d34cb src/ui/verify-person-ui.ts (tryHead: verify.tryFirst → tryFirstSubHead; bulkNote(knowsTitle › section); showVerifyBulkStarted: BULK_PROCESS_MS 15 s, closable, activeResearchNoAgent, work do=tasks workTasks, researchLinkFlags) · src/research-verify.ts verifyBulkStartedKind (plain / next / head / process: working false, work.tasks, workTaskIds) · src/verify-ui-model.ts VERIFY_TRY_PEOPLE 5 · strings.ts verify.tryFirstSubHead, bulkNote, bulkStartedIdle, bulkStartedNext, bulkStartedHead, processNow, bulkStarted · research:7116bb60 src/core/verify.ts verifyBulk (try → priority 3, queueAt next, first), src/commands/verify.ts (working), src/cli/menu-links.ts workOn (jen open a nedržené, asks výchozí ne, run --task), src/core/links.ts (task= jen s do=tasks, 1–100) · cs.json ui.verify.bulk.first, ui.link.work.picked.head, ui.link.work.picked, ui.link.work.picked.gone, ui.link.work.picked.none · CHANGELOG.cs.md 1.36.0 (dvě zkoušky v pořadí zadání) -->
 
 <a id="S7.6"></a>
 ## S7.6 Verifying by itself in the research's queue

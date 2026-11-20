@@ -57,7 +57,7 @@ through the bridge.
   (the strip opens the overview as before). Without the browser's storage (private window) it lasts until the page is
   closed.
 - **From app 3.31.0:** on a phone held sideways the unfolded panel of a followed research folds to its strip when the
-  indicator of loading photos **Photos k / n** or a notice appears (not the **Undo** pill nor the confirmation of the
+  indicator of loading photos **Photos k / n** ([S1.4.1](S1-connecting-app-and-research.md#S1.4.1)) or a notice appears (not the **Undo** pill nor the confirmation of the
   focus). It does not unfold again by itself, not even when the indicator or the notice goes; a tap on its header
   unfolds it. The folding is not remembered as the device's choice. On a computer, a tablet and a phone held upright
   nothing changes.
@@ -556,6 +556,32 @@ work uses the AI subscription.
   again.
 
 <!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) · 3.29.0: app:a0a66d45 Teď nabízí Pracovat na frontě… (bez práce agenta a běhu; okno přehledu; fokus zpět) · 3c8f4128 src/ui/queue-work-dialog.ts Další (n) (pořadí: ruční další, místo ve frontě; bez odložených a mimo linie, které se neberou; queue.page; zbytek, Přehled výzkumu ›; sbalené při otevření) · strings.ts live.queueWorkMore, queueWorkLess, queueWorkByQueue, queueWorkByQueueHint, queueWorkRest, queueWorkRestUnknown, queueWorkOverview, queueTagNext · 3.30.0: app:574e7ef9 src/ui/queue-start.ts (QUEUE_START_MS 30 s, důkaz handoff nebo sezení/běh, silent → queueNotStarted, proven bez sezení zmizí potichu) · src/ui/research-overview-ui.ts (live-now-starting, terminalSilent) · strings.ts busy.queueStarting, queueStartingSub, queueNotStarted, terminalSilent -->
+
+<a id="S4.2.4"></a>
+### S4.2.4 The queue by task type
+
+With a research that gives the kind of work of its tasks, the **Queue** in the Research overview has a row **Task
+type** under the direction chips: a chip for each type that has a task in the queue, with its count (“Verification
+12”). The type is set by the research ([R2.2](R2-lines-and-queue.md#R2.2)).
+
+- **Types** in this order: **Verification**, **Registers**, **Material**, **Places**, **Beyond the registers**,
+  **Requests**, **Stories**, **History**, **Other**.
+- **Limits:**
+  - the chosen chip narrows the queue to tasks of that type and shows ×; a second click clears the choice (“Show all
+    task types”). The chosen type stays in the row even at zero when its last task goes;
+  - the filter combines with a direction or branch and with the search in the queue ([S4.2.1](#S4.2.1)): “12 tasks
+    found · type Verification”; with no result “Nothing found among tasks of type Verification.” with **Search all
+    task types**;
+  - the choice holds for the research it was made with, until it is cleared or following ends;
+  - with an older research the row is not shown and the queue is as before.
+- **From the section Verifying:** the row “Waiting to be verified” in What the research knows › **Verifying**
+  ([S7.5](S7-reliability-and-verification.md#S7.5)) has **Show in the queue**. It opens the **Queue** in the Research
+  overview narrowed to **Verification**. It stays in the app and has no mark.
+- **Controls:** app: **Research overview** → **Queue** → the row **Task type**; What the research knows ›
+  **Verifying** → **Show in the queue**. Terminal: `strom task list --kind verify` ([R2.2](R2-lines-and-queue.md#R2.2)).
+- **Since:** app 3.31.0, research 1.36.0
+
+<!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni K7.4 · app:53ef9cbe src/ui/queue-kind-ui.ts (queueKindChips: jen druhy s úkolem v pevném pořadí, vybraný i s 0; queueKindRow aria-pressed, ×, taskKindClear; volba pro bridge.base) · src/research-link.ts QUEUE_KIND_FEATURE queue.kind, QUEUE_TASK_KINDS · src/research-queue-pages.ts (kind= s linií, větví a q) · src/ui/research-ui.ts queueSearchInKind, queueSearchNoneKind, queueSearchAllKinds · src/ui/verify-person-ui.ts verifyRowsHtml (pendingQueue, bez značky), showOverviewQueueKind('verify') · strings.ts live.taskKinds, taskKindLabel, taskKindClear, queueSearchFound, verify.pendingQueue · research:7116bb60 src/core/taskkind.ts, GET /queue?kind=, queueCounts.kind · CHANGELOG.cs.md 3.31.0 -->
 
 <a id="S4.3"></a>
 ## S4.3 Directions in the app

@@ -351,7 +351,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.7.19 | A6-views.md | aplikace 3.30.0 | platí | Rozsah: seznam osob | Scope: a list of people | Umfang: eine Personenliste | Zakres: lista osób |
 | A6.7.20 | A6-views.md | aplikace 3.30.0 | platí | Seskupit podle | Group by | Gruppieren nach | Grupuj według |
 | A6.8 | A6-views.md | aplikace 3.28.0 | platí | Pohled v samostatném okně | A view in a separate window | Ansicht in einem eigenen Fenster | Widok w osobnym oknie |
-| A6.8.1 | A6-views.md | aplikace 3.28.0 | platí | Sledovat výběr | Follow selection | Auswahl folgen | Śledź wybór |
+| A6.8.1 | A6-views.md | aplikace 3.28.0 | platí | Výběr | Selection | Auswahl | Wybór |
 | A6.8.2 | A6-views.md | aplikace 3.28.0 | platí | Když hlavní okno chybí | When the main window is missing | Wenn das Hauptfenster fehlt | Gdy brakuje okna głównego |
 | A6.8.3 | A6-views.md | aplikace 3.28.0 | platí | Druhá karta aplikace | A second tab of the app | Ein zweiter Tab der App | Druga karta aplikacji |
 | A6.8.4 | A6-views.md | aplikace 3.30.0 | platí | Co výběr v dalším okně udělá v hlavním okně | What a choice in another window does in the main window | Was eine Wahl in einem weiteren Fenster im Hauptfenster bewirkt | Co wybór w kolejnym oknie zrobi w oknie głównym |
@@ -427,6 +427,8 @@ nenapsáno) · `neplatí od <verze>`.
 | S1.3 | S1-connecting-app-and-research.md | aplikace 3.12.0 | platí | Druhy stromů v aplikaci | Kinds of trees in the app | Arten von Stammbäumen in der App | Rodzaje drzew w aplikacji |
 | S1.3.1 | S1-connecting-app-and-research.md | aplikace 3.29.0 | koncept | Ukázkový strom | The sample tree | Der Beispiel-Stammbaum | Drzewo przykładowe |
 | S1.4 | S1-connecting-app-and-research.md | aplikace 3.0.0 | platí | Sledování živě | Following live | Live verfolgen | Śledzenie na żywo |
+| S1.4.1 | S1-connecting-app-and-research.md | aplikace 3.31.0, výzkum 1.30.0 | platí | Strom hned, fotky přibývají | The tree at once, the photos follow | Der Stammbaum sofort, die Fotos folgen | Drzewo od razu, zdjęcia dochodzą |
+| S1.4.2 | S1-connecting-app-and-research.md | aplikace 3.31.0 | platí | Výstupy čekají na fotky | Outputs wait for the photos | Ausgaben warten auf die Fotos | Wydruki i pliki czekają na zdjęcia |
 | S1.5 | S1-connecting-app-and-research.md | aplikace 3.9.0 | platí | Když výzkum neběží nebo spojení nejde | When the research is not running or the connection fails | Wenn die Forschung nicht läuft oder die Verbindung nicht geht | Gdy badanie nie działa albo połączenie się nie udaje |
 | S1.6 | S1-connecting-app-and-research.md | aplikace 3.9.0, výzkum 1.12.0 | platí | Starší a novější verze | Older and newer versions | Ältere und neuere Versionen | Starsze i nowsze wersje |
 | S1.7 | S1-connecting-app-and-research.md | aplikace 3.13.1 | platí | Více výzkumů na jednom počítači | Several researches on one computer | Mehrere Forschungen auf einem Computer | Kilka badań na jednym komputerze |
@@ -475,6 +477,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.2.1 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Hledání ve frontě | Searching the queue | Suche in der Warteschlange | Wyszukiwanie w kolejce |
 | S4.2.2 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Udělat jako další a Vrátit | Do next and Undo | Als Nächstes erledigen und Rückgängig | Zrób jako następne i Cofnij |
 | S4.2.3 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Pracovat na frontě… | Work on the queue… | An der Warteschlange arbeiten… | Praca nad kolejką… |
+| S4.2.4 | S4-research-from-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Fronta podle druhu úkolu | The queue by task type | Warteschlange nach Aufgabenart | Kolejka według rodzaju zadania |
 | S4.3 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Linie v aplikaci | Directions in the app | Linien in der App | Linie w aplikacji |
 | S4.3.1 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Správa linií z aplikace | Managing directions from the app | Verwaltung der Linien aus der App | Zarządzanie liniami z aplikacji |
 | S4.3.2 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Práce mimo linie po větvích | Work outside the directions by branches | Arbeit außerhalb der Linien nach Zweigen | Praca poza liniami według gałęzi |
@@ -520,6 +523,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S7.3 | S7-reliability-and-verification.md | výzkum 1.30.0, aplikace 3.26.0 | koncept | Ověřit u údaje | Verify at a fact | Prüfen an einer Angabe | Zweryfikuj przy danej |
 | S7.4 | S7-reliability-and-verification.md | výzkum 1.30.0, aplikace 3.26.0 | koncept | Ověřit údaje u osoby | Verify facts at a person | Angaben prüfen bei einer Person | Zweryfikuj dane przy osobie |
 | S7.5 | S7-reliability-and-verification.md | výzkum 1.30.0, aplikace 3.26.0 | koncept | Ověřit údaje ve stromu | Verify facts in the tree | Angaben im Baum prüfen | Zweryfikuj dane w drzewie |
+| S7.5.1 | S7-reliability-and-verification.md | aplikace 3.31.0, výzkum 1.36.0 | koncept | Zkouška na začátku fronty a Zpracovat hned | The trial at the head of the queue and Process now | Die Probe am Anfang der Warteschlange und Jetzt bearbeiten | Próba na początku kolejki i Przetwórz teraz |
 | S7.6 | S7-reliability-and-verification.md | výzkum 1.30.0 | koncept | Ověřování samo ve frontě výzkumu | Verifying by itself in the research's queue | Prüfung von selbst in der Warteschlange der Forschung | Weryfikacja sama w kolejce badania |
 | S7.6.1 | S7-reliability-and-verification.md | výzkum 1.30.0, aplikace 3.26.0 | koncept | Jednorázová oprava starších výzkumů | A one-time fix of older researches | Einmalige Korrektur älterer Forschungen | Jednorazowa poprawka starszych badań |
 | S7.7 | S7-reliability-and-verification.md | výzkum 1.30.0, aplikace 3.26.0 | koncept | Výsledek ověření | The result of verifying | Das Ergebnis der Prüfung | Wynik weryfikacji |

@@ -67,8 +67,13 @@ jeden úkol. Běh spustí jedno nebo víc sezení za sebou; mezi nimi se může 
 - **Platí od:** výzkum 1.32.0
 - **Od výzkumu 1.36.0:** při **Spouštění agenta z aplikace Strom: bez potvrzení** se práce spustí bez dotazu na ano;
   podmínka se ptá dál ([S4.5.5](S4-research-from-the-app.md#S4.5.5)).
+- **Od výzkumu 1.36.0:** odkaz může jmenovat úkoly (`do=tasks` s `task=T…,T…`, jen čísla úkolů, nejvýš 100, nikdy
+  s `n`): **Zpracovat hned** po zkoušce ověření ([S7.5.1](S7-reliability-and-verification.md#S7.5.1)). Terminál
+  ukáže „Tyto úkoly, v tomto pořadí:“ a „Každý úkol jedno sezení (N sezení), pak konec; co se nedokončí, vrátí se
+  do fronty.“ Po **ano** spustí `strom run --task` s těmi úkoly v pořadí odkazu. Úkoly, které už nečekají (hotové,
+  vzaté zpět nebo je má jiný), vynechá a řekne kolik; když nečeká žádný, nic se nespustí.
 
-<!-- zdroj: research:src/cli/menu-links.ts workRun (WORK_LIST=5, agentCliHere, busyIn, taskQueue s RUN_TURNS, loop jen s run.gate, choose výchozí „Teď nic“, asks … false, run --tasks | --loop) · src/core/links.ts LINK_WORK_DOS, LINK_WORK_MAX=100, LINK_WORK_DEFAULT=5 · src/commands/links.ts case "work" · cs.json ui.link.work.*, ui.link.what.work.*, ui.run.next, ui.run.limit, ui.link.cost · CHANGELOG.cs.md 1.32.0 · spec 052 K6.2 (cesta terminál, most agenta nespouští) -->
+<!-- zdroj: 1.36.0: research:7116bb60 src/cli/menu-links.ts workOn, src/core/links.ts (task= jen s do=tasks, ne s n, 1–LINK_WORK_MAX) · cs.json ui.link.work.picked.* · research:src/cli/menu-links.ts workRun (WORK_LIST=5, agentCliHere, busyIn, taskQueue s RUN_TURNS, loop jen s run.gate, choose výchozí „Teď nic“, asks … false, run --tasks | --loop) · src/core/links.ts LINK_WORK_DOS, LINK_WORK_MAX=100, LINK_WORK_DEFAULT=5 · src/commands/links.ts case "work" · cs.json ui.link.work.*, ui.link.what.work.*, ui.run.next, ui.run.limit, ui.link.cost · CHANGELOG.cs.md 1.32.0 · spec 052 K6.2 (cesta terminál, most agenta nespouští) -->
 
 <a id="R7.2"></a>
 ## R7.2 Každé sezení má časový limit

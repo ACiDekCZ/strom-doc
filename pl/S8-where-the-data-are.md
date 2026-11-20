@@ -123,8 +123,13 @@ aplikacja wczyta drzewo bez nich i nie usunie niczego, co badanie ma.
   zmieniło, zapyta.
 - **Obsługa:** aplikacja: komunikat → **Spróbuj ponownie**.
 - **Obowiązuje od:** aplikacja 3.30.0, badanie 1.35.0
+- **Od aplikacji 3.31.0:** przy otwarciu przez **Śledź na żywo** zdjęcia przychodzą po drzewie
+  ([S1.4.1](S1-connecting-app-and-research.md#S1.4.1)). Zdjęcia, które nie przyszły, zgłasza tam „Niektóre zdjęcia
+  nie zostały wczytane (N).” ze **Spróbować ponownie**; samo nie powtarza się po 5 s
+  i 30 s. Do ich przyjścia zapisy drzewa nadal
+  tylko dodają.
 
-<!-- zdroj: app:6bbc2f82 src/ui/research-ui.ts noteResearchMediaMissed (zápisy jen přidávají), 61ef1bdd MEDIA_RETRY_MS=[5000, 30000], researchMediaMissed, tellResearchMediaMissed, researchRetryMedia · strings.ts sync.mediaMissed, sync.retry -->
+<!-- zdroj: app:src/ui/research-ui.ts startLiveFollow onDone (failed → noteResearchMediaMissed, bez researchMediaMissed a MEDIA_RETRY_MS), src/ui/image-load-chip.ts showFailed · spec 116 · app:6bbc2f82 src/ui/research-ui.ts noteResearchMediaMissed (zápisy jen přidávají), 61ef1bdd MEDIA_RETRY_MS=[5000, 30000], researchMediaMissed, tellResearchMediaMissed, researchRetryMedia · strings.ts sync.mediaMissed, sync.retry -->
 
 <a id="S8.6"></a>
 ## S8.6 Paczka i usunięcie drzewa: skany i rodzinne zdjęcia
