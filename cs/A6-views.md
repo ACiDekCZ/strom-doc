@@ -356,6 +356,66 @@ studené odstíny modré a zelené, matčina teplé růžové a oranžové, poto
 
 <!-- zdroj: app:src/fan-rod-assign.ts (strany P/M/D: rod středu P, jen potomci D, jinak nejnižší prstenec, shoda P; pořadí počet výsečí › velikost › id; FAN_ROD_MAX_STRONG 10, FAN_ROD_LEGEND_MAIN 20, tier S/T; opakování odstínů ne na sousedních výsečích ani o jednu dál, výpůjčka jiné strany) · src/fan-colors.ts paleta P/M/D světlá, tmavá, tisk, fanRodLegend, fanRodOtherSwatch (K1.7), legendOther, legendNoRod · src/ui/fan-view.ts legenda (FAN_STORAGE_KEYS.legendOtherOpen, náhled jen při (hover: hover)), setRodSelection(…, 'legend'), forgetRodColors · strings.ts fan.legendFatherSide, legendMotherSide, legendDescendants, legendOther, legendNoRod, legendCentre, colorsChipRod, menuHighlightRod, menuUnhighlightRod, posterHighlighted · app:1d9dad0f, 7231dd13 (legenda po stranách), 77282e4e (telefon, tablet), b31c74a9 (štítky se netisknou), defe20a6, 7821ea72 (vějíř mimo štítek), 1ad91795 (paleta P/M/D), a265a3cc (paměť barev při návratu, další okna) · dirigent:spec/114-vejir-barvy-rodu · test/vysledek-1119-app-vejir-rody, vysledek-1119-app-vejir-barvy-vse · CHANGELOG.cs.md 3.30.0 -->
 
+<a id="A6.4.2"></a>
+### A6.4.2 Vzhled vějíře
+
+Tlačítko **Vzhled** v liště vějíře (v úzké liště jen ikona) otevře panel **Vzhled vějíře**. Mění, jak vějíř
+vypadá, ne strom: funguje i ve stromu jen ke čtení, při sledování výzkumu a v uložené stránce.
+
+- **Styl:**
+  - **Barevný** (na obrazovku): výchozí, kresba jako dosud;
+  - **Pastelový** (méně inkoustu);
+  - **Starobylý** (jako dárek): sépie a pergamen, písmo Strom Serif;
+  - **Černobílý** (černobílá tiskárna): odstíny šedi a vzorky (čáry, mřížka, tečky, kroužky, křížky, čárky), žádný
+    šikmý. Šikmá šrafa zůstává jen opakované osobě (implex).
+
+  Každý styl má podobu pro světlý i tmavý motiv a pro tisk.
+- **Barvy rodů** (jen pro barvy **Rody**, jinak „Jen pro barvy podle rodů.“):
+  - **Všechny rody**: barvy jako v [A6.4.1](#A6.4.1);
+  - **Hlavní rody**: „10 největších ve vějíři barevně, ostatní šedě.“ Rod ústřední osoby je mezi hlavními vždy
+    (nahradí desátý). Legenda má šedý řádek **Ostatní rody (N)**, podtitul plakátu „barvy hlavních rodů“. Barvy
+    hlavních rodů a paměť barev se nemění.
+- **Text ve výsečích:** **Jméno a roky** (výchozí) · **Jméno, data a místa** (narození a úmrtí s datem a místem, z
+  místa jen část před první čárkou, například „* 22. 11. 1888 Kessenau“; jen kde se vejde) · **Jen jména** (o něco
+  větším písmem). „Kde se text nevejde, zkrátí se.“
+- **Portréty** „Ve středu, u rodičů a prarodičů“ (výchozí vypnuto): kulatý portrét ve středu a v prvních dvou
+  prstencích. Chráněná žijící osoba portrét nemá. Text má přednost: portrét, na který by nezbylo místo, se
+  nekreslí. Během načítání panel řekne „Portréty se načítají (k / n)“; „Ve vějíři zatím nikdo nemá portrét.“
+- **Tři úrovně vzhledu:**
+  - **výchozí** vzhled je v **Nastavení → Vějíř** (styl, barvy rodů, text, portréty) a drží ho zařízení: „Každé
+    spuštění začne s tímto vzhledem; v panelu Vzhled jde změnit jen pro aktuální práci.“ Vějíř, který ukazuje
+    výchozí vzhled, změnu v Nastavení hned převezme;
+  - **aktuální** vzhled z panelu platí do zavření aplikace; obnovení stránky ho drží;
+  - **vzhled výstupu** (plakát, obrázek, tisk) se nepamatuje ([A6.4.3](#A6.4.3)).
+
+  Nižší úroveň nikdy nepřepíše vyšší, jen **Uložit jako výchozí**.
+- **Patička panelu:** když se vzhled liší od výchozího, „Liší se od výchozího vzhledu.“ s **Uložit jako výchozí**
+  („Uloženo jako výchozí vzhled vějíře.“) a **Vrátit na výchozí**; tlačítko **Vzhled** pak nese tečku. Jinak
+  „Výchozí vzhled · lze změnit v Nastavení“; odkaz otevře Nastavení u skupiny **Vějíř**.
+- Další okno ([A6.8](#A6.8)) začne z aktuálního vzhledu hlavního okna a své změny drží jen u sebe.
+- **Telefon:** **Barvy** a **Vzhled** jsou záložky jednoho listu zespodu; list se otevře na naposledy použité.
+- **Hranice:** vějíř na stránce osoby se nemění (jen barvy pohlaví).
+- **Ovládání:** lišta vějíře → **Vzhled**; **Nastavení → Vějíř**.
+- **Platí od:** aplikace 3.31.0
+
+<!-- zdroj: app:53ad42f1 src/fan-look.ts (hlavička: tři úrovně, ne úprava stromu, další okno; FAN_LOOK_DEFAULT color/all/years/portraits false), storage-keys.ts FAN_STORAGE_KEYS, FAN_LOOK_SESSION_KEY · 2236bbd4 src/fan-rod-assign.ts (rodScope main: 10 největších, rod středu vždy), src/fan-colors.ts FAN_STYLES, FAN_PATTERNS (vl, hl, grid, dot, dot2, ring, plus, dash), palety světlá/tmavá/tisk · c2dc2520 src/fan-labels.ts (content years/places/names, místo před čárkou), src/fan-chart.ts portréty prstence 1–2, chránění žijící, text má přednost · 2e9d8ad0 Nastavení → Vějíř (index.html settings-group-fan, setFanDefaultLook; vějíř s výchozím vzhledem změnu převezme) · e07ed419 (stránka osoby) · strings.ts fan.look*, style*, scope*, content*, portraits*, lookDiffers, lookIsDefault, lookSaveDefault, lookResetDefault, lookSavedToast, defaultsDesc, textNote, legendOtherGrey, posterColorsMain · SPEC.md 1120-app-vejir-vzhled · spec 118 K1.1–K2.6 · CHANGELOG.cs.md 3.31.0 -->
+
+<a id="A6.4.3"></a>
+### A6.4.3 Vzhled plakátu
+
+Dialog **Export jako plakát** (menu **Export plakátu**: SVG, PNG, Tisk / PDF) má u vějíře skupinu **Vzhled
+plakátu** se stejnými volbami jako panel **Vzhled** ([A6.4.2](#A6.4.2)) a s **Náhledem**.
+
+- Volby jsou předvyplněné vzhledem z obrazovky. „Platí jen pro tento výstup; obrazovka ani výchozí vzhled se
+  nemění.“ Změněná volba nese „změněno jen pro tisk“; **Jako na obrazovce** vrátí vzhled obrazovky.
+- Rody si v jiném stylu nebo barevnosti nechají barvy z obrazovky.
+- Na telefonu je skupina sbalená do jednoho řádku.
+- **Hranice:** vzhled výstupu se nepamatuje; další export začne znovu od vzhledu obrazovky.
+- **Ovládání:** **Export plakátu** → **Vzhled plakátu**.
+- **Platí od:** aplikace 3.31.0
+
+<!-- zdroj: app:2e9d8ad0 src/ui/export-image-ui.ts (PosterLook předvyplněný z obrazovky, náhled toutéž funkcí plakátu, Jako na obrazovce, sloty rodů z obrazovky, telefon jeden řádek), src/fan-look.ts (vzhled výstupu se nepamatuje) · e2e/fan-look-output.spec.ts · strings.ts poster.menu, title, lookTitle, lookPreview, lookOnlyHere, lookAsScreen, lookChanged · SPEC.md 1120-app-vejir-vzhled · spec 118 -->
+
 <a id="A6.5"></a>
 ## A6.5 Mapa
 

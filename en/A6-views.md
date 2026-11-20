@@ -387,6 +387,72 @@ descendants (the shape Two-way) ochre.
 
 <!-- zdroj: app:src/fan-rod-assign.ts (strany P/M/D: rod středu P, jen potomci D, jinak nejnižší prstenec, shoda P; pořadí počet výsečí › velikost › id; FAN_ROD_MAX_STRONG 10, FAN_ROD_LEGEND_MAIN 20, tier S/T; opakování odstínů ne na sousedních výsečích ani o jednu dál, výpůjčka jiné strany) · src/fan-colors.ts paleta P/M/D světlá, tmavá, tisk, fanRodLegend, fanRodOtherSwatch (K1.7), legendOther, legendNoRod · src/ui/fan-view.ts legenda (FAN_STORAGE_KEYS.legendOtherOpen, náhled jen při (hover: hover)), setRodSelection(…, 'legend'), forgetRodColors · strings.ts fan.legendFatherSide, legendMotherSide, legendDescendants, legendOther, legendNoRod, legendCentre, colorsChipRod, menuHighlightRod, menuUnhighlightRod, posterHighlighted · app:1d9dad0f, 7231dd13 (legenda po stranách), 77282e4e (telefon, tablet), b31c74a9 (štítky se netisknou), defe20a6, 7821ea72 (vějíř mimo štítek), 1ad91795 (paleta P/M/D), a265a3cc (paměť barev při návratu, další okna) · dirigent:spec/114-vejir-barvy-rodu · test/vysledek-1119-app-vejir-rody, vysledek-1119-app-vejir-barvy-vse · CHANGELOG.cs.md 3.30.0 -->
 
+<a id="A6.4.2"></a>
+### A6.4.2 Fan appearance
+
+The button **Appearance** in the fan's bar (in a narrow bar only an icon) opens the panel **Fan appearance**. It
+changes how the fan looks, not the tree: it works also in a read-only tree, while following a research and in a saved
+page.
+
+- **Style:**
+  - **Colour** (for the screen): the default, the drawing as before;
+  - **Pastel** (less ink);
+  - **Antique** (as a gift): sepia and parchment, the font Strom Serif;
+  - **Black and white** (black-and-white printer): shades of grey and patterns (lines, grid, dots, rings, crosses,
+    dashes), none of them diagonal. Diagonal hatching stays only for a repeated person (pedigree collapse).
+
+  Each style has a version for the light and the dark appearance and for print.
+- **Family line colours** (only for the colours **Family lines**, otherwise "Only for colours by family line."):
+  - **All lines**: colours as in [A6.4.1](#A6.4.1);
+  - **Main lines**: "the 10 largest in the fan in colour, the others grey." The central person's line is always among
+    the main lines (it replaces the tenth). The legend has a grey row **Other lines (N)**, the poster's subtitle "colours
+    of the main lines". The colours of the main lines and the memory of the colours do not change.
+- **Text in the sectors:** **Name and years** (default) · **Name, dates and places** (birth and death with the date and
+  the place, of the place only the part before the first comma, for example "* 22 Nov 1888 Kessenau"; only where it
+  fits) · **Names only** (in a slightly larger font). "Where the text does not fit, it is shortened."
+- **Portraits** "In the centre, for parents and grandparents" (off by default): a round portrait in the centre and in
+  the first two rings. A protected living person has no portrait. The text takes precedence: a portrait for which no
+  room would be left is not drawn. While loading, the panel says "Portraits loading (k / n)"; "Nobody in the fan has a
+  portrait yet."
+- **Three levels of appearance:**
+  - the **default** appearance is in **Settings → Fan** (style, family line colours, text, portraits) and the device
+    keeps it: "Every start begins with this appearance; the Appearance panel changes it for the current work only."
+    A fan that shows the default appearance takes over a change in Settings right away;
+  - the **current** appearance from the panel holds until the app is closed; reloading the page keeps it;
+  - the **output appearance** (poster, image, print) is not remembered ([A6.4.3](#A6.4.3)).
+
+  A lower level never overwrites a higher one; only **Save as default** does.
+- **Panel footer:** when the appearance differs from the default, "Differs from the default appearance." with **Save
+  as default** ("Saved as the default fan appearance.") and **Back to default**; the button **Appearance** then
+  carries a dot. Otherwise "Default appearance · can be changed in Settings"; the link opens Settings at the group
+  **Fan**.
+- Another window ([A6.8](#A6.8)) starts from the current appearance of the main window and keeps its changes to
+  itself.
+- **Phone:** **Colours** and **Appearance** are tabs of one sheet from below; the sheet opens on the one used last.
+- **Limits:** the fan on the person page does not change (only the gender colours).
+- **Controls:** the fan's bar → **Appearance**; **Settings → Fan**.
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:53ad42f1 src/fan-look.ts (hlavička: tři úrovně, ne úprava stromu, další okno; FAN_LOOK_DEFAULT color/all/years/portraits false), storage-keys.ts FAN_STORAGE_KEYS, FAN_LOOK_SESSION_KEY · 2236bbd4 src/fan-rod-assign.ts (rodScope main: 10 největších, rod středu vždy), src/fan-colors.ts FAN_STYLES, FAN_PATTERNS (vl, hl, grid, dot, dot2, ring, plus, dash), palety světlá/tmavá/tisk · c2dc2520 src/fan-labels.ts (content years/places/names, místo před čárkou), src/fan-chart.ts portréty prstence 1–2, chránění žijící, text má přednost · 2e9d8ad0 Nastavení → Vějíř (index.html settings-group-fan, setFanDefaultLook; vějíř s výchozím vzhledem změnu převezme) · e07ed419 (stránka osoby) · strings.ts fan.look*, style*, scope*, content*, portraits*, lookDiffers, lookIsDefault, lookSaveDefault, lookResetDefault, lookSavedToast, defaultsDesc, textNote, legendOtherGrey, posterColorsMain · SPEC.md 1120-app-vejir-vzhled · spec 118 K1.1–K2.6 · CHANGELOG.cs.md 3.31.0 -->
+
+<a id="A6.4.3"></a>
+### A6.4.3 Poster appearance
+
+The dialog **Export as poster** (menu **Export poster**: SVG, PNG, Print / PDF) has for the fan the group **Poster
+appearance** with the same options as the panel **Appearance** ([A6.4.2](#A6.4.2)) and with **Preview**.
+
+- The options are prefilled with the appearance from the screen. "Applies to this output only; the screen and the
+  default stay as they are." A changed option carries "changed for this output only"; **As on screen** returns the
+  appearance of the screen.
+- In another style or colouring the family lines keep the colours from the screen.
+- On a phone the group is folded into one row.
+- **Limits:** the output appearance is not remembered; the next export starts again from the appearance of the
+  screen.
+- **Controls:** **Export poster** → **Poster appearance**.
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:2e9d8ad0 src/ui/export-image-ui.ts (PosterLook předvyplněný z obrazovky, náhled toutéž funkcí plakátu, Jako na obrazovce, sloty rodů z obrazovky, telefon jeden řádek), src/fan-look.ts (vzhled výstupu se nepamatuje) · e2e/fan-look-output.spec.ts · strings.ts poster.menu, title, lookTitle, lookPreview, lookOnlyHere, lookAsScreen, lookChanged · SPEC.md 1120-app-vejir-vzhled · spec 118 -->
+
 <a id="A6.5"></a>
 ## A6.5 Map
 

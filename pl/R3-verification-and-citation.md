@@ -519,3 +519,55 @@ Opowieść pisze się z danych dla rodziny. Tego, czego nie udokumentowano, się
 - **Obowiązuje od:** badanie 1.0.0; tło miejsca i czasu 1.10.0; format tekstu 1.8.0; opowieść pary 1.23.0
 
 <!-- zdroj: research:assets/method/narrate.md (celé; formát od v1.8.0, pozadí od v1.10.0, pár od v1.23.0) · research:src/commands/story.ts --note -->
+
+<a id="R3.10"></a>
+## R3.10 Usunięte źródło zostaje wycofane
+
+Źródła, które człowiek usunie, badanie nie usuwa, tylko je wycofuje (powód „deleted”): znika z drzewa
+genealogicznego, które dostaje aplikacja, a `strom source restore` przywraca je razem z cytatami.
+
+- **Co robi wycofanie:**
+  - cytaty źródła zdejmuje się z danych, imion i rodzin i przechowuje w źródle. Wartości danych zostają;
+  - dana, której stanu pozostałe cytaty nie uniosą jako pewnego, zostaje obniżona. Cytat główny źródła znika i inny
+    nie zostaje wybrany na jego miejsce;
+  - zadanie, które pracuje tylko z tym źródłem, zostaje porzucone; zadanie z innymi miejscami toczy się dalej bez
+    niego;
+  - sprzeczność, która opiera się na źródle, dostaje znacznik do przejrzenia, a jej stan zostaje. Znacznik zdejmuje
+    `strom conflict keep` (decyzja obowiązuje) albo nowe rozstrzygnięcie sprzeczności;
+  - tekst opowieści nigdy się nie zmienia; źródło tylko wypada z jej listy źródeł.
+- **Przywrócenie** (`strom source restore`): źródło dostaje z powrotem to samo ID, a każdy cytat wraca do danej,
+  przy której był (przy osobie w międzyczasie scalonej do tej, do której weszła), o ile dana jeszcze jest, a źródło
+  jej już nie cytuje. Cytat główny wraca tylko tam, gdzie w międzyczasie główny nie stał się inny; obniżony stan
+  wraca tylko tam, gdzie w międzyczasie nikt go nie zmienił; zadania tylko tam, gdzie się nie zmieniły. Znaczniki
+  do przejrzenia znikają.
+- **Co mówi badanie:**
+  - `strom source show S…` przy usuniętym źródle mówi, kiedy człowiek je usunął i gdzie (w terminalu albo
+    w aplikacji Strom), ile cytatów jest w nim przechowanych i jak je przywrócić;
+  - `strom source list --retracted` wypisuje tylko wycofane źródła: usunięte (z liczbą przechowanych cytatów
+    i wierszem, jak źródło przywrócić), scalone i cofnięte.
+- **Pilnuje kod:**
+  - wszystko albo nic: źródło, którego badanie nie ma albo które jest już wycofane, i nie zapisze się nic; najwyżej
+    50 źródeł naraz; całe usunięcie to jedna operacja historii;
+  - `--dry-run` (co by usunięcie zabrało, z liczbami) może uruchomić każdy, także agent;
+  - bez `--dry-run` człowiek mówi tak we własnym terminalu (Enter to nie), inaczej w oknie systemu; gdy nie ma kogo
+    zapytać, polecenie kończy się kodem 4. Agent nigdy nie usunie źródła, nawet z potwierdzeniem aplikacji; może
+    usunięcie tylko zaproponować z liczbami z `--dry-run`;
+  - `strom source restore` odrzuci źródło, które nie jest wycofane (`source.notRetracted`), i źródło wycofane
+    inaczej: scalone albo cofnięte przy synchronizacji (`source.notRestorable`);
+  - `strom conflict keep` odrzuci otwartą sprzeczność i sprzeczność bez znacznika (`conflict.notMarked`). Agent może
+    człowiekowi znacznik tylko zgłosić, nigdy go nie zdejmie;
+  - usunięte źródło ani to, co się do niego odwołuje, już nie wróci z późniejszym plikiem z aplikacji ani importem.
+- **Granice:**
+  - kopią zapasową jest historia badania i cytaty przechowane w źródle; pełnej kopii zapasowej badania przed
+    usunięciem się nie robi;
+  - cytat, którego nie da się przywrócić (dana zniknęła albo źródło już ją cytuje), zostaje wypisany, a reszta się
+    przywraca.
+- Usunięcie w aplikacji: [A3.1.2](A3-evidence-in-the-app.md#A3.1.2), usunięcie przy edycji i synchronizacja:
+  [S2.6.1](S2-edits-from-the-app.md#S2.6.1), plik drzewa genealogicznego razem ze źródłem:
+  [R11.5.6](R11-material-from-the-user.md#R11.5.6).
+- **Obsługa:** terminal: `strom source retract S… [--dry-run] [--reason "…"] [--sources-from <plik>]`,
+  `strom source restore S…`, `strom source list --retracted`, `strom conflict keep X…`; aplikacja: **Usuń
+  źródło…** przez most ([A3.1.2](A3-evidence-in-the-app.md#A3.1.2)).
+- **Obowiązuje od:** badanie 1.36.0
+
+<!-- zdroj: research:e6bbfb40 src/core/sourceretract.ts (hlavička; DELETED, RETRACT_MOST 50, RETRACT_CONFIRM_MS 15 min, REVIEW_RETRACTED, ACTIVE open/doing/parked/waiting) · src/commands/sourceretract.ts source retract (description, agentMay --dry-run, source.agent, source.retract-changed, requireHumanYes), source restore (description, source.notRetracted, source.notRestorable), ui.source.restore.skipped · src/commands/analysis.ts conflict keep (conflict.notMarked, agent jen říká) · src/commands/sources.ts source list --retracted, source show RETRACTED … the person puts it back · src/core/sync.ts withholdDeleted (spec 117 J6) · assets/lang/cs.json ui.consent.retract, ui.source.retract.would · CHANGELOG.cs.md 1.36.0 · spec 117 K1.1–K1.7, J3 (záloha = historie + citace v prameni) -->

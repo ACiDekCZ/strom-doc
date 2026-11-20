@@ -383,8 +383,13 @@ Zustimmung oder in der App über **Endgültig löschen…** ([A3.5.16](A3-eviden
     gespeichert.
 - **Grenzen:** in der App Strom lässt es sich nicht rückgängig machen; eine Datei bleibt nur in einer Sicherung
   (`strom backup`) oder einem Paket, das vorher entstand. Die Geschichte der Forschung behält den Eintrag.
-- **Bedienung:** Terminal: `strom input delete I… [--dry-run] [--files-from …]`; App: **Endgültig löschen…** über
-  die Brücke (`POST /material/delete`, [R11.5.4](#R11.5.4)).
+- **Ab Forschung 1.36.0:** eine Stammbaumdatei (ein importiertes GEDCOM, die JSON-Datei der App) wird genauso
+  gelöscht. Entstand aus ihr eine Quelle und gilt diese noch, endet der Befehl (`material.source-live`): die Datei
+  lässt sich nur zusammen mit dieser Quelle löschen, `--retract-sources S…`. Zuerst wird die Quelle gelöscht, wie
+  bei `strom source retract` ([R3.10](R3-verification-and-citation.md#R3.10)); für beides genügt ein Ja, und alles
+  wird mit einem Commit geschrieben. Die Quelle lässt sich danach wiederherstellen, aber ohne die Datei.
+- **Bedienung:** Terminal: `strom input delete I… [--dry-run] [--files-from …] [--retract-sources S…]`; App:
+  **Endgültig löschen…** über die Brücke (`POST /material/delete`, [R11.5.4](#R11.5.4)).
 - **Gilt seit:** Forschung 1.35.0
 
-<!-- zdroj: research:0cc2cfca src/commands/intake.ts input delete (popis, --files-from, skrytý --confirm, isAgent → material.agent, checkDeleteConfirm → material.delete-changed, material.body, souhlas člověka, exit 4) · src/core/materialdelete.ts (hlavička: historie drží záznam, bajty jen v záloze nebo balíčku; DELETE_MOST_FILES=MATERIAL_MOST_EDIT=500, DELETE_CONFIRM_MS 15 min; nečitelný jiný výzkum → nic se nesmaže) · input show („deleted for good“), input list bez smazaných · CHANGELOG.md 1.35.0 -->
+<!-- zdroj: research:0cc2cfca src/commands/intake.ts input delete (popis, --files-from, skrytý --confirm, isAgent → material.agent, checkDeleteConfirm → material.delete-changed, material.body, souhlas člověka, exit 4) · src/core/materialdelete.ts (hlavička: historie drží záznam, bajty jen v záloze nebo balíčku; DELETE_MOST_FILES=MATERIAL_MOST_EDIT=500, DELETE_CONFIRM_MS 15 min; nečitelný jiný výzkum → nic se nesmaže) · input show („deleted for good“), input list bez smazaných · CHANGELOG.md 1.35.0 · 1.36.0: e6bbfb40 src/commands/intake.ts input delete (--retract-sources, material.source-live, jeden commit), ui.input.delete.retracted · src/core/live.ts POST /material/delete {files, confirm, sources} -->

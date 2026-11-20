@@ -405,6 +405,76 @@ Orangetöne, die Nachkommen (Form Beidseitig) Ocker.
 
 <!-- zdroj: app:src/fan-rod-assign.ts (strany P/M/D: rod středu P, jen potomci D, jinak nejnižší prstenec, shoda P; pořadí počet výsečí › velikost › id; FAN_ROD_MAX_STRONG 10, FAN_ROD_LEGEND_MAIN 20, tier S/T; opakování odstínů ne na sousedních výsečích ani o jednu dál, výpůjčka jiné strany) · src/fan-colors.ts paleta P/M/D světlá, tmavá, tisk, fanRodLegend, fanRodOtherSwatch (K1.7), legendOther, legendNoRod · src/ui/fan-view.ts legenda (FAN_STORAGE_KEYS.legendOtherOpen, náhled jen při (hover: hover)), setRodSelection(…, 'legend'), forgetRodColors · strings.ts fan.legendFatherSide, legendMotherSide, legendDescendants, legendOther, legendNoRod, legendCentre, colorsChipRod, menuHighlightRod, menuUnhighlightRod, posterHighlighted · app:1d9dad0f, 7231dd13 (legenda po stranách), 77282e4e (telefon, tablet), b31c74a9 (štítky se netisknou), defe20a6, 7821ea72 (vějíř mimo štítek), 1ad91795 (paleta P/M/D), a265a3cc (paměť barev při návratu, další okna) · dirigent:spec/114-vejir-barvy-rodu · test/vysledek-1119-app-vejir-rody, vysledek-1119-app-vejir-barvy-vse · CHANGELOG.cs.md 3.30.0 -->
 
+<a id="A6.4.2"></a>
+### A6.4.2 Darstellung des Fächers
+
+Die Schaltfläche **Darstellung** in der Leiste des Fächers (in einer schmalen Leiste nur ein Symbol) öffnet den
+Bereich **Darstellung des Fächers**. Er ändert, wie der Fächer aussieht, nicht den Stammbaum: er wirkt auch in einem
+schreibgeschützten Stammbaum, beim Verfolgen einer Forschung und in der gespeicherten Seite.
+
+- **Stil:**
+  - **Farbig** (für den Bildschirm): Standard, die Zeichnung wie bisher;
+  - **Pastell** (weniger Tinte);
+  - **Antik** (als Geschenk): Sepia und Pergament, die Schrift Strom Serif;
+  - **Schwarzweiß** (Schwarzweißdrucker): Graustufen und Muster (Linien, Gitter, Punkte, Ringe, Kreuze, Striche),
+    keines schräg. Die schräge Schraffur bleibt nur einer wiederholten Person (Ahnenschwund).
+
+  Jeder Stil hat eine Form für das helle und das dunkle Erscheinungsbild und für den Druck.
+- **Farben der Stammlinien** (nur bei den Farben **Stammlinien**, sonst „Nur bei Farben nach Stammlinien.“):
+  - **Alle Stammlinien**: Farben wie in [A6.4.1](#A6.4.1);
+  - **Hauptstammlinien**: „die 10 größten im Fächer farbig, die übrigen grau.“ Die Stammlinie der zentralen Person
+    ist immer unter den Hauptstammlinien (sie ersetzt die zehnte). Die Legende hat eine graue Zeile **Weitere
+    Stammlinien (N)**, der Untertitel des Plakats „Farben der Hauptstammlinien“. Die Farben der Hauptstammlinien und
+    das Gedächtnis der Farben ändern sich nicht.
+- **Text in den Segmenten:** **Name und Jahre** (Standard) · **Name, Daten und Orte** (Geburt und Tod mit Datum und
+  Ort, vom Ort nur der Teil vor dem ersten Komma, zum Beispiel „* 22.11.1888 Kessenau“; nur wo es passt) · **Nur
+  Namen** (in etwas größerer Schrift). „Wo der Text nicht passt, wird er gekürzt.“
+- **Porträts** „In der Mitte, bei Eltern und Großeltern“ (standardmäßig aus): ein rundes Porträt in der Mitte und in
+  den ersten zwei Ringen. Eine geschützte lebende Person hat kein Porträt. Der Text hat Vorrang: ein Porträt, für das
+  kein Platz bliebe, wird nicht gezeichnet. Während des Ladens sagt der Bereich „Porträts werden geladen (k / n)“;
+  „Im Fächer hat noch niemand ein Porträt.“
+- **Drei Ebenen der Darstellung:**
+  - die **Standarddarstellung** ist in **Einstellungen → Fächer** (Stil, Farben der Stammlinien, Text, Porträts),
+    und das Gerät hält sie: „Jeder Start beginnt mit dieser Darstellung; im Bereich „Darstellung“ lässt sie sich nur
+    für die aktuelle Arbeit ändern.“ Ein Fächer, der die Standarddarstellung zeigt, übernimmt eine Änderung in den
+    Einstellungen sofort;
+  - die **aktuelle** Darstellung aus dem Bereich gilt bis zum Schließen der App; das Neuladen der Seite behält sie;
+  - die **Darstellung der Ausgabe** (Plakat, Bild, Druck) wird nicht gespeichert ([A6.4.3](#A6.4.3)).
+
+  Eine niedrigere Ebene überschreibt nie eine höhere, nur **Als Standard speichern**.
+- **Fuß des Bereichs:** weicht die Darstellung vom Standard ab, „Weicht von der Standarddarstellung ab.“ mit **Als
+  Standard speichern** („Als Standarddarstellung des Fächers gespeichert.“) und **Auf Standard zurücksetzen**; die
+  Schaltfläche **Darstellung** trägt dann einen Punkt. Sonst „Standarddarstellung · änderbar in den Einstellungen“;
+  der Link öffnet die Einstellungen bei der Gruppe **Fächer**.
+- Ein weiteres Fenster ([A6.8](#A6.8)) beginnt mit der aktuellen Darstellung des Hauptfensters und behält seine
+  Änderungen nur für sich.
+- **Telefon:** **Farben** und **Darstellung** sind Reiter eines Blatts von unten; das Blatt öffnet sich auf dem
+  zuletzt benutzten.
+- **Grenzen:** der Fächer auf der Seite der Person ändert sich nicht (nur die Geschlechtsfarben).
+- **Bedienung:** Leiste des Fächers → **Darstellung**; **Einstellungen → Fächer**.
+- **Gilt seit:** App 3.31.0
+
+<!-- zdroj: app:53ad42f1 src/fan-look.ts (hlavička: tři úrovně, ne úprava stromu, další okno; FAN_LOOK_DEFAULT color/all/years/portraits false), storage-keys.ts FAN_STORAGE_KEYS, FAN_LOOK_SESSION_KEY · 2236bbd4 src/fan-rod-assign.ts (rodScope main: 10 největších, rod středu vždy), src/fan-colors.ts FAN_STYLES, FAN_PATTERNS (vl, hl, grid, dot, dot2, ring, plus, dash), palety světlá/tmavá/tisk · c2dc2520 src/fan-labels.ts (content years/places/names, místo před čárkou), src/fan-chart.ts portréty prstence 1–2, chránění žijící, text má přednost · 2e9d8ad0 Nastavení → Vějíř (index.html settings-group-fan, setFanDefaultLook; vějíř s výchozím vzhledem změnu převezme) · e07ed419 (stránka osoby) · strings.ts fan.look*, style*, scope*, content*, portraits*, lookDiffers, lookIsDefault, lookSaveDefault, lookResetDefault, lookSavedToast, defaultsDesc, textNote, legendOtherGrey, posterColorsMain · SPEC.md 1120-app-vejir-vzhled · spec 118 K1.1–K2.6 · CHANGELOG.cs.md 3.31.0 -->
+
+<a id="A6.4.3"></a>
+### A6.4.3 Darstellung des Posters
+
+Der Dialog **Als Poster exportieren** (Menü **Poster exportieren**: SVG, PNG, Druck / PDF) hat beim Fächer die Gruppe
+**Darstellung des Posters** mit denselben Optionen wie der Bereich **Darstellung** ([A6.4.2](#A6.4.2)) und mit
+**Vorschau**.
+
+- Die Optionen sind mit der Darstellung vom Bildschirm vorausgefüllt. „Gilt nur für diese Ausgabe; Bildschirm und
+  Standard bleiben unverändert.“ Eine geänderte Option trägt „nur für diese Ausgabe geändert“; **Wie auf dem
+  Bildschirm** bringt die Darstellung des Bildschirms zurück.
+- Die Stammlinien behalten in einem anderen Stil oder einer anderen Farbgebung die Farben vom Bildschirm.
+- Auf dem Telefon ist die Gruppe in eine Zeile zugeklappt.
+- **Grenzen:** die Darstellung der Ausgabe wird nicht gespeichert; der nächste Export beginnt wieder mit der
+  Darstellung des Bildschirms.
+- **Bedienung:** **Poster exportieren** → **Darstellung des Posters**.
+- **Gilt seit:** App 3.31.0
+
+<!-- zdroj: app:2e9d8ad0 src/ui/export-image-ui.ts (PosterLook předvyplněný z obrazovky, náhled toutéž funkcí plakátu, Jako na obrazovce, sloty rodů z obrazovky, telefon jeden řádek), src/fan-look.ts (vzhled výstupu se nepamatuje) · e2e/fan-look-output.spec.ts · strings.ts poster.menu, title, lookTitle, lookPreview, lookOnlyHere, lookAsScreen, lookChanged · SPEC.md 1120-app-vejir-vzhled · spec 118 -->
+
 <a id="A6.5"></a>
 ## A6.5 Karte
 

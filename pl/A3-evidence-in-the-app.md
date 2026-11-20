@@ -64,6 +64,57 @@ ustawienie **Moje transkrypcje źródeł** określa, jak traktuje ją badanie
 
 <!-- zdroj: app:src/research-sync.ts:357 researchReadSource, :365 isOlderSource, :377 verifiedOffer, :385 unverifiedOlderSources · src/ui/sources.ts:618 renderSourceReading, :658 sourceVerifiedValue, :296 renderSourcesFilter, :377 renderSourceViewer · strings.ts sources.verified/verifiedHintGuide/verifiedHintOlder/verifiedByTree/readBy/userReadingNote/filterUnverified · překlad (od 3.24.0): src/source-translation.ts SOURCE_TRANSLATION_LABELS, splitSourceTranslation · strings.ts viewerTranslation, translation · commit c2942b0 -->
 
+<a id="A3.1.2"></a>
+### A3.1.2 Usuń źródło w śledzonym drzewie
+
+Przy drzewie, które aplikacja śledzi na żywo z badania, źródło można usunąć bezpośrednio w badaniu. Badanie wycofuje
+źródło ([R3.10](R3-verification-and-citation.md#R3.10)): z danych i opowieści znikają jego cytaty, daty, miejsca,
+imiona ani tekst opowieści się nie zmieniają, a usunięcie można cofnąć.
+
+- Okno **Źródła** jest przy śledzonym drzewie tylko do odczytu: bez edycji i dodawania, w wierszu źródła jest tylko
+  kosz. Gdy badanie nie odpowiada, kosz jest nieaktywny i po najechaniu mówi „Usunięcie źródła działa, gdy badanie
+  jest uruchomione.” Na urządzeniu dotykowym w wierszu zamiast kosza jest **⋯** z arkuszem od dołu: **Otwórz
+  źródło** i **Usuń źródło…**.
+- Okno **Usunąć źródło?** najpierw sprawdza w badaniu, co opiera się na źródle („Sprawdzanie w badaniu, co odwołuje
+  się do źródła…”), i dopiero potem pozwala usunąć. Pod nagłówkiem **Co opiera się na źródle** mówi, ile cytatów
+  przy danych i ile opowieści cytuje źródło, oraz po wierszach:
+  - **Dane** i **Bez źródła**: które dane zostaną bez źródła („Dane pozostaną, tylko bez cytowania.”) i które mają
+    też inne źródło;
+  - **Mniej pewne**: ile danych stanie się mniej pewnych;
+  - **Opowieści**: „Tekst opowieści pozostanie; źródło wypadnie tylko z listy źródeł opowieści.” Kod źródła
+    w tekście pozostanie, tylko już nie jako odnośnik;
+  - **Rozbieżności**: rozbieżność pozostaje i zostanie oznaczona „źródło wycofane – do przejrzenia”
+    ([S3.4.1](S3-what-the-research-knows.md#S3.4.1)); przy rozstrzygniętej „decyzja pozostaje”. Rozbieżność nie
+    zamyka się sama;
+  - **Zadania** (otwarte, w toku, odłożone, czeka): zadanie tylko na tym źródle zakończy się jako porzucone, z innego
+    zadania źródło wypadnie z miejsc zadania; mówi też, gdy nad zadaniem właśnie pracuje agent. **Cofnij** przywróci
+    zadania do obecnego stanu;
+  - **Pliki**: plik pozostanie w Materiałach, tylko bez powiązania ze źródłem; obrazy z archiwum pozostaną przy
+    źródle. Gdy źródło powstało z pliku drzewa genealogicznego, okno to mówi; usunąć także plik można w Materiałach
+    ([A3.5.17](#A3.5.17)).
+
+  Źródło, którego nic nie cytuje, ma tylko „Nic nie cytuje źródła.”
+- Po **Usuń źródło** powiadomienie mówi „Źródło … usunięte w badaniu.” z **Cofnij**. **Cofnij** przywraca źródło
+  wraz z cytatami; cytatu, którego dana w międzyczasie się zmieniła, przywrócić nie można, a powiadomienie mówi, ile
+  ich jest. Później źródło można przywrócić w badaniu (`strom source restore`).
+- **Pilnuje kod:**
+  - usunięcie obowiązuje tylko dla wykazu, który okno pokazało, i najwyżej 15 minut. Gdy wykaz w międzyczasie się
+    zmienił albo potwierdzenie wygasło, okno pokazuje nowy wykaz i usunięcie trzeba potwierdzić ponownie;
+  - gdy badanie właśnie zapisuje, usunięcie zostanie za chwilę ponowione. Przy źródle, którego w badaniu już nie ma,
+    drzewo wczyta się ponownie; źródło już wycofane okno zgłosi;
+  - badanie tylko do odczytu (zapieczętowane na innym komputerze) usunięcia nie zaoferuje.
+- **Granice:**
+  - tylko przy śledzonym drzewie badania, które umie usuwać źródła, i tylko przy źródle z badania; nie przy kopii
+    drzewa. Usunięcie przy edycji drzewa z badania opisuje [S2.6.1](S2-edits-from-the-app.md#S2.6.1);
+  - **Cofnij** potrzebuje uruchomionego badania; inaczej powiadomienie mówi, że źródło można przywrócić w badaniu.
+    Źródła scalonego albo wycofanego w badaniu inaczej przywrócić nie można.
+- **Obsługa:** aplikacja: **Akcje → Źródła** → kosz (na urządzeniu dotykowym **⋯** → **Usuń źródło…**) → **Usuń
+  źródło**; powiadomienie → **Cofnij**. Pozycja **Źródła** jest przy śledzonym drzewie w menu tylko wtedy, gdy
+  usunięcie można zaoferować.
+- **Obowiązuje od:** aplikacja 3.31.0 z badaniem 1.36.0
+
+<!-- zdroj: app:d527ffdd src/source-retract.ts sourceRetractOfferedIn (null bez sledování, jen ke čtení, kopie link.copy, bez brány source.retract; off když most neodpovídá), RETRACT stavy · 9d91f035, 4178ef85 src/ui/sources.ts sourcesReadOnly, openSourceRowSheet, source-retract-ui.ts (dialog, toast Vrátit, /source/restore) · src/ui/tree-management.ts isSourcesMenuOffered (zamčený strom jen se sourceRetractOffered) · strings.ts sources.retract.* (trashOff, rowMenu, menuDelete, menuOpen, title, intro, loading, usesTitle, counts, rows, bare, hasOther, lowered, storyKeep, storyCode, conflictReview, conflictDecided, conflictNever, taskState, taskDropped, taskNarrowed, taskDoing, tasksBack, filesStay, images, fileTree, undoLater, noCites, go, changed, expired, busyWait, gone, already, readonly, toast, undo, restored, restoredPart, restoreDown, notRestorable) · SPEC.md 1120-app-117-smazani · research:e6bbfb40 src/core/sourceretract.ts RETRACT_CONFIRM_MS · spec 117 §1–§3, J3 -->
+
 <a id="A3.2"></a>
 ## A3.2 Cytat: co źródło dokumentuje
 
@@ -725,12 +776,52 @@ odwołuje się do plików; w aplikacji nie da się tego cofnąć.
     ([A3.5.6](#A3.5.6));
   - najwyżej 500 plików naraz („Naraz można usunąć najwyżej 500 plików.”);
   - tylko z badaniem, które umie usuwać, i z działającym mostem; nigdy w drzewie tylko do odczytu;
-  - na wąskim ekranie okno jest arkuszem od dołu.
+  - na wąskim ekranie okno jest arkuszem od dołu;
+  - plik drzewa genealogicznego i plik, z którego powstało obowiązujące źródło, opisuje [A3.5.17](#A3.5.17).
 - **Obsługa:** okno **Materiały** → zaznaczenie → ⋯ → **Usuń trwale…** (ostatnia pozycja); podgląd pliku (ostatnia
   akcja). Terminal: `strom input delete` ([R11.5.6](R11-material-from-the-user.md#R11.5.6)).
 - **Obowiązuje od:** aplikacja 3.30.0, badanie 1.35.0
 
 <!-- zdroj: app:05e13ef7 src/ui/material-delete-ui.ts openDeleteDialog (suchý běh, potvrzení mostu, zaškrtnutí, Zrušit s fokusem, hideInstead, changed, expired, toast bez Zpět, list zespodu), src/material-delete.ts deletableFiles (origin ≠ tree, file), src/materials.ts DELETE_MAX_FILES=500, MATERIAL_DELETE_FEATURE · src/ui/materials-window.ts sel-delete (caps.delete, ne jen ke čtení, bridgeUp), src/ui/material-viewer-ui.ts (inArchive, poslední akce) · app:6949d833, f214eda6 (množné číslo, understandHint) · strings.ts materials.del.* · research:0cc2cfca src/core/materialdelete.ts DELETE_MOST_FILES, DELETE_CONFIRM_MS -->
+
+<a id="A3.5.17"></a>
+### A3.5.17 Plik drzewa genealogicznego w Materiałach
+
+Okno **Materiały** pokazuje też pliki drzew genealogicznych, które ma badanie: zaimportowany GEDCOM albo plik JSON
+aplikacji. Można je obejrzeć i usunąć trwale; gdy powstało z nich źródło, tylko razem z nim.
+
+- Kafelek i wiersz w **Lista** pokazują rodzaj i rozmiar („Plik drzewa genealogicznego · 184 kB”) oraz etykietę
+  **Plik źródła**, gdy powstało z niego źródło ([A3.5.14](#A3.5.14)). Plik drzewa genealogicznego nigdy nie jest **W
+  drzewie**: nie ma tej etykiety i filtr **W drzewie** go nie liczy, nawet gdy źródło z niego jest w drzewie. Filtr
+  **Rodzaj** ma wiersz **Pliki drzew genealogicznych** tylko wtedy, gdy jakiś jest.
+- Pliki drzew genealogicznych są poza porządkowaniem przez agenta, akcjami zbiorczymi, **Bez osoby** i liczbami
+  **Przejrzyj**. Tytuł, rodzaj, data ani osoby się przy nich nie zmieniają.
+- Menu pliku (na wąskim ekranie arkusz od dołu) ma tylko **Szczegóły** i **Usuń trwale…**. **Szczegóły** są bez
+  podglądu i wymieniają źródło, które z pliku powstało („plik źródła …”).
+- **Usuń trwale…** przy pliku, z którego nie powstało źródło: okno jak w [A3.5.16](#A3.5.16), ze zdaniami „Plik
+  drzewa zostanie usunięty z archiwum badania. W aplikacji nie da się tego cofnąć.” i „Nic nie odwołuje się do
+  pliku: nie powstało z niego źródło.”, bez **Tylko ukryj – można cofnąć**.
+- **Usuń trwale…** przy pliku, z którego powstało źródło, które nadal obowiązuje: dwuczęściowe okno **Usunąć źródło
+  i plik?** („Z pliku powstało źródło …. Plik zostanie usunięty po źródle, oba naraz.”):
+  - **Najpierw zostanie usunięte źródło**: co opiera się na źródle, jak w oknie **Usunąć źródło?**
+    ([A3.1.2](#A3.1.2));
+  - **Potem zostanie usunięty plik**: co odwołuje się do pliku; źródło „zostanie usunięte w pierwszym kroku”;
+  - „Źródło można później przywrócić w badaniu, ale już bez pliku.”, jedno pole **Rozumiem, pliku nie da się
+    przywrócić w aplikacji** i przycisk **Usuń źródło i plik**.
+
+  Oba zapisują się naraz, jednym zapisem w badaniu. Powiadomienie „Usunięto źródło … i plik ….” nie ma **Cofnij**,
+  a źródło potem znika z drzewa.
+- **Pilnuje kod:** gdy wykaz w międzyczasie się zmienił, okno pokazuje nowy, odznacza pole i usunięcie trzeba
+  potwierdzić ponownie. Nieudany zapis niczego nie usuwa („Zapis w badaniu się nie powiódł. Nic nie zostało
+  usunięte.”) i pozwala spróbować ponownie.
+- **Granice:** tylko z badaniem, które zgłasza pliki drzew genealogicznych w materiale; bez niego okno ich nie
+  pokazuje. Usuwanie jak w [A3.5.16](#A3.5.16): tylko z działającym mostem i nigdy w drzewie tylko do odczytu.
+- **Obsługa:** okno **Materiały** → plik drzewa genealogicznego → ⋯ → **Szczegóły** / **Usuń trwale…**; filtr
+  **Rodzaj → Pliki drzew genealogicznych**. Terminal: `strom input delete I… --retract-sources S…`
+  ([R11.5.6](R11-material-from-the-user.md#R11.5.6)).
+- **Obowiązuje od:** aplikacja 3.31.0 z badaniem 1.36.0
+
+<!-- zdroj: app:36601947 src/materials-overview.ts (druh tree za bránou material.trees, trees=1; mimo třídění, hromadné akce, bez osoby, počty Projít; podrobnosti nejdou upravit), src/material-delete.ts treeFileSource, retractSources, blockedBy (409 material.source-live) · 2a406d67 dlaždice a řádek (Soubor rodokmenu · velikost, štítek zdroje), filtr Druh, nabídka Podrobnosti + Smazat natrvalo… (list zespodu), Podrobnosti bez náhledu, dialog bez pramene bez Jen skrýt · b40b22e4 dvoudílný dialog · d9af4b16 (ne Ve stromu, ani štítek, ani filtr) · e2e/material-tree-delete.spec.ts (hlavička) · strings.ts materials.treeFile, kindTrees, treeFileOf, treeDetails, del.textTree, noRefsTree, bothTitle, bothIntro, partSource, partFile, laterNoFile, fileSourceSub, understandFile, bothGo, bothChanged, bothNone, bothToast · SPEC.md 1120-app-117-smazani, 1120-app-108-diry · spec 117 §5–§7 -->
 
 <a id="A3.6"></a>
 ## A3.6 Źródła osoby

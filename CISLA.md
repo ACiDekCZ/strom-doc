@@ -60,6 +60,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R3.8.1 | R3-verification-and-citation.md | aplikace 3.5.0 | platí | Úroveň doložení osoby | The documentation level of a person | Belegstufe einer Person | Poziom udokumentowania osoby |
 | R3.9 | R3-verification-and-citation.md | výzkum 1.26.0 | platí | Vyprávění drží své prameny | A story keeps its sources | Eine Erzählung behält ihre Quellen | Opowieść zachowuje swoje źródła |
 | R3.9.1 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Co vyprávění tvrdí | What a story claims | Was eine Erzählung behauptet | Co twierdzi opowieść |
+| R3.10 | R3-verification-and-citation.md | výzkum 1.36.0 | platí | Smazaný pramen se odvolá | A deleted source is retracted | Eine gelöschte Quelle wird zurückgezogen | Usunięte źródło zostaje wycofane |
 | R4 | R4-places.md | výzkum 1.22.0 | platí | Místa | Places | Orte | Miejsca |
 | R4.1 | R4-places.md | výzkum 1.25.0 | platí | Místo dostane polohu, jen když je jisté | A place gets a position only when it is certain | Ein Ort bekommt eine Lage nur, wenn er sicher ist | Miejsce dostaje położenie, tylko gdy jest pewne |
 | R4.1.1 | R4-places.md | výzkum 1.25.2 | platí | Stejné jméno, jiné místo | The same name, a different place | Gleicher Name, anderer Ort | Ta sama nazwa, inne miejsce |
@@ -251,6 +252,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A3 | A3-evidence-in-the-app.md | aplikace 1.4.0 | platí | Doložení v aplikaci | Evidence in the app | Belege in der App | Udokumentowanie w aplikacji |
 | A3.1 | A3-evidence-in-the-app.md | aplikace 1.4.0 | platí | Pramen je jeden zápis | A source is one entry | Eine Quelle ist ein Eintrag | Źródło to jeden zapis |
 | A3.1.1 | A3-evidence-in-the-app.md | aplikace 3.9.0 | platí | Přepis a Přepis ověřen | Transcript and Transcription verified | Transkription und Abschrift geprüft | Transkrypcja i Transkrypcja zweryfikowana |
+| A3.1.2 | A3-evidence-in-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Smazat pramen u sledovaného stromu | Delete source in a followed tree | Quelle löschen im verfolgten Stammbaum | Usuń źródło w śledzonym drzewie |
 | A3.2 | A3-evidence-in-the-app.md | aplikace 1.4.0 | platí | Citace: co pramen dokládá | Citation: what a source supports | Zitation: was eine Quelle belegt | Cytat: co źródło dokumentuje |
 | A3.2.1 | A3-evidence-in-the-app.md | aplikace 3.1.0 | platí | Výběr pramene | Source picker | Auswahl der Quelle | Wybór źródła |
 | A3.2.2 | A3-evidence-in-the-app.md | aplikace 3.29.0 | koncept | Pořadí citací a hlavní citace | The order of citations and the main citation | Reihenfolge der Zitate und Hauptzitat | Kolejność cytatów i cytat główny |
@@ -275,6 +277,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A3.5.14 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Agent nezařadil, Stejný obsah a Zdroj pramene | Not assigned by the agent, Same content and File of a source | Vom Agenten nicht zugeordnet, Gleicher Inhalt und Datei einer Quelle | Agent nie przypisał, Ta sama treść i Plik źródła |
 | A3.5.15 | A3-evidence-in-the-app.md | aplikace 3.30.0 | platí | Přidat materiály… v okně | Add materials… in the window | Materialien hinzufügen… im Fenster | Dodaj materiały… w oknie |
 | A3.5.16 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Smazat natrvalo | Delete permanently | Endgültig löschen | Usuń trwale |
+| A3.5.17 | A3-evidence-in-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Soubor rodokmenu v Materiálech | A family tree file in Materials | Stammbaumdatei in den Materialien | Plik drzewa genealogicznego w Materiałach |
 | A3.6 | A3-evidence-in-the-app.md | aplikace 3.3.0 | platí | Prameny osoby | Sources of a person | Quellen einer Person | Źródła osoby |
 | A3.7 | A3-evidence-in-the-app.md | aplikace 3.4.0 | platí | Kde chybí doklady | Where evidence is missing | Wo Belege fehlen | Gdzie brakuje dowodów |
 | A3.8 | A3-evidence-in-the-app.md | aplikace 3.14.0 | platí | Obraz jen ve výzkumu | Image only in the research | Bild nur in der Forschung | Obraz tylko w badaniu |
@@ -316,6 +319,8 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.3 | A6-views.md | aplikace 1.5.0 | platí | Časová osa | Timeline | Zeitleiste | Oś czasu |
 | A6.4 | A6-views.md | aplikace 1.8.0 | platí | Vějíř | Fan | Fächer | Wachlarz |
 | A6.4.1 | A6-views.md | aplikace 3.30.0 | platí | Barvy rodů a zvýraznění rodu | Family line colours and highlighting a family line | Stammlinienfarben und Hervorheben einer Stammlinie | Kolory rodów i wyróżnienie rodu |
+| A6.4.2 | A6-views.md | aplikace 3.31.0 | platí | Vzhled vějíře | Fan appearance | Darstellung des Fächers | Wygląd wachlarza |
+| A6.4.3 | A6-views.md | aplikace 3.31.0 | platí | Vzhled plakátu | Poster appearance | Darstellung des Posters | Wygląd plakatu |
 | A6.5 | A6-views.md | aplikace 1.10.0 | platí | Mapa | Map | Karte | Mapa |
 | A6.5.1 | A6-views.md | aplikace 1.10.0 | platí | Odkud mapa bere polohu místa | Where the map gets a place's location | Woher die Karte die Lage eines Ortes nimmt | Skąd mapa bierze położenie miejsca |
 | A6.5.2 | A6-views.md | aplikace 3.25.0 | platí | Místa mimo mapu dohledat ve výzkumu | Looking up places off the map in the research | Orte ohne Karte in der Forschung suchen | Odszukanie miejsc poza mapą w badaniu |
@@ -440,6 +445,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S2.5 | S2-edits-from-the-app.md | aplikace 3.11.0, výzkum 1.12.0 | platí | Co výzkum nepřijme | What the research does not accept | Was die Forschung nicht annimmt | Czego badanie nie przyjmie |
 | S2.5.1 | S2-edits-from-the-app.md | aplikace 3.29.0, výzkum 1.34.0 | koncept | Nepřevzaté změny jmenovitě | Changes not taken, by name | Nicht übernommene Änderungen einzeln | Nieprzyjęte zmiany z nazwy |
 | S2.6 | S2-edits-from-the-app.md | výzkum 1.0.0 | platí | Osoba odebraná v aplikaci | A person removed in the app | In der App entfernte Person | Osoba usunięta w aplikacji |
+| S2.6.1 | S2-edits-from-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Pramen smazaný v aplikaci | A source deleted in the app | In der App gelöschte Quelle | Źródło usunięte w aplikacji |
 | S2.7 | S2-edits-from-the-app.md | aplikace 3.4.0, výzkum 1.0.0 | platí | Vrácení poslání | Undoing a send | Senden zurücknehmen | Cofnięcie wysłania |
 | S2.7.1 | S2-edits-from-the-app.md | aplikace 3.9.0 | koncept | Načíst verzi výzkumu? | Load the research version? | Version der Forschung laden? | Wczytać wersję badania? |
 | S3 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Co ví výzkum | What the research knows | Was die Forschung weiß | Co wie badanie |
@@ -449,6 +455,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S3.3 | S3-what-the-research-knows.md | aplikace 3.6.0 | platí | Nad osobou ukazuje, kde strom končí a co dál | Above the person shows where the tree ends and what comes next | Über der Person zeigt, wo der Stammbaum endet und was weiter geschieht | Nad osobą pokazuje, gdzie kończy się drzewo i co dalej |
 | S3.3.1 | S3-what-the-research-knows.md | aplikace 3.6.0 | platí | Akce u Nad osobou | Actions at Above the person | Aktionen bei Über der Person | Działania przy Nad osobą |
 | S3.4 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Rozpory | Conflicts | Widersprüche | Sprzeczności |
+| S3.4.1 | S3-what-the-research-knows.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Pramen odvolán – přezkoumat | Source retracted – to review | Quelle zurückgezogen – prüfen | Źródło wycofane – do przejrzenia |
 | S3.5 | S3-what-the-research-knows.md | aplikace 3.4.0 | platí | Hypotézy | Hypotheses | Hypothesen | Hipotezy |
 | S3.5.1 | S3-what-the-research-knows.md | aplikace 3.11.0 | platí | Ukázat: připojeno jen v zobrazení | Show: linked in the view only | Zeigen: nur in der Ansicht verbunden | Pokaż: połączone tylko w widoku |
 | S3.5.2 | S3-what-the-research-knows.md | aplikace 3.27.0 | platí | Rozhodnout hypotézu v aplikaci | Deciding a hypothesis in the app | Eine Hypothese in der App entscheiden | Rozstrzygnięcie hipotezy w aplikacji |

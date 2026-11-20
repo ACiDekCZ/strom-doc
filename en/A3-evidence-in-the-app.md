@@ -63,6 +63,59 @@ setting **My source transcriptions** decides how the research takes it
 
 <!-- zdroj: app:src/research-sync.ts:357 researchReadSource, :365 isOlderSource, :377 verifiedOffer, :385 unverifiedOlderSources · src/ui/sources.ts:618 renderSourceReading, :658 sourceVerifiedValue, :296 renderSourcesFilter, :377 renderSourceViewer · strings.ts sources.verified/verifiedHintGuide/verifiedHintOlder/verifiedByTree/readBy/userReadingNote/filterUnverified · překlad (od 3.24.0): src/source-translation.ts SOURCE_TRANSLATION_LABELS, splitSourceTranslation · strings.ts viewerTranslation, translation · commit c2942b0 -->
 
+<a id="A3.1.2"></a>
+### A3.1.2 Delete source in a followed tree
+
+In a tree the app follows live from the research, a source can be deleted directly in the research. The research
+retracts the source ([R3.10](R3-verification-and-citation.md#R3.10)): its citations leave the facts and stories, the
+dates, places, names and the text of stories do not change, and the deletion can be undone.
+
+- The window **Sources** is read-only in a followed tree: no editing and no adding, the row of a source has only a
+  bin. When the research does not answer, the bin is inactive and on hover says "Deleting a source works while the
+  research runs." On a touch device the row has **⋯** instead of the bin, with a sheet from the bottom: **Open
+  source** and **Delete source…**.
+- The dialog **Delete source?** first checks in the research what rests on the source ("Checking in the research
+  what refers to the source…"), and only then allows deleting. Under the heading **What rests on the source** it
+  says how many citations on facts and how many stories cite the source, and by rows:
+  - **Facts** and **Without a source**: which facts are left without a source ("The facts stay, only without a
+    citation.") and which also have another source;
+  - **Less certain**: how many facts become less certain;
+  - **Stories**: "The story text stays; the source only leaves the story’s list of sources." The source's code in
+    the text stays, only no longer as a link;
+  - **Conflicts**: a conflict stays and is marked "source retracted – to review"
+    ([S3.4.1](S3-what-the-research-knows.md#S3.4.1)); a decided one shows "the decision stays". A conflict does not
+    close by itself;
+  - **Tasks** (open, in progress, parked, waiting): a task only on this source ends as given up, from another task
+    the source leaves the task's places; it also says when an agent is working on the task right now. **Undo**
+    returns the tasks to their current state;
+  - **Files**: a file stays in Materials, only without the link to the source; archive images stay with the source.
+    When the source was made from a family tree file, the dialog says so; the file itself can be deleted in
+    Materials ([A3.5.17](#A3.5.17)).
+
+  A source nothing cites has only "Nothing cites the source."
+- After **Delete source** the notice says "Source … deleted in the research." with **Undo**. **Undo** returns the
+  source with its citations; a citation whose fact has changed meanwhile cannot be returned, and the notice says how
+  many. Later the source can be restored in the research (`strom source restore`).
+- **Enforced by the code:**
+  - the deletion holds only for the list the dialog showed, and for at most 15 minutes. When the list has changed
+    meanwhile or the confirmation has expired, the dialog shows the new list and the deletion must be confirmed
+    again;
+  - when the research is writing right now, the deletion is tried again in a moment. For a source that is no longer
+    in the research, the tree is loaded again; a source already retracted is reported by the dialog;
+  - a read-only research (sealed on another computer) does not offer the deletion.
+- **Limits:**
+  - only in a followed tree of a research that can delete a source, and only for a source from the research; not in
+    a copy of the tree. Deleting while editing a tree from the research is described in
+    [S2.6.1](S2-edits-from-the-app.md#S2.6.1);
+  - **Undo** needs a running research; otherwise the notice says that the source can be restored in the research.
+    A source merged or retracted otherwise in the research cannot be restored.
+- **Controls:** app: **Actions → Sources** → the bin (on touch **⋯** → **Delete source…**) → **Delete source**;
+  the notice → **Undo**. In a followed tree the item **Sources** is in the menu only when the deletion can be
+  offered.
+- **Since:** app 3.31.0 with research 1.36.0
+
+<!-- zdroj: app:d527ffdd src/source-retract.ts sourceRetractOfferedIn (null bez sledování, jen ke čtení, kopie link.copy, bez brány source.retract; off když most neodpovídá), RETRACT stavy · 9d91f035, 4178ef85 src/ui/sources.ts sourcesReadOnly, openSourceRowSheet, source-retract-ui.ts (dialog, toast Vrátit, /source/restore) · src/ui/tree-management.ts isSourcesMenuOffered (zamčený strom jen se sourceRetractOffered) · strings.ts sources.retract.* (trashOff, rowMenu, menuDelete, menuOpen, title, intro, loading, usesTitle, counts, rows, bare, hasOther, lowered, storyKeep, storyCode, conflictReview, conflictDecided, conflictNever, taskState, taskDropped, taskNarrowed, taskDoing, tasksBack, filesStay, images, fileTree, undoLater, noCites, go, changed, expired, busyWait, gone, already, readonly, toast, undo, restored, restoredPart, restoreDown, notRestorable) · SPEC.md 1120-app-117-smazani · research:e6bbfb40 src/core/sourceretract.ts RETRACT_CONFIRM_MS · spec 117 §1–§3, J3 -->
+
 <a id="A3.2"></a>
 ## A3.2 Citation: what a source supports
 
@@ -735,12 +788,52 @@ dialog that first says what refers to the files; it cannot be undone in the app.
     **Remove from the tree…** ([A3.5.6](#A3.5.6));
   - at most 500 files at once ("At most 500 files can be deleted at once.");
   - only with a research that can delete and with a running bridge; never in a read-only tree;
-  - on a narrow screen the dialog is a sheet from the bottom.
+  - on a narrow screen the dialog is a sheet from the bottom;
+  - a family tree file and a file a valid source was made from are described in [A3.5.17](#A3.5.17).
 - **Controls:** the window **Materials** → a selection → ⋯ → **Delete permanently…** (the last item); the file
   viewer (the last action). Terminal: `strom input delete` ([R11.5.6](R11-material-from-the-user.md#R11.5.6)).
 - **Since:** app 3.30.0, research 1.35.0
 
 <!-- zdroj: app:05e13ef7 src/ui/material-delete-ui.ts openDeleteDialog (suchý běh, potvrzení mostu, zaškrtnutí, Zrušit s fokusem, hideInstead, changed, expired, toast bez Zpět, list zespodu), src/material-delete.ts deletableFiles (origin ≠ tree, file), src/materials.ts DELETE_MAX_FILES=500, MATERIAL_DELETE_FEATURE · src/ui/materials-window.ts sel-delete (caps.delete, ne jen ke čtení, bridgeUp), src/ui/material-viewer-ui.ts (inArchive, poslední akce) · app:6949d833, f214eda6 (množné číslo, understandHint) · strings.ts materials.del.* · research:0cc2cfca src/core/materialdelete.ts DELETE_MOST_FILES, DELETE_CONFIRM_MS -->
+
+<a id="A3.5.17"></a>
+### A3.5.17 A family tree file in Materials
+
+The window **Materials** also shows the family tree files the research has: an imported GEDCOM or a JSON file of the
+app. They can be viewed and deleted permanently; when a source was made from one, only together with the source.
+
+- The tile and the row of **List** show the kind and size ("Family tree file · 184 kB") and the tag **File of a
+  source** when a source was made from the file ([A3.5.14](#A3.5.14)). A family tree file is never **In the tree**:
+  it does not have that tag and the filter **In the tree** does not count it, not even when the source from it is in
+  the tree. The filter **Type** has the row **Family tree files** only when there is one.
+- Family tree files are outside the agent's sorting, bulk actions, **No person** and the counts of **Go through**.
+  Their title, kind, date and people do not change.
+- The file's menu (on a narrow screen a sheet from the bottom) has only **Details** and **Delete permanently…**.
+  **Details** are without a preview and name the source made from the file ("the file of the source …").
+- **Delete permanently…** for a file no source was made from: a dialog as in [A3.5.16](#A3.5.16), with the sentences
+  "The family tree file is deleted from the research archive. This cannot be undone in the app." and "Nothing refers
+  to the file: no source was made from it.", without **Only hide – can be undone**.
+- **Delete permanently…** for a file a still valid source was made from: a two-part dialog **Delete the source and
+  the file?** ("The source … was made from this file. The file is deleted after the source, both at once."):
+  - **First the source is deleted**: what rests on the source, as in the dialog **Delete source?**
+    ([A3.1.2](#A3.1.2));
+  - **Then the file is deleted**: what refers to the file; the source "deleted in the first step";
+  - "The source can be restored in the research later, but without the file.", one checkbox **I understand the file
+    cannot be brought back in the app** and the button **Delete source and file**.
+
+  Both are written at once, in one write in the research. The notice "Deleted the source … and the file …." has no
+  **Undo**, and the source then disappears from the tree.
+- **Enforced by the code:** when the list has changed meanwhile, the dialog shows the new one, clears the tick and
+  the deletion must be confirmed again. A failed write deletes nothing ("Writing to the research failed. Nothing was
+  deleted.") and allows trying again.
+- **Limits:** only with a research that reports family tree files in the material; without it the window does not
+  show them. Deleting as in [A3.5.16](#A3.5.16): only with a running bridge and never in a read-only tree.
+- **Controls:** the window **Materials** → a family tree file → ⋯ → **Details** / **Delete permanently…**; the
+  filter **Type → Family tree files**. Terminal: `strom input delete I… --retract-sources S…`
+  ([R11.5.6](R11-material-from-the-user.md#R11.5.6)).
+- **Since:** app 3.31.0 with research 1.36.0
+
+<!-- zdroj: app:36601947 src/materials-overview.ts (druh tree za bránou material.trees, trees=1; mimo třídění, hromadné akce, bez osoby, počty Projít; podrobnosti nejdou upravit), src/material-delete.ts treeFileSource, retractSources, blockedBy (409 material.source-live) · 2a406d67 dlaždice a řádek (Soubor rodokmenu · velikost, štítek zdroje), filtr Druh, nabídka Podrobnosti + Smazat natrvalo… (list zespodu), Podrobnosti bez náhledu, dialog bez pramene bez Jen skrýt · b40b22e4 dvoudílný dialog · d9af4b16 (ne Ve stromu, ani štítek, ani filtr) · e2e/material-tree-delete.spec.ts (hlavička) · strings.ts materials.treeFile, kindTrees, treeFileOf, treeDetails, del.textTree, noRefsTree, bothTitle, bothIntro, partSource, partFile, laterNoFile, fileSourceSub, understandFile, bothGo, bothChanged, bothNone, bothToast · SPEC.md 1120-app-117-smazani, 1120-app-108-diry · spec 117 §5–§7 -->
 
 <a id="A3.6"></a>
 ## A3.6 Sources of a person

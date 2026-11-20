@@ -70,6 +70,62 @@ Forschung verbundenen Stammbaum bestimmt die Einstellung **Meine Quellenabschrif
 
 <!-- zdroj: app:src/research-sync.ts:357 researchReadSource, :365 isOlderSource, :377 verifiedOffer, :385 unverifiedOlderSources · src/ui/sources.ts:618 renderSourceReading, :658 sourceVerifiedValue, :296 renderSourcesFilter, :377 renderSourceViewer · strings.ts sources.verified/verifiedHintGuide/verifiedHintOlder/verifiedByTree/readBy/userReadingNote/filterUnverified · překlad (od 3.24.0): src/source-translation.ts SOURCE_TRANSLATION_LABELS, splitSourceTranslation · strings.ts viewerTranslation, translation · commit c2942b0 -->
 
+<a id="A3.1.2"></a>
+### A3.1.2 Quelle löschen im verfolgten Stammbaum
+
+Bei einem Stammbaum, den die App live aus der Forschung verfolgt, lässt sich eine Quelle direkt in der Forschung
+löschen. Die Forschung zieht die Quelle zurück ([R3.10](R3-verification-and-citation.md#R3.10)): aus Angaben und
+Erzählungen verschwinden ihre Zitate, Daten, Orte, Namen und der Text der Erzählungen ändern sich nicht, und das
+Löschen lässt sich rückgängig machen.
+
+- Das Fenster **Quellen** ist bei einem verfolgten Stammbaum schreibgeschützt: ohne Bearbeiten und Hinzufügen, in der
+  Zeile einer Quelle ist nur der Papierkorb. Antwortet die Forschung nicht, ist der Papierkorb inaktiv und sagt beim
+  Darüberfahren „Eine Quelle lässt sich löschen, wenn die Forschung läuft.“ Auf einem Touch-Gerät ist in der Zeile
+  statt des Papierkorbs **⋯** mit einem Blatt von unten: **Quelle öffnen** und **Quelle löschen…**.
+- Der Dialog **Quelle löschen?** ermittelt zuerst in der Forschung, was auf der Quelle steht („In der Forschung wird
+  ermittelt, was auf die Quelle verweist…“), und erlaubt erst dann das Löschen. Unter der Überschrift **Was auf der
+  Quelle steht** sagt er, wie viele Zitate bei Angaben und wie viele Erzählungen die Quelle zitieren, und nach Zeilen:
+  - **Angaben** und **Ohne Quelle**: welche Angaben ohne Quelle bleiben („Die Angaben bleiben, nur ohne Zitat.“)
+    und welche auch eine andere Quelle haben;
+  - **Weniger sicher**: wie viele Angaben weniger sicher werden;
+  - **Erzählungen**: „Der Erzähltext bleibt; die Quelle fällt nur aus der Quellenliste der Erzählung.“ Das Kürzel der
+    Quelle im Text bleibt, nur nicht mehr als Verweis;
+  - **Widersprüche**: ein Widerspruch bleibt und wird markiert „Quelle zurückgezogen – prüfen“
+    ([S3.4.1](S3-what-the-research-knows.md#S3.4.1)); bei einem entschiedenen „die Entscheidung bleibt“. Ein
+    Widerspruch schließt sich nicht von selbst;
+  - **Aufgaben** (offen, in Arbeit, zurückgestellt, wartet): eine Aufgabe nur zu dieser Quelle endet als aufgegeben,
+    bei einer anderen fällt die Quelle aus den Orten der Aufgabe; er sagt auch, wenn ein Agent gerade an der Aufgabe
+    arbeitet. **Rückgängig** bringt die Aufgaben in den jetzigen Zustand zurück;
+  - **Dateien**: eine Datei bleibt in den Materialien, nur ohne Verknüpfung zur Quelle; Archivbilder bleiben bei der
+    Quelle. Ist die Quelle aus einer Stammbaumdatei entstanden, sagt der Dialog das; auch die Datei löschen lässt
+    sich in den Materialien ([A3.5.17](#A3.5.17)).
+
+  Eine Quelle, die niemand zitiert, hat nur „Niemand zitiert die Quelle.“
+- Nach **Quelle löschen** sagt die Meldung „Quelle … in der Forschung gelöscht.“ mit **Rückgängig**. **Rückgängig**
+  bringt die Quelle samt Zitaten zurück; ein Zitat, dessen Angabe sich inzwischen geändert hat, lässt sich nicht
+  zurückbringen, und die Meldung sagt, wie viele. Später lässt sich die Quelle in der Forschung wiederherstellen
+  (`strom source restore`).
+- **Prüft der Code:**
+  - das Löschen gilt nur für die Liste, die der Dialog gezeigt hat, und höchstens 15 Minuten. Hat sich die Liste
+    inzwischen geändert oder ist die Bestätigung abgelaufen, zeigt der Dialog die neue Liste, und das Löschen muss
+    neu bestätigt werden;
+  - schreibt die Forschung gerade, wird das Löschen gleich erneut versucht. Bei einer Quelle, die nicht mehr in der
+    Forschung ist, wird der Baum neu geladen; eine bereits zurückgezogene Quelle meldet der Dialog;
+  - eine schreibgeschützte Forschung (auf einem anderen Computer versiegelt) bietet das Löschen nicht an.
+- **Grenzen:**
+  - nur bei einem verfolgten Stammbaum einer Forschung, die das Löschen einer Quelle kann, und nur bei einer Quelle
+    aus der Forschung; nicht bei einer Kopie des Stammbaums. Das Löschen beim Bearbeiten eines Stammbaums aus der
+    Forschung beschreibt [S2.6.1](S2-edits-from-the-app.md#S2.6.1);
+  - **Rückgängig** braucht eine laufende Forschung; sonst sagt die Meldung, dass sich die Quelle in der Forschung
+    wiederherstellen lässt. Eine in der Forschung zusammengeführte oder anders zurückgezogene Quelle lässt sich nicht
+    wiederherstellen.
+- **Bedienung:** App: **Aktionen → Quellen** → Papierkorb (auf Touch **⋯** → **Quelle löschen…**) → **Quelle
+  löschen**; Meldung → **Rückgängig**. Der Eintrag **Quellen** ist bei einem verfolgten Stammbaum nur dann im Menü,
+  wenn sich das Löschen anbieten lässt.
+- **Gilt seit:** App 3.31.0 mit Forschung 1.36.0
+
+<!-- zdroj: app:d527ffdd src/source-retract.ts sourceRetractOfferedIn (null bez sledování, jen ke čtení, kopie link.copy, bez brány source.retract; off když most neodpovídá), RETRACT stavy · 9d91f035, 4178ef85 src/ui/sources.ts sourcesReadOnly, openSourceRowSheet, source-retract-ui.ts (dialog, toast Vrátit, /source/restore) · src/ui/tree-management.ts isSourcesMenuOffered (zamčený strom jen se sourceRetractOffered) · strings.ts sources.retract.* (trashOff, rowMenu, menuDelete, menuOpen, title, intro, loading, usesTitle, counts, rows, bare, hasOther, lowered, storyKeep, storyCode, conflictReview, conflictDecided, conflictNever, taskState, taskDropped, taskNarrowed, taskDoing, tasksBack, filesStay, images, fileTree, undoLater, noCites, go, changed, expired, busyWait, gone, already, readonly, toast, undo, restored, restoredPart, restoreDown, notRestorable) · SPEC.md 1120-app-117-smazani · research:e6bbfb40 src/core/sourceretract.ts RETRACT_CONFIRM_MS · spec 117 §1–§3, J3 -->
+
 <a id="A3.2"></a>
 ## A3.2 Zitation: was eine Quelle belegt
 
@@ -783,13 +839,58 @@ Dialog, der zuerst sagt, was auf die Dateien verweist; in der App lässt es sich
     **Aus dem Stammbaum entfernen…** ([A3.5.6](#A3.5.6));
   - höchstens 500 Dateien auf einmal („Auf einmal lassen sich höchstens 500 Dateien löschen.“);
   - nur mit einer Forschung, die löschen kann, und mit laufender Brücke; nie in einem schreibgeschützten Stammbaum;
-  - auf einem schmalen Bildschirm ist der Dialog ein Blatt von unten.
+  - auf einem schmalen Bildschirm ist der Dialog ein Blatt von unten;
+  - eine Stammbaumdatei und eine Datei, aus der eine gültige Quelle entstand, beschreibt [A3.5.17](#A3.5.17).
 - **Bedienung:** Fenster **Materialien** → Auswahl → ⋯ → **Endgültig löschen…** (der letzte Eintrag);
   Dateibetrachter (die letzte Aktion). Terminal: `strom input delete`
   ([R11.5.6](R11-material-from-the-user.md#R11.5.6)).
 - **Gilt seit:** App 3.30.0, Forschung 1.35.0
 
 <!-- zdroj: app:05e13ef7 src/ui/material-delete-ui.ts openDeleteDialog (suchý běh, potvrzení mostu, zaškrtnutí, Zrušit s fokusem, hideInstead, changed, expired, toast bez Zpět, list zespodu), src/material-delete.ts deletableFiles (origin ≠ tree, file), src/materials.ts DELETE_MAX_FILES=500, MATERIAL_DELETE_FEATURE · src/ui/materials-window.ts sel-delete (caps.delete, ne jen ke čtení, bridgeUp), src/ui/material-viewer-ui.ts (inArchive, poslední akce) · app:6949d833, f214eda6 (množné číslo, understandHint) · strings.ts materials.del.* · research:0cc2cfca src/core/materialdelete.ts DELETE_MOST_FILES, DELETE_CONFIRM_MS -->
+
+<a id="A3.5.17"></a>
+### A3.5.17 Stammbaumdatei in den Materialien
+
+Das Fenster **Materialien** zeigt auch die Stammbaumdateien, die die Forschung hat: ein importiertes GEDCOM oder eine
+JSON-Datei der App. Sie lassen sich ansehen und endgültig löschen; ist aus einer eine Quelle entstanden, nur zusammen
+mit ihr.
+
+- Kachel und Zeile der **Liste** zeigen Art und Größe („Stammbaumdatei · 184 kB“) und das Etikett **Datei einer
+  Quelle**, wenn aus ihr eine Quelle entstanden ist ([A3.5.14](#A3.5.14)). Eine Stammbaumdatei ist nie **Im
+  Stammbaum**: sie hat dieses Etikett nicht, und der Filter **Im Stammbaum** zählt sie nicht, auch dann nicht, wenn
+  die Quelle aus ihr im Stammbaum ist. Der Filter **Art** hat die Zeile **Stammbaumdateien** nur, wenn es eine gibt.
+- Stammbaumdateien sind außerhalb des Sortierens durch den Agenten, der Sammelaktionen, von **Ohne Person** und der
+  Zählungen von **Durchgehen**. Titel, Art, Datum und Personen ändern sich bei ihnen nicht.
+- Das Menü der Datei (auf einem schmalen Bildschirm ein Blatt von unten) hat nur **Details** und **Endgültig
+  löschen…**. **Details** sind ohne Vorschau und nennen die Quelle, die aus der Datei entstand („Datei der Quelle
+  …“).
+- **Endgültig löschen…** bei einer Datei, aus der keine Quelle entstand: ein Dialog wie in [A3.5.16](#A3.5.16), mit
+  dem Satz „Die Stammbaumdatei wird aus dem Archiv der Forschung gelöscht. In der App lässt sich das nicht rückgängig
+  machen.“ und „Nichts verweist auf die Datei: aus ihr ist keine Quelle entstanden.“, ohne **Nur ausblenden – lässt
+  sich rückgängig machen**.
+- **Endgültig löschen…** bei einer Datei, aus der eine Quelle entstand, die noch gilt: ein zweiteiliger Dialog
+  **Quelle und Datei löschen?** („Aus der Datei entstand die Quelle …. Die Datei wird nach der Quelle gelöscht,
+  beides auf einmal.“):
+  - **Zuerst wird die Quelle gelöscht**: was auf der Quelle steht, wie im Dialog **Quelle löschen?**
+    ([A3.1.2](#A3.1.2));
+  - **Dann wird die Datei gelöscht**: was auf die Datei verweist; die Quelle „wird im ersten Schritt gelöscht“;
+  - „Die Quelle lässt sich später in der Forschung wiederherstellen, aber ohne die Datei.“, ein einziges Kästchen
+    **Verstanden, die Datei lässt sich in der App nicht zurückholen** und die Schaltfläche **Quelle und Datei
+    löschen**.
+
+  Beides wird auf einmal geschrieben, mit einem Schreiben in der Forschung. Die Meldung „Quelle … und Datei …
+  gelöscht.“ hat kein **Rückgängig**, und die Quelle verschwindet dann aus dem Stammbaum.
+- **Prüft der Code:** hat sich die Liste inzwischen geändert, zeigt der Dialog die neue, nimmt den Haken weg, und das
+  Löschen muss neu bestätigt werden. Ein misslungenes Schreiben löscht nichts („Das Schreiben in die Forschung ist
+  fehlgeschlagen. Nichts wurde gelöscht.“) und erlaubt einen neuen Versuch.
+- **Grenzen:** nur mit einer Forschung, die Stammbaumdateien im Material meldet; ohne sie zeigt das Fenster sie
+  nicht. Löschen wie in [A3.5.16](#A3.5.16): nur mit laufender Brücke und nie in einem schreibgeschützten Stammbaum.
+- **Bedienung:** Fenster **Materialien** → Stammbaumdatei → ⋯ → **Details** / **Endgültig löschen…**; Filter **Art →
+  Stammbaumdateien**. Terminal: `strom input delete I… --retract-sources S…`
+  ([R11.5.6](R11-material-from-the-user.md#R11.5.6)).
+- **Gilt seit:** App 3.31.0 mit Forschung 1.36.0
+
+<!-- zdroj: app:36601947 src/materials-overview.ts (druh tree za bránou material.trees, trees=1; mimo třídění, hromadné akce, bez osoby, počty Projít; podrobnosti nejdou upravit), src/material-delete.ts treeFileSource, retractSources, blockedBy (409 material.source-live) · 2a406d67 dlaždice a řádek (Soubor rodokmenu · velikost, štítek zdroje), filtr Druh, nabídka Podrobnosti + Smazat natrvalo… (list zespodu), Podrobnosti bez náhledu, dialog bez pramene bez Jen skrýt · b40b22e4 dvoudílný dialog · d9af4b16 (ne Ve stromu, ani štítek, ani filtr) · e2e/material-tree-delete.spec.ts (hlavička) · strings.ts materials.treeFile, kindTrees, treeFileOf, treeDetails, del.textTree, noRefsTree, bothTitle, bothIntro, partSource, partFile, laterNoFile, fileSourceSub, understandFile, bothGo, bothChanged, bothNone, bothToast · SPEC.md 1120-app-117-smazani, 1120-app-108-diry · spec 117 §5–§7 -->
 
 <a id="A3.6"></a>
 ## A3.6 Quellen einer Person

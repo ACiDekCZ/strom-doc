@@ -555,3 +555,57 @@ Eine Erzählung wird aus den Angaben für die Familie geschrieben. Was nicht bel
   Paares 1.23.0
 
 <!-- zdroj: research:assets/method/narrate.md (celé; formát od v1.8.0, pozadí od v1.10.0, pár od v1.23.0) · research:src/commands/story.ts --note -->
+
+<a id="R3.10"></a>
+## R3.10 Eine gelöschte Quelle wird zurückgezogen
+
+Eine Quelle, die ein Mensch löscht, entfernt die Forschung nicht, sondern zieht sie zurück (Grund „deleted“): sie
+verschwindet aus dem Stammbaum, den die App bekommt, und `strom source restore` holt sie samt Zitaten zurück.
+
+- **Was das Zurückziehen bewirkt:**
+  - die Zitate der Quelle werden von Angaben, Namen und Familien abgenommen und in der Quelle aufbewahrt. Die Werte
+    der Angaben bleiben;
+  - eine Angabe, deren Status die übrigen Zitate nicht als sicher tragen, wird herabgesetzt. Das Hauptzitat der
+    Quelle verschwindet, und an seiner Stelle wird kein anderes gewählt;
+  - eine Aufgabe, die nur mit dieser Quelle arbeitet, wird aufgegeben; eine Aufgabe mit weiteren Stellen geht ohne
+    sie weiter;
+  - ein Widerspruch, der auf der Quelle steht, bekommt eine Prüfmarke, und sein Status bleibt. Die Marke nimmt
+    `strom conflict keep` ab (die Entscheidung gilt) oder eine neue Entscheidung des Widerspruchs;
+  - der Text einer Erzählung ändert sich nie; die Quelle fällt nur aus ihrer Liste der Quellen heraus.
+- **Wiederherstellen** (`strom source restore`): die Quelle bekommt dieselbe ID zurück, und jedes Zitat kehrt zu der
+  Angabe zurück, bei der es war (bei einer inzwischen zusammengeführten Person zu der, in die sie einging), wenn es
+  die Angabe noch gibt und die Quelle sie nicht schon zitiert. Das Hauptzitat kehrt nur dorthin zurück, wo
+  inzwischen kein anderes zum Hauptzitat wurde; ein herabgesetzter Status nur dorthin, wo ihn inzwischen niemand
+  geändert hat; Aufgaben nur dorthin, wo sie sich nicht geändert haben. Die Prüfmarken verschwinden.
+- **Was die Forschung sagt:**
+  - `strom source show S…` sagt bei einer gelöschten Quelle, wann der Mensch sie gelöscht hat und wo (im Terminal
+    oder in der App Strom), wie viele Zitate in ihr aufbewahrt sind und wie sie sich zurückholen lässt;
+  - `strom source list --retracted` listet nur zurückgezogene Quellen: gelöschte (mit der Zahl der aufbewahrten
+    Zitate und einer Zeile, wie die Quelle zurückzuholen ist), zusammengeführte und zurückgenommene.
+- **Prüft der Code:**
+  - alles oder nichts: eine Quelle, die die Forschung nicht hat oder die schon zurückgezogen ist, und es wird nichts
+    geschrieben; höchstens 50 Quellen auf einmal; das ganze Löschen ist eine Operation der Geschichte;
+  - `--dry-run` (was das Löschen nähme, mit Zahlen) darf jeder ausführen, auch ein Agent;
+  - ohne `--dry-run` sagt der Mensch ja in seinem eigenen Terminal (Enter ist nein), sonst in einem Fenster des
+    Systems; ist niemand zu fragen, endet der Befehl mit Code 4. Ein Agent löscht nie eine Quelle, auch nicht mit
+    der Bestätigung der App; er darf das Löschen nur mit den Zahlen aus `--dry-run` vorschlagen;
+  - `strom source restore` lehnt eine Quelle ab, die nicht zurückgezogen ist (`source.notRetracted`), und auch eine
+    anders zurückgezogene: zusammengeführt oder bei einer Synchronisierung zurückgenommen (`source.notRestorable`);
+  - `strom conflict keep` lehnt einen offenen Widerspruch und einen Widerspruch ohne Marke ab
+    (`conflict.notMarked`). Ein Agent darf dem Menschen die Marke nur mitteilen, er nimmt sie nie ab;
+  - eine gelöschte Quelle und was auf sie verweist, kehren mit einer späteren Datei aus der App oder einem Import
+    nicht mehr zurück.
+- **Grenzen:**
+  - die Sicherung sind die Geschichte der Forschung und die in der Quelle aufbewahrten Zitate; eine volle Sicherung
+    der Forschung wird vor dem Löschen nicht gemacht;
+  - ein Zitat, das sich nicht wiederherstellen lässt (die Angabe ist verschwunden, oder die Quelle zitiert sie
+    schon), wird ausgegeben, und der Rest wird wiederhergestellt.
+- Löschen in der App: [A3.1.2](A3-evidence-in-the-app.md#A3.1.2), Löschen beim Bearbeiten und die Synchronisierung:
+  [S2.6.1](S2-edits-from-the-app.md#S2.6.1), eine Stammbaumdatei zusammen mit der Quelle:
+  [R11.5.6](R11-material-from-the-user.md#R11.5.6).
+- **Bedienung:** Terminal: `strom source retract S… [--dry-run] [--reason "…"] [--sources-from <Datei>]`,
+  `strom source restore S…`, `strom source list --retracted`, `strom conflict keep X…`; App: **Quelle löschen…**
+  über die Brücke ([A3.1.2](A3-evidence-in-the-app.md#A3.1.2)).
+- **Gilt seit:** Forschung 1.36.0
+
+<!-- zdroj: research:e6bbfb40 src/core/sourceretract.ts (hlavička; DELETED, RETRACT_MOST 50, RETRACT_CONFIRM_MS 15 min, REVIEW_RETRACTED, ACTIVE open/doing/parked/waiting) · src/commands/sourceretract.ts source retract (description, agentMay --dry-run, source.agent, source.retract-changed, requireHumanYes), source restore (description, source.notRetracted, source.notRestorable), ui.source.restore.skipped · src/commands/analysis.ts conflict keep (conflict.notMarked, agent jen říká) · src/commands/sources.ts source list --retracted, source show RETRACTED … the person puts it back · src/core/sync.ts withholdDeleted (spec 117 J6) · assets/lang/cs.json ui.consent.retract, ui.source.retract.would · CHANGELOG.cs.md 1.36.0 · spec 117 K1.1–K1.7, J3 (záloha = historie + citace v prameni) -->

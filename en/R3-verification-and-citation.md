@@ -524,3 +524,55 @@ A story is written from the facts, for the family. What has not been proven is n
   story 1.23.0
 
 <!-- zdroj: research:assets/method/narrate.md (celé; formát od v1.8.0, pozadí od v1.10.0, pár od v1.23.0) · research:src/commands/story.ts --note -->
+
+<a id="R3.10"></a>
+## R3.10 A deleted source is retracted
+
+A source that a person deletes is not removed by the research but retracted (reason "deleted"): it disappears from
+the family tree the app gets, and `strom source restore` brings it back together with its citations.
+
+- **What retracting does:**
+  - the source's citations are taken off facts, names and families and kept in the source. The values of the facts
+    stay;
+  - a fact whose status the remaining citations cannot carry as certain is lowered. The source's main citation
+    disappears and no other one is chosen in its place;
+  - a task that works only with this source is given up; a task with other places goes on without it;
+  - a conflict that rests on the source gets a review mark and its status stays. The mark is taken off by
+    `strom conflict keep` (the decision stands) or by a new decision of the conflict;
+  - the text of a story never changes; the source only drops out of its list of sources.
+- **Restoring** (`strom source restore`): the source gets back the same ID and each citation returns to the fact it
+  was at (for a person merged meanwhile, to the one it went into), if the fact still exists and the source does not
+  cite it already. The main citation returns only where no other one has become the main one meanwhile; a lowered
+  status returns only where nobody has changed it meanwhile; tasks only where they have not changed. The review
+  marks disappear.
+- **What the research says:**
+  - `strom source show S…` at a deleted source says when the person deleted it and where (in the terminal or in the
+    Strom app), how many citations are kept in it and how to bring it back;
+  - `strom source list --retracted` lists only retracted sources: deleted ones (with the number of kept citations
+    and a line saying how to bring the source back), merged ones and ones taken back.
+- **Enforced by the code:**
+  - all or nothing: a source the research does not have or that is already retracted, and nothing is written; at
+    most 50 sources at once; the whole deletion is one operation of the history;
+  - `--dry-run` (what the deletion would take, with counts) may be run by anyone, an agent too;
+  - without `--dry-run` the person says yes in their own terminal (Enter says no), else in a window of the system;
+    when there is nobody to ask, the command ends with code 4. An agent never deletes a source, not even with the
+    app's confirmation; it may only propose the deletion with the counts from `--dry-run`;
+  - `strom source restore` refuses a source that is not retracted (`source.notRetracted`), and a source retracted
+    otherwise: merged, or taken back during a sync (`source.notRestorable`);
+  - `strom conflict keep` refuses an open conflict and a conflict without a mark (`conflict.notMarked`). An agent may
+    only tell the person about the mark, it never takes it off;
+  - a deleted source and what refers to it no longer come back with a later file from the app or an import.
+- **Limits:**
+  - the backup is the research's history and the citations kept in the source; no full backup of the research is
+    made before the deletion;
+  - a citation that cannot be restored (the fact disappeared, or the source already cites it) is listed and the rest
+    is restored.
+- Deleting in the app: [A3.1.2](A3-evidence-in-the-app.md#A3.1.2), deleting while editing and the sync:
+  [S2.6.1](S2-edits-from-the-app.md#S2.6.1), a family tree file together with its source:
+  [R11.5.6](R11-material-from-the-user.md#R11.5.6).
+- **Controls:** terminal: `strom source retract S… [--dry-run] [--reason "…"] [--sources-from <file>]`,
+  `strom source restore S…`, `strom source list --retracted`, `strom conflict keep X…`; app: **Delete source…**
+  through the bridge ([A3.1.2](A3-evidence-in-the-app.md#A3.1.2)).
+- **Since:** research 1.36.0
+
+<!-- zdroj: research:e6bbfb40 src/core/sourceretract.ts (hlavička; DELETED, RETRACT_MOST 50, RETRACT_CONFIRM_MS 15 min, REVIEW_RETRACTED, ACTIVE open/doing/parked/waiting) · src/commands/sourceretract.ts source retract (description, agentMay --dry-run, source.agent, source.retract-changed, requireHumanYes), source restore (description, source.notRetracted, source.notRestorable), ui.source.restore.skipped · src/commands/analysis.ts conflict keep (conflict.notMarked, agent jen říká) · src/commands/sources.ts source list --retracted, source show RETRACTED … the person puts it back · src/core/sync.ts withholdDeleted (spec 117 J6) · assets/lang/cs.json ui.consent.retract, ui.source.retract.would · CHANGELOG.cs.md 1.36.0 · spec 117 K1.1–K1.7, J3 (záloha = historie + citace v prameni) -->

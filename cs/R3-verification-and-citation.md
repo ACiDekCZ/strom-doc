@@ -486,3 +486,51 @@ Vyprávění se píše z údajů pro rodinu. Co se nedoložilo, se nedomýšlí.
 - **Platí od:** výzkum 1.0.0; pozadí místa a doby 1.10.0; formát textu 1.8.0; vyprávění páru 1.23.0
 
 <!-- zdroj: research:assets/method/narrate.md (celé; formát od v1.8.0, pozadí od v1.10.0, pár od v1.23.0) · research:src/commands/story.ts --note -->
+
+<a id="R3.10"></a>
+## R3.10 Smazaný pramen se odvolá
+
+Pramen, který člověk smaže, výzkum neodstraní, ale odvolá (důvod „deleted“): zmizí z rodokmenu, který dostává
+aplikace, a `strom source restore` ho vrátí i s citacemi.
+
+- **Co odvolání udělá:**
+  - citace pramene se odeberou z údajů, jmen a rodin a uchovají se v prameni. Hodnoty údajů zůstanou;
+  - údaj, jehož stav zbylé citace neunesou jako jistý, se sníží. Hlavní citace pramene zmizí a jiná se místo ní
+    nevybere;
+  - úkol, který pracuje jen s tímto pramenem, se vzdá; úkol s dalšími místy pokračuje bez něj;
+  - rozpor, který na prameni stojí, dostane značku přezkoumání a jeho stav zůstane. Značku sundá
+    `strom conflict keep` (rozhodnutí platí) nebo nové rozhodnutí rozporu;
+  - text vyprávění se nikdy nemění; pramen jen vypadne z jeho seznamu pramenů.
+- **Obnovení** (`strom source restore`): pramen dostane zpět stejné ID a každá citace se vrátí k údaji, u kterého
+  byla (u osoby sloučené mezitím k té, do které šla), pokud údaj ještě je a pramen už necituje. Hlavní citace se
+  vrátí jen tam, kde se mezitím hlavní nestala jiná; snížený stav se vrátí jen tam, kde ho mezitím nikdo nezměnil;
+  úkoly jen tam, kde se nezměnily. Značky přezkoumání zmizí.
+- **Co výzkum řekne:**
+  - `strom source show S…` u smazaného pramene řekne, kdy ho člověk smazal a kde (v terminálu, nebo v aplikaci
+    Strom), kolik citací je v něm uloženo a jak ho vrátit;
+  - `strom source list --retracted` vypíše jen odvolané prameny: smazané (s počtem uložených citací a řádkem, jak
+    pramen vrátit), sloučené a vzaté zpět.
+- **Hlídá kód:**
+  - všechno, nebo nic: pramen, který výzkum nemá nebo už je odvolaný, a nezapíše se nic; nejvýš 50 pramenů
+    najednou; celé smazání je jedna operace historie;
+  - `--dry-run` (co by smazání vzalo, s počty) smí spustit kdokoli, i agent;
+  - bez `--dry-run` řekne ano člověk ve vlastním terminálu (Enter je ne), jinak v okně systému; když se nemá koho
+    zeptat, příkaz skončí s kódem 4. Agent pramen nikdy nesmaže, ani s potvrzením aplikace; smí smazání jen
+    navrhnout s počty z `--dry-run`;
+  - `strom source restore` odmítne pramen, který odvolaný není (`source.notRetracted`), i pramen odvolaný jinak:
+    sloučený, nebo vzatý zpět při synchronizaci (`source.notRestorable`);
+  - `strom conflict keep` odmítne otevřený rozpor i rozpor bez značky (`conflict.notMarked`). Agent smí člověku
+    značku jen oznámit, nikdy ji nesundá;
+  - smazaný pramen ani to, co na něj odkazuje, se už nevrátí s pozdějším souborem z aplikace ani importem.
+- **Hranice:**
+  - zálohou je historie výzkumu a citace uložené v prameni; plná záloha výzkumu se před smazáním nedělá;
+  - citace, kterou obnovit nejde (údaj zmizel, nebo pramen už cituje), se vypíše a zbytek se obnoví.
+- Smazání v aplikaci: [A3.1.2](A3-evidence-in-the-app.md#A3.1.2), smazání při úpravách a synchronizace:
+  [S2.6.1](S2-edits-from-the-app.md#S2.6.1), soubor rodokmenu spolu s pramenem:
+  [R11.5.6](R11-material-from-the-user.md#R11.5.6).
+- **Ovládání:** terminál: `strom source retract S… [--dry-run] [--reason "…"] [--sources-from <soubor>]`,
+  `strom source restore S…`, `strom source list --retracted`, `strom conflict keep X…`; aplikace: **Smazat
+  pramen…** přes most ([A3.1.2](A3-evidence-in-the-app.md#A3.1.2)).
+- **Platí od:** výzkum 1.36.0
+
+<!-- zdroj: research:e6bbfb40 src/core/sourceretract.ts (hlavička; DELETED, RETRACT_MOST 50, RETRACT_CONFIRM_MS 15 min, REVIEW_RETRACTED, ACTIVE open/doing/parked/waiting) · src/commands/sourceretract.ts source retract (description, agentMay --dry-run, source.agent, source.retract-changed, requireHumanYes), source restore (description, source.notRetracted, source.notRestorable), ui.source.restore.skipped · src/commands/analysis.ts conflict keep (conflict.notMarked, agent jen říká) · src/commands/sources.ts source list --retracted, source show RETRACTED … the person puts it back · src/core/sync.ts withholdDeleted (spec 117 J6) · assets/lang/cs.json ui.consent.retract, ui.source.retract.would · CHANGELOG.cs.md 1.36.0 · spec 117 K1.1–K1.7, J3 (záloha = historie + citace v prameni) -->

@@ -289,6 +289,18 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 - **Čísla:** [R6.7.2](cs/R6-awaiting-action.md#R6.7.2)
 
+<a id="retracted-source"></a>
+### Odvolaný pramen
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Smazat pramen… (app) · `strom source retract` · odvolaný (`strom source list --retracted`) | Pramen, který člověk smazal: výzkum ho neodstraní, ale odvolá. Citace se z údajů odeberou a uchovají v prameni, hodnoty zůstanou; `strom source restore` pramen vrátí i s citacemi. |
+| en | Delete source… (app) · `strom source retract` · retracted (`strom source list --retracted`) | A source the person deleted: the research does not remove it but retracts it. Its citations are taken off the facts and kept in the source, the values stay; `strom source restore` puts the source back with its citations. |
+| de | Quelle löschen… (app) · `strom source retract` · zurückgezogen (`strom source list --retracted`) | Eine Quelle, die der Mensch gelöscht hat: Die Forschung entfernt sie nicht, sondern zieht sie zurück. Die Zitationen werden von den Angaben genommen und in der Quelle aufbewahrt, die Werte bleiben; `strom source restore` bringt die Quelle mit ihren Zitationen zurück. |
+| pl | Usuń źródło… (app) · `strom source retract` · wycofane (`strom source list --retracted`) | Źródło usunięte przez człowieka: badanie go nie usuwa, lecz wycofuje. Cytowania zostają zdjęte z danych i zachowane w źródle, wartości zostają; `strom source restore` przywraca źródło razem z cytowaniami. |
+
+- **Čísla:** [R3.10](cs/R3-verification-and-citation.md#R3.10), A3.1.2, A3.5.17, S2.6.1, S3.4.1, R11.5.6
+
 <a id="site-to-check"></a>
 ### Ověřit web
 
@@ -433,7 +445,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | pl | sprzeczność (`ui.wait.kind.conflict`, `research.conflicts` Sprzeczności) | Zapis, że źródła o jednej danej się nie zgadzają: co najmniej dwa twierdzenia ze źródłami, otwarty do rozstrzygnięcia z uzasadnieniem. |
 
 - **Genealogicky:** konflikt důkazů (conflicting evidence); jeho vyřešení je součástí GPS.
-- **Čísla:** [R5.1](cs/R5-conflicts.md#R5.1), R5.1.1, R5.3, R5.6, S3.4
+- **Čísla:** [R5.1](cs/R5-conflicts.md#R5.1), R5.1.1, R5.3, R5.6, R3.10, S3.4, S3.4.1
 
 <a id="location-conflict"></a>
 ### Rozpor polohy
@@ -1198,7 +1210,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Quellen (app); Quelle zitieren; Belegt | Ein bestimmter Eintrag (Taufe, Heirat, Tod) in der Liste der Quellen des Stammbaums. Angaben und Personen verweisen mit einer Zitation darauf. |
 | pl | Źródła (app); Cytuj źródło; Dokumentuje | Jeden konkretny zapis (chrzest, ślub, zgon) na liście źródeł drzewa. Dane i osoby odwołują się do niego cytowaniem. |
 
-- **Čísla:** [A3.1](cs/A3-evidence-in-the-app.md#A3.1), A3.2, A3.2.1, A3.6
+- **Čísla:** [A3.1](cs/A3-evidence-in-the-app.md#A3.1), A3.1.2, A3.2, A3.2.1, A3.6
 
 <a id="problems-and-leads"></a>
 ### K ověření a stopy
@@ -1330,7 +1342,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Stammlinie | Die männliche Linie vom ältesten bekannten Träger des Namens, bestimmt durch den Stammvater, nicht durch den Nachnamen. Die App berechnet sie aus den Daten des Stammbaums. |
 | pl | Ród | Linia męska od najstarszego znanego nosiciela nazwiska, wyznaczona przez założyciela, nie przez nazwisko. Aplikacja liczy ją z danych drzewa. |
 
-- **Čísla:** [A4.1](cs/A4-surnames-and-families.md#A4.1), A4.1.1, A4.2, A4.4, A6.4.1
+- **Čísla:** [A4.1](cs/A4-surnames-and-families.md#A4.1), A4.1.1, A4.2, A4.4, A6.4.1, A6.4.2
 
 <a id="sort-with-agent"></a>
 ### Roztřídit agentem
@@ -1426,7 +1438,19 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Endgültig löschen… (app) · `strom input delete` | Löscht Dateien der Forschung aus dem Archiv und aus dem Stammbaum; nur ein Mensch, nach einer Liste dessen, was auf die Dateien verweist. In der App lässt es sich nicht rückgängig machen; eine Datei bleibt nur in einer früheren Sicherung. Ausblenden oder Entfernen aus dem Stammbaum löscht keine Datei. |
 | pl | Usuń trwale… (app) · `strom input delete` | Usuwa pliki badania z archiwum i z drzewa; tylko człowiek, po wykazie tego, co odwołuje się do plików. W aplikacji nie da się tego cofnąć; plik zostaje tylko we wcześniejszej kopii zapasowej. Ukrycie ani usunięcie z drzewa pliku nie kasuje. |
 
-- **Čísla:** [A3.5.16](cs/A3-evidence-in-the-app.md#A3.5.16), R11.5, R11.5.4, R11.5.6
+- **Čísla:** [A3.5.16](cs/A3-evidence-in-the-app.md#A3.5.16), A3.5.17, R11.5, R11.5.4, R11.5.6
+
+<a id="family-tree-file"></a>
+### Soubor rodokmenu
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Soubor rodokmenu (app) | Soubor, ze kterého výzkum převzal rodokmen: importovaný GEDCOM nebo soubor JSON aplikace. V Materiálech ho jde prohlédnout a smazat natrvalo; když z něj vznikl platný pramen, jen spolu s ním. |
+| en | Family tree file (app) | A file the research took a family tree from: an imported GEDCOM or the app's JSON file. In Materials it can be looked at and deleted permanently; when a standing source was made of it, only together with that source. |
+| de | Stammbaumdatei (app) | Eine Datei, aus der die Forschung einen Stammbaum übernommen hat: ein importiertes GEDCOM oder eine JSON-Datei der App. In den Materialien lässt sie sich ansehen und endgültig löschen; ist daraus eine gültige Quelle entstanden, nur zusammen mit ihr. |
+| pl | Plik drzewa genealogicznego (app) | Plik, z którego badanie przejęło drzewo: zaimportowany GEDCOM albo plik JSON aplikacji. W Materiałach można go obejrzeć i usunąć trwale; gdy powstało z niego obowiązujące źródło, tylko razem z nim. |
+
+- **Čísla:** [A3.5.17](cs/A3-evidence-in-the-app.md#A3.5.17), R11.3, R11.5.6
 
 <a id="paired-phones"></a>
 ### Spárované telefony
@@ -1656,6 +1680,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [S2.5](cs/S2-edits-from-the-app.md#S2.5)
 
+<a id="fan-appearance"></a>
+### Vzhled vějíře
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Vzhled (app) · Vzhled vějíře · Vzhled plakátu | Styl vějíře (Barevný, Pastelový, Starobylý, Černobílý), barvy rodů, text ve výsečích a portréty. Výchozí v Nastavení, aktuální v panelu do zavření aplikace, plakát jen pro jeden výstup; strom se tím nemění. |
+| en | Appearance (app) · Fan appearance · Poster appearance | The fan's style (Colour, Pastel, Antique, Black and white), family line colours, the text in the sectors and portraits. The default in Settings, the current one in the panel until the app closes, the poster's for one output only; the tree does not change. |
+| de | Darstellung (app) · Darstellung des Fächers · Darstellung des Posters | Stil des Fächers (Farbig, Pastell, Antik, Schwarzweiß), Farben der Stammlinien, Text in den Segmenten und Porträts. Standard in den Einstellungen, aktuell im Bereich bis zum Schließen der App, beim Poster nur für eine Ausgabe; der Stammbaum ändert sich nicht. |
+| pl | Wygląd (app) · Wygląd wachlarza · Wygląd plakatu | Styl wachlarza (Kolorowy, Pastelowy, Dawny, Czarno-biały), kolory rodów, tekst w wycinkach i portrety. Domyślny w Ustawieniach, bieżący w panelu do zamknięcia aplikacji, plakatu tylko dla jednego wydruku; drzewo się nie zmienia. |
+
+- **Čísla:** [A6.4.2](cs/A6-views.md#A6.4.2), A6.4.3
+
 <a id="story-basis"></a>
 ### Z čeho text vychází
 
@@ -1702,7 +1738,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Datei einer Quelle (app) · `uses.of` (Brücke) | Eine Datei, aus der die Forschung eine Quelle gemacht hat. Sie ist über die Quelle eingeordnet: das Sortieren sendet sie nicht, und **Wo verwendet** zeigt die Quellen zuerst. |
 | pl | Plik źródła (app) · `uses.of` (most) | Plik, z którego badanie zrobiło źródło. Jest uporządkowany przez źródło: porządkowanie go nie wyśle, a **Gdzie użyto** pokazuje źródła jako pierwsze. |
 
-- **Čísla:** [A3.5.14](cs/A3-evidence-in-the-app.md#A3.5.14), A3.5.3, A3.5.11, R11.5.4
+- **Čísla:** [A3.5.14](cs/A3-evidence-in-the-app.md#A3.5.14), A3.5.3, A3.5.11, A3.5.17, R11.5.4
 
 <a id="lineage-markers"></a>
 ### Značení linií

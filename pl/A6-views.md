@@ -379,6 +379,69 @@ Dwustronny) ochrowe.
 
 <!-- zdroj: app:src/fan-rod-assign.ts (strany P/M/D: rod středu P, jen potomci D, jinak nejnižší prstenec, shoda P; pořadí počet výsečí › velikost › id; FAN_ROD_MAX_STRONG 10, FAN_ROD_LEGEND_MAIN 20, tier S/T; opakování odstínů ne na sousedních výsečích ani o jednu dál, výpůjčka jiné strany) · src/fan-colors.ts paleta P/M/D světlá, tmavá, tisk, fanRodLegend, fanRodOtherSwatch (K1.7), legendOther, legendNoRod · src/ui/fan-view.ts legenda (FAN_STORAGE_KEYS.legendOtherOpen, náhled jen při (hover: hover)), setRodSelection(…, 'legend'), forgetRodColors · strings.ts fan.legendFatherSide, legendMotherSide, legendDescendants, legendOther, legendNoRod, legendCentre, colorsChipRod, menuHighlightRod, menuUnhighlightRod, posterHighlighted · app:1d9dad0f, 7231dd13 (legenda po stranách), 77282e4e (telefon, tablet), b31c74a9 (štítky se netisknou), defe20a6, 7821ea72 (vějíř mimo štítek), 1ad91795 (paleta P/M/D), a265a3cc (paměť barev při návratu, další okna) · dirigent:spec/114-vejir-barvy-rodu · test/vysledek-1119-app-vejir-rody, vysledek-1119-app-vejir-barvy-vse · CHANGELOG.cs.md 3.30.0 -->
 
+<a id="A6.4.2"></a>
+### A6.4.2 Wygląd wachlarza
+
+Przycisk **Wygląd** na pasku wachlarza (na wąskim pasku tylko ikona) otwiera panel **Wygląd wachlarza**. Zmienia to,
+jak wachlarz wygląda, nie drzewo: działa także w drzewie tylko do odczytu, przy śledzeniu badania i w zapisanej
+stronie.
+
+- **Styl:**
+  - **Kolorowy** (na ekran): domyślny, rysunek jak dotąd;
+  - **Pastelowy** (mniej tuszu);
+  - **Dawny** (na prezent): sepia i pergamin, czcionka Strom Serif;
+  - **Czarno-biały** (drukarka czarno-biała): odcienie szarości i wzory (linie, kratka, kropki, kółka, krzyżyki,
+    kreski), żaden ukośny. Ukośne kreskowanie zostaje tylko powtórzonej osobie (implex).
+
+  Każdy styl ma postać dla jasnego i ciemnego wyglądu oraz dla druku.
+- **Kolory rodów** (tylko dla kolorów **Rody**, inaczej „Tylko dla kolorów według rodów.”):
+  - **Wszystkie rody**: kolory jak w [A6.4.1](#A6.4.1);
+  - **Główne rody**: „10 największych w wachlarzu w kolorze, pozostałe szare.” Ród osoby w centrum jest zawsze wśród
+    głównych (zastępuje dziesiąty). Legenda ma szary wiersz **Pozostałe rody (N)**, podtytuł plakatu „kolory głównych
+    rodów”. Kolory głównych rodów i pamięć kolorów się nie zmieniają.
+- **Tekst w polach:** **Imię i lata** (domyślnie) · **Imię, daty i miejsca** (urodzenie i zgon z datą i miejscem,
+  z miejsca tylko część przed pierwszym przecinkiem, na przykład „* 22.11.1888 Kessenau”; tylko tam, gdzie się
+  zmieści) · **Tylko imiona i nazwiska** (nieco większym pismem). „Gdy tekst się nie mieści, jest skracany.”
+- **Portrety** „W środku, u rodziców i dziadków” (domyślnie wyłączone): okrągły portret w centrum i w pierwszych dwóch
+  pierścieniach. Chroniona osoba żyjąca portretu nie ma. Tekst ma pierwszeństwo: portret, na który nie zostałoby
+  miejsca, się nie rysuje. W trakcie wczytywania panel mówi „Wczytywanie portretów (k / n)”; „Nikt w wachlarzu nie ma
+  jeszcze portretu.”
+- **Trzy poziomy wyglądu:**
+  - **domyślny** wygląd jest w **Ustawienia → Wachlarz** (styl, kolory rodów, tekst, portrety) i trzyma go
+    urządzenie: „Każde uruchomienie zaczyna się od tego wyglądu; w panelu Wygląd można go zmienić tylko na bieżącą
+    pracę.” Wachlarz, który pokazuje domyślny wygląd, od razu przejmuje zmianę w Ustawieniach;
+  - **bieżący** wygląd z panelu obowiązuje do zamknięcia aplikacji; odświeżenie strony go zachowuje;
+  - **wygląd wydruku** (plakat, obraz, druk) nie jest zapamiętywany ([A6.4.3](#A6.4.3)).
+
+  Niższy poziom nigdy nie nadpisuje wyższego, tylko **Zapisz jako domyślny**.
+- **Stopka panelu:** gdy wygląd różni się od domyślnego, „Różni się od domyślnego wyglądu.” z **Zapisz jako
+  domyślny** („Zapisano jako domyślny wygląd wachlarza.”) i **Przywróć domyślny**; przycisk **Wygląd** ma wtedy
+  kropkę. Inaczej „Domyślny wygląd · można zmienić w Ustawieniach”; odnośnik otwiera Ustawienia przy grupie
+  **Wachlarz**.
+- Kolejne okno ([A6.8](#A6.8)) zaczyna od bieżącego wyglądu okna głównego i swoje zmiany trzyma tylko u siebie.
+- **Telefon:** **Kolory** i **Wygląd** są kartami jednego arkusza od dołu; arkusz otwiera się na ostatnio używanej.
+- **Granice:** wachlarz na stronie osoby się nie zmienia (tylko kolory płci).
+- **Obsługa:** pasek wachlarza → **Wygląd**; **Ustawienia → Wachlarz**.
+- **Obowiązuje od:** aplikacja 3.31.0
+
+<!-- zdroj: app:53ad42f1 src/fan-look.ts (hlavička: tři úrovně, ne úprava stromu, další okno; FAN_LOOK_DEFAULT color/all/years/portraits false), storage-keys.ts FAN_STORAGE_KEYS, FAN_LOOK_SESSION_KEY · 2236bbd4 src/fan-rod-assign.ts (rodScope main: 10 největších, rod středu vždy), src/fan-colors.ts FAN_STYLES, FAN_PATTERNS (vl, hl, grid, dot, dot2, ring, plus, dash), palety světlá/tmavá/tisk · c2dc2520 src/fan-labels.ts (content years/places/names, místo před čárkou), src/fan-chart.ts portréty prstence 1–2, chránění žijící, text má přednost · 2e9d8ad0 Nastavení → Vějíř (index.html settings-group-fan, setFanDefaultLook; vějíř s výchozím vzhledem změnu převezme) · e07ed419 (stránka osoby) · strings.ts fan.look*, style*, scope*, content*, portraits*, lookDiffers, lookIsDefault, lookSaveDefault, lookResetDefault, lookSavedToast, defaultsDesc, textNote, legendOtherGrey, posterColorsMain · SPEC.md 1120-app-vejir-vzhled · spec 118 K1.1–K2.6 · CHANGELOG.cs.md 3.31.0 -->
+
+<a id="A6.4.3"></a>
+### A6.4.3 Wygląd plakatu
+
+Okno **Eksport jako plakat** (menu **Eksport plakatu**: SVG, PNG, Druk / PDF) ma przy wachlarzu grupę **Wygląd
+plakatu** z tymi samymi opcjami co panel **Wygląd** ([A6.4.2](#A6.4.2)) i z **Podgląd**.
+
+- Opcje są wstępnie wypełnione wyglądem z ekranu. „Dotyczy tylko tego wydruku; ekran i wygląd domyślny się nie
+  zmieniają.” Zmieniona opcja ma „zmienione tylko dla wydruku”; **Jak na ekranie** przywraca wygląd ekranu.
+- Rody w innym stylu lub kolorystyce zachowują kolory z ekranu.
+- Na telefonie grupa jest zwinięta do jednego wiersza.
+- **Granice:** wygląd wydruku nie jest zapamiętywany; następny eksport zaczyna znowu od wyglądu ekranu.
+- **Obsługa:** **Eksport plakatu** → **Wygląd plakatu**.
+- **Obowiązuje od:** aplikacja 3.31.0
+
+<!-- zdroj: app:2e9d8ad0 src/ui/export-image-ui.ts (PosterLook předvyplněný z obrazovky, náhled toutéž funkcí plakátu, Jako na obrazovce, sloty rodů z obrazovky, telefon jeden řádek), src/fan-look.ts (vzhled výstupu se nepamatuje) · e2e/fan-look-output.spec.ts · strings.ts poster.menu, title, lookTitle, lookPreview, lookOnlyHere, lookAsScreen, lookChanged · SPEC.md 1120-app-vejir-vzhled · spec 118 -->
+
 <a id="A6.5"></a>
 ## A6.5 Mapa
 
