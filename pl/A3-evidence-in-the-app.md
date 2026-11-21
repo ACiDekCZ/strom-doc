@@ -61,6 +61,8 @@ ustawienie **Moje transkrypcje źródeł** określa, jak traktuje ją badanie
   jest pod transkrypcją jako zwinięta sekcja **Tłumaczenie transkrypcji**: w podglądzie źródła i na karcie źródła na
   stronie osoby. Notatka źródła się przez to nie zmienia; edytor notatki pokazuje ją całą. Źródło bez tłumaczenia
   wygląda jak wcześniej.
+- **Od aplikacji 3.25.0:** transkrypcję, którą czytało tylko badanie, można w podglądzie źródła potwierdzić bez zmiany
+  tekstu ([A3.1.3](#A3.1.3)).
 
 <!-- zdroj: app:src/research-sync.ts:357 researchReadSource, :365 isOlderSource, :377 verifiedOffer, :385 unverifiedOlderSources · src/ui/sources.ts:618 renderSourceReading, :658 sourceVerifiedValue, :296 renderSourcesFilter, :377 renderSourceViewer · strings.ts sources.verified/verifiedHintGuide/verifiedHintOlder/verifiedByTree/readBy/userReadingNote/filterUnverified · překlad (od 3.24.0): src/source-translation.ts SOURCE_TRANSLATION_LABELS, splitSourceTranslation · strings.ts viewerTranslation, translation · commit c2942b0 -->
 
@@ -114,6 +116,36 @@ imiona ani tekst opowieści się nie zmieniają, a usunięcie można cofnąć.
 - **Obowiązuje od:** aplikacja 3.31.0 z badaniem 1.36.0
 
 <!-- zdroj: app:d527ffdd src/source-retract.ts sourceRetractOfferedIn (null bez sledování, jen ke čtení, kopie link.copy, bez brány source.retract; off když most neodpovídá), RETRACT stavy · 9d91f035, 4178ef85 src/ui/sources.ts sourcesReadOnly, openSourceRowSheet, source-retract-ui.ts (dialog, toast Vrátit, /source/restore) · src/ui/tree-management.ts isSourcesMenuOffered (zamčený strom jen se sourceRetractOffered) · strings.ts sources.retract.* (trashOff, rowMenu, menuDelete, menuOpen, title, intro, loading, usesTitle, counts, rows, bare, hasOther, lowered, storyKeep, storyCode, conflictReview, conflictDecided, conflictNever, taskState, taskDropped, taskNarrowed, taskDoing, tasksBack, filesStay, images, fileTree, undoLater, noCites, go, changed, expired, busyWait, gone, already, readonly, toast, undo, restored, restoredPart, restoreDown, notRestorable) · SPEC.md 1120-app-117-smazani · research:e6bbfb40 src/core/sourceretract.ts RETRACT_CONFIRM_MS · spec 117 §1–§3, J3 -->
+
+<a id="A3.1.3"></a>
+### A3.1.3 Potwierdzenie transkrypcji badania
+
+Transkrypcję, którą czytało tylko badanie, może użytkownik potwierdzić: sam przeczytał zapis i transkrypcja się
+zgadza. Tekst się nie zmienia; transkrypcja obowiązuje wtedy także jako odczyt użytkownika
+([R3.5.2](R3-verification-and-citation.md#R3.5.2)).
+
+- W podglądzie źródła na końcu wiersza „Transkrypcję odczytało badanie“ jest mały przycisk **Potwierdź
+  transkrypcję** („Transkrypcja zgadza się z zapisem. Będzie obowiązywać także jako odczyt użytkownika.“). Po
+  potwierdzeniu wiersz brzmi „Transkrypcję odczytało badanie, użytkownik potwierdził ją ‹data›“, a przycisk to
+  **Cofnij potwierdzenie** („Transkrypcja znów będzie obowiązywać tylko jako odczyt badania.“).
+- **Granice:**
+  - tylko przy źródle z transkrypcją, którą badanie zna i czytało tylko ono; transkrypcji, którą użytkownik
+    przeczytał inaczej, potwierdzić nie można;
+  - tylko w drzewie połączonym z badaniem, którego most przyjmuje potwierdzenia; nie w Archiwum Strom, w badaniu
+    czekającym na agenta ani w drzewie otwartym tylko do odczytu;
+  - gdy badanie nie działa, przycisk jest w spoczynku ze zdaniem „Potwierdzić można, gdy badanie działa.“ (przy
+    cofnięciu „Cofnąć potwierdzenie można, gdy badanie działa.“);
+  - potwierdzenie zapisuje badanie, nie aplikacja. Odpowiedź widać od razu; do drzewa trafi z następną wersją
+    badania;
+  - badanie może odmówić, a aplikacja powie dlaczego: transkrypcja w międzyczasie się zmieniła („Nowe brzmienie
+    można potwierdzić, gdy dotrze.“), źródło jest scalone, wycofane albo nie ma go już w badaniu, albo badanie
+    zapisała ostatnio nowsza wersja Strom Research;
+  - potwierdzenie nie zmienia stopnia pewności w aplikacji; decyduje badanie.
+- **Obsługa:** aplikacja: **Akcje → Źródła** → źródło → **Potwierdź transkrypcję** / **Cofnij potwierdzenie**;
+  dotyczy także drzewa, które aplikacja śledzi na żywo z badania.
+- **Obowiązuje od:** aplikacja 3.25.0, badanie 1.29.0
+
+<!-- zdroj: app:v3.30.0 src/source-confirm.ts (SOURCES_CONFIRM_FEATURE sources.confirm, SOURCE_CONFIRM_TIMEOUT_MS, sourceConfirmAction, sourceConfirmOffer: agentless, readOnly, rest) · src/ui/source-confirm-ui.ts (prohlížeč pramene, odpověď hned, strom až s další verzí výzkumu _STROM_READ/_CONF/_TXT) · strings.ts sources.readConfirmed, sources.confirm.action/actionTitle/undo/undoTitle/restConfirm/restUndo/changed/merged/retracted/reader/none/archive/locked · CHANGELOG.cs.md 3.25.0 · research:src/core/confirm.ts -->
 
 <a id="A3.2"></a>
 ## A3.2 Cytat: co źródło dokumentuje

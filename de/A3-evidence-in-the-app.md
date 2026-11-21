@@ -67,6 +67,8 @@ Forschung verbundenen Stammbaum bestimmt die Einstellung **Meine Quellenabschrif
   **Übersetzung der Transkription**: im Quellenbetrachter und auf der Karte der Quelle auf der Seite der Person. Die
   Notiz der Quelle ändert sich dadurch nicht; der Editor der Notiz zeigt sie ganz. Eine Quelle ohne Übersetzung sieht
   aus wie früher.
+- **Ab App 3.25.0:** eine Abschrift, die nur die Forschung gelesen hat, lässt sich im Quellenbetrachter bestätigen,
+  ohne den Text zu ändern ([A3.1.3](#A3.1.3)).
 
 <!-- zdroj: app:src/research-sync.ts:357 researchReadSource, :365 isOlderSource, :377 verifiedOffer, :385 unverifiedOlderSources · src/ui/sources.ts:618 renderSourceReading, :658 sourceVerifiedValue, :296 renderSourcesFilter, :377 renderSourceViewer · strings.ts sources.verified/verifiedHintGuide/verifiedHintOlder/verifiedByTree/readBy/userReadingNote/filterUnverified · překlad (od 3.24.0): src/source-translation.ts SOURCE_TRANSLATION_LABELS, splitSourceTranslation · strings.ts viewerTranslation, translation · commit c2942b0 -->
 
@@ -125,6 +127,38 @@ Löschen lässt sich rückgängig machen.
 - **Gilt seit:** App 3.31.0 mit Forschung 1.36.0
 
 <!-- zdroj: app:d527ffdd src/source-retract.ts sourceRetractOfferedIn (null bez sledování, jen ke čtení, kopie link.copy, bez brány source.retract; off když most neodpovídá), RETRACT stavy · 9d91f035, 4178ef85 src/ui/sources.ts sourcesReadOnly, openSourceRowSheet, source-retract-ui.ts (dialog, toast Vrátit, /source/restore) · src/ui/tree-management.ts isSourcesMenuOffered (zamčený strom jen se sourceRetractOffered) · strings.ts sources.retract.* (trashOff, rowMenu, menuDelete, menuOpen, title, intro, loading, usesTitle, counts, rows, bare, hasOther, lowered, storyKeep, storyCode, conflictReview, conflictDecided, conflictNever, taskState, taskDropped, taskNarrowed, taskDoing, tasksBack, filesStay, images, fileTree, undoLater, noCites, go, changed, expired, busyWait, gone, already, readonly, toast, undo, restored, restoredPart, restoreDown, notRestorable) · SPEC.md 1120-app-117-smazani · research:e6bbfb40 src/core/sourceretract.ts RETRACT_CONFIRM_MS · spec 117 §1–§3, J3 -->
+
+<a id="A3.1.3"></a>
+### A3.1.3 Abschrift der Forschung bestätigen
+
+Eine Abschrift, die nur die Forschung gelesen hat, kann der Benutzer bestätigen: er hat den Eintrag selbst gelesen,
+und die Abschrift stimmt. Der Text ändert sich nicht; die Abschrift gilt dann auch als Lesung des Benutzers
+([R3.5.2](R3-verification-and-citation.md#R3.5.2)).
+
+- Im Quellenbetrachter steht am Ende der Zeile „Abschrift von der Forschung gelesen“ eine kleine Schaltfläche
+  **Abschrift bestätigen** („Die Abschrift stimmt mit dem Eintrag überein und gilt dann auch als in der App
+  gelesen.“). Nach der Bestätigung lautet die Zeile „Abschrift von der Forschung gelesen und am ‹Datum› in der App
+  bestätigt“, und die Schaltfläche ist **Bestätigung zurücknehmen** („Die Abschrift gilt wieder nur als von der
+  Forschung gelesen.“).
+- **Grenzen:**
+  - nur bei einer Quelle mit einer Abschrift, die die Forschung kennt und nur sie gelesen hat; eine Abschrift, die
+    der Benutzer anders gelesen hat, lässt sich nicht bestätigen;
+  - nur in einem mit der Forschung verbundenen Stammbaum, deren Brücke Bestätigungen annimmt; nicht in einem
+    Strom-Archiv, in einer Forschung, die auf ihren Agenten wartet, und nicht in einem schreibgeschützt geöffneten
+    Stammbaum;
+  - läuft die Forschung nicht, ist die Schaltfläche in Ruhe mit dem Satz „Bestätigen geht, solange die Forschung
+    läuft.“ (beim Zurücknehmen „Die Bestätigung lässt sich zurücknehmen, solange die Forschung läuft.“);
+  - die Bestätigung schreibt die Forschung, nicht die App. Die Antwort ist sofort zu sehen; in den Stammbaum kommt
+    sie mit der nächsten Version der Forschung;
+  - die Forschung kann ablehnen, und die App sagt warum: die Abschrift hat sich inzwischen geändert („Der neue
+    Wortlaut lässt sich bestätigen, sobald er da ist.“), die Quelle ist zusammengeführt, zurückgezogen oder nicht
+    mehr in der Forschung, oder die Forschung wurde zuletzt von einer neueren Version von Strom Research geschrieben;
+  - eine Bestätigung ändert den Grad der Sicherheit in der App nicht; es entscheidet die Forschung.
+- **Bedienung:** App: **Aktionen → Quellen** → eine Quelle → **Abschrift bestätigen** / **Bestätigung
+  zurücknehmen**; gilt auch in einem Stammbaum, den die App live aus der Forschung verfolgt.
+- **Gilt seit:** App 3.25.0, Forschung 1.29.0
+
+<!-- zdroj: app:v3.30.0 src/source-confirm.ts (SOURCES_CONFIRM_FEATURE sources.confirm, SOURCE_CONFIRM_TIMEOUT_MS, sourceConfirmAction, sourceConfirmOffer: agentless, readOnly, rest) · src/ui/source-confirm-ui.ts (prohlížeč pramene, odpověď hned, strom až s další verzí výzkumu _STROM_READ/_CONF/_TXT) · strings.ts sources.readConfirmed, sources.confirm.action/actionTitle/undo/undoTitle/restConfirm/restUndo/changed/merged/retracted/reader/none/archive/locked · CHANGELOG.cs.md 3.25.0 · research:src/core/confirm.ts -->
 
 <a id="A3.2"></a>
 ## A3.2 Zitation: was eine Quelle belegt

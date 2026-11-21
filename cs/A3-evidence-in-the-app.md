@@ -54,6 +54,8 @@ ukáže jedno ze tří:
 - **Od aplikace 3.24.0:** překlad přepisu, který poslal výzkum ([R3.4](R3-verification-and-citation.md#R3.4)), je
   pod přepisem jako sbalený oddíl **Překlad přepisu**: v prohlížeči pramene i na kartě pramene na stránce osoby.
   Poznámka pramene se tím nemění; editor poznámky ji ukazuje celou. Pramen bez překladu vypadá jako dřív.
+- **Od aplikace 3.25.0:** přepis, který četl jen výzkum, jde v prohlížeči pramene potvrdit bez změny textu
+  ([A3.1.3](#A3.1.3)).
 
 <!-- zdroj: app:src/research-sync.ts:357 researchReadSource, :365 isOlderSource, :377 verifiedOffer, :385 unverifiedOlderSources · src/ui/sources.ts:618 renderSourceReading, :658 sourceVerifiedValue, :296 renderSourcesFilter, :377 renderSourceViewer · strings.ts sources.verified/verifiedHintGuide/verifiedHintOlder/verifiedByTree/readBy/userReadingNote/filterUnverified · překlad (od 3.24.0): src/source-translation.ts SOURCE_TRANSLATION_LABELS, splitSourceTranslation · strings.ts viewerTranslation, translation · commit c2942b0 -->
 
@@ -102,6 +104,33 @@ text vyprávění se nemění a smazání jde vrátit.
 - **Platí od:** aplikace 3.31.0 s výzkumem 1.36.0
 
 <!-- zdroj: app:d527ffdd src/source-retract.ts sourceRetractOfferedIn (null bez sledování, jen ke čtení, kopie link.copy, bez brány source.retract; off když most neodpovídá), RETRACT stavy · 9d91f035, 4178ef85 src/ui/sources.ts sourcesReadOnly, openSourceRowSheet, source-retract-ui.ts (dialog, toast Vrátit, /source/restore) · src/ui/tree-management.ts isSourcesMenuOffered (zamčený strom jen se sourceRetractOffered) · strings.ts sources.retract.* (trashOff, rowMenu, menuDelete, menuOpen, title, intro, loading, usesTitle, counts, rows, bare, hasOther, lowered, storyKeep, storyCode, conflictReview, conflictDecided, conflictNever, taskState, taskDropped, taskNarrowed, taskDoing, tasksBack, filesStay, images, fileTree, undoLater, noCites, go, changed, expired, busyWait, gone, already, readonly, toast, undo, restored, restoredPart, restoreDown, notRestorable) · SPEC.md 1120-app-117-smazani · research:e6bbfb40 src/core/sourceretract.ts RETRACT_CONFIRM_MS · spec 117 §1–§3, J3 -->
+
+<a id="A3.1.3"></a>
+### A3.1.3 Potvrdit přepis výzkumu
+
+Přepis, který četl jen výzkum, může uživatel potvrdit: přečetl zápis sám a přepis souhlasí. Text se nemění; přepis
+pak platí i jako čtení uživatele ([R3.5.2](R3-verification-and-citation.md#R3.5.2)).
+
+- V prohlížeči pramene je na konci řádku „Přepis četl výzkum“ malé tlačítko **Potvrdit přepis** („Přepis souhlasí se
+  záznamem. Bude platit i jako čtení uživatele.“). Po potvrzení řádek zní „Přepis četl výzkum, uživatel ho potvrdil
+  ‹datum›“ a tlačítko je **Zrušit potvrzení** („Přepis bude znovu platit jen jako čtení výzkumu.“).
+- **Hranice:**
+  - jen u pramene s přepisem, který výzkum zná a četl jen on; přepis, který uživatel přečetl jinak, potvrdit nejde;
+  - jen u stromu propojeného s výzkumem, jehož most potvrzení přijímá; ne v Archivu Stromu, u výzkumu, který čeká na
+    agenta, ani u stromu otevřeného jen ke čtení;
+  - když výzkum neběží, tlačítko je v klidu s větou „Potvrdit jde, když výzkum běží.“ (u zrušení „Zrušit potvrzení
+    jde, když výzkum běží.“);
+  - potvrzení zapíše výzkum, ne aplikace. Odpověď je vidět hned; do stromu přijde s další verzí výzkumu;
+  - výzkum může odmítnout a aplikace řekne proč: přepis se mezitím změnil („Potvrdit jde nové znění, až dorazí.“),
+    pramen je sloučený, odvolaný nebo už ve výzkumu není, nebo výzkum naposledy zapsala novější verze Strom
+    Research;
+  - potvrzení nemění stupeň jistoty v aplikaci; rozhoduje výzkum.
+- **Ovládání:** aplikace: **Akce → Prameny** → pramen → **Potvrdit přepis** / **Zrušit potvrzení**; platí i u stromu,
+  který aplikace sleduje živě z výzkumu.
+- **Platí od:** aplikace 3.25.0, výzkum 1.29.0
+
+<!-- zdroj: app:v3.30.0 src/source-confirm.ts (SOURCES_CONFIRM_FEATURE sources.confirm, SOURCE_CONFIRM_TIMEOUT_MS, sourceConfirmAction, sourceConfirmOffer: agentless, readOnly, rest) · src/ui/source-confirm-ui.ts (prohlížeč pramene, odpověď hned, strom až s další verzí výzkumu _STROM_READ/_CONF/_TXT) · strings.ts sources.readConfirmed, sources.confirm.action/actionTitle/undo/undoTitle/restConfirm/restUndo/changed/merged/retracted/reader/none/archive/locked · CHANGELOG.cs.md 3.25.0 · research:src/core/confirm.ts -->
+
 
 <a id="A3.2"></a>
 ## A3.2 Citace: co pramen dokládá

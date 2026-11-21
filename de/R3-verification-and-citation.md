@@ -60,19 +60,27 @@ eines Grades: `event add`, `cite`, `event edit` und auch bei Angaben, die aus de
   2. Mindestens eine Zitation muss aus einer Quelle stammen, die nicht schwach ist. Schwach sind ein Stammbaum
      (`--kind family-tree`), eine Erinnerung (`--kind family-memory`), ein verfasstes Werk (`--form authored`) und ab
      Forschung 1.28.0 ein Register (`--kind index`).
-  3. Belegt braucht zusätzlich unter den Zitationen aus nicht schwachen Quellen mindestens eine mit
-     Primärinformation (`--information primary`): ein Eintrag, zur Zeit des Ereignisses geschrieben von jemandem,
-     der es wusste. Die Information bei der Zitation hat Vorrang vor der Information bei der Quelle.
-- **Nur Methodik:** der Code prüft nicht, dass die Quelle eine Originalquelle ist (`--form original`), dass der Agent
-  sie selbst gelesen hat, dass der Eintrag die Angabe direkt nennt, und auch nicht die blinde zweite Lesung
-  ([R3.5](#R3.5)). Belegt geht darum auch bei einer Kopie mit Primärinformation durch (bei einem Register bis
-  Forschung 1.27.0 ebenfalls).
+  3. Belegt braucht zusätzlich eine Zitation des ursprünglichen Eintrags selbst (ab Forschung 1.29.0, siehe unten).
+  4. Unter den Zitationen des ursprünglichen Eintrags muss mindestens eine mit Primärinformation sein
+     (`--information primary`): ein Eintrag, zur Zeit des Ereignisses geschrieben von jemandem, der es wusste. Die
+     Information bei der Zitation hat Vorrang vor der Information bei der Quelle.
+- **Nur Methodik:** der Code prüft nicht, dass der Agent den Eintrag selbst gelesen hat, dass der Eintrag die Angabe
+  direkt nennt, und auch nicht die blinde zweite Lesung ([R3.5](#R3.5)).
 - **Bedienung:** Terminal: `strom event add P… BIRT --date "…" --cite S… --information primary --status proven`.
   Die Ablehnung nennt den Grund und was stattdessen geht (Hinweis lassen, `--status possible` oder
   `--status probable`).
 - **Gilt seit:** Forschung 1.0.0
+- **Ab Forschung 1.29.0:** der ursprüngliche Eintrag ist eine Quelle der Form Original (`--form original`), die ein
+  Eintrag ist (keine schwache Quelle, also auch kein Register) und nicht zurückgezogen ist. Eine Quelle, die aus der
+  Strom-App kam, zählt nur, wenn sie aus einer Lesung eines Dokuments durch die Leser der Forschung entstand, die der
+  Benutzer in der App in den Stammbaum geschickt hat (**In den Stammbaum vorschlagen…**,
+  [R8.8](R8-reading-scans.md#R8.8)); die Verlässlichkeit **Original** aus der App allein ([R3.2.1](#R3.2.1)) macht
+  keinen ursprünglichen Eintrag. Eine Kopie, ein Register, eine fremde Abschrift oder das Wort der App über eine
+  Quelle geben höchstens Wahrscheinlich; die Ablehnung hat den Code `status.original`. Bis Forschung 1.28.0 ging
+  Belegt bei jeder nicht schwachen Quelle mit Primärinformation durch, auch bei einer Kopie; solche Angaben älterer
+  Forschungen bringt die Korrektur [R3.2.2](#R3.2.2) einmal in Ordnung.
 
-<!-- zdroj: research:src/core/evidence.ts:27 isWeak, :32 informationOf, :55-68 checkStatus · src/core/actions.ts:196-209 makeEvent, :648, :906 · src/commands/people.ts:745 · od v1.28.0 evidence.ts isWeak (kind index), checkStatus "… or an index cannot make a fact" -->
+<!-- zdroj: research:src/core/evidence.ts:27 isWeak, :32 informationOf, :55-68 checkStatus · src/core/actions.ts:196-209 makeEvent, :648, :906 · src/commands/people.ts:745 · od v1.28.0 evidence.ts isWeak (kind index), checkStatus "… or an index cannot make a fact" · 1.29.0: research:v1.35.0 src/core/evidence.ts isOriginalHere, provesIt, checkStatus (code status.original) · src/core/model.ts Source.reading · CHANGELOG.cs.md 1.29.0 -->
 
 <a id="R3.2.1"></a>
 ### R3.2.1 Quelle: Form und Information
@@ -97,6 +105,31 @@ eines Grades: `event add`, `cite`, `event edit` und auch bei Angaben, die aus de
   die App nicht.
 
 <!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 · 3.27.0: research:ff760309 src/core/sync.ts:1095 (zdroj aplikace a.quality), :963 citedDetails (s.quay z první citace), :4361 QUAY_EVIDENCE · app:5721b016 export QUAY citace · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (round trip QUAY 2/3, sync --dry-run nic nového) -->
+
+<a id="R3.2.2"></a>
+### R3.2.2 Belegt ohne ursprünglichen Eintrag in älteren Forschungen
+
+Eine Forschung, die vor Version 1.29.0 angelegt wurde, kann belegte Angaben ohne Zitation des ursprünglichen
+Eintrags haben ([R3.2](#R3.2)). Eine Korrektur bringt sie einmal nach Regeln in Ordnung; sie kostet nichts und lässt
+sich zurücknehmen.
+
+- **Prüft der Code:**
+  - die Korrektur läuft einmal von selbst, beim ersten Start der neuen Version nach der Sicherung der Forschung;
+  - eine Angabe ohne Zitation des ursprünglichen Eintrags, die ein Agent oder ein Sammelschreiben (ein Import, die
+    Umwandlung einer alten Forschung, ein Stapel) als Belegt eingetragen hat, wird Wahrscheinlich; Möglich, wenn sie
+    keine nicht schwache Quelle stützt. Der Grund steht in der Geschichte der Angabe;
+  - eine Angabe, die ein Mensch als Belegt eingetragen hat, bleibt, wie sie ist, und wartet auf seine Prüfung: in
+    Was wartet als ein Eintrag mit Anzahl in der Gruppe **Sicherheit zu prüfen** („N Angaben vom Benutzer ohne
+    Originaleintrag belegt: belegt lassen oder wahrscheinlich machen?“). Eine Angabe, die der Mensch nach der
+    Prüfung belassen hat, wird nicht noch einmal angeboten;
+  - es entscheidet nur der Mensch in seinem Terminal, nie ein Agent;
+  - eine Angabe mit Zitation des ursprünglichen Eintrags bleibt.
+- **Bedienung:** Terminal: Was wartet → **Belegt lassen** / **Wahrscheinlich machen**;
+  `strom fixes review proven-originals keep|lower [E…]` (ohne Nummern der Angaben alle wartenden), `strom fixes show
+  proven-originals`, `strom fixes undo proven-originals`.
+- **Gilt seit:** Forschung 1.29.0
+
+<!-- zdroj: research:v1.35.0 src/core/provenfix.ts (PROVEN_SINCE 1.29.0, PROVEN_SETTLED, PROVEN_FIX_FILE quality/proven.json, provenFixes: by user a ne bulkWrites → left, jinak probable/possible podle isWeak) · src/commands/fixchecks.ts PROVEN_ORIGINALS (paid false, "Applied by itself once, at the first start of this strom after its backup") · src/commands/fixes.ts review proven-originals keep|lower · assets/lang/cs.json wait.group.proven, ui.waiting.proven, ui.wait.proven.keep/lower, ui.fixes.proven-originals.* · CHANGELOG.cs.md 1.29.0 -->
 
 <a id="R3.3"></a>
 ## R3.3 Quelle oder Hinweis
@@ -402,6 +435,43 @@ Wie sie damit rechnet, bestimmt eine Einstellung des Stammbaums in der App.
 - **Gilt seit:** Forschung 1.12.0, App 3.9.0; Lesung eines Dokuments durch Leser der Forschung 1.18.0
 
 <!-- zdroj: research:assets/method/verify.md:19-24 · src/core/sync.ts:220, :824, :3367 readsFor, :3870 reading, :3992 · src/core/readsync.ts:190 readingGrade · cs.json sync.verify.*, read.note.* · app:strings.ts treeSettings.transcripts/guide/evidence/evidenceDesc/notRetroactive, sources.verified -->
+
+<a id="R3.5.2"></a>
+### R3.5.2 Wann der Benutzer eine Quelle gelesen hat
+
+Bei jeder Quelle hält die Forschung fest, wer sie gelesen hat: die Forschung (das Modell einer Sitzung, die Leser
+eines Dokuments), der Benutzer oder beide. Leser ist der Benutzer nur aus einer wirklichen Lesung. Eine Quelle, die
+der Benutzer gelesen hat, bietet die Forschung nicht erneut zum Lesen an.
+
+- **Prüft der Code:** eine Lesung des Benutzers ist nur:
+  - eine Abschrift, die der Benutzer in der App geschrieben oder bei der er **Abschrift geprüft** angekreuzt hat
+    ([R3.5.1](#R3.5.1));
+  - eine Lesung eines Dokuments, die der Benutzer in der App in den Stammbaum geschickt hat
+    ([R8.8](R8-reading-scans.md#R8.8));
+  - eine Abschrift der Forschung, die der Benutzer in der App bestätigt hat (**Abschrift bestätigen**,
+    [A3.1.3](A3-evidence-in-the-app.md#A3.1.3));
+  - eine Abschrift, die ein Mensch in seinem eigenen Terminal von Hand eingegeben hat.
+- **Grenzen:**
+  - ein Import, die Umwandlung einer alten Forschung, ein Stapel, ein Skript oder ein Agent, den strom nicht
+    erkennt, machen den Benutzer nie zum Leser, auch wenn sie im Namen des Benutzers schreiben. GEDCOM aus einem
+    anderen Programm (`strom import`) gibt die Angaben als Hinweis;
+  - eine Bestätigung gilt für den Wortlaut der Abschrift, den der Benutzer gesehen hat. Ändert die Forschung die
+    Abschrift danach, zählt die Bestätigung nicht mehr (sie bleibt in der Geschichte), und der neue Wortlaut lässt
+    sich bestätigen;
+  - eine Bestätigung allein ändert den Grad keiner Angabe. Ist die Quelle ein ursprünglicher Eintrag mit
+    Primärinformation, kann eine Angabe darauf Belegt sein ([R3.2](#R3.2)); sonst höchstens Wahrscheinlich;
+  - bestätigen und zurücknehmen geht nur aus der App, durch einen Menschen; ein Agent darf es nicht. Nicht möglich
+    ist es in einem Strom-Archiv, bei einer zusammengeführten oder zurückgezogenen Quelle, ohne Abschrift und bei
+    einer Abschrift, die die Forschung nicht gelesen oder die der Benutzer schon gelesen hat.
+- **Korrektur älterer Forschungen:** bis Forschung 1.28.0 zählte jedes Schreiben im Namen des Benutzers als seine
+  Lesung. Einmal, beim ersten Start der neuen Version nach der Sicherung: eine Quelle, die nur ein Sammellauf
+  geschrieben hat (ein Import, eine Umwandlung, ein Stapel), verliert die Lesung des Benutzers; eine Quelle, die ein
+  Mensch von Hand geschrieben hat, behält sie. Sie kostet nichts; `strom fixes undo readers` gibt die Lesung zurück.
+- **Bedienung:** App: **Abschrift bestätigen** / **Bestätigung zurücknehmen** unter der Abschrift der Quelle
+  ([A3.1.3](A3-evidence-in-the-app.md#A3.1.3)); Terminal: `strom fixes show readers`, `strom fixes undo readers`.
+- **Gilt seit:** Forschung 1.29.0, App 3.25.0
+
+<!-- zdroj: research:v1.35.0 src/core/readers.ts (komentář: čtení uživatele jen app.read, Source.reading, POST /sources/confirm, read.user z terminálu; userReading jen pro aktuální transcriptMark) · src/core/readerfix.ts (READERS_SINCE 1.29.0, bulkWrites, how "earlier", undo) · src/commands/fixchecks.ts READERS (paid false) · src/core/confirm.ts confirmCheck (confirm.archive/none/merged/retracted/reader/changed), shrnutí „original … primary may make a fact proven; of anything else at most probable“ · src/commands/sources.ts source confirm (STROM_FOR_APP, ne agent: confirm.app) · src/core/import.ts (status lead) · CHANGELOG.cs.md 1.29.0 · app:v3.30.0 src/source-confirm.ts · CHANGELOG 3.25.0 -->
 
 <a id="R3.6"></a>
 ## R3.6 Negative Suche

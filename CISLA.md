@@ -44,6 +44,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R3.1.1 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Výchozí stupeň a citace, která ho zvedne | The default degree and the citation that raises it | Standardgrad und die Zitation, die ihn hebt | Stopień domyślny i cytat, który go podnosi |
 | R3.2 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Co kód pustí jako Pravděpodobné a Doložené | What the code lets through as Probable and Proven | Was der Code als Wahrscheinlich und Belegt durchlässt | Co kod przepuszcza jako Prawdopodobne i Udokumentowane |
 | R3.2.1 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Pramen: forma a informace | A source: form and information | Quelle: Form und Information | Źródło: forma i informacja |
+| R3.2.2 | R3-verification-and-citation.md | výzkum 1.29.0 | platí | Doložené bez původního záznamu ve starších výzkumech | Proven without the original record in older researches | Belegt ohne ursprünglichen Eintrag in älteren Forschungen | Udokumentowane bez aktu oryginalnego w starszych badaniach |
 | R3.3 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Pramen, nebo vodítko | A source, or a lead | Quelle oder Hinweis | Źródło czy wskazówka |
 | R3.4 | R3-verification-and-citation.md | výzkum 1.1.0 | platí | Citace: výřez a přepis | A citation: clip and transcription | Zitation: Ausschnitt und Abschrift | Cytat: wycinek i transkrypcja |
 | R3.4.1 | R3-verification-and-citation.md | výzkum 1.29.0, aplikace 3.25.0 | platí | Přepis člověka mění jen člověk | Only a person changes a person's transcription | Die Abschrift eines Menschen ändert nur der Mensch | Transkrypcję człowieka zmienia tylko człowiek |
@@ -54,6 +55,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R3.4.6 | R3-verification-and-citation.md | výzkum 1.34.0 | koncept | Citace odebraná uživatelem | A citation the user removed | Vom Benutzer entferntes Zitat | Cytat usunięty przez użytkownika |
 | R3.5 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Slepé druhé čtení | A blind second reading | Blinde zweite Lesung | Ślepy drugi odczyt |
 | R3.5.1 | R3-verification-and-citation.md | výzkum 1.12.0, aplikace 3.9.0 | platí | Přepisy a čtení z aplikace | Transcriptions and readings from the app | Abschriften und Lesungen aus der App | Transkrypcje i odczyty z aplikacji |
+| R3.5.2 | R3-verification-and-citation.md | výzkum 1.29.0, aplikace 3.25.0 | platí | Kdy pramen přečetl uživatel | When the user has read a source | Wann der Benutzer eine Quelle gelesen hat | Kiedy źródło przeczytał użytkownik |
 | R3.6 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Negativní hledání | A negative search | Negative Suche | Negatywne wyszukiwanie |
 | R3.7 | R3-verification-and-citation.md | výzkum 1.0.0 | platí | Kdy se agent ptá člověka | When the agent asks a person | Wann der Agent den Menschen fragt | Kiedy agent pyta człowieka |
 | R3.8 | R3-verification-and-citation.md | aplikace 3.5.0 | platí | Jak doložení ukazuje aplikace | How the app shows evidence | Wie die App Belege zeigt | Jak udokumentowanie pokazuje aplikacja |
@@ -153,6 +155,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R8.8.2 | R8-reading-scans.md | výzkum 1.29.0, aplikace 3.25.0 | platí | Přečíst znovu pramen z originálu | Reading a source again from its original | Eine Quelle erneut aus dem Original lesen | Ponowny odczyt źródła z oryginału |
 | R8.8.3 | R8-reading-scans.md | výzkum 1.29.0, aplikace 3.25.0 | platí | Úkol z nového čtení | Task from a new reading | Aufgabe aus einer neuen Lesung | Zadanie z nowego odczytu |
 | R8.9 | R8-reading-scans.md | výzkum 1.0.0 | koncept | Kdo čte: přehled a příklad jednoho zápisu | Who reads: an overview and an example of one entry | Wer liest: Überblick und Beispiel eines Eintrags | Kto czyta: przegląd i przykład jednego wpisu |
+| R8.10 | R8-reading-scans.md | výzkum 1.0.0 | platí | Jak model vidí sken: zvětšení, ostřejší výřez a dva čtenáři | How a model sees a scan: enlarging, a sharper crop and two readers | Wie ein Modell einen Scan sieht: Vergrößerung, schärferer Ausschnitt und zwei Leser | Jak model widzi skan: powiększenie, ostrzejszy wycinek i dwóch czytelników |
 | R9 | R9-archives.md | výzkum 1.14.0 | koncept | Archivy: co smí agent a co udělá člověk | Archives: what the agent may do and what a person does | Archive: was der Agent darf und was der Mensch tut | Archiwa: co wolno agentowi, a co robi człowiek |
 | R9.1 | R9-archives.md | výzkum 1.14.0 | koncept | Druhy archivů | Kinds of archives | Arten von Archiven | Rodzaje archiwów |
 | R9.1.1 | R9-archives.md | výzkum 1.14.0 | koncept | Web, který výzkum nezná | A site the research does not know | Eine Website, die die Forschung nicht kennt | Strona, której badanie nie zna |
@@ -258,6 +261,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A3.1 | A3-evidence-in-the-app.md | aplikace 1.4.0 | platí | Pramen je jeden zápis | A source is one entry | Eine Quelle ist ein Eintrag | Źródło to jeden zapis |
 | A3.1.1 | A3-evidence-in-the-app.md | aplikace 3.9.0 | platí | Přepis a Přepis ověřen | Transcript and Transcription verified | Transkription und Abschrift geprüft | Transkrypcja i Transkrypcja zweryfikowana |
 | A3.1.2 | A3-evidence-in-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Smazat pramen u sledovaného stromu | Delete source in a followed tree | Quelle löschen im verfolgten Stammbaum | Usuń źródło w śledzonym drzewie |
+| A3.1.3 | A3-evidence-in-the-app.md | aplikace 3.25.0, výzkum 1.29.0 | platí | Potvrdit přepis výzkumu | Confirm the research's transcription | Abschrift der Forschung bestätigen | Potwierdzenie transkrypcji badania |
 | A3.2 | A3-evidence-in-the-app.md | aplikace 1.4.0 | platí | Citace: co pramen dokládá | Citation: what a source supports | Zitation: was eine Quelle belegt | Cytat: co źródło dokumentuje |
 | A3.2.1 | A3-evidence-in-the-app.md | aplikace 3.1.0 | platí | Výběr pramene | Source picker | Auswahl der Quelle | Wybór źródła |
 | A3.2.2 | A3-evidence-in-the-app.md | aplikace 3.29.0 | koncept | Pořadí citací a hlavní citace | The order of citations and the main citation | Reihenfolge der Zitate und Hauptzitat | Kolejność cytatów i cytat główny |

@@ -58,17 +58,25 @@ A degree must not claim more than the fact's citations give. The code checks thi
   2. At least one citation must be from a source that is not weak. Weak are a family tree (`--kind family-tree`),
      a memory (`--kind family-memory`), an authored work (`--form authored`) and from research 1.28.0 an index
      (`--kind index`).
-  3. Proven additionally needs, among the citations from sources that are not weak, at least one with primary
-     information (`--information primary`): a record written at the time of the event by someone who knew. The
-     information at a citation takes precedence over the information at the source.
-- **Method only:** the code does not check that the source is an original (`--form original`), that the agent read it
-  itself, that the record states the fact directly, or a blind second reading ([R3.5](#R3.5)). Proven therefore also
-  passes for a copy with primary information (for an index too up to research 1.27.0).
+  3. Proven additionally needs a citation of the original record itself (from research 1.29.0, see below).
+  4. Among the citations of the original record at least one must have primary information
+     (`--information primary`): a record written at the time of the event by someone who knew. The information at a
+     citation takes precedence over the information at the source.
+- **Method only:** the code does not check that the agent read the record itself, that the record states the fact
+  directly, or a blind second reading ([R3.5](#R3.5)).
 - **Controls:** terminal: `strom event add P… BIRT --date "…" --cite S… --information primary --status proven`.
   A refusal gives the reason and what to do instead (leave it a Lead, `--status possible`, or `--status probable`).
 - **Since:** research 1.0.0
+- **From research 1.29.0:** the original record is a source of the form original (`--form original`) that is
+  a record (not a weak source, so not an index either) and is not retracted. A source that came from the Strom app
+  counts only when it arose from a reading of a document by the research's readers that the user sent into the tree
+  in the app (**Suggest for the tree…**, [R8.8](R8-reading-scans.md#R8.8)); the reliability **Original** from the app
+  alone ([R3.2.1](#R3.2.1)) does not make an original record. A copy, an index, someone else's transcript or the
+  app's word about a source give at most Probable; the refusal has the code `status.original`. Up to research 1.28.0
+  Proven passed for any source that is not weak with primary information, a copy too; such facts of older researches
+  are set right once by the fix [R3.2.2](#R3.2.2).
 
-<!-- zdroj: research:src/core/evidence.ts:27 isWeak, :32 informationOf, :55-68 checkStatus · src/core/actions.ts:196-209 makeEvent, :648, :906 · src/commands/people.ts:745 · od v1.28.0 evidence.ts isWeak (kind index), checkStatus "… or an index cannot make a fact" -->
+<!-- zdroj: research:src/core/evidence.ts:27 isWeak, :32 informationOf, :55-68 checkStatus · src/core/actions.ts:196-209 makeEvent, :648, :906 · src/commands/people.ts:745 · od v1.28.0 evidence.ts isWeak (kind index), checkStatus "… or an index cannot make a fact" · 1.29.0: research:v1.35.0 src/core/evidence.ts isOriginalHere, provesIt, checkStatus (code status.original) · src/core/model.ts Source.reading · CHANGELOG.cs.md 1.29.0 -->
 
 <a id="R3.2.1"></a>
 ### R3.2.1 A source: form and information
@@ -93,6 +101,29 @@ A degree must not claim more than the fact's citations give. The code checks thi
   `QUAY` of a citation the research wrote itself does not change on the way through the app.
 
 <!-- zdroj: research:src/commands/sources.ts:197-198, :221, :837 · src/core/evidence.ts:40 quay · src/core/sync.ts:4660 QUAY_EVIDENCE · assets/method/recording.md:38-46 · app:strings.ts sources.quality1-3, src/ui/sources.ts:76 · 3.27.0: research:ff760309 src/core/sync.ts:1095 (zdroj aplikace a.quality), :963 citedDetails (s.quay z první citace), :4361 QUAY_EVIDENCE · app:5721b016 export QUAY citace · dirigent:test/vysledek-1111-app-spolehlivost-citace.md (round trip QUAY 2/3, sync --dry-run nic nového) -->
+
+<a id="R3.2.2"></a>
+### R3.2.2 Proven without the original record in older researches
+
+A research created before version 1.29.0 may have Proven facts without a citation of the original record
+([R3.2](#R3.2)). A fix sets them right once by rules; it costs nothing and can be undone.
+
+- **Enforced by the code:**
+  - the fix runs by itself once, at the first start of the new version after the research's backup;
+  - a fact without a citation of the original record that an agent, or a bulk write (an import, the conversion of an
+    old research, a batch), entered as Proven becomes Probable; Possible when no source that is not weak backs it.
+    The reason is in the fact's history;
+  - a fact a person entered as Proven stays as it is and waits for their review: in What waits as one item with
+    a count in the group **Certainty to look at** ("N facts made proven by the user without the original record: keep
+    proven, or make probable?"). A fact the person kept after the review is not offered again;
+  - only the person decides, in their own terminal, never an agent;
+  - a fact with a citation of the original record stays.
+- **Controls:** terminal: What waits → **Keep them proven** / **Make them probable**;
+  `strom fixes review proven-originals keep|lower [E…]` (without fact IDs all that wait), `strom fixes show
+  proven-originals`, `strom fixes undo proven-originals`.
+- **Since:** research 1.29.0
+
+<!-- zdroj: research:v1.35.0 src/core/provenfix.ts (PROVEN_SINCE 1.29.0, PROVEN_SETTLED, PROVEN_FIX_FILE quality/proven.json, provenFixes: by user a ne bulkWrites → left, jinak probable/possible podle isWeak) · src/commands/fixchecks.ts PROVEN_ORIGINALS (paid false, "Applied by itself once, at the first start of this strom after its backup") · src/commands/fixes.ts review proven-originals keep|lower · assets/lang/cs.json wait.group.proven, ui.waiting.proven, ui.wait.proven.keep/lower, ui.fixes.proven-originals.* · CHANGELOG.cs.md 1.29.0 -->
 
 <a id="R3.3"></a>
 ## R3.3 A source, or a lead
@@ -378,6 +409,41 @@ overwrite it. How the research counts it is set by the tree setting in the app.
 - **Since:** research 1.12.0, app 3.9.0; a document read by the research's readers 1.18.0
 
 <!-- zdroj: research:assets/method/verify.md:19-24 · src/core/sync.ts:220, :824, :3367 readsFor, :3870 reading, :3992 · src/core/readsync.ts:190 readingGrade · cs.json sync.verify.*, read.note.* · app:strings.ts treeSettings.transcripts/guide/evidence/evidenceDesc/notRetroactive, sources.verified -->
+
+<a id="R3.5.2"></a>
+### R3.5.2 When the user has read a source
+
+For each source the research keeps who read it: the research (a session's model, the readers of a document), the
+user, or both. The user is a reader only from a real reading. A source the user has read is not offered by the
+research for reading again.
+
+- **Enforced by the code:** the user's reading is only:
+  - a transcription the user wrote in the app or ticked **Transcription verified** at ([R3.5.1](#R3.5.1));
+  - a reading of a document the user sent into the tree in the app ([R8.8](R8-reading-scans.md#R8.8));
+  - a research transcription the user confirmed in the app (**Confirm transcription**,
+    [A3.1.3](A3-evidence-in-the-app.md#A3.1.3));
+  - a transcription a person typed by hand in their own terminal.
+- **Limits:**
+  - an import, the conversion of an old research, a batch, a script or an agent strom does not recognise never make
+    the user a reader, even when they write in the user's name. GEDCOM from another program (`strom import`) gives
+    the facts as Lead;
+  - a confirmation holds for the wording of the transcription the user saw. When the research changes the
+    transcription afterwards, the confirmation no longer counts (it stays in the history) and the new wording can be
+    confirmed;
+  - a confirmation by itself changes the degree of no fact. If the source is an original record with primary
+    information, a fact on it can be Proven ([R3.2](#R3.2)); otherwise at most Probable;
+  - confirming and taking it back is possible only from the app, by a person; an agent may not. Confirming is not
+    possible in a Strom archive, for a merged or retracted source, without a transcription, or for a transcription
+    the research did not read or the user has already read.
+- **Fix of older researches:** up to research 1.28.0 every write in the user's name counted as the user's reading.
+  Once, at the first start of the new version after the backup: a source only a bulk run wrote (an import,
+  a conversion, a batch) loses the user's reading; a source a person wrote by hand keeps it. It costs nothing;
+  `strom fixes undo readers` gives the reading back.
+- **Controls:** app: **Confirm transcription** / **Undo confirmation** under the source's transcription
+  ([A3.1.3](A3-evidence-in-the-app.md#A3.1.3)); terminal: `strom fixes show readers`, `strom fixes undo readers`.
+- **Since:** research 1.29.0, app 3.25.0
+
+<!-- zdroj: research:v1.35.0 src/core/readers.ts (komentář: čtení uživatele jen app.read, Source.reading, POST /sources/confirm, read.user z terminálu; userReading jen pro aktuální transcriptMark) · src/core/readerfix.ts (READERS_SINCE 1.29.0, bulkWrites, how "earlier", undo) · src/commands/fixchecks.ts READERS (paid false) · src/core/confirm.ts confirmCheck (confirm.archive/none/merged/retracted/reader/changed), shrnutí „original … primary may make a fact proven; of anything else at most probable“ · src/commands/sources.ts source confirm (STROM_FOR_APP, ne agent: confirm.app) · src/core/import.ts (status lead) · CHANGELOG.cs.md 1.29.0 · app:v3.30.0 src/source-confirm.ts · CHANGELOG 3.25.0 -->
 
 <a id="R3.6"></a>
 ## R3.6 A negative search

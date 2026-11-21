@@ -60,6 +60,8 @@ setting **My source transcriptions** decides how the research takes it
   ([R3.4](R3-verification-and-citation.md#R3.4)) is under the transcription as a folded section **Translation of the
   transcript**: in the source viewer and on the source card on a person's page. The note of the source does not
   change; the note editor shows it whole. A source without a translation looks as before.
+- **From app 3.25.0:** a transcript only the research read can be confirmed in the source viewer without changing the
+  text ([A3.1.3](#A3.1.3)).
 
 <!-- zdroj: app:src/research-sync.ts:357 researchReadSource, :365 isOlderSource, :377 verifiedOffer, :385 unverifiedOlderSources · src/ui/sources.ts:618 renderSourceReading, :658 sourceVerifiedValue, :296 renderSourcesFilter, :377 renderSourceViewer · strings.ts sources.verified/verifiedHintGuide/verifiedHintOlder/verifiedByTree/readBy/userReadingNote/filterUnverified · překlad (od 3.24.0): src/source-translation.ts SOURCE_TRANSLATION_LABELS, splitSourceTranslation · strings.ts viewerTranslation, translation · commit c2942b0 -->
 
@@ -115,6 +117,36 @@ dates, places, names and the text of stories do not change, and the deletion can
 - **Since:** app 3.31.0 with research 1.36.0
 
 <!-- zdroj: app:d527ffdd src/source-retract.ts sourceRetractOfferedIn (null bez sledování, jen ke čtení, kopie link.copy, bez brány source.retract; off když most neodpovídá), RETRACT stavy · 9d91f035, 4178ef85 src/ui/sources.ts sourcesReadOnly, openSourceRowSheet, source-retract-ui.ts (dialog, toast Vrátit, /source/restore) · src/ui/tree-management.ts isSourcesMenuOffered (zamčený strom jen se sourceRetractOffered) · strings.ts sources.retract.* (trashOff, rowMenu, menuDelete, menuOpen, title, intro, loading, usesTitle, counts, rows, bare, hasOther, lowered, storyKeep, storyCode, conflictReview, conflictDecided, conflictNever, taskState, taskDropped, taskNarrowed, taskDoing, tasksBack, filesStay, images, fileTree, undoLater, noCites, go, changed, expired, busyWait, gone, already, readonly, toast, undo, restored, restoredPart, restoreDown, notRestorable) · SPEC.md 1120-app-117-smazani · research:e6bbfb40 src/core/sourceretract.ts RETRACT_CONFIRM_MS · spec 117 §1–§3, J3 -->
+
+<a id="A3.1.3"></a>
+### A3.1.3 Confirm the research's transcription
+
+A transcription only the research read can be confirmed by the user: they read the entry themselves and the
+transcription matches. The text does not change; the transcription then also counts as the user's reading
+([R3.5.2](R3-verification-and-citation.md#R3.5.2)).
+
+- In the source viewer, at the end of the line "Transcription read by the research", is a small button **Confirm
+  transcription** ("The transcription matches the record. It will also count as read in the app."). After
+  confirming, the line reads "Transcription read by the research and confirmed in the app on ‹date›" and the button
+  is **Undo confirmation** ("The transcription counts again as read by the research only.").
+- **Limits:**
+  - only for a source with a transcription the research knows and only the research read; a transcription the user
+    read in another way cannot be confirmed;
+  - only in a tree connected to the research whose bridge takes confirmations; not in a Strom archive, in a research
+    waiting for its agent, or in a tree opened read-only;
+  - when the research is not running, the button is at rest with the sentence "Confirming is possible while the
+    research is running." (for undoing "Undoing the confirmation is possible while the research is running.");
+  - the research writes the confirmation, not the app. The answer is shown at once; it comes into the tree with the
+    research's next version;
+  - the research may refuse and the app says why: the transcription changed meanwhile ("The new wording can be
+    confirmed once it arrives."), the source is merged, withdrawn or no longer in the research, or the research was
+    last written by a newer version of Strom Research;
+  - a confirmation does not change the level of certainty in the app; the research decides.
+- **Controls:** app: **Actions → Sources** → a source → **Confirm transcription** / **Undo confirmation**; also in a
+  tree the app follows live from the research.
+- **Since:** app 3.25.0, research 1.29.0
+
+<!-- zdroj: app:v3.30.0 src/source-confirm.ts (SOURCES_CONFIRM_FEATURE sources.confirm, SOURCE_CONFIRM_TIMEOUT_MS, sourceConfirmAction, sourceConfirmOffer: agentless, readOnly, rest) · src/ui/source-confirm-ui.ts (prohlížeč pramene, odpověď hned, strom až s další verzí výzkumu _STROM_READ/_CONF/_TXT) · strings.ts sources.readConfirmed, sources.confirm.action/actionTitle/undo/undoTitle/restConfirm/restUndo/changed/merged/retracted/reader/none/archive/locked · CHANGELOG.cs.md 3.25.0 · research:src/core/confirm.ts -->
 
 <a id="A3.2"></a>
 ## A3.2 Citation: what a source supports

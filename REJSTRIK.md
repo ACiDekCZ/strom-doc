@@ -134,13 +134,13 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Doložené (app; terminal od výzkumu 1.26.0) · doloženo (terminal 1.25.2) | Nejvyšší stupeň: kód chce citaci z pramene, který není slabý, s primární informací; metodika navíc vlastní čtení původního záznamu, který údaj uvádí přímo. |
-| en | Proven (app) · proven (terminal) | The highest degree: the code requires a citation from a source that is not weak, with primary information; the method also requires reading the original record that states the fact directly. |
-| de | Belegt (app) · belegt (terminal) | Der höchste Grad: der Code verlangt eine Zitation aus einer Quelle, die nicht schwach ist, mit Primärinformation; die Methodik zusätzlich eine eigene Lesung des ursprünglichen Eintrags, der die Angabe direkt nennt. |
-| pl | Udokumentowane (app) · udokumentowane (terminal) | Najwyższy stopień: kod wymaga cytatu ze źródła, które nie jest słabe, z informacją pierwotną; metodyka ponadto własnego odczytu aktu oryginalnego, który podaje daną wprost. |
+| cs | Doložené (app; terminal od výzkumu 1.26.0) · doloženo (terminal 1.25.2) | Nejvyšší stupeň: kód chce citaci z pramene, který není slabý, s primární informací, od výzkumu 1.29.0 citaci samotného původního záznamu; metodika navíc vlastní čtení původního záznamu, který údaj uvádí přímo. |
+| en | Proven (app) · proven (terminal) | The highest degree: the code requires a citation from a source that is not weak, with primary information, from research 1.29.0 a citation of the original record itself; the method also requires reading the original record that states the fact directly. |
+| de | Belegt (app) · belegt (terminal) | Der höchste Grad: der Code verlangt eine Zitation aus einer Quelle, die nicht schwach ist, mit Primärinformation, ab Forschung 1.29.0 eine Zitation des ursprünglichen Eintrags selbst; die Methodik zusätzlich eine eigene Lesung des ursprünglichen Eintrags, der die Angabe direkt nennt. |
+| pl | Udokumentowane (app) · udokumentowane (terminal) | Najwyższy stopień: kod wymaga cytatu ze źródła, które nie jest słabe, z informacją pierwotną, od badania 1.29.0 cytatu samego aktu oryginalnego; metodyka ponadto własnego odczytu aktu oryginalnego, który podaje daną wprost. |
 
 - **Genealogicky:** prokázaný závěr z přímého důkazu v původním prameni s primární informací.
-- **Čísla:** [R3.2](cs/R3-verification-and-citation.md#R3.2), R3.1, R3.5
+- **Čísla:** [R3.2](cs/R3-verification-and-citation.md#R3.2), R3.2.2, R3.1, R3.5, R3.5.2
 
 <a id="queue"></a>
 ### Fronta
@@ -226,7 +226,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | de | Meine Quellenabschriften: Hinweis · Beleg; Abschrift geprüft | Einstellung des Stammbaums, wie die Forschung Abschriften aus der App nimmt: als Hinweis oder als erste Lesung des Eintrags (die Angabe ist dann Wahrscheinlich). |
 | pl | Moje transkrypcje źródeł: Wskazówka · Udokumentowane; Transkrypcja zweryfikowana | Ustawienie drzewa, jak badanie traktuje transkrypcje z aplikacji: jako wskazówkę albo jako pierwszy odczyt aktu (dana jest wtedy Prawdopodobne). |
 
-- **Čísla:** [R3.5.1](cs/R3-verification-and-citation.md#R3.5.1), R3.8
+- **Čísla:** [R3.5.1](cs/R3-verification-and-citation.md#R3.5.1), R3.5.2, A3.1.3, R3.8
 
 <a id="report-a-problem"></a>
 ### Nahlásit problém
