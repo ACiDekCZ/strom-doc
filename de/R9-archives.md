@@ -891,3 +891,47 @@ von selbst zurück.
 - **Gilt seit:** Forschung 1.36.0
 
 <!-- zdroj: research:c7b117cd src/core/census.ts censusHeld (open, parked do uplynulého dne, waiting; nikdy doing ani parked člověkem), censusHidden, censusHeldCount · src/core/queue.ts rankTasks censusHide · src/core/waiting.ts (Co čeká) · src/core/live.ts censusStatus (/status.census {on, held}) · src/commands/tasks.ts task list (censusHeldNow, „held: census off“, --kind census) · src/commands/session.ts censusLine, censusCloseLine · research:5a73905e src/cli/menu-settings.ts censusLabel (ui.settings.census.held), censusStep (ui.settings.census.back) · test/cli/census.test.ts (M3) · dirigent:spec/106 K1.3, rozhodnutí 20. 11. M3 -->
+
+<a id="R9.13"></a>
+## R9.13 Ein eingeschränktes Archiv: eine Sitzung zur Zeit
+
+Ein Archiv, das automatisierten Zugriff einschränkt, wird jeweils nur von einer Sitzung aller Forschungen mit dem
+gemeinsamen Ordner auf dem Computer genutzt. So sperrt das Archiv den Zugriff nicht, und einer, der arbeitet, kommt im vollen
+erlaubten Tempo voran, statt dass sich mehrere das Tempo teilen.
+
+- **Eingeschränktes Archiv:** die Bedingungen des Archivs verlangen menschliches Tempo oder nur den Browser, ein Mensch
+  hat die Erlaubnis „langsam“ oder „über den Browser“ gegeben ([R9.2](#R9.2)), oder der Downloader des Archivs hat ein
+  Stundenlimit. Eine Ablehnung durch das Archiv (401, 403, 429) macht kein eingeschränktes Archiv: das Archiv wird wie
+  bisher eine Weile in Ruhe gelassen. Erkannt wird das Archiv an der Domain der Website.
+- **Prüft der Code:**
+  - eine Aufgabe, deren Bücher nur in einem eingeschränkten Archiv liegen, nimmt mit der Belegung der Aufgabe auch das
+    Archiv. Die Sitzung hält das Archiv; ein Agent, der sich erst ins Archiv verirrt, belegt es mit der ersten Anfrage;
+  - das Halten des Archivs endet mit der Sitzung, mit dem Verfall der Sitzung
+    ([R7.9](R7-when-the-agent-works.md#R7.9)) oder nach `archive.hold` (Standard 30 Min.) ohne Anfrage an das Archiv,
+    auch wenn die Sitzung weiterläuft. Wer nur heruntergeladene Scans liest, gibt das Archiv so frei;
+  - eine Aufgabe in einem Archiv, das eine andere Sitzung hält, wird vorerst ausgelassen, und es wird andere Arbeit
+    genommen („ausgelassen: das Archiv … schränkt automatisierten Zugriff ein und wird gerade von einer anderen Sitzung
+    genutzt“). Eine Anfrage des Agenten an ein solches Archiv wird abgelehnt;
+  - die Arbeit allein, der nur solche Aufgaben geblieben sind, wartet höchstens `archive.wait` (Standard 30 Min.). An
+    das Archiv wird während des Wartens nichts gesendet. Dann endet der Lauf mit dem Grund „nichts weiter zu tun – die
+    übrigen Aufgaben brauchen das Archiv …, das während der ganzen Wartezeit eine andere Sitzung nutzte“;
+  - `strom session start T…` bei einer Aufgabe eines belegten Archivs wird mit einem Satz abgelehnt: „Das Archiv …
+    nutzt gerade eine andere Forschung (seit 9:10, zuletzt 9:40); frei spätestens um 10:10.“ In derselben Forschung
+    steht statt „eine andere Forschung“ die Nummer der Sitzung;
+  - wer auf das Archiv wartet, steht in einer Warteschlange; nach dem Freiwerden hat Vorrang, wer am längsten wartet.
+    Eine Sitzung, die das Archiv freigegeben hat, belegt es nicht gleich wieder, wenn jemand darauf wartet.
+- **Massendownload:** auf dem Computer läuft jeweils nur ein Massendownload von Bildern aus einem eingeschränkten
+  Archiv (`strom fetch`). Ein weiterer reiht sich in die Warteschlange ein („queued behind …“) und wartet von selbst
+  höchstens `archive.wait`; dann endet er mit der Zeit, wann es erneut zu versuchen ist. Der Download hält auch das
+  Archiv, deshalb überspringen ihn die Agenten anderer Forschungen. Nicht eingeschränkte Archive ändern sich nicht: ihr
+  Tempo überwacht weiter nur der Anfragenbegrenzer.
+- **Grenzen:** das Halten sagt nicht, wie schnell heruntergeladen wird, nur wer; das Tempo des Archivs ändert sich
+  nicht. Ein älteres strom neben diesem hält keine Archive und hält sich nur an das Tempo.
+- **In der App:** wer ein Archiv nutzt und auf welches Archiv die Arbeit wartet, zeigt die Forschungsübersicht
+  ([S4.1](S4-research-from-the-app.md#S4.1), [S4.2](S4-research-from-the-app.md#S4.2)).
+- **Bedienung:** Terminal: `strom config set archive.hold <Minuten>`, `strom config set archive.wait <Minuten>` (z. B.
+  `45m`, `2h`; 5 Min. bis 24 Std., gilt für diesen Computer); das Menü zeigt „Die selbstständige Arbeit wartet auf das
+  Archiv … (höchstens bis …).“
+- **Gilt seit:** Forschung 1.36.0
+
+<!-- zdroj: research:10894288, 9408c7ea, 41dcd8eb src/core/archiveholds.ts (hlavička; restrictedLevel: browserOnly, permission slow|browser, allows(…).human; ne forbidden/refused; cappedConnector policy.pace.perHour; siteOf webDomain; siteLife: proces, sezení, archive.hold; PRIORITY_MS 2 min; joinQueue, releaseSite; BULK) · src/commands/connectors.ts:1443-1448 (help fetch), :3085-3190 holdArchive (fetch obrázků čeká ve frontě ≤ archive.wait, ostatní exit 7 data.held) · src/commands/session.ts:985-997, :1355-1389 (stop archive) · src/core/errors.ts:142 archive.held(.own) · src/core/config.ts:336-337 archive.hold, archive.wait · cs.json ui.run.skip.archive, ui.run.archive.wait, ui.run.stop.archive, ui.error.archive.held(.own), ui.menu.working.archive · CHANGELOG.cs.md 1.36.0 · dirigent:spec/127 K2.1–K2.5, K5.1, rozhodnutí 21. 11. (1)–(3), navrh-rezervace.md kap. 5 -->

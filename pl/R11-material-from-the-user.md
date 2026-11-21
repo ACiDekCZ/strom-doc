@@ -33,6 +33,8 @@ to, co w nim rzeczywiście stoi.
   `strom input list`, `strom input show I…`. Aplikacja: **Wyślij materiał…**, **Dodaj materiały…**
   ([A3.5](A3-evidence-in-the-app.md#A3.5)).
 - **Obowiązuje od:** badanie 1.0.0
+- **Od badania 1.36.0:** zadanie materiały plik dostaje tylko przy włączonym `intake.auto` albo z `--sort`; inaczej
+  czeka w Materiałach nieuporządkowany ([R11.6](#R11.6)). Tekst (`--text`) dostaje zadanie zawsze.
 
 <!-- zdroj: research:src/commands/intake.ts intake (description, BOOK_OF_SCANS=20, sha256 known, intakeTask) · research:src/core/media.ts MAX_IN_TREE=20 MB · research 1.0.0 = commit 48698860 · research:assets/method/intake.md kroky 1, 4, 6, 7 -->
 
@@ -143,6 +145,9 @@ na zadania.
 - **Obsługa:** terminal: `strom input batch` (partie i ile z nich posortowano), `strom input sort I… --as
   source|document|photo|unrelated --person P…`. Aplikacja: **Dodaj materiały…** w menu badania.
 - **Obowiązuje od:** badanie 1.12.0; partia z telefonu 1.18.0
+- **Od badania 1.36.0:** zadania porządkowania powstają tylko przy włączonym `intake.auto` albo gdy człowiek poprosi
+  o uporządkowanie partii; inaczej partia zamyka się bez zadań, a pliki czekają w Materiałach nieuporządkowane
+  ([R11.6](#R11.6)).
 
 <!-- zdroj: research:src/core/batches.ts hlavička, BATCH_TASK_FILES=25 (od v1.12.0), BATCH_IDLE_MS, PHONE_BATCH_IDLE_MS (od v1.18.0) · research:src/commands/intake.ts input batch done (--idle), input sort (unrelated --reason) · research:assets/method/intake.md "A batch from the Strom app" -->
 
@@ -356,3 +361,39 @@ albo w aplikacji przez **Usuń trwale…** ([A3.5.16](A3-evidence-in-the-app.md#
 - **Obowiązuje od:** badanie 1.35.0
 
 <!-- zdroj: research:0cc2cfca src/commands/intake.ts input delete (popis, --files-from, skrytý --confirm, isAgent → material.agent, checkDeleteConfirm → material.delete-changed, material.body, souhlas člověka, exit 4) · src/core/materialdelete.ts (hlavička: historie drží záznam, bajty jen v záloze nebo balíčku; DELETE_MOST_FILES=MATERIAL_MOST_EDIT=500, DELETE_CONFIRM_MS 15 min; nečitelný jiný výzkum → nic se nesmaže) · input show („deleted for good“), input list bez smazaných · CHANGELOG.md 1.35.0 · 1.36.0: e6bbfb40 src/commands/intake.ts input delete (--retract-sources, material.source-live, jeden commit), ui.input.delete.retracted · src/core/live.ts POST /material/delete {files, confirm, sources} -->
+
+<a id="R11.6"></a>
+## R11.6 Wysłane pliki agent przejrzy dopiero po włączeniu
+
+Plik wysłany do badania sam nie uruchamia pracy agenta. Zostaje zapisany i czeka w Materiałach nieuporządkowany, dopóki
+człowiek nie poprosi o uporządkowanie albo dopóki w ustawieniach badania nie włączy, że wysłane pliki agent przejrzy
+sam (`intake.auto`).
+
+- **Pilnuje kod:**
+  - `intake.auto` jest domyślnie wyłączone, także w badaniach założonych wcześniej; nic się nie przekształca i o nic
+    się nie pyta;
+  - wyłączone: zamknięta partia (aplikacja, telefon, zamknięcie dzień po ostatnim pliku) nie zakłada zadań
+    porządkowania. Zadanie nie powstaje też przy pojedynczym pliku z aplikacji (materiał osoby, skan źródła, oryginał
+    portretu lub zdjęcia związku z zapisu drzewa, [S8.3](S8-where-the-data-are.md#S8.3)), przy pliku wysłanym
+    ponownie z kolejną osobą lub notatką, przy pliku ponownie wyświetlonym, przy uzupełnionym materiale ani przy
+    plikach `strom intake`;
+  - włączone: jak dotąd. Partia daje zadania porządkowania po mniej więcej 25 plików, które idą w kolejce na przodzie
+    ([R11.4](#R11.4)), plik swoje zadanie materiały ([R11.1](#R11.1)), skan źródła zadanie odczytu;
+  - zadanie powstaje zawsze z wyraźnego działania człowieka: **Uporządkuj agentem…** ([R11.5.3](#R11.5.3)),
+    `--sort`, plik jako odpowiedź na czekające zadanie ([R6.7.1](R6-awaiting-action.md#R6.7.1)), **Odczytaj
+    dokument**, a także tekst (`strom intake --text`), który mówi człowiek;
+  - włączyć może tylko człowiek: w terminalu, w menu albo w aplikacji Strom. Agentowi włączenie zostaje odrzucone.
+    Wyłączyć może każdy. Zadania porządkowania, które już powstały, po wyłączeniu zostają;
+  - ustawienie obowiązuje dla jednego badania (`--for-tree`) albo dla wszystkich badań na komputerze.
+- **Dlaczego:** porządkowanie korzysta z subskrypcji AI i zmienia drzewo (przypisuje pliki do osób, nazywa je,
+  zakłada źródła). Samo wgranie pliku nie może uruchomić pracy AI; dokumenty rodziny wymagają zgody człowieka.
+- **W aplikacji:** przełącznik w ustawieniach badania ([S4.4.11](S4-research-from-the-app.md#S4.4.11)), koniec
+  wysyłania partii i **Wyślij materiał…** ([A3.5](A3-evidence-in-the-app.md#A3.5)).
+- **Obsługa:** terminal: `strom config set intake.auto on|off --for-tree`; menu **Ustawienia** → „Pliki wysłane do
+  badania agent przegląda sam: wyłączone”; `strom intake <pliki> --sort` (pliki agent przejrzy od razu); menu
+  **Dodaj materiały** pyta „Zlecić przejrzenie agentowi (zadania dla agenta, korzysta z subskrypcji AI)?” (domyślnie
+  nie); `strom input batch done <partia> --sort` (uporządkować partię zamkniętą bez zadań). Most: `POST /intake
+  {auto}`, `POST /batch/<id>/done` z `sort`.
+- **Obowiązuje od:** badanie 1.36.0
+
+<!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) -->

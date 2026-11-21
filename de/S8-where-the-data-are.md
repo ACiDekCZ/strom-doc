@@ -73,6 +73,9 @@ Inhalt, mit ihren Stellen im Stammbaum ([R11.5.1](R11-material-from-the-user.md#
 - Das Original eines Porträts geht in die Forschung als Original eines Anhangs mit der Markierung **Porträt**, das
   Original eines Paarfotos als Material beider Partner. Ein Original erzeugt eine Aufgabe Unterlagen; im
   Strom-Archiv wartet es zurückgestellt.
+  - **Ab Forschung 1.36.0:** die Aufgabe Unterlagen entsteht nur, wenn die Einstellung **An die Forschung gesendete
+    Dateien geht der Agent selbst durch** eingeschaltet ist; sonst wartet das Original unsortiert unter Materialien
+    ([R11.6](R11-material-from-the-user.md#R11.6)).
 - Das Laden des Stammbaums aus der Forschung gibt die Dateien nach ihrem Fingerabdruck zurück: die App bekommt
   Porträts, Paarfotos und Anhänge an ihre Stellen. Eine in der App entfernte Datei blendet die Forschung aus, sie
   löscht sie nicht ([A3.5.6](A3-evidence-in-the-app.md#A3.5.6)).

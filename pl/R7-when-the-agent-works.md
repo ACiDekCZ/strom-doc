@@ -43,6 +43,9 @@ to jedno zadanie. Przebieg uruchamia jedną lub więcej sesji po kolei; między 
 - **Obowiązuje od:** badanie 1.0.0; czekanie na archiwum, które nie odpowiada, od 1.22.0
 - **Od badania 1.32.0:** przebieg z `--tasks` kończy się **załatwione zadania: N** albo po 2×n sesjach **sesje: …
   (najwięcej dla żądanej liczby zadań) – załatwione zadania: …**.
+- **Od badania 1.36.0:** przebieg, któremu zostały tylko zadania w archiwum z ograniczeniami, którego używa inna sesja,
+  czeka najwyżej `archive.wait` i kończy się **nic więcej do zrobienia – pozostałe zadania potrzebują archiwum …**
+  ([R9.13](R9-archives.md#R9.13)).
 
 <!-- zdroj: research:src/commands/session.ts:853 Stop, :1220-1268, :1277-1285 · cs.json ui.run.summary, ui.run.stop.*, ui.run.asleep.wait · CHANGELOG.cs.md 1.22.0 · 1.32.0: session.ts Stop tasks|sessions, cs.json ui.run.stop.tasks, ui.run.stop.sessions -->
 
@@ -368,3 +371,47 @@ na niego. Do tego czasu zachowuje się jak Archiwum Strom.
   `strom run`, czat; także inny niż ustawiony), albo gdy ustawiony agent jest znów na komputerze.
 
 <!-- zdroj: research:src/core/state.ts (hlavička, stateOf, actsAsArchive, kindOf, refuseInArchive agent.missing) · cs.json ui.mode.is.waiting, ui.waiting.refuse, ui.menu.keeparchive · CHANGELOG 1.15.0 · 1.35.0: research:31def74a src/core/state.ts heldWhereNobody (parked, heldBy archive, waiting.held), settleWaiting (atWork: session start, run, chat; jinak stateOf research) · src/core/records.ts create · CHANGELOG.cs.md 1.35.0 „Rodinný materiál … odložený, dokud tu agent není“ -->
+
+<a id="R7.9"></a>
+## R7.9 Zadanie trzyma sesja, która nad nim pracuje
+
+Nad jednym badaniem może pracować naraz kilku agentów: samodzielna praca (`strom run`), rozmowa (`strom chat`), agent,
+który wywołuje `strom` bezpośrednio w swoim terminalu, a także inny komputer nad tym samym badaniem. Zadanie ma zawsze
+tylko jednego wykonawcę: trzyma je otwarta sesja, dopóki jej agent daje znak życia. Porzucone zadanie zwalnia się samo.
+
+- **Pilnuje kod:**
+  - wybór zadania i jego zajęcie odbywają się naraz. Gdy o to samo zadanie starają się dwaj, dostaje je jeden; drugi
+    bierze następne wolne. Dotyczy to `strom run`, `strom chat`, `strom session start`, `strom task start`, linku
+    z aplikacji Strom i agenta, który pracuje bezpośrednio;
+  - znak życia: proces przebiegu lub rozmowy, który uruchomił strom, na tym komputerze; inaczej każde polecenie
+    `strom` tej sesji. Agenta, który pracuje bezpośrednio, badanie rozpoznaje po numerze jego rozmowy (Claude Code,
+    Codex…): dwaj tacy agenci mają każdy swoją sesję;
+  - bez znaku życia dłużej niż `task.hold` (domyślnie 30 min) trzymanie wygasa. Gdy proces trzymającego na tym
+    komputerze się zakończył, wygasa od razu;
+  - wygasłą sesję przejmuje tylko jeden chętny. Stara sesja zostaje zamknięta jako przerwana z notatką „przejęte po
+    N minutach bez oznak życia; rozpoczęta praca w N…”; to, co w niej zapisano, zostaje, a zadanie wraca do kolejki;
+  - stary trzymający, który obudzi się po przejęciu (uśpiony komputer, zatrzymany proces), nic już nie zapisze:
+    polecenie zapisujące zostaje odrzucone i mówi, która sesja przejęła zadanie i kiedy. Czytać może dalej. `strom
+    task done` i inne zapisy do zadania, które trzyma inna sesja, zostają odrzucone;
+  - kto chce zadanie, które trzyma inna sesja, dostaje jedno zdanie: „T12 trzyma Claude Code (sesja N0040) od 14:05,
+    ostatnio 14:31; zwolni się najpóźniej o 15:01.” Gdy trzyma je żywy proces na tym komputerze, zamiast godziny
+    stoi „zwolni się, gdy skończy”. `strom run` bierze następne wolne zadanie, `strom session start T…` zostaje
+    odrzucone z propozycją następnego (`strom task next`). Na zwolnienie się nie czeka;
+  - `strom run` przejmuje wygasłe sesje na początku każdej sesji i pomija zadania, które trzyma inna sesja („T12
+    pominięte: pracuje nad nim inny agent”).
+- **Tylko metodyka:** agent, który pracuje bezpośrednio, wydaje polecenie `strom` co najmniej raz na 20 minut; długie
+  czytanie skanów bez niego zwolniłoby zadanie.
+- **Granice:**
+  - czas pochodzi z tego samego komputera; przy badaniu na wspólnym dysku z innego komputera rozstrzyga tylko ostatni
+    znak życia. Przy przesuniętych zegarach rezerwacja trzyma raczej dłużej, nigdy się nie podwoi;
+  - starszy strom obok tego zadań nie trzyma: jego sesje nowy strom ocenia według jego przebiegu i ostatniego zapisu,
+    inaczej od początku sesji;
+  - nic z tego nie jest w danych badania; trzymanie to tylko lokalny stan obok badania.
+- **W aplikacji:** kto trzyma zadanie i do kiedy, pokazuje Przegląd badania
+  ([S4.1](S4-research-from-the-app.md#S4.1), [S4.2](S4-research-from-the-app.md#S4.2)).
+- **Obsługa:** terminal: `strom config set task.hold <minuty>` (np. `45m`, `2h`; od 5 min do 24 h, obowiązuje dla tego
+  komputera, nie dla jednego badania), `strom task next`; menu pokazuje w wierszu o pracy także agentów, którzy
+  pracują bezpośrednio („Agent pracuje teraz bezpośrednio w badaniu.”).
+- **Obowiązuje od:** badanie 1.36.0
+
+<!-- zdroj: research:1e58aa7b, f08b6574, 23b20c27 src/core/holds.ts (Hold by run|chat|agent, agentSession, BEAT_MS 60 s, holdAlive: proces tady mrtvý → hned, jinak lastSign < task.hold; lastSign max(beat, mtime), budoucnost jako teď; sessionLife: bez holdu worker, run.lock, ops logy, jinak start) · src/core/session.ts claimTask, takeOver (session.taken: „převzato po … bez známky života; rozdělaná práce v …“), :574 session.taken · src/core/errors.ts:122 task.held, task.held.here · src/commands/session.ts:217-225 (session start: sign of life, at least once every 20 minutes, task.held), :985-997 (run: vynechá držené, převzetí na začátku sezení) · src/brief/brief.ts:1668, src/commands/guide.ts:152 (aspoň jednou za 20 minut) · src/core/config.ts:242-246, :335 task.hold (tree: false, 5 min–24 h, výchozí 30) · ověřeno: strom config set task.hold 3 / 25h / --for-tree odmítnuto (izolovaně) · cs.json ui.error.task.held(.here), ui.error.session.taken, ui.run.skip.held, ui.menu.working.direct(.more), session.taken · CHANGELOG.cs.md 1.36.0 „Více agentů a výzkumů najednou“ · dirigent:spec/127 K1.1–K1.5, K5.1–K5.3, navrh-rezervace.md kap. 1–4, 6 -->

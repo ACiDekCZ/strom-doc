@@ -65,6 +65,8 @@ je předá všechny; výzkum každý soubor uloží jednou, podle obsahu, s jeho
 
 - Originál portrétu jde do výzkumu jako originál přílohy se štítkem **Portrét**, originál fotky svazku jako
   materiál obou partnerů. Originál vytvoří úkol podklady; v Archivu Stromu čeká odložený.
+  - **Od výzkumu 1.36.0:** úkol podklady vznikne jen se zapnutým nastavením **Soubory poslané do výzkumu projde
+    agent sám**; jinak originál čeká v Materiálech neroztříděný ([R11.6](R11-material-from-the-user.md#R11.6)).
 - Načtení stromu z výzkumu vrátí soubory podle otisku: aplikace dostane portréty, fotky svazků a přílohy na jejich
   místa. Soubor odebraný v aplikaci výzkum skryje, nesmaže ho ([A3.5.6](A3-evidence-in-the-app.md#A3.5.6)).
 - **Hranice:**

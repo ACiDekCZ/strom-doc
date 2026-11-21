@@ -30,6 +30,8 @@ v něm skutečně stojí.
   `strom input list`, `strom input show I…`. Aplikace: **Poslat materiál…**, **Přidat materiály…**
   ([A3.5](A3-evidence-in-the-app.md#A3.5)).
 - **Platí od:** výzkum 1.0.0
+- **Od výzkumu 1.36.0:** úkol podklady dostane soubor jen se zapnutým `intake.auto` nebo s `--sort`; jinak čeká
+  v Materiálech neroztříděný ([R11.6](#R11.6)). Text (`--text`) dostane úkol vždy.
 
 <!-- zdroj: research:src/commands/intake.ts intake (description, BOOK_OF_SCANS=20, sha256 known, intakeTask) · research:src/core/media.ts MAX_IN_TREE=20 MB · research 1.0.0 = commit 48698860 · research:assets/method/intake.md kroky 1, 4, 6, 7 -->
 
@@ -137,6 +139,8 @@ Složku, ZIP nebo krabici dokumentů poslanou z aplikace výzkum přijme jako je
 - **Ovládání:** terminál: `strom input batch` (dávky a kolik je roztříděno), `strom input sort I… --as
   source|document|photo|unrelated --person P…`. Aplikace: **Přidat materiály…** v menu výzkumu.
 - **Platí od:** výzkum 1.12.0; dávka z telefonu 1.18.0
+- **Od výzkumu 1.36.0:** úkoly roztřídění vzniknou jen se zapnutým `intake.auto`, nebo když člověk o roztřídění
+  dávky požádá; jinak se dávka uzavře bez úkolů a soubory čekají v Materiálech neroztříděné ([R11.6](#R11.6)).
 
 <!-- zdroj: research:src/core/batches.ts hlavička, BATCH_TASK_FILES=25 (od v1.12.0), BATCH_IDLE_MS, PHONE_BATCH_IDLE_MS (od v1.18.0) · research:src/commands/intake.ts input batch done (--idle), input sort (unrelated --reason) · research:assets/method/intake.md "A batch from the Strom app" -->
 
@@ -345,3 +349,36 @@ v aplikaci přes **Smazat natrvalo…** ([A3.5.16](A3-evidence-in-the-app.md#A3.
 - **Platí od:** výzkum 1.35.0
 
 <!-- zdroj: research:0cc2cfca src/commands/intake.ts input delete (popis, --files-from, skrytý --confirm, isAgent → material.agent, checkDeleteConfirm → material.delete-changed, material.body, souhlas člověka, exit 4) · src/core/materialdelete.ts (hlavička: historie drží záznam, bajty jen v záloze nebo balíčku; DELETE_MOST_FILES=MATERIAL_MOST_EDIT=500, DELETE_CONFIRM_MS 15 min; nečitelný jiný výzkum → nic se nesmaže) · input show („deleted for good“), input list bez smazaných · CHANGELOG.md 1.35.0 · 1.36.0: e6bbfb40 src/commands/intake.ts input delete (--retract-sources, material.source-live, jeden commit), ui.input.delete.retracted · src/core/live.ts POST /material/delete {files, confirm, sources} -->
+
+<a id="R11.6"></a>
+## R11.6 Poslané soubory projde agent jen po zapnutí
+
+Soubor poslaný do výzkumu sám nespustí práci agenta. Uloží se a čeká v Materiálech neroztříděný, dokud člověk nepožádá
+o roztřídění, nebo dokud v nastavení výzkumu nezapne, že poslané soubory projde agent sám (`intake.auto`).
+
+- **Hlídá kód:**
+  - `intake.auto` je ve výchozím stavu vypnuté, i ve výzkumech založených dřív; nic se nepřevádí a nic se neptá;
+  - vypnuto: uzavřená dávka (aplikace, telefon, uzavření den po posledním souboru) nezaloží úkoly roztřídění. Úkol
+    nevznikne ani u jednotlivého souboru z aplikace (materiál osoby, sken pramene, originál portrétu nebo fotky svazku
+    ze zápisu stromu, [S8.3](S8-where-the-data-are.md#S8.3)), u souboru poslaného znovu s další
+    osobou nebo poznámkou, u souboru znovu zobrazeného, u doplněného podkladu ani u `strom intake` souborů;
+  - zapnuto: jako dřív. Dávka dá úkoly roztřídění po zhruba 25 souborech, které jdou ve frontě napřed
+    ([R11.4](#R11.4)), soubor svůj úkol podklady ([R11.1](#R11.1)), sken pramene úkol k přečtení;
+  - úkol vznikne vždy z výslovné akce člověka: **Roztřídit agentem…** ([R11.5.3](#R11.5.3)), `--sort`, soubor jako
+    odpověď na čekající úkol ([R6.7.1](R6-awaiting-action.md#R6.7.1)), **Přečíst dokument**, i text
+    (`strom intake --text`), který říká člověk;
+  - zapnout smí jen člověk: v terminálu, v menu, nebo v aplikaci Strom. Agentovi se zapnutí odmítne. Vypnout smí
+    kdokoli. Úkoly roztřídění, které už vznikly, po vypnutí zůstávají;
+  - nastavení platí pro jeden výzkum (`--for-tree`), nebo pro všechny výzkumy na počítači.
+- **Proč:** roztřídění čerpá předplatné AI a mění strom (soubory připojí k osobám, pojmenuje je, založí prameny).
+  Samotné nahrání souboru nesmí spustit práci AI; dokumenty rodiny potřebují svolení člověka.
+- **V aplikaci:** přepínač v nastavení výzkumu ([S4.4.11](S4-research-from-the-app.md#S4.4.11)), konec posílání
+  dávky a **Poslat materiál…** ([A3.5](A3-evidence-in-the-app.md#A3.5)).
+- **Ovládání:** terminál: `strom config set intake.auto on|off --for-tree`; menu **Nastavení** → „Soubory poslané do
+  výzkumu projde agent sám: vypnuto“; `strom intake <soubory> --sort` (soubory projde agent hned); menu **Přidat
+  podklady** se zeptá „Nechat to projít agentem (úkoly pro agenta, čerpá předplatné AI)?“ (výchozí ne);
+  `strom input batch done <dávka> --sort` (roztřídit dávku uzavřenou bez úkolů). Most: `POST /intake {auto}`,
+  `POST /batch/<id>/done` s `sort`.
+- **Platí od:** výzkum 1.36.0
+
+<!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) -->

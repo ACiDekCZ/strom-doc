@@ -30,6 +30,8 @@ ze všech pramenů údaje, ne jak dobrý je jeden pramen ([R3.2.1](#R3.2.1)).
   **vodítko**, **vyvrácené**. Souhrn `strom stats` píše dál „jen stopy“.
 - **Od výzkumu 1.30.0:** `strom event show` a `strom event edit` vypisují údaj člověku v jazyce výzkumu
   (například „[vodítko]“); agent dostává výpis dál anglicky.
+- **Od výzkumu 1.36.0:** stupeň má i jméno osoby, kromě **Vyvrácené** (`strom cite P… S… --status`,
+  [R10.5.2](R10-people-and-hypotheses.md#R10.5.2)).
 
 <!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus · 1.26.0: src/cli/human.ts:139 STATUS, cs.json ui.st.* (commit fe59fb40) -->
 

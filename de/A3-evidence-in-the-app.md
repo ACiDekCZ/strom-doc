@@ -413,6 +413,26 @@ oder Strom-Archiv zeigt es auch Dateien der Forschung, die im Stammbaum nirgends
   Anhängen und **Materialien** im Menü der Person (das Fenster mit Filter auf die Person).
 - **Gilt seit:** App 3.9.0; Abschnitt und Fenster **Materialien** 3.16.0; 3.30.0: das Fenster bei jedem Stammbaum,
   eine Datei des Stammbaums als ein Material mit seinen Stellen (Datenversion 24)
+- **Ab App 3.31.0 mit Forschung 1.36.0:** die Forschung geht die Dateien nur dann selbst durch, wenn die Einstellung
+  **An die Forschung gesendete Dateien geht der Agent selbst durch** eingeschaltet ist
+  ([S4.4.11](S4-research-from-the-app.md#S4.4.11), [R11.6](R11-material-from-the-user.md#R11.6)). Ausgeschaltet
+  (Standard):
+  - **Material senden…** sagt „Dem Stammbaum wird nichts hinzugefügt. Die Forschung speichert die Dateien bei der
+    Person. Sie warten unter Materialien; der Agent geht sie nur auf Anfrage durch.“ (bei einer Quelle „… bei der
+    Quelle.“). Nach dem Senden die Meldung „An die Forschung gesendet: 1 Datei zu Jan Horák. Sie wartet unsortiert
+    unter Materialien.“ mit **Mit dem Agenten sortieren…** (am Computer mit dem Fenster **Materialien**,
+    [A3.5.8](#A3.5.8)) und **Anzeigen**;
+  - die Bestätigung eines Stapels **Materialien hinzufügen…** hat keine Blöcke **Datenschutz** und **Geschätzte
+    Kosten**, nur „Die Dateien werden in der Forschung gespeichert, außerhalb von Git, und warten unsortiert unter
+    Materialien. Der Agent sortiert sie nur auf Anfrage; die Kosten werden vorher angezeigt.“;
+  - das Ende des Stapels sagt „Die Dateien warten unsortiert unter Materialien. Der Agent sortiert sie nur auf
+    Anfrage.“ und bietet **Mit dem Agenten sortieren…** für die Dateien des Stapels an; geht das nicht sofort,
+    verweist es auf **Mit dem Agenten sortieren…** unter Materialien. Eingeschaltet: „Die Forschung sortiert den
+    Stapel selbst. …“ mit der Zahl **Sortieraufgaben**;
+  - eine Datei, die der Agent noch nicht durchgegangen ist, hat unter Materialien den Stand **unsortiert**
+    (eingeschaltet: **wartet auf Verarbeitung**).
+
+  Mit einer älteren Forschung gelten die bisherigen Texte.
 
 <!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 -->
 

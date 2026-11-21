@@ -842,3 +842,46 @@ themselves.
 - **Since:** research 1.36.0
 
 <!-- zdroj: research:c7b117cd src/core/census.ts censusHeld (open, parked do uplynulého dne, waiting; nikdy doing ani parked člověkem), censusHidden, censusHeldCount · src/core/queue.ts rankTasks censusHide · src/core/waiting.ts (Co čeká) · src/core/live.ts censusStatus (/status.census {on, held}) · src/commands/tasks.ts task list (censusHeldNow, „held: census off“, --kind census) · src/commands/session.ts censusLine, censusCloseLine · research:5a73905e src/cli/menu-settings.ts censusLabel (ui.settings.census.held), censusStep (ui.settings.census.back) · test/cli/census.test.ts (M3) · dirigent:spec/106 K1.3, rozhodnutí 20. 11. M3 -->
+
+<a id="R9.13"></a>
+## R9.13 A restricted archive: one session at a time
+
+An archive that restricts automated access is used by only one session at a time of all the researches with the
+shared folder on the computer. The archive thus does not block access, and one worker goes at the full allowed pace
+instead of several workers sharing the pace.
+
+- **A restricted archive:** the archive's terms want a person's pace or the browser alone, a person gave the
+  permission “slowly” or “through the browser” ([R9.2](#R9.2)), or the archive's downloader has an hourly cap.
+  A refusal by the archive (401, 403, 429) does not make an archive restricted: the archive is left alone for a while
+  as before. The archive is recognised by the domain of its website.
+- **Enforced by the code:**
+  - a task whose books lie only on a restricted archive takes the archive too when the task is claimed. The session
+    holds the archive; an agent that only strays onto the archive claims it with its first request;
+  - holding the archive ends with the session, with the session lapsing ([R7.9](R7-when-the-agent-works.md#R7.9)),
+    or after `archive.hold` (default 30 min) without a request to the archive, even while the session goes on.
+    Whoever only reads downloaded scans thus releases the archive;
+  - a task on an archive that another session holds is left out for now and other work is taken (“left out: the
+    archive … restricts automated access and another session uses it now”). An agent's request to such an archive is
+    refused;
+  - working alone left only with such tasks waits at most `archive.wait` (default 30 min). Nothing is sent to the
+    archive while it waits. Then the run ends with the reason “nothing else to do — the tasks left need the archive …,
+    which another session used through the whole wait”;
+  - `strom session start T…` on a task of an occupied archive is refused with one sentence: “the archive … is used
+    now by another research (since 9:10, last request 9:40); free by 10:10 at the latest.” In the same research the
+    session's number stands in place of “another research”;
+  - whoever waits for the archive stands in a queue; after the release the one who has waited longest goes first.
+    A session that let the archive go does not claim it again at once when someone is waiting for it.
+- **Bulk download:** on the computer only one bulk download of images from a restricted archive runs at a time
+  (`strom fetch`). Another one joins a queue (“queued behind …”) and waits by itself at most `archive.wait`; then it
+  ends with a time to try again. The download holds the archive too, so the agents of other researches skip it.
+  Unrestricted archives do not change: their pace is still watched only by the request limiter.
+- **Limits:** holding says not how fast the download goes, only who downloads; the archive's pace does not change. An
+  older strom beside this one does not hold archives and keeps only to the pace.
+- **In the app:** who uses an archive and which archive the work waits for is shown by the Research overview
+  ([S4.1](S4-research-from-the-app.md#S4.1), [S4.2](S4-research-from-the-app.md#S4.2)).
+- **Controls:** terminal: `strom config set archive.hold <minutes>`, `strom config set archive.wait <minutes>` (e.g.
+  `45m`, `2h`; 5 min to 24 h, applies to this computer); the menu shows “The work on its own waits for the archive …
+  (at most until …).”
+- **Since:** research 1.36.0
+
+<!-- zdroj: research:10894288, 9408c7ea, 41dcd8eb src/core/archiveholds.ts (hlavička; restrictedLevel: browserOnly, permission slow|browser, allows(…).human; ne forbidden/refused; cappedConnector policy.pace.perHour; siteOf webDomain; siteLife: proces, sezení, archive.hold; PRIORITY_MS 2 min; joinQueue, releaseSite; BULK) · src/commands/connectors.ts:1443-1448 (help fetch), :3085-3190 holdArchive (fetch obrázků čeká ve frontě ≤ archive.wait, ostatní exit 7 data.held) · src/commands/session.ts:985-997, :1355-1389 (stop archive) · src/core/errors.ts:142 archive.held(.own) · src/core/config.ts:336-337 archive.hold, archive.wait · cs.json ui.run.skip.archive, ui.run.archive.wait, ui.run.stop.archive, ui.error.archive.held(.own), ui.menu.working.archive · CHANGELOG.cs.md 1.36.0 · dirigent:spec/127 K2.1–K2.5, K5.1, rozhodnutí 21. 11. (1)–(3), navrh-rezervace.md kap. 5 -->

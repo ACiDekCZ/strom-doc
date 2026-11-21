@@ -46,6 +46,9 @@ kann er eine Bedingung fragen ([R7.4](#R7.4)).
 - **Gilt seit:** Forschung 1.0.0; das Warten auf ein Archiv, das nicht antwortet, seit 1.22.0
 - **Ab Forschung 1.32.0:** ein Lauf mit `--tasks` endet mit **N Aufgaben erledigt**, oder nach 2×n Sitzungen mit
   **Sitzungen: … (höchstens so viele für die gewünschten Aufgaben) – erledigte Aufgaben: …**.
+- **Ab Forschung 1.36.0:** ein Lauf, dem nur Aufgaben in einem eingeschränkten Archiv geblieben sind, das eine andere
+  Sitzung nutzt, wartet höchstens `archive.wait` und endet mit **nichts weiter zu tun – die übrigen Aufgaben brauchen
+  das Archiv …** ([R9.13](R9-archives.md#R9.13)).
 
 <!-- zdroj: research:src/commands/session.ts:853 Stop, :1220-1268, :1277-1285 · cs.json ui.run.summary, ui.run.stop.*, ui.run.asleep.wait · CHANGELOG.cs.md 1.22.0 · 1.32.0: session.ts Stop tasks|sessions, cs.json ui.run.stop.tasks, ui.run.stop.sessions -->
 
@@ -388,3 +391,50 @@ anderen Computer übertragen), wartet auf ihn. Bis dahin verhält sie sich wie e
   Agent wieder auf dem Computer ist.
 
 <!-- zdroj: research:src/core/state.ts (hlavička, stateOf, actsAsArchive, kindOf, refuseInArchive agent.missing) · cs.json ui.mode.is.waiting, ui.waiting.refuse, ui.menu.keeparchive · CHANGELOG 1.15.0 · 1.35.0: research:31def74a src/core/state.ts heldWhereNobody (parked, heldBy archive, waiting.held), settleWaiting (atWork: session start, run, chat; jinak stateOf research) · src/core/records.ts create · CHANGELOG.cs.md 1.35.0 „Rodinný materiál … odložený, dokud tu agent není“ -->
+
+<a id="R7.9"></a>
+## R7.9 Eine Aufgabe hält die Sitzung, die an ihr arbeitet
+
+An einer Forschung können mehrere Agenten zugleich arbeiten: die Arbeit allein (`strom run`), ein Gespräch (`strom
+chat`), ein Agent, der `strom` direkt in seinem Terminal aufruft, und auch ein anderer Computer mit derselben
+Forschung. Eine Aufgabe hat immer nur einen, der an ihr arbeitet: Die offene Sitzung hält sie, solange deren Agent ein
+Lebenszeichen gibt. Eine verlassene Aufgabe wird von selbst frei.
+
+- **Prüft der Code:**
+  - die Wahl einer Aufgabe und ihre Belegung geschehen in einem Schritt. Wollen zwei dieselbe Aufgabe, bekommt sie
+    einer; der andere nimmt die nächste freie. Das gilt für `strom run`, `strom chat`, `strom session start`, `strom
+    task start`, einen Link aus der Strom-App und einen Agenten, der direkt arbeitet;
+  - Lebenszeichen: der Prozess eines Laufs oder Gesprächs, den strom gestartet hat, auf diesem Computer; sonst jeder
+    Befehl `strom` dieser Sitzung. Einen Agenten, der direkt arbeitet, erkennt die Forschung an der Nummer seines
+    Gesprächs (Claude Code, Codex…): zwei solche Agenten haben je eine eigene Sitzung;
+  - ohne Lebenszeichen länger als `task.hold` (Standard 30 Min.) verfällt das Halten. Ist der Prozess des Halters auf
+    diesem Computer beendet, verfällt es sofort;
+  - eine verfallene Sitzung übernimmt nur ein Interessent. Die alte Sitzung wird als unterbrochen geschlossen, mit der
+    Notiz „übernommen nach N Minuten ohne Lebenszeichen; begonnene Arbeit in N…“; was darin geschrieben wurde, bleibt,
+    und die Aufgabe geht in die Warteschlange zurück;
+  - ein alter Halter, der nach der Übernahme aufwacht (Computer im Ruhezustand, angehaltener Prozess), schreibt nichts
+    mehr: ein schreibender Befehl wird abgelehnt und sagt, welche Sitzung die Aufgabe wann übernommen hat. Lesen darf
+    er weiter. `strom task done` und andere Einträge zu einer Aufgabe, die eine andere Sitzung hält, werden abgelehnt;
+  - wer eine Aufgabe will, die eine andere Sitzung hält, bekommt einen Satz: „T12 hält Claude Code (Sitzung N0040)
+    seit 14:05, zuletzt 14:31; frei spätestens um 15:01.“ Hält sie ein lebender Prozess auf diesem Computer, steht
+    statt der Uhrzeit „frei, sobald es endet“. `strom run` nimmt die nächste freie Aufgabe, `strom session start T…`
+    wird abgelehnt, mit dem Angebot der nächsten (`strom task next`). Auf das Freiwerden wird nicht gewartet;
+  - `strom run` übernimmt verfallene Sitzungen am Anfang jeder Sitzung und lässt Aufgaben aus, die eine andere Sitzung
+    hält („T12 ausgelassen: ein anderer Agent arbeitet daran“).
+- **Nur Methodik:** ein Agent, der direkt arbeitet, gibt mindestens alle 20 Minuten einen Befehl `strom`; ein langes
+  Lesen von Scans ohne ihn würde die Aufgabe freigeben.
+- **Grenzen:**
+  - die Zeit stammt vom selben Computer; bei einer Forschung auf einem gemeinsamen Laufwerk von einem anderen Computer
+    entscheidet nur das letzte Lebenszeichen. Bei verstellten Uhren hält eine Reservierung eher länger, doppelt wird
+    sie nie;
+  - ein älteres strom neben diesem hält keine Aufgaben: seine Sitzungen beurteilt das neue strom nach seinem Lauf und
+    nach dem letzten Eintrag, sonst ab dem Beginn der Sitzung;
+  - nichts davon steht in den Daten der Forschung; das Halten ist nur ein lokaler Zustand neben der Forschung.
+- **In der App:** wer eine Aufgabe hält und bis wann, zeigt die Forschungsübersicht
+  ([S4.1](S4-research-from-the-app.md#S4.1), [S4.2](S4-research-from-the-app.md#S4.2)).
+- **Bedienung:** Terminal: `strom config set task.hold <Minuten>` (z. B. `45m`, `2h`; 5 Min. bis 24 Std., gilt für
+  diesen Computer, nicht für eine Forschung), `strom task next`; das Menü zeigt in der Zeile über die Arbeit auch
+  Agenten, die direkt arbeiten („Gerade arbeitet ein Agent direkt in der Forschung.“).
+- **Gilt seit:** Forschung 1.36.0
+
+<!-- zdroj: research:1e58aa7b, f08b6574, 23b20c27 src/core/holds.ts (Hold by run|chat|agent, agentSession, BEAT_MS 60 s, holdAlive: proces tady mrtvý → hned, jinak lastSign < task.hold; lastSign max(beat, mtime), budoucnost jako teď; sessionLife: bez holdu worker, run.lock, ops logy, jinak start) · src/core/session.ts claimTask, takeOver (session.taken: „převzato po … bez známky života; rozdělaná práce v …“), :574 session.taken · src/core/errors.ts:122 task.held, task.held.here · src/commands/session.ts:217-225 (session start: sign of life, at least once every 20 minutes, task.held), :985-997 (run: vynechá držené, převzetí na začátku sezení) · src/brief/brief.ts:1668, src/commands/guide.ts:152 (aspoň jednou za 20 minut) · src/core/config.ts:242-246, :335 task.hold (tree: false, 5 min–24 h, výchozí 30) · ověřeno: strom config set task.hold 3 / 25h / --for-tree odmítnuto (izolovaně) · cs.json ui.error.task.held(.here), ui.error.session.taken, ui.run.skip.held, ui.menu.working.direct(.more), session.taken · CHANGELOG.cs.md 1.36.0 „Více agentů a výzkumů najednou“ · dirigent:spec/127 K1.1–K1.5, K5.1–K5.3, navrh-rezervace.md kap. 1–4, 6 -->

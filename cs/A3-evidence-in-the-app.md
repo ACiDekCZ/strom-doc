@@ -354,6 +354,21 @@ s výzkumem nebo Archivem Stromu ukazuje i soubory výzkumu, které ve stromu ni
   na osobu).
 - **Platí od:** aplikace 3.9.0; sekce a okno **Materiály** 3.16.0; 3.30.0: okno u každého stromu, soubor stromu
   jako jeden materiál s místy (verze dat 24)
+- **Od aplikace 3.31.0 s výzkumem 1.36.0:** výzkum soubory projde sám jen se zapnutým nastavením **Soubory poslané do
+  výzkumu projde agent sám** ([S4.4.11](S4-research-from-the-app.md#S4.4.11),
+  [R11.6](R11-material-from-the-user.md#R11.6)). Vypnuto (výchozí):
+  - **Poslat materiál…** říká „Do stromu se nic nepřidá. Výzkum soubory uloží k osobě. Čekají v Materiálech, agent
+    je projde jen na požádání.“ (u pramene „… k prameni.“). Po poslání hláška „Posláno do výzkumu (Jan Horák):
+    1 soubor. Čeká v Materiálech neroztříděný.“ s **Roztřídit agentem…** (na počítači s oknem **Materiály**,
+    [A3.5.8](#A3.5.8)) a **Zobrazit**;
+  - potvrzení dávky **Přidat materiály…** nemá bloky **Soukromí** a **Odhad ceny**, jen „Soubory se uloží do výzkumu
+    mimo git a čekají v Materiálech neroztříděné. Agent je roztřídí jen na požádání; cena se ukáže předem.“;
+  - konec dávky říká „Soubory čekají v Materiálech neroztříděné. Agent je roztřídí jen na požádání.“ a nabízí
+    **Roztřídit agentem…** pro soubory dávky; když to nejde hned, odkáže na **Roztřídit agentem…** v Materiálech.
+    Zapnuto: „Výzkum dávku roztřídí sám. …“ s počtem **Úkoly k roztřídění**;
+  - soubor, který agent ještě neprošel, má v Materiálech stav **neroztříděno** (zapnuto: **čeká na zpracování**).
+
+  Se starším výzkumem platí dosavadní texty.
 
 <!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 -->
 

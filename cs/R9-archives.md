@@ -772,3 +772,44 @@ Vypnutí sčítání úkoly sčítání odloží, nesmaže. Po zapnutí se vrát
 - **Platí od:** výzkum 1.36.0
 
 <!-- zdroj: research:c7b117cd src/core/census.ts censusHeld (open, parked do uplynulého dne, waiting; nikdy doing ani parked člověkem), censusHidden, censusHeldCount · src/core/queue.ts rankTasks censusHide · src/core/waiting.ts (Co čeká) · src/core/live.ts censusStatus (/status.census {on, held}) · src/commands/tasks.ts task list (censusHeldNow, „held: census off“, --kind census) · src/commands/session.ts censusLine, censusCloseLine · research:5a73905e src/cli/menu-settings.ts censusLabel (ui.settings.census.held), censusStep (ui.settings.census.back) · test/cli/census.test.ts (M3) · dirigent:spec/106 K1.3, rozhodnutí 20. 11. M3 -->
+
+<a id="R9.13"></a>
+## R9.13 Omezený archiv: jedno sezení najednou
+
+Archiv, který omezuje automatický přístup, používá najednou jen jedno sezení ze všech výzkumů se společnou složkou
+na počítači. Archiv tak nezablokuje přístup a jeden pracující jede plnou povolenou rychlostí, místo aby se víc
+pracujících dělilo o tempo.
+
+- **Omezený archiv:** podmínky archivu chtějí lidské tempo nebo jen prohlížeč, člověk dal svolení „pomalu“ nebo „přes
+  prohlížeč“ ([R9.2](#R9.2)), nebo stahovač archivu má hodinový strop. Odmítnutí archivu (401, 403, 429) omezený
+  archiv nedělá: archiv se nechá chvíli být jako dosud. Archiv se pozná podle domény webu.
+- **Hlídá kód:**
+  - úkol, jehož knihy leží jen na omezeném archivu, vezme se zabráním úkolu i archiv. Archiv drží sezení; agent,
+    který na archiv teprve zabloudí, ho zabere prvním požadavkem;
+  - držení archivu skončí se sezením, s propadnutím sezení ([R7.9](R7-when-the-agent-works.md#R7.9)), nebo po
+    `archive.hold` (výchozí 30 min) bez požadavku na archiv, i když sezení dál běží. Kdo jen čte stažené skeny,
+    archiv tak uvolní;
+  - úkol na archivu, který drží jiné sezení, se zatím vynechá a vezme se jiná práce („vynechán: archiv … omezuje
+    automatický přístup a teď ho používá jiné sezení“). Požadavek agenta na takový archiv se odmítne;
+  - samostatná práce, které zbyly jen takové úkoly, počká nejvýš `archive.wait` (výchozí 30 min). Archivu se během
+    čekání nic neposílá. Pak běh skončí s důvodem „nic dalšího k práci – zbylé úkoly potřebují archiv …, který celou
+    dobu čekání používalo jiné sezení“;
+  - `strom session start T…` na úkolu obsazeného archivu se odmítne jednou větou: „Archiv … teď používá jiný výzkum
+    (od 9:10, naposledy 9:40); uvolní se nejpozději v 10:10.“ Ve stejném výzkumu stojí místo „jiný výzkum“ číslo
+    sezení;
+  - kdo na archiv čeká, stojí ve frontě; po uvolnění má přednost ten, kdo čeká nejdéle. Sezení, které archiv pustilo,
+    ho hned znovu nezabere, když na něj někdo čeká.
+- **Hromadné stahování:** na počítači běží najednou jen jedno hromadné stahování snímků z omezeného archivu
+  (`strom fetch`). Další se zařadí do fronty („queued behind …“) a počká samo nejvýš `archive.wait`; pak skončí
+  s časem, kdy to zkusit znovu. Stahování drží i archiv, takže ho agenti ostatních výzkumů přeskakují. Neomezené archivy
+  se nemění: jejich tempo dál hlídá jen omezovač požadavků.
+- **Hranice:** držení neříká, jak rychle se stahuje, jen kdo; tempo archivu se nemění. Starší strom vedle tohoto
+  archivy nedrží a drží se jen tempa.
+- **V aplikaci:** kdo archiv používá a na který archiv práce čeká, ukazuje Přehled výzkumu
+  ([S4.1](S4-research-from-the-app.md#S4.1), [S4.2](S4-research-from-the-app.md#S4.2)).
+- **Ovládání:** terminál: `strom config set archive.hold <minuty>`, `strom config set archive.wait <minuty>` (např.
+  `45m`, `2h`; 5 min až 24 h, platí pro tento počítač); menu ukazuje „Samostatná práce čeká na archiv … (nejdéle do
+  …).“
+- **Platí od:** výzkum 1.36.0
+
+<!-- zdroj: research:10894288, 9408c7ea, 41dcd8eb src/core/archiveholds.ts (hlavička; restrictedLevel: browserOnly, permission slow|browser, allows(…).human; ne forbidden/refused; cappedConnector policy.pace.perHour; siteOf webDomain; siteLife: proces, sezení, archive.hold; PRIORITY_MS 2 min; joinQueue, releaseSite; BULK) · src/commands/connectors.ts:1443-1448 (help fetch), :3085-3190 holdArchive (fetch obrázků čeká ve frontě ≤ archive.wait, ostatní exit 7 data.held) · src/commands/session.ts:985-997, :1355-1389 (stop archive) · src/core/errors.ts:142 archive.held(.own) · src/core/config.ts:336-337 archive.hold, archive.wait · cs.json ui.run.skip.archive, ui.run.archive.wait, ui.run.stop.archive, ui.error.archive.held(.own), ui.menu.working.archive · CHANGELOG.cs.md 1.36.0 · dirigent:spec/127 K2.1–K2.5, K5.1, rozhodnutí 21. 11. (1)–(3), navrh-rezervace.md kap. 5 -->

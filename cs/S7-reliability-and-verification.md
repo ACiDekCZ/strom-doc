@@ -5,7 +5,8 @@ U každého údaje aplikace ukazuje, jak spolehlivý je, a kartička ve stromu m
 údaj ověřit podle originálu záznamu: na pozadí, u jednoho údaje, u osoby nebo ve velké části stromu. Jistota ale
 vzniká až tím, že **člověk** sám porovná údaj se skenem záznamu a potvrdí ho (**Potvrdit podle skenu**, [S7.8](#S7.8)).
 Ověření agentem dá nejvýš **Doloženo**; potvrzení člověkem je silnější a agent ho nikdy nezmění. Kapitola popisuje
-aplikaci Strom 3.26.0 a výzkum 1.30.0. Co jde jen s mostem výzkumu a co i bez něj, shrnuje [S7.9](#S7.9).
+aplikaci Strom 3.26.0 a výzkum 1.30.0; změny z novější verze mají u sebe její číslo. Co jde jen s mostem výzkumu
+a co i bez něj, shrnuje [S7.9](#S7.9). Jméno osoby jako údaj popisuje [S7.10](#S7.10).
 
 <!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni/spec.md · app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Ověřit údaje, Jedna značka na kartičce) · research:6c6e7c3b CHANGELOG.cs.md 1.30.0 (ověření podle originálů) -->
 
@@ -75,6 +76,11 @@ nejslabší ze tří údajů kartičky: jméno, narození a úmrtí.
     ●● doloženo, ●○ doloženo zčásti, tečkovaný rámeček bez pramene. Strom bez pramenů i bez původu značku nemá;
   - zástupná osoba („?“) značku nemá.
 - **Bublina u značky:** „Nejslabší údaj kartičky: …“ a slovy, co značka znamená.
+  - **Od aplikace 3.31.0:** u značky **Z rodokmenu** stojí nadpis „Citováno v rodokmenu, ve Stromu neověřeno“ jen
+    nad prameny, které jsou citované jen u údajů z rodokmenu (třeba u jména). Pramen citovaný u doloženého narození
+    nebo úmrtí (matrika, i když ji cituje zároveň jméno) stojí pod vlastním nadpisem **Prameny (N)**. Dřív stál pod
+    nadpisem z rodokmenu každý pramen kartičky. Když značku drží jméno, vede bublina odkazem **Jméno v kartě osoby ›**
+    ke značce jména v kartě osoby ([S7.10](#S7.10)).
 - **Ovládání:** **Nastavení → Karta osoby → Na kartě ukázat → Doložení a spolehlivost** (výchozí zapnuto).
 - **Platí od:** aplikace 3.26.0
 - **Od aplikace 3.28.0:** při oddálení stromu pod 0,55 je značka větší (asi 10 px na obrazovce), pod 0,3 se
@@ -110,7 +116,8 @@ Výzkum pak údaj ověří podle originálu záznamu: na pozadí, mimo práci na
 - **Hlídá kód:**
   - ověření vyžádané člověkem jde ve frontě výzkumu první ([R2](R2-lines-and-queue.md));
   - **Ověřit** se nabízí jen u stromu napojeného na výzkum, když most běží a výzkum ověřování umí ([S7.9](#S7.9));
-  - jméno, pohlaví, rozvod a ostatní události se neověřují;
+  - jméno, pohlaví, rozvod a ostatní události se neověřují. **Od aplikace 3.31.0 s výzkumem 1.36.0** se ověřuje
+    i jméno ([S7.10](#S7.10));
   - **Ověřit přednostně** se nenabízí u údaje, o jehož ověření už požádal člověk (je první ve frontě), u údaje, který
     čeká na snímky nebo na svolení archivu, u prvního na řadě a když výzkum pořadí údaje neuvádí. Úkol, na kterém
     agent právě pracuje, výzkum nepřeřadí.
@@ -149,6 +156,7 @@ a v bublině značky na kartičce, nebo položkou **Ověřit údaje · N** v nab
 - **Hlídá kód:** N je přesně to, co výzkum vezme: údaje osoby a jejích rodin, které výzkum zná (i údaje už doložené
   jiným čtenářem), kromě potvrzených člověkem, čekajících na ověření, jména a pohlaví. Počet v nabídce, v okně a ve
   zprávě po spuštění je stejný.
+  - **Od aplikace 3.31.0 s výzkumem 1.36.0:** N počítá i jméno ([S7.10](#S7.10)).
   - **Od aplikace 3.30.0:** jen narození, křest, sňatek, úmrtí a pohřeb. Bydliště, povolání a jiné údaje se ověřují
     přes **Ověřit** u údaje. Když by výzkum pro celou osobu vzal i jiné údaje, pošle aplikace k ověření každý
     zaškrtnutý údaj jmenovitě. Do 3.29.0 i bydliště a povolání.
@@ -316,7 +324,9 @@ a **Vzít zpět**.
     zpět potvrzení u {jméno}“) a zápis v historii změn („Údaj u {jméno} potvrzen podle skenu“, „Potvrzení podle skenu
     vzato zpět: {jméno}“);
   - strom napojený na výzkum: potvrzení zapíše výzkum přes most, jen když most běží a výzkum to umí; jméno a pohlaví
-    se tu nepotvrzují;
+    se tu nepotvrzují. **Od aplikace 3.31.0 s výzkumem 1.36.0** se potvrzuje i jméno ([S7.10](#S7.10));
+  - **od aplikace 3.31.0:** potvrzený údaj, který má dál hodnotu z rodokmenu jiného programu, má pod potvrzením
+    řádek „Převzato z rodokmenu {program}, soubor {datum}“: odkud hodnota přišla, zůstává vidět;
   - v terminálu potvrzuje jen člověk u svého terminálu: `strom verify confirm E… [--undo]`. Agentovi `strom`
     potvrzení odmítne.
 - **Hranice:** strom napojený na výzkum, jehož most neběží: od aplikace 3.30.0 nabídne **Potvrdit podle skenu**
@@ -350,3 +360,46 @@ a **Vzít zpět**.
 - **Platí od:** výzkum 1.30.0, aplikace 3.26.0
 
 <!-- zdroj: app:7b0471f8 src/verify-offer.ts (feature verify a facts.confirm jen ze stavu výzkumu přes most) · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2) · research:6c6e7c3b strom help verify · app:0fbda127 researchConfirms offline -->
+
+<a id="S7.10"></a>
+## S7.10 Jméno jako údaj
+
+Jméno osoby má značku jako narození nebo úmrtí: jak jisté je podle zápisů, které ho dokládají, a zda ho potvrdil
+člověk. Jde ho ověřit i potvrdit podle skenu. Stupeň jména určuje výzkum ([R10.5.2](R10-people-and-hypotheses.md#R10.5.2)).
+
+- **Kde:**
+  - karta osoby: značka u **Jméno** a **Příjmení** (jméno z rodokmenu změněné jen zčásti má značku jen u části, která
+    je z rodokmenu); bublina značky jako u údaje ([S7.1](#S7.1));
+  - kartička ve stromu: jméno je jedním ze tří údajů, ze kterých je jedna značka ([S7.2](#S7.2)). Po potvrzení nebo
+    jeho vzetí zpět přes most se značka kartičky změní hned;
+  - jméno po sňatku má tichou značku u **Příjmení po sňatku**: bez bubliny a bez akcí a do značky kartičky
+    nevstupuje.
+- **Akce u jména** (strom napojený na výzkum, který jméno umí):
+  - **Ověřit** s náhledem jako u údaje ([S7.3](#S7.3)). Když výzkum jméno ověří spolu se zápisem narození nebo křtu,
+    náhled to řekne: „Ověří se spolu s narozením.“, „Ověří se spolu se křtem.“, u narození nebo křtu „Ověří se spolu
+    se jménem.“;
+  - **Potvrdit podle skenu** a **Vzít zpět** jako u údaje ([S7.8](#S7.8)); jméno změněné od načtení stromu se
+    nepotvrdí;
+  - **Ověřit údaje (N)** u osoby jméno počítá ([S7.4](#S7.4));
+  - když značku kartičky drží jméno, nabídne bublina značky odkaz **Jméno v kartě osoby ›**: otevře kartu osoby
+    s bublinou jména.
+- **Hlídá kód:**
+  - stupeň jména bere aplikace jen ze souboru výzkumu; sama nic nedopočítává ani nepřevádí
+    ([R10.5.3](R10-people-and-hypotheses.md#R10.5.3));
+  - do značky kartičky se počítá jen jméno totožnosti osoby ([R10.5.2](R10-people-and-hypotheses.md#R10.5.2));
+  - strom napojený na výzkum, jehož most neběží: jméno s číslem výzkumu jde potvrdit podle skenu; potvrzení drží
+    aplikace a do výzkumu dojde s nejbližším předáním stromu ([S7.8](#S7.8));
+  - strom bez výzkumu: jméno s pramenem potvrdí aplikace sama, jako ostatní údaje;
+  - jméno po sňatku napsané v aplikaci jinak, nebo smazané, svůj stupeň ztratí;
+  - když už žádný údaj osoby není jen z rodokmenu (každý je doložený nebo potvrzený), řádek o původu v kartě osoby
+    říká „Údaje osoby přišly z {program} (soubor {datum}, načteno {datum}); žádný už není jen z rodokmenu.“
+    ([S6.2](S6-tree-from-another-program.md#S6.2)).
+- **Hranice:** se starším výzkumem, který jméno neumí, se nic nemění: jméno ve stromu výzkumu nemá **Ověřit** ani
+  **Potvrdit podle skenu** a značka jména zůstává podle původu (třeba **Z rodokmenu**). Pohlaví se dál neověřuje
+  ani nepotvrzuje.
+- **Ovládání:** aplikace: karta osoby → značka u **Jméno** nebo **Příjmení** → **Ověřit** / **Potvrdit podle
+  skenu** / **Vzít zpět**; bublina značky na kartičce → **Jméno v kartě osoby ›**. Terminál: `strom verify facts
+  --fact P….N`, `strom verify confirm P….N [--undo]`.
+- **Platí od:** aplikace 3.31.0, výzkum 1.36.0
+
+<!-- zdroj: app:58e76958 src/ged-parser.ts (_STROM_STATUS, _STROM_EID P….N, _STROM_CONFIRMED pod NAME), src/reliability.ts factStatusOf (name → nameStatus), src/ui/person-reliability-ui.ts:126-145 (marriedNameStatus inert, fact name:married; jméno u input-firstname a lastname-label, fromParts GIVN/SURN), src/ui/fact-status.ts:200-203 personMarksLayout originHistory · app:bb1c6f0a src/verify-ui-model.ts verifyFactKind NAME, factOffer (nameOk: features name-status, nebo offline s eid; jinak ve stromu výzkumu nic), PERSON_VERIFY_KINDS NAME, verifyTogetherKind (NAME ↔ BIRT/BAPM/CHR), src/verify.ts NAME_STATUS_FEATURE, researchNameRef · strings.ts verify.kinds.NAME, verify.together · app:837ca7a4 src/ui/verify-person-ui.ts:293-310 verifyCardTipActions nameAtPerson, src/renderer.ts refreshCardStatus, src/data.ts (married name přepsaný → bez stavu) · CHANGELOG.cs.md 3.31.0 „Stav jména“ · research:8b92b3ae features name-status, POST /facts/confirm a /verify s P….N · research:0bbd1d22 src/core/stromapp.ts APP_READS_NAME_STATUS · dirigent:spec/066 K6.3, K6.5 · app:docs/ZADANI_VYZKUM_stav-jmena.md Odpověď aplikace -->

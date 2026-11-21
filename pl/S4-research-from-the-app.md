@@ -58,8 +58,14 @@ most.
   potwierdzenie ustawienia w centrum). Sam się ponownie nie rozwinie, nawet gdy wskaźnik albo powiadomienie
   zniknie; rozwija go stuknięcie w nagłówek. Zwinięcie nie jest zapamiętywane jako wybór urządzenia. Na komputerze,
   tablecie i telefonie trzymanym pionowo nic się nie zmienia.
+- **Od aplikacji 3.31.0 z badaniem 1.36.0:** **Trwa praca** i **Teraz** pokazują także agenta, który pracuje
+  bezpośrednio w badaniu („Claude Code – praca bezpośrednia”). Przy pracy, która trzyma zadanie
+  ([R7.9](R7-when-the-agent-works.md#R7.9)), stoi „ostatnio 14:31; zwolni się najpóźniej o 15:01” (ostatnio tylko
+  wtedy, gdy różni się od początku; przy procesie na tym komputerze bez czasu zwolnienia). Przebieg, który czeka na
+  archiwum z ograniczeniami ([R9.13](R9-archives.md#R9.13)), ma stan „Wstrzymano · czeka na archiwum … (najdłużej
+  do 14:40)”. Ze starszym badaniem wszystko jest jak wcześniej.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, (3.28.0: app 8da3f11e MINI_OPEN_KEY strom-research-mini-open, miniPanelFolded, rememberMiniPanelFolded, ne na telefonu; otevřený Přehled panel nerozbalí), :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · spec 036 K1.8 · malý panel: app 2c018779 src/ui/research-ui.ts, research-directions-ui.ts (pod nadpisem linie jen jak) · 3.27.0 spec 057: app f05fff8e src/ui/research-actions-ui.ts overviewRows (research-item-overview první; stop při sledování, jinak followLive, ne bez agenta), src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (live.researchLink v záhlaví focus) · 28bbebeb src/ui/live-section-prefs.ts TOP_DEFAULTS (month.price false), research-overview-ui.ts appendOverviewSummary, strings.ts live.spendSessions, spendAmount · 87a6ea88 live.dirWorkedOn · strings.ts live.openOverview · 3.31.0: app 7be40d24 src/ui/landscape-panel-fold.ts (MQ_PHONE_LANDSCAPE, jen rozbalený panel, images nebo toast message, nerozbalí se sám, nepamatuje se) · SPEC.md 1120-app-108-diry · spec 116 -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, (3.28.0: app 8da3f11e MINI_OPEN_KEY strom-research-mini-open, miniPanelFolded, rememberMiniPanelFolded, ne na telefonu; otevřený Přehled panel nerozbalí), :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · spec 036 K1.8 · malý panel: app 2c018779 src/ui/research-ui.ts, research-directions-ui.ts (pod nadpisem linie jen jak) · 3.27.0 spec 057: app f05fff8e src/ui/research-actions-ui.ts overviewRows (research-item-overview první; stop při sledování, jinak followLive, ne bez agenta), src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (live.researchLink v záhlaví focus) · 28bbebeb src/ui/live-section-prefs.ts TOP_DEFAULTS (month.price false), research-overview-ui.ts appendOverviewSummary, strings.ts live.spendSessions, spendAmount · 87a6ea88 live.dirWorkedOn · strings.ts live.openOverview · 3.31.0: app 7be40d24 src/ui/landscape-panel-fold.ts (MQ_PHONE_LANDSCAPE, jen rozbalený panel, images nebo toast message, nerozbalí se sám, nepamatuje se) · SPEC.md 1120-app-108-diry · spec 116 · 3.31.0 spec 127: app:f89b5166, 040e42e6 src/research-holds.ts workingHoldText, waitsText, src/ui/research-ui.ts pausedText (statePaused · waitsArchive), workingHoldEl, src/ui/research-overview-ui.ts:921, src/research-link.ts features task.holds, archive.holds · strings.ts live.holdLast, holdFreeBy, waitsArchive · research cs.json who.agent -->
 
 <a id="S4.1.1"></a>
 ### S4.1.1 Śledź agenta w drzewie
@@ -421,8 +427,15 @@ Aplikacja pokazuje początek kolejki badania w kolejności, w jakiej bierze ją 
   następne i cofnąć to ([S4.2.2](#S4.2.2)) oraz poprosić o pracę agenta nad kolejką ([S4.2.3](#S4.2.3)). Rozwinięta
   **Kolejka** ma wtedy liczbę zadań w nagłówku („Kolejka · 1240”) zamiast po prawej. Ze starszym badaniem Kolejka
   jest jak wcześniej.
+- **Od aplikacji 3.31.0 z badaniem 1.36.0:** zadanie w kolejce, które trzyma inna sesja, ma uwagę „Zadanie trzyma
+  Claude Code (sesja N0040) od 14:05, ostatnio 14:31; zwolni się najpóźniej o 15:01.” Zadanie, z którego archiwum
+  z ograniczeniami korzysta teraz inna sesja, ma „Z archiwum … korzysta teraz inne badanie (od 14:05, ostatnio
+  14:31); zwolni się najpóźniej o 15:01.”; zamiast „inne badanie” może stać „sesja N0040”, „inna sesja” albo
+  „zbiorcze pobieranie”. Gdy na archiwum dłużej czeka inna praca: „Na archiwum … dłużej czeka inna praca; kolej
+  najpóźniej o 15:01.” Uruchomienie zadania, które trzyma inna sesja, badanie odrzuca
+  ([R7.9](R7-when-the-agent-works.md#R7.9), [R9.13](R9-archives.md#R9.13)). Ze starszym badaniem bez uwag.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear · 3.27.0: app 2ee3718d (queue[].kind ze /status i ze stránek fronty, jiná hodnota zahozena) strings.ts live.queueKind · research 5f48cdaf src/core/queue.ts RUN_TURNS, runOrder (most /status queue[], GET /queue, menu před strom run), kind story|history · 3.28.0: app 4ad34832 src/ui/research-ui.ts appendQueueSection (counted: queueTitleCount místo summary, když je pole nebo akce záhlaví) · spec 052 -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear · 3.27.0: app 2ee3718d (queue[].kind ze /status i ze stránek fronty, jiná hodnota zahozena) strings.ts live.queueKind · research 5f48cdaf src/core/queue.ts RUN_TURNS, runOrder (most /status queue[], GET /queue, menu před strom run), kind story|history · 3.28.0: app 4ad34832 src/ui/research-ui.ts appendQueueSection (counted: queueTitleCount místo summary, když je pole nebo akce záhlaví) · spec 052 · 3.31.0 spec 127: app:f89b5166 src/research-holds.ts heldByText, archiveHeldText, queueHoldText (linie vynechána), src/ui/research-ui.ts queueHoldNote · strings.ts live.heldByTask, archiveHeld, archiveHolderOther, archiveHolderFetch, archiveHolderOwn, archiveHolderSession, archiveHeldWaiting · app:docs/ZADANI_VYZKUM_rezervace.md Odpověď aplikace -->
 
 <a id="S4.2.1"></a>
 ### S4.2.1 Wyszukiwanie w kolejce
@@ -1120,6 +1133,32 @@ pokazuje.
 - **Obowiązuje od:** badanie 1.36.0, aplikacja 3.31.0
 
 <!-- zdroj: app:6edc7dc7 src/research-link.ts CENSUS_FEATURE census, LiveCensus {on, held}, sanitizeCensus · src/history-bridge.ts postBridgeCensus, censusReply (held, invalid, archive 409 census.archive, busy, locked, full) · app:80d6358c src/ui/research-tree-settings-ui.ts renderResearchCensusRow (jen s funkcí census, ne archiv ani výzkum bez agenta, gone po 409; pend přerušovaně a zamčeno; censusHeld jen vypnuto a held > 0; bez mostu storiesBridgeDown), setResearchCensus · strings.ts history.censusSection, censusTitle, censusDesc, censusHeld, storiesBridgeDown, errBusy · e2e/research-census.spec.ts · research:c7b117cd src/core/live.ts POST /census (config set census --for-tree v prostředí aplikace, bez okna) · CHANGELOG.cs.md 3.31.0 „Sčítání lidu z výzkumu“ · dirigent:spec/106 K1.1, K1.4 -->
+
+<a id="S4.4.11"></a>
+### S4.4.11 Badanie dla drzewa › Materiały: pliki agent przejrzy sam
+
+To, czy pliki wysłane do badania agent przejrzy sam ([R11.6](R11-material-from-the-user.md#R11.6)), można włączać
+i wyłączać także w aplikacji. Zapis idzie przez most od razu po kliknięciu, w obu kierunkach, i jest decyzją
+człowieka w aplikacji.
+
+- **Grupa Materiały** z przełącznikiem **Pliki wysłane do badania agent przejrzy sam** i zdaniem „Pliki wysłane do
+  badania (paczki, pojedyncze pliki, skany źródeł) dostają zadania dla agenta: przypisuje je do osób, nazywa je
+  i zakłada źródła. Zużywa subskrypcję lub kredyt. Wyłączone: pliki czekają w Materiałach i są sortowane tylko na
+  żądanie.” Domyślnie jest wyłączony.
+- **Granice:**
+  - tylko przy badaniu, które oferuje to ustawienie; przy starszym badaniu grupy nie ma i obowiązują dotychczasowe
+    teksty. Nie w Archiwum Strom ani w badaniu, które czeka na agenta; gdy badanie w międzyczasie przełączy się na
+    Archiwum Strom, grupa znika;
+  - po kliknięciu nowy stan pokazuje się od razu, przerywany i zablokowany, dopóki badanie nie potwierdzi zapisu;
+  - bez mostu przełącznik jest nieaktywny: „Badanie nie działa. Zmienić to będzie można, gdy zacznie działać.”;
+  - odmowa podaje powód pod wierszem, a przełącznik zostaje taki, jak ma go badanie (zajęte lub zablokowane badanie,
+    zapis trzyma ktoś inny, pełny dysk);
+  - przełącznik dotyczy tego drzewa; to samo ustawienie dotyczy także zdjęć z telefonu ([S5.4](S5-phone.md#S5.4)).
+- **Obsługa:** aplikacja: **Badanie → Więcej → Badanie dla tego drzewa… → Materiały → Pliki wysłane do badania agent
+  przejrzy sam**. Terminal: [R11.6](R11-material-from-the-user.md#R11.6).
+- **Obowiązuje od:** badanie 1.36.0, aplikacja 3.31.0
+
+<!-- zdroj: app:74d06317 src/ui/research-tree-settings-ui.ts renderResearchIntakeRow (features intake.auto, /status.intake, researchAgentlessFor, storiesBridgeDown, pend), setResearchIntake (POST /intake, archive → gone, busy, held, locked, full) · src/research-link.ts postBridgeIntake · strings.ts history.intakeSection, intakeTitle, intakeDesc · research:src/core/live.ts POST /intake (intake.body, intake.archive), /status intake · dirigent:spec/130 K2.1 -->
 
 <a id="S4.5"></a>
 ## S4.5 Działania, które otwierają badanie

@@ -42,6 +42,9 @@ session is one task. A run starts one or more sessions in a row; between them it
 - **Since:** research 1.0.0; waiting for an archive that does not answer from 1.22.0
 - **From research 1.32.0:** a run with `--tasks` ends with **N tasks dealt with**, or after 2×n sessions with
   **sessions: … (the most for the tasks asked) — tasks dealt with: …**.
+- **From research 1.36.0:** a run left only with tasks on a restricted archive that another session uses waits at
+  most `archive.wait` and ends with **nothing else to do — the tasks left need the archive …**
+  ([R9.13](R9-archives.md#R9.13)).
 
 <!-- zdroj: research:src/commands/session.ts:853 Stop, :1220-1268, :1277-1285 · cs.json ui.run.summary, ui.run.stop.*, ui.run.asleep.wait · CHANGELOG.cs.md 1.22.0 · 1.32.0: session.ts Stop tasks|sessions, cs.json ui.run.stop.tasks, ui.run.stop.sessions -->
 
@@ -364,3 +367,48 @@ for it. Until then it behaves as a Strom archive.
   `strom run`, chat; even another than the one set), or when the agent set is on the computer again.
 
 <!-- zdroj: research:src/core/state.ts (hlavička, stateOf, actsAsArchive, kindOf, refuseInArchive agent.missing) · cs.json ui.mode.is.waiting, ui.waiting.refuse, ui.menu.keeparchive · CHANGELOG 1.15.0 · 1.35.0: research:31def74a src/core/state.ts heldWhereNobody (parked, heldBy archive, waiting.held), settleWaiting (atWork: session start, run, chat; jinak stateOf research) · src/core/records.ts create · CHANGELOG.cs.md 1.35.0 „Rodinný materiál … odložený, dokud tu agent není“ -->
+
+<a id="R7.9"></a>
+## R7.9 A task is held by the session working on it
+
+Several agents can work on one research at once: working alone (`strom run`), a conversation (`strom chat`), an agent
+that calls `strom` directly in its own terminal, and another computer over the same research. A task always has only
+one worker: the open session holds it while its agent gives a sign of life. An abandoned task is released by itself.
+
+- **Enforced by the code:**
+  - choosing a task and claiming it happen at once. When two want the same task, one of them gets it; the other takes
+    the next free one. This applies to `strom run`, `strom chat`, `strom session start`, `strom task start`, a link
+    from the Strom app and an agent that works directly;
+  - a sign of life: the process of a run or a conversation that strom started, on this computer; otherwise every
+    `strom` command of that session. The research recognises an agent that works directly by the number of its
+    conversation (Claude Code, Codex…): two such agents each have a session of their own;
+  - with no sign of life for longer than `task.hold` (default 30 min) the hold lapses. When the holder's process on
+    this computer has ended, it lapses at once;
+  - a lapsed session is taken over by one taker only. The old session is closed as interrupted with the note “taken
+    over after N minutes without a sign of life; work in progress in N…”; what was written in it stays, and the task
+    goes back to the queue;
+  - an old holder that wakes up after the takeover (a computer put to sleep, a stopped process) writes nothing more:
+    a writing command is refused and says which session took the task over and when. It may still read. `strom task
+    done` and other writes to a task that another session holds are refused;
+  - whoever wants a task that another session holds gets one sentence: “T12 is held by Claude Code (session N0040)
+    since 14:05, last sign of life 14:31; free by 15:01 at the latest.” When a live process on this computer holds
+    it, in place of the time stands “free when it ends”. `strom run` takes the next free task, `strom session start
+    T…` is refused with an offer of the next one (`strom task next`). There is no waiting for the release;
+  - `strom run` takes over lapsed sessions at the start of each session and leaves out tasks that another session
+    holds (“T12 left out: another agent is working on it”).
+- **Method only:** an agent that works directly gives a `strom` command at least once every 20 minutes; a long
+  reading of scans without one would release the task.
+- **Limits:**
+  - the time comes from the same computer; for a research on a shared disk from another computer only the last sign
+    of life decides. With clocks out of step a reservation holds rather longer, it never doubles;
+  - an older strom beside this one does not hold tasks: the new strom judges its sessions by its run and by the last
+    write, otherwise from the start of the session;
+  - none of this is in the research's data; the hold is only a local state beside the research.
+- **In the app:** who holds a task and until when is shown by the Research overview
+  ([S4.1](S4-research-from-the-app.md#S4.1), [S4.2](S4-research-from-the-app.md#S4.2)).
+- **Controls:** terminal: `strom config set task.hold <minutes>` (e.g. `45m`, `2h`; 5 min to 24 h, applies to this
+  computer, not to one research), `strom task next`; the menu shows in the line about work the agents that work
+  directly too (“An agent is working directly in the research right now.”).
+- **Since:** research 1.36.0
+
+<!-- zdroj: research:1e58aa7b, f08b6574, 23b20c27 src/core/holds.ts (Hold by run|chat|agent, agentSession, BEAT_MS 60 s, holdAlive: proces tady mrtvý → hned, jinak lastSign < task.hold; lastSign max(beat, mtime), budoucnost jako teď; sessionLife: bez holdu worker, run.lock, ops logy, jinak start) · src/core/session.ts claimTask, takeOver (session.taken: „převzato po … bez známky života; rozdělaná práce v …“), :574 session.taken · src/core/errors.ts:122 task.held, task.held.here · src/commands/session.ts:217-225 (session start: sign of life, at least once every 20 minutes, task.held), :985-997 (run: vynechá držené, převzetí na začátku sezení) · src/brief/brief.ts:1668, src/commands/guide.ts:152 (aspoň jednou za 20 minut) · src/core/config.ts:242-246, :335 task.hold (tree: false, 5 min–24 h, výchozí 30) · ověřeno: strom config set task.hold 3 / 25h / --for-tree odmítnuto (izolovaně) · cs.json ui.error.task.held(.here), ui.error.session.taken, ui.run.skip.held, ui.menu.working.direct(.more), session.taken · CHANGELOG.cs.md 1.36.0 „Více agentů a výzkumů najednou“ · dirigent:spec/127 K1.1–K1.5, K5.1–K5.3, navrh-rezervace.md kap. 1–4, 6 -->

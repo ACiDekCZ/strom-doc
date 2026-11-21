@@ -382,6 +382,23 @@ w archiwum**).
   z filtrem na osobę).
 - **Obowiązuje od:** aplikacja 3.9.0; sekcja i okno **Materiały** 3.16.0; 3.30.0: okno przy każdym drzewie, plik
   drzewa jako jeden materiał z miejscami (wersja danych 24)
+- **Od aplikacji 3.31.0 z badaniem 1.36.0:** badanie przegląda pliki samo tylko z włączonym ustawieniem **Pliki
+  wysłane do badania agent przejrzy sam** ([S4.4.11](S4-research-from-the-app.md#S4.4.11),
+  [R11.6](R11-material-from-the-user.md#R11.6)). Wyłączone (domyślnie):
+  - **Wyślij materiał…** mówi „Do drzewa nic nie zostanie dodane. Badanie zapisze pliki przy osobie. Czekają
+    w Materiałach; agent przejrzy je tylko na żądanie.” (przy źródle „… przy źródle.”). Po wysłaniu komunikat
+    „Wysłano do badania: 1 plik dla Jan Horák. Czeka w Materiałach nieposortowany.” z **Uporządkuj agentem…** (na
+    komputerze z oknem **Materiały**, [A3.5.8](#A3.5.8)) i **Pokaż**;
+  - potwierdzenie partii **Dodaj materiały…** nie ma bloków **Prywatność** i **Szacowany koszt**, tylko „Pliki
+    zostaną zapisane w badaniu, poza gitem, i czekają w Materiałach nieposortowane. Agent posortuje je tylko na
+    żądanie; koszt jest podawany wcześniej.”;
+  - koniec partii mówi „Pliki czekają w Materiałach nieposortowane. Agent posortuje je tylko na żądanie.” i oferuje
+    **Uporządkuj agentem…** dla plików partii; gdy nie da się tego zrobić od razu, odsyła do **Uporządkuj agentem…**
+    w Materiałach. Włączone: „Badanie samo posortuje paczkę. …” z liczbą **Zadania sortowania**;
+  - plik, którego agent jeszcze nie przejrzał, ma w Materiałach stan **nieposortowane** (włączone: **czeka na
+    przetworzenie**).
+
+  Ze starszym badaniem obowiązują dotychczasowe teksty.
 
 <!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 -->
 

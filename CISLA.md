@@ -131,6 +131,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R7.7 | R7-when-the-agent-works.md | výzkum 1.25.2 | platí | Nepřihlášený agent | An agent not logged in | Ein nicht angemeldeter Agent | Niezalogowany agent |
 | R7.8 | R7-when-the-agent-works.md | výzkum 1.12.0 | platí | Archiv Stromu: výzkum, na kterém agent nepracuje | Strom archive: a research the agent does not work on | Strom-Archiv: eine Forschung, an der kein Agent arbeitet | Archiwum Strom: badanie, nad którym agent nie pracuje |
 | R7.8.1 | R7-when-the-agent-works.md | výzkum 1.15.0 | platí | Výzkum čeká na agenta | A research waiting for an agent | Eine Forschung wartet auf einen Agenten | Badanie czeka na agenta |
+| R7.9 | R7-when-the-agent-works.md | výzkum 1.36.0 | platí | Úkol drží sezení, které na něm pracuje | A task is held by the session working on it | Eine Aufgabe hält die Sitzung, die an ihr arbeitet | Zadanie trzyma sesja, która nad nim pracuje |
 | R8 | R8-reading-scans.md | výzkum 1.0.0 | platí | Hledání a čtení záznamů ve skenech | Finding and reading entries in scans | Einträge in Scans finden und lesen | Wyszukiwanie i odczyt wpisów w skanach |
 | R8.1 | R8-reading-scans.md | výzkum 1.0.0 | platí | Nejdřív kniha | The book first | Zuerst das Buch | Najpierw księga |
 | R8.1.1 | R8-reading-scans.md | výzkum 1.14.0 | platí | Rejstřík před listováním | An index before browsing | Ein Register vor dem Durchblättern | Indeks przed przeglądaniem |
@@ -186,6 +187,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R9.12.2 | R9-archives.md | výzkum 1.36.0 | platí | Kdy a kde agent sčítání hledá | When and where the agent looks for census records | Wann und wo der Agent Volkszählungen sucht | Kiedy i gdzie agent szuka spisów ludności |
 | R9.12.3 | R9-archives.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Domácnost: jedna společná událost | A household: one shared event | Ein Haushalt: ein gemeinsames Ereignis | Gospodarstwo domowe: jedno wspólne wydarzenie |
 | R9.12.4 | R9-archives.md | výzkum 1.36.0 | platí | Vypnuté sčítání: odložené úkoly | Census records off: tasks set aside | Volkszählungen aus: zurückgestellte Aufgaben | Spisy ludności wyłączone: odłożone zadania |
+| R9.13 | R9-archives.md | výzkum 1.36.0 | platí | Omezený archiv: jedno sezení najednou | A restricted archive: one session at a time | Ein eingeschränktes Archiv: eine Sitzung zur Zeit | Archiwum z ograniczeniami: jedna sesja naraz |
 | R10 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Osoby: ztotožnění, jména a hypotézy | People: identification, names and hypotheses | Personen: Identifizierung, Namen und Hypothesen | Osoby: identyfikacja, imiona i hipotezy |
 | R10.1 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Jmenovec není hledaná osoba | A namesake is not the person sought | Ein Namensvetter ist nicht die gesuchte Person | Imiennik to nie poszukiwana osoba |
 | R10.2 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Dva záznamy jedné osoby: sloučení | Two records of one person: merging | Zwei Einträge einer Person: Zusammenführen | Dwa wpisy jednej osoby: scalenie |
@@ -196,6 +198,8 @@ nenapsáno) · `neplatí od <verze>`.
 | R10.4 | R10-people-and-hypotheses.md | výzkum 1.9.0 | platí | Rodina mimo strom čeká na doloženou vazbu | A family outside the tree waits for a proven link | Eine Familie außerhalb des Stammbaums wartet auf eine belegte Verbindung | Rodzina poza drzewem czeka na udokumentowane powiązanie |
 | R10.5 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Jména osoby | A person's names | Die Namen einer Person | Imiona i nazwiska osoby |
 | R10.5.1 | R10-people-and-hypotheses.md | výzkum 1.18.0 | platí | Chybné jméno a poznámka se odvolají | A wrong name and a note are retracted | Ein falscher Name und eine Notiz werden zurückgezogen | Błędne imię i notatka zostają wycofane |
+| R10.5.2 | R10-people-and-hypotheses.md | výzkum 1.36.0 | platí | Jak jisté je jméno | How sure a name is | Wie sicher ein Name ist | Na ile pewne jest imię i nazwisko |
+| R10.5.3 | R10-people-and-hypotheses.md | výzkum 1.36.0 | platí | Jistota jmen ve starších výzkumech | How sure names are in older researches | Sicherheit der Namen in älteren Forschungen | Pewność imion i nazwisk w starszych badaniach |
 | R10.6 | R10-people-and-hypotheses.md | výzkum 1.0.0 | platí | Lidé, které zápis jmenuje | People a record names | Personen, die ein Eintrag nennt | Osoby wymienione we wpisie |
 | R11 | R11-material-from-the-user.md | výzkum 1.0.0 | platí | Podklady od uživatele | Material from the user | Unterlagen vom Benutzer | Materiały od użytkownika |
 | R11.1 | R11-material-from-the-user.md | výzkum 1.0.0 | platí | Každý soubor je podklad s úkolem | Every file is material with a task | Jede Datei ist eine Unterlage mit einer Aufgabe | Każdy plik to materiał z zadaniem |
@@ -209,6 +213,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R11.5.4 | R11-material-from-the-user.md | výzkum 1.35.0 | platí | Materiál přes most | Material through the bridge | Material über die Brücke | Materiał przez most |
 | R11.5.5 | R11-material-from-the-user.md | výzkum 1.35.0 | platí | Běh třídění z aplikace | A sorting run from the app | Ein Lauf des Sortierens aus der App | Przebieg porządkowania z aplikacji |
 | R11.5.6 | R11-material-from-the-user.md | výzkum 1.35.0 | platí | Smazat natrvalo: `strom input delete` | Delete permanently: `strom input delete` | Endgültig löschen: `strom input delete` | Usuń trwale: `strom input delete` |
+| R11.6 | R11-material-from-the-user.md | výzkum 1.36.0 | platí | Poslané soubory projde agent jen po zapnutí | Sent files are gone through by the agent only once switched on | Gesendete Dateien geht der Agent erst nach dem Einschalten durch | Wysłane pliki agent przejrzy dopiero po włączeniu |
 | R12 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Kde agent pracuje a co strom hlídá | Where the agent works and what strom watches | Wo der Agent arbeitet und was strom überwacht | Gdzie agent pracuje i czego strom pilnuje |
 | R12.1 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Způsoby práce: tabulka | Ways of working: a table | Arten zu arbeiten: eine Tabelle | Sposoby pracy: tabela |
 | R12.2 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Prohlížeč v aplikaci Claude | The browser in the Claude app | Der Browser in der App Claude | Przeglądarka w aplikacji Claude |
@@ -513,6 +518,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.4.8 | S4-research-from-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Úkol, který není zapsaný, jak má | A task not recorded as needed | Eine Aufgabe, die nicht wie nötig erfasst ist | Zadanie, które nie jest zapisane tak, jak trzeba |
 | S4.4.9 | S4-research-from-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Náhled opravy a Vrátit | Preview of the fix and Undo | Vorschau der Korrektur und Rückgängig | Podgląd poprawki i Cofnij |
 | S4.4.10 | S4-research-from-the-app.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Výzkum u stromu › Sčítání lidu | Research for this tree › Census records | Forschung für diesen Stammbaum › Volkszählungen | Badanie dla drzewa › Spisy ludności |
+| S4.4.11 | S4-research-from-the-app.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Výzkum u stromu › Materiály: soubory projde agent sám | Research for this tree › Materials: the agent goes through files by itself | Forschung für diesen Stammbaum › Materialien: Dateien geht der Agent selbst durch | Badanie dla drzewa › Materiały: pliki agent przejrzy sam |
 | S4.5 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Akce, které otevřou výzkum | Actions that open the research | Aktionen, die die Forschung öffnen | Działania, które otwierają badanie |
 | S4.5.1 | S4-research-from-the-app.md | aplikace 3.21.0 | platí | Značky akcí | Action marks | Marken der Aktionen | Oznaczenia działań |
 | S4.5.2 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Kde akce jsou | Where the actions are | Wo die Aktionen sind | Gdzie są działania |
@@ -551,6 +557,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S7.7 | S7-reliability-and-verification.md | výzkum 1.30.0, aplikace 3.26.0 | koncept | Výsledek ověření | The result of verifying | Das Ergebnis der Prüfung | Wynik weryfikacji |
 | S7.8 | S7-reliability-and-verification.md | výzkum 1.30.0, aplikace 3.26.0 | koncept | Potvrdit podle skenu: potvrzení člověkem | Confirm against the scan: confirmation by a person | Anhand des Scans bestätigen: Bestätigung durch einen Menschen | Potwierdź według skanu: potwierdzenie przez człowieka |
 | S7.9 | S7-reliability-and-verification.md | výzkum 1.30.0, aplikace 3.26.0 | koncept | Co jde s mostem a co bez něj | What works with the bridge and what without it | Was mit der Brücke geht und was ohne sie | Co działa z mostem, a co bez niego |
+| S7.10 | S7-reliability-and-verification.md | aplikace 3.31.0, výzkum 1.36.0 | koncept | Jméno jako údaj | The name as a fact | Der Name als Angabe | Imię i nazwisko jako dana |
 | S8 | S8-where-the-data-are.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Kde jsou data | Where the data are | Wo die Daten liegen | Gdzie są dane |
 | S8.1 | S8-where-the-data-are.md | aplikace 3.0.0 | platí | Co je jen v prohlížeči | What is only in the browser | Was nur im Browser liegt | Co jest tylko w przeglądarce |
 | S8.2 | S8-where-the-data-are.md | výzkum 1.0.0 | platí | Co je ve výzkumu a v Archivu Stromu | What is in the research and in the Strom archive | Was in der Forschung und im Strom-Archiv liegt | Co jest w badaniu i w Archiwum Strom |

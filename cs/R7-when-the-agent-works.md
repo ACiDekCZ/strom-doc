@@ -40,6 +40,9 @@ jeden úkol. Běh spustí jedno nebo víc sezení za sebou; mezi nimi se může 
 - **Platí od:** výzkum 1.0.0; čekání na archiv, který neodpovídá, od 1.22.0
 - **Od výzkumu 1.32.0:** běh s `--tasks` skončí **vyřízené úkoly: N**, nebo po 2×n sezeních **sezení: … (nejvíc pro
   žádaný počet úkolů) – vyřízené úkoly: …**.
+- **Od výzkumu 1.36.0:** běh, kterému zbyly jen úkoly na omezeném archivu, který používá jiné sezení, počká nejvýš
+  `archive.wait` a skončí **nic dalšího k práci – zbylé úkoly potřebují archiv …**
+  ([R9.13](R9-archives.md#R9.13)).
 
 <!-- zdroj: research:src/commands/session.ts:853 Stop, :1220-1268, :1277-1285 · cs.json ui.run.summary, ui.run.stop.*, ui.run.asleep.wait · CHANGELOG.cs.md 1.22.0 · 1.32.0: session.ts Stop tasks|sessions, cs.json ui.run.stop.tasks, ui.run.stop.sessions -->
 
@@ -341,3 +344,47 @@ Do té doby se chová jako Archiv Stromu.
   než nastavený), nebo když je nastavený agent zase na počítači.
 
 <!-- zdroj: research:src/core/state.ts (hlavička, stateOf, actsAsArchive, kindOf, refuseInArchive agent.missing) · cs.json ui.mode.is.waiting, ui.waiting.refuse, ui.menu.keeparchive · CHANGELOG 1.15.0 · 1.35.0: research:31def74a src/core/state.ts heldWhereNobody (parked, heldBy archive, waiting.held), settleWaiting (atWork: session start, run, chat; jinak stateOf research) · src/core/records.ts create · CHANGELOG.cs.md 1.35.0 „Rodinný materiál … odložený, dokud tu agent není“ -->
+
+<a id="R7.9"></a>
+## R7.9 Úkol drží sezení, které na něm pracuje
+
+Na jednom výzkumu může pracovat víc agentů najednou: samostatná práce (`strom run`), rozhovor (`strom chat`), agent,
+který volá `strom` přímo ve svém terminálu, i jiný počítač nad týmž výzkumem. Úkol má vždy jen jednoho pracujícího:
+drží ho otevřené sezení, dokud jeho agent dává znamení života. Opuštěný úkol se uvolní sám.
+
+- **Hlídá kód:**
+  - výběr úkolu a jeho zabrání proběhnou naráz. Když o tentýž úkol stojí dva, dostane ho jeden; druhý vezme další volný.
+    Platí pro `strom run`, `strom chat`, `strom session start`, `strom task start`, odkaz z aplikace Strom i agenta,
+    který pracuje přímo;
+  - znamení života: proces běhu nebo rozhovoru, který spustil strom, na tomto počítači; jinak každý příkaz `strom`
+    toho sezení. Agenta, který pracuje přímo, pozná výzkum podle čísla jeho konverzace (Claude Code, Codex…): dva
+    takoví agenti mají každý své sezení;
+  - bez znamení života déle než `task.hold` (výchozí 30 min) držení propadne. Když proces držitele na tomto počítači
+    skončil, propadne hned;
+  - propadlé sezení převezme jen jeden zájemce. Staré sezení se zavře jako přerušené s poznámkou „převzato po N
+    minutách bez známky života; rozdělaná práce v N…“; co v něm bylo zapsáno, zůstává, a úkol se vrátí do fronty;
+  - starý držitel, který se po převzetí probudí (uspaný počítač, zastavený proces), už nic nezapíše: zapisující příkaz
+    se odmítne a řekne, které sezení úkol převzalo a kdy. Číst smí dál. `strom task done` a další zápisy k úkolu, který
+    drží jiné sezení, se odmítnou;
+  - kdo chce úkol, který drží jiné sezení, dostane jednu větu: „T12 drží Claude Code (sezení N0040) od 14:05,
+    naposledy 14:31; uvolní se nejpozději v 15:01.“ Když ho drží živý proces na tomto počítači, místo času stojí
+    „uvolní se, až skončí“. `strom run` vezme další volný úkol, `strom session start T…` se odmítne s nabídkou dalšího
+    (`strom task next`). Na uvolnění se nečeká;
+  - `strom run` převezme propadlá sezení na začátku každého sezení a úkoly, které drží jiné sezení, vynechá („T12
+    vynechán: pracuje na něm jiný agent“).
+- **Jen metodika:** agent, který pracuje přímo, dá aspoň jednou za 20 minut příkaz `strom`; dlouhé čtení skenů bez
+  něj by úkol uvolnilo.
+- **Hranice:**
+  - čas je ze stejného počítače; u výzkumu na sdíleném disku z jiného počítače rozhoduje jen poslední znamení života.
+    Při posunutých hodinách drží rezervace spíš déle, nikdy se nezdvojí;
+  - starší strom vedle tohoto úkoly nedrží: jeho sezení posuzuje nový strom podle jeho běhu a podle posledního zápisu,
+    jinak od začátku sezení;
+  - nic z toho není v datech výzkumu; držení je jen místní stav vedle výzkumu.
+- **V aplikaci:** kdo úkol drží a do kdy, ukazuje Přehled výzkumu ([S4.1](S4-research-from-the-app.md#S4.1),
+  [S4.2](S4-research-from-the-app.md#S4.2)).
+- **Ovládání:** terminál: `strom config set task.hold <minuty>` (např. `45m`, `2h`; 5 min až 24 h, platí pro tento
+  počítač, ne pro jeden výzkum), `strom task next`; menu ukazuje v řádku o práci i agenty, kteří pracují přímo
+  („Přímo ve výzkumu teď pracuje agent.“).
+- **Platí od:** výzkum 1.36.0
+
+<!-- zdroj: research:1e58aa7b, f08b6574, 23b20c27 src/core/holds.ts (Hold by run|chat|agent, agentSession, BEAT_MS 60 s, holdAlive: proces tady mrtvý → hned, jinak lastSign < task.hold; lastSign max(beat, mtime), budoucnost jako teď; sessionLife: bez holdu worker, run.lock, ops logy, jinak start) · src/core/session.ts claimTask, takeOver (session.taken: „převzato po … bez známky života; rozdělaná práce v …“), :574 session.taken · src/core/errors.ts:122 task.held, task.held.here · src/commands/session.ts:217-225 (session start: sign of life, at least once every 20 minutes, task.held), :985-997 (run: vynechá držené, převzetí na začátku sezení) · src/brief/brief.ts:1668, src/commands/guide.ts:152 (aspoň jednou za 20 minut) · src/core/config.ts:242-246, :335 task.hold (tree: false, 5 min–24 h, výchozí 30) · ověřeno: strom config set task.hold 3 / 25h / --for-tree odmítnuto (izolovaně) · cs.json ui.error.task.held(.here), ui.error.session.taken, ui.run.skip.held, ui.menu.working.direct(.more), session.taken · CHANGELOG.cs.md 1.36.0 „Více agentů a výzkumů najednou“ · dirigent:spec/127 K1.1–K1.5, K5.1–K5.3, navrh-rezervace.md kap. 1–4, 6 -->

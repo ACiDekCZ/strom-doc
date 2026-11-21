@@ -330,12 +330,12 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | podklad, podklady (terminal, `strom intake`, `strom input`) | Soubor nebo text, který výzkumu dal uživatel. Uloží se beze změny a dostane úkol; z dokladu se stane pramen, z ostatního vodítko. |
-| en | input, inputs (terminal, `strom intake`, `strom input`) | A file or text the user gave the research. It is kept unchanged and gets a task; a document becomes a source, the rest a lead. |
-| de | Unterlage, Unterlagen (terminal, `strom intake`, `strom input`) | Eine Datei oder ein Text, den der Benutzer der Forschung gegeben hat. Sie wird unverändert gespeichert und bekommt eine Aufgabe; aus einer Urkunde wird eine Quelle, aus dem Rest ein Hinweis. |
-| pl | materiał, materiały (terminal, `strom intake`, `strom input`) | Plik lub tekst, który użytkownik dał badaniu. Zostaje zapisany bez zmian i dostaje zadanie; dokument staje się źródłem, reszta wskazówką. |
+| cs | podklad, podklady (terminal, `strom intake`, `strom input`) | Soubor nebo text, který výzkumu dal uživatel. Uloží se beze změny; úkol pro agenta dostane, jen když je zapnuté, že poslané soubory projde agent sám, nebo když o to člověk požádá (text vždy); z dokladu se stane pramen, z ostatního vodítko. |
+| en | input, inputs (terminal, `strom intake`, `strom input`) | A file or text the user gave the research. It is kept unchanged; it gets a task for the agent only when the agent going through sent files by itself is switched on, or when a person asks for it (a text always); a document becomes a source, the rest a lead. |
+| de | Unterlage, Unterlagen (terminal, `strom intake`, `strom input`) | Eine Datei oder ein Text, den der Benutzer der Forschung gegeben hat. Sie wird unverändert gespeichert; eine Aufgabe für den Agenten bekommt sie nur, wenn eingeschaltet ist, dass der Agent gesendete Dateien selbst durchgeht, oder wenn ein Mensch darum bittet (ein Text immer); aus einer Urkunde wird eine Quelle, aus dem Rest ein Hinweis. |
+| pl | materiał, materiały (terminal, `strom intake`, `strom input`) | Plik lub tekst, który użytkownik dał badaniu. Zostaje zapisany bez zmian; zadanie dla agenta dostaje tylko wtedy, gdy jest włączone, że wysłane pliki agent przejrzy sam, albo gdy człowiek o to poprosi (tekst zawsze); dokument staje się źródłem, reszta wskazówką. |
 
-- **Čísla:** [R11](cs/R11-material-from-the-user.md), R11.1, R11.2, R11.3, R11.4
+- **Čísla:** [R11](cs/R11-material-from-the-user.md), R11.1, R11.2, R11.3, R11.4, R11.6, S4.4.11
 
 <a id="gate"></a>
 ### Podmínka
@@ -1102,7 +1102,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Anhand des Scans bestätigen, der Stand Am {datum} anhand des Scans bestätigt (app) · `strom verify confirm` | Die Bestätigung einer Angabe durch einen Menschen, der sie mit dem Scan des Eintrags verglichen hat: die Marke Bestätigt (✓). Sie gilt, solange sich der Wert nicht ändert; Zurücknehmen hebt sie auf. Der Agent ändert sie nie. |
 | pl | Potwierdź według skanu, stan Potwierdzone według skanu {data} (app) · `strom verify confirm` | Potwierdzenie danej przez człowieka, który porównał ją ze skanem aktu: znacznik Potwierdzone (✓). Obowiązuje, dopóki wartość się nie zmieni; Cofnij je wycofuje. Agent nigdy go nie zmienia. |
 
-- **Čísla:** [S7.8](cs/S7-reliability-and-verification.md#S7.8), S7.1, S7.9
+- **Čísla:** [S7.8](cs/S7-reliability-and-verification.md#S7.8), S7.1, S7.9, S7.10
 
 <a id="verify-facts"></a>
 ### Ověřit údaje
@@ -1367,6 +1367,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Spisy ludności | Źródło zapisujące jedno gospodarstwo domowe w jednym roku: kto mieszkał w domu, pokrewieństwo z głową gospodarstwa, wiek, często miejsce urodzenia i zawód. Badanie używa go tylko wtedy, gdy człowiek je włączy; po wyłączeniu zadania spisu są odłożone. Gospodarstwo domowe to jedno wspólne wydarzenie. |
 
 - **Čísla:** [R9.12](cs/R9-archives.md#R9.12), R9.12.1, R9.12.2, R9.12.3, R9.12.4, S4.2.4, S4.4.10
+
+<a id="task-hold"></a>
+### Úkol drží sezení · omezený archiv
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | drží (úkol, archiv) · `task.hold`, `archive.hold`, `archive.wait` · archiv omezuje automatický přístup | Úkol drží otevřené sezení, dokud jeho agent dává znamení života; bez něj déle než `task.hold` úkol převezme další zájemce. Archiv, který omezuje automatický přístup (lidské tempo, jen prohlížeč, hodinový strop), drží najednou jen jedno sezení ze všech výzkumů na počítači. |
+| en | held (a task, an archive) · `task.hold`, `archive.hold`, `archive.wait` · the archive restricts automated access | A task is held by the open session while its agent gives a sign of life; with none for longer than `task.hold` the next one who wants it takes it over. An archive that restricts automated access (a person's pace, the browser alone, an hourly cap) is held by one session at a time of all the researches on the computer. |
+| de | hält (eine Aufgabe, ein Archiv) · `task.hold`, `archive.hold`, `archive.wait` · das Archiv schränkt automatisierten Zugriff ein | Eine Aufgabe hält die offene Sitzung, solange ihr Agent ein Lebenszeichen gibt; ohne eines länger als `task.hold` übernimmt sie der nächste Interessent. Ein Archiv, das automatisierten Zugriff einschränkt (menschliches Tempo, nur Browser, Stundenlimit), hält jeweils nur eine Sitzung aller Forschungen auf dem Computer. |
+| pl | trzyma (zadanie, archiwum) · `task.hold`, `archive.hold`, `archive.wait` · archiwum ogranicza zautomatyzowany dostęp | Zadanie trzyma otwarta sesja, dopóki jej agent daje znak życia; bez niego dłużej niż `task.hold` zadanie przejmuje następny chętny. Archiwum, które ogranicza zautomatyzowany dostęp (ludzkie tempo, tylko przeglądarka, limit godzinowy), trzyma naraz tylko jedna sesja ze wszystkich badań na komputerze. |
+
+- **Čísla:** [R7.9](cs/R7-when-the-agent-works.md#R7.9), [R9.13](cs/R9-archives.md#R9.13), S4.1, S4.2
 
 <a id="list-of-people"></a>
 ### Seznam osob

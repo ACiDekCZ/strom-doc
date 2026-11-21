@@ -6,8 +6,9 @@ Die Forschung kann eine Angabe am Original des Eintrags prüfen: im Hintergrund,
 in einem großen Teil des Stammbaums. Gewissheit entsteht aber erst dadurch, dass **ein Mensch** die Angabe selbst mit
 dem Scan des Eintrags vergleicht und sie bestätigt (**Anhand des Scans bestätigen**, [S7.8](#S7.8)). Die Prüfung durch
 einen Agenten gibt höchstens **Belegt**; die Bestätigung durch einen Menschen ist stärker, und der Agent ändert sie nie.
-Beschrieben werden die Strom-App 3.26.0 und die Forschung 1.30.0. Was nur mit der Brücke der Forschung geht und was
-auch ohne sie, fasst [S7.9](#S7.9) zusammen.
+Beschrieben werden die Strom-App 3.26.0 und die Forschung 1.30.0; Änderungen aus einer neueren Version tragen deren
+Nummer. Was nur mit der Brücke der Forschung geht und was auch ohne sie, fasst [S7.9](#S7.9) zusammen. Den Namen
+einer Person als Angabe beschreibt [S7.10](#S7.10).
 
 <!-- zdroj: dirigent:spec/065-spolehlivost-a-znovu-overeni/spec.md · app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Ověřit údaje, Jedna značka na kartičce) · research:6c6e7c3b CHANGELOG.cs.md 1.30.0 (ověření podle originálů) -->
 
@@ -85,6 +86,12 @@ Angaben steht. Sie nimmt die schwächste der drei Angaben des Kärtchens: Name, 
     Quelle. Ein Stammbaum ohne Quellen und ohne Herkunft hat keine Marke;
   - eine Platzhalterperson („?“) hat keine Marke.
 - **Popup der Marke:** „Schwächste Angabe des Kärtchens: …“ und in Worten, was die Marke bedeutet.
+  - **Ab App 3.31.0:** bei der Marke **Aus dem Stammbaum** steht die Überschrift „Im Stammbaum zitiert, in Strom
+    nicht geprüft“ nur über Quellen, die nur bei Angaben aus dem Stammbaum zitiert sind (etwa beim Namen). Eine
+    Quelle, die bei einer belegten Geburt oder einem belegten Tod zitiert ist (eine Matrik, auch wenn sie zugleich der
+    Name zitiert), steht unter der eigenen Überschrift **Quellen (N)**. Früher stand jede Quelle des Kärtchens unter
+    der Überschrift aus dem Stammbaum. Hält der Name die Marke, führt das Popup mit dem Link **Name in der
+    Personenkarte ›** zur Marke des Namens in der Personenkarte ([S7.10](#S7.10)).
 - **Bedienung:** **Einstellungen → Personenkarte → Auf der Karte zeigen → Belege und Verlässlichkeit** (standardmäßig
   ein).
 - **Gilt seit:** App 3.26.0
@@ -125,7 +132,8 @@ den Linien.
     ([R2](R2-lines-and-queue.md));
   - **Prüfen** wird nur bei einem an die Forschung gebundenen Stammbaum angeboten, wenn die Brücke läuft und die
     Forschung das Prüfen beherrscht ([S7.9](#S7.9));
-  - Name, Geschlecht, Scheidung und die übrigen Ereignisse werden nicht geprüft;
+  - Name, Geschlecht, Scheidung und die übrigen Ereignisse werden nicht geprüft. **Ab App 3.31.0 mit Forschung
+    1.36.0** wird auch der Name geprüft ([S7.10](#S7.10));
   - **Vorrangig prüfen** wird nicht angeboten bei einer Angabe, deren Prüfung ein Mensch schon erbeten hat (sie steht
     in der Warteschlange vorn), bei einer Angabe, die auf Scans oder auf die Erlaubnis eines Archivs wartet, bei der
     nächsten an der Reihe und wenn die Forschung die Position der Angabe nicht nennt. Eine Aufgabe, an der der Agent
@@ -171,6 +179,7 @@ im Menü der Person.
   Forschung kennt (auch Angaben, die schon ein anderer Leser belegt hat), außer den von einem Menschen bestätigten,
   den auf Prüfung wartenden, Name und Geschlecht. Die Zahl im Menü, im Fenster und in der Meldung nach dem Start ist
   dieselbe.
+  - **Ab App 3.31.0 mit Forschung 1.36.0:** N zählt auch den Namen ([S7.10](#S7.10)).
   - **Ab App 3.30.0:** nur Geburt, Taufe, Heirat, Tod und Begräbnis. Wohnorte, Berufe und andere Angaben werden über
     **Prüfen** bei der Angabe geprüft. Würde die Forschung für die ganze Person auch andere Angaben nehmen, schickt
     die App jede angekreuzte Angabe einzeln benannt zur Prüfung. Bis 3.29.0 auch Wohnorte und Berufe.
@@ -362,7 +371,11 @@ statt der Aktion den Stand „✓ Am {datum} anhand des Scans bestätigt“ und 
     Änderungsverlauf („Angabe von {name} anhand des Scans bestätigt“, „Bestätigung anhand des Scans zurückgenommen:
     {name}“);
   - an die Forschung gebundener Stammbaum: die Bestätigung schreibt die Forschung über die Brücke, nur wenn die Brücke
-    läuft und die Forschung es beherrscht; Name und Geschlecht werden hier nicht bestätigt;
+    läuft und die Forschung es beherrscht; Name und Geschlecht werden hier nicht bestätigt. **Ab App 3.31.0 mit
+    Forschung 1.36.0** wird auch der Name bestätigt ([S7.10](#S7.10));
+  - **ab App 3.31.0:** eine bestätigte Angabe, die weiter den Wert aus dem Stammbaum eines anderen Programms hat, hat
+    unter der Bestätigung die Zeile „Übernommen aus {program}, Datei vom {datum}“: woher der Wert kam, bleibt
+    sichtbar;
   - im Terminal bestätigt nur ein Mensch an seinem Terminal: `strom verify confirm E… [--undo]`. Einem Agenten lehnt
     `strom` die Bestätigung ab.
 - **Grenzen:** ein an die Forschung gebundener Stammbaum, dessen Brücke nicht läuft: ab App 3.30.0 bietet er
@@ -398,3 +411,50 @@ statt der Aktion den Stand „✓ Am {datum} anhand des Scans bestätigt“ und 
 - **Gilt seit:** Forschung 1.30.0, App 3.26.0
 
 <!-- zdroj: app:7b0471f8 src/verify-offer.ts (feature verify a facts.confirm jen ze stavu výzkumu přes most) · dirigent:test/vysledek-1109-zaver-c-potvrzeni.md (N2) · research:6c6e7c3b strom help verify · app:0fbda127 researchConfirms offline -->
+
+<a id="S7.10"></a>
+## S7.10 Der Name als Angabe
+
+Der Name einer Person hat eine Marke wie Geburt oder Tod: wie sicher er nach den Einträgen ist, die ihn belegen, und
+ob ihn ein Mensch bestätigt hat. Er lässt sich prüfen und anhand des Scans bestätigen. Die Stufe des Namens bestimmt
+die Forschung ([R10.5.2](R10-people-and-hypotheses.md#R10.5.2)).
+
+- **Wo:**
+  - Personenkarte: die Marke bei **Vorname** und **Nachname** (ein nur teilweise geänderter Name aus dem Stammbaum
+    hat die Marke nur bei dem Teil, der aus dem Stammbaum ist); das Popup der Marke wie bei einer Angabe
+    ([S7.1](#S7.1));
+  - Kärtchen im Baum: der Name ist eine der drei Angaben, aus denen die eine Marke entsteht ([S7.2](#S7.2)). Nach
+    einer Bestätigung oder ihrer Rücknahme über die Brücke ändert sich die Marke des Kärtchens sofort;
+  - der Ehename hat eine stille Marke bei **Ehename**: ohne Popup und ohne Aktionen, und in die Marke des Kärtchens
+    geht er nicht ein.
+- **Aktionen beim Namen** (ein Stammbaum, der an eine Forschung gebunden ist, die den Namen beherrscht):
+  - **Prüfen** mit der Vorschau wie bei einer Angabe ([S7.3](#S7.3)). Prüft die Forschung den Namen zusammen mit dem
+    Eintrag der Geburt oder Taufe, sagt es die Vorschau: „Wird zusammen mit der Geburt geprüft.“, „Wird zusammen mit
+    der Taufe geprüft.“, bei Geburt oder Taufe „Der Name wird mitgeprüft.“;
+  - **Anhand des Scans bestätigen** und **Zurücknehmen** wie bei einer Angabe ([S7.8](#S7.8)); ein seit dem Laden des
+    Stammbaums geänderter Name wird nicht bestätigt;
+  - **Angaben prüfen (N)** bei einer Person zählt den Namen mit ([S7.4](#S7.4));
+  - hält der Name die Marke des Kärtchens, bietet das Popup der Marke den Link **Name in der Personenkarte ›**: er
+    öffnet die Personenkarte mit dem Popup des Namens.
+- **Prüft der Code:**
+  - die Stufe des Namens nimmt die App nur aus der Datei der Forschung; selbst rechnet und überträgt sie nichts
+    ([R10.5.3](R10-people-and-hypotheses.md#R10.5.3));
+  - in die Marke des Kärtchens zählt nur der Identitätsname der Person
+    ([R10.5.2](R10-people-and-hypotheses.md#R10.5.2));
+  - ein an die Forschung gebundener Stammbaum, dessen Brücke nicht läuft: ein Name mit einer Nummer der Forschung
+    lässt sich anhand des Scans bestätigen; die Bestätigung hält die App, und sie erreicht die Forschung mit der
+    nächsten Übergabe des Stammbaums ([S7.8](#S7.8));
+  - Stammbaum ohne Forschung: einen Namen mit Quelle bestätigt die App selbst, wie die übrigen Angaben;
+  - ein Ehename, der in der App anders geschrieben oder gelöscht wurde, verliert seine Stufe;
+  - ist keine Angabe der Person mehr nur aus dem Stammbaum (jede ist belegt oder bestätigt), sagt die Zeile zur
+    Herkunft in der Personenkarte „Die Angaben der Person stammen aus {program} (Datei vom {datum}, geladen am
+    {datum}); keine ist mehr nur aus dem Stammbaum.“ ([S6.2](S6-tree-from-another-program.md#S6.2)).
+- **Grenzen:** mit einer älteren Forschung, die den Namen nicht beherrscht, ändert sich nichts: der Name im Stammbaum
+  der Forschung hat weder **Prüfen** noch **Anhand des Scans bestätigen**, und die Marke des Namens bleibt nach der
+  Herkunft (etwa **Aus dem Stammbaum**). Das Geschlecht wird weiterhin weder geprüft noch bestätigt.
+- **Bedienung:** App: Personenkarte → Marke bei **Vorname** oder **Nachname** → **Prüfen** / **Anhand des Scans
+  bestätigen** / **Zurücknehmen**; Popup der Marke auf dem Kärtchen → **Name in der Personenkarte ›**. Terminal:
+  `strom verify facts --fact P….N`, `strom verify confirm P….N [--undo]`.
+- **Gilt seit:** App 3.31.0, Forschung 1.36.0
+
+<!-- zdroj: app:58e76958 src/ged-parser.ts (_STROM_STATUS, _STROM_EID P….N, _STROM_CONFIRMED pod NAME), src/reliability.ts factStatusOf (name → nameStatus), src/ui/person-reliability-ui.ts:126-145 (marriedNameStatus inert, fact name:married; jméno u input-firstname a lastname-label, fromParts GIVN/SURN), src/ui/fact-status.ts:200-203 personMarksLayout originHistory · app:bb1c6f0a src/verify-ui-model.ts verifyFactKind NAME, factOffer (nameOk: features name-status, nebo offline s eid; jinak ve stromu výzkumu nic), PERSON_VERIFY_KINDS NAME, verifyTogetherKind (NAME ↔ BIRT/BAPM/CHR), src/verify.ts NAME_STATUS_FEATURE, researchNameRef · strings.ts verify.kinds.NAME, verify.together · app:837ca7a4 src/ui/verify-person-ui.ts:293-310 verifyCardTipActions nameAtPerson, src/renderer.ts refreshCardStatus, src/data.ts (married name přepsaný → bez stavu) · CHANGELOG.cs.md 3.31.0 „Stav jména“ · research:8b92b3ae features name-status, POST /facts/confirm a /verify s P….N · research:0bbd1d22 src/core/stromapp.ts APP_READS_NAME_STATUS · dirigent:spec/066 K6.3, K6.5 · app:docs/ZADANI_VYZKUM_stav-jmena.md Odpověď aplikace -->

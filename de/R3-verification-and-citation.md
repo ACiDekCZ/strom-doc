@@ -33,6 +33,8 @@ Schlussfolgerung aus allen Quellen der Angabe ist, nicht, wie gut eine einzelne 
   **möglich**, **Hinweis**, **widerlegt**. Die Zusammenfassung `strom stats` schreibt weiter „nur Hinweise“.
 - **Ab Forschung 1.30.0:** `strom event show` und `strom event edit` geben die Angabe für den Menschen in der Sprache
   der Forschung aus (zum Beispiel „[Hinweis]“); der Agent bekommt die Ausgabe weiter auf Englisch.
+- **Ab Forschung 1.36.0:** einen Grad hat auch der Name einer Person, außer **Widerlegt** (`strom cite P… S…
+  --status`, [R10.5.2](R10-people-and-hypotheses.md#R10.5.2)).
 
 <!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus · 1.26.0: src/cli/human.ts:139 STATUS, cs.json ui.st.* (commit fe59fb40) -->
 

@@ -829,3 +829,47 @@ Wyłączenie spisów odkłada zadania spisu, nie usuwa ich. Po włączeniu wraca
 - **Obowiązuje od:** badanie 1.36.0
 
 <!-- zdroj: research:c7b117cd src/core/census.ts censusHeld (open, parked do uplynulého dne, waiting; nikdy doing ani parked člověkem), censusHidden, censusHeldCount · src/core/queue.ts rankTasks censusHide · src/core/waiting.ts (Co čeká) · src/core/live.ts censusStatus (/status.census {on, held}) · src/commands/tasks.ts task list (censusHeldNow, „held: census off“, --kind census) · src/commands/session.ts censusLine, censusCloseLine · research:5a73905e src/cli/menu-settings.ts censusLabel (ui.settings.census.held), censusStep (ui.settings.census.back) · test/cli/census.test.ts (M3) · dirigent:spec/106 K1.3, rozhodnutí 20. 11. M3 -->
+
+<a id="R9.13"></a>
+## R9.13 Archiwum z ograniczeniami: jedna sesja naraz
+
+Archiwum, które ogranicza zautomatyzowany dostęp, używa naraz tylko jedna sesja ze wszystkich badań ze wspólnym
+folderem na komputerze. Archiwum nie zablokuje więc dostępu, a jeden wykonawca idzie pełnym dozwolonym tempem, zamiast
+żeby kilku dzieliło się tempem.
+
+- **Archiwum z ograniczeniami:** warunki archiwum wymagają ludzkiego tempa albo tylko przeglądarki, człowiek dał zgodę
+  „powoli” lub „przez przeglądarkę” ([R9.2](#R9.2)), albo program pobierający archiwum ma limit godzinowy. Odrzucenie
+  przez archiwum (401, 403, 429) nie czyni archiwum archiwum z ograniczeniami: archiwum zostaje na chwilę zostawione
+  w spokoju jak dotąd. Archiwum rozpoznaje się po domenie witryny.
+- **Pilnuje kod:**
+  - zadanie, którego księgi leżą tylko w archiwum z ograniczeniami, przy zajęciu zadania bierze także archiwum.
+    Archiwum trzyma sesja; agent, który dopiero zabłądzi do archiwum, zajmuje je pierwszym zapytaniem;
+  - trzymanie archiwum kończy się z sesją, z wygaśnięciem sesji ([R7.9](R7-when-the-agent-works.md#R7.9)) albo po
+    `archive.hold` (domyślnie 30 min) bez zapytania do archiwum, nawet gdy sesja dalej trwa. Kto tylko czyta pobrane
+    skany, zwalnia tak archiwum;
+  - zadanie w archiwum, które trzyma inna sesja, zostaje na razie pominięte i bierze się inną pracę („pominięte:
+    archiwum … ogranicza zautomatyzowany dostęp i używa go teraz inna sesja”). Zapytanie agenta do takiego archiwum
+    zostaje odrzucone;
+  - samodzielna praca, której zostały tylko takie zadania, czeka najwyżej `archive.wait` (domyślnie 30 min). Do
+    archiwum podczas czekania nic się nie wysyła. Potem przebieg kończy się z powodem „nic więcej do zrobienia –
+    pozostałe zadania potrzebują archiwum …, którego przez cały czas oczekiwania używała inna sesja”;
+  - `strom session start T…` przy zadaniu zajętego archiwum zostaje odrzucone jednym zdaniem: „Archiwum … używa teraz
+    inne badanie (od 9:10, ostatnio 9:40); zwolni się najpóźniej o 10:10.” W tym samym badaniu zamiast „inne badanie”
+    stoi numer sesji;
+  - kto czeka na archiwum, stoi w kolejce; po zwolnieniu pierwszeństwo ma ten, kto czeka najdłużej. Sesja, która
+    archiwum puściła, nie zajmie go od razu ponownie, gdy ktoś na nie czeka.
+- **Pobieranie zbiorcze:** na komputerze działa naraz tylko jedno zbiorcze pobieranie skanów z archiwum
+  z ograniczeniami (`strom fetch`). Kolejne ustawia się w kolejce („queued behind …”) i czeka samo najwyżej
+  `archive.wait`; potem kończy się z godziną, kiedy spróbować ponownie. Pobieranie trzyma też archiwum, więc agenci
+  innych badań je pomijają. Archiwa bez ograniczeń się nie zmieniają: ich tempa dalej pilnuje tylko ogranicznik
+  zapytań.
+- **Granice:** trzymanie nie mówi, jak szybko się pobiera, tylko kto; tempo archiwum się nie zmienia. Starszy strom obok
+  tego archiwów nie trzyma i trzyma się tylko tempa.
+- **W aplikacji:** kto używa archiwum i na które archiwum praca czeka, pokazuje Przegląd badania
+  ([S4.1](S4-research-from-the-app.md#S4.1), [S4.2](S4-research-from-the-app.md#S4.2)).
+- **Obsługa:** terminal: `strom config set archive.hold <minuty>`, `strom config set archive.wait <minuty>` (np. `45m`,
+  `2h`; od 5 min do 24 h, obowiązuje dla tego komputera); menu pokazuje „Praca samodzielna czeka na archiwum …
+  (najdłużej do …).”
+- **Obowiązuje od:** badanie 1.36.0
+
+<!-- zdroj: research:10894288, 9408c7ea, 41dcd8eb src/core/archiveholds.ts (hlavička; restrictedLevel: browserOnly, permission slow|browser, allows(…).human; ne forbidden/refused; cappedConnector policy.pace.perHour; siteOf webDomain; siteLife: proces, sezení, archive.hold; PRIORITY_MS 2 min; joinQueue, releaseSite; BULK) · src/commands/connectors.ts:1443-1448 (help fetch), :3085-3190 holdArchive (fetch obrázků čeká ve frontě ≤ archive.wait, ostatní exit 7 data.held) · src/commands/session.ts:985-997, :1355-1389 (stop archive) · src/core/errors.ts:142 archive.held(.own) · src/core/config.ts:336-337 archive.hold, archive.wait · cs.json ui.run.skip.archive, ui.run.archive.wait, ui.run.stop.archive, ui.error.archive.held(.own), ui.menu.working.archive · CHANGELOG.cs.md 1.36.0 · dirigent:spec/127 K2.1–K2.5, K5.1, rozhodnutí 21. 11. (1)–(3), navrh-rezervace.md kap. 5 -->

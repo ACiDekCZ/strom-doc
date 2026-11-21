@@ -72,6 +72,9 @@ places in the tree ([R11.5.1](R11-material-from-the-user.md#R11.5.1)).
 - The original of a portrait goes to the research as the original of an attachment tagged **Portrait**, the original
   of a couple's photo as material of both partners. An original creates a material task; in the Strom archive it waits
   set aside.
+  - **From research 1.36.0:** the material task is created only with the setting **The agent goes through files sent
+    to the research by itself** switched on; otherwise the original waits in Materials, not sorted yet
+    ([R11.6](R11-material-from-the-user.md#R11.6)).
 - Loading the tree from the research returns the files by their fingerprint: the app gets the portraits, couples'
   photos and attachments in their places. A file removed in the app is hidden by the research, not deleted
   ([A3.5.6](A3-evidence-in-the-app.md#A3.5.6)).

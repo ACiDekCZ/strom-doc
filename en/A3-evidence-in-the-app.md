@@ -387,6 +387,23 @@ nowhere in the tree (**only in the archive**).
   attachments and **Materials** in the person menu (the window filtered to the person).
 - **Since:** app 3.9.0; the section and window **Materials** 3.16.0; 3.30.0: the window in every tree, a file of the
   tree as one material with its places (data version 24)
+- **From app 3.31.0 with research 1.36.0:** the research goes through the files by itself only with the setting
+  **The agent goes through files sent to the research by itself** switched on
+  ([S4.4.11](S4-research-from-the-app.md#S4.4.11), [R11.6](R11-material-from-the-user.md#R11.6)). Off (the default):
+  - **Send material…** says "Nothing is added to the tree. The research stores the files with the person. They wait
+    in Materials; the agent goes through them only on request." (at a source "… with the source."). After sending,
+    the message "Sent to the research: 1 file for Jan Horák. It waits in Materials, not sorted yet." with **Sort with
+    the agent…** (on a computer with the window **Materials**, [A3.5.8](#A3.5.8)) and **Show**;
+  - the confirmation of a batch **Add materials…** has no blocks **Privacy** and **Estimated cost**, only "The files
+    are stored in the research, outside git, and wait in Materials unsorted. The agent sorts them only on request;
+    the cost is shown before that.";
+  - the end of the batch says "The files wait in Materials, not sorted yet. The agent sorts them only on request."
+    and offers **Sort with the agent…** for the batch's files; when that cannot be done at once, it points to **Sort
+    with the agent…** in Materials. On: "The research sorts the batch by itself. …" with the count **Sorting tasks**;
+  - a file the agent has not gone through yet has the state **not sorted** in Materials (on: **waiting to be
+    processed**).
+
+  With an older research the earlier texts apply.
 
 <!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 -->
 

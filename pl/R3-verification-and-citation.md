@@ -32,6 +32,8 @@ wniosek ze wszystkich źródeł danej, a nie, na ile dobre jest jedno źródło 
   **możliwe**, **wskazówka**, **obalone**. Podsumowanie `strom stats` pisze nadal „tylko wskazówki”.
 - **Od badania 1.30.0:** `strom event show` i `strom event edit` wypisują daną człowiekowi w języku badania
   (na przykład „[wskazówka]”); agent nadal dostaje wypis po angielsku.
+- **Od badania 1.36.0:** stopień ma także imię i nazwisko osoby, poza **Obalone** (`strom cite P… S… --status`,
+  [R10.5.2](R10-people-and-hypotheses.md#R10.5.2)).
 
 <!-- zdroj: research:src/core/model.ts:36 STATUSES · assets/method/core.md:8-12 · src/cli/human.ts:138 statusName · assets/lang/cs.json ui.st.*, ui.stats.facts · src/commands/people.ts:115 wordsFor · src/core/actions.ts:629 notRetracted · app:src/ui/fact-status.ts · strings.ts factStatus · 1.26.0: src/cli/human.ts:139 STATUS, cs.json ui.st.* (commit fe59fb40) -->
 
