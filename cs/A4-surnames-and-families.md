@@ -78,7 +78,7 @@ přiženil se do rodu …“. Kdo se do rodu přivdal, má „manželka v rodu �
   - Ve stránkách a exportu s ochranou žijících se řádek u žijící osoby ukáže jen při volbě **Plná data** nebo
     **Ponechat jen příjmení**.
 - **Ovládání:** nabídka **Akce rodu** u řádku: **Ukázat rod ve stromu**, **Upravit rod…**, **Založit rod od této
-  osoby…**, **Kniha rodu…**. Výběr rodu v pohledu na strom popisuje A6.
+  osoby…**, **Kniha rodu…**. Rod jako výběr osob v pohledu na strom popisuje [A6.6](A6-views.md#A6.6).
 - **Platí od:** aplikace 3.19.0
 
 <!-- zdroj: app:src/lineage.ts:793 marriedInto · :857 personRodRow · src/lineage-row.ts:40 personRodRowValue · :70 rodRowShown · strings.ts lineage.row.* -->
@@ -94,7 +94,8 @@ rodiny** (do 4 osob), velké rody mají vlastní řádek.
     v seznamu rodů vůbec; osoba je vidět u rodu, do kterého se přivdala.
   - Dvě odlišná pravidla: velký rod se od stejnojmenných rodů odlišuje jen proti jiným velkým, malý proti všem
     ([A4.4](#A4.4)).
-- **Ovládání:** **Přehled stromu → Rody → Další rodiny**. V liště nástrojů **Rody → Další rodiny** (A6).
+- **Ovládání:** **Přehled stromu → Rody → Další rodiny**. V liště nástrojů **Výběr ▾ → Rody → Další rodiny**
+  ([A6.6.1](A6-views.md#A6.6.1); do aplikace 3.30.0 **Rody → Další rodiny**).
 - **Platí od:** aplikace 3.19.0
 
 <!-- zdroj: app:src/lineage.ts:72 SMALL_ROD_MAX_MEMBERS · :710 isMarriedInOnly · :722 otherFamilyRods · strings.ts treeOverview.rods, familyPages.otherFams -->
@@ -121,9 +122,9 @@ jméno jako jiné rody, dostane do závorky rozlišení.
   - Od 20 velkých rodů má přehled hledání a ukáže prvních 20 rodů, zbytek po rozbalení. Hledá se v názvu, tvarech
     jména, obcích a jménech členů.
   - Časová osa rodů je zaokrouhlená na 50 let.
-- **Ovládání:** **Přehled stromu → Rody**, pole „Hledat rod, obec nebo osobu…“. Seznam **Rody** v liště nástrojů má
-  stejné pořadí a názvy, s **Celý strom** a **Další rodiny** (A6).
-- **Platí od:** aplikace 3.19.0 (seznam **Rody** v liště nástrojů 3.21.0)
+- **Ovládání:** **Přehled stromu → Rody**, pole „Hledat rod, obec nebo osobu…“. Oddíl **Rody** nabídky **Výběr ▾**
+  v liště nástrojů má stejné pořadí a názvy, s **Další rodiny** ([A6.6.1](A6-views.md#A6.6.1)).
+- **Platí od:** aplikace 3.19.0 (seznam **Rody** v liště nástrojů 3.21.0, od 3.31.0 oddíl **Rody** nabídky **Výběr ▾**)
 
 <!-- zdroj: app:src/lineage.ts:393 computeLineages (řazení) · :567 summarise · :672 founderYearOf · :938 rodLabel · src/rods-overview.ts:23 rodSize · :33 sortRods · :46 AXIS_STEP · :79 rodMatches · :98 ROD_SEARCH_FROM · :114 founderPlace · src/ui/tree-overview.ts:160 RODS_SORT_KEY -->
 

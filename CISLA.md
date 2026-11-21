@@ -338,7 +338,13 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.5.4 | A6-views.md | aplikace 3.28.0 | platí | Cesta předků k osobě | The ancestors' path to a person | Der Weg der Vorfahren zu einer Person | Droga przodków do osoby |
 | A6.5.5 | A6-views.md | aplikace 3.28.0 | platí | Barvy rodů a legenda Rody | Line colours and the Family lines legend | Linienfarben und die Legende Stammlinien | Kolory rodów i legenda Rody |
 | A6.5.6 | A6-views.md | aplikace 3.28.0 | platí | Přehrát cestu k osobě | Playing the path to a person | Den Weg zu einer Person abspielen | Odtwarzanie drogi do osoby |
-| A6.6 | A6-views.md | aplikace 3.21.0 | platí | Rod v pohledu | A family line in the view | Stammlinie in der Ansicht | Ród w widoku |
+| A6.5.7 | A6-views.md | aplikace 3.31.0 | platí | Mapa s rozsahem Výběr | The map with the scope Selection | Die Karte mit dem Bereich Auswahl | Mapa z zakresem Wybór |
+| A6.5.8 | A6-views.md | aplikace 3.31.0 | platí | Osoby výběru bez místa | People of the selection without a place | Personen der Auswahl ohne Ort | Osoby z wyboru bez miejsca |
+| A6.6 | A6-views.md | aplikace 3.21.0 | platí | Výběr osob | The selection of people | Personenauswahl | Wybór osób |
+| A6.6.1 | A6-views.md | aplikace 3.31.0 | platí | Nabídka Výběr ▾ | The menu Selection ▾ | Das Menü Auswahl ▾ | Menu Wybór ▾ |
+| A6.6.2 | A6-views.md | aplikace 3.31.0 | platí | Skrýt ostatní | Hide others | Andere ausblenden | Ukryj pozostałe |
+| A6.6.3 | A6-views.md | aplikace 3.31.0 | platí | Ústřední osoba mimo výběr | The central person outside the selection | Die zentrale Person außerhalb der Auswahl | Osoba w centrum poza wyborem |
+| A6.6.4 | A6-views.md | aplikace 3.31.0 | platí | Výběr v oknech a v paměti | The selection in windows and in memory | Die Auswahl in Fenstern und im Speicher | Wybór w oknach i w pamięci |
 | A6.7 | A6-views.md | aplikace 3.27.0 | platí | Tabulka | Table | Tabelle | Tabela |
 | A6.7.1 | A6-views.md | aplikace 3.27.0 | platí | Svazky v tabulce osob | Unions in the People table | Verbindungen in der Personentabelle | Związki w tabeli osób |
 | A6.7.2 | A6-views.md | aplikace 3.27.0 | platí | Sloupce | Columns | Spalten | Kolumny |
@@ -361,7 +367,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.7.19 | A6-views.md | aplikace 3.30.0 | platí | Rozsah: seznam osob | Scope: a list of people | Umfang: eine Personenliste | Zakres: lista osób |
 | A6.7.20 | A6-views.md | aplikace 3.30.0 | platí | Seskupit podle | Group by | Gruppieren nach | Grupuj według |
 | A6.8 | A6-views.md | aplikace 3.28.0 | platí | Pohled v samostatném okně | A view in a separate window | Ansicht in einem eigenen Fenster | Widok w osobnym oknie |
-| A6.8.1 | A6-views.md | aplikace 3.28.0 | platí | Výběr | Selection | Auswahl | Wybór |
+| A6.8.1 | A6-views.md | aplikace 3.28.0 | platí | Vybraná osoba | Chosen person | Gewählte Person | Wybrana osoba |
 | A6.8.2 | A6-views.md | aplikace 3.28.0 | platí | Když hlavní okno chybí | When the main window is missing | Wenn das Hauptfenster fehlt | Gdy brakuje okna głównego |
 | A6.8.3 | A6-views.md | aplikace 3.28.0 | platí | Druhá karta aplikace | A second tab of the app | Ein zweiter Tab der App | Druga karta aplikacji |
 | A6.8.4 | A6-views.md | aplikace 3.30.0 | platí | Co výběr v dalším okně udělá v hlavním okně | What a choice in another window does in the main window | Was eine Wahl in einem weiteren Fenster im Hauptfenster bewirkt | Co wybór w kolejnym oknie zrobi w oknie głównym |

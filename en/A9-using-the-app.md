@@ -117,8 +117,9 @@ views and actions are in the **More** sheet.
 - **Bottom bar:** **Family** | **Descendants** | **＋** (add a person; only in a tree that can be edited) | **Table** |
   **More**. An open Family, Descendants or Table view is highlighted on the bar; an open Fan, Map or Timeline
   highlights **More**.
-- **More → View:** **Fan** | **Map** | **Timeline**. On a phone the choice of the family line ([A6.6](A6-views.md#A6.6))
-  is under them when the tree offers it; not in the Timeline, the Map and the Table.
+- **More → View:** **Fan** | **Map** | **Timeline**. On a phone the row **Selection** ([A6.6.1](A6-views.md#A6.6.1))
+  is under them in Family, Descendants and the Fan of every tree with people; not in the Timeline, the Map and the
+  Table. Up to app 3.30.0 the choice of the family line was there, only when the tree offered it.
 - **Full screen:** the **More** sheet has **Full screen**, in full screen **Exit full screen**. The browser's bars
   then take no room.
   - It is offered only where the browser allows a page full screen, and only with the bottom bar. A phone held

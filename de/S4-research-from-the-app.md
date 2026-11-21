@@ -390,7 +390,7 @@ um darin inzwischen etwas anderes anzusehen; die übrigen Fenster folgen weiter.
   koppelt das Fenster wieder an, und es springt sofort zum Agenten. Das Abkoppeln übersteht das Neuladen des Fensters
   (F5) und wird mit dem Ende des Folgens vergessen.
 - **Wahl aus einem anderen Fenster:** ein folgendes Fenster, das nicht pausiert ist, markiert eine in einem anderen
-  Fenster gewählte Person nur, auch mit **Auswahl** → **Dieses Fenster**: **wechseln** ([A6.8.1](A6-views.md#A6.8.1));
+  Fenster gewählte Person nur, auch mit **Gewählte Person** → **Dieses Fenster**: **wechseln** ([A6.8.1](A6-views.md#A6.8.1));
   die Mitte bleibt beim Agenten. Die Tabelle wählt die Zeile dieser Person aus, scrollt aber nicht zu ihr. Der Sprung
   zum Agenten wird den anderen Fenstern nicht als Wahl einer Person geschickt. Ein pausiertes und ein abgekoppeltes
   Fenster richten sich nach der Wahl **Dieses Fenster** wie außerhalb des Folgens. Eine mit **fokussieren** an das

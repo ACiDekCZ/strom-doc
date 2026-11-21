@@ -117,8 +117,9 @@ i akcje są w arkuszu **Więcej**.
 - **Dolny pasek:** **Rodzina** | **Potomkowie** | **＋** (dodaj osobę; tylko w drzewie, które można edytować) |
   **Tabela** | **Więcej**. Otwarta Rodzina, Potomkowie lub Tabela jest wyróżniona na pasku; otwarty Wachlarz, Mapa
   lub Oś czasu wyróżnia **Więcej**.
-- **Więcej → Widok:** **Wachlarz** | **Mapa** | **Oś czasu**. Na telefonie jest pod nimi wybór rodu
-  ([A6.6](A6-views.md#A6.6)), gdy drzewo go oferuje; nie przy Osi czasu, Mapie i Tabeli.
+- **Więcej → Widok:** **Wachlarz** | **Mapa** | **Oś czasu**. Na telefonie jest pod nimi wiersz **Wybór**
+  ([A6.6.1](A6-views.md#A6.6.1)) w Rodzinie, Potomkach i Wachlarzu każdego drzewa z osobami; nie przy Osi czasu, Mapie
+  i Tabeli. Do aplikacji 3.30.0 był tam wybór rodu, tylko gdy drzewo go oferowało.
 - **Pełny ekran:** w arkuszu **Więcej** jest **Pełny ekran**, w trybie pełnego ekranu **Zamknij pełny ekran**.
   Paski przeglądarki nie zajmują wtedy miejsca.
   - Oferuje się go tylko tam, gdzie przeglądarka pozwala stronie na pełny ekran, i tylko z dolnym paskiem. Telefon

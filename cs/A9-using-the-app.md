@@ -114,8 +114,9 @@ jsou v listu **Více**.
 - **Dolní lišta:** **Rodina** | **Potomci** | **＋** (přidat osobu; jen ve stromu, který jde upravit) | **Tabulka** |
   **Více**. Otevřená Rodina, Potomci nebo Tabulka se zvýrazní na liště; otevřený Vějíř, Mapa nebo Časová osa
   zvýrazní **Více**.
-- **Více → Pohled:** **Vějíř** | **Mapa** | **Časová osa**. Na telefonu je pod nimi volba rodu
-  ([A6.6](A6-views.md#A6.6)), když ji strom nabízí; v Časové ose, Mapě a Tabulce ne.
+- **Více → Pohled:** **Vějíř** | **Mapa** | **Časová osa**. Na telefonu je pod nimi řádek **Výběr**
+  ([A6.6.1](A6-views.md#A6.6.1)) v Rodině, Potomcích a Vějíři každého stromu s osobami; v Časové ose, Mapě a Tabulce
+  ne. Do aplikace 3.30.0 tam byla volba rodu, jen když ji strom nabízel.
 - **Celá obrazovka:** v listu **Více** je **Celá obrazovka**, při celé obrazovce **Ukončit celou obrazovku**.
   Lišty prohlížeče pak nezabírají místo.
   - Nabízí se jen tam, kde prohlížeč celou obrazovku stránce dovolí, a jen v režimu dolní lišty. Telefon otočený

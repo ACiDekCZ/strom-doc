@@ -1644,6 +1644,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [S2.1](cs/S2-edits-from-the-app.md#S2.1), S2.7
 
+<a id="selection-of-people"></a>
+### Výběr
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Výběr | Jedna pojmenovaná skupina osob, kterou má okno aplikace: rod, předci nebo potomci osoby, linie výzkumu, nebo seznam osob. Rodina, Potomci a Vějíř ji zvýrazní, Mapa a Tabulka ji mohou mít jako rozsah. Do dat stromu se neukládá. |
+| en | Selection | One named group of people a window of the app has: a family line, the ancestors or descendants of a person, a research line, or a list of people. Family, Descendants and the Fan highlight it, the Map and the Table can have it as their scope. It is not stored in the tree's data. |
+| de | Auswahl | Eine benannte Gruppe von Personen, die ein Fenster der App hat: eine Stammlinie, die Vorfahren oder Nachkommen einer Person, eine Forschungslinie oder eine Personenliste. Familie, Nachkommen und Fächer heben sie hervor, Karte und Tabelle können sie als Bereich haben. In den Daten des Stammbaums wird sie nicht gespeichert. |
+| pl | Wybór | Jedna nazwana grupa osób, którą ma okno aplikacji: ród, przodkowie lub potomkowie osoby, linia badania albo lista osób. Rodzina, Potomkowie i Wachlarz ją wyróżniają, Mapa i Tabela mogą mieć ją jako zakres. Nie zapisuje się w danych drzewa. |
+
+- **Čísla:** [A6.6](cs/A6-views.md#A6.6), A6.6.1, A6.6.2, A6.6.3, A6.6.4, A6.5.7, A6.5.8, A6.7.19
+
 <a id="record-excerpt"></a>
 ### Výřez zápisu
 

@@ -3,11 +3,14 @@
 
 How the Strom app chooses which people to show and how each view shows them. Describes the app 3.21.2; changes from a later version carry its number.
 
-A view is a different reading of **the same choice of people**. The choice is set by the central person (the one
-clicked) and the depth **Ancestors** and **Descendants**. Family, Descendants, Timeline and Map show the same
+A view is a different reading of **the same surroundings of the central person**. The surroundings are set by the
+central person (the one clicked) and the depth **Ancestors** and **Descendants**. Family, Descendants, Timeline and Map show the same
 surroundings of the central person. The Fan counts ancestors and descendants on its own by the number of generations
 ([A6.4](#A6.4)). The Table shows the whole tree ([A6.7](#A6.7)), from app 3.30.0 also only one list of people
 ([A6.7.19](#A6.7.19)).
+From app 3.31.0 a window also has a **Selection**: one named group of people (a family line, the ancestors or
+descendants of a person, a research line, a list of people) that Family, Descendants and the Fan highlight and the
+Map shows alone ([A6.6](#A6.6)).
 On a computer each view can also be opened in a separate window ([A6.8](#A6.8)).
 
 Views: **Family**, **Descendants**, **Timeline**, **Fan**, **Map**, **Table**.
@@ -19,7 +22,7 @@ Views: **Family**, **Descendants**, **Timeline**, **Fan**, **Map**, **Table**.
 
 The Family view shows the central person within their family, not the whole tree.
 
-- The choice includes:
+- The surroundings include:
   1. the central person and all their partners;
   2. their descendants down to the depth **Descendants**, with partners;
   3. direct ancestors through both parents up to the depth **Ancestors**;
@@ -465,7 +468,8 @@ descendants (the shape Two-way) ochre.
   highlights the tree's family line ([A6.6](#A6.6)), as in the Family view. The line's sectors have a dashed outline,
   the others are subdued. The highlight stays after re-centring. A second click, **Clear the family line highlight**,
   × on the label or Esc clears it. When fitting, the fan keeps clear of the band with the highlight's label; a zoomed
-  view stays as it is.
+  view stays as it is. From app 3.31.0 the highlighted family line is the window's selection ([A6.6](#A6.6)): it holds
+  in Family and Descendants too, and clearing the highlight clears the window's selection.
 - **Phone:** a tap on a row in the legend sheet highlights the line (or clears it) and closes the sheet. The colours
   chip then shows the line's sample and name instead of the dots. **Tablet:** the legend rows have the size of
   a control.
@@ -478,7 +482,7 @@ descendants (the shape Two-way) ochre.
 - **Since:** app 3.30.0 (the colours **Family lines** since app 3.20.0; up to 3.29.0 only the ten largest lines in
   colour, the others grey)
 
-<!-- zdroj: app:src/fan-rod-assign.ts (strany P/M/D: rod středu P, jen potomci D, jinak nejnižší prstenec, shoda P; pořadí počet výsečí › velikost › id; FAN_ROD_MAX_STRONG 10, FAN_ROD_LEGEND_MAIN 20, tier S/T; opakování odstínů ne na sousedních výsečích ani o jednu dál, výpůjčka jiné strany) · src/fan-colors.ts paleta P/M/D světlá, tmavá, tisk, fanRodLegend, fanRodOtherSwatch (K1.7), legendOther, legendNoRod · src/ui/fan-view.ts legenda (FAN_STORAGE_KEYS.legendOtherOpen, náhled jen při (hover: hover)), setRodSelection(…, 'legend'), forgetRodColors · strings.ts fan.legendFatherSide, legendMotherSide, legendDescendants, legendOther, legendNoRod, legendCentre, colorsChipRod, menuHighlightRod, menuUnhighlightRod, posterHighlighted · app:1d9dad0f, 7231dd13 (legenda po stranách), 77282e4e (telefon, tablet), b31c74a9 (štítky se netisknou), defe20a6, 7821ea72 (vějíř mimo štítek), 1ad91795 (paleta P/M/D), a265a3cc (paměť barev při návratu, další okna) · dirigent:spec/114-vejir-barvy-rodu · test/vysledek-1119-app-vejir-rody, vysledek-1119-app-vejir-barvy-vse · CHANGELOG.cs.md 3.30.0 -->
+<!-- zdroj: app:src/fan-rod-assign.ts (strany P/M/D: rod středu P, jen potomci D, jinak nejnižší prstenec, shoda P; pořadí počet výsečí › velikost › id; FAN_ROD_MAX_STRONG 10, FAN_ROD_LEGEND_MAIN 20, tier S/T; opakování odstínů ne na sousedních výsečích ani o jednu dál, výpůjčka jiné strany) · src/fan-colors.ts paleta P/M/D světlá, tmavá, tisk, fanRodLegend, fanRodOtherSwatch (K1.7), legendOther, legendNoRod · src/ui/fan-view.ts legenda (FAN_STORAGE_KEYS.legendOtherOpen, náhled jen při (hover: hover)), setRodSelection(…, 'legend'), forgetRodColors · strings.ts fan.legendFatherSide, legendMotherSide, legendDescendants, legendOther, legendNoRod, legendCentre, colorsChipRod, menuHighlightRod, menuUnhighlightRod, posterHighlighted · app:1d9dad0f, 7231dd13 (legenda po stranách), 77282e4e (telefon, tablet), b31c74a9 (štítky se netisknou), defe20a6, 7821ea72 (vějíř mimo štítek), 1ad91795 (paleta P/M/D), a265a3cc (paměť barev při návratu, další okna) · dirigent:spec/114-vejir-barvy-rodu · test/vysledek-1119-app-vejir-rody, vysledek-1119-app-vejir-barvy-vse · CHANGELOG.cs.md 3.30.0 · 3.31.0: src/ui/rod-view.ts selectRodFromFan → setRodSelection / clearRodSelection = clearSelection (app:51ad8fd6) -->
 
 <a id="A6.4.2"></a>
 ### A6.4.2 Fan appearance
@@ -551,7 +555,9 @@ appearance** with the same options as the panel **Appearance** ([A6.4.2](#A6.4.2
 
 The Map shows the places of people's events.
 
-- **Scope:** **This view** (default, the people of the view) · **Whole tree**.
+- **Scope:** **This view** (default, the people of the view) · **Whole tree**. From app 3.31.0 there is
+  **Selection** between them, the people of the window's selection ([A6.5.7](#A6.5.7)), and the main window remembers
+  the chosen scope for each tree.
 - **Kinds:** **Births** · **Deaths** · **Marriages** · **Other events**. All are on by default; the choice is
   remembered on the device.
   - A baptism counts as a birth, a burial and a cremation as a death.
@@ -563,7 +569,7 @@ The Map shows the places of people's events.
 - **Migration over time** shows the places by year and the ancestors' path to one person ([A6.5.3](#A6.5.3)).
 - **Since:** map app 1.10.0; kinds of events and town points app 3.21.0
 
-<!-- zdroj: app:src/places.ts collectPlaces, groupTownPoints · src/ui/map-ui.ts (localStorage strom.map.kinds) · strings.ts map.scopeView, map.scopeTree, map.kinds · CHANGELOG.cs.md 3.21.0 -->
+<!-- zdroj: app:src/places.ts collectPlaces, groupTownPoints · src/ui/map-ui.ts (localStorage strom.map.kinds) · strings.ts map.scopeView, map.scopeTree, map.kinds · CHANGELOG.cs.md 3.21.0 · 3.31.0: app:src/settings.ts mapScopeByTree, getMapScopeForTree, setMapScopeForTree · src/ui/map-scope-ui.ts (jen hlavní okno) · spec 098 -->
 
 <a id="A6.5.1"></a>
 ### A6.5.1 Where the map gets a place's location
@@ -801,26 +807,212 @@ person.
 
 <!-- zdroj: app:src/map-lines.ts pathPlaySchedule (PATH_PLAY_MS 24000, PATH_EVENT_WEIGHT 5, krok rok, součet 24 000), pathAddedIn (nejbližší generace, pak rel, cíl poslední), pathLastAdded · src/ui/map-path-ui.ts playMapPath (konec u cíle), panMapToPathEnd (framed, jednou), renderMapTimeMarks (čtvrtiny podle firstYear, cíl), renderMapTimeCaption (cíl, jinak items[0]; aria-live, aria-valuetext; bez cesty skryto) · src/ui/map-ui.ts toggleMapTimePlay (na konci od začátku), setMapTimeYear (pozastaví), značky → setMapTimeYear · strings.ts map.timeMarkTitle, pathGoalEnd · app cce82a89, 34e82d43 (app:81f2adf0) · ZADANI_UIX_mapa-rody-v-case D5 (ponechat) · spec 054 K2.2 · CHANGELOG.cs.md 3.28.0 -->
 
+<a id="A6.5.7"></a>
+### A6.5.7 The map with the scope Selection
+
+With the scope **Selection** the map works only with the people of the window's selection ([A6.6](#A6.6)).
+
+- **What is counted from the selection:** the places' points, the counts in the bar, the places to look up in the
+  research ([A6.5.2](#A6.5.2)), **Migration over time** with its range of years ([A6.5.3](#A6.5.3)) and the
+  ancestors' path ([A6.5.4](#A6.5.4)).
+- **The part Selection** of the scope switch carries the selection's name and the number of people ("Line Horák ·
+  14"); a window without a selection has only **Selection ▾**. A click on a part that is not chosen switches the
+  scope at once. A click on the chosen part or on the part without a selection opens the selection menu
+  ([A6.6](#A6.6)). A selection chosen on the map is the window's selection: Family then highlights it.
+- **A place with people outside the selection:** the place's panel shows only the people of the selection and under
+  them "and {n} people outside the selection ·" with **Whole tree** (switches the scope). A marriage of which only one
+  partner is in the selection is shown on the map; the panel lists only that partner.
+- **Finding a person on the map:** a person outside the selection has the label "outside the selection" in the result
+  and the link **Show in the whole tree** (switches the scope to **Whole tree**).
+- **The path to a person:** the choice of the path's person offers only people of the selection. When the path's
+  target is outside the selection, the path chip is dimmed with "· outside the selection", the path is not drawn and
+  the bar says "The path's person is outside the selection – the path is not shown."
+- **An empty selection:** in the middle of the map "The selection is empty."; a selection none of whose people has a
+  place: "No one in the selection has a place yet." with a link to the people without a place ([A6.5.8](#A6.5.8)).
+  The status bar is not shown then.
+- **Clearing the selection or its end** returns the scope to **This view**. The scope **Selection** remembered for a
+  tree holds only when the window has a selection after the tree opens.
+- **The Places window** opened from the map has the same scope switch (the part **Selection** only when the window
+  has a selection) and changes both the map's scope and the list of places. Opened from elsewhere it shows the places
+  of the whole tree.
+- **Phone:** instead of the switch there is the button **Scope: {name} ▾** next to the kinds of events. It opens the
+  sheet **Scope**: the section **Map scope** (three scopes with numbers of people), **Change the selection** (at
+  most 5 selections: family lines, the central person's ancestors, lists) and **All selections…** (the whole
+  selection menu). A phone held sideways has the switch as on a computer.
+- **Controls:** app: map → the scope switch **This view** · **Selection** · **Whole tree** (phone **Scope: … ▾**);
+  **On the map** at a list of people ([A11.3](A11-lists-of-people.md#A11.3)) and in the Table's **⋯**
+  ([A6.7.19](#A6.7.19)).
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:src/map-scope.ts mapScopePersonIds · src/ui/map-ui.ts mapScopePersons (body, počty, mapMissingPlaces, mapTimeHarvest, map-lines) · src/ui/map-scope-ui.ts (díl Výběr: nezvolený → rozsah hned, zvolený nebo bez výběru → nabídka; vyprázdnění selEmpty / selNoPlaces; mimo výběr popupOutside, popupWhole, outside, showInTree; zrušený / zaniklý výběr → 'view'; zapamatovaný 'sel' jen s výběrem; list Rozsah s selectionQuickRows(5)) · src/ui/selection-picker-ui.ts selectionQuickRows (2 rody, předci, seznamy, další rody) · src/places.ts collectPlaces (fact.persons.filter(kept): sňatek jen s osobou výběru) · src/ui/map-path-ui.ts (osoby cesty z výběru, pathOutside) · src/ui/places-manager-ui.ts (rozsah okna Místa jen z mapy) · strings.ts map.scopeSel, scopeSelNamed, scopeAria, scopeGroup, scopeBtn, scopeSheet, scopeSheetSec, scopeViewHint, scopeChange, scopeAll, selEmpty, selNoPlaces, selUnplacedLink, outside, showInTree, popupOutside, popupWhole, popupSelCount, pathOutside · app:90c09692, 95752f6d, 74d3a34e · ZADANI_DEV_vyber-osob §3, §4, §10 · spec 098 (spec 120 K1.1–K1.3) · dirigent:test/vysledek-1121-app-098-vyber-p1.md -->
+
+<a id="A6.5.8"></a>
+### A6.5.8 People of the selection without a place
+
+In the scope **Selection** the map's status bar has a second row "{n} people in the selection have no place ›" when
+at least one person of the selection has no place in any kind of the map (birth, death, marriage or divorce, other
+events of the person and of the couple). A place without coordinates counts as a place.
+
+- A click opens the **Table** with the people of the selection and the chip **No place** on ([A6.7.6](#A6.7.6)): for
+  a list in the scope of that list, for another selection in the scope "Selection: {name}" ([A6.7.19](#A6.7.19)).
+  The chip can be switched off like other filters.
+- **Limits:** the row is not shown when everyone has a place, while coordinates are being looked up, and on an error
+  or offline.
+- **Controls:** app: map → status bar → "… have no place ›"; on an empty map the link "{n} people without a place ›".
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:src/places.ts personHasMapPlace (narození, úmrtí, události osoby, svazek start/end/události; místo bez souřadnic se počítá) · src/ui/map-ui.ts renderMapStatus (map-status-unplaced, ne při geocodingu, chybě, offline) · src/ui/map-scope-ui.ts (Tabulka v rozsahu výběru s filter noPlace) · src/ui/table-view/table-ui.ts openTableForSelection · src/ui/table-view/table-filter.ts CHIP_ORDER noPlace · strings.ts map.selUnplaced, selUnplacedLink, table.chip.noPlace, chipNoPlaceTitle · app:2a578474, 39020cf1 · ZADANI_DEV_vyber-osob §5 · spec 120 K1.4 -->
+
 <a id="A6.6"></a>
-## A6.6 A family line in the view
+## A6.6 The selection of people
 
-A view can highlight one family line ([A4](A4-surnames-and-families.md)): its members fully, wives and husbands who
-married into it more faintly, the others subdued. This holds in the views Family, Descendants and Fan.
+The selection is one named group of people a window has. It holds in all views of the window: Family, Descendants and
+the Fan highlight it, the Map can show it alone ([A6.5.7](#A6.5.7)) and the Table can have it as its scope
+([A6.7.19](#A6.7.19)). The selection is not stored in the tree's data; lists of people
+([A11](A11-lists-of-people.md)) stay as they are.
 
-- The choice is remembered for each tree on the device. A family line that is no longer in the tree is cancelled
-  silently.
-- When no member of the family line is drawn in the view:
-  - Family and Fan move the central person to the nearest member of the family line (through parents, children and
-    partners; on a tie to the older one), and when the person is not connected to one, to the founder of the family
-    line;
-  - Descendants always moves the central person to the founder;
-  - the bar offers **↩ Back**.
-- **Limits:** restoring the choice from memory does not move the central person.
-- **Controls:** **Family lines** in the bar; in the person's menu **Only the … line** (the person's own family line
-  by birth comes first); the end through × on the label or **Show the whole tree**.
-- **Since:** app 3.21.0
+| Selection | Who is in it | Name on the label and in the menu |
+|---|---|---|
+| family line | the real members of the family line ([A4](A4-surnames-and-families.md)) | Line {line} |
+| ancestors of a person | the person's ancestors as the rule **Ancestors of a person** ([A11.2](A11-lists-of-people.md#A11.2)): all generations, or 1 to 10 | Ancestors: {person} |
+| descendants of a person | the person's descendants as the rule **Descendants of a person**, all generations or 1 to 10 | Descendants: {person} |
+| research line | the people of the research line as the rule **Research line** | Research line: {line} |
+| list of people | the people of the list | List: {list} |
 
-<!-- zdroj: app:src/ui/rod-view.ts · src/rod-focus.ts (BFS přes rodiče, děti, partnery) · strings.ts rodView.only, rodView.whole, rodView.moved · spec 039 · CHANGELOG.cs.md 3.21.0 -->
+- A window has at most one selection. The selection's people are counted again after each change of the tree (an
+  automatic list and the rule of ancestors, descendants and a line too). Placeholder persons and people no longer in
+  the tree do not belong to the selection.
+- **Highlight** in Family, Descendants and the Fan: the selection's people fully, the others subdued. For a family
+  line, wives and husbands who married into it are shown more faintly; they are not in the selection.
+- **The selection's label** above the tree: "{name} · {n} people ▾" (opens the selection menu, [A6.6.1](#A6.6.1)),
+  **Hide others** ([A6.6.2](#A6.6.2)), **Next person ›** (focuses the next person of the selection) and × **Clear the
+  selection** (also Esc). An empty selection has a label with the count 0 and **Next person ›** cannot be used. The
+  label is not shown on the Timeline and on the Map.
+- **Another highlight** (evidence, checks, live changes) covers the selection for a while and the label belongs to
+  it. When it ends, the selection returns; **Hide others** does not hold while it is covered. Choosing a selection
+  ends another highlight.
+- **Nothing of the selection is drawn** (after choosing a selection, not after restoring it from memory):
+  - Family and the Fan move the central person to the person of the selection fewest steps away (through parents,
+    children and partners; on a tie to the one born earlier). When the selection is not connected to the person, the
+    central person goes to the founder of the family line or to the person whose ancestors or descendants they are;
+    for a line and a list to the earliest-born person of the selection;
+  - Descendants always moves the central person to the founder of the family line, the person of the ancestors or
+    descendants, otherwise to the earliest-born;
+  - the notice "Focus: {person}, selection {name}" has **↩ Back**.
+  - On the Timeline, on the Map and in the Table the central person does not move.
+- **Controls:** app: **Selection ▾** in the bar of Family, Descendants and the Fan; in the person's menu **Select ›**;
+  the selection's label; on a phone **More → Selection** ([A6.6.1](#A6.6.1)).
+- **Since:** app 3.21.0 (only a family line: **Family lines** in the bar, in the person's menu **Only the … line**);
+  3.31.0: the selection of people (family line, ancestors, descendants, research line, list), the menu
+  **Selection ▾**, **Hide others**
+
+<!-- zdroj: app:src/view-selection.ts (SelectionRef rod / ancestors / descendants / line / list; selectionPersonIds: realRodMembers, rulePersonIds, listPersonIds; cache na lineage index = změnu dat; selectionLabel předpony) · src/ui/view-selection-ui.ts (jeden výběr okna, selectionGroup: rod faint realRodSpouses, zakrytí jinou skupinou a návrat selectionUncovered, setSelection ukončí jinou skupinu, ne přesun při 'restore') · src/ui/evidence-ui.ts (kind 'selection': štítek ▾ otevře nabídku, Skrýt ostatní, Další osoba, × a Esc = clearSelection; prázdný výběr 0 a Další nedostupné) · src/ui/rod-view.ts moveFocusToSelection (ne timeline, map, table) · src/rod-focus.ts selectionFocusTarget (nejméně kroků, shoda dříve narozený; root = zakladatel / osoba předků a potomků; jinak nejdříve narozený; Potomci vždy root) · strings.ts selection.pill, hideOthers, clear, moved, prefix · app:51ad8fd6, cb97070c, 61873988, 39e84ca0, e5da4a61 · ZADANI_DEV_vyber-osob §0, §1, §8, §9, §12 · spec 098 Rozhodnutí 1–5 (Milan 21. 11. „jak doporucujes“) · dřív: src/ui/rod-view.ts, spec 039, CHANGELOG.cs.md 3.21.0 -->
+
+<a id="A6.6.1"></a>
+### A6.6.1 The menu Selection ▾
+
+One menu chooses the window's selection everywhere: in the tree's bar, on the selection's label, in the part
+**Selection** of the map's scope switch and on a phone in the sheet **More**.
+
+- **Contents** from the top:
+  1. the field **Find a line, person, list…**;
+  2. for a selection of ancestors or descendants the block **Window selection**: the name and the count, "Person:
+     {person}" with **Change…** and **Generations** (− and +: all, or 1 to 10);
+  3. **No selection** (whole tree, the number of the tree's people);
+  4. the section **Family lines** as the earlier list **Family lines** ([A4.4](A4-surnames-and-families.md#A4.4)):
+     family lines with the bar of their period and their count, and **Other families**; only when the tree has a
+     family line that is not small;
+  5. the section **Ancestors and descendants**: "Ancestors: {central person}" and "Descendants: {central person}" with
+     counts, in the heading **Another person…**;
+  6. the section **Research lines**, only in a tree with lines;
+  7. the section **Lists of people**: lists by name with the icon of the kind, the kind (an automatic one with its
+     rule, a checklist with "a of b left") and the count; without lists "The tree has no lists yet.";
+  8. **Save the selection as a list…** (a selection that is not a list; not in a read-only tree) opens a new list
+     with the selection's rule ([A11.6](A11-lists-of-people.md#A11.6)); **Lists of people…** opens the management of
+     lists.
+- **Search** goes through family lines (also the name's forms), lines, lists and people, regardless of diacritics.
+  Found people (at most 5, with years and place) are in the section **People** with the rows "Ancestors: …" and
+  "Descendants: …".
+- **The person's menu:** **Select ›** offers the person's family lines (the line by birth first, then lines the
+  person married into, with at least two real members), **Ancestors** and **Descendants** with counts (without them
+  when the person has no ancestors or descendants). When the person is in the window's selection, **Clear the
+  selection** is under it.
+- **Phone:** the tree's bar has no button; in Family, Descendants and the Fan the sheet **More** has the row
+  **Selection** with the selection's name (without a selection **No selection**), not on the Timeline, the Map and in
+  the Table. The menu is a sheet with the search field at the top. A phone held sideways has the row **Selection** at
+  the end of the line **View**. A tablet has **Selection ▾** on the right of the top bar.
+- **Controls:** app: **Selection ▾** in the bar of Family, Descendants and the Fan; the name ▾ on the selection's
+  label; the person's menu **Select ›**; phone **More → Selection**.
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:src/ui/selection-picker-ui.ts (lišta Rodiny, Potomků, Vějíře, ne timeline/map/table; tablet vpravo; každý strom s osobami; MAX_GENERATIONS 10 pak všechny; FOUND_LIMIT 5; rody jen když rodPickerOffered – ne jen malé rody; pole hledání vždy (rod-picker.ts:382); canSave ref ≠ list && !listsReadOnly; saveListOptions; Seznamy osob…) · src/rod-picker.ts selectionPickerHtml (pořadí oddílů, patička) · src/ui/rod-picker-ui.ts wireRodPicker (hledání přes oddíly, bez diakritiky) · src/ui/context-menu.ts (Vybrat ›: rodný rod první, rody sňatkem s ≥ 2 skutečnými členy, Předky / Potomky s počty, Zrušit výběr když osoba patří do výběru) · src/ui/bottom-sheet.ts (řádek Výběr v Rodině, Potomcích, Vějíři; na šířku valueInPair na konci řádku Pohled) · strings.ts selection.* · app:61873988, 07fd4946, a273ef05, 1eb97c1f, 8cfb01da · ZADANI_DEV_vyber-osob §2, §10 -->
+
+<a id="A6.6.2"></a>
+### A6.6.2 Hide others
+
+**Hide others** on the selection's label leaves only the selection's people in Family and Descendants: the other
+cards disappear and the tree is laid out again from them alone, within the central person and the depth **Ancestors**
+and **Descendants** ([A6.1](#A6.1)). The selection **Ancestors: {person}** thus shows the person's pure pedigree.
+
+- The central person is always drawn ([A6.6.3](#A6.6.3)). The view never draws more cards than without the filter.
+- For a family line, wives and husbands who married into it stay with their member.
+- Lines are drawn only between people who are both drawn. A family of which only one parent is drawn hangs under that
+  parent. People of the selection not connected to the others stand in the row of their generation as separate
+  groups, in the order they would have in the full view.
+- The tabs of hidden relatives on the cards and **Children and siblings** ([A6.1.3](#A6.1.3)) count only the
+  selection's people.
+- The card nearest the middle of the screen stays in place after the new layout (otherwise the central person); the
+  zoom does not change.
+- The choice is remembered with the selection ([A6.6.4](#A6.6.4)) and is switched off when the selection is cleared.
+- **Limits:** the Fan does not have the choice (the selection is only highlighted). Outputs (image, print, export)
+  draw the whole view.
+- **Controls:** app: the selection's label → **Hide others** (a checkbox); on a phone the label is one row and **Hide
+  others** is only a checkbox without text.
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:src/layout/pipeline/person-filter.ts (filtr při sběru osob: jen osoby celého pohledu a jejich generace a pořadí, ústřední vždy; restrictSelection: čáry jen mezi nakreslenými, rodina s jedním rodičem pod ním; nespojené osoby ve vlastních skupinách vedle sebe v pořadí celého pohledu) · src/layout/pipeline/index.ts drawnOrder · src/renderer.ts setPersonFilter (Rodina a Potomci; záložky a bulk-family jen osoby výběru tabInView; karta nejblíž středu zůstane, jinak ústřední; přiblížení beze změny; výstupy kreslí celý pohled) · src/ui/evidence-ui.ts (rod: faint partneři do filtru; ne ve vějíři – CSS) · src/ui/view-selection-ui.ts setHideOthers (pamatuje s výběrem, bez výběru vypnuto) · strings.ts selection.hideOthers, hideOthersTitle · app:39e84ca0, e5da4a61 · ZADANI_DEV_vyber-osob §8 · dirigent:prace/1121-app-098-vyber-p1 (telefon: štítek v jednom řádku, Skrýt ostatní čtvereček 44 px), test/vysledek-1121-app-098-vyber-p1.md -->
+
+<a id="A6.6.3"></a>
+### A6.6.3 The central person outside the selection
+
+A central person who is not in the selection stays fully visible in Family and Descendants, also with **Hide others**.
+On the card's top edge it has the label "outside the selection"; a screen reader reads "{name} – outside the
+selection".
+
+- In the Fan the centre is not subdued; it has no label.
+- Following the research agent ([S4.1.7](S4-research-from-the-app.md#S4.1.7)) changes only the central person; the
+  selection stays and does not hold back the jumps after the agent. A jump to a person outside the selection is shown
+  with the label "outside the selection".
+- **Controls:** a click on the card of a person outside the selection.
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:src/renderer.ts setEvidenceHighlight (ústřední osoba nikdy dim; mimo výběr card-tag „mimo výběr“, aria; ve vějíři jen střed bez dim) · src/layout/pipeline/person-filter.ts (ústřední vždy) · src/ui/live-follow-ui.ts (skok agenta mění zaměření, výběr nechá a skoky nezdržuje) · strings.ts selection.outside, outsideAria · app:39e84ca0, e5da4a61 · ZADANI_DEV_vyber-osob §7 (sledování), §9 -->
+
+<a id="A6.6.4"></a>
+### A6.6.4 The selection in windows and in memory
+
+The selection belongs to a window and holds in it across views. For a tree the main window's selection is
+remembered.
+
+| What | Main window | Another window ([A6.8](#A6.8)) |
+|---|---|---|
+| the selection and **Hide others** | remembered for each tree on the device; after the tree opens it returns and the central person does not move | on opening takes over the selection of the window it was opened from; then has its own and keeps it until closed (also after F5) |
+| the map's scope ([A6.5](#A6.5)) | remembered for each tree | takes it over on opening, then its own |
+
+- A change of the selection in one window does not change the other windows. The exception is **On the map** from the
+  Table of another window: the main window carries it out ([A6.7.19](#A6.7.19)).
+- **A selection that is gone** (a deleted list, a family line that ceased to exist, a removed research line, a
+  deleted person of ancestors or descendants): the selection is cleared, **Hide others** is switched off and the
+  map's scope **Selection** returns to **This view**. When the selection was visible (the highlight in Family,
+  Descendants or the Fan, the Map with the scope **Selection**), a notice says why: "Selection cleared: the list
+  “{list}” was deleted.", "Selection cleared: the {line} line is gone.", "Selection cleared: the research line was
+  removed.", "Selection cleared: {person} was deleted."
+- A locked tree or a tree still loading does not drop the remembered selection; it applies after unlocking or
+  loading.
+- The earlier choice of a family line (up to app 3.30.0) is taken over as a selection of the family line.
+- **Since:** app 3.31.0
+
+<!-- zdroj: app:src/settings.ts selectionByTree (migrace rodByTree → { ref rod, hideOthers false }), mapScopeByTree · src/ui/view-selection-ui.ts (hlavní okno zapisuje, další okno jen stav okna; adoptWindowSelection; obnova bez přesunu; selectionDataChanged: zaniklý výběr zrušen, hideOthers vypnuto, toast jen když byl vidět; zapomenout jen u skutečně načtených dat; pending u zamčeného stromu) · src/windows/view-window-state.ts (selection, mapScope v přenášeném stavu; F5) · src/windows/window-show-on-map.ts · src/ui/map-scope-ui.ts (zrušený / zaniklý → 'view') · strings.ts selection.goneList, goneRod, goneLine, gonePerson · app:9f1fe7c4, 27e6a511, 287d10d5, f5e531e9 · ZADANI_DEV_vyber-osob §7, §12 -->
 
 <a id="A6.7"></a>
 ## A6.7 Table
@@ -852,7 +1044,8 @@ the depth **Ancestors** and **Descendants**. The Table view is based on a table 
   when they are among its people, otherwise the first person; a source row does not change the central person.
 - **Limits:**
   - highlighting a family line ([A6.6](#A6.6)) is not used in the table; a family line can be chosen with the chip
-    **Family line** ([A6.7.6](#A6.7.6));
+    **Family line** ([A6.7.6](#A6.7.6)), from app 3.31.0 also the window's selection as the scope
+    ([A6.7.19](#A6.7.19));
   - the research's columns, chips and views are only in a tree from the research ([A6.7.14](#A6.7.14));
   - a read-only tree (a followed tree, a tree saved by a newer version of the app, a locked tree) the table only
     shows: “Read only: edits and “Not an error” are not available here.” Browsing, filter, sort and CSV and XLSX
@@ -1058,6 +1251,8 @@ The filter chooses the rows, the search narrows them further, the sort sets the 
   date** (birth or death), **No source**, **With findings** (error or to check; not a lead), **Unusual**,
   **Unconfirmed research** (only a tree from the research). The finding chips wait for the check (“Once the checks
   finish”). What does not fit is in **More (n)**.
+  - **From app 3.31.0:** after **No birth date** there is the chip **No place**: people without a place of birth,
+    marriage, death or another event, that is without a place the map would show ([A6.5.8](#A6.5.8)).
 - **A filter in a column** (**Filter…** in the header) by the kind of column:
   - values from a list (sex, union status, level of a finding, family line …);
   - a range **from**–**to** (for a date **Year**, for an age, count and percentage a number);
@@ -1715,7 +1910,20 @@ the people of the list; the filter, the search and the chips then apply within i
   space is short, the word **Scope** is hidden and the whole tree is only a mark. On a phone **⋯ → Scope ›**. From a
   list: **Open in Table** ([A11.3](A11-lists-of-people.md#A11.3)).
 - **Since:** app 3.30.0
+- **From app 3.31.0:**
+  - the **window's selection** ([A6.6](#A6.6)) that is not a list (a family line, ancestors, descendants, a research
+    line) is in **Scope ▾** as the section **Window selection** with the row "Selection: {name} · {count}"; the table's
+    bar then shows "Selection: {name}". The rows are as in the scope of a list, only without an order of their own:
+    without the columns **#** and **Done**. A person outside the selection: "Not in the selection: {name}.";
+  - the scope of the selection follows the window's selection: another selection replaces it, a selection of a list
+    switches to the scope of that list, a cleared selection or one that is gone returns **Whole tree**. The scope of
+    the selection belongs to the window and is not saved with the Table's view;
+  - in the scope of a list or a selection the last row of the Table's **⋯** is **On the map**: the window's selection
+    is set to that list or selection and the Map opens with the scope **Selection** ([A6.5.7](#A6.5.7)). In another
+    window ([A6.8](#A6.8)) the main window carries it out; without the main window the row is unavailable ("The main
+    window is not open.").
 
+<!-- zdroj 3.31.0: app:src/ui/table-view/table-scope.ts (kind 'selection', klíč sel:…, jen pos, bez # a Hotovo) · table-ui.ts (oddíl scopeSelGroup jen pro výběr, který není seznam; rozsah sleduje výběr okna; openTableForSelection; ⋯ Na mapě jen v rozsahu seznamu nebo výběru, poslední řádek) · table-views.ts (rozsah výběru se s pohledem neukládá) · table-bar.ts (název výběru a ikona druhu) · table-notice.ts notInSelection · src/windows/window-show-on-map.ts (další okno → hlavní okno) · strings.ts table.scopeSelGroup, scopeSel, notInSelection, onMap, onMapNoMain · app:2a578474, 39020cf1 · ZADANI_DEV_vyber-osob §5, §6 · spec 098 -->
 <!-- zdroj: app:src/ui/table-view/table-scope.ts tableScopeOf, scopeRows (Osoby v pořadí, svazek s partnerem, událost s osobou, prameny nikdy), scopeCounts, outsideScope, applyScopeCells · table-ui.ts setTableScope (Osoby, Svazky, Události najednou; LIST_SORT # ↑; zpět bez num), dropGoneScopes + scopeGone, tableScopeRows (Spravovat seznamy… ne v isReadOnly), showTableScopeMenu, tableScopeSheetRows, toggleTableDone, tableRowRemoveIds, hiddenJump.outsideList (:2204), leadColumnsOf (# a Hotovo), export :3125 scopeRows · table-notice.ts:60 (scopeGone, notInList, Celý strom) · table-views.ts:258, :272 view.scope · table-bar.ts tv-scope-btn · strings.ts table.scope, scopeWhole, scopeManage, scopeSources, scopeGone, notInList, outsideList, sortList, col.num, col.done, chip.left, chip.done, lists.toast.removed · app:211323e8, 33fa6cd4 (# a Hotovo v exportu), 9681a1f4 (N1 jeden řádek lišty) · ZADANI_DEV §9, §13d · spec 084 K3.* -->
 
 <a id="A6.7.20"></a>
@@ -1764,7 +1972,8 @@ from it.
 - **What the window has:** instead of the app's toolbar it has a heading: the tree's name, the view switch (below 960 px
   as "{view} ▾"), **Follow selection** ([A6.8.1](#A6.8.1)), **Undo**, **Redo** and ⧉ **Open another window**. It has no
   tree switcher, no **Research** menu, no Settings and no small research panel. From app 3.30.0 the switch **Selection**
-  ([A6.8.4](#A6.8.4)) stands in place of **Follow selection**.
+  ([A6.8.4](#A6.8.4)) stands in place of **Follow selection**, from app 3.31.0 it is called **Chosen person**
+  ([A6.8.1](#A6.8.1)). The window has its own selection of people ([A6.6](#A6.6)).
 - **Edits:** in the window a person can be edited (the person menu, **Edit**) and so can a Table cell. The main
   window saves them, they can be undone as its steps and show in all windows at once. **Undo** and **Redo** in the window's heading
   undo and redo the main window's steps. When the tree changed in another window meanwhile, the edit is not applied:
@@ -1795,7 +2004,7 @@ from it.
 <!-- zdroj: app:4b1373a7 src/windows/window-open.ts isDesktopSystem, windowsOffered (role main, ne isViewMode, > MOBILE_MAX 640, ne isPhoneBar), openInNewWindow · src/windows/window-controls.ts openWindow (BLOCKED_TOAST_MS 10 s, win.retry; MANY_WINDOWS 5, manyWindows), INDICATOR_TEXT_MIN_WIDTH 1280, renderMenu (6 pohledů, thisView, overview jen UI.canOpenResearchOverview), wireTabs (ctrl/meta click, auxclick button 1, contextmenu, Shift+F10 / ContextMenu) · src/windows/view-window-state.ts (přenos stavu, F5 satelitu) · src/windows/sat-header.ts · src/windows/satellite.ts readOnly (live, locked) · src/windows/sat-states.ts (live strip readOnlyLive, goToMain; CONFLICT_TOAST_MS) · src/windows/window-drafts.ts (draftKept) · src/windows/window-research-menu.ts (researchInMain) · src/windows/window-title.ts · index.html html.window-satellite .toolbar skryto · strings.ts win.* · CHANGELOG.cs.md 3.28.0 · spec 079 K1.1–K1.4, K1.7 · prace/1112-app-okna-zaklad, 1112-app-okna-pohledy -->
 
 <a id="A6.8.1"></a>
-### A6.8.1 Selection
+### A6.8.1 Chosen person
 
 The selected person is shared between the windows. What a choice in another window does in this window is set by the
 switch **Follow selection** in the window's heading.
@@ -1822,8 +2031,12 @@ switch **Follow selection** in the window's heading.
 - **From app 3.30.0:** the switch is called **Selection ▾**, and these modes are in its group **This window** ·
   selection from other windows. The second group **Main window** says what a choice in this window does in the main
   window ([A6.8.4](#A6.8.4)).
+- **From app 3.31.0:** the switch is called **Chosen person ▾**, with the groups **This window** · person chosen in
+  another window and **Main window** · person chosen in this window. At **off** it says "The window keeps its own
+  chosen person and sends none." The word **Selection** in the app means only the selection of people
+  ([A6.6](#A6.6)).
 
-<!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) -->
+<!-- zdroj: app:4b1373a7 src/windows/follow-mode.ts RECENTERING (family, descendants, fan), defaultFollowMode, followModesFor, effectiveFollowMode, followChoiceToStore (sessionStorage pro okno) · src/windows/window-selection.ts (origin, bez smyčky) · src/windows/sat-header.ts · strings.ts win.followSelectionState, followModeSwitch, followModeMark, followModeOff, followModeSwitchNote, followModeMarkNote, followSelectionOff · spec 079 K1.3, K2.1 · prace/1112-app-okna-sledovat (7bb1b8b2) · 3.31.0: strings.ts satFollow.menu, label, groupThisSub, groupMainSub, recvOffNote, sendDisabled, agentNote (app:51ad8fd6, ZADANI_DEV_vyber-osob §1.1) -->
 
 <a id="A6.8.2"></a>
 ### A6.8.2 When the main window is missing
@@ -1875,8 +2088,8 @@ other. Other windows connect to it."
 ### A6.8.4 What a choice in another window does in the main window
 
 A person chosen in the Table, on the Timeline or on the Map of another window is marked in the main window, or
-becomes its centre. This is set by the group **Main window** in the switch **Selection** in the heading of the other
-window.
+becomes its centre. This is set by the group **Main window** in the switch **Selection** (from app 3.31.0 **Chosen person**) in the
+heading of the other window.
 
 | Choice | What happens in the main window |
 |---|---|
@@ -1898,9 +2111,9 @@ window.
   window says "{name} is not in this view." with **Go to** (the person becomes the centre) and ×.
 - **Limits:**
   - a main window that follows the research agent only marks the person; the centre stays with the agent
-    ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Once per run it says "Following the agent – a selection from
+    ([S4.1.7](S4-research-from-the-app.md#S4.1.7)). Once per run it says "Following the agent – a person chosen in
     another window is only marked."; the other window has "(agent)" at the choice and in its menu "The main window
-    is following the agent – the selection is only marked there." After a pause or the end of following nothing is
+    follows the agent – the chosen person is only marked there." After a pause or the end of following nothing is
     switched back: **focus** holds from the next choice;
   - a person who is no longer in the tree: the centre stays, "The selected person is no longer in the tree." A notice
     without × goes after 6 s;
@@ -1909,12 +2122,12 @@ window.
     this window." goes after 6 s. Family, Descendants and the Fan hide no one;
   - a person who is the centre already: nothing happens;
   - with **off** in the group **This window** and when the main window is not open, the group **Main window** is
-    greyed out with the note "Unavailable – selection sharing is off in this window." or "The main window is not
+    greyed out with the note "Unavailable – sharing the chosen person is off in this window." or "The main window is not
     open."; the choice stays stored;
   - the choice holds for one window and its Table, Timeline and Map, and survives the window's reload (F5); each
     other window has its own. Until a choice is made, the view decides: the Table focuses, the Timeline and the Map
     mark. **mark only** once chosen holds in the Table too and survives the window's reload.
-- **Controls:** app: in the heading of another window **Selection ▾** → **Main window** · selection in this window:
+- **Controls:** app: in the heading of another window **Chosen person ▾** → **Main window** · person chosen in this window:
   **mark only**, **focus**. The closed switch shows what is chosen (in a narrow window shortened to icons); its
   tooltip has the whole wording.
 - **Since:** app 3.30.0

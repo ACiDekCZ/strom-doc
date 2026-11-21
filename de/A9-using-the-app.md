@@ -123,8 +123,9 @@ Die übrigen Ansichten und Aktionen stehen im Blatt **Mehr**.
 - **Untere Leiste:** **Familie** | **Nachkommen** | **＋** (Person hinzufügen; nur in einem Stammbaum, der sich
   bearbeiten lässt) | **Tabelle** | **Mehr**. Eine offene Familie, Nachkommen oder Tabelle wird in der Leiste
   hervorgehoben; ein offener Fächer, eine offene Karte oder Zeitleiste hebt **Mehr** hervor.
-- **Mehr → Ansicht:** **Fächer** | **Karte** | **Zeitleiste**. Auf dem Telefon steht darunter die Wahl der Stammlinie
-  ([A6.6](A6-views.md#A6.6)), wenn der Stammbaum sie anbietet; nicht bei Zeitleiste, Karte und Tabelle.
+- **Mehr → Ansicht:** **Fächer** | **Karte** | **Zeitleiste**. Auf dem Telefon steht darunter die Zeile **Auswahl**
+  ([A6.6.1](A6-views.md#A6.6.1)) in Familie, Nachkommen und Fächer jedes Stammbaums mit Personen; nicht bei
+  Zeitleiste, Karte und Tabelle. Bis App 3.30.0 stand dort die Wahl der Stammlinie, nur wenn der Stammbaum sie anbot.
 - **Vollbild:** Im Blatt **Mehr** steht **Vollbild**, im Vollbild **Vollbild beenden**. Die Leisten des Browsers
   nehmen dann keinen Platz ein.
   - Es wird nur angeboten, wo der Browser einer Seite das Vollbild erlaubt, und nur mit der unteren Leiste. Ein

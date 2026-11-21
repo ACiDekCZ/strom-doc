@@ -356,7 +356,7 @@ innego; pozostałe okna śledzą dalej. Wszystkie okna są przy tym tylko do odc
   i ślad w Wachlarzu i na Mapie) w nim zostają. **Śledź agenta** ponownie dołącza okno i od razu przeskakuje do
   agenta. Odłączenie przetrwa odświeżenie okna (F5) i zostaje zapomniane wraz z końcem śledzenia.
 - **Wybór z innego okna:** śledzące okno, które nie jest wstrzymane, osobę wybraną w innym oknie tylko zaznacza, także
-  przy **Wybór** → **To okno**: **przełączaj** ([A6.8.1](A6-views.md#A6.8.1)); centrum zostaje przy agencie. Tabela
+  przy **Wybrana osoba** → **To okno**: **przełączaj** ([A6.8.1](A6-views.md#A6.8.1)); centrum zostaje przy agencie. Tabela
   zaznacza wiersz tej osoby, ale do niego nie przewija. Przeskok za agentem nie jest wysyłany innym oknom jako wybór
   osoby. Wstrzymane i odłączone okno kieruje się wyborem **To okno** jak poza śledzeniem. Wybór wysłany do okna głównego
   z **ustaw w centrum** okno główne śledzące agenta tylko zaznacza ([A6.8.4](A6-views.md#A6.8.4)).

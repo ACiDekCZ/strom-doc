@@ -89,8 +89,8 @@ Herkunftslinie und gegebenenfalls „· heiratete in Stammlinie …“. Wer in d
   - In Seiten und Exporten mit Schutz lebender Personen erscheint die Zeile bei einer lebenden Person nur bei der
     Option **Vollständige Daten** oder **Nur Nachname behalten**.
 - **Bedienung:** das Angebot **Aktionen zur Stammlinie** bei der Zeile: **Stammlinie im Baum zeigen**, **Stammlinie
-  bearbeiten…**, **Stammlinie ab dieser Person beginnen…**, **Buch der Stammlinie…**. Die Wahl einer Stammlinie in
-  der Ansicht des Stammbaums beschreibt A6.
+  bearbeiten…**, **Stammlinie ab dieser Person beginnen…**, **Buch der Stammlinie…**. Die Stammlinie als Personenauswahl
+  in der Ansicht des Stammbaums beschreibt [A6.6](A6-views.md#A6.6).
 - **Gilt seit:** App 3.19.0
 
 <!-- zdroj: app:src/lineage.ts:793 marriedInto · :857 personRodRow · src/lineage-row.ts:40 personRodRowValue · :70 rodRowShown · strings.ts lineage.row.* -->
@@ -107,8 +107,8 @@ Stammlinien stehen unter **Weitere Familien** (bis 4 Personen), große Stammlini
     bei der Stammlinie zu sehen, in die sie eingeheiratet hat.
   - Zwei unterschiedliche Regeln: eine große Stammlinie wird von gleichnamigen Stammlinien nur gegenüber anderen
     großen unterschieden, eine kleine gegenüber allen ([A4.4](#A4.4)).
-- **Bedienung:** **Stammbaum-Überblick → Stammlinien → Weitere Familien**. In der Werkzeugleiste **Stammlinien →
-  Weitere Familien** (A6).
+- **Bedienung:** **Stammbaum-Überblick → Stammlinien → Weitere Familien**. In der Werkzeugleiste **Auswahl ▾ → Stammlinien →
+  Weitere Familien** ([A6.6.1](A6-views.md#A6.6.1); bis App 3.30.0 **Stammlinien → Weitere Familien**).
 - **Gilt seit:** App 3.19.0
 
 <!-- zdroj: app:src/lineage.ts:72 SMALL_ROD_MAX_MEMBERS · :710 isMarriedInOnly · :722 otherFamilyRods · strings.ts treeOverview.rods, familyPages.otherFams -->
@@ -138,10 +138,11 @@ Klammern eine Unterscheidung.
   - Ab 20 großen Stammlinien hat der Überblick eine Suche und zeigt die ersten 20 Stammlinien, den Rest nach dem
     Aufklappen. Gesucht wird im Namen, in den Namensformen, Orten und Namen der Mitglieder.
   - Die Zeitleiste der Stammlinien ist auf 50 Jahre gerundet.
-- **Bedienung:** **Stammbaum-Überblick → Stammlinien**, Feld „Stammlinie, Ort oder Person suchen…“. Die Liste
-  **Stammlinien** in der Werkzeugleiste hat dieselbe Reihenfolge und dieselben Namen, mit **Ganzer Stammbaum** und
-  **Weitere Familien** (A6).
-- **Gilt seit:** App 3.19.0 (Liste **Stammlinien** in der Werkzeugleiste 3.21.0)
+- **Bedienung:** **Stammbaum-Überblick → Stammlinien**, Feld „Stammlinie, Ort oder Person suchen…“. Der Abschnitt
+  **Stammlinien** des Menüs **Auswahl ▾** in der Werkzeugleiste hat dieselbe Reihenfolge und dieselben Namen, mit
+  **Weitere Familien** ([A6.6.1](A6-views.md#A6.6.1)).
+- **Gilt seit:** App 3.19.0 (Liste **Stammlinien** in der Werkzeugleiste 3.21.0, ab 3.31.0 Abschnitt **Stammlinien**
+  des Menüs **Auswahl ▾**)
 
 <!-- zdroj: app:src/lineage.ts:393 computeLineages (řazení) · :567 summarise · :672 founderYearOf · :938 rodLabel · src/rods-overview.ts:23 rodSize · :33 sortRods · :46 AXIS_STEP · :79 rodMatches · :98 ROD_SEARCH_FROM · :114 founderPlace · src/ui/tree-overview.ts:160 RODS_SORT_KEY -->
 

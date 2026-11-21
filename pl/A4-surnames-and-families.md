@@ -82,7 +82,7 @@ w rodzie …” i ewentualnie „· ród z urodzenia …”.
   - Na stronach i w eksporcie z ochroną osób żyjących wiersz przy osobie żyjącej pokazuje się tylko przy opcji
     **Pełne dane** lub **Zostaw tylko nazwisko**.
 - **Obsługa:** menu **Akcje rodu** przy wierszu: **Pokaż ród w drzewie**, **Edytuj ród…**, **Załóż ród od tej
-  osoby…**, **Księga rodu…**. Wybór rodu w widoku drzewa opisuje A6.
+  osoby…**, **Księga rodu…**. Ród jako wybór osób w widoku drzewa opisuje [A6.6](A6-views.md#A6.6).
 - **Obowiązuje od:** aplikacja 3.19.0
 
 <!-- zdroj: app:src/lineage.ts:793 marriedInto · :857 personRodRow · src/lineage-row.ts:40 personRodRowValue · :70 rodRowShown · strings.ts lineage.row.* -->
@@ -98,7 +98,8 @@ Ród z najwyżej 4 rzeczywistymi członkami jest mały. Osób wżenionych nie wl
     w liście rodów wcale; osoba jest widoczna przy rodzie, do którego weszła przez małżeństwo.
   - Dwie różne zasady: duży ród odróżnia się od rodów o tej samej nazwie tylko względem innych dużych, mały względem
     wszystkich ([A4.4](#A4.4)).
-- **Obsługa:** **Przegląd drzewa → Rody → Inne rodziny**. Na pasku narzędzi **Rody → Inne rodziny** (A6).
+- **Obsługa:** **Przegląd drzewa → Rody → Inne rodziny**. Na pasku narzędzi **Wybór ▾ → Rody → Inne rodziny**
+  ([A6.6.1](A6-views.md#A6.6.1); do aplikacji 3.30.0 **Rody → Inne rodziny**).
 - **Obowiązuje od:** aplikacja 3.19.0
 
 <!-- zdroj: app:src/lineage.ts:72 SMALL_ROD_MAX_MEMBERS · :710 isMarriedInOnly · :722 otherFamilyRods · strings.ts treeOverview.rods, familyPages.otherFams -->
@@ -128,9 +129,10 @@ ma tę samą nazwę co inne rody, dostaje w nawiasie rozróżnienie.
   - Od 20 dużych rodów przegląd ma wyszukiwanie i pokazuje pierwsze 20 rodów, resztę po rozwinięciu. Szuka się
     w nazwie, formach nazwiska, miejscowościach i imionach członków.
   - Oś czasu rodów jest zaokrąglona do 50 lat.
-- **Obsługa:** **Przegląd drzewa → Rody**, pole „Szukaj rodu, miejscowości lub osoby…”. Lista **Rody** na pasku
-  narzędzi ma tę samą kolejność i nazwy, z **Całe drzewo** i **Inne rodziny** (A6).
-- **Obowiązuje od:** aplikacja 3.19.0 (lista **Rody** na pasku narzędzi 3.21.0)
+- **Obsługa:** **Przegląd drzewa → Rody**, pole „Szukaj rodu, miejscowości lub osoby…”. Sekcja **Rody** menu
+  **Wybór ▾** na pasku narzędzi ma tę samą kolejność i nazwy, z **Inne rodziny** ([A6.6.1](A6-views.md#A6.6.1)).
+- **Obowiązuje od:** aplikacja 3.19.0 (lista **Rody** na pasku narzędzi 3.21.0, od 3.31.0 sekcja **Rody** menu
+  **Wybór ▾**)
 
 <!-- zdroj: app:src/lineage.ts:393 computeLineages (řazení) · :567 summarise · :672 founderYearOf · :938 rodLabel · src/rods-overview.ts:23 rodSize · :33 sortRods · :46 AXIS_STEP · :79 rodMatches · :98 ROD_SEARCH_FROM · :114 founderPlace · src/ui/tree-overview.ts:160 RODS_SORT_KEY -->
 

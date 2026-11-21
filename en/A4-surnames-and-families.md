@@ -84,8 +84,8 @@ in … line" and possibly "· born into …".
   - In pages and exports with privacy of living people, the row of a living person is shown only with the option
     **Full data** or **Keep surname only**.
 - **Controls:** the menu **Family line actions** at the row: **Show family line in tree**, **Edit family line…**,
-  **Start a family line from this person…**, **Family line book…**. Choosing a family line in the tree view is
-  described in A6.
+  **Start a family line from this person…**, **Family line book…**. A family line as the selection of people in the
+  tree view is described in [A6.6](A6-views.md#A6.6).
 - **Since:** app 3.19.0
 
 <!-- zdroj: app:src/lineage.ts:793 marriedInto · :857 personRodRow · src/lineage-row.ts:40 personRodRowValue · :70 rodRowShown · strings.ts lineage.row.* -->
@@ -102,8 +102,8 @@ lines are under **Other families** (up to 4 people), large family lines have a r
     they married into.
   - Two different rules: a large family line is told apart from family lines of the same name only against other
     large ones, a small one against all ([A4.4](#A4.4)).
-- **Controls:** **Tree overview → Family lines → Other families**. In the toolbar **Family lines → Other families**
-  (A6).
+- **Controls:** **Tree overview → Family lines → Other families**. In the toolbar **Selection ▾ → Family lines → Other
+  families** ([A6.6.1](A6-views.md#A6.6.1); up to app 3.30.0 **Family lines → Other families**).
 - **Since:** app 3.19.0
 
 <!-- zdroj: app:src/lineage.ts:72 SMALL_ROD_MAX_MEMBERS · :710 isMarriedInOnly · :722 otherFamilyRods · strings.ts treeOverview.rods, familyPages.otherFams -->
@@ -131,9 +131,11 @@ the line. When a family line has the same name as other family lines, it gets a 
   - From 20 large family lines the overview has a search and shows the first 20 family lines, the rest after
     expanding. It searches in the name, name forms, towns and members' names.
   - The time axis of family lines is rounded to 50 years.
-- **Controls:** **Tree overview → Family lines**, the field "Search line, place or person…". The list **Family
-  lines** in the toolbar has the same order and names, with **Whole tree** and **Other families** (A6).
-- **Since:** app 3.19.0 (the list **Family lines** in the toolbar 3.21.0)
+- **Controls:** **Tree overview → Family lines**, the field "Search line, place or person…". The section **Family
+  lines** of the menu **Selection ▾** in the toolbar has the same order and names, with **Other families**
+  ([A6.6.1](A6-views.md#A6.6.1)).
+- **Since:** app 3.19.0 (the list **Family lines** in the toolbar 3.21.0, from 3.31.0 the section **Family lines** of
+  the menu **Selection ▾**)
 
 <!-- zdroj: app:src/lineage.ts:393 computeLineages (řazení) · :567 summarise · :672 founderYearOf · :938 rodLabel · src/rods-overview.ts:23 rodSize · :33 sortRods · :46 AXIS_STEP · :79 rodMatches · :98 ROD_SEARCH_FROM · :114 founderPlace · src/ui/tree-overview.ts:160 RODS_SORT_KEY -->
 
