@@ -1213,7 +1213,7 @@ pracovat najednou, běh celé fronty i běhy linií dohromady ([R7.10.1](R7-when
 
 Většina akcí výzkumu v aplikaci je odkaz `strom-research://`. Odkaz otevře terminál výzkumu na tomtéž počítači.
 Terminál řekne, co aplikace žádá, a zeptá se. Bez potvrzení v terminálu se nic nezapíše ani nezaplatí. Výjimkou je
-jen práce agenta na předplatné nebo kredit AI, když se tak výzkum nastaví ([S4.5.5](#S4.5.5)).
+jen práce agenta na předplatné nebo kredit AI, když je tak nastavený tento počítač ([S4.5.5](#S4.5.5)).
 
 - **Hranice:**
   - Akce je vidět jen na počítači (ne na dotykovém zařízení), jen když výzkum odkaz ohlásil a jen když je zapnuté
@@ -1346,7 +1346,7 @@ tak přestane čekat hned a ozve se, jen když se nic neotevřelo ([S4.5](#S4.5)
 <a id="S4.5.5"></a>
 ### S4.5.5 Spouštění agenta z aplikace bez potvrzení
 
-Volba výzkumu **Spouštění agenta z aplikace Strom** určuje, jestli se terminál před prací agenta, o kterou požádala
+Nastavení tohoto počítače **Spouštění agenta z aplikace Strom** určuje, jestli se terminál před prací agenta, o kterou požádala
 aplikace, zeptá **Pokračovat?** Výchozí je **s potvrzením**: terminál řekne, co aplikace žádá, že agent pracuje na
 předplatné nebo kredit AI, a čeká na ano ([S4.5](#S4.5)). **Bez potvrzení** se práce agenta spustí hned a terminál to
 řekne jednou řádkou: **▶ Spouští se bez potvrzení (výzkum …): …** a kde se dotaz znovu zapíná.

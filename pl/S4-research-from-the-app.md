@@ -1317,7 +1317,7 @@ naraz pracować nad drzewem, przebieg całej kolejki i przebiegi linii razem
 
 Większość działań badania w aplikacji to link `strom-research://`. Link otwiera terminal badania na tym samym
 komputerze. Terminal mówi, o co prosi aplikacja, i pyta. Bez potwierdzenia w terminalu nic się nie zapisze ani nie
-zapłaci. Wyjątkiem jest tylko praca agenta w ramach subskrypcji lub kredytu AI, gdy badanie jest tak ustawione
+zapłaci. Wyjątkiem jest tylko praca agenta w ramach subskrypcji lub kredytu AI, gdy ten komputer jest tak ustawiony
 ([S4.5.5](#S4.5.5)).
 
 - **Granice:**
@@ -1463,7 +1463,7 @@ wykonane. Aplikacja przestaje więc od razu czekać i odzywa się tylko wtedy, g
 <a id="S4.5.5"></a>
 ### S4.5.5 Uruchamianie agenta z aplikacji bez potwierdzenia
 
-Ustawienie badania **Uruchamianie agenta z aplikacji Strom** decyduje, czy terminal przed pracą agenta, o którą
+Ustawienie tego komputera **Uruchamianie agenta z aplikacji Strom** decyduje, czy terminal przed pracą agenta, o którą
 poprosiła aplikacja, zapyta **Kontynuować?** Domyślnie jest **z potwierdzeniem**: terminal mówi, o co prosi
 aplikacja, że agent pracuje w ramach subskrypcji lub kredytu AI, i czeka na tak ([S4.5](#S4.5)). **Bez potwierdzenia**
 praca agenta uruchamia się od razu, a terminal mówi o tym jedną linią: **▶ Uruchamianie bez potwierdzenia

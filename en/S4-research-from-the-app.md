@@ -1339,7 +1339,7 @@ most**: how many runs may work on the tree at once, the run of the whole queue a
 
 Most research actions in the app are a `strom-research://` link. The link opens the research's terminal on the same
 computer. The terminal says what the app asks for and asks. Without confirmation in the terminal nothing is written
-or paid. The only exception is the agent's work on the subscription or AI credit, when the research is set so
+or paid. The only exception is the agent's work on the subscription or AI credit, when this computer is set so
 ([S4.5.5](#S4.5.5)).
 
 - **Limits:**
@@ -1484,7 +1484,7 @@ done. The app then stops waiting at once and speaks up only when nothing opened 
 <a id="S4.5.5"></a>
 ### S4.5.5 Starting the agent from the app without confirmation
 
-The research's setting **Starting the agent from the Strom app** decides whether the terminal asks **Go on?** before
+The setting of this computer **Starting the agent from the Strom app** decides whether the terminal asks **Go on?** before
 agent's work that the app asked for. The default is **asked first**: the terminal says what the app asks for, that the
 agent works on the subscription or AI credit, and waits for a yes ([S4.5](#S4.5)). **Without the question** the
 agent's work starts at once and the terminal says so in one line: **▶ Started without the question (research …): …**

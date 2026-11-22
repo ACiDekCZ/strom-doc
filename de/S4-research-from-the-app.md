@@ -1436,7 +1436,7 @@ Läufe der Richtungen zusammen ([R7.10.1](R7-when-the-agent-works.md#R7.10.1)).
 Die meisten Aktionen der Forschung in der App sind ein Link `strom-research://`. Der Link öffnet das Terminal der
 Forschung auf demselben Computer. Das Terminal sagt, worum die App bittet, und fragt nach. Ohne Bestätigung im
 Terminal wird nichts geschrieben und nichts bezahlt. Ausgenommen ist nur die Arbeit des Agenten auf das Abonnement
-oder KI-Guthaben, wenn die Forschung so eingestellt ist ([S4.5.5](#S4.5.5)).
+oder KI-Guthaben, wenn dieser Computer so eingestellt ist ([S4.5.5](#S4.5.5)).
 
 - **Grenzen:**
   - Eine Aktion ist nur am Computer zu sehen (nicht auf einem Touch-Gerät), nur wenn die Forschung den Link gemeldet
@@ -1587,7 +1587,7 @@ geöffnet hat ([S4.5](#S4.5)).
 <a id="S4.5.5"></a>
 ### S4.5.5 Den Agenten aus der App ohne Bestätigung starten
 
-Die Einstellung der Forschung **Agent aus der Strom-App starten** bestimmt, ob das Terminal vor Arbeit des Agenten,
+Die Einstellung dieses Computers **Agent aus der Strom-App starten** bestimmt, ob das Terminal vor Arbeit des Agenten,
 um die die App gebeten hat, **Fortfahren?** fragt. Standard ist **mit Rückfrage**: Das Terminal sagt, worum die App
 bittet, dass der Agent auf das Abonnement oder KI-Guthaben arbeitet, und wartet auf ein Ja ([S4.5](#S4.5)). **Ohne
 Rückfrage** startet die Arbeit des Agenten sofort, und das Terminal sagt es in einer Zeile: **▶ Startet ohne Rückfrage

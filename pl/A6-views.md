@@ -927,12 +927,16 @@ a drzewo rozkłada się na nowo tylko z nich, w granicach osoby w centrum i gł�
 - Karta najbliżej środka ekranu zostaje po przełożeniu na miejscu (w przeciwnym razie osoba w centrum); powiększenie się
   nie zmienia.
 - Opcja zapamiętuje się z wyborem ([A6.6.4](#A6.6.4)) i wyłącza się z wyczyszczeniem wyboru.
-- **Granice:** Wachlarz tej opcji nie ma (wybór tylko wyróżnia). Wyniki (obraz, druk, eksport) rysują cały widok.
+- **Wachlarz** oferuje opcję tylko przy wyborze **Przodkowie: {osoba}**. Wycinki pozostałych osób zostają na swoich
+  miejscach jako puste przerywane obrysy (bez imienia, lat, wypełnienia i **+**) i nie da się ich otworzyć ani wybrać
+  klawiaturą; wycinki wyboru i środek zostają tam, gdzie były.
+- **Granice:** przy każdym innym wyborze Wachlarz tej opcji nie ma (wybór tylko wyróżnia); **Ukryj pozostałe**
+  włączone w Rodzinie nic tam nie zmienia i zostaje włączone. Wyniki (obraz, druk, eksport) rysują cały widok.
 - **Obsługa:** aplikacja: etykieta wyboru → **Ukryj pozostałe** (pole wyboru); na telefonie etykieta jest w jednym
   wierszu, a **Ukryj pozostałe** to tylko pole wyboru bez tekstu.
 - **Obowiązuje od:** aplikacja 3.31.0
 
-<!-- zdroj: app:src/layout/pipeline/person-filter.ts (filtr při sběru osob: jen osoby celého pohledu a jejich generace a pořadí, ústřední vždy; restrictSelection: čáry jen mezi nakreslenými, rodina s jedním rodičem pod ním; nespojené osoby ve vlastních skupinách vedle sebe v pořadí celého pohledu) · src/layout/pipeline/index.ts drawnOrder · src/renderer.ts setPersonFilter (Rodina a Potomci; záložky a bulk-family jen osoby výběru tabInView; karta nejblíž středu zůstane, jinak ústřední; přiblížení beze změny; výstupy kreslí celý pohled) · src/ui/evidence-ui.ts (rod: faint partneři do filtru; ne ve vějíři – CSS) · src/ui/view-selection-ui.ts setHideOthers (pamatuje s výběrem, bez výběru vypnuto) · strings.ts selection.hideOthers, hideOthersTitle · app:39e84ca0, e5da4a61 · ZADANI_DEV_vyber-osob §8 · dirigent:prace/1121-app-098-vyber-p1 (telefon: štítek v jednom řádku, Skrýt ostatní čtvereček 44 px), test/vysledek-1121-app-098-vyber-p1.md -->
+<!-- zdroj: app:src/layout/pipeline/person-filter.ts (filtr při sběru osob: jen osoby celého pohledu a jejich generace a pořadí, ústřední vždy; restrictSelection: čáry jen mezi nakreslenými, rodina s jedním rodičem pod ním; nespojené osoby ve vlastních skupinách vedle sebe v pořadí celého pohledu) · src/layout/pipeline/index.ts drawnOrder · src/renderer.ts setPersonFilter (Rodina a Potomci; záložky a bulk-family jen osoby výběru tabInView; karta nejblíž středu zůstane, jinak ústřední; přiblížení beze změny; výstupy kreslí celý pohled) · src/ui/evidence-ui.ts (rod: faint partneři do filtru; ve vějíři jen předci: setPersonFilter fan = ref.kind ancestors, syncEvidencePillHide evidence-pill--no-hide) · src/fan-chart.ts buildFanSvg keepOnly (offSector: prázdný čárkovaný obrys, bez +, pointer-events none, aria-hidden; střed vždy) · src/ui/fan-view.ts svgExtras keepOnly (jen obrazovka; výstup fan-chart.ts:1249 bez keepOnly), klávesnice přeskočí · app:493f330c · src/ui/view-selection-ui.ts setHideOthers (pamatuje s výběrem, bez výběru vypnuto) · strings.ts selection.hideOthers, hideOthersTitle · app:39e84ca0, e5da4a61 · ZADANI_DEV_vyber-osob §8 · dirigent:prace/1121-app-098-vyber-p1 (telefon: štítek v jednom řádku, Skrýt ostatní čtvereček 44 px), test/vysledek-1121-app-098-vyber-p1.md -->
 
 <a id="A6.6.3"></a>
 ### A6.6.3 Osoba w centrum poza wyborem
