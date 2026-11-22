@@ -30,6 +30,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R2.1.2 | R2-lines-and-queue.md | výzkum 1.8.0 | platí | Pozastavená a ukončená linie | A paused and an ended line | Pausierte und beendete Linie | Linia wstrzymana i zakończona |
 | R2.1.3 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Kdo do linie patří | Who belongs to a line | Wer zu einer Linie gehört | Kto należy do linii |
 | R2.1.4 | R2-lines-and-queue.md | výzkum 1.26.0 | platí | Pořadí linií je pořadí práce | The order of the lines is the order of work | Die Reihenfolge der Linien ist die Reihenfolge der Arbeit | Kolejność linii to kolejność pracy |
+| R2.1.5 | R2-lines-and-queue.md | výzkum 1.36.0 | platí | Převod úkolů do užší linie | Moving tasks into a narrower line | Aufgaben in eine engere Linie übernehmen | Przeniesienie zadań do węższej linii |
 | R2.2 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Fronta určuje, který úkol přijde na řadu | The queue sets which task comes next | Die Warteschlange bestimmt, welche Aufgabe an die Reihe kommt | Kolejka wyznacza, które zadanie przychodzi na kolej |
 | R2.2.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Strategie fronty | The queue strategy | Strategie der Warteschlange | Strategia kolejki |
 | R2.2.2 | R2-lines-and-queue.md | výzkum 1.1.0 | platí | Vyprávění na řadě | A story is due | Erzählung an der Reihe | Opowieść na kolei |
@@ -132,6 +133,11 @@ nenapsáno) · `neplatí od <verze>`.
 | R7.8 | R7-when-the-agent-works.md | výzkum 1.12.0 | platí | Archiv Stromu: výzkum, na kterém agent nepracuje | Strom archive: a research the agent does not work on | Strom-Archiv: eine Forschung, an der kein Agent arbeitet | Archiwum Strom: badanie, nad którym agent nie pracuje |
 | R7.8.1 | R7-when-the-agent-works.md | výzkum 1.15.0 | platí | Výzkum čeká na agenta | A research waiting for an agent | Eine Forschung wartet auf einen Agenten | Badanie czeka na agenta |
 | R7.9 | R7-when-the-agent-works.md | výzkum 1.36.0 | platí | Úkol drží sezení, které na něm pracuje | A task is held by the session working on it | Eine Aufgabe hält die Sitzung, die an ihr arbeitet | Zadanie trzyma sesja, która nad nim pracuje |
+| R7.10 | R7-when-the-agent-works.md | výzkum 1.36.0 | platí | Běh linie: každá linie může mít vlastní běh | A run of a line: each line can have a run of its own | Lauf einer Linie: jede Linie kann einen eigenen Lauf haben | Przebieg linii: każda linia może mieć własny przebieg |
+| R7.10.1 | R7-when-the-agent-works.md | výzkum 1.36.0 | platí | Nejvýš běhů najednou: `run.parallel` | Runs at once, at most: `run.parallel` | Höchstens so viele Läufe gleichzeitig: `run.parallel` | Najwyżej przebiegów naraz: `run.parallel` |
+| R7.10.2 | R7-when-the-agent-works.md | výzkum 1.36.0 | platí | Zastavit jeden běh | Stopping one run | Einen Lauf anhalten | Zatrzymanie jednego przebiegu |
+| R7.10.3 | R7-when-the-agent-works.md | výzkum 1.36.0 | platí | Co si běhy na počítači dělí | What runs on a computer share | Was sich die Läufe auf einem Computer teilen | Co dzielą przebiegi na komputerze |
+| R7.10.4 | R7-when-the-agent-works.md | výzkum 1.36.0 | platí | Běh linie z odkazu aplikace Strom | A run of a line from a link of the Strom app | Lauf einer Linie über einen Link der App Strom | Przebieg linii z odnośnika aplikacji Strom |
 | R8 | R8-reading-scans.md | výzkum 1.0.0 | platí | Hledání a čtení záznamů ve skenech | Finding and reading entries in scans | Einträge in Scans finden und lesen | Wyszukiwanie i odczyt wpisów w skanach |
 | R8.1 | R8-reading-scans.md | výzkum 1.0.0 | platí | Nejdřív kniha | The book first | Zuerst das Buch | Najpierw księga |
 | R8.1.1 | R8-reading-scans.md | výzkum 1.14.0 | platí | Rejstřík před listováním | An index before browsing | Ein Register vor dem Durchblättern | Indeks przed przeglądaniem |
@@ -499,6 +505,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.1.5 | S4-research-from-the-app.md | aplikace 3.27.0 | platí | Přehled výzkumu bez sledování | The Research overview without following | Forschungsübersicht ohne Folgen | Przegląd badania bez śledzenia |
 | S4.1.6 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Přehled výzkumu v samostatném okně | The Research overview in a separate window | Forschungsübersicht in einem eigenen Fenster | Przegląd badania w osobnym oknie |
 | S4.1.7 | S4-research-from-the-app.md | aplikace 3.30.0 | platí | Sledovat agenta v dalších oknech | Following the agent in other windows | Dem Agenten in weiteren Fenstern folgen | Śledzenie agenta w innych oknach |
+| S4.1.8 | S4-research-from-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Teď s více běhy | Now with several runs | Jetzt mit mehreren Läufen | Teraz z kilkoma przebiegami |
 | S4.2 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Fronta v aplikaci | The queue in the app | Warteschlange in der App | Kolejka w aplikacji |
 | S4.2.1 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Hledání ve frontě | Searching the queue | Suche in der Warteschlange | Wyszukiwanie w kolejce |
 | S4.2.2 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Udělat jako další a Vrátit | Do next and Undo | Als Nächstes erledigen und Rückgängig | Zrób jako następne i Cofnij |
@@ -507,6 +514,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.3 | S4-research-from-the-app.md | aplikace 3.5.0 | platí | Linie v aplikaci | Directions in the app | Linien in der App | Linie w aplikacji |
 | S4.3.1 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Správa linií z aplikace | Managing directions from the app | Verwaltung der Linien aus der App | Zarządzanie liniami z aplikacji |
 | S4.3.2 | S4-research-from-the-app.md | aplikace 3.22.0 | platí | Práce mimo linie po větvích | Work outside the directions by branches | Arbeit außerhalb der Linien nach Zweigen | Praca poza liniami według gałęzi |
+| S4.3.3 | S4-research-from-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Pustit agenta na tuto linii | Put an agent on this direction | Agent auf diese Richtung ansetzen | Uruchom agenta na tej linii |
 | S4.4 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Čeká na vyřízení v aplikaci | Awaiting action in the app | Wartet auf Bearbeitung in der App | Czeka na załatwienie w aplikacji |
 | S4.4.1 | S4-research-from-the-app.md | aplikace 3.27.0 | platí | Více značek na kartě osoby | Several marks on a person card | Mehrere Marken auf der Personenkarte | Kilka oznaczeń na karcie osoby |
 | S4.4.2 | S4-research-from-the-app.md | aplikace 3.28.0 | platí | Hledání v Čeká na vyřízení | Searching Awaiting action | Suche in Wartet auf Bearbeitung | Wyszukiwanie w Czeka na załatwienie |
@@ -519,6 +527,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.4.9 | S4-research-from-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Náhled opravy a Vrátit | Preview of the fix and Undo | Vorschau der Korrektur und Rückgängig | Podgląd poprawki i Cofnij |
 | S4.4.10 | S4-research-from-the-app.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Výzkum u stromu › Sčítání lidu | Research for this tree › Census records | Forschung für diesen Stammbaum › Volkszählungen | Badanie dla drzewa › Spisy ludności |
 | S4.4.11 | S4-research-from-the-app.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Výzkum u stromu › Materiály: soubory projde agent sám | Research for this tree › Materials: the agent goes through files by itself | Forschung für diesen Stammbaum › Materialien: Dateien geht der Agent selbst durch | Badanie dla drzewa › Materiały: pliki agent przejrzy sam |
+| S4.4.12 | S4-research-from-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Výzkum u stromu › Nejvýš agentů najednou | Research for this tree › Agents at once, at most | Forschung für diesen Stammbaum › Agenten gleichzeitig höchstens | Badanie dla drzewa › Najwyżej agentów naraz |
 | S4.5 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Akce, které otevřou výzkum | Actions that open the research | Aktionen, die die Forschung öffnen | Działania, które otwierają badanie |
 | S4.5.1 | S4-research-from-the-app.md | aplikace 3.21.0 | platí | Značky akcí | Action marks | Marken der Aktionen | Oznaczenia działań |
 | S4.5.2 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Kde akce jsou | Where the actions are | Wo die Aktionen sind | Gdzie są działania |

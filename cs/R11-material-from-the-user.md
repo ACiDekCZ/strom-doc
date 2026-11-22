@@ -365,7 +365,7 @@ o roztřídění, nebo dokud v nastavení výzkumu nezapne, že poslané soubory
   - zapnuto: jako dřív. Dávka dá úkoly roztřídění po zhruba 25 souborech, které jdou ve frontě napřed
     ([R11.4](#R11.4)), soubor svůj úkol podklady ([R11.1](#R11.1)), sken pramene úkol k přečtení;
   - úkol vznikne vždy z výslovné akce člověka: **Roztřídit agentem…** ([R11.5.3](#R11.5.3)), `--sort`, soubor jako
-    odpověď na čekající úkol ([R6.7.1](R6-awaiting-action.md#R6.7.1)), **Přečíst dokument**, i text
+    odpověď na čekající úkol ([R6.7.1](R6-awaiting-action.md#R6.7.1)), **Přečíst dokument…**, i text
     (`strom intake --text`), který říká člověk;
   - zapnout smí jen člověk: v terminálu, v menu, nebo v aplikaci Strom. Agentovi se zapnutí odmítne. Vypnout smí
     kdokoli. Úkoly roztřídění, které už vznikly, po vypnutí zůstávají;
@@ -381,4 +381,4 @@ o roztřídění, nebo dokud v nastavení výzkumu nezapne, že poslané soubory
   `POST /batch/<id>/done` s `sort`.
 - **Platí od:** výzkum 1.36.0
 
-<!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) -->
+<!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) · app:strings.ts read.menu (položka menu s „…“, titulek read.title bez) · dirigent:prace/1122-app-nalezy-330 -->

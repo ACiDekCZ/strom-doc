@@ -120,6 +120,8 @@ session. Then the run ends and no further session starts. Nothing is stopped by 
   overview**, at the working agent **Finish and stop**; it is confirmed in the research's terminal. When the run
   waits for the condition, the button is not there.
 - **Since:** research 1.8.0, app 3.5.0
+- **From research 1.36.0:** a run can also be stopped from outside and on its own, `strom run stop <run-…>
+  [--finish]`; with more runs, each has its own **Finish and stop** in the app ([R7.10.2](#R7.10.2)).
 
 <!-- zdroj: research:src/commands/session.ts:198-221 session finish, :865 onSignal, :1194 askedToFinish · src/core/clock.ts askFinish, refuseReadersWhenFinishing · runners/runner.ts:296 OWN_GROUP · src/cli/menu-links.ts:473 finishSession · app:v3.21.2 research-overview-ui.ts:810,868 (!w.paused) · strings.ts live.finishSession -->
 
@@ -280,6 +282,8 @@ not depend on the condition; from 1.34.0 see below.
   - unchanged: a manual run (one task, `--tasks n`, `--max` without `--loop`) and a run without a condition end with
     **subscription limit** as before. The Claude Code message “You've hit your limit · resets …” and a refusal of
     the agent because of the limit are taken as the limit.
+- **From research 1.36.0:** a limit hit by one run stops new sessions of all runs of the same agent on the computer
+  ([R7.10.3](#R7.10.3)).
 
 <!-- zdroj: research:src/commands/session.ts:1196-1206 closeSession (session.limit), :1255-1259 · src/core/session.ts:248-262 · runners/runner.ts:226 looksLikeLimit · cs.json ui.run.stop.limit, ui.run.stop.resets · 1.34.0: research:8f24e9f7 src/commands/session.ts:1453-1483 (gateHolds && gate, limitResume, limitReserve, DEFAULT_WAIT_MS 15 min, until → time, markPaused), :1363 metrics.limit, src/core/planlimit.ts limitResume, timeOf, LIMIT_RESERVE_MS 60 s, FURTHEST_MS · 03146702 (B8: „You've hit your limit“, odmítnutý rate_limit_event) · cs.json ui.run.limit.wait, ui.run.limit.unknown, ui.run.limit.why, ui.run.limit.five_hour, ui.run.limit.seven_day · dirigent:prace/1115-vyzkum-k036-limit-obnova -->
 
@@ -412,3 +416,125 @@ one worker: the open session holds it while its agent gives a sign of life. An a
 - **Since:** research 1.36.0
 
 <!-- zdroj: research:1e58aa7b, f08b6574, 23b20c27 src/core/holds.ts (Hold by run|chat|agent, agentSession, BEAT_MS 60 s, holdAlive: proces tady mrtvý → hned, jinak lastSign < task.hold; lastSign max(beat, mtime), budoucnost jako teď; sessionLife: bez holdu worker, run.lock, ops logy, jinak start) · src/core/session.ts claimTask, takeOver (session.taken: „převzato po … bez známky života; rozdělaná práce v …“), :574 session.taken · src/core/errors.ts:122 task.held, task.held.here · src/commands/session.ts:217-225 (session start: sign of life, at least once every 20 minutes, task.held), :985-997 (run: vynechá držené, převzetí na začátku sezení) · src/brief/brief.ts:1668, src/commands/guide.ts:152 (aspoň jednou za 20 minut) · src/core/config.ts:242-246, :335 task.hold (tree: false, 5 min–24 h, výchozí 30) · ověřeno: strom config set task.hold 3 / 25h / --for-tree odmítnuto (izolovaně) · cs.json ui.error.task.held(.here), ui.error.session.taken, ui.run.skip.held, ui.menu.working.direct(.more), session.taken · CHANGELOG.cs.md 1.36.0 „Více agentů a výzkumů najednou“ · dirigent:spec/127 K1.1–K1.5, K5.1–K5.3, navrh-rezervace.md kap. 1–4, 6 -->
+
+<a id="R7.10"></a>
+## R7.10 A run of a line: each line can have a run of its own
+
+Working alone ([R7.1](#R7.1)) can be started on one line (`strom run --research G…`). Each line has at most one run.
+The runs of different lines and the run of the whole queue work side by side, each on other tasks.
+
+- **Enforced by the code:**
+  - a run of a line holds its line while its process lives. A second run of the same line is refused at once with
+    one sentence: “The line Ancestors of Jan Horák has a run already (since 14:05) — one run per line. It can be
+    stopped in its own window.”;
+  - a run of a line takes the tasks whose main line is its own. A task's main line is its own line, and when that
+    one has ended, the narrowest active line of its people ([R2.1.3](R2-lines-and-queue.md#R2.1.3)). It also takes
+    shared tasks (a common ancestor, help to another line, [R2.3](R2-lines-and-queue.md#R2.3)) whose main line has no
+    run of its own. A task whose main line is held by another run it never takes;
+  - the run of the whole queue leaves out every task of a line that has a run of its own, and also a shared task
+    whose people belong to such a line. Work outside the lines, local history and places stay with it;
+  - this is judged at every choice of a task, before the task is claimed ([R7.9](#R7.9)). A task another session is
+    already working on is not taken over: the session at work finishes it;
+  - conversations (`strom chat`) do not hold a line and do not count among the runs ([R7.10.1](#R7.10.1));
+  - a run of a line does not start beside a run of a strom older than 1.25. Beside a run of a newer strom that does
+    not know lines it starts and says so: that one may take tasks of this line too, but never the one at work.
+- **Limits:**
+  - a run of a line has its own terminal window with the title “Strom · Horáks · Ancestors of Jan Horák (G0002)”;
+    the agent names its session after the line. Meanwhile a run of another line can be started from the menu;
+  - the window of the same line does not open again right after the first one (“A window for the line … opened a
+    moment ago — the run goes on there.”);
+  - only an active line: neither a paused nor an ended line gets a run ([R2.1.2](R2-lines-and-queue.md#R2.1.2));
+  - the research remembers the agent the line last ran with and offers it next time in the menu and in the app;
+  - the warning at a run beside another run says that the subscription use adds up.
+- **In the app:** **Put an agent on this direction** ([S4.3.3](S4-research-from-the-app.md#S4.3.3)); runs in the
+  section **Now** ([S4.1.8](S4-research-from-the-app.md#S4.1.8)).
+- **Controls:** terminal: the menu **Let the agent work on its own**; with two or more active lines it asks **Work on
+  what?**: **the whole queue (the lines with a run of their own aside)**, or a line (“— in a window of its own”; a
+  line with a run “— has a run already” and does not start). The command `strom run --research G…` (with the further
+  options of [R7.1](#R7.1)); `strom research list` shows the numbers of the lines.
+- **Since:** research 1.36.0
+
+<!-- zdroj: research:089875ec src/core/linerun.ts (lineHolds .strom/lines/<G>.json zámek s procesem, run.line.held, run.line.older pro strom před 1.25, lineRunFilter: obecný běh vynechá úkol s linií drženou jiným během; běh linie bere hlavní linii G nebo úkoly v G, jejichž hlavní linii nedrží jiný běh; linie úkolu = vlastní + hlavní (placer core/offline.ts) + linie jeho lidí; mimo linie, dějiny, místa žádnou; rememberLineAgent) · src/cli/menu.ts runMenu (ui.run.where, ui.run.whole, ui.run.line.item/busy/held, openInNewTerminal title Strom · strom · linie (G…), key linie, ui.run.window, ui.run.window.recent; dějiny jen celá fronta) · src/commands/session.ts:1107 enterRun (research, agent) · cs.json ui.run.line, ui.run.line.older, ui.run.beside, ui.run.others · help run (Runs of lines) · CHANGELOG.cs.md 1.36.0 · dirigent:spec/126 U11, prace/1121-research-126-linie-b1 -->
+
+<a id="R7.10.1"></a>
+### R7.10.1 Runs at once, at most: `run.parallel`
+
+At most `run.parallel` runs work at once in one family tree (default 3, 1–10): the run of the whole queue and the runs
+of lines together. Conversations do not count.
+
+- **Enforced by the code:**
+  - counted when a run starts, under a short lock of the tree's lines. A run beyond the limit is refused and says
+    which runs are working and how to stop them;
+  - only a person may raise the value: `strom config set run.parallel <n>` asks “Let up to N runs of the agent work
+    at once in one family tree (now M)? Each run spends the agent's plan — the use adds up.” The agent does not raise
+    the value. Anyone may lower it, the app too ([S4.4.12](S4-research-from-the-app.md#S4.4.12));
+  - lowering it below the number of runs going on stops none; a new run starts once there are fewer.
+- **Limits:** the setting applies to this computer, not to one family tree.
+- **Controls:** terminal: `strom config set run.parallel <n>`, back with `strom config unset run.parallel`.
+- **Since:** research 1.36.0
+
+<!-- zdroj: research:089875ec src/core/linerun.ts (run.parallel, hint strom config set run.parallel <n>, rozhovory se nepočítají) · src/core/config.ts run.parallel (tree: false, DEFAULT_RUN_PARALLEL 3, RUN_PARALLEL_MAX 10, „only you raise it“) · src/commands/setup.ts runsDecision (requireHuman jen při zvýšení), cs.json ui.consent.runParallel · src/core/live.ts runsLimitWrite (POST settings/runs: snížení, zvýšení 403 runs.raise s příkazem, mimo 1–10 400 runs.max) · src/core/liveruns.ts runLimits · help run -->
+
+<a id="R7.10.2"></a>
+### R7.10.2 Stopping one run
+
+Each run can be stopped on its own; the other runs work on. Stopping interrupts nothing by force.
+
+- **Limits:**
+  - `strom run stop <run-…>`: the session at work finishes its task and no next one starts. With `--finish` the
+    session at work is also asked to finish at once: the agent writes what it found and closes the session as
+    `strom session finish` does ([R7.3](#R7.3));
+  - a run that waits (for the condition, the subscription limit or an archive) ends at once;
+  - the run reads the request within a second or two and says so in its terminal. Ctrl-C in the run's window stops
+    only that run;
+  - the number of a run (`run-…`) is given by the refusal of a run beyond the limit ([R7.10.1](#R7.10.1)) and by
+    `strom session list --open`;
+  - after a run of a line ends, the run of the whole queue takes its tasks again.
+- **In the app:** **Stop** and **Finish and stop** in the run's block ([S4.1.8](S4-research-from-the-app.md#S4.1.8)).
+- **Controls:** terminal: `strom run stop <run-…> [--finish]`, Ctrl-C in the run's window.
+- **Since:** research 1.36.0
+
+<!-- zdroj: research:src/commands/session.ts run stop (help: the task at work is finished, no next one starts; --finish; a run that waits ends at once; read within a second or two) · src/core/live.ts POST runs/stop · src/commands/links.ts finish?run= finishRun (strom run stop <run> --finish) · STOP_HINT src/core/linerun.ts · help run stop -->
+
+<a id="R7.10.3"></a>
+### R7.10.3 What runs on a computer share
+
+Runs on one computer (all researches with the same shared folder) share the agent's subscription limit, the questions
+to the condition, the requests to websites and the readers of scans.
+
+- **Enforced by the code:**
+  - a subscription limit hit by one run ([R7.6](#R7.6)) applies to all runs of the same agent (and account) on the
+    computer: no new session starts until the limit renews. A run under a condition with `--loop` or `--until` waits,
+    any other ends (**subscription limit**). A session at work goes on;
+  - the runs ask their conditions ([R7.4](#R7.4)) one after another: the next only after the session the condition
+    let through has started;
+  - the pages of one website the agents open count towards `web.perHost` ([R9.3](R9-archives.md#R9.3)) from all
+    sessions on the computer over the last `run.minutes`;
+  - at most `read.parallel` readers read scans at once on the whole computer ([R8.3.1](R8-reading-scans.md#R8.3.1)).
+- **Since:** research 1.36.0
+
+<!-- zdroj: research:src/core/machine.ts (limit-<agent>.json ve sdílené složce agents/, brána po jednom, sloty čtenářů) · src/core/web.ts web.perHost za run.minutes ze všech sezení · src/core/config.ts read.parallel, web.perHost (počítáno na počítač) · help run (What runs share on this computer) · CHANGELOG.cs.md 1.36.0 · dirigent:spec/126 U8 -->
+
+<a id="R7.10.4"></a>
+### R7.10.4 A run of a line from a link of the Strom app
+
+- The link `strom-research://work` with `research=G…` (and possibly `agent=…`) asks for a run of one line. The
+  research terminal opens it in a new window with the line's name, says “Run of the line …: its tasks only — another
+  line can have a run of its own beside it.”, the agent and the first 5 tasks of the line, and starts `strom run
+  --research G…` with `--tasks N` or `--loop` as in [R7.1.2](#R7.1.2).
+- **Limits:**
+  - nothing starts when the line is not in the research or is paused or ended, when the chosen agent's program is not
+    on the computer, when the line already has a run, when a run of a strom older than 1.25 works on the research, or
+    at the full number of runs (“The limit of runs at once is reached (3 of 3, setting run.parallel). Nothing more was
+    started.”);
+  - the confirmation follows the setting **Starting the agent from the Strom app**
+    ([S4.5.5](S4-research-from-the-app.md#S4.5.5));
+  - a link for the whole queue is still refused beside a run of the whole queue or a session outside the runs of
+    lines. The runs of lines count for it only towards `run.parallel`; the queue it shows has no tasks of lines with a
+    run of their own;
+  - `strom-research://finish` with `run=run-…` asks the run to finish and end as `strom run stop <run-…> --finish`
+    does ([R7.10.2](#R7.10.2)).
+- **Controls:** the app ([S4.3.3](S4-research-from-the-app.md#S4.3.3)); terminal: `strom link open "<link>"`.
+- **Since:** research 1.36.0
+
+<!-- zdroj: research:src/cli/menu-links.ts workRun byLine (ui.link.direction.none, ui.link.work.line.state, ui.link.work.agent, ui.link.work.older, ui.run.line.held, ui.link.work.cap; obecný odkaz: busy bez běhů linií, runRefusal max; lineRunFilter; ui.run.line, ui.link.work.agent.is; run --research [--agent] --tasks|--loop) · src/commands/links.ts lineWindow (titulek Strom · strom · linie (G…), klíč linie), finish run= → finishRun · src/core/links.ts work research=, agent= -->

@@ -70,7 +70,7 @@ drzewa przekazuje je wszystkie; badanie zapisuje każdy plik raz, według zawart
 - Oryginał portretu idzie do badania jako oryginał załącznika z etykietą **Portret**, oryginał zdjęcia pary jako
   materiał obojga partnerów. Oryginał tworzy zadanie materiały; w Archiwum Strom czeka odłożony.
   - **Od badania 1.36.0:** zadanie materiały powstaje tylko z włączonym ustawieniem **Pliki wysłane do badania agent
-    przejrzy sam**; w przeciwnym razie oryginał czeka w Materiałach nieposortowany
+    przejrzy sam**; w przeciwnym razie oryginał czeka w Materiałach nieuporządkowany
     ([R11.6](R11-material-from-the-user.md#R11.6)).
 - Wczytanie drzewa z badania zwraca pliki według odcisku: aplikacja dostaje portrety, zdjęcia par i załączniki na ich
   miejsca. Plik usunięty w aplikacji badanie ukrywa, nie kasuje go ([A3.5.6](A3-evidence-in-the-app.md#A3.5.6)).

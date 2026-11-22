@@ -381,7 +381,7 @@ sam (`intake.auto`).
     ([R11.4](#R11.4)), plik swoje zadanie materiały ([R11.1](#R11.1)), skan źródła zadanie odczytu;
   - zadanie powstaje zawsze z wyraźnego działania człowieka: **Uporządkuj agentem…** ([R11.5.3](#R11.5.3)),
     `--sort`, plik jako odpowiedź na czekające zadanie ([R6.7.1](R6-awaiting-action.md#R6.7.1)), **Odczytaj
-    dokument**, a także tekst (`strom intake --text`), który mówi człowiek;
+    dokument…**, a także tekst (`strom intake --text`), który mówi człowiek;
   - włączyć może tylko człowiek: w terminalu, w menu albo w aplikacji Strom. Agentowi włączenie zostaje odrzucone.
     Wyłączyć może każdy. Zadania porządkowania, które już powstały, po wyłączeniu zostają;
   - ustawienie obowiązuje dla jednego badania (`--for-tree`) albo dla wszystkich badań na komputerze.
@@ -396,4 +396,4 @@ sam (`intake.auto`).
   {auto}`, `POST /batch/<id>/done` z `sort`.
 - **Obowiązuje od:** badanie 1.36.0
 
-<!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) -->
+<!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) · app:strings.ts read.menu (položka menu s „…“, titulek read.title bez) · dirigent:prace/1122-app-nalezy-330 -->

@@ -64,6 +64,8 @@ most.
   wtedy, gdy różni się od początku; przy procesie na tym komputerze bez czasu zwolnienia). Przebieg, który czeka na
   archiwum z ograniczeniami ([R9.13](R9-archives.md#R9.13)), ma stan „Wstrzymano · czeka na archiwum … (najdłużej
   do 14:40)”. Ze starszym badaniem wszystko jest jak wcześniej.
+- **Od aplikacji 3.31.0 z badaniem 1.36.0:** przy kilku przebiegach **Teraz** ma blok dla każdego przebiegu; każdy
+  się śledzi i zatrzymuje osobno ([S4.1.8](#S4.1.8)).
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, (3.28.0: app 8da3f11e MINI_OPEN_KEY strom-research-mini-open, miniPanelFolded, rememberMiniPanelFolded, ne na telefonu; otevřený Přehled panel nerozbalí), :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · spec 036 K1.8 · malý panel: app 2c018779 src/ui/research-ui.ts, research-directions-ui.ts (pod nadpisem linie jen jak) · 3.27.0 spec 057: app f05fff8e src/ui/research-actions-ui.ts overviewRows (research-item-overview první; stop při sledování, jinak followLive, ne bez agenta), src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (live.researchLink v záhlaví focus) · 28bbebeb src/ui/live-section-prefs.ts TOP_DEFAULTS (month.price false), research-overview-ui.ts appendOverviewSummary, strings.ts live.spendSessions, spendAmount · 87a6ea88 live.dirWorkedOn · strings.ts live.openOverview · 3.31.0: app 7be40d24 src/ui/landscape-panel-fold.ts (MQ_PHONE_LANDSCAPE, jen rozbalený panel, images nebo toast message, nerozbalí se sám, nepamatuje se) · SPEC.md 1120-app-108-diry · spec 116 · 3.31.0 spec 127: app:f89b5166, 040e42e6 src/research-holds.ts workingHoldText, waitsText, src/ui/research-ui.ts pausedText (statePaused · waitsArchive), workingHoldEl, src/ui/research-overview-ui.ts:921, src/research-link.ts features task.holds, archive.holds · strings.ts live.holdLast, holdFreeBy, waitsArchive · research cs.json who.agent -->
 
@@ -393,6 +395,58 @@ innego; pozostałe okna śledzą dalej. Wszystkie okna są przy tym tylko do odc
 
 <!-- zdroj: app:9cec9c30 (od 3714c539) src/windows/agent-follow-state.ts AgentFollow attached/paused/detached, agentFollowKey (sessionStorage jen detached), setLive (konec sezení zapomene odpojení), detach, attach, setPaused · src/windows/agent-state.ts, agent-mirror.ts, src/ui/agent-window-ui.ts (stav agenta z hlavního okna bez adresy a tokenu mostu, K1.3) · src/windows/sat-states.ts SatStrip, liveStrip (lost › paused › detached › idle › attachedNoJump › attached), STRIP_ICON, AMBER, writeStrip (tlačítka, goToMain poslední) · src/main.ts noJump (descendants, timeline) · src/ui/live-follow-ui.ts (další okno: pohled okna, Zpět pohled nepřepne, bez štítku pauzy ani mapPaused, pauza jen v okně, návrat po 20 s) · src/windows/window-selection.ts (připojené okno výběr jen vyznačí; skok agenta se nerozesílá) · src/windows/takeover.ts TAKEOVER_STEP_MS 400, takeoverOrder (sledující, pak odpojená; okno bez vlastního sledování ne), hasBridge (storedResearchBridge) · src/windows/become-main.ts, window-start.ts (◎ jako v zavřeném hlavním okně) · strings.ts win.agentAttached, agentAttachedNoJump, agentIdle, agentPaused, agentDetached, detach, attach, bridgeLost, followEnded, takingOver, takenOver, takeoverFailed, goToMain; live.followOff, followBack; research.stop · CHANGELOG.cs.md 3.30.0 „Sledování agenta ve všech oknech“ · spec 097 K1.1–K1.4, K2.1–K2.6, Rozhodnutí 16. 11. O1–O5, dotazy 3–5, 8 · app:docs/ZADANI_DEV_sledovani-ve-vsech-oknech.md §1–§4, §6, §7; ZADANI_UIX dotazy 10, 12 · prace/1116-app-097-sledovani-okna -->
 
+<a id="S4.1.8"></a>
+### S4.1.8 Teraz z kilkoma przebiegami
+
+Przy badaniu, które potrafi przebiegi linii ([R7.10](R7-when-the-agent-works.md#R7.10)), sekcja **Teraz**
+w **Przeglądzie badania** pokazuje jeden blok dla każdego przebiegu: przebieg całej kolejki i przebieg każdej linii
+osobno. Każdy przebieg można śledzić i zatrzymać osobno.
+
+- **Blok przebiegu:**
+  - nagłówek: znak linii, jej nazwa i numer (G…), przy przebiegu całej kolejki **Cała kolejka**; po prawej stan:
+    **pracuje**, **uruchamia się…**, **czeka na limit subskrypcji do 14:00**, **czeka na archiwum do 14:40**, **czeka
+    na przeglądarkę archiwum** („Przeglądarkę archiwum ma teraz inny przebieg; ten poczeka, aż się zwolni.”),
+    **czeka na pobieranie**, **czeka do …**, **kończy – agent dopisuje znalezione**, **zakończył o 11:52**;
+  - pod nagłówkiem agent, od kiedy i jak długo, i ostatni krok (osoba – zadanie) jak dotąd ([S4.1](#S4.1));
+  - przebieg całej kolejki, obok którego linie mają własne przebiegi: „Pomija: Przodkowie Jana Horáka, Potomkowie
+    Marie Vlkovej”. Gdy właśnie kończy zadanie linii, która w międzyczasie dostała własny przebieg: „Dokończy T0103
+    linii …, potem ją pominie.”;
+  - zakończony przebieg zostaje w **Teraz** 60 s ze stanem **zakończył o …**. Pod nim, tylko przy końcu przez limit,
+    **Wyczerpał się limit subskrypcji.**, a przy błędzie **Agent zakończył się błędem; szczegóły są w terminalu
+    badania.**; przy przebiegu linii także **Linię znowu bierze cała kolejka.** Potem blok znika. Nowe otwarcie
+    aplikacji zakończonych bloków nie pokazuje.
+- **Kolejność bloków:** najpierw przebieg całej kolejki, potem przebiegi linii w kolejności linii
+  ([R2.1.4](R2-lines-and-queue.md#R2.1.4)). Nagłówek sekcji to „Teraz · agenci: 3”; podsumowanie **Stan** przy dwóch
+  i więcej przebiegach „Pracuje agentów: 3” i ewentualnie „1 czeka na limit do 14:00”.
+- **Akcje bloku:**
+  - **Pokaż w drzewie**: osoby linii, przy przebiegu całej kolejki osoba, nad którą pracuje agent;
+  - **Śledź ten przebieg** / **● Śledzony**: tylko przy dwóch i więcej przebiegach i włączonym śledzeniu;
+  - **Zatrzymaj** („Dokończy rozpoczęte zadanie i nie zacznie kolejnego”): od razu przez most, bez terminala, przy
+    pracującym albo czekającym przebiegu; podczas zapisu **Zatrzymywanie…**, przy odmowie **Nie udało się zatrzymać
+    agenta.** Znaczenie jest takie jak `strom run stop` ([R7.10.2](R7-when-the-agent-works.md#R7.10.2));
+  - **Dokończ i zakończ**: otwiera terminal badania i prosi ten przebieg, by dokończył i się zakończył
+    ([R7.3](R7-when-the-agent-works.md#R7.3)); przy pracującym przebiegu i przy przebiegu czekającym na przeglądarkę
+    archiwum albo pobieranie. Przebieg czekający na limit albo archiwum go nie ma;
+  - kończący się przebieg ma tylko **Pokaż w drzewie**. Zatrzymanie jednego przebiegu nie zmienia pozostałych;
+    zatrzymać wszystkich naraz się nie da.
+- **Śledzenie:** śledzi się jeden przebieg. Domyślny jest pierwszy niewstrzymany przebieg w kolejności **Teraz**;
+  nowy przebieg śledzenia nie przełącza. Gdy śledzony przebieg się zakończy, śledzi się znowu domyślny.
+  - w drzewie przy dwóch i więcej przebiegach jest pigułka **Śledzony: Przodkowie Jana Horáka ▾** z menu **Śledź
+    przebieg** (numer i nazwa bloku, pod nimi agent i osoba; czekający przebieg szary ze swoim stanem; na końcu
+    **Przestań śledzić**);
+  - osoby wszystkich przebiegów są oznaczone jak dotąd ([S4.1.1](#S4.1.1)); śledzony przebieg ma pierwszy kolor
+    śledzenia, pozostałe drugi. Zamiast numeru sesji niosą oznaczenie przebiegu: znak linii i numer bloku w **Teraz**
+    („↑ 2”), przebieg całej kolejki tylko numer;
+  - inne okna drzewa ([S4.1.7](#S4.1.7)) śledzą ten sam przebieg co okno główne.
+- **Telefon:** bloki i stany są takie same, bez **Zatrzymaj**, **Dokończ i zakończ** i wyboru śledzonego przebiegu;
+  pigułka mówi tylko, który przebieg jest śledzony, i oznaczone są tylko osoby śledzonego przebiegu.
+- **Granice:** przy starszym badaniu albo przy jedynym przebiegu całej kolejki **Teraz** jest jak dotąd.
+- **Obsługa:** aplikacja: **Przegląd badania → Teraz**; pigułka **Śledzony:** w drzewie. Terminal:
+  `strom run stop <run-…> [--finish]`.
+- **Obowiązuje od:** aplikacja 3.31.0 (badanie 1.36.0)
+
+<!-- zdroj: app:4de0835a src/research-runs.ts (run.lines, RUN_ENDED_MS 60 s, orderRuns obecný první a linie v pořadí, runCount, noteEndedRuns jen v paměti) · src/ui/research-overview-ui.ts vykreslení bloku (runStateWorking/Starting/Limit/Archive/Waiting/WaitingUntil/Browser/Download/Finishing/Ended, runBrowserNote, runSkips, runFinishesThen, runEndedText jen limit|error, runAfterStop), overviewRunActions (Ukázat ve stromu; Sledovat tento běh jen ≥ 2 běhy a sledování, ne telefon; Zastavit s run.stop u working|waiting, ne telefon; Dokončit a skončit finish?run= u working a čekání na prohlížeč nebo stahování) · src/ui/live-follow-ui.ts pilulka followRunPill, followRunMenu, followOff · strings.ts live.nowAgents, stateAgents, stateAgentsWaiting, runWhole, run*, followRun* · app:docs/ZADANI_DEV_beh-po-liniich.md §3, §4, §7, Kolo 2 C2 · dirigent:spec/126 K2.1, K2.2, K2.5, prace/1121-app-126-linie, 1122-app-126-kolo2 · research: /status runs[], runsEnded[] (POST runs/stop) -->
+
 <a id="S4.2"></a>
 ## S4.2 Kolejka w aplikacji
 
@@ -434,6 +488,14 @@ Aplikacja pokazuje początek kolejki badania w kolejności, w jakiej bierze ją 
   „zbiorcze pobieranie”. Gdy na archiwum dłużej czeka inna praca: „Na archiwum … dłużej czeka inna praca; kolej
   najpóźniej o 15:01.” Uruchomienie zadania, które trzyma inna sesja, badanie odrzuca
   ([R7.9](R7-when-the-agent-works.md#R7.9), [R9.13](R9-archives.md#R9.13)). Ze starszym badaniem bez uwag.
+- **Od aplikacji 3.31.0 z badaniem 1.36.0:** zadania linii z własnym przebiegiem
+  ([R7.10](R7-when-the-agent-works.md#R7.10)) i zadania, które jej pomagają, nie stoją bez filtra w numerowanych
+  wierszach. Na ich miejscu nad wierszami stoi jeden wiersz na linię: znak, nazwa linii, liczba zadań, „robi je własny
+  agent linii (Claude)” i **Pokaż ›** (filtr linii). Liczba w **Kolejce** i w etykiecie **Wszystkie linie** oraz
+  numery porządkowe obejmują tylko zadania dla przebiegu całej kolejki. W filtrze takiej linii jej zadania są
+  ponumerowane w jej kolejności, a nad nimi stoi „Nad tą linią pracuje własny agent (Claude, od 10:42). Cała kolejka
+  ją pomija.” Praca poza liniami, gałęzie i historia miejsc zostają przy przebiegu całej kolejki. Na telefonie
+  **Kolejka** jest taka sama.
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:308 queueNoteText, :3373 appendQueueSection · research-overview-ui.ts:311 (20) · strings.ts research.queue, research.park/drop/wake, research.queueMore, research.queueOffLast, research.queueOffNever, research.queueHelps · HEAD src/research-queue-pages.ts:19 QUEUE_PAGE, :28 QUEUE_ROWS_CAP · src/ui/research-ui.ts:3884 taskDoNext/taskDoLast · strings.ts live.taskDoing, live.queueLoadMore, live.queueCapNote, live.branchQueueChip, live.branchQueueChipClear · 3.27.0: app 2ee3718d (queue[].kind ze /status i ze stránek fronty, jiná hodnota zahozena) strings.ts live.queueKind · research 5f48cdaf src/core/queue.ts RUN_TURNS, runOrder (most /status queue[], GET /queue, menu před strom run), kind story|history · 3.28.0: app 4ad34832 src/ui/research-ui.ts appendQueueSection (counted: queueTitleCount místo summary, když je pole nebo akce záhlaví) · spec 052 · 3.31.0 spec 127: app:f89b5166 src/research-holds.ts heldByText, archiveHeldText, queueHoldText (linie vynechána), src/ui/research-ui.ts queueHoldNote · strings.ts live.heldByTask, archiveHeld, archiveHolderOther, archiveHolderFetch, archiveHolderOwn, archiveHolderSession, archiveHeldWaiting · app:docs/ZADANI_VYZKUM_rezervace.md Odpověď aplikace -->
 
@@ -554,6 +616,15 @@ Praca agenta zużywa subskrypcję AI.
   lub przebieg; wtedy zastępuje go wiersz sesji. Bez potwierdzenia w ciągu 30 s **Teraz** pyta **Praca nad kolejką
   się nie rozpoczęła?** („Terminal nie odezwał się w ciągu 30 s.”) ze **Spróbować ponownie** i radą, a przyciski są
   znów wolne.
+- **Od aplikacji 3.31.0 z badaniem 1.36.0:** gdy linie mają własne przebiegi
+  ([R7.10](R7-when-the-agent-works.md#R7.10)):
+  - **Praca nad kolejką…** jest zajęta (**● Trwa praca ›**) tylko podczas przebiegu całej kolejki, nie podczas
+    przebiegów linii;
+  - przy pełnej liczbie przebiegów ([S4.4.12](#S4.4.12)) przycisk jest niedostępny z „Pracują 3 agenci, ustawienia nie
+    pozwalają na więcej.” i **Ustawienia ›**; w menu **Badanie** pozycja jest szara z tym samym wyjaśnieniem;
+  - okno pokazuje kolejkę bez zadań linii z własnym przebiegiem, a pod zadaniem z **Jako pierwsze** „Pominie linię
+    Przodkowie Jana Horáka (pracuje nad nią własny agent).”; gdy jakiś przebieg już pracuje, także „Pracuje już
+    1 agent. Zużycie subskrypcji się sumuje.”
 
 <!-- zdroj: app:9cf43b22, 34accb13 (8a10387e) src/ui/queue-work-dialog.ts queueWorkOffer (live, ne phone/sheet, ne noAgent, linkAvailable work, work.link; busy sessions|runs → 'busy'), queueWorkHead (queue-work-busy → showOverviewNowFinish), queueWorkCounted (run.tasks), queueWorkFirst (own next, pos 1), queueWorkSessionLine, WORK_TASKS_DEFAULT 5, noGate (work.gate === null) · src/research-link.ts WORK_TASKS_MIN/MAX, WORK_LINK_FEATURE, RUN_TASKS_FEATURE · src/ui/research-ui.ts queueHeadAction (jen rozbalená Fronta) · src/ui/research-overview-ui.ts showOverviewNowFinish · strings.ts live.queueWork*, queueWorkingLink · spec 052 K6.1, K6.2, K6.4, K6.6 · ZADANI_DEV_fronta-hledani §5; D6 (řádek sezení i bez brány) · 3.29.0: app:a0a66d45 Teď nabízí Pracovat na frontě… (bez práce agenta a běhu; okno přehledu; fokus zpět) · 3c8f4128 src/ui/queue-work-dialog.ts Další (n) (pořadí: ruční další, místo ve frontě; bez odložených a mimo linie, které se neberou; queue.page; zbytek, Přehled výzkumu ›; sbalené při otevření) · strings.ts live.queueWorkMore, queueWorkLess, queueWorkByQueue, queueWorkByQueueHint, queueWorkRest, queueWorkRestUnknown, queueWorkOverview, queueTagNext · 3.30.0: app:574e7ef9 src/ui/queue-start.ts (QUEUE_START_MS 30 s, důkaz handoff nebo sezení/běh, silent → queueNotStarted, proven bez sezení zmizí potichu) · src/ui/research-overview-ui.ts (live-now-starting, terminalSilent) · strings.ts busy.queueStarting, queueStartingSub, queueNotStarted, terminalSilent -->
 
@@ -611,6 +682,10 @@ Przegląd pokazuje linie badania ([R2.1](R2-lines-and-queue.md#R2.1)): co na kt�
   linii wstrzymanej nie). Szczegóły linii mówią, co linia znalazła w ostatnich dniach (**Ostatnie N dni:** sesje,
   osoby, źródła); osoby pokazują w drzewie. Zakończone linie są zwinięte na końcu (**Zakończone · N**). W wąskim
   oknie i na telefonie przegląd jest panelem wysuwanym: zamiast uchwytu kolejności strzałki ▲▼.
+- **Od aplikacji 3.31.0 z badaniem 1.36.0:** każda linia może dostać własnego agenta, **Uruchom agenta na tej linii**
+  ([S4.3.3](#S4.3.3)). Wiersz linii z własnym przebiegiem mówi „Agent pracuje: Claude” z odnośnikiem **W Teraz ›**,
+  który rozwinie **Teraz** i podświetli blok przebiegu ([S4.1.8](#S4.1.8)). Rozmowa **Pracuj nad tą linią** ma
+  podpowiedź „Rozmowa z agentem o linii w terminalu”.
 
 <!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume · 3.22.0: research-directions-ui.ts:703 dirEnded, :852 dirNow, :878 dirFoundIn, :720 sheet; strings.ts live.dirLimitGen, dirLimitBefore, dirFound* -->
 
@@ -643,6 +718,15 @@ nic się nie płaci.
 - **Obsługa:** aplikacja: **Przegląd badania → Linie**, **+ Nowa linia**, przy linii **⋯**; menu osoby
   **Badanie ›**.
 - **Obowiązuje od:** aplikacja 3.22.0 (badanie 1.26.0)
+- **Od aplikacji 3.31.0 z badaniem 1.36.0:** nowa linia wewnątrz szerszej linii
+  ([R2.1.5](R2-lines-and-queue.md#R2.1.5)): formularz **Nowa linia** mówi „Nowa linia leży wewnątrz linii Przodkowie
+  Jana Horáka. Osoby z niej pozostają też w szerszej linii.” i proponuje zaznaczone „Przenieść tu 7 otwartych zadań
+  z linii Przodkowie Jana Horáka (o osobach tej linii)” (przy kilku szerszych liniach „z szerszych linii”). Po
+  założeniu z przeniesieniem zostaje 10 s powiadomienie „Założono linię. Przeniesiono 7 zadań.” z **Cofnij
+  przeniesienie** i **Pracuj nad tą linią**. **Cofnij przeniesienie** (**Cofanie…**) cofa tylko przeniesienie, linia
+  zostaje: „Przeniesienie cofnięte · 7 zadań z powrotem w szerszej linii”; gdy zadania się w międzyczasie zmieniły,
+  **Nie ma czego cofnąć.** Bez przeniesienia (pole niezaznaczone, nie ma czego przenosić, starsze badanie)
+  powiadomienie jest jak dotąd; na telefonie bez **Pracuj nad tą linią**.
 
 <!-- zdroj: app:HEAD src/ui/research-directions-ui.ts:372 DIRECTIONS_WRITE_SINCE, :628 · src/research-directions-write.ts createDirection, editDirection, setDirectionState, writeDirectionOrder · src/ui/research-actions-ui.ts:1015-1024, :1067 openDirectionForm · strings.ts live.dirNew, dirFormNew, dirFree, dirEditFree, dirLocked, dirOrderWeight, dirOrderStrict, dirArchive, dirPhoneOnly, dirBridgeDown, dirOldResearch, dirBusy, dirRetry, dirDupActive, dirShowIt, dirAnyway · research:src/core/live.ts /directions -->
 
@@ -681,6 +765,50 @@ z [R2.3](R2-lines-and-queue.md#R2.3) i [R2.3.1](R2-lines-and-queue.md#R2.3.1) mo
   od aplikacji 3.29.0
 
 <!-- zdroj: app:HEAD src/ui/research-offline-ui.ts:3, :104 (caps.offLineBranches, ≥2 linie) · src/research-directions-write.ts setBranchMode, setOffLineTree, answerBranchWaiting · strings.ts live.offModeLink, live.offModeCap, live.branchAddPick, live.branchCreate, live.branchNever, live.branchReset · research-offline-ui.ts:202-228 growingBranchLine, :542 branch choices, :680 branchQueueBeyond, :740 pick · strings.ts live.dirNear, branchGrows, branchOwnChoice, branchQueueHead, branchQueuePos, branchAllTasks, branchTaken, branchDefaultTag, branchAdd(Paused), branchNeverGroup, waitBranchLeave, waitBranchHint, setOutTitle, setOutOcc, setSuggest, setOwnChoice, setManualTasks, menu treeSettings · spec 038 K7 · 3.27.0: strings.ts live.setOutIntro (app 4e4f6d8c, spec 036 K1.8) · 3.29.0: app:70d50162 research-offline-ui.ts openOffLineSettings bez sledování (prohlížený strom), overview-window offline-settings → hlavní okno · 0a00fb2b research-tree-settings-ui.ts offLineSettingsOffered (archiv, čeká na agenta: text, ne odkaz) -->
+
+<a id="S4.3.3"></a>
+### S4.3.3 Uruchom agenta na tej linii
+
+Przy każdej aktywnej linii można poprosić o własny przebieg: agenta, który bierze tylko zadania tej linii
+([R7.10](R7-when-the-agent-works.md#R7.10)). Aplikacja niczego nie uruchamia: otwiera terminal badania w nowym oknie,
+a ten uruchamia przebieg ([R7.10.4](R7-when-the-agent-works.md#R7.10.4)). Praca agenta zużywa subskrypcję AI.
+
+- **Gdzie:** szczegóły linii, przycisk **Uruchom agenta na tej linii** (oznaczenie AI i terminal) ze zdaniem „Agent
+  sam bierze zadania tej linii (7 w kolejce), w nowym oknie terminala.”; menu **⋯** przy linii, pozycja przed
+  **Pracuj nad tą linią** (podpowiedź „Agent sam bierze zadania linii”).
+- **Linia z przebiegiem:** w szczegółach zamiast przycisku „● Agent pracuje · Claude · od 10:42” i **W Teraz ›**;
+  w menu pozycji nie ma. Drugi przebieg tej samej linii nie jest możliwy.
+- **Gdy się nie da:** przycisk i pozycja zostają, niedostępne, z powodem:
+  - „Linia jest wstrzymana.” (obok zostaje **Uruchom ponownie**);
+  - „W kolejce linii nic nie ma.”;
+  - „Pracują 3 agenci, ustawienia nie pozwalają na więcej.” z **Ustawienia ›** ([S4.4.12](#S4.4.12));
+  - „Na tym komputerze nie jest zainstalowany agent, którego badanie może uruchomić.”;
+  - „Nad drzewem pracuje agent uruchomiony starszą wersją badania; obok niego agent linii się nie uruchomi. Będzie
+    można, gdy on skończy.”;
+  - w innym wypadku „Teraz nie da się uruchomić agenta na tej linii.”
+  Przy zakończonej linii akcji nie ma.
+- **Okno Uruchom agenta na linii:** w nagłówku znak, nazwa i numer linii.
+  - **Agent** (tylko gdy badanie zna dwóch i więcej agentów): wybór agenta, domyślny z „(domyślny)”, pod nim „Wybór
+    zostaje zapamiętany dla tej linii.” Wstępnie wybrany jest agent, z którym linia pracowała ostatnio, inaczej
+    domyślny agent badania;
+  - **Automatycznie** („Agent bierze zadanie za zadaniem tej linii, dopóki pozwala limit subskrypcji.”) albo **Tylko
+    5 zadań**, **Jako pierwsze** i **Kolejne (n)** jak w [S4.2.3](#S4.2.3), tylko z kolejki linii; pod nimi
+    „i jeszcze 12 zadań linii w kolejce”;
+  - gdy jakiś przebieg już pracuje: „Pracuje już 1 agent. Zużycie subskrypcji się sumuje.” Niczego to nie blokuje;
+  - **Anuluj** i **Uruchom** (oznaczenie AI i terminal) ze zdaniem „Agent zacznie w nowym oknie terminala. Pracę
+    zatrzymuje Ctrl-C w jego oknie lub „Dokończ i zakończ” w sekcji Teraz.” Gdy linia w międzyczasie zostanie
+    zablokowana, **Uruchom** jest niedostępne z powodem.
+- **Po Uruchom:** **Teraz** od razu pokazuje „Uruchamianie… · Przodkowie Jana Horáka (G0002)” z „Agent uruchomi się
+  w nowym oknie terminala badania.”; bez odpowiedzi w ciągu 30 s „Przebieg linii się nie uruchomił? · Przodkowie Jana Horáka” ze
+  **Spróbować ponownie** jak w [S4.2.3](#S4.2.3).
+- **Granice:** tylko przy badaniu, które potrafi przebiegi linii, z mostem, który odpowiada, i z agentem; nie
+  w Archiwum Strom, nie w badaniu czekającym na agenta i nie na telefonie (tam przebiegi tylko widać,
+  [S4.1.8](#S4.1.8)).
+- **Obsługa:** aplikacja: **Przegląd badania → Linie**, szczegóły linii albo **⋯**. Terminal: `strom run
+  --research G…`, menu **Pozwól agentowi pracować samodzielnie** ([R7.10](R7-when-the-agent-works.md#R7.10)).
+- **Obowiązuje od:** aplikacja 3.31.0 (badanie 1.36.0)
+
+<!-- zdroj: app:4de0835a src/ui/research-directions-ui.ts (managedDirectionDetail blok běhu, openManagedDirectionMenu položka před dirWork, managedDirectionMeta lineRunWorkingMeta + lineRunInNow, lineRunWhy) · src/research-runs.ts lineRunBlock (ended, running, canStart/why z mostu, paused > empty > limit), atRunLimit · src/ui/queue-work-dialog.ts showLineRunDialog, syncLineRunDialog (lineRunKicker, lineRunAgent, lineRunAgentDefault, lineRunAgentKept, lineRunAutoHint, lineRunRest, runsAddUp, lineRunStart, lineRunConfirm) · beginRunWork (work?research=G&agent=), lineRunStarting, lineRunStartingSub, lineRunNotStarted · strings.ts live.lineRun*, runsLimitReached, runsSettingsLink, dirWorkHint · app:docs/ZADANI_DEV_beh-po-liniich.md §1, §2, Kolo 2 B · dirigent:spec/126 K2.1, K2.2, K2.4, K2.7, K2.8 · research: researches[].run/canStart/why/agent, agents[] -->
 
 <a id="S4.4"></a>
 ## S4.4 Czeka na załatwienie w aplikacji
@@ -1159,6 +1287,30 @@ człowieka w aplikacji.
 - **Obowiązuje od:** badanie 1.36.0, aplikacja 3.31.0
 
 <!-- zdroj: app:74d06317 src/ui/research-tree-settings-ui.ts renderResearchIntakeRow (features intake.auto, /status.intake, researchAgentlessFor, storiesBridgeDown, pend), setResearchIntake (POST /intake, archive → gone, busy, held, locked, full) · src/research-link.ts postBridgeIntake · strings.ts history.intakeSection, intakeTitle, intakeDesc · research:src/core/live.ts POST /intake (intake.body, intake.archive), /status intake · dirigent:spec/130 K2.1 -->
+
+<a id="S4.4.12"></a>
+### S4.4.12 Badanie dla drzewa › Najwyżej agentów naraz
+
+W oknie **Badanie dla tego drzewa…** pod wyborem agenta jest wiersz **Najwyżej agentów naraz**: ile przebiegów może
+naraz pracować nad drzewem, przebieg całej kolejki i przebiegi linii razem
+([R7.10.1](R7-when-the-agent-works.md#R7.10.1)).
+
+- **Granice:**
+  - pole z **−** i **+**, od 1 do pułapu, który podaje badanie (10); pod nim „Domyślnie 3. Liczy się też praca nad
+    całą kolejką.”;
+  - zmniejszenie aplikacja zapisuje od razu przez most. Zmniejszenie poniżej liczby trwających przebiegów żadnego nie
+    zatrzyma; nowe się nie uruchomią;
+  - zwiększenie z aplikacji nie jest możliwe: wartość wraca, a wiersz mówi „Zwiększyć można tylko w terminalu
+    badania.” z poleceniem `strom config set run.parallel 4` do skopiowania;
+  - przy pełnej liczbie są niedostępne **Uruchom agenta na tej linii** ([S4.3.3](#S4.3.3)) i **Praca nad kolejką…**
+    ([S4.2.3](#S4.2.3)), a odnośnik **Ustawienia ›** otwiera to okno przy tym wierszu. Trwające przebiegi się nie
+    zmieniają;
+  - wiersza nie ma przy starszym badaniu (obowiązuje 3), w Archiwum Strom i przy badaniu czekającym na agenta.
+- **Obsługa:** aplikacja: **Badanie → Więcej → Badanie dla tego drzewa… → Najwyżej agentów naraz**. Terminal:
+  `strom config set run.parallel <n>`.
+- **Obowiązuje od:** aplikacja 3.31.0 (badanie 1.36.0)
+
+<!-- zdroj: app:4de0835a src/ui/research-tree-settings-ui.ts renderResearchRunsRow (pod dl.research-tree-agent; bez run.limit, v archivu a bez agenta se nekreslí; RUN_LIMIT_MIN 1, cap z výzkumu), setResearchRunsMax (POST settings/runs, 403 runs.raise → runsMaxRaise + příkaz) · src/research-runs.ts atRunLimit · strings.ts research.runsMax, runsMaxHint, runsMaxRaise, live.runsLimitReached, runsSettingsLink · research:src/core/live.ts runsLimitWrite, src/core/liveruns.ts runLimits (cap 10) · app:docs/ZADANI_DEV_beh-po-liniich.md §5 · dirigent:spec/126 K2.3 -->
 
 <a id="S4.5"></a>
 ## S4.5 Działania, które otwierają badanie

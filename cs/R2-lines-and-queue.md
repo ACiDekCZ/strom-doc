@@ -70,6 +70,34 @@ Linie mají jedno pořadí a v něm na ně přichází práce: první linie má 
 
 <!-- zdroj: research:src/core/order.ts workOrder, orderMode · src/core/queue.ts:237-240 lineBonus, :396 priority lineRank · src/commands/research.ts:215 research edit, :303 research order, :326 research move -->
 
+<a id="R2.1.5"></a>
+### R2.1.5 Převod úkolů do užší linie
+
+Linie je uvnitř širší linie, když její osoba patří do té širší (předkové dědečka uvnitř předků vnuka). Otevřené úkoly
+širší linie, které se týkají jen lidí užší linie, jde do užší linie převést. Převod je rozhodnutí člověka a jde vrátit.
+
+- **Hlídá kód:**
+  - převádí se jen úkoly, které širší linii jmenují jako svou, jsou otevřené nebo čekají na člověka a všichni jejich
+    lidé patří do užší linie. Úkol bez vlastní linie se už počítá k nejužší linii ([R2.1.3](#R2.1.3));
+  - nikdy úkol, na kterém se pracuje (rozdělaný nebo držený otevřeným sezením, [R7.9](R7-when-the-agent-works.md#R7.9)),
+    odložený, hotový, úkol bez lidí ani úkol s někým mimo užší linii;
+  - z pozastavené širší linie se nepřevádí nic;
+  - převod je jedna operace historie, která si pamatuje, odkud který úkol přišel. Vrácení vezme poslední převod
+    linie a každý úkol, který linii pořád má, vrátí do linie, odkud přišel.
+- **Hranice:**
+  - při zakládání linie uvnitř širší: `--move-tasks` úkoly převede, `--keep-tasks` je nechá; bez volby se člověk
+    u terminálu zeptá (navrženo ano). Agent, `--yes` nebo běh bez terminálu úkoly nechá a řekne, kolik by se jich
+    převedlo a že je převede `strom research gather G…`;
+  - agent převod spustí, jen když o něj člověk požádá;
+  - pro běh linie ([R7.10](R7-when-the-agent-works.md#R7.10)) to znamená, že převedené úkoly bere její běh, ne běh
+    širší linie.
+- **Ovládání:** terminál: `strom research new … --move-tasks|--keep-tasks`, `strom research gather G…` (`--dry-run`
+  ukáže, co by se změnilo), `strom research gather G… --undo`. Aplikace: formulář **Nová linie**, **Vrátit převod**
+  ([S4.3.1](S4-research-from-the-app.md#S4.3.1)).
+- **Platí od:** výzkum 1.36.0
+
+<!-- zdroj: research:src/core/gather.ts widerLines (bez pozastavených a vzatých zpět), gatherable (MOVABLE open, waiting; ne doing, držené sezením, odložené, hotové, bez lidí, s někým mimo), gatherPreview, gather, lastGather, ungather; operace research.gather / research.ungather · src/commands/research.ts research new --move-tasks|--keep-tasks (dotaz u terminálu, jinak movable {count, from}), research gather [--undo] · src/core/live.ts directions/preview, POST directions moveTasks, gather/undo (409 gather.none) · help research gather, research new · dirigent:spec/126 U11 -->
+
 <a id="R2.2"></a>
 ## R2.2 Fronta určuje, který úkol přijde na řadu
 

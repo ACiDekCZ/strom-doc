@@ -374,8 +374,8 @@ statt der Aktion den Stand „✓ Am {datum} anhand des Scans bestätigt“ und 
     läuft und die Forschung es beherrscht; Name und Geschlecht werden hier nicht bestätigt. **Ab App 3.31.0 mit
     Forschung 1.36.0** wird auch der Name bestätigt ([S7.10](#S7.10));
   - **ab App 3.31.0:** eine bestätigte Angabe, die weiter den Wert aus dem Stammbaum eines anderen Programms hat, hat
-    unter der Bestätigung die Zeile „Übernommen aus {program}, Datei vom {datum}“: woher der Wert kam, bleibt
-    sichtbar;
+    unter der Bestätigung die Zeile „Übernommen aus dem Stammbaum {program}, Datei vom {datum}“: woher der Wert
+    kam, bleibt sichtbar;
   - im Terminal bestätigt nur ein Mensch an seinem Terminal: `strom verify confirm E… [--undo]`. Einem Agenten lehnt
     `strom` die Bestätigung ab.
 - **Grenzen:** ein an die Forschung gebundener Stammbaum, dessen Brücke nicht läuft: ab App 3.30.0 bietet er

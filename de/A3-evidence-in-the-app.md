@@ -418,9 +418,9 @@ oder Strom-Archiv zeigt es auch Dateien der Forschung, die im Stammbaum nirgends
   ([S4.4.11](S4-research-from-the-app.md#S4.4.11), [R11.6](R11-material-from-the-user.md#R11.6)). Ausgeschaltet
   (Standard):
   - **Material senden…** sagt „Dem Stammbaum wird nichts hinzugefügt. Die Forschung speichert die Dateien bei der
-    Person. Sie warten unter Materialien; der Agent geht sie nur auf Anfrage durch.“ (bei einer Quelle „… bei der
-    Quelle.“). Nach dem Senden die Meldung „An die Forschung gesendet: 1 Datei zu Jan Horák. Sie wartet unsortiert
-    unter Materialien.“ mit **Mit dem Agenten sortieren…** (am Computer mit dem Fenster **Materialien**,
+    Person. Unter Materialien warten sie; der Agent geht sie nur auf Anfrage durch.“ (bei einer Quelle „… bei der
+    Quelle.“). Nach dem Senden die Meldung „An die Forschung gesendet: 1 Datei zu Jan Horák, unsortiert unter
+    Materialien.“ mit **Mit dem Agenten sortieren…** (am Computer mit dem Fenster **Materialien**,
     [A3.5.8](#A3.5.8)) und **Anzeigen**;
   - die Bestätigung eines Stapels **Materialien hinzufügen…** hat keine Blöcke **Datenschutz** und **Geschätzte
     Kosten**, nur „Die Dateien werden in der Forschung gespeichert, außerhalb von Git, und warten unsortiert unter
@@ -466,8 +466,10 @@ einem Archiv auch die Dateien der Forschung.
   ist sie in **Filter**.
 - **Bedienung:** siehe [A3.5](#A3.5); Dateien auswählen: **Auswählen**, Strg/Cmd+A wählt aus, was die Filter zeigen.
 - **Gilt seit:** App 3.30.0
+- **Ab App 3.31.0:** auf dem Telefon öffnet sich das Fenster auch aus **Mehr → Für die Familie**: die erste Zeile
+  **Materialien** mit der Zahl der Dateien. Auf dem Tablet bleibt **Materialien** in der ersten Ebene von **Mehr**.
 
-<!-- zdroj: app:c9775287 src/materials-overview.ts chooseSort, sortOverviewGroups (uvnitř skupin), src/ui/materials-window.ts mwSortChipHtml, mwSortMenu, mwSortColumns (intree jen model archive), mwSetSort → writeListPrefs (localStorage), filtry ≤ 1024 · strings.ts materials.sortBy, sortChip, sortDefault, sortAscending, sortDescending · app:1ebf7896 src/ui/materials-ui.ts, src/ui/materials-window.ts (skupiny, Kde soubory jsou) · app:a1127378 sloupce seznamu, Ctrl/Cmd+A · app:b198b1c2 src/media-uses.ts materialPersonLabel (Neznámá osoba) · app:e6e16634 staleEdit · app:prace/1117-app-102-materialy D1 (telefon: bez řádku Materiály ve Více) · strings.ts materials.groupAdded, groupPerson, groupBatch, groupDate, whereTitle, whereApp, whereArchiveResearch, whereEncryptedResearch, search, showHidden, unknownPerson, staleEdit -->
+<!-- zdroj: app:c9775287 src/materials-overview.ts chooseSort, sortOverviewGroups (uvnitř skupin), src/ui/materials-window.ts mwSortChipHtml, mwSortMenu, mwSortColumns (intree jen model archive), mwSetSort → writeListPrefs (localStorage), filtry ≤ 1024 · strings.ts materials.sortBy, sortChip, sortDefault, sortAscending, sortDescending · app:1ebf7896 src/ui/materials-ui.ts, src/ui/materials-window.ts (skupiny, Kde soubory jsou) · app:a1127378 sloupce seznamu, Ctrl/Cmd+A · app:b198b1c2 src/media-uses.ts materialPersonLabel (Neznámá osoba) · app:e6e16634 staleEdit · app:prace/1117-app-102-materialy D1 (telefon: bez řádku Materiály ve Více) · strings.ts materials.groupAdded, groupPerson, groupBatch, groupDate, whereTitle, whereApp, whereArchiveResearch, whereEncryptedResearch, search, showHidden, unknownPerson, staleEdit · 3.31.0: app:122a5096 src/ui/bottom-sheet.ts materialsRow (s počtem materialsAppCount) jako první řádek stránky menu.forFamily jen isPhoneBar, jinak v první úrovni · strings.ts materials.menu, menu.forFamily · dirigent:prace/1122-app-mobil-drobnosti -->
 
 <a id="A3.5.2"></a>
 ### A3.5.2 Titel, Art und Datum
@@ -532,8 +534,11 @@ einem Schritt **Rückgängig**.
 - **Bedienung:** Dateibetrachter (**Verknüpfen mit…** oder P; die Pfeile wechseln das Ziel, Enter verknüpft); eine
   Auswahl im Fenster **Materialien**.
 - **Gilt seit:** App 3.30.0
+- **Ab App 3.31.0:** eine Person, der alle gewählten Dateien schon gehören (durch eine Stelle im Stammbaum oder eine
+  Zuordnung in der Forschung), steht über der Liste als Chip mit der Markierung „bereits verknüpft“, ohne ×, und ist
+  in der Liste angehakt und nicht änderbar. „Noch niemand“ erscheint daneben nicht.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Quelle aus einer Datei und Beleg einer Quelle

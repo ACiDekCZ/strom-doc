@@ -387,15 +387,15 @@ w archiwum**).
   [R11.6](R11-material-from-the-user.md#R11.6)). Wyłączone (domyślnie):
   - **Wyślij materiał…** mówi „Do drzewa nic nie zostanie dodane. Badanie zapisze pliki przy osobie. Czekają
     w Materiałach; agent przejrzy je tylko na żądanie.” (przy źródle „… przy źródle.”). Po wysłaniu komunikat
-    „Wysłano do badania: 1 plik dla Jan Horák. Czeka w Materiałach nieposortowany.” z **Uporządkuj agentem…** (na
-    komputerze z oknem **Materiały**, [A3.5.8](#A3.5.8)) i **Pokaż**;
+    „Wysłano do badania: 1 plik dla osoby Jan Horák. Czeka w Materiałach nieuporządkowany.” z **Uporządkuj agentem…**
+    (na komputerze z oknem **Materiały**, [A3.5.8](#A3.5.8)) i **Pokaż**;
   - potwierdzenie partii **Dodaj materiały…** nie ma bloków **Prywatność** i **Szacowany koszt**, tylko „Pliki
-    zostaną zapisane w badaniu, poza gitem, i czekają w Materiałach nieposortowane. Agent posortuje je tylko na
+    zostaną zapisane w badaniu, poza gitem, i czekają w Materiałach nieuporządkowane. Agent uporządkuje je tylko na
     żądanie; koszt jest podawany wcześniej.”;
-  - koniec partii mówi „Pliki czekają w Materiałach nieposortowane. Agent posortuje je tylko na żądanie.” i oferuje
+  - koniec partii mówi „Pliki czekają w Materiałach nieuporządkowane. Agent uporządkuje je tylko na żądanie.” i oferuje
     **Uporządkuj agentem…** dla plików partii; gdy nie da się tego zrobić od razu, odsyła do **Uporządkuj agentem…**
-    w Materiałach. Włączone: „Badanie samo posortuje paczkę. …” z liczbą **Zadania sortowania**;
-  - plik, którego agent jeszcze nie przejrzał, ma w Materiałach stan **nieposortowane** (włączone: **czeka na
+    w Materiałach. Włączone: „Badanie samo uporządkuje paczkę. …” z liczbą **Zadania porządkowania**;
+  - plik, którego agent jeszcze nie przejrzał, ma w Materiałach stan **nieuporządkowane** (włączone: **czeka na
     przetworzenie**).
 
   Ze starszym badaniem obowiązują dotychczasowe teksty.
@@ -427,8 +427,10 @@ badania.
   Na tablecie i w oknie do 1024 px jest w **Filtry**.
 - **Obsługa:** zob. [A3.5](#A3.5); zaznaczanie plików: **Zaznacz**, Ctrl/Cmd+A zaznacza to, co pokazują filtry.
 - **Obowiązuje od:** aplikacja 3.30.0
+- **Od aplikacji 3.31.0:** na telefonie okno otwiera się też z **Więcej → Dla rodziny**: pierwszy wiersz **Materiały**
+  z liczbą plików. Na tablecie **Materiały** zostają na pierwszym poziomie **Więcej**.
 
-<!-- zdroj: app:c9775287 src/materials-overview.ts chooseSort, sortOverviewGroups (uvnitř skupin), src/ui/materials-window.ts mwSortChipHtml, mwSortMenu, mwSortColumns (intree jen model archive), mwSetSort → writeListPrefs (localStorage), filtry ≤ 1024 · strings.ts materials.sortBy, sortChip, sortDefault, sortAscending, sortDescending · app:1ebf7896 src/ui/materials-ui.ts, src/ui/materials-window.ts (skupiny, Kde soubory jsou) · app:a1127378 sloupce seznamu, Ctrl/Cmd+A · app:b198b1c2 src/media-uses.ts materialPersonLabel (Neznámá osoba) · app:e6e16634 staleEdit · app:prace/1117-app-102-materialy D1 (telefon: bez řádku Materiály ve Více) · strings.ts materials.groupAdded, groupPerson, groupBatch, groupDate, whereTitle, whereApp, whereArchiveResearch, whereEncryptedResearch, search, showHidden, unknownPerson, staleEdit -->
+<!-- zdroj: app:c9775287 src/materials-overview.ts chooseSort, sortOverviewGroups (uvnitř skupin), src/ui/materials-window.ts mwSortChipHtml, mwSortMenu, mwSortColumns (intree jen model archive), mwSetSort → writeListPrefs (localStorage), filtry ≤ 1024 · strings.ts materials.sortBy, sortChip, sortDefault, sortAscending, sortDescending · app:1ebf7896 src/ui/materials-ui.ts, src/ui/materials-window.ts (skupiny, Kde soubory jsou) · app:a1127378 sloupce seznamu, Ctrl/Cmd+A · app:b198b1c2 src/media-uses.ts materialPersonLabel (Neznámá osoba) · app:e6e16634 staleEdit · app:prace/1117-app-102-materialy D1 (telefon: bez řádku Materiály ve Více) · strings.ts materials.groupAdded, groupPerson, groupBatch, groupDate, whereTitle, whereApp, whereArchiveResearch, whereEncryptedResearch, search, showHidden, unknownPerson, staleEdit · 3.31.0: app:122a5096 src/ui/bottom-sheet.ts materialsRow (s počtem materialsAppCount) jako první řádek stránky menu.forFamily jen isPhoneBar, jinak v první úrovni · strings.ts materials.menu, menu.forFamily · dirigent:prace/1122-app-mobil-drobnosti -->
 
 <a id="A3.5.2"></a>
 ### A3.5.2 Tytuł, rodzaj i data
@@ -488,8 +490,11 @@ Każdy wiersz to odnośnik do osoby lub źródła.
 - **Obsługa:** podgląd pliku (**Połącz z…** lub P; strzałki zmieniają cel, Enter łączy); zaznaczenie w oknie
   **Materiały**.
 - **Obowiązuje od:** aplikacja 3.30.0
+- **Od aplikacji 3.31.0:** osoba, do której należą już wszystkie wybrane pliki (miejscem w drzewie lub przypisaniem
+  w badaniu), stoi nad listą jako chip z oznaczeniem „już połączono”, bez ×, a na liście jest zaznaczona i nie da
+  się jej zmienić. „Na razie nikt” obok niej się nie pokazuje.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Źródło z pliku i dowód źródła

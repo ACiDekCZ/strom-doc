@@ -386,7 +386,7 @@ itself (`intake.auto`).
   - on: as before. A batch gives sorting tasks of about 25 files each, which go first in the queue
     ([R11.4](#R11.4)), a file its material task ([R11.1](#R11.1)), a scan of a source a task to read it;
   - a task always arises from an explicit action of a person: **Sort with the agent…** ([R11.5.3](#R11.5.3)),
-    `--sort`, a file as the answer to a waiting task ([R6.7.1](R6-awaiting-action.md#R6.7.1)), **Read a document**,
+    `--sort`, a file as the answer to a waiting task ([R6.7.1](R6-awaiting-action.md#R6.7.1)), **Read a document…**,
     and a text (`strom intake --text`), which is what a person says;
   - only a person may switch it on: in the terminal, in the menu, or in the Strom app. Switching it on is refused to
     the agent. Anyone may switch it off. Sorting tasks that have already arisen stay after it is switched off;
@@ -402,4 +402,4 @@ itself (`intake.auto`).
   `POST /intake {auto}`, `POST /batch/<id>/done` with `sort`.
 - **Since:** research 1.36.0
 
-<!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) -->
+<!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) · app:strings.ts read.menu (položka menu s „…“, titulek read.title bez) · dirigent:prace/1122-app-nalezy-330 -->

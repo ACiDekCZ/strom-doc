@@ -91,7 +91,7 @@ z niej zadania do posortowania, tak samo jak przy **Dodaj materiały…** ([S4](
 
 - **Od badania 1.36.0:** zadania do posortowania powstają tylko z włączonym ustawieniem badania **Pliki wysłane do
   badania agent przejrzy sam** ([R11.6](R11-material-from-the-user.md#R11.6)); w przeciwnym razie zdjęcia czekają
-  w Materiałach nieposortowane, a posortować je można w aplikacji na komputerze (**Uporządkuj agentem…**,
+  w Materiałach nieuporządkowane, a uporządkować je można w aplikacji na komputerze (**Uporządkuj agentem…**,
   [A3.5.8](A3-evidence-in-the-app.md#A3.5.8)).
 
 - **Granice:** zdjęcia zapisują się bez zmian, w pełnej rozdzielczości i poza historią drzewa. Pliku, który badanie

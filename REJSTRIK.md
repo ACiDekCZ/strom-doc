@@ -6,6 +6,18 @@ definice, genealogický protějšek a čísla pravidel, která ho vysvětlují.
 Pojmy části R (výzkum) v abecedním pořadí, pak pojmy částí A a S (aplikace a její spojení s výzkumem) v oddílu na
 konci. Všechny mají definice ve všech čtyřech jazycích.
 
+<a id="line-run"></a>
+### Běh linie
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | běh linie (terminál) · Pustit agenta na tuto linii (aplikace) | Samostatná práce agenta jen na úkolech jedné linie, vedle běhů jiných linií a běhu celé fronty. Každá linie má nejvýš jeden běh. |
+| en | run of the line (terminal) · Put an agent on this direction (app) | The agent's own work on the tasks of one line only, beside the runs of other lines and the run of the whole queue. Each line has at most one run. |
+| de | Lauf der Linie (terminal) · Agent auf diese Richtung ansetzen (app) | Die eigenständige Arbeit des Agenten nur an den Aufgaben einer Linie, neben den Läufen anderer Linien und dem Lauf der ganzen Warteschlange. Jede Linie hat höchstens einen Lauf. |
+| pl | przebieg linii (terminal) · Uruchom agenta na tej linii (aplikacja) | Samodzielna praca agenta tylko nad zadaniami jednej linii, obok przebiegów innych linii i przebiegu całej kolejki. Każda linia ma najwyżej jeden przebieg. |
+
+- **Čísla:** [R7.10](cs/R7-when-the-agent-works.md#R7.10), R7.10.1, R7.10.2, R7.10.3, R7.10.4, R2.1.5, S4.1.8, S4.3.3, S4.4.12
+
 <a id="what-the-research-knows"></a>
 ### Co ví výzkum
 
@@ -201,7 +213,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | de | Limit des Abonnements | Die Grenze des Plans des Agenten, auf die der Agent in einer Sitzung gestoßen ist. Der Lauf endet und wartet nicht. |
 | pl | limit subskrypcji | Granica planu agenta, na którą agent natrafił w sesji. Przebieg się kończy i nie czeka. |
 
-- **Čísla:** [R7.6](cs/R7-when-the-agent-works.md#R7.6)
+- **Čísla:** [R7.6](cs/R7-when-the-agent-works.md#R7.6), R7.10.3
 
 <a id="line"></a>
 ### Linie výzkumu
@@ -214,7 +226,7 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 | pl | linia | Jeden cel badania: przodkowie osoby, potomkowie osoby albo jedno pytanie. Każde zadanie należy do którejś linii. |
 
 - **Genealogicky:** cíl výzkumu (research objective) ve smyslu GPS.
-- **Čísla:** [R2.1](cs/R2-lines-and-queue.md#R2.1), R2.1.1, R2.1.2, R2.1.3, R2.1.4, S3.3
+- **Čísla:** [R2.1](cs/R2-lines-and-queue.md#R2.1), R2.1.1, R2.1.2, R2.1.3, R2.1.4, R2.1.5, R7.10, S3.3
 
 <a id="source-transcriptions-setting"></a>
 ### Moje přepisy pramenů

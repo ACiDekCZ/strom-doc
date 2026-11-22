@@ -78,6 +78,39 @@ Die Linien haben eine Reihenfolge, und in ihr kommt die Arbeit zu ihnen: die ers
 
 <!-- zdroj: research:src/core/order.ts workOrder, orderMode · src/core/queue.ts:237-240 lineBonus, :396 priority lineRank · src/commands/research.ts:215 research edit, :303 research order, :326 research move -->
 
+<a id="R2.1.5"></a>
+### R2.1.5 Aufgaben in eine engere Linie übernehmen
+
+Eine Linie liegt innerhalb einer weiteren Linie, wenn ihre Person zur weiteren gehört (die Vorfahren eines Großvaters
+innerhalb der Vorfahren seines Enkels). Offene Aufgaben der weiteren Linie, die nur Personen der engeren Linie
+betreffen, lassen sich in die engere Linie übernehmen. Die Übernahme entscheidet ein Mensch, und sie lässt sich
+rückgängig machen.
+
+- **Prüft der Code:**
+  - übernommen werden nur Aufgaben, die die weitere Linie als ihre eigene nennen, offen sind oder auf einen Menschen
+    warten und deren Personen alle zur engeren Linie gehören. Eine Aufgabe ohne eigene Linie zählt schon jetzt für die
+    engste Linie ([R2.1.3](#R2.1.3));
+  - nie eine Aufgabe, an der gearbeitet wird (begonnen oder von einer offenen Sitzung gehalten,
+    [R7.9](R7-when-the-agent-works.md#R7.9)), eine zurückgestellte oder erledigte Aufgabe, eine Aufgabe ohne Personen
+    oder mit jemandem außerhalb der engeren Linie;
+  - aus einer pausierten weiteren Linie wird nichts übernommen;
+  - die Übernahme ist eine Operation der Historie, die sich merkt, woher jede Aufgabe kam. Rückgängig nimmt die letzte
+    Übernahme der Linie und gibt jede Aufgabe, die die Linie noch hat, an die Linie zurück, aus der sie kam.
+- **Grenzen:**
+  - beim Anlegen einer Linie innerhalb einer weiteren: `--move-tasks` übernimmt die Aufgaben, `--keep-tasks` lässt sie;
+    ohne beides wird ein Mensch am Terminal gefragt (vorgeschlagen ist Ja). Ein Agent, `--yes` oder ein Lauf ohne
+    Terminal lässt die Aufgaben und sagt, wie viele übernommen würden und dass `strom research gather G…` sie
+    übernimmt;
+  - der Agent startet eine Übernahme nur, wenn ein Mensch darum bittet;
+  - für den Lauf einer Linie ([R7.10](R7-when-the-agent-works.md#R7.10)) heißt das, dass die übernommenen Aufgaben ihr
+    Lauf nimmt, nicht der Lauf der weiteren Linie.
+- **Bedienung:** Terminal: `strom research new … --move-tasks|--keep-tasks`, `strom research gather G…` (`--dry-run`
+  zeigt, was sich ändern würde), `strom research gather G… --undo`. App: Formular **Neue Richtung**, **Übernahme
+  rückgängig** ([S4.3.1](S4-research-from-the-app.md#S4.3.1)).
+- **Gilt seit:** Forschung 1.36.0
+
+<!-- zdroj: research:src/core/gather.ts widerLines (bez pozastavených a vzatých zpět), gatherable (MOVABLE open, waiting; ne doing, držené sezením, odložené, hotové, bez lidí, s někým mimo), gatherPreview, gather, lastGather, ungather; operace research.gather / research.ungather · src/commands/research.ts research new --move-tasks|--keep-tasks (dotaz u terminálu, jinak movable {count, from}), research gather [--undo] · src/core/live.ts directions/preview, POST directions moveTasks, gather/undo (409 gather.none) · help research gather, research new · dirigent:spec/126 U11 -->
+
 <a id="R2.2"></a>
 ## R2.2 Die Warteschlange bestimmt, welche Aufgabe an die Reihe kommt
 
