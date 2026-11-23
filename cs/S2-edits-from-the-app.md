@@ -354,8 +354,14 @@ dá ve výzkumu“. Archiv Stromu odebrání zrcadlí ([S2.4](#S2.4)).
   - **Upraveno jinde:** **Odebrat ze stromu**, nebo **Nechat ve stromu**.
   Rozhodnutí potvrzuje výzkum. Pak aplikace načte jeho verzi.
 - **Platí od:** výzkum 1.0.0; otázka odebrané osoby od aplikace 3.16.0 (výzkum 1.20.0)
+- **Od aplikace 3.32.0:** totéž platí pro osoby z odvolaného sloučení stromů
+  ([A8.12](A8-merging-trees.md#A8.12)). Sloučení, které do výzkumu ještě neodešlo, se odvolá jen v aplikaci a výzkum
+  nedostane nic. Sloučení už odeslané aplikace odvolá hned a řekne, že výzkum osoby sám nesmaže; když zná zápis
+  výzkumu, který sloučení přinesl, dá krok v terminálu výzkumu `strom sync undo I…` s **Kopírovat**, jinak odkáže
+  sem. Do té doby výzkum při příští verzi osoby vrátí a aplikace je nabídne k odebrání
+  ([A8.13](A8-merging-trees.md#A8.13)).
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 „What the app no longer has is only reported“, gone :2355 · app:src/ui/research-removed-ui.ts :1-14 · strings.ts sync.notWrittenReport, conflict.person.* · CHANGELOG.cs.md 3.16.0 -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 „What the app no longer has is only reported“, gone :2355 · app:src/ui/research-removed-ui.ts :1-14 · strings.ts sync.notWrittenReport, conflict.person.* · CHANGELOG.cs.md 3.16.0 · 3.32.0: app:debf50cc src/ui/merge-history-ui.ts (resSent, resUndoStep / resUndoHelp), undoResearchStep (jen záznam I\d+), src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · strings.ts mergeWizard.resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy · research:src/commands/sync.ts:627 sync undo · spec 134 K9.3 -->
 
 <a id="S2.6.1"></a>
 ### S2.6.1 Pramen smazaný v aplikaci

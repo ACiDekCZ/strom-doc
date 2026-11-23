@@ -1140,6 +1140,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A9.7.1](cs/A9-using-the-app.md#A9.7.1), A9.7
 
+<a id="memory-limit"></a>
+### Paměť nemusí stačit
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Paměť nemusí stačit | Oznámení a otázka, když se otevřený strom nebo výstup s obrázky blíží mezi paměti, kterou prohlížeč aplikaci dává. Obrázky v paměti stromu nejsou: načtou se, až jsou vidět, a jsou uložené jednou, sdílené kopiemi stromu a zálohami. |
+| en | Memory may not be enough | A notice and a question when the open tree or an output with images comes close to the memory the browser gives the app. Images are not in the tree's memory: they load when shown, and are stored once, shared by copies of the tree and by backups. |
+| de | Der Speicher reicht womöglich nicht | Hinweis und Rückfrage, wenn sich der offene Stammbaum oder eine Ausgabe mit Bildern dem Speicher nähert, den der Browser der App gibt. Bilder sind nicht im Speicher des Stammbaums: Sie werden geladen, wenn sie zu sehen sind, und einmal gespeichert, gemeinsam für Kopien des Stammbaums und Sicherungen. |
+| pl | Pamięci może nie wystarczyć | Powiadomienie i pytanie, gdy otwarte drzewo albo wynik z obrazami zbliża się do granicy pamięci, którą przeglądarka daje aplikacji. Obrazów nie ma w pamięci drzewa: wczytują się, gdy są widoczne, i są zapisane raz, wspólne dla kopii drzewa i kopii zapasowych. |
+
+- **Čísla:** [S8.7](cs/S8-where-the-data-are.md#S8.7)
+
 <a id="portrait"></a>
 ### Portrét · výřez portrétu
 
@@ -1259,6 +1271,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Połączenie z telefonem | Usługa badania na komputerze, przez którą sparowane telefony w tej samej sieci lokalnej widzą badanie i wysyłają do niego zdjęcia. Jest jedna dla całego komputera; włącza ją tylko człowiek. |
 
 - **Čísla:** [S5.1](cs/S5-phone.md#S5.1), S5.5, S5.6
+
+<a id="before-merge"></a>
+### Před sloučením (záloha)
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Před sloučením | Záloha stromu, kterou aplikace udělá před každým zápisem sloučení, i s vypnutými automatickými zálohami. Zůstane, dokud jde sloučení odvolat; rotace záloh ji nesmaže. Bez ní se nic nezapíše. |
+| en | Before merge | The backup of the tree the app makes before every write of a merge, even with automatic backups switched off. It stays while the merge can be undone; the rotation of backups does not delete it. Without it nothing is written. |
+| de | Vor dem Zusammenführen | Die Sicherung des Stammbaums, die die App vor jedem Schreiben einer Zusammenführung anlegt, auch bei ausgeschalteten automatischen Sicherungen. Sie bleibt, solange sich die Zusammenführung zurücknehmen lässt; die Rotation der Sicherungen löscht sie nicht. Ohne sie wird nichts geschrieben. |
+| pl | Przed scaleniem | Kopia drzewa, którą aplikacja robi przed każdym zapisem scalenia, także przy wyłączonych automatycznych kopiach. Zostaje, dopóki scalenie można cofnąć; rotacja kopii jej nie usuwa. Bez niej nic się nie zapisze. |
+
+- **Čísla:** [A8.10](cs/A8-merging-trees.md#A8.10), A8.12, S6.5
 
 <a id="hand-over-to-research"></a>
 ### Předat výzkumu
@@ -1452,17 +1476,41 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [S1.2](cs/S1-connecting-app-and-research.md#S1.2), S1.4, S4.1, S4.5.1, S4.5.2
 
+<a id="merge-wizard"></a>
+### Sloučení stromů (průvodce)
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Sloučení stromů · Import rodokmenu · Přijaté změny | Průvodce v šesti krocích, kterým od aplikace 3.32.0 jde každé sloučení: soubor GEDCOM, jiný strom, pohled nebo přijaté změny do vybraného stromu, nebo do nového. Nic nezapíše bez zálohy **Před sloučením** a bez kontroly součtů; každá osoba importu skončí právě jednou. |
+| en | Merge trees · Import a family tree · Received changes | The six-step guide every merge goes through from app 3.32.0: a GEDCOM file, another tree, a view or received changes into a chosen tree, or into a new one. It writes nothing without the backup **Before merge** and a check of the totals; each person of the import ends up exactly once. |
+| de | Stammbäume zusammenführen · Stammbaum importieren · Empfangene Änderungen | Der Assistent in sechs Schritten, durch den ab App 3.32.0 jedes Zusammenführen geht: eine GEDCOM-Datei, ein anderer Stammbaum, eine Ansicht oder empfangene Änderungen in einen gewählten Stammbaum oder in einen neuen. Er schreibt nichts ohne die Sicherung **Vor dem Zusammenführen** und ohne Prüfung der Summen; jede Person des Imports landet genau einmal. |
+| pl | Scalanie drzew · Import drzewa · Otrzymane zmiany | Kreator w sześciu krokach, przez który od aplikacji 3.32.0 przechodzi każde scalenie: plik GEDCOM, inne drzewo, widok lub otrzymane zmiany do wybranego drzewa albo do nowego. Nie zapisze nic bez kopii **Przed scaleniem** i bez sprawdzenia sum; każda osoba importu trafia dokładnie raz. |
+
+- **Čísla:** [A8.5](cs/A8-merging-trees.md#A8.5), A8.6, A8.7, A8.8, A8.9, A8.10, A8.11, S6.7
+
 <a id="merge-with-existing"></a>
 ### Sloučit s existujícím
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Sloučit s existujícím | Import, který osoby ze souboru spáruje s osobami aktuálního stromu a výsledek uloží jako nový strom; aktuální strom i soubor zůstanou beze změny. |
-| en | Merge with existing | An import that matches people from the file with people of the current tree and saves the result as a new tree; the current tree and the file stay unchanged. |
-| de | Mit Vorhandenem zusammenführen | Ein Import, der Personen aus der Datei mit Personen des aktuellen Stammbaums abgleicht und das Ergebnis als neuen Stammbaum speichert; der aktuelle Stammbaum und die Datei bleiben unverändert. |
-| pl | Scal z istniejącym | Import, który paruje osoby z pliku z osobami bieżącego drzewa i zapisuje wynik jako nowe drzewo; bieżące drzewo i plik pozostają bez zmian. |
+| cs | Sloučit s existujícím | Import, který osoby ze souboru spáruje s osobami aktuálního stromu a výsledek uloží jako nový strom; aktuální strom i soubor zůstanou beze změny. Od aplikace 3.32.0 ho nahrazuje průvodce **Sloučení stromů** (A8.5). |
+| en | Merge with existing | An import that matches people from the file with people of the current tree and saves the result as a new tree; the current tree and the file stay unchanged. From app 3.32.0 the guide **Merge trees** replaces it (A8.5). |
+| de | Mit Vorhandenem zusammenführen | Ein Import, der Personen aus der Datei mit Personen des aktuellen Stammbaums abgleicht und das Ergebnis als neuen Stammbaum speichert; der aktuelle Stammbaum und die Datei bleiben unverändert. Ab App 3.32.0 ersetzt ihn der Assistent **Stammbäume zusammenführen** (A8.5). |
+| pl | Scal z istniejącym | Import, który paruje osoby z pliku z osobami bieżącego drzewa i zapisuje wynik jako nowe drzewo; bieżące drzewo i plik pozostają bez zmian. Od aplikacji 3.32.0 zastępuje go kreator **Scalanie drzew** (A8.5). |
 
-- **Čísla:** [A8.1](cs/A8-merging-trees.md#A8.1), A2.1.1, A2.8, A8.2, A8.3, S6.7
+- **Čísla:** [A8.1](cs/A8-merging-trees.md#A8.1), A2.1.1, A2.8, A8.2, A8.3, A8.5, S6.7
+
+<a id="merge-history"></a>
+### Historie sloučení · Odvolat sloučení
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Historie sloučení… · Odvolat sloučení… | Seznam sloučení do stromu s jejich zdrojem a datem. Sloučení z něj jde odvolat celé nebo po částech; práce udělaná po sloučení zůstane. Sloučení už odeslané do výzkumu výzkum sám nesmaže (S2.6). |
+| en | Merge history… · Undo the merge… | The list of merges into a tree with their source and date. A merge can be undone from it, whole or in parts; work done after the merge stays. A merge already sent to the research is not deleted by the research itself (S2.6). |
+| de | Verlauf der Zusammenführungen… · Zusammenführung zurücknehmen… | Die Liste der Zusammenführungen in einen Stammbaum mit ihrer Quelle und ihrem Datum. Eine Zusammenführung lässt sich von dort ganz oder in Teilen zurücknehmen; Arbeit nach der Zusammenführung bleibt. Eine bereits an die Forschung gesendete Zusammenführung löscht die Forschung nicht von selbst (S2.6). |
+| pl | Historia scaleń… · Cofnij scalenie… | Lista scaleń do drzewa z ich źródłem i datą. Scalenie można z niej cofnąć w całości lub częściami; praca wykonana po scaleniu zostaje. Scalenia już wysłanego do badania badanie samo nie usuwa (S2.6). |
+
+- **Čísla:** [A8.11](cs/A8-merging-trees.md#A8.11), A8.12, A8.13, S2.6
 
 <a id="delete-permanently"></a>
 ### Smazat natrvalo

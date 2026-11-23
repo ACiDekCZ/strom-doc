@@ -501,8 +501,12 @@ a link to the person or the source.
 - **From app 3.31.0:** a person who already has all the chosen files (by a place in the tree or by an assignment in
   the research) stands above the list as a chip marked "already linked", without ×, and is ticked in the list and
   cannot be changed. "Nobody yet" is not shown beside them.
+- **From app 3.32.0:** in a tree followed live from the research, **Link to…** is offered as elsewhere (⋯ in the
+  person's **Materials**, the rows of attachments, the file viewer). The dialog says "The tree is followed live and is
+  read-only. Linking is possible after following ends; the choice stays." and offers **End following**; until then
+  linking is not possible. A locked person still does not have the action.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 A source from a file and the evidence of a source

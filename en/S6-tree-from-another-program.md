@@ -172,8 +172,11 @@ what can be done with it next. It shows once after each import, whether the tree
 - **Limits:** the card is only for another program's file. It replaces the earlier questions after an import (the
   check, separating families).
 - **Since:** app 3.26.0
+- **From app 3.32.0:** the card shows after an import into a new tree and after **Insert into tree**. After merging
+  a file into an existing tree it does not show: the data check is in the guide's last step (**Check the tree**,
+  [A8.11](A8-merging-trees.md#A8.11)).
 
-<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
+<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 · 3.32.0: app:debf50cc src/merge/ui.ts finishDone (afterImport jen u w.newTree s importId), step6Env noNextCard · strings.ts mergeWizard.noNextCard -->
 
 <a id="S6.5"></a>
 ## S6.5 Backups and going back in time
@@ -193,8 +196,18 @@ thus be restored.
 - **From app 3.27.0:** the backup **Before the data update of a new version** is made before the app, on opening,
   adjusts a tree saved by an older version; today only to join sources that differed only in reliability
   ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)).
+- **From app 3.32.0:**
+  - the backups **Before import** and **Before merge** are always made, even with the switch **Automatic backups of
+    this tree** off ("Daily; before an import or a merge always."); every merge into a tree, from any input, takes
+    the backup **Before merge**;
+  - the backup **Before merge** stays while the merge can be undone: the rotation of backups does not delete it. When
+    another one would have to go because of it, the guide asks ([A8.10](A8-merging-trees.md#A8.10));
+  - without a backup the merge is not written;
+  - a single merge can be taken back without restoring the whole backup: **Undo the merge…**
+    ([A8.12](A8-merging-trees.md#A8.12)). A backup brings back the whole tree, including everything that has happened
+    since the merge.
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 -->
 
 <a id="S6.6"></a>
 ## S6.6 Export back to the program, or to share
@@ -272,8 +285,12 @@ has the same ID but otherwise does not match is only offered.
 - **Controls:** **Import → Import GEDCOM → Merge with existing** ([A8](A8-merging-trees.md)).
 - **Since:** app 3.26.0; 3.27.0: an ID of more people in the tree only offers; a manual merge of people joins
   notes (before it did not)
+- **From app 3.32.0:** **Import → Import GEDCOM** opens the guide **Import a family tree** with the choice **Add to a
+  tree** ([A8.6](A8-merging-trees.md#A8.6)). The guide recognises the same file merged again: it adds only the people
+  left out last time and does not double the joined people. A match of 50–79 is not joined without a person's
+  decision; the remaining pairs can be added as new, or left out, all at once ([A8.7](A8-merging-trees.md#A8.7)).
 
-<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek -->
+<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek · 3.32.0: app:debf50cc src/ui/import-export.ts openGedcomGuide, src/merge/ui.ts repeatLine (otisk souboru) · strings.ts mergeWizard.repeat, restAdd, restSkip · CHANGELOG.cs.md 3.32.0 -->
 <!-- zdroj: app:1c9b2392 src/merge/matching.ts ID_MATCH_SCORE 100, ID_CANDIDATE_SCORE 60, ID_MAX_YEAR_GAP 3, WEAK_ID_BONUS 25, offerOnlyCap · src/merge/executor.ts:82 AUTO_CONFIRM_SCORE = 80 · src/merge/notes.ts · strings.ts merge reason id „Stejné ID v souboru“ · dirigent:prace/1108-app-066-u8/karta.md Výsledek (FAM se podle ID nepárují; mergePersons neslučuje poznámky) -->
 <!-- zdroj: 3.27.0: app:ffe1da9f src/data.ts mergePersons (notes: mergeNoteText keep+remove; partnership note: mergeNoteText) · app:b5595ca1 src/merge/matching.ts idNamesSeveral, findDirectMatches · app:a5fc9656 src/ged-parser.ts keptMedia, extras OBJE (export zpět jako ostatní _XXX rodiny) · strings.ts personMerge.title „Sloučit osoby“ · CHANGELOG.cs.md 3.27.0 · dirigent:test/vysledek-1109-app-drobnosti-ged.md P1 (dialog poznámku jako konflikt nenabízí: detectFieldConflicts jen jméno, příjmení, narození, úmrtí) -->
 

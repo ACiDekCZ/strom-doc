@@ -493,8 +493,12 @@ Każdy wiersz to odnośnik do osoby lub źródła.
 - **Od aplikacji 3.31.0:** osoba, do której należą już wszystkie wybrane pliki (miejscem w drzewie lub przypisaniem
   w badaniu), stoi nad listą jako chip z oznaczeniem „już połączono”, bez ×, a na liście jest zaznaczona i nie da
   się jej zmienić. „Na razie nikt” obok niej się nie pokazuje.
+- **Od aplikacji 3.32.0:** w drzewie śledzonym na żywo z badania **Połącz z…** jest dostępne jak gdzie indziej
+  (⋯ w **Materiałach** osoby, wiersze załączników, podgląd pliku). Okno mówi „Drzewo jest śledzone na żywo i jest
+  tylko do odczytu. Połączenie będzie możliwe po zakończeniu śledzenia, wybór zostanie zachowany.” i proponuje
+  **Zakończ śledzenie**; do tego czasu połączyć się nie da. Zablokowana osoba nadal tej akcji nie ma.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Źródło z pliku i dowód źródła

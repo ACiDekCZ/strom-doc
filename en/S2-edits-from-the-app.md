@@ -382,8 +382,14 @@ nothing by itself; it can be deleted in the research". A Strom archive mirrors t
   - **Edited elsewhere:** **Remove from the tree**, or **Keep in the tree**.
   The research confirms the decision. Then the app loads its version.
 - **Since:** research 1.0.0; the question about a removed person from app 3.16.0 (research 1.20.0)
+- **From app 3.32.0:** the same holds for the people of an undone merge of trees
+  ([A8.12](A8-merging-trees.md#A8.12)). A merge not yet sent to the research is undone only in the app, and the
+  research gets nothing. A merge already sent the app undoes at once and says that the research does not delete the
+  people by itself; when it knows the research's entry the merge brought, it gives a step in the research's terminal
+  `strom sync undo I…` with **Copy**, otherwise it points here. Until then the research brings the people back with
+  its next version and the app offers them for removal ([A8.13](A8-merging-trees.md#A8.13)).
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 „What the app no longer has is only reported“, gone :2355 · app:src/ui/research-removed-ui.ts :1-14 · strings.ts sync.notWrittenReport, conflict.person.* · CHANGELOG.cs.md 3.16.0 -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 „What the app no longer has is only reported“, gone :2355 · app:src/ui/research-removed-ui.ts :1-14 · strings.ts sync.notWrittenReport, conflict.person.* · CHANGELOG.cs.md 3.16.0 · 3.32.0: app:debf50cc src/ui/merge-history-ui.ts (resSent, resUndoStep / resUndoHelp), undoResearchStep (jen záznam I\d+), src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · strings.ts mergeWizard.resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy · research:src/commands/sync.ts:627 sync undo · spec 134 K9.3 -->
 
 <a id="S2.6.1"></a>
 ### S2.6.1 A source deleted in the app

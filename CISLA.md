@@ -399,10 +399,19 @@ nenapsáno) · `neplatí od <verze>`.
 | A7.7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Uložené HTML (samostatný soubor) | Saved HTML (a standalone file) | Gespeichertes HTML (eigenständige Datei) | Zapisany HTML (samodzielny plik) |
 | A7.8 | A7-book-pages-and-export.md | aplikace 2.8.0 | platí | Vyprávění | Stories | Erzählungen | Opowieść |
 | A8 | A8-merging-trees.md | aplikace 1.0.0 | platí | Sloučení stromů | Merging trees | Zusammenführen von Stammbäumen | Scalanie drzew |
-| A8.1 | A8-merging-trees.md | aplikace 1.0.0 | platí | Sloučení vždy založí nový strom | A merge always creates a new tree | Zusammenführen legt immer einen neuen Stammbaum an | Scalenie zawsze zakłada nowe drzewo |
+| A8.1 | A8-merging-trees.md | aplikace 1.0.0 | neplatí od 3.32.0 | Sloučení vždy založí nový strom | A merge always creates a new tree | Zusammenführen legt immer einen neuen Stammbaum an | Scalenie zawsze zakłada nowe drzewo |
 | A8.2 | A8-merging-trees.md | aplikace 1.0.0 | platí | Párování osob | Pairing people | Abgleich der Personen | Łączenie osób w pary |
 | A8.3 | A8-merging-trees.md | aplikace 1.0.0 | platí | Co rozhoduje člověk | What a person decides | Was der Mensch entscheidet | Co rozstrzyga człowiek |
 | A8.4 | A8-merging-trees.md | aplikace 1.0.0 | platí | Co se přenese se stromem | What comes along with the tree | Was mit dem Stammbaum übernommen wird | Co przechodzi z drzewem |
+| A8.5 | A8-merging-trees.md | aplikace 3.32.0 | platí | Průvodce Sloučení stromů | The Merge trees guide | Der Assistent Stammbäume zusammenführen | Kreator Scalanie drzew |
+| A8.6 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 1: Co s tím | Step 1: What to do | Schritt 1: Was damit | Krok 1: Co z tym |
+| A8.7 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 2: Kdo je kdo | Step 2: Who is who | Schritt 2: Wer ist wer | Krok 2: Kto jest kim |
+| A8.8 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 3: Koho přidat | Step 3: Whom to add | Schritt 3: Wen hinzufügen | Krok 3: Kogo dodać |
+| A8.9 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 4: Kdo má pravdu | Step 4: Who is right | Schritt 4: Wer hat recht | Krok 4: Kto ma rację |
+| A8.10 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 5: Co se stane a zápis | Step 5: What will happen, and the write | Schritt 5: Was passiert, und das Schreiben | Krok 5: Co się stanie i zapis |
+| A8.11 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 6: Co se stalo a Historie sloučení | Step 6: What happened, and Merge history | Schritt 6: Was passiert ist, und der Verlauf der Zusammenführungen | Krok 6: Co się stało i Historia scaleń |
+| A8.12 | A8-merging-trees.md | aplikace 3.32.0 | platí | Odvolání sloučení | Undoing a merge | Zurücknehmen einer Zusammenführung | Cofnięcie scalenia |
+| A8.13 | A8-merging-trees.md | aplikace 3.32.0 | platí | Sloučení do stromu s výzkumem | A merge into a tree with a research | Zusammenführen in einen Stammbaum mit Forschung | Scalenie do drzewa z badaniem |
 | A9 | A9-using-the-app.md | aplikace 3.25.0 | koncept | Ovládání aplikace | Using the app | Bedienung der App | Obsługa aplikacji |
 | A9.1 | A9-using-the-app.md | aplikace 3.25.0 | koncept | Kde co je | Where things are | Wo was ist | Gdzie co jest |
 | A9.2 | A9-using-the-app.md | aplikace 3.25.0 | koncept | Prvky mají čitelný název | Controls have a readable name | Bedienelemente haben einen lesbaren Namen | Elementy mają czytelną nazwę |
@@ -574,3 +583,4 @@ nenapsáno) · `neplatí od <verze>`.
 | S8.4 | S8-where-the-data-are.md | aplikace 3.0.0 | platí | Ukazatel Jen v prohlížeči | The indicator Only in browser | Die Anzeige Nur im Browser | Wskaźnik Tylko w przeglądarce |
 | S8.5 | S8-where-the-data-are.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Fotky z výzkumu se nepodařilo načíst | The photos from the research could not be loaded | Die Fotos aus der Forschung konnten nicht geladen werden | Nie udało się wczytać zdjęć z badania |
 | S8.6 | S8-where-the-data-are.md | výzkum 1.35.0 | platí | Balík a odebrání stromu: skeny a rodinné fotky | The pack and removing a tree: scans and family photos | Paket und Entfernen eines Stammbaums: Scans und Familienfotos | Paczka i usunięcie drzewa: skany i rodzinne zdjęcia |
+| S8.7 | S8-where-the-data-are.md | aplikace 3.32.0 | platí | Obrázky mimo paměť stromu | Images outside the tree's memory | Bilder außerhalb des Speichers des Stammbaums | Obrazy poza pamięcią drzewa |

@@ -375,8 +375,14 @@ usunąć można w badaniu”. Archiwum Strom usunięcie odzwierciedla ([S2.4](#S
   - **Zmieniono gdzie indziej:** **Usuń z drzewa** albo **Zostaw w drzewie**.
   Decyzję potwierdza badanie. Potem aplikacja wczytuje jego wersję.
 - **Obowiązuje od:** badanie 1.0.0; pytanie o usuniętą osobę od aplikacji 3.16.0 (badanie 1.20.0)
+- **Od aplikacji 3.32.0:** to samo dotyczy osób z cofniętego scalenia drzew ([A8.12](A8-merging-trees.md#A8.12)).
+  Scalenie, które jeszcze nie trafiło do badania, cofa się tylko w aplikacji, a badanie nie dostaje niczego.
+  Scalenie już wysłane aplikacja cofa od razu i mówi, że badanie samo osób nie usunie; gdy zna wpis badania, który
+  scalenie przyniosło, podaje krok w terminalu badania `strom sync undo I…` z **Kopiuj**, inaczej odsyła tutaj. Do
+  tego czasu badanie przy następnej wersji osoby przywróci, a aplikacja zaproponuje ich usunięcie
+  ([A8.13](A8-merging-trees.md#A8.13)).
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 „What the app no longer has is only reported“, gone :2355 · app:src/ui/research-removed-ui.ts :1-14 · strings.ts sync.notWrittenReport, conflict.person.* · CHANGELOG.cs.md 3.16.0 -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 „What the app no longer has is only reported“, gone :2355 · app:src/ui/research-removed-ui.ts :1-14 · strings.ts sync.notWrittenReport, conflict.person.* · CHANGELOG.cs.md 3.16.0 · 3.32.0: app:debf50cc src/ui/merge-history-ui.ts (resSent, resUndoStep / resUndoHelp), undoResearchStep (jen záznam I\d+), src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · strings.ts mergeWizard.resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy · research:src/commands/sync.ts:627 sync undo · spec 134 K9.3 -->
 
 <a id="S2.6.1"></a>
 ### S2.6.1 Źródło usunięte w aplikacji

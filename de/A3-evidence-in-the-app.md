@@ -537,8 +537,13 @@ einem Schritt **Rückgängig**.
 - **Ab App 3.31.0:** eine Person, der alle gewählten Dateien schon gehören (durch eine Stelle im Stammbaum oder eine
   Zuordnung in der Forschung), steht über der Liste als Chip mit der Markierung „bereits verknüpft“, ohne ×, und ist
   in der Liste angehakt und nicht änderbar. „Noch niemand“ erscheint daneben nicht.
+- **Ab App 3.32.0:** in einem live aus der Forschung verfolgten Stammbaum wird **Verknüpfen mit…** wie anderswo
+  angeboten (⋯ in den **Materialien** der Person, Zeilen der Anhänge, Dateibetrachter). Der Dialog sagt „Der
+  Stammbaum wird live verfolgt und ist schreibgeschützt. Verknüpfen geht nach dem Beenden der Verfolgung; die Auswahl
+  bleibt.“ und bietet **Verfolgung beenden** an; bis dahin lässt sich nicht verknüpfen. Eine gesperrte Person hat die
+  Aktion weiterhin nicht.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Quelle aus einer Datei und Beleg einer Quelle

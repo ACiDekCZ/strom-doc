@@ -462,8 +462,12 @@ Každý soubor ukazuje, kde je použit: osoby, portrét, svazek, události, pram
 - **Od aplikace 3.31.0:** osoba, které už patří všechny zvolené soubory (místem ve stromu nebo přiřazením ve
   výzkumu), stojí nad seznamem jako čip se značkou „už připojeno“, bez ×, a v seznamu je zaškrtnutá a nejde změnit.
   Vedle ní se neukazuje „Zatím nikdo“.
+- **Od aplikace 3.32.0:** ve stromu sledovaném živě z výzkumu se **Připojit k…** nabízí jako jinde (⋯ v **Materiálech**
+  osoby, řádky příloh, prohlížeč souboru). Dialog řekne „Strom se sleduje živě a je jen pro čtení. Připojit jde po
+  ukončení sledování, volba zůstane.“ a nabídne **Ukončit sledování**; do té doby připojit nejde. Zamčená osoba akci
+  dál nemá.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Pramen ze souboru a doklad pramene

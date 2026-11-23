@@ -408,8 +408,15 @@ spiegelt das Entfernen ([S2.4](#S2.4)).
   - **Anderswo bearbeitet:** **Aus dem Stammbaum entfernen** oder **Im Stammbaum lassen**.
   Die Entscheidung bestätigt die Forschung. Dann lädt die App ihre Version.
 - **Gilt seit:** Forschung 1.0.0; Frage zur entfernten Person seit App 3.16.0 (Forschung 1.20.0)
+- **Ab App 3.32.0:** dasselbe gilt für die Personen einer zurückgenommenen Zusammenführung von Stammbäumen
+  ([A8.12](A8-merging-trees.md#A8.12)). Eine Zusammenführung, die noch nicht an die Forschung gegangen ist, wird nur
+  in der App zurückgenommen, und die Forschung bekommt nichts. Eine schon gesendete Zusammenführung nimmt die App
+  sofort zurück und sagt, dass die Forschung die Personen nicht von selbst löscht; kennt sie den Eintrag der
+  Forschung, den die Zusammenführung brachte, gibt sie einen Schritt im Terminal der Forschung
+  `strom sync undo I…` mit **Kopieren**, sonst verweist sie hierher. Bis dahin bringt die Forschung die Personen mit
+  der nächsten Version zurück, und die App bietet sie zum Entfernen an ([A8.13](A8-merging-trees.md#A8.13)).
 
-<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 „What the app no longer has is only reported“, gone :2355 · app:src/ui/research-removed-ui.ts :1-14 · strings.ts sync.notWrittenReport, conflict.person.* · CHANGELOG.cs.md 3.16.0 -->
+<!-- zdroj: research:src/core/sync.ts (v1.25.2) :1-19 „What the app no longer has is only reported“, gone :2355 · app:src/ui/research-removed-ui.ts :1-14 · strings.ts sync.notWrittenReport, conflict.person.* · CHANGELOG.cs.md 3.16.0 · 3.32.0: app:debf50cc src/ui/merge-history-ui.ts (resSent, resUndoStep / resUndoHelp), undoResearchStep (jen záznam I\d+), src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · strings.ts mergeWizard.resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy · research:src/commands/sync.ts:627 sync undo · spec 134 K9.3 -->
 
 <a id="S2.6.1"></a>
 ### S2.6.1 In der App gelöschte Quelle

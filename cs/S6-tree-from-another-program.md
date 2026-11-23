@@ -157,8 +157,11 @@ Ukáže se jednou po každém importu, ať se strom založil nový, vložil, neb
 - **Hranice:** karta je jen u souboru jiného programu. Nahrazuje dřívější otázky po importu (kontrola, oddělení
   rodin).
 - **Platí od:** aplikace 3.26.0
+- **Od aplikace 3.32.0:** karta se ukáže po importu do nového stromu a po **Vložit do stromu**. Po sloučení souboru
+  do stávajícího stromu se neukáže: kontrola dat je v posledním kroku průvodce (**Zkontrolovat strom**,
+  [A8.11](A8-merging-trees.md#A8.11)).
 
-<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
+<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 · 3.32.0: app:debf50cc src/merge/ui.ts finishDone (afterImport jen u w.newTree s importId), step6Env noNextCard · strings.ts mergeWizard.noNextCard -->
 
 <a id="S6.5"></a>
 ## S6.5 Zálohy a návrat v čase
@@ -178,8 +181,17 @@ vrátit.
 - **Od aplikace 3.27.0:** záloha **Před úpravou dat pro novou verzi** vznikne, než aplikace při otevření upraví strom
   uložený starší verzí; dnes jen kvůli sloučení pramenů, které se lišily jen spolehlivostí
   ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)).
+- **Od aplikace 3.32.0:**
+  - zálohy **Před importem** a **Před sloučením** vznikají vždy, i s vypnutým přepínačem **Automatické zálohy tohoto
+    stromu** („Denně; před importem a sloučením vždy.“); zálohu **Před sloučením** si vezme každé sloučení do
+    stromu, ze kteréhokoli vstupu;
+  - záloha **Před sloučením** zůstane, dokud jde sloučení odvolat: rotace záloh ji nesmaže. Když by kvůli ní
+    musela odejít jiná, průvodce se zeptá ([A8.10](A8-merging-trees.md#A8.10));
+  - bez zálohy se sloučení nezapíše;
+  - jedno sloučení jde vzít zpět i bez obnovení celé zálohy: **Odvolat sloučení…**
+    ([A8.12](A8-merging-trees.md#A8.12)). Záloha vrátí celý strom, i se vším, co se od sloučení stalo.
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 -->
 
 <a id="S6.6"></a>
 ## S6.6 Export zpět do programu, nebo ke sdílení
@@ -253,8 +265,12 @@ ID, ale jinak se neshoduje, se jen nabídne.
 - **Ovládání:** **Import → Import GEDCOM → Sloučit s existujícím** ([A8](A8-merging-trees.md)).
 - **Platí od:** aplikace 3.26.0; 3.27.0: ID u víc osob stromu jen nabídne; ruční sloučení osob spojí poznámky
   (dřív je nespojovalo)
+- **Od aplikace 3.32.0:** **Import → Import GEDCOM** otevře průvodce **Import rodokmenu** s volbou **Přidat do
+  stromu** ([A8.6](A8-merging-trees.md#A8.6)). Tentýž soubor sloučený znovu průvodce pozná: přidá jen osoby, které se
+  minule vynechaly, a spojené osoby nezdvojí. Shoda 50–79 se bez rozhodnutí člověka nespojí; zbylé dvojice jde
+  naráz přidat jako nové, nebo vynechat ([A8.7](A8-merging-trees.md#A8.7)).
 
-<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek -->
+<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek · 3.32.0: app:debf50cc src/ui/import-export.ts openGedcomGuide, src/merge/ui.ts repeatLine (otisk souboru) · strings.ts mergeWizard.repeat, restAdd, restSkip · CHANGELOG.cs.md 3.32.0 -->
 <!-- zdroj: app:1c9b2392 src/merge/matching.ts ID_MATCH_SCORE 100, ID_CANDIDATE_SCORE 60, ID_MAX_YEAR_GAP 3, WEAK_ID_BONUS 25, offerOnlyCap · src/merge/executor.ts:82 AUTO_CONFIRM_SCORE = 80 · src/merge/notes.ts · strings.ts merge reason id „Stejné ID v souboru“ · dirigent:prace/1108-app-066-u8/karta.md Výsledek (FAM se podle ID nepárují; mergePersons neslučuje poznámky) -->
 <!-- zdroj: 3.27.0: app:ffe1da9f src/data.ts mergePersons (notes: mergeNoteText keep+remove; partnership note: mergeNoteText) · app:b5595ca1 src/merge/matching.ts idNamesSeveral, findDirectMatches · app:a5fc9656 src/ged-parser.ts keptMedia, extras OBJE (export zpět jako ostatní _XXX rodiny) · strings.ts personMerge.title „Sloučit osoby“ · CHANGELOG.cs.md 3.27.0 · dirigent:test/vysledek-1109-app-drobnosti-ged.md P1 (dialog poznámku jako konflikt nenabízí: detectFieldConflicts jen jméno, příjmení, narození, úmrtí) -->
 

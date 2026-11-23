@@ -185,8 +185,11 @@ angelegt, eingefügt oder zusammengeführt wurde.
 - **Grenzen:** die Karte gibt es nur bei einer Datei eines anderen Programms. Sie ersetzt die früheren Fragen nach dem
   Import (Prüfung, Trennen von Familien).
 - **Gilt seit:** App 3.26.0
+- **Ab App 3.32.0:** die Karte erscheint nach einem Import in einen neuen Stammbaum und nach **In Stammbaum
+  einfügen**. Nach dem Zusammenführen einer Datei in einen bestehenden Stammbaum erscheint sie nicht: die Datenprüfung
+  ist im letzten Schritt des Assistenten (**Stammbaum prüfen**, [A8.11](A8-merging-trees.md#A8.11)).
 
-<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 -->
+<!-- zdroj: app:7b0471f8 src/ui/import-next-ui.ts (IMPORT_NEXT_HELP_TOPIC = 'A2', nextCardClosed, :302 verify → showVerifyBulkDialog) · src/import-next.ts IMPORT_NEXT_VERIFY_FEATURES ['verify.bulk'] · strings.ts importNext.* · dirigent:prace/1108-app-066-u5 · 3.32.0: app:debf50cc src/merge/ui.ts finishDone (afterImport jen u w.newTree s importId), step6Env noNextCard · strings.ts mergeWizard.noNextCard -->
 
 <a id="S6.5"></a>
 ## S6.5 Sicherungen und Zurückgehen in der Zeit
@@ -207,8 +210,20 @@ Zustand vor dem Import lässt sich so zurückkehren.
 - **Ab App 3.27.0:** Die Sicherung **Vor der Anpassung der Daten an eine neue Version** entsteht, bevor die App beim
   Öffnen einen mit einer älteren Version gespeicherten Stammbaum anpasst; derzeit nur, um Quellen zusammenzuführen,
   die sich nur in der Zuverlässigkeit unterschieden ([A2.6.1](A2-loading-a-family-tree.md#A2.6.1)).
+- **Ab App 3.32.0:**
+  - die Sicherungen **Vor dem Import** und **Vor dem Zusammenführen** entstehen immer, auch bei ausgeschaltetem
+    Schalter **Automatische Sicherungen dieses Stammbaums** („Täglich; vor einem Import oder dem Zusammenführen
+    immer.“); die Sicherung **Vor dem Zusammenführen** legt jedes Zusammenführen in einen Stammbaum an, aus jeder
+    Quelle;
+  - die Sicherung **Vor dem Zusammenführen** bleibt, solange sich die Zusammenführung zurücknehmen lässt: die Rotation
+    der Sicherungen löscht sie nicht. Müsste ihretwegen eine andere gehen, fragt der Assistent
+    ([A8.10](A8-merging-trees.md#A8.10));
+  - ohne Sicherung wird die Zusammenführung nicht geschrieben;
+  - eine einzelne Zusammenführung lässt sich auch ohne Wiederherstellen der ganzen Sicherung zurücknehmen:
+    **Zusammenführung zurücknehmen…** ([A8.12](A8-merging-trees.md#A8.12)). Eine Sicherung bringt den ganzen
+    Stammbaum zurück, samt allem, was seit der Zusammenführung geschehen ist.
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 -->
 
 <a id="S6.6"></a>
 ## S6.6 Export zurück ins Programm oder zum Teilen
@@ -290,8 +305,13 @@ der Programm-ID. Eine Person, die dieselbe ID hat, aber sonst nicht übereinstim
 - **Bedienung:** **Import → GEDCOM importieren → Mit Vorhandenem zusammenführen** ([A8](A8-merging-trees.md)).
 - **Gilt seit:** App 3.26.0; 3.27.0: eine ID mehrerer Personen im Stammbaum wird nur angeboten; manuelles
   Zusammenführen von Personen verbindet die Notizen (vorher nicht)
+- **Ab App 3.32.0:** **Import → GEDCOM importieren** öffnet den Assistenten **Stammbaum importieren** mit der Wahl
+  **Zu Stammbaum hinzufügen** ([A8.6](A8-merging-trees.md#A8.6)). Dieselbe Datei, erneut zusammengeführt, erkennt der
+  Assistent: er fügt nur die Personen hinzu, die beim letzten Mal ausgelassen wurden, und verdoppelt verbundene
+  Personen nicht. Eine Übereinstimmung von 50–79 wird ohne Entscheidung des Menschen nicht verbunden; die übrigen
+  Paare lassen sich auf einmal als neu hinzufügen oder auslassen ([A8.7](A8-merging-trees.md#A8.7)).
 
-<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek -->
+<!-- zdroj: app:7b0471f8 CHANGELOG.cs.md 3.26.0 (Slučování) · src/merge matchSameNamedRelatives, standInsOfKnownFamilies (b3c3ce00) · strings.ts merge reasons partner_of_matched, child_of_matched, parent_of_matched, sibling_of_matched, in_law_of_matched · dirigent:prace/1109-app-slouceni-325, 1109-app-gedy-opravy (N6: značky importu se starému stromu nedoplní), 1109-app-jeden-rodic Výsledek · 3.32.0: app:debf50cc src/ui/import-export.ts openGedcomGuide, src/merge/ui.ts repeatLine (otisk souboru) · strings.ts mergeWizard.repeat, restAdd, restSkip · CHANGELOG.cs.md 3.32.0 -->
 
 <!-- zdroj: app:1c9b2392 src/merge/matching.ts ID_MATCH_SCORE 100, ID_CANDIDATE_SCORE 60, ID_MAX_YEAR_GAP 3, WEAK_ID_BONUS 25, offerOnlyCap · src/merge/executor.ts:82 AUTO_CONFIRM_SCORE = 80 · src/merge/notes.ts · strings.ts merge reason id „Stejné ID v souboru“ · dirigent:prace/1108-app-066-u8/karta.md Výsledek (FAM se podle ID nepárují; mergePersons neslučuje poznámky) -->
 <!-- zdroj: 3.27.0: app:ffe1da9f src/data.ts mergePersons (notes: mergeNoteText keep+remove; partnership note: mergeNoteText) · app:b5595ca1 src/merge/matching.ts idNamesSeveral, findDirectMatches · app:a5fc9656 src/ged-parser.ts keptMedia, extras OBJE (export zpět jako ostatní _XXX rodiny) · strings.ts personMerge.title „Sloučit osoby“ · CHANGELOG.cs.md 3.27.0 · dirigent:test/vysledek-1109-app-drobnosti-ged.md P1 (dialog poznámku jako konflikt nenabízí: detectFieldConflicts jen jméno, příjmení, narození, úmrtí) -->
