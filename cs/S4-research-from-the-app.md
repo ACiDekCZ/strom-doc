@@ -808,6 +808,8 @@ a co jen ve výzkumu, říká [R6.5](R6-awaiting-action.md#R6.5).
   - položka čekající na snímky začíná blokem **Dodat** s kroky ([S4.4.7](#S4.4.7)).
 - **Od aplikace 3.30.0 s výzkumem 1.35.0:** úkol, jehož čekání na snímky není zapsané, jak ho strom potřebuje, má
   značku a v otevřené položce opravu v jednom kroku ([S4.4.8](#S4.4.8), [S4.4.9](#S4.4.9)).
+- **Od aplikace 3.32.0 s výzkumem 1.37.0:** položka, kterou jde vrátit agentovi, má řádek **Teď** a tlačítko
+  **Zkusit znovu přes agenta**, pás archivu **Zkusit znovu vše přes agenta** ([S4.4.14](#S4.4.14)).
 
 <!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
@@ -1086,6 +1088,8 @@ dělají. Výsledkem jsou soubory ve složce, ne odpověď.
 - **Ovládání:** aplikace: **Přehled výzkumu → Čeká na vyřízení**, klik na položku se snímky; v malém panelu **Mám
   snímky**.
 - **Platí od:** aplikace 3.30.0
+- **Od aplikace 3.32.0 s výzkumem 1.37.0:** u úkolu, který jde vrátit agentovi, stojí pod blokem řádek **Teď**
+  a **Zkusit znovu přes agenta**; jako hlavní akce udělá krok **Mám snímky** obrysovým ([S4.4.14](#S4.4.14)).
 
 <!-- zdroj: app:449e6962, 429839f0 src/ui/waiting-task-ui.ts waitingTakesImages (waitingActions images přes most), waitingAnswerTexts (answerImagesLabel, answerImagesHint), waitingDeliverEl (věta deliverSentence, phone → deliverPhone bez kroků, kroky deliverSteps web → folder → images, krok ② books.folderBook přes odkaz book jen s book.folder, jinak openFolder task?do=folder se značkou, ③ haveImages waiting-action--primary → openWaitingImages, deliver-pair šipka s krokem, is-column), panel dialog (column, upload: true, title haveImages) · src/research-waiting.ts waitingForImages (images, web s inbox), waitingDeliver (chybějící čísla jen u detail full; kniha jen ze seznamu se složkou), deliverSentence, deliverWebUrl (w.url, jinak bookWebUrl), deliverSteps · src/ui/research-overview-ui.ts appendWaitingTaskActions deliver (answer → link-button cannotGet, ostatní pod ⋯, na telefonu nic pod ⋯) · strings.ts live.waitingTask.deliverLabel, deliverBook, deliverTask, deliverBookAny, deliverTaskAny, deliverPhone, stepAria, cannotGet, answerImagesLabel, answerImagesHint · e2e/waiting-images.spec.ts, overview-waiting-books.spec.ts · ZADANI_DEV_knihy-zahlavi.md §5 · dirigent:prace/1117-app-knihy-zahlavi (D12, D13) -->
 
@@ -1250,6 +1254,59 @@ Ve skupině **Materiály** okna **Výzkum u tohoto stromu…** je přepínač **
 - **Platí od:** aplikace 3.32.0 (výzkum 1.37.0)
 
 <!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 -->
+
+<a id="S4.4.14"></a>
+### S4.4.14 Zkusit znovu přes agenta
+
+Položka, kterou výzkum dovolí vrátit agentovi ([R6.7.3](R6-awaiting-action.md#R6.7.3)), říká, proč čeká teď,
+a má tlačítko **Zkusit znovu přes agenta**. Skupina archivu s víc takovými položkami je vrátí najednou.
+
+- **Řádek Teď** (otevřená položka, místo poznámky o prohlížeči): **Teď:** a důvod podle výzkumu:
+  - „Prohlížeč agenta zadržel stahování z … Po povolení automatického stahování v profilu prohlížeče agenta je
+    uloží agent sám.“ (bez známého webu „… z webu archivu …“);
+  - „Ukládání snímků se zastavilo, sezení agenta skončilo uprostřed.“;
+  - „Prohlížeč agenta je teď připravený, snímky uloží agent sám.“;
+  - „Stránka je v prohlížeči archivu, ze kterého se snímky uložit nedají: agent je jen přečte z obrazovky, žádný
+    snímek se neuloží.“;
+  - rozšíření nepřipojené: „S rozšířením Claude in Chrome by snímky uložil agent sám. Po připojení rozšíření jde
+    úkol vrátit agentovi.“ a na počítači odkaz na rozšíření; agent bez prohlížeče: „S Claude Code a rozšířením
+    Claude in Chrome by snímky uložil agent sám.“;
+  - položka už vrácená, která čeká znovu, má na konci „– zkoušeno znovu 18:40, zase zadrženo“ (nebo „zase čeká“);
+    čas dnes, „včera 18:40“, jinak s dnem a měsícem.
+- **Tlačítko u položky:** **Zkusit znovu přes agenta** s počtem snímků, které úkolu chybí („· 2 snímky“), u stránky
+  jen ke čtení z obrazovky „· jen čtení“; bez známého počtu bez čísla.
+  - Je hlavní akcí, když agent může pokračovat hned (zadržené stahování, zastavené ukládání, připravený prohlížeč,
+    čtení z obrazovky); krok **Mám snímky** bloku **Dodat** ([S4.4.7](#S4.4.7)) je pak jen obrysový. S nepřipojeným
+    rozšířením nebo agentem bez prohlížeče je obrysové vedle hlavní akce.
+  - U položky s blokem **Dodat** stojí pod řádkem **Teď**, jinak mezi akcemi položky.
+  - Klik vrátí úkol hned, bez potvrzení: položka zmizí a oznámení řekne „Vráceno agentovi – vezme si ho jako
+    další.“ (výzkum právě pracuje), jinak „Vráceno agentovi – čeká první ve frontě, agent ho vezme při příštím
+    spuštění.“
+  - Odmítnutí stojí v řádku položky: „Úkol mezitím čeká na něco jiného; nevráceno.“, „Úkol už se vrátit nedá.“,
+    „Výzkum teď neodpovídá; nic se nevrátilo.“
+- **Limit:** položka vrácená 3× za 24 hodin má místo tlačítka „Agentovi jde vrátit znovu zítra 9:12 – 3 pokusy za 24
+  hodin.“
+- **Skupina archivu:** v pásu archivu ([S4.4](#S4.4)) s nejméně dvěma položkami, které jdou vrátit teď, stojí
+  **Zkusit znovu vše přes agenta (N úkolů, M snímků)**, i u sbalené skupiny:
+  - počty jsou z celé skupiny, ne jen z položek, které ukazuje hledání. Když některá položka počet snímků neříká,
+    stojí „nejméně M snímků“; když jsou všechny jen ke čtení z obrazovky, „jen čtení“; bez známých snímků jen
+    „(N úkolů)“. Položky u limitu jsou za tlačítkem: „· 1 jde až zítra 9:12“;
+  - klik otevře na místě otázku „Vrátit agentovi 2 úkoly (5 snímků)? Na řadu přijdou hned.“ s **Vrátit** a
+    **Zrušit** (i Esc). **Vrátit** vrátí všechny vratné položky skupiny najednou, nebo žádnou; oznámení „Vráceno
+    agentovi: 2 úkoly, na řadě hned.“, při odmítnutí „Nic se nevrátilo: …“ a tlačítko zůstane;
+  - čekají-li dvě a víc položek skupiny ze stejného důvodu, stojí řádek **Teď** jednou v pásu a položky ho nemají.
+  - Ve skupinách podle knihy a u otázek k místům tlačítko skupiny není.
+- **Telefon:** jen řádek **Teď** a věta „Vrátit agentovi jde v aplikaci na počítači.“ (u limitu věta limitu), bez
+  tlačítek; každá položka má svůj řádek **Teď**.
+- **Hranice:** jen v **Přehledu výzkumu** a jeho samostatném okně ([S4.1.6](#S4.1.6)), ne v malém panelu; jen
+  s výzkumem, který vrácení umí. Se starším výzkumem položka řádek **Teď** ani tlačítko nemá. Agent tlačítko nespustí:
+  vrací jen člověk ([R6.6](R6-awaiting-action.md#R6.6)).
+- **Ovládání:** aplikace: **Přehled výzkumu → Čeká na vyřízení**, otevřená položka, **Zkusit znovu přes agenta**;
+  v pásu archivu **Zkusit znovu vše přes agenta** · terminál: **Co čeká** → **Vrátit agentovi**
+  ([R6.7.3](R6-awaiting-action.md#R6.7.3)).
+- **Platí od:** aplikace 3.32.0 (výzkum 1.37.0)
+
+<!-- zdroj: app:c574752a, 3c6a554d, 75b71f5a src/research-waiting.ts waitingRetryReason (held/heldNoHost, stopped, ready, screen, no-extension waitNoExt + afterExt + extLink, agent-without-browser waitAgent, again → againHeld/againWaits), retryWhenText (dnes, včera, zítra, den a měsíc), waitingRetryCount, waitingRetryLimitText, waitingRetryMain (ne no-extension/agent-without-browser), waitingActions ctx.retry (jen přehled, ne telefon, w.retry.can), waitingGroupRetry (n, atLeast, readOnly, later), groupRetry*Text, waitingGroupRetryReason (≥ 2, stejné why+host) · src/ui/research-overview-ui.ts waitingRetryEl (Teď, limit, telefon R.phone, tlačítko primary/secondary), waitingRetryOffered (ne sheet, can, writes.retry), waitingGroupRetryOffer (ne sheet, ne kniha, ne místa, offer.n < 2 → nic, celá skupina s.waiting), waitingGroupRetryNow (ne telefon), browserNote jen bez w.retry · src/ui/waiting-task-ui.ts waitingDeliverEl retryMain (③ obrysová) · src/ui/research-waiting-write-ui.ts retryWaitingItem (doneRunning/doneIdle podle běhu, limit → can false, waitingRetryRefusedText) · src/ui/overview-window-ui.ts waiting-agent-retry, waiting-group-agent-retry · src/research-link.ts WAITING_RETRY_FEATURE · strings.ts live.waitingRetry, research.browser.waitNoExt, waitAgent · e2e/waiting-retry.spec.ts, waiting-retry-group.spec.ts · dirigent:prace/1124-app-089-zkusit-znovu (Výsledek, odchylky sub1–sub3), spec/089 K1.1–K3.1 -->
 
 <a id="S4.5"></a>
 ## S4.5 Akce, které otevřou výzkum

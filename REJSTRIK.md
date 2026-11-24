@@ -1968,6 +1968,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A3.5.14](cs/A3-evidence-in-the-app.md#A3.5.14), A3.5.3, A3.5.11, A3.5.17, R11.5.4
 
+<a id="retry-with-the-agent"></a>
+### Zkusit znovu přes agenta
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Zkusit znovu přes agenta (app) · Vrátit agentovi (terminal) · `strom task wake --retry` | Vrácení úkolu, který čeká na snímky archivu jen přes prohlížeč, zpět agentovi, když překážka prohlížeče pominula. Nic se nezapíše jako odpověď člověka, úkol jde hned na řadu; vrací jen člověk, jeden úkol nejvýš 3× za 24 hodin. |
+| en | Retry with the agent (app) · Return to the agent (terminal) · `strom task wake --retry` | Returning a task that waits for images of an archive reached only through a browser back to the agent once the obstacle of the browser is gone. Nothing is written as the person's answer, the task goes first in the queue; only a person returns it, one task at most 3 times in 24 hours. |
+| de | Erneut über den Agenten versuchen (app) · An den Agenten zurückgeben (terminal) · `strom task wake --retry` | Die Rückgabe einer Aufgabe, die auf Bilder eines Archivs nur über den Browser wartet, an den Agenten, sobald das Hindernis des Browsers weg ist. Nichts wird als Antwort des Menschen geschrieben, die Aufgabe kommt sofort an die Reihe; zurückgeben kann nur der Mensch, eine Aufgabe höchstens 3× in 24 Stunden. |
+| pl | Spróbuj ponownie przez agenta (app) · Zwrócić agentowi (terminal) · `strom task wake --retry` | Zwrot agentowi zadania, które czeka na skany archiwum dostępnego tylko przez przeglądarkę, gdy przeszkoda przeglądarki minęła. Nic nie zapisuje się jako odpowiedź człowieka, zadanie trafia od razu na początek kolejki; zwraca tylko człowiek, jedno zadanie najwyżej 3× w ciągu 24 godzin. |
+
+- **Čísla:** [S4.4.14](cs/S4-research-from-the-app.md#S4.4.14), R6.7.3, R6.6, R2.2, R9.8.1
+
 <a id="lineage-markers"></a>
 ### Značení linií
 

@@ -521,6 +521,9 @@ Pravidla archivů jsou v obou stejná. Liší se v tom, kdo je u toho a co se st
    **pomalu** nebo **přes prohlížeč** vrátí úkoly čekající na archiv, které ve složce ještě nic nemají.
 
 - **Platí od:** výzkum 1.27.0, aplikace Strom 3.23.0
+- **Od výzkumu 1.37.0:** úkol, který přešel na člověka kvůli prohlížeči agenta (zadržené stahování, zastavené
+  ukládání), nebo čeká na snímky knihy, kam prohlížeč agenta smí, vrátí člověk agentovi, když překážka pominula
+  ([R6.7.3](R6-awaiting-action.md#R6.7.3)); úkol jde hned na řadu a zpět na krok 4.
 
 <!-- zdroj: research:src/commands/media.ts:141 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/core/inboxwatch.ts · src/commands/session.ts takeWaiting · src/core/live.ts waiting answer · 1.37.0: research:81de7cdb src/core/waiting.ts savedByAgentNow -->
 
