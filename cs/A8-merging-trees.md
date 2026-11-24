@@ -140,6 +140,9 @@ nezapíše, dokud se zápis nepotvrdí v kroku **Co se stane**.
 | jiný strom | **Sloučení stromů** | **Změnit strukturu…** › **Výběr nebo celý strom do jiného stromu…** › **Celý strom** ([A14.5](A14-trees-and-structure.md#A14.5)); cíl je otevřený strom, u otevřeného stromu jiný |
 | výběr osob stromu (rod, seznam, linie, pohled, ručně) | **Sloučení stromů** | **Změnit strukturu…** › **Výběr nebo celý strom do jiného stromu…** › **Výběr…** |
 | soubor GEDCOM nebo Strom (JSON) do otevřeného stromu | **Import rodokmenu** | **Změnit strukturu…** › **Přidat ze souboru do tohoto stromu…** |
+| jiný strom do otevřeného stromu | **Sloučení stromů** | **Změnit strukturu…** › **Z jiného stromu do tohoto stromu…** ([A14.5](A14-trees-and-structure.md#A14.5)) |
+| soubor GEDCOM nebo strom Strom (`.json`) puštěný na okno aplikace | **Import rodokmenu** | přetáhnout soubor na okno; cílem je otevřený strom ([A8.5.1](#A8.5.1)) |
+| soubor puštěný na řádek stromu ve Správě stromů, řádek stromu přetažený na jiný řádek | **Import rodokmenu** / **Sloučení stromů** | Správa stromů; cílem je strom řádku, na který se pustilo ([A8.5.1](#A8.5.1)) |
 | změny poslané z jiného Stromu | **Přijaté změny** | náhled přijatých změn → **Prohlédnout podrobně** |
 
 - **Kroky:** **Co s tím** ([A8.6](#A8.6)), **Kdo je kdo** ([A8.7](#A8.7)), **Koho přidat** ([A8.8](#A8.8)), **Kdo
@@ -165,6 +168,40 @@ nezapíše, dokud se zápis nepotvrdí v kroku **Co se stane**.
 
 <!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md · app:52171573 (dotaz 10: větší okno, lišta kroků s počty, pod 1100 px číslem) · 6e36ad08 (V-N4: cílový strom v nadpisu, stavovém řádku, Porovnat, řádku rozpracovaného) · a9bc0b6b, f0c5a3fb (139: Sloučit do jiného stromu a Sloučit pohled do… nahrazené Změnit strukturu; mergeViewInto bez volajícího) · strings.ts structure.pendingRow -->
 
+<a id="A8.5.1"></a>
+### A8.5.1 Soubor nebo strom puštěný myší
+
+Soubor GEDCOM i strom Strom (`.json`) jde do průvodce dostat přetažením: na okno aplikace, nebo na řádek stromu ve
+Správě stromů. Co se stane, určuje soubor a místo, kam se pustí.
+
+- **Na okno aplikace:**
+  - jeden soubor `.ged` otevře průvodce **Import rodokmenu** s cílem v otevřeném stromu (**Nový strom**, **Přidat do
+    stromu**, **Jen porovnat**);
+  - jeden soubor `.json` se nejdřív přečte. Strom otevře týž průvodce; zašifrovaný strom se napřed zeptá na heslo.
+    Záloha **Exportovat vše** a balíček změn z jiného Stromu jdou cestou importu JSON. Jiný soubor `.json` je pro
+    výzkum, který přijímá dávky, materiál ([R11.4](R11-material-from-the-user.md#R11.4)); jinak aplikace řekne
+    „{soubor} není čitelný soubor rodokmenu (.json). Nic se nezměnilo.“;
+  - víc souborů najednou jde u výzkumu, který přijímá dávky, do dávky; jinak rozhodne první soubor;
+  - během tažení se jeden soubor typu JSON bere jako strom: nápis nad oknem řekne, že se otevře průvodce, ne dávka;
+  - jiný soubor okno odmítne: „Sem lze přetáhnout jen soubory GEDCOM (.ged) a stromy Strom (.json).“ Prázdná
+    obrazovka nabízí „Stačí pustit soubor .ged nebo .json a otevře se“.
+- **Na řádek stromu ve Správě stromů:**
+  - soubor `.ged` nebo `.json` puštěný na řádek otevře průvodce s volbou **Přidat do stromu** a stromem toho řádku
+    jako cílem. Otevřený strom zůstane otevřený; zavření průvodce vrátí do Správy stromů;
+  - řádek stromu přetažený myší na jiný řádek otevře průvodce **Sloučení stromů**: přetažený strom je import, strom
+    pod ním cíl;
+  - řádek pod taženým souborem je čárkovaně orámovaný a říká, co puštění udělá: „Pustit: přidat {soubor} do stromu
+    {strom}“;
+  - strom, do kterého teď zapsat nejde (zamčený, sledovaný živě, z novější verze aplikace), se cílem nestane:
+    průvodce zůstane u volby **Přidat do stromu** bez vybraného cíle a dlaždice toho stromu v kroku 1 řekne proč.
+    Jiný strom se sám nevybere;
+  - řádek puštěný sám na sebe, dotykem nebo v aplikaci jen ke čtení neudělá nic. Nabídka ⋯ řádku zůstává.
+- **Hranice:** nic se nezapíše bez průvodce; zápis platí jako každé sloučení a jde odvolat ([A8.12](#A8.12)).
+- **Ovládání:** přetažení souboru na okno nebo na řádek Správy stromů; přetažení řádku stromu na jiný řádek.
+- **Platí od:** aplikace 3.32.0
+
+<!-- zdroj: app:b907d506 src/drop-route.ts dropRoute (guide-ged, json, batch, refuse), jsonDropKind (tree / šifrovaný, app-file: záloha Exportovat vše a balíček změn, other), dragLooksLikeJson · strings.ts onlyGedcom, dropHint, unreadableJson · app:73ee4625 src/tree-drop.ts treeRowDrop (sám na sebe, jen ke čtení nic), treeRowFileRoute, počáteční cíl (blokovaný strom nevybrán, důvod na dlaždici kroku 1, keepAdd) · src/ui/tree-management.ts (čárkovaný řádek, dotyk nic, ⋯ zůstává) · strings.ts mergeWizard.dropOnTree · dirigent:spec/134 K10.2, K10.3 -->
+
 <a id="A8.6"></a>
 ## A8.6 Krok 1: Co s tím
 
@@ -174,7 +211,7 @@ V prvním kroku se volí, co s importem, do kterého stromu a co se stane s osob
 |---|---|
 | **Nový strom** | vznikne nový strom s osobami importu; na výzkum napojený nebude; stávající stromy zůstanou beze změny |
 | **Přidat do stromu** | osoby importu se přidají do vybraného stromu (**Do kterého stromu**) |
-| **Jen porovnat** | projdou se stejné kroky, ale nic se nezapíše; výčet jde na konci uložit |
+| **Jen porovnat** | projdou se stejné kroky, ale nic se nezapíše (strom, zálohy ani soubory); výčet jde na konci uložit |
 | **Uložit jako JSON** | **Stáhnout JSON** stáhne převedená data jako soubor `.json`; do stromu se nic nezapíše |
 
 - **Co s osobou, která už ve stromu je** (u **Přidat do stromu**):
@@ -191,7 +228,9 @@ V prvním kroku se volí, co s importem, do kterého stromu a co se stane s osob
 - **Prohodit** u dvou stromů obrátí, co se do čeho přidává.
 - Tentýž soubor sloučený do stromu znovu průvodce pozná a řekne, kolik osob je nových; osoby spojené minule se
   nezdvojí. Přidají se tak jen osoby, které se minule vynechaly. Totéž platí pro strom: „Ze stromu Horákovi už se
-  sem slučovalo 12. 11. 2026. Nových je jen 5 osob; 40 je spojeno se sloučením z 12. 11. 2026 a nezdvojí se.“
+  sem slučovalo (12. 11. 2026). Nových je jen 5 osob; 40 je spojeno s tím dřívějším sloučením a nezdvojí se.“
+- **Pravidla podle programu:** soubor GEDCOM z programu, pro který je uložené pravidlo, má rozsah a volby kroku 4
+  předvyplněné: „Předvyplněno podle pravidla uloženého pro soubory z {program} (jde změnit).“ ([A8.6.1](#A8.6.1))
 - Kopie stromu a strom bez výzkumu mají v kroku 1 popis „kopie stromu „{název}“ · bez výzkumu“; u cíle bez výzkumu
   stojí „{strom} nemá výzkum: po sloučení se nic neposílá.“ ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Hranice:** cílem nemůže být zamčený strom (odemknout jde ve Správě stromů) ani strom z novější verze aplikace.
@@ -201,7 +240,34 @@ V prvním kroku se volí, co s importem, do kterého stromu a co se stane s osob
   se jinde sleduje živě. Ze stromu otevřeného jen ke čtení jde import jen jako **Nový strom**.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch -->
+<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch · app:02165311 strings.ts mergeWizard.repeat, repeatTree (datum dřívějšího sloučení v závorce) · app:fcddfcab (Jen porovnat: otisk všech stromů, záloh a souborů před a po; writePlan/applyPlan plán porovnání odmítnou) src/merge/write.ts · app:ad0ea45a strings.ts mergeWizard.prefilledFrom -->
+
+<a id="A8.6.1"></a>
+### A8.6.1 Pravidla pro soubory jednoho programu
+
+Rozsah z kroku 1 a pravidla kroku 4 jde zapamatovat pro soubory GEDCOM z téhož programu. Další soubor z toho
+programu začne průvodce s nimi; jde je změnit.
+
+- **Uložit:** v kroku 5 nad tlačítkem zápisu stojí zaškrtávací políčko „Zapamatovat pro soubory z {program}: rozsah
+  c), Platí můj strom“ (s pravidly podle druhu údaje „… s výjimkami podle druhu údaje“). Pod ním: „Příště se v kroku 1
+  předvyplní (jde změnit). Uložená pravidla jsou v Nastavení → Data a soukromí.“ Políčko je ve výchozím stavu
+  nezaškrtnuté, i u předvyplněného kroku 1.
+- **Kdy se uloží:** až po zápisu; u **Jen porovnat** po **Uložit výčet…**. Zavřený průvodce nic neuloží.
+- **Co se uloží:** rozsah a pravidla pro celé sloučení a podle druhu údaje. Pravidla pro jednu osobu nebo jednu
+  hodnotu se neukládají: patří lidem jednoho stromu. Pro jeden program platí jedno pravidlo; novější nahradí starší.
+- **Kde:** v nastavení tohoto zařízení, ne ve stromu. **Nastavení** → **Data a soukromí** → **Uložená pravidla
+  importu** („Předvyplní krok 1 průvodce importem pro soubory ze stejného programu.“) má řádek pro každý program
+  (rozsah · pravidla) s **Odebrat**. Bez uloženého pravidla se skupina neukazuje.
+- **Předvyplnění:** krok 1 dalšího souboru z téhož programu má rozsah a pravidla z uloženého pravidla a pod rozsahem
+  větu „Předvyplněno podle pravidla uloženého pro soubory z {program} (jde změnit).“ Rozpracované sloučení si nechá
+  své volby.
+- **Hranice:** jen soubor GEDCOM, který uvádí program, jenž ho vytvořil (hlavička souboru, `HEAD.SOUR`), a jen
+  u **Přidat do stromu** a **Jen porovnat**. Strom, výběr a soubor `.json` program neuvádějí; **Nový strom** rozsah ani
+  pravidla nemá.
+- **Ovládání:** krok 5 průvodce; **Nastavení** → **Data a soukromí** → **Uložená pravidla importu**.
+- **Platí od:** aplikace 3.32.0
+
+<!-- zdroj: app:ad0ea45a src/merge/saved-rules.ts sourceProgram (jen ged s program), canRemember (add | compare, ne json), ruleFromChoices (scope, rules.all, rules.kind; ne osoba ani hodnota), applySavedRule, rememberLabel, savedRuleDetail · src/merge/steps/step5-plan.ts:549 (políčko nad tlačítkem, rememberNote) · strings.ts mergeWizard.rememberRules, rememberNote, rememberKinds, prefilledFrom, settings.rulesSetting, rulesSettingHint, rulesRowDetail, rulesRemove, groupData · dirigent:spec/134 K10.4 -->
 
 <a id="A8.7"></a>
 ## A8.7 Krok 2: Kdo je kdo
@@ -230,10 +296,24 @@ vidět a jde zrušit.
   hlavičkou (sloupec „Import · {soubor}“). Příbuzní jsou po řádcích, z dokladů první tři a „a N dalších ▸“ /
   **Sbalit**. Zbytek nerozhodnutých je v patě seznamu; seznam jde složit do úzké lišty (**Skrýt seznam dvojic** /
   **Ukázat seznam dvojic**). Telefon má krok beze změny.
+- **Kde se krok otevře:** když v **Možná stejní** čeká nerozhodnutá dvojice, krok 2 se otevře tam, na první z nich
+  (i po návratu z kroku 1 nebo z pozdějšího kroku a u rozpracovaného sloučení); jinak na skupině ukázané naposled.
+  Skupina přepnutá ručně uvnitř kroku zůstane.
+- **K rozhodnutí N** v počtech (na telefonu řádek počtů) a „· N k rozhodnutí“ pod krokem 2 vedou na první
+  nerozhodnutou dvojici v **Možná stejní** (na telefonu na její záhlaví). Když zbývají jen nenapojené skupiny, vedou
+  do kroku 3. Při 0 a po zápisu nevedou nikam.
+- **Partner spojené osoby:** když je osoba importu spojená a jejich společné děti také, nabídne se její partner
+  z importu v **Možná stejní** s druhým rodičem těch dětí ve stromu, s důvodem „Partner spojené osoby, společné
+  děti“, i při jiném příjmení (rodném × po sňatku). Podmínky: pohlaví se neliší a jedno křestní jméno je stejné
+  (iniciála nebo zkrácený tvar jména jen při podobném příjmení, nebo když je to příjmení partnera po sňatku). Skóre je
+  pod hranicí 80, rozhodne tedy člověk. Slabší dvojice jiné osoby bez takového dokladu (jmenovkyně, švagrová)
+  ustoupí. Manžel potvrzený nebo vybraný ručně v kroku 2 takto přivede i manželku.
+- Dvojice spojená v kroku 4 volbou **Stejná osoba** ([A8.9](#A8.9)) má v kroku 2 důvod „stejná osoba, zvoleno
+  v kroku 4“.
 - **Hranice:** u **Nový strom** se krok přeskočí: všechny osoby jsou nové.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) -->
+<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) · app:e1c98f45 (K10.5: otevření na první nerozhodnuté dvojici Možná stejní, jinak skupina naposled; K rozhodnutí N a · N k rozhodnutí jako tlačítka, jen nenapojené → krok 3, při 0 a po zápisu nic) strings.ts mergeWizard.cntPending, subPending · app:fd66ae63 (K10.6: partner spojené osoby se společnými spojenými dětmi, pod AUTO_CONFIRM_SCORE, pohlaví, jedno křestní jméno, iniciála či zkrácený tvar jen při podobném příjmení nebo příjmení po sňatku; slabší dvojice ustoupí; manžel potvrzený v kroku 2 přivede manželku) strings.ts merge.matchReasons.partner_shared_children · app:d6333eab strings.ts mergeWizard.joinedInStep4 · dirigent:spec/134 K10.5, K10.6 -->
 
 <a id="A8.8"></a>
 ## A8.8 Krok 3: Koho přidat
@@ -271,13 +351,22 @@ Krok 4 rozhodne údaje, které mají spojené osoby jinak. Bez volby člověka p
 - **Chráněné údaje:** údaj ve stromu označený „doloženo“, „potvrzeno“ nebo „z výzkumu“ hromadná volba nezmění; jde
   změnit jen jednotlivě. Přepis doloženého údaje se zeptá **Přepsat doložený údaj?**; po zápisu je údaj „Z rodokmenu“
   a doklad zůstane u osoby jako pramen.
-- **Rozpory vazeb** (jiní rodiče, druhý partner, jiný sňatek, třetí rodič, smyčka předek–potomek) se rozhodují vždy
-  jednotlivě: **Nechat moje**, **Z importu** nebo **Obojí**. Smyčka se nikdy nezapíše.
+- **Rozpory vazeb** (jiní rodiče, druhý partner, jiný sňatek, třetí rodič, smyčka předek–potomek) hromadná volba
+  nerozhodne: **Nechat moje**, **Z importu** nebo **Obojí** se volí u každého řádku. Smyčka se nikdy nezapíše.
+- **Děti jednoho páru:** děti, jejichž rodiče mají tentýž rozpor (třetí rodič, jiní rodiče), jsou jeden řádek
+  s počtem („třetí rodič · 6 dětí“, jména prvních tří a „+3“) a rozhodnou se jednou za všechny. Počet rozporů v kroku
+  počítá řádky.
+- **Stejná osoba:** u třetího rodiče nebo druhého partnera, který je pro strom nový, když na druhé straně stojí jedna
+  osoba stromu, kterou import nezná, je navíc volba **Stejná osoba**. Spojí obě osoby jako rozhodnutí kroku 2 (ručně
+  vybraná dvojice, uloží se se sloučením jako každá jiná). Rozpory, které tím odpadnou, zmizí a počty se přepočtou.
+  Pod rozpory stojí „Spojeno jako stejná osoba: {osoba importu} = {osoba stromu}“ se **Zpět** (vrátí rozhodnutí, které
+  platilo předtím). Nenabízí se u jiného pohlaví, u osoby stromu spojené už s někým jiným, u spojení, které by
+  udělalo smyčku, ani u spojovacího „?“.
 - **Hranice:** u rozsahu **a)** a **b)** se krok přeskočí; když jsou rozpory vazeb, ukáže jen je. U **Nový strom** se
   přeskočí vždy.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step4-rules.ts (relOnly, s4SkippedTitle, protected), src/merge/plan.ts:438 relationConflicts, :534 (scope a), :542 (scope b jen prázdné) · src/merge/wizard-steps.ts step4 (newTree, scope a/b skip) · strings.ts mergeWizard.ruleAll, ruleOrder, rMine, rImport, rBoth, rPrecise, rEach, rDefault, importSays, kinds, protectedLine, protKinds, protTitle, protText, protAfter, relConf, relKinds, relAlways, keepMine, fromImport, both, loopNever, step4Skipped, s4SkippedTitle, relOnly · spec 134 §7, K0.3 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step4-rules.ts (relOnly, s4SkippedTitle, protected), src/merge/plan.ts:438 relationConflicts, :534 (scope a), :542 (scope b jen prázdné) · src/merge/wizard-steps.ts step4 (newTree, scope a/b skip) · strings.ts mergeWizard.ruleAll, ruleOrder, rMine, rImport, rBoth, rPrecise, rEach, rDefault, importSays, kinds, protectedLine, protKinds, protTitle, protText, protAfter, relConf, relKinds, relAlways, keepMine, fromImport, both, loopNever, step4Skipped, s4SkippedTitle, relOnly · spec 134 §7, K0.3 · app:d6333eab (K10.7, K10.8: děti jednoho páru se stejným rozporem jeden řádek, počet řádků; Stejná osoba u třetího rodiče či druhého partnera, spojení jako rozhodnutí kroku 2, Zpět; ne jiné pohlaví, osoba spojená s jiným, smyčka, „?“) strings.ts mergeWizard.relChildren, samePerson, samePersonTitle, joinedSame, undoSame · dirigent:spec/134 K10.7, K10.8 -->
 
 <a id="A8.10"></a>
 ## A8.10 Krok 5: Co se stane a zápis
@@ -286,7 +375,8 @@ Krok 5 ukáže celý výčet změn po skupinách. Zapíše se až jeho tlačítk
 
 - **Výčet:** **Noví**, **Spojení**, **Změny údajů**, **Doplněné údaje**, **Spojené prameny**, **Páry a vazby**,
   **Prameny**, **Místa**, **Fotky a soubory**, **Nepřidaní** (u každé osoby proč: krok a volba) a **Strom
-  nepřevezme**. Položku jde odškrtnout. **Uložit výčet…** ho uloží do souboru.
+  nepřevezme**. Položku jde odškrtnout. **Uložit výčet…** ho uloží jako text (`.txt`) a jako data (`.json`); text
+  končí počty slovy („Spojení 40 · Noví 5 · Nepřidaní 0 · K rozhodnutí 0 · = 45 osob importu“).
 - **Doplněné údaje** (jen když nějaké jsou): prázdné údaje spojených osob, které zápis doplní, po řádcích osoba ·
   údaj (e-mail, další tvary jména, události, prameny, otevřená otázka…).
 - **Spojené prameny:** pramen zdroje se spojí jen se stejným pramenem cílového stromu (stejné číslo výzkumu, citace,
@@ -308,13 +398,16 @@ Krok 5 ukáže celý výčet změn po skupinách. Zapíše se až jeho tlačítk
   kontrolují součty a odkazy; když nesedí: „Součty nesedí: nic se neuložilo.“ Zavřít okno během zápisu nic
   nerozbije: zápis se dokončí, nebo se nezapíše nic.
 - Zápis je jeden krok **Zpět**.
-- **Hranice:** u **Jen porovnat** se nezapíše nic; výčet jde uložit. Kontrola nepočítá do **Změny údajů** prázdné
-  údaje doplněné rozsahem **b)**.
+- **Zapamatovat pravidla:** u souboru GEDCOM, který uvádí svůj program, stojí nad tlačítkem „Zapamatovat pro
+  soubory z {program}: …“ ([A8.6.1](#A8.6.1)).
+- **Hranice:** u **Jen porovnat** je hlavní tlačítko **Uložit výčet…**: uloží výčet a průvodce zavře. Nezapíše se nic:
+  strom, zálohy ani soubory zůstanou, jak byly, a plán porovnání aplikace k zápisu nepustí. Kontrola nepočítá do
+  **Změny údajů** prázdné údaje doplněné rozsahem **b)**.
 - **Ovládání:** tlačítko „Přidat N osob, změnit M údajů“, s doplněnými údaji „…, doplnit F“, u nového stromu
   „Vytvořit strom s N osobami“.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto -->
+<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto · app:fcddfcab (K10.1) src/merge/write.ts (plán compare se nezapíše), src/merge/plan-export.ts exportPlan (počty slovy cntTotal), src/merge/ui.ts savePlan (.txt a .json), src/merge/wizard-ui.ts primary (compare: savePlan, finishCompare) · app:ad0ea45a step5-plan.ts merge-s5-remember -->
 
 <a id="A8.11"></a>
 ## A8.11 Krok 6: Co se stalo a Historie sloučení

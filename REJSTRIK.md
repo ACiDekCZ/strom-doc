@@ -828,6 +828,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A1.7](cs/A1-the-app-in-brief.md#A1.7), R1.8
 
+<a id="only-compare"></a>
+### Jen porovnat
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Jen porovnat (app) | Režim průvodce sloučením, který jen ukáže, co by sloučení udělalo. Nezapíše nic do stromu, záloh ani souborů; výčet jde uložit (**Uložit výčet…**). |
+| en | Only compare (app) | A mode of the merge guide that only shows what a merge would do. It writes nothing into the tree, its backups or files; the list can be saved (**Save the list…**). |
+| de | Nur vergleichen (app) | Ein Modus des Assistenten zum Zusammenführen, der nur zeigt, was das Zusammenführen täte. Er schreibt nichts in den Stammbaum, die Sicherungen oder Dateien; die Liste lässt sich speichern (**Liste speichern…**). |
+| pl | Tylko porównaj (app) | Tryb kreatora scalania, który tylko pokazuje, co zrobiłoby scalenie. Nie zapisuje nic do drzewa, kopii zapasowych ani plików; zestawienie można zapisać (**Zapisz zestawienie…**). |
+
+- **Čísla:** [A8.6](cs/A8-merging-trees.md#A8.6), A8.10
+
 <a id="to-check"></a>
 ### K ověření
 
@@ -1079,6 +1091,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Pozostawić bez zmian | Słowo człowieka, że czekanie zadania jest właściwe tak, jak jest. Ustalenie nie jest potem proponowane, dopóki czekanie się nie zmieni. Może je dać tylko człowiek, nie agent. |
 
 - **Čísla:** [R6.9.1](cs/R6-awaiting-action.md#R6.9.1), [S4.4.8](cs/S4-research-from-the-app.md#S4.4.8)
+
+<a id="most-helpful"></a>
+### Nejvíc pomůže
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Nejvíc pomůže (app) · `strom task list --state waiting --order gain` | Pořadí položek, které čekají na vyřízení, podle toho, o kolik jejich vyřízení rozšíří rodokmen: nová generace, přímá linie, uvolněné úkoly. Důvod stojí pod řádkem. |
+| en | Most helpful (app) · `strom task list --state waiting --order gain` | An order of the things awaiting action by how much dealing with them grows the family tree: a new generation, the direct line, the tasks freed. The reason stands under the row. |
+| de | Am hilfreichsten (app) · `strom task list --state waiting --order gain` | Eine Reihenfolge der wartenden Dinge danach, wie sehr ihre Erledigung den Stammbaum erweitert: eine neue Generation, die direkte Linie, freigegebene Aufgaben. Der Grund steht unter der Zeile. |
+| pl | Najbardziej pomocne (app) · `strom task list --state waiting --order gain` | Kolejność spraw czekających na załatwienie według tego, jak bardzo ich załatwienie rozszerzy drzewo: nowe pokolenie, linia prosta, uwolnione zadania. Powód stoi pod wierszem. |
+
+- **Čísla:** [R6.4.1](cs/R6-awaiting-action.md#R6.4.1), S4.4.3
 
 <a id="not-an-error"></a>
 ### Není chyba
@@ -1450,7 +1474,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Mit dem Agenten sortieren… (app) · `strom material sort` | Der Agent der Forschung schlägt zu Dateien Titel, Datum, Art und Verknüpfungen mit Begründung vor. Nichts wird geschrieben, bevor ein Mensch den Vorschlag annimmt; Titel und Verknüpfungen von Menschen ändert der Agent nicht. |
 | pl | Uporządkuj agentem… (app) · `strom material sort` | Agent badania proponuje dla plików tytuł, datę, rodzaj i połączenia z uzasadnieniem. Nic się nie zapisze, dopóki człowiek nie przyjmie propozycji; tytułów i połączeń nadanych przez człowieka agent nie zmienia. |
 
-- **Čísla:** [A3.5.8](cs/A3-evidence-in-the-app.md#A3.5.8), A3.5.10–A3.5.13, R11.5.3, R11.5.5
+- **Čísla:** [A3.5.8](cs/A3-evidence-in-the-app.md#A3.5.8), A3.5.10–A3.5.13, R11.5.3, R11.5.5, S4.4.13
 
 <a id="census-records"></a>
 ### Sčítání lidu
@@ -1462,7 +1486,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Volkszählungen | Eine Quelle, die einen Haushalt in einem Jahr festhält: wer im Haus wohnte, das Verhältnis zum Haushaltsvorstand, Alter, oft Geburtsort und Beruf. Die Forschung nutzt sie nur, wenn ein Mensch sie einschaltet; ausgeschaltet werden Volkszählungsaufgaben zurückgestellt. Ein Haushalt ist ein gemeinsames Ereignis. |
 | pl | Spisy ludności | Źródło zapisujące jedno gospodarstwo domowe w jednym roku: kto mieszkał w domu, pokrewieństwo z głową gospodarstwa, wiek, często miejsce urodzenia i zawód. Badanie używa go tylko wtedy, gdy człowiek je włączy; po wyłączeniu zadania spisu są odłożone. Gospodarstwo domowe to jedno wspólne wydarzenie. |
 
-- **Čísla:** [R9.12](cs/R9-archives.md#R9.12), R9.12.1, R9.12.2, R9.12.3, R9.12.4, S4.2.4, S4.4.10
+- **Čísla:** [R9.12](cs/R9-archives.md#R9.12), R9.12.1, R9.12.2, R9.12.3, R9.12.4, S4.2.4, S4.4.10, A10.7, S2.7.1
 
 <a id="task-hold"></a>
 ### Úkol drží sezení · omezený archiv
@@ -1546,7 +1570,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Stammbäume zusammenführen · Stammbaum importieren · Empfangene Änderungen | Der Assistent in sechs Schritten, durch den ab App 3.32.0 jedes Zusammenführen geht: eine GEDCOM-Datei, ein anderer Stammbaum, eine Ansicht oder empfangene Änderungen in einen gewählten Stammbaum oder in einen neuen. Er schreibt nichts ohne die Sicherung **Vor dem Zusammenführen** und ohne Prüfung der Summen; jede Person des Imports landet genau einmal. |
 | pl | Scalanie drzew · Import drzewa · Otrzymane zmiany | Kreator w sześciu krokach, przez który od aplikacji 3.32.0 przechodzi każde scalenie: plik GEDCOM, inne drzewo, widok lub otrzymane zmiany do wybranego drzewa albo do nowego. Nie zapisze nic bez kopii **Przed scaleniem** i bez sprawdzenia sum; każda osoba importu trafia dokładnie raz. |
 
-- **Čísla:** [A8.5](cs/A8-merging-trees.md#A8.5), A8.6, A8.7, A8.8, A8.9, A8.10, A8.11, S6.7
+- **Čísla:** [A8.5](cs/A8-merging-trees.md#A8.5), A8.5.1, A8.6, A8.6.1, A8.7, A8.8, A8.9, A8.10, A8.11, A14.5, S6.7
 
 <a id="merge-with-existing"></a>
 ### Sloučit s existujícím
@@ -1740,6 +1764,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A6.7](cs/A6-views.md#A6.7), A6.7.1, A6.7.2, A6.7.3, A6.7.4, A6.7.5, A6.7.6, A6.7.7, A6.7.8, A6.7.9, A6.7.10, A6.7.11, A6.7.12, A6.7.13, A6.7.14, A6.7.15, A6.7.16, A6.7.17, A6.7.18, A6.7.19, A6.7.20
 
+<a id="sort-without-asking"></a>
+### Třídit agentem bez ptaní
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Třídit agentem bez ptaní (app) · `sort.confirm no` | Nastavení výzkumu, se kterým třídění materiálu agentem neříká cenu před každým tříděním; spustí se dál jen na požádání. Zapnout ho jde jen v terminálu výzkumu, vypnout i v aplikaci. |
+| en | Sort with the agent without asking (app) · `sort.confirm no` | A setting of the research with which sorting material with the agent does not say the cost before each sorting; it still starts only when asked. It can be switched on only in the research terminal, switched off in the app too. |
+| de | Mit dem Agenten sortieren ohne Nachfrage (app) · `sort.confirm no` | Eine Einstellung der Forschung, mit der das Sortieren von Material mit dem Agenten die Kosten nicht vor jedem Sortieren nennt; es startet weiterhin nur auf Anforderung. Einschalten lässt es sich nur im Terminal der Forschung, ausschalten auch in der App. |
+| pl | Porządkowanie agentem bez pytania (app) · `sort.confirm no` | Ustawienie badania, z którym porządkowanie materiałów agentem nie podaje kosztu przed każdym porządkowaniem; nadal startuje tylko na żądanie. Włączyć je można tylko w terminalu badania, wyłączyć także w aplikacji. |
+
+- **Čísla:** [S4.4.13](cs/S4-research-from-the-app.md#S4.4.13), R11.5.3, A3.5.8
+
 <a id="surname-spellings"></a>
 ### Tvary příjmení
 
@@ -1775,6 +1811,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | osoba w centrum | Osoba, wokół której widok pokazuje otoczenie; zmienia się kliknięciem karty. Widok nie pokazuje całego drzewa, tylko otoczenie tej osoby. |
 
 - **Čísla:** [A6.1](cs/A6-views.md#A6.1), A1.3, A6.1.1, A6.1.6, A6.6
+
+<a id="saved-import-rules"></a>
+### Uložená pravidla importu
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Uložená pravidla importu (app) | Volby kroku 1 průvodce sloučením zapamatované pro soubory GEDCOM jednoho programu (rozsah a co platí). Další soubor z téhož programu začne s nimi; jsou v nastavení zařízení. |
+| en | Saved import rules (app) | The choices of step 1 of the merge guide remembered for the GEDCOM files of one program (the scope and what counts). The next file from that program starts with them; they are in the device settings. |
+| de | Gespeicherte Importregeln (app) | Die Wahl aus Schritt 1 des Assistenten zum Zusammenführen, gemerkt für GEDCOM-Dateien eines Programms (Umfang und was gilt). Die nächste Datei aus diesem Programm beginnt damit; sie stehen in den Einstellungen des Geräts. |
+| pl | Zapisane reguły importu (app) | Wybory z kroku 1 kreatora scalania zapamiętane dla plików GEDCOM jednego programu (zakres i co obowiązuje). Następny plik z tego programu zaczyna z nimi; są w ustawieniach urządzenia. |
+
+- **Čísla:** [A8.6.1](cs/A8-merging-trees.md#A8.6.1)
 
 <a id="duplicate-verdict"></a>
 ### Verdikt výzkumu u duplicity

@@ -15,8 +15,13 @@ Seznam se pokaždé spočítá z výzkumu, nic se do něj nezapisuje.
 - **Ovládání:** aplikace: oddíl **Čeká na vyřízení** · terminál: menu **Co čeká (n)**, stavový řádek **Čeká: N** ·
   stránka pro telefon: **Co čeká · N**.
 - **Platí od:** výzkum 1.3.0. Seznam po místech vyřízení a v aplikaci od 1.14.0 (aplikace 3.11.0).
+- **Od výzkumu 1.37.0:** snímky, které ukládá prohlížeč agenta ([R9.5](R9-archives.md#R9.5)), jsou práce agenta.
+  Dokud je sezení agenta ukládá, úkol v seznamu není, ani v počtech, štítcích a oznámeních; aplikace Strom ho ukáže
+  jako práci („agent ukládá snímky (k z n)“, [S4.1](S4-research-from-the-app.md#S4.1)). Na člověka čeká jen snímek,
+  který prohlížeč zadržel, a ukládání, jehož sezení skončilo uprostřed ([R6.2.1](#R6.2.1)). Dřív zapsaná čekání se tak
+  ukážou samy.
 
-<!-- zdroj: research:src/core/waiting.ts:1-12, waitingFor :303-460 (filtr :321), actsAsArchive (v1.15.0) · src/cli/menu.ts:234, :379 · CHANGELOG.cs.md 1.14.0 · app:src/ui/research-overview-ui.ts research.waiting -->
+<!-- zdroj: research:src/core/waiting.ts:1-12, waitingFor :303-460 (filtr :321), actsAsArchive (v1.15.0) · src/cli/menu.ts:234, :379 · CHANGELOG.cs.md 1.14.0 · app:src/ui/research-overview-ui.ts research.waiting · 1.37.0: research:81de7cdb src/core/waiting.ts savedByAgentNow (ne ve waitingFor ani v počtech; zadržený snímek a sezení, které už úkol nedrží, čekají na člověka), src/core/ownsave.ts agentSaveWait · aae8f1aa src/cli/menu-waiting.ts (terminál Co čeká bez snímků, které ukládá agent) · 1c8a4380 (vlastní čekání agenta na snímek je hned člověka) -->
 
 <a id="R6.1.1"></a>
 ### R6.1.1 Počet a co je jen v terminálu
@@ -64,9 +69,17 @@ určuje oddíl, skupinu a možné akce: **snímky**, **ověřit web**, **svolen�
   ([S4.4.7](S4-research-from-the-app.md#S4.4.7)).
 - **Od výzkumu 1.35.0:** čekání na snímky zapsané jinak (snímky jen ve slovech, víc knih, kniha, kterou výzkum
   nemá) `strom task wait` nezapíše a `strom task audit` takové úkoly najde a opraví ([R6.9](#R6.9)).
+- **Od výzkumu 1.37.0:** soubor, ze kterého nejde poznat číslo snímku (`000.jpg`), ostatní snímky nezdrží: zůstane
+  ležet a ohlásí se jednou. Soubory pojmenované jinak (podle aktů, `001-004.jpg`) se převezmou v pořadí složky, když se
+  20 minut nic dalšího neuloží; úkol, ke kterému přišla jen část snímků, se po stejné době vrátí s tím, co přišlo a co
+  chybí ([R9.6](R9-archives.md#R9.6)).
+- **Od výzkumu 1.37.0:** čekání na snímky, které ukládá prohlížeč agenta, říká člověku jen dvě věci: snímek zadržený
+  prohlížečem („v prohlížeči povolit stahování více souborů z webu …“) a ukládání zastavené koncem sezení („ukládání
+  přes prohlížeč agenta zastaveno na snímku 12 knihy B0003 …: sezení agenta skončilo – pokračuje v něm příští sezení;
+  nebo snímky 12-15 uložit ručně z … do složky úkolu“). Platí to i pro čekání zapsaná starším výzkumem.
 - **Platí od:** výzkum 1.0.0. Probuzení po uložení od 1.15.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
+<!-- zdroj: research:62e335eb, 6fee0f71 src/core/inboxwait.ts (000.jpg jednou, pořadí složky po 20 min, částečný příchod) · 81de7cdb src/core/waiting.ts waitOnNow, ownSaveSaid (browser.wait.held, browser.wait.stopped) · src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
 
 <a id="R6.2.2"></a>
 ### R6.2.2 Ověřit web
@@ -179,8 +192,33 @@ skupiny drží pohromadě na místě své první položky, aby šly vyřídit je
 - **Platí od:** výzkum 1.14.0
 - **Od výzkumu 1.35.0:** výzkum u položky posílá i její knihu. Aplikace 3.30.0 umí položky seskupit podle knihy
   ([S4.4.4](S4-research-from-the-app.md#S4.4.4)); v **Co čeká** je přehled knih s nejvíc úkoly ([R6.8](#R6.8)).
+- **Od výzkumu 1.37.0:** u položky, za kterou stojí úkoly, posílá i to, kolik její vyřízení pomůže ([R6.4.1](#R6.4.1)).
 
 <!-- zdroj: research:src/core/waiting.ts:73 SECTION_RANK, :75 DECIDE_RANK, :468 together, :478-492 ordered · src/core/waitkind.ts:238 waitGroupOf · assets/lang/cs.json:2313-2320 wait.group.* (:2359) · src/cli/menu-waiting.ts:205-232 · app:strings.ts:11958 waitingFilterLabel -->
+
+<a id="R6.4.1"></a>
+### R6.4.1 Co nejvíc pomůže
+
+Ke každé položce, za kterou stojí úkoly, výzkum spočítá, jak moc její vyřízení rozšíří rodokmen, a pár slovy řekne
+proč. Cena stažení se nevažuje; počítá se jen, o kolik strom vyroste. Nic se nečte, neposílá ani nezapisuje.
+
+- **Skóre:** součet částí:
+  - **nová generace** (+50): osoba, které se položka týká, stojí na okraji stromu bez obou rodičů nebo jednoho z nich
+    a výzkum k ní míří (v rozsahu linie, ne za její mezí, ne u pozastavené, hotové nebo pravděpodobně žijící osoby,
+    ne u rodiče, který jen není doložený). Část jmenuje jednu takovou osobu: nejvyšší generaci v linii, pak nejnižší ID;
+  - **přímá linie** (+30): osoba, které se položka týká, je předek lidí, pro které výzkum je;
+  - **úkoly** (+10 za každý, nejvýš 10): úkoly, které vyřízení uvolní – vlastní a každý otevřený nebo odložený úkol,
+    který potřebuje knihu některého z nich. Jiné čekající úkoly téže knihy se nepočítají; každý je svou položkou.
+    Řekne se až od dvou úkolů.
+- **Důvod:** části v jazyce výzkumu spojené „ · “: „nová generace: rodiče osoby Jan Horák“ (nebo „otec osoby …“,
+  „matka osoby …“), „přímá linie“, „odblokuje 3 úkoly“. Položka s jedním úkolem a nic dalšího má skóre bez důvodu.
+- **Hranice:** položky bez úkolů (příběhy, odeslání, rozpory, místa, větve, hypotézy, nová znění přepisu) a položky se
+  skóre 0 skóre nemají. Počítá se jednou za celé **Co čeká**.
+- **Ovládání:** aplikace: pořadí **Nejvíc pomůže** v **Čeká na vyřízení** ([S4.4.3](S4-research-from-the-app.md#S4.4.3)).
+  Terminál: `strom task list --state waiting --order gain` (jen se `--state waiting`, bez `--book` a `--off-tree`).
+- **Platí od:** výzkum 1.37.0 (aplikace 3.32.0)
+
+<!-- zdroj: research:44d3f750 src/core/waitgain.ts GAIN_POINTS (generation 50, line 30, task 10), UNBLOCKS_MAX 10, waitGains (edgeReach scope in, ne proof; kinship 0; bookOfTask, bookTasks open + parked; část unblocks od n ≥ 2; bez skóre 0), gainSays · src/core/waiting.ts (gain), src/core/live.ts waiting[].gain, feature waiting.gain · src/commands/tasks.ts task list --order gain (task.order) · assets/lang/cs.json wait.gain.* · CHANGELOG.cs.md 1.37.0 „Co nejvíc pomůže“ · dirigent:spec/105 K4.1 -->
 
 <a id="R6.5"></a>
 ## R6.5 Co jde vyřídit kde

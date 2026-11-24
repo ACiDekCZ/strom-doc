@@ -50,6 +50,10 @@ z rejstříku stromů; data stromu se kvůli nim nečtou.
   5. **Skrýt strom** / **Zobrazit strom**, **Zamknout strom** / **Odemknout strom**;
   6. **Smazat strom…**.
 - Pata okna: **Exportovat vše**, **Nový strom**, **Zavřít**. Od 6 stromů je nad seznamem pole **Hledat strom…**.
+- **Puštění na řádek:** soubor GEDCOM nebo strom Strom (`.json`) puštěný na řádek stromu otevře průvodce sloučením
+  s tímto stromem jako cílem; řádek stromu přetažený myší na jiný řádek ho do toho stromu sloučí přes průvodce.
+  Řádek pod taženým souborem je čárkovaně orámovaný a říká „Pustit: přidat {soubor} do stromu {strom}“
+  ([A8.5.1](A8-merging-trees.md#A8.5.1)).
 - **Hranice:**
   - zamčený strom má v ⋯ jen čtení a **Odemknout**; strom uložený novější verzí aplikace jen čtení;
   - **Duplikovat**, **Sloučit do jiného stromu…**, **Rozdělit** a **Oddělit nespojené části** v ⋯ nejsou; jsou
@@ -60,7 +64,7 @@ z rejstříku stromů; data stromu se kvůli nim nečtou.
   → **Správa stromů ›**.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:3110125c src/ui/tree-management.ts renderTreeManagerList (stats z indexu, badges, canStructure, pendingRow, mergeFacts subPending 134 S-P2, pendingOrphans, targetGone, searchable ≥ 6) · fbd97361 src/tree-row.ts treeOriginLine (research → copy → fromTree → importedFrom → none) · src/ui/tree-actions.ts treeActionGroups (overview, research, settings, structure, manage, delete, trees; manageTrees jen mimo správu) · 7b967fd8 strings.ts treeManager.imagesShared, imagesSharedTip (134 S-P1) · bcb2a0fa (kopie s vypnutým přepínačem, ◎ Sleduje se živě, zápis stojí) · strings.ts structure.research, followed, writeStopped, fromTree, fromGedcom, fromFile, mergeHistory, pendingRow, savedAt, pendingOrphans, targetGone, treeManager.* -->
+<!-- zdroj: app:3110125c src/ui/tree-management.ts renderTreeManagerList (stats z indexu, badges, canStructure, pendingRow, mergeFacts subPending 134 S-P2, pendingOrphans, targetGone, searchable ≥ 6) · fbd97361 src/tree-row.ts treeOriginLine (research → copy → fromTree → importedFrom → none) · src/ui/tree-actions.ts treeActionGroups (overview, research, settings, structure, manage, delete, trees; manageTrees jen mimo správu) · 7b967fd8 strings.ts treeManager.imagesShared, imagesSharedTip (134 S-P1) · bcb2a0fa (kopie s vypnutým přepínačem, ◎ Sleduje se živě, zápis stojí) · strings.ts structure.research, followed, writeStopped, fromTree, fromGedcom, fromFile, mergeHistory, pendingRow, savedAt, pendingOrphans, targetGone, treeManager.* · app:73ee4625 src/tree-drop.ts, src/ui/tree-management.ts (puštění na řádek) · strings.ts mergeWizard.dropOnTree -->
 
 <a id="A14.2"></a>
 ## A14.2 Změnit strukturu…
@@ -76,6 +80,7 @@ který strom se změní.“
 | **Rozdělit** | **Na rodiny…** | podle rodů, větví nebo pohledu osoby vzniknou nové stromy ([A14.4](#A14.4)) |
 | | **Oddělit nespojené části…** | z částí, které nic nespojuje, vzniknou nové stromy ([A14.4](#A14.4)) |
 | **Spojit** | **Výběr nebo celý strom do jiného stromu…** | přes průvodce sloučením; změní se cílový strom, jde vrátit ([A14.5](#A14.5)) |
+| | **Z jiného stromu do tohoto stromu…** | jiný strom aplikace přes průvodce sloučením; změní se tento strom, jde vrátit ([A14.5](#A14.5)) |
 | | **Přidat ze souboru do tohoto stromu…** | GEDCOM nebo soubor Strom (JSON) přes průvodce sloučením; změní se tento strom, jde vrátit ([A14.5](#A14.5)) |
 
 Nový strom, kopie i rozdělení původní strom nemění.
@@ -88,7 +93,11 @@ Nový strom, kopie i rozdělení původní strom nemění.
   - **Výběr nebo celý strom do jiného stromu…**, když jiný strom není: „Není jiný strom.“ Cíl, do kterého teď
     zapisovat nejde, volbu nezašedí: proč, řekne průvodce sloučením ([A8.5](A8-merging-trees.md#A8.5));
   - **Přidat ze souboru…** u stromu sledovaného živě: „Strom se sleduje živě, zapisovat do něj teď nejde.“
-    s odkazem **Ukončit sledování**.
+    s odkazem **Ukončit sledování**;
+  - **Z jiného stromu do tohoto stromu…**, první důvod, který platí: „Není jiný strom.“ → „Po otevření stromu.“ →
+    „Strom se sleduje živě, zapisovat do něj teď nejde.“ s odkazem **Ukončit sledování**.
+- Všechny volby jsou vidět bez posouvání na obrazovce notebooku 1366 × 657 i 1024 × 768, i se šedými volbami
+  a důvody pod nimi. Kde je pod okrajem okna ještě něco, spodek okna se rozplyne.
 - **Hranice:** zamčený strom a strom jen ke čtení okno nemají (položka chybí). Na volbách má okno **Zavřít**, na
   dalších krocích **Zpět** · **Zrušit** a tlačítko kroku; otevřené ze Správy stromů se do ní vrátí.
 - **Ovládání:** **Akce › Strom › Změnit strukturu…**; Správa stromů, tlačítko **Změnit strukturu…** v řádku stromu
@@ -96,7 +105,7 @@ Nový strom, kopie i rozdělení původní strom nemění.
   volbami.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:a9bc0b6b src/structure-options.ts (OPTIONS, STRUCTURE_GROUPS, blocked: select notOpen, parts connected, into noOther, file notOpen/followed+stopFollowing; readOnly bez dialogu), src/ui/structure-ui.ts structureOptionRow (důvod pod volbou, Ukončit sledování), structureOpenTree, structureRunOption, arrowKeys · defe53b4 (Zavřít na volbách, Zpět · Zrušit · primární na krocích) · 45d5be44 (telefon) · strings.ts structure.intro, group.*, opt*, why*, openTree, research.stop -->
+<!-- zdroj: app:a9bc0b6b src/structure-options.ts (OPTIONS, STRUCTURE_GROUPS, blocked: select notOpen, parts connected, into noOther, file notOpen/followed+stopFollowing; readOnly bez dialogu), src/ui/structure-ui.ts structureOptionRow (důvod pod volbou, Ukončit sledování), structureOpenTree, structureRunOption, arrowKeys · defe53b4 (Zavřít na volbách, Zpět · Zrušit · primární na krocích) · 45d5be44 (telefon) · strings.ts structure.intro, group.*, opt*, why*, openTree, research.stop · app:5e85dfc1 src/structure-options.ts (from: noOther → notOpen → followed + stopFollowing) · fef250eb, f4050b1c (všechny volby bez posouvání do 1366 × 657 a 1024 × 768, rozplynutí spodku okna) · dirigent:spec/139 K3.2, K3.3 -->
 
 <a id="A14.3"></a>
 ## A14.3 Nový strom z výběru a kopie celého stromu
@@ -180,14 +189,22 @@ Zapíše se až po potvrzení v průvodci a jde vrátit ([A8.12](A8-merging-tree
     9 osob.“ Import se v průvodci jmenuje „{strom} — {co}“.
 
   **Pokračovat k průvodci** otevře průvodce, kde se vybere cílový strom. Tento strom se nemění.
+- **Z jiného stromu do tohoto stromu…** otevře **Přidat z jiného stromu**, krok „z kterého stromu“: „Který strom
+  přidat do tohoto stromu. Vybírá se celý; zúžit ho jde v prvním kroku průvodce.“ Nabízí všechny ostatní stromy
+  aplikace podle abecedy, i skryté a kopie, každý s „N osob · řádek původu · Skrytý“ ([A14.1](#A14.1)). **Pokračovat
+  k průvodci** otevře průvodce sloučením s vybraným celým stromem jako importem a tímto stromem jako cílem
+  ([A8.5](A8-merging-trees.md#A8.5)). Vybraný strom se nemění; tento strom se změní až po potvrzení v průvodci
+  a sloučení jde vrátit (**Zpět** v oznámení, **Historie sloučení**). Dlouhý název bez mezer se na telefonu zalomí
+  v řádku.
 - **Přidat ze souboru do tohoto stromu…:** **Soubor GEDCOM (.ged)** (z jiného programu: MyHeritage, Geni, Ancestry,
   Gramps…) nebo **Soubor Strom (.json)** (export ze Stromu, třeba od příbuzného). Po výběru souboru se otevře
   průvodce sloučením s tímto stromem jako cílem. Do stromu se nic nezapíše, dokud to průvodce nepotvrdí.
 - **Hranice:** když teď žádný strom sloučení vzít nemůže, okno Změnit strukturu zůstane a průvodce řekne proč.
-  Přidat ze souboru jde jen do otevřeného stromu, který není sledovaný živě. Co se po sloučení pošle do výzkumu,
+  Přidat ze souboru a z jiného stromu jde jen do otevřeného stromu, který není sledovaný živě. Co se po sloučení pošle do výzkumu,
   řeší [A8.13](A8-merging-trees.md#A8.13).
-- **Ovládání:** **Změnit strukturu…** › **Výběr nebo celý strom do jiného stromu…**, **Přidat ze souboru do tohoto
-  stromu…**
+- **Ovládání:** **Změnit strukturu…** › **Výběr nebo celý strom do jiného stromu…**, **Z jiného stromu do tohoto
+  stromu…**, **Přidat ze souboru do tohoto stromu…**; soubor nebo řádek stromu puštěný na řádek Správy stromů
+  ([A8.5.1](A8-merging-trees.md#A8.5.1))
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:f0c5a3fb src/ui/structure-ui.ts structureJoinWhatStep, structureJoin (whole → showMergeTreesDialog, selection → structureWhoStep mode join → mergeSubsetInto „{strom} — {co}“), structureFileStep (startGedcomImportPlain, startJsonImportIntoTree) · 29d02a8c joinPartners · strings.ts structure.joinTitle, joinWhatIntro, joinWhole, joinWholeDesc, joinSelection, joinSelectionDesc, joinNote, continueGuide, joinPartners, fileTitle, fileGed*, fileJson*, fileNote -->
+<!-- zdroj: app:f0c5a3fb src/ui/structure-ui.ts structureJoinWhatStep, structureJoin (whole → showMergeTreesDialog, selection → structureWhoStep mode join → mergeSubsetInto „{strom} — {co}“), structureFileStep (startGedcomImportPlain, startJsonImportIntoTree) · 29d02a8c joinPartners · strings.ts structure.joinTitle, joinWhatIntro, joinWhole, joinWholeDesc, joinSelection, joinSelectionDesc, joinNote, continueGuide, joinPartners, fileTitle, fileGed*, fileJson*, fileNote · app:5e85dfc1 src/ui/structure-ui.ts (from: ostatní stromy podle abecedy, persons · treeOriginText · hiddenBadge; celý strom jako import, otevřený strom cíl) · fef250eb (dlouhý název na telefonu) · strings.ts structure.optFrom, optFromDesc, fromTitle, fromStep, fromIntro, fromNote · dirigent:spec/139 K3.2 -->

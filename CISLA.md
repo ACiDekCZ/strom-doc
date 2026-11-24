@@ -100,6 +100,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R6.3.3 | R6-awaiting-action.md | výzkum 1.26.0 | platí | Větve mimo linie | Branches off the lines | Zweige außerhalb der Linien | Gałęzie poza liniami |
 | R6.3.4 | R6-awaiting-action.md | výzkum 1.28.0 | platí | Hypotézy k rozhodnutí | Hypotheses to decide | Hypothesen zu entscheiden | Hipotezy do rozstrzygnięcia |
 | R6.4 | R6-awaiting-action.md | výzkum 1.14.0 | platí | Skupiny a pořadí | Groups and order | Gruppen und Reihenfolge | Grupy i kolejność |
+| R6.4.1 | R6-awaiting-action.md | výzkum 1.37.0 | platí | Co nejvíc pomůže | What helps most | Was am meisten hilft | Co najbardziej pomoże |
 | R6.5 | R6-awaiting-action.md | výzkum 1.14.0 | platí | Co jde vyřídit kde | What can be dealt with where | Was sich wo erledigen lässt | Co można załatwić gdzie |
 | R6.6 | R6-awaiting-action.md | výzkum 1.14.0 | platí | Co smí jen člověk | What only a person may do | Was nur der Mensch darf | Co może tylko człowiek |
 | R6.7 | R6-awaiting-action.md | výzkum 1.14.0 | platí | Odesláno, odpověď a návrat do fronty | Sent, the answer and the return to the queue | Gesendet, Antwort und Rückkehr in die Warteschlange | Wysłano, odpowiedź i powrót do kolejki |
@@ -407,7 +408,9 @@ nenapsáno) · `neplatí od <verze>`.
 | A8.3 | A8-merging-trees.md | aplikace 1.0.0 | platí | Co rozhoduje člověk | What a person decides | Was der Mensch entscheidet | Co rozstrzyga człowiek |
 | A8.4 | A8-merging-trees.md | aplikace 1.0.0 | platí | Co se přenese se stromem | What comes along with the tree | Was mit dem Stammbaum übernommen wird | Co przechodzi z drzewem |
 | A8.5 | A8-merging-trees.md | aplikace 3.32.0 | platí | Průvodce Sloučení stromů | The Merge trees guide | Der Assistent Stammbäume zusammenführen | Kreator Scalanie drzew |
+| A8.5.1 | A8-merging-trees.md | aplikace 3.32.0 | platí | Soubor nebo strom puštěný myší | A file or tree dropped with the mouse | Eine mit der Maus abgelegte Datei oder ein Stammbaum | Plik lub drzewo upuszczone myszą |
 | A8.6 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 1: Co s tím | Step 1: What to do | Schritt 1: Was damit | Krok 1: Co z tym |
+| A8.6.1 | A8-merging-trees.md | aplikace 3.32.0 | platí | Pravidla pro soubory jednoho programu | Rules for the files of one program | Regeln für die Dateien eines Programms | Reguły dla plików jednego programu |
 | A8.7 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 2: Kdo je kdo | Step 2: Who is who | Schritt 2: Wer ist wer | Krok 2: Kto jest kim |
 | A8.8 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 3: Koho přidat | Step 3: Whom to add | Schritt 3: Wen hinzufügen | Krok 3: Kogo dodać |
 | A8.9 | A8-merging-trees.md | aplikace 3.32.0 | platí | Krok 4: Kdo má pravdu | Step 4: Who is right | Schritt 4: Wer hat recht | Krok 4: Kto ma rację |
@@ -555,6 +558,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S4.4.10 | S4-research-from-the-app.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Výzkum u stromu › Sčítání lidu | Research for this tree › Census records | Forschung für diesen Stammbaum › Volkszählungen | Badanie dla drzewa › Spisy ludności |
 | S4.4.11 | S4-research-from-the-app.md | výzkum 1.36.0, aplikace 3.31.0 | platí | Výzkum u stromu › Materiály: soubory projde agent sám | Research for this tree › Materials: the agent goes through files by itself | Forschung für diesen Stammbaum › Materialien: Dateien geht der Agent selbst durch | Badanie dla drzewa › Materiały: pliki agent przejrzy sam |
 | S4.4.12 | S4-research-from-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Výzkum u stromu › Nejvýš agentů najednou | Research for this tree › Agents at once, at most | Forschung für diesen Stammbaum › Agenten gleichzeitig höchstens | Badanie dla drzewa › Najwyżej agentów naraz |
+| S4.4.13 | S4-research-from-the-app.md | aplikace 3.32.0, výzkum 1.37.0 | platí | Výzkum u stromu › Materiály: třídit agentem bez ptaní | Research for this tree › Materials: sort with the agent without asking | Forschung für diesen Stammbaum › Materialien: mit dem Agenten sortieren ohne Nachfrage | Badanie dla drzewa › Materiały: porządkowanie agentem bez pytania |
 | S4.5 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Akce, které otevřou výzkum | Actions that open the research | Aktionen, die die Forschung öffnen | Działania, które otwierają badanie |
 | S4.5.1 | S4-research-from-the-app.md | aplikace 3.21.0 | platí | Značky akcí | Action marks | Marken der Aktionen | Oznaczenia działań |
 | S4.5.2 | S4-research-from-the-app.md | aplikace 3.4.0 | platí | Kde akce jsou | Where the actions are | Wo die Aktionen sind | Gdzie są działania |
