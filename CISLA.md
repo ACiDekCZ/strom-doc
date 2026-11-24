@@ -220,6 +220,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R11.5.5 | R11-material-from-the-user.md | výzkum 1.35.0 | platí | Běh třídění z aplikace | A sorting run from the app | Ein Lauf des Sortierens aus der App | Przebieg porządkowania z aplikacji |
 | R11.5.6 | R11-material-from-the-user.md | výzkum 1.35.0 | platí | Smazat natrvalo: `strom input delete` | Delete permanently: `strom input delete` | Endgültig löschen: `strom input delete` | Usuń trwale: `strom input delete` |
 | R11.6 | R11-material-from-the-user.md | výzkum 1.36.0 | platí | Poslané soubory projde agent jen po zapnutí | Sent files are gone through by the agent only once switched on | Gesendete Dateien geht der Agent erst nach dem Einschalten durch | Wysłane pliki agent przejrzy dopiero po włączeniu |
+| R11.7 | R11-material-from-the-user.md | výzkum 1.37.0 | platí | Materiál k seznamu osob | Material for a list of people | Material zu einer Personenliste | Materiał do listy osób |
 | R12 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Kde agent pracuje a co strom hlídá | Where the agent works and what strom watches | Wo der Agent arbeitet und was strom überwacht | Gdzie agent pracuje i czego strom pilnuje |
 | R12.1 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Způsoby práce: tabulka | Ways of working: a table | Arten zu arbeiten: eine Tabelle | Sposoby pracy: tabela |
 | R12.2 | R12-where-the-agent-works.md | výzkum 1.29.0 | koncept | Prohlížeč v aplikaci Claude | The browser in the Claude app | Der Browser in der App Claude | Przeglądarka w aplikacji Claude |
@@ -298,6 +299,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A3.5.15 | A3-evidence-in-the-app.md | aplikace 3.30.0 | platí | Přidat materiály… v okně | Add materials… in the window | Materialien hinzufügen… im Fenster | Dodaj materiały… w oknie |
 | A3.5.16 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Smazat natrvalo | Delete permanently | Endgültig löschen | Usuń trwale |
 | A3.5.17 | A3-evidence-in-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Soubor rodokmenu v Materiálech | A family tree file in Materials | Stammbaumdatei in den Materialien | Plik drzewa genealogicznego w Materiałach |
+| A3.5.18 | A3-evidence-in-the-app.md | aplikace 3.32.0, výzkum 1.37.0 | platí | Materiál k seznamu osob | Material for a list of people | Material zu einer Personenliste | Materiał do listy osób |
 | A3.6 | A3-evidence-in-the-app.md | aplikace 3.3.0 | platí | Prameny osoby | Sources of a person | Quellen einer Person | Źródła osoby |
 | A3.7 | A3-evidence-in-the-app.md | aplikace 3.4.0 | platí | Kde chybí doklady | Where evidence is missing | Wo Belege fehlen | Gdzie brakuje dowodów |
 | A3.8 | A3-evidence-in-the-app.md | aplikace 3.14.0 | platí | Obraz jen ve výzkumu | Image only in the research | Bild nur in der Forschung | Obraz tylko w badaniu |
@@ -316,6 +318,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A4.7 | A4-surnames-and-families.md | aplikace 1.15.0 | platí | Tvary příjmení stromu a návrhy z výzkumu | Surname spellings of the tree and suggestions from the research | Namensschreibweisen des Stammbaums und Vorschläge aus der Forschung | Formy nazwiska drzewa i propozycje z badania |
 | A4.8 | A4-surnames-and-families.md | aplikace 3.0.0 | platí | Hledání a řazení jmen | Searching and sorting names | Suche und Sortierung von Namen | Wyszukiwanie i sortowanie imion i nazwisk |
 | A4.8.1 | A4-surnames-and-families.md | aplikace 3.28.0 | platí | Stejná jména ve výběru osoby | Same names in a person list | Gleiche Namen in der Personenauswahl | Te same imiona i nazwiska w wyborze osoby |
+| A4.8.2 | A4-surnames-and-families.md | aplikace 3.32.0 | platí | Rozsah hledání: Celý strom, Přímá linie, V pohledu | Search scope: Whole tree, Direct line, In view | Suchbereich: Ganzer Stammbaum, Direkte Linie, In der Ansicht | Zakres wyszukiwania: Całe drzewo, Linia prosta, W widoku |
 | A5 | A5-tree-check.md | aplikace 1.0.0 | platí | Kontrola stromu | Tree check | Prüfung des Stammbaums | Kontrola drzewa |
 | A5.1 | A5-tree-check.md | aplikace 3.17.0 | platí | Kontrola a její nálezy | The check and its findings | Die Prüfung und ihre Befunde | Kontrola i jej wyniki |
 | A5.1.1 | A5-tree-check.md | aplikace 1.10.0 | platí | Oprava jedním klikem | One-click fix | Behebung mit einem Klick | Naprawa jednym kliknięciem |
@@ -461,6 +464,18 @@ nenapsáno) · `neplatí od <verze>`.
 | A12.6 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Kde se portrét a fotka svazku ukážou | Where the portrait and the couple's photo appear | Wo Porträt und Paarfoto erscheinen | Gdzie widać portret i zdjęcie pary |
 | A12.7 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Export, ochrana žijících a GEDCOM | Export, privacy of living people and GEDCOM | Export, Schutz lebender Personen und GEDCOM | Eksport, ochrona osób żyjących i GEDCOM |
 | A12.8 | A12-portrait-and-couple-photo.md | aplikace 3.30.0 | platí | Fotky v datech stromu | Photos in the data of the tree | Fotos in den Daten des Stammbaums | Zdjęcia w danych drzewa |
+| A13 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Statistiky stromu | Tree statistics | Statistik des Stammbaums | Statystyki drzewa |
+| A13.1 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Okno Statistiky | The Statistics window | Das Fenster Statistik | Okno Statystyki |
+| A13.2 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Témata a jak se počítají | Topics and how they are counted | Themen und wie sie gezählt werden | Tematy i jak się je liczy |
+| A13.3 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Rozsah a období narození | Scope and period of birth | Bereich und Geburtszeitraum | Zakres i okres urodzenia |
+| A13.4 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Z hodnoty do Tabulky | From a value to the Table | Von einem Wert zur Tabelle | Od wartości do Tabeli |
+| A13.5 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Export CSV | CSV export | CSV-Export | Eksport CSV |
+| A14 | A14-trees-and-structure.md | aplikace 3.32.0 | platí | Správa stromů a změna struktury | Managing trees and changing the structure | Stammbäume verwalten und die Struktur ändern | Zarządzanie drzewami i zmiana struktury |
+| A14.1 | A14-trees-and-structure.md | aplikace 3.32.0 | platí | Správa stromů | Manage trees | Stammbäume verwalten | Zarządzanie drzewami |
+| A14.2 | A14-trees-and-structure.md | aplikace 3.32.0 | platí | Změnit strukturu… | Change structure… | Struktur ändern… | Zmień strukturę… |
+| A14.3 | A14-trees-and-structure.md | aplikace 3.32.0 | platí | Nový strom z výběru a kopie celého stromu | New tree from a selection and a copy of the whole tree | Neuer Stammbaum aus einer Auswahl und Kopie des ganzen Stammbaums | Nowe drzewo z wyboru i kopia całego drzewa |
+| A14.4 | A14-trees-and-structure.md | aplikace 3.32.0 | platí | Rozdělit | Split | Aufteilen | Podziel |
+| A14.5 | A14-trees-and-structure.md | aplikace 3.32.0 | platí | Spojit | Join | Zusammenführen | Połącz |
 | S1 | S1-connecting-app-and-research.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Propojení aplikace a výzkumu | Connecting the app and the research | Verbindung von App und Forschung | Połączenie aplikacji i badania |
 | S1.1 | S1-connecting-app-and-research.md | výzkum 1.0.0 | platí | Most výzkumu běží jen na tomto počítači | The research's bridge runs only on this computer | Die Brücke der Forschung läuft nur auf diesem Computer | Most badania działa tylko na tym komputerze |
 | S1.2 | S1-connecting-app-and-research.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Výzkum se otevře v aplikaci odkazem z terminálu | The research opens in the app through a link from the terminal | Die Forschung öffnet sich in der App über einen Link aus dem Terminal | Badanie otwiera się w aplikacji linkiem z terminala |
@@ -475,6 +490,9 @@ nenapsáno) · `neplatí od <verze>`.
 | S1.7 | S1-connecting-app-and-research.md | aplikace 3.13.1 | platí | Více výzkumů na jednom počítači | Several researches on one computer | Mehrere Forschungen auf einem Computer | Kilka badań na jednym komputerze |
 | S1.8 | S1-connecting-app-and-research.md | aplikace 3.0.0 | platí | Data zůstávají na počítači | Data stay on the computer | Die Daten bleiben auf dem Computer | Dane zostają na komputerze |
 | S1.9 | S1-connecting-app-and-research.md | aplikace 3.25.0, výzkum 1.29.0 | platí | Výzkum zapnutý: přepínač mostu u stromu | Research on: the bridge's switch at a tree | Forschung an: der Schalter der Brücke am Stammbaum | Badanie włączone: przełącznik mostu przy drzewie |
+| S1.10 | S1-connecting-app-and-research.md | aplikace 3.32.0 | platí | Jeden výzkum, jeden strom: kopie bez výzkumu | One research, one tree: a copy without research | Eine Forschung, ein Stammbaum: Kopie ohne Forschung | Jedno badanie, jedno drzewo: kopia bez badania |
+| S1.10.1 | S1-connecting-app-and-research.md | aplikace 3.32.0 | platí | Výzkum pro kopii stromu | Research for a copy of a tree | Forschung für eine Kopie | Badanie dla kopii drzewa |
+| S1.10.2 | S1-connecting-app-and-research.md | aplikace 3.32.0 | platí | Jednorázové odpojení stromů, které sdílely výzkum | One-time detaching of trees that shared a research | Einmaliges Trennen von Stammbäumen, die eine Forschung teilten | Jednorazowe odłączenie drzew, które dzieliły badanie |
 | S2 | S2-edits-from-the-app.md | aplikace 3.0.0, výzkum 1.0.0 | platí | Úpravy z aplikace ve výzkumu | Edits from the app in the research | Änderungen aus der App in der Forschung | Zmiany z aplikacji w badaniu |
 | S2.1 | S2-edits-from-the-app.md | výzkum 1.0.0 | platí | Hlavní je strom v aplikaci | The tree in the app is the main one | Maßgeblich ist der Stammbaum in der App | Główne jest drzewo w aplikacji |
 | S2.2 | S2-edits-from-the-app.md | aplikace 3.9.0, výzkum 1.12.0 | platí | Kdy se úpravy posílají | When edits are sent | Wann Änderungen gesendet werden | Kiedy zmiany są wysyłane |

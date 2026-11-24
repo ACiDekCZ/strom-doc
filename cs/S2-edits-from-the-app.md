@@ -103,6 +103,8 @@ nemění.
   hláškou „Znovu neodesláno: to poslání neneslo osoby tohoto stromu. Úpravy zůstávají tady.“ Samo poslání a odchod
   ze stránky nic nehlásí; čekající úpravy ukazuje značka.
 - **Ukázkový strom** se do výzkumu nikdy nepošle ([S1.3.1](S1-connecting-app-and-research.md#S1.3.1)).
+- **Od aplikace 3.32.0:** kopie stromu z výzkumu se do výzkumu nepošle vůbec, ani tlačítkem. Když si výzkum o úpravy
+  řekne odkazem, pošle se strom, který k výzkumu patří ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Hranice:** malý jiný strom pod propojením výzkumu odmítne od výzkumu 1.34.0 i výzkum sám ([S2.5](#S2.5)).
   Vrácené poslání, které neneslo osoby stromu, aplikace znovu nenabízí ([S2.7](#S2.7)).
 - **Platí od:** aplikace 3.29.0

@@ -756,6 +756,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [S7.2](cs/S7-reliability-and-verification.md#S7.2), S6.2
 
+<a id="filled-in-details"></a>
+### Doplněné údaje · Spojené prameny
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Doplněné údaje · Spojené prameny | Skupiny výčtu sloučení: prázdné údaje spojených osob, které zápis doplní, a prameny importu spojené se stejným pramenem cílového stromu místo přidání nového. |
+| en | Filled-in details · Joined sources | Groups of the merge summary: empty details of joined people that the write fills in, and sources of the import joined with the same source of the target tree instead of being added as new. |
+| de | Ergänzte Angaben · Verbundene Quellen | Gruppen der Übersicht einer Zusammenführung: leere Angaben verbundener Personen, die das Schreiben ergänzt, und Quellen des Imports, die mit derselben Quelle des Ziel-Stammbaums verbunden statt neu hinzugefügt werden. |
+| pl | Uzupełnione dane · Połączone źródła | Grupy zestawienia scalenia: puste dane połączonych osób, które zapis uzupełni, oraz źródła importu połączone z tym samym źródłem drzewa docelowego zamiast dodania nowego. |
+
+- **Čísla:** [A8.10](cs/A8-merging-trees.md#A8.10), A8.11
+
 <a id="couple-photo"></a>
 ### Fotka svazku
 
@@ -948,6 +960,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A2.1.1](cs/A2-loading-a-family-tree.md#A2.1.1)
 
+<a id="copy-without-research"></a>
+### Kopie bez výzkumu · Výzkum pro kopii stromu
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Kopie bez výzkumu · Výzkum pro kopii stromu | Strom, který vznikl z jiného stromu (kopie, starší strom po Otevřít jako kopii, další načtení) a do výzkumu původního stromu nic nezapisuje. Vlastní výzkum dostane jen dialogem Výzkum pro kopii stromu: založit nový, nebo výzkum převzít. |
+| en | Copy without research · Research for a copy of a tree | A tree made from another tree (a copy, the older tree after Open as copy, another load) that writes nothing to the research of the original tree. It gets a research of its own only through the dialog Research for a copy of a tree: start a new one, or take the research over. |
+| de | Kopie ohne Forschung · Forschung für eine Kopie | Ein Stammbaum, der aus einem anderen Stammbaum entstanden ist (Kopie, der ältere Stammbaum nach Als Kopie öffnen, ein weiteres Laden) und nichts in die Forschung des ursprünglichen Stammbaums schreibt. Eine eigene Forschung bekommt er nur über den Dialog Forschung für eine Kopie: eine neue anlegen oder die Forschung übernehmen. |
+| pl | Kopia bez badania · Badanie dla kopii drzewa | Drzewo powstałe z innego drzewa (kopia, starsze drzewo po Otwórz jako kopię, kolejne wczytanie), które nic nie zapisuje do badania drzewa pierwotnego. Własne badanie dostaje tylko przez okno Badanie dla kopii drzewa: założyć nowe albo przejąć badanie. |
+
+- **Čísla:** [S1.10](cs/S1-connecting-app-and-research.md#S1.10), S1.10.1, S1.10.2, A14.3
+
 <a id="research-edge"></a>
 ### Kraj výzkumu
 
@@ -971,6 +995,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Materiały (app) · Wyślij materiał… | Każdy plik drzewa (załącznik, całe zdjęcie portretu, zdjęcie pary, dowód źródła) i plik badania. Ten sam plik jest w drzewie raz i niesie swoje miejsca. Plik można wysłać do badania także bez dodania do drzewa. |
 
 - **Čísla:** [A3.5](cs/A3-evidence-in-the-app.md#A3.5), A3.5.1–A3.5.16, R11, R11.4, R11.5, R11.5.6
+
+<a id="material-for-a-list"></a>
+### Materiál k seznamu osob
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Materiál k seznamu osob | Soubor poslaný výzkumu k celému seznamu osob stromu (pole Týká se › Seznam osob), ne k jedné osobě. Výzkum dostane seznam, jak byl v okamžiku poslání. |
+| en | Material for a list of people | A file sent to the research for a whole list of people of the tree (the field Concerns › List of people), not for one person. The research gets the list as it was at the moment of sending. |
+| de | Material zu einer Personenliste | Eine Datei, die der Forschung zu einer ganzen Personenliste des Stammbaums geschickt wird (Feld Betrifft › Personenliste), nicht zu einer Person. Die Forschung bekommt die Liste so, wie sie beim Senden war. |
+| pl | Materiał do listy osób | Plik wysłany do badania dla całej listy osób drzewa (pole Dotyczy › Lista osób), a nie dla jednej osoby. Badanie dostaje listę taką, jaka była w chwili wysłania. |
+
+- **Čísla:** [A3.5.18](cs/A3-evidence-in-the-app.md#A3.5.18), R11.7
 
 <a id="research-bridge"></a>
 ### Most výzkumu
@@ -1284,6 +1320,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A8.10](cs/A8-merging-trees.md#A8.10), A8.12, S6.5
 
+<a id="before-undoing-a-merge"></a>
+### Před odvoláním sloučení (záloha)
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Před odvoláním sloučení | Záloha stromu, kterou aplikace udělá před každým odvoláním sloučení, i s vypnutými automatickými zálohami. Rotace záloh ji nesmaže, dokud jde sloučení vrátit. |
+| en | Before undoing a merge | The backup of the tree the app makes before every undo of a merge, even with automatic backups switched off. The rotation of backups does not delete it while the merge can be restored. |
+| de | Vor dem Rückgängigmachen der Zusammenführung | Die Sicherung des Stammbaums, die die App vor jedem Rückgängigmachen einer Zusammenführung anlegt, auch bei ausgeschalteten automatischen Sicherungen. Die Rotation der Sicherungen löscht sie nicht, solange sich die Zusammenführung wiederherstellen lässt. |
+| pl | Przed cofnięciem scalenia | Kopia drzewa, którą aplikacja robi przed każdym cofnięciem scalenia, także przy wyłączonych automatycznych kopiach. Rotacja kopii jej nie usuwa, dopóki scalenie można przywrócić. |
+
+- **Čísla:** [A8.12](cs/A8-merging-trees.md#A8.12), S6.5
+
 <a id="hand-over-to-research"></a>
 ### Předat výzkumu
 
@@ -1379,6 +1427,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Ród | Linia męska od najstarszego znanego nosiciela nazwiska, wyznaczona przez założyciela, nie przez nazwisko. Aplikacja liczy ją z danych drzewa. |
 
 - **Čísla:** [A4.1](cs/A4-surnames-and-families.md#A4.1), A4.1.1, A4.2, A4.4, A6.4.1, A6.4.2
+
+<a id="search-scope"></a>
+### Rozsah hledání
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Rozsah hledání: Celý strom · Přímá linie · V pohledu | Kde hledání osob hledá: v celém stromu, jen v přímé linii osoby (předci a potomci), nebo jen mezi osobami, které ukazuje pohled. |
+| en | Search scope: Whole tree · Direct line · In view | Where the search for people looks: in the whole tree, only in a person's direct line (ancestors and descendants), or only among the people the view shows. |
+| de | Suchbereich: Ganzer Stammbaum · Direkte Linie · In der Ansicht | Wo die Personensuche sucht: im ganzen Stammbaum, nur in der direkten Linie einer Person (Vorfahren und Nachkommen) oder nur unter den Personen, die die Ansicht zeigt. |
+| pl | Zakres wyszukiwania: Całe drzewo · Linia prosta · W widoku | Gdzie szuka wyszukiwanie osób: w całym drzewie, tylko w linii prostej osoby (przodkowie i potomkowie) albo tylko wśród osób, które pokazuje widok. |
+
+- **Čísla:** [A4.8.2](cs/A4-surnames-and-families.md#A4.8.2)
 
 <a id="sort-with-agent"></a>
 ### Roztřídit agentem
@@ -1583,6 +1643,30 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Razem z · wspólne wydarzenie | Wydarzenie kilku osób (spis ludności, miejsce zamieszkania, emigracja…) zapisane raz: każda osoba ma kopię z tą samą datą, miejscem, domem, notatką i źródłami oraz z własnym wiekiem i rolą. Zmiana dotyczy wszystkich kopii. |
 
 - **Čísla:** [A10.1](cs/A10-shared-events.md#A10.1), A10.1.1, A10.2, A10.6, A10.7, A2.1, A2.7, A6.7.10, A8.4, R11.3, R9.12.3, S2.3
+
+<a id="manage-trees"></a>
+### Správa stromů · Změnit strukturu…
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Správa stromů · Změnit strukturu… | Okno se všemi stromy prohlížeče (počty, původ, rozpracovaná sloučení, export) a okno akcí, které ze stromu dělají jiné stromy: nový strom z výběru, kopie celého stromu, rozdělení, spojení do jiného stromu, přidání ze souboru. |
+| en | Manage trees · Change structure… | The window with all trees of the browser (counts, origin, unfinished merges, export) and the window of actions that make other trees out of a tree: a new tree from a selection, a copy of the whole tree, splitting, joining into another tree, adding from a file. |
+| de | Stammbäume verwalten · Struktur ändern… | Das Fenster mit allen Stammbäumen des Browsers (Anzahlen, Herkunft, angefangene Zusammenführungen, Export) und das Fenster der Aktionen, die aus einem Stammbaum andere Stammbäume machen: neuer Stammbaum aus einer Auswahl, Kopie des ganzen Stammbaums, Aufteilen, Zusammenführen in einen anderen Stammbaum, Hinzufügen aus einer Datei. |
+| pl | Zarządzanie drzewami · Zmień strukturę… | Okno ze wszystkimi drzewami przeglądarki (liczby, pochodzenie, rozpoczęte scalenia, eksport) i okno działań, które z drzewa robią inne drzewa: nowe drzewo z wyboru, kopia całego drzewa, podział, połączenie z innym drzewem, dodanie z pliku. |
+
+- **Čísla:** [A14.1](cs/A14-trees-and-structure.md#A14.1), A14.2, A14.3, A14.4, A14.5
+
+<a id="statistics"></a>
+### Statistiky
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Statistiky | Okno s podrobnými počty stromu po tématech (jména, místa, věk, děti, povolání…) v rozsahu a období narození; z hodnoty vede do Tabulky a jde uložit jako CSV. |
+| en | Statistics | The window with detailed counts of the tree by topic (names, places, age, children, occupations…) within a scope and a period of birth; a value leads to the Table and it can be saved as CSV. |
+| de | Statistik | Das Fenster mit ausführlichen Zahlen des Stammbaums nach Themen (Namen, Orte, Alter, Kinder, Berufe…) in einem Bereich und Geburtszeitraum; ein Wert führt zur Tabelle, und es lässt sich als CSV speichern. |
+| pl | Statystyki | Okno ze szczegółowymi liczbami drzewa według tematów (imiona, miejsca, wiek, dzieci, zawody…) w zakresie i okresie urodzenia; wartość prowadzi do Tabeli, a całość można zapisać jako CSV. |
+
+- **Čísla:** [A13.1](cs/A13-tree-statistics.md#A13.1), A13.2, A13.3, A13.4, A13.5
 
 <a id="same-id-in-the-file"></a>
 ### Stejné ID v souboru

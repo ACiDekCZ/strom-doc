@@ -3,7 +3,8 @@
 
 Jak aplikace Strom slučuje dva rodokmeny: soubor GEDCOM se stromem, dva stromy, nebo pohled se stromem. Popisuje
 aplikaci 3.21.2; změny z novější verze mají u sebe její číslo. Od aplikace 3.32.0 vede každé sloučení průvodce
-**Sloučení stromů** v šesti krocích ([A8.5](#A8.5) až [A8.13](#A8.13)). Sloučení duplicitní osoby uvnitř jednoho
+**Sloučení stromů** v šesti krocích ([A8.5](#A8.5) až [A8.13](#A8.13)) a spojení stromů nabízí **Změnit strukturu…**
+([A14.5](A14-trees-and-structure.md#A14.5)). Sloučení duplicitní osoby uvnitř jednoho
 stromu je jiná věc ([A5.6](A5-tree-check.md#A5.6)).
 
 <a id="A8.1"></a>
@@ -136,8 +137,9 @@ nezapíše, dokud se zápis nepotvrdí v kroku **Co se stane**.
 | Odkud | Průvodce | Ovládání |
 |---|---|---|
 | soubor GEDCOM | **Import rodokmenu** | **Import → Import GEDCOM**; ze Správy stromů začíná volbou **Nový strom** |
-| jiný strom | **Sloučení stromů** | Správa stromů, ⋯ u stromu → **Sloučit do jiného stromu…** (cíl je otevřený strom) |
-| osoby právě zobrazené v pohledu | **Sloučení stromů** | akce stromu → **Sloučit pohled do…** |
+| jiný strom | **Sloučení stromů** | **Změnit strukturu…** › **Výběr nebo celý strom do jiného stromu…** › **Celý strom** ([A14.5](A14-trees-and-structure.md#A14.5)); cíl je otevřený strom, u otevřeného stromu jiný |
+| výběr osob stromu (rod, seznam, linie, pohled, ručně) | **Sloučení stromů** | **Změnit strukturu…** › **Výběr nebo celý strom do jiného stromu…** › **Výběr…** |
+| soubor GEDCOM nebo Strom (JSON) do otevřeného stromu | **Import rodokmenu** | **Změnit strukturu…** › **Přidat ze souboru do tohoto stromu…** |
 | změny poslané z jiného Stromu | **Přijaté změny** | náhled přijatých změn → **Prohlédnout podrobně** |
 
 - **Kroky:** **Co s tím** ([A8.6](#A8.6)), **Kdo je kdo** ([A8.7](#A8.7)), **Koho přidat** ([A8.8](#A8.8)), **Kdo
@@ -145,18 +147,23 @@ nezapíše, dokud se zápis nepotvrdí v kroku **Co se stane**.
   pro zvolenou cestu nic nerozhoduje, se přeskočí a průvodce to u něj řekne.
 - Nad kroky stojí průběžné počty osob importu: **Spojení**, **Noví**, **Nepřidaní** a **K rozhodnutí**; jejich součet
   je počet osob importu.
+- Na širším okně (tablet, počítač) zabírá průvodce skoro celou obrazovku a kroky s počty jsou v jedné liště: počty
+  slovy a „= N osob importu“; pod 1100 px šířky mají ostatní kroky jen číslo. Na telefonu je průvodce beze změny.
+- Průvodce spuštěný ze zdroje (otevřený strom se slučuje do jiného) jmenuje všude cílový strom: v nadpisu, ve
+  stavovém řádku, v „Porovnat … se stromem …“ i v řádku rozpracovaného sloučení.
 - Porovnání velkého stromu ukazuje průběh a odhad času. **Přerušit** nic neztratí: volby z kroku 1 zůstanou
   a porovnání jde spustit znovu.
 - Průvodce zavřený před zápisem řekne „Zatím se nic nezapsalo.“ a rozhodnutí jde **Uložit na později**. Uložené
-  sloučení čeká ve Správě stromů v **Nedokončená sloučení**. Když se cílový strom mezitím změnil, průvodce to při
+  sloučení čeká ve Správě stromů pod svým cílovým stromem jako **Rozpracované sloučení** ([A14.1](A14-trees-and-structure.md#A14.1)). Když se cílový strom mezitím změnil, průvodce to při
   pokračování řekne; návrhy se přepočítají, rozhodnuté dvojice zůstanou.
 - Sloučení, které se minule nedokončilo (zavřené okno, pád), aplikace při dalším otevření ohlásí: strom i soubor
   jsou beze změny.
 - **Hranice:** soubor GEDCOM do prázdného stromu se dál vkládá přes **Vložit do stromu** bez průvodce
   ([A2](A2-loading-a-family-tree.md)). Sloučení dvou osob jednoho stromu je jiná věc ([A5.6](A5-tree-check.md#A5.6)).
-- **Platí od:** aplikace 3.32.0; dřív sloučení vždy zakládalo nový strom ([A8.1](#A8.1))
+- **Platí od:** aplikace 3.32.0; dřív sloučení vždy zakládalo nový strom ([A8.1](#A8.1)). Dřívější **Sloučit do jiného
+  stromu…** v ⋯ Správy stromů a **Sloučit pohled do…** nahradilo v téže verzi **Změnit strukturu…**.
 
-<!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md -->
+<!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md · app:52171573 (dotaz 10: větší okno, lišta kroků s počty, pod 1100 px číslem) · 6e36ad08 (V-N4: cílový strom v nadpisu, stavovém řádku, Porovnat, řádku rozpracovaného) · a9bc0b6b, f0c5a3fb (139: Sloučit do jiného stromu a Sloučit pohled do… nahrazené Změnit strukturu; mergeViewInto bez volajícího) · strings.ts structure.pendingRow -->
 
 <a id="A8.6"></a>
 ## A8.6 Krok 1: Co s tím
@@ -183,7 +190,10 @@ V prvním kroku se volí, co s importem, do kterého stromu a co se stane s osob
   seznam uloží. Nic z toho se neztratí tiše.
 - **Prohodit** u dvou stromů obrátí, co se do čeho přidává.
 - Tentýž soubor sloučený do stromu znovu průvodce pozná a řekne, kolik osob je nových; osoby spojené minule se
-  nezdvojí. Přidají se tak jen osoby, které se minule vynechaly.
+  nezdvojí. Přidají se tak jen osoby, které se minule vynechaly. Totéž platí pro strom: „Ze stromu Horákovi už se
+  sem slučovalo 12. 11. 2026. Nových je jen 5 osob; 40 je spojeno se sloučením z 12. 11. 2026 a nezdvojí se.“
+- Kopie stromu a strom bez výzkumu mají v kroku 1 popis „kopie stromu „{název}“ · bez výzkumu“; u cíle bez výzkumu
+  stojí „{strom} nemá výzkum: po sloučení se nic neposílá.“ ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Hranice:** cílem nemůže být zamčený strom (odemknout jde ve Správě stromů) ani strom z novější verze aplikace.
   Strom, na kterém právě běží živé sledování výzkumu (◎ **Sledovat agenta ve stromu**), je jen pro čtení; průvodce
   u něj nabídne **Vypnout sledování a sloučit sem**: před zápisem se uloží záloha, posílání do výzkumu se pozastaví
@@ -191,7 +201,7 @@ V prvním kroku se volí, co s importem, do kterého stromu a co se stane s osob
   se jinde sleduje živě. Ze stromu otevřeného jen ke čtení jde import jen jako **Nový strom**.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch -->
 
 <a id="A8.7"></a>
 ## A8.7 Krok 2: Kdo je kdo
@@ -210,12 +220,20 @@ vidět a jde zrušit.
   neodvolané sloučení. Jsou ve **Stejní** s důvodem „Už sloučeno dřív z tohoto zdroje“ a nic se nezdvojí.
 - **Proč ano** jmenuje jen to, co dávají oba záznamy: „Přesné jméno a datum narození“ jen při stejném datu narození
   na obou stranách, při shodě jen roku „Jméno a rok narození“, jinak „Přesné jméno“.
-- **Zbylé nerozhodnuté** jde vyřídit naráz: **Přidat jako nové** (průvodce upozorní, že to může zdvojit osoby, které
-  už ve stromu jsou), nebo **Nepřidávat**. Dokud zbývá nerozhodnutá dvojice, průvodce dál nepustí.
+- **Zbylé nerozhodnuté** jde vyřídit naráz: „Zbylých N nerozhodnutých:“ **Přidat jako nové (N)** (průvodce upozorní,
+  že to může zdvojit osoby, které už ve stromu jsou), nebo **Nepřidávat (N)**. Dvojice se stejnými rodiči, dítětem
+  nebo partnerem hromadné rozhodnutí vynechá; pod tlačítky stojí „2 dvojice se stejnými rodiči, dítětem nebo
+  partnerem je potřeba rozhodnout jednotlivě.“ Když zbývají jen takové, zůstane jen ta věta. Dokud zbývá nerozhodnutá
+  dvojice, krok 3 se neodemkne.
+- **Na širším okně:** nad dvojicí je řádek ovládání (‹ skrýt seznam · „Dvojice i z n“ · skupina · ↑ ↓ · rozhodnutí),
+  kandidáti stromu jsou v řádcích („Ve stromu Horákovi 2 kandidáti“) a tabulka dvojice roluje sama s pevnou
+  hlavičkou (sloupec „Import · {soubor}“). Příbuzní jsou po řádcích, z dokladů první tři a „a N dalších ▸“ /
+  **Sbalit**. Zbytek nerozhodnutých je v patě seznamu; seznam jde složit do úzké lišty (**Skrýt seznam dvojic** /
+  **Ukázat seznam dvojic**). Telefon má krok beze změny.
 - **Hranice:** u **Nový strom** se krok přeskočí: všechny osoby jsou nové.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear -->
+<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) -->
 
 <a id="A8.8"></a>
 ## A8.8 Krok 3: Koho přidat
@@ -266,9 +284,20 @@ Krok 4 rozhodne údaje, které mají spojené osoby jinak. Bez volby člověka p
 
 Krok 5 ukáže celý výčet změn po skupinách. Zapíše se až jeho tlačítkem a jen to, co výčet ukazuje.
 
-- **Výčet:** **Noví**, **Spojení**, **Změny údajů**, **Páry a vazby**, **Prameny**, **Místa**, **Fotky a soubory**,
-  **Nepřidaní** (u každé osoby proč: krok a volba) a **Strom nepřevezme**. Položku jde odškrtnout. **Uložit výčet…**
-  ho uloží do souboru.
+- **Výčet:** **Noví**, **Spojení**, **Změny údajů**, **Doplněné údaje**, **Spojené prameny**, **Páry a vazby**,
+  **Prameny**, **Místa**, **Fotky a soubory**, **Nepřidaní** (u každé osoby proč: krok a volba) a **Strom
+  nepřevezme**. Položku jde odškrtnout. **Uložit výčet…** ho uloží do souboru.
+- **Doplněné údaje** (jen když nějaké jsou): prázdné údaje spojených osob, které zápis doplní, po řádcích osoba ·
+  údaj (e-mail, další tvary jména, události, prameny, otevřená otázka…).
+- **Spojené prameny:** pramen zdroje se spojí jen se stejným pramenem cílového stromu (stejné číslo výzkumu, citace,
+  nebo název, archiv a místo): „1 pramen spojen se stávajícím“. Skupina **Prameny** uvádí jen nové. Prameny zdroje se
+  mezi sebou nespojují: dva záznamy jedné matriky, které se liší jen číslem pramenu výzkumu, zůstanou dva. Výsledek
+  má tak stejné prameny bez ohledu na směr (**Prohodit**).
+- **Počty sedí všude:** nové páry a změny údajů jsou v kroku 5, v kroku 6, v záznamu sloučení i v dialogu odvolání
+  stejné číslo jako to, co se zapíše. Spojovací „?“ bez dětí ani rozsah **d)** pár nepřidají ani nehlásí; dvě osoby
+  importu spojené s jednou osobou mění údaj jednou (i v kroku 4).
+- Jiná fotka se stejným názvem a velikostí je ve **Změny údajů** jako „Fotka: photo (3222) → jiná fotka se stejným
+  názvem a velikostí“ (i v kroku 4, v Historii sloučení, v odvolání a v uloženém výčtu).
 - **Kam zapsat:** **Zapsat do stromu …**, nebo **Zapsat do nového stromu** (kopie cílového stromu s importem; cílový
   strom zůstane beze změny).
 - **Záloha:** před zápisem do stromu se vytvoří záloha **Před sloučením**, vždy, i s vypnutými automatickými
@@ -281,10 +310,11 @@ Krok 5 ukáže celý výčet změn po skupinách. Zapíše se až jeho tlačítk
 - Zápis je jeden krok **Zpět**.
 - **Hranice:** u **Jen porovnat** se nezapíše nic; výčet jde uložit. Kontrola nepočítá do **Změny údajů** prázdné
   údaje doplněné rozsahem **b)**.
-- **Ovládání:** tlačítko „Přidat N osob, změnit M údajů“, u nového stromu „Vytvořit strom s N osobami“.
+- **Ovládání:** tlačítko „Přidat N osob, změnit M údajů“, s doplněnými údaji „…, doplnit F“, u nového stromu
+  „Vytvořit strom s N osobami“.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto -->
 
 <a id="A8.11"></a>
 ## A8.11 Krok 6: Co se stalo a Historie sloučení
@@ -297,6 +327,7 @@ Po zápisu krok 6 řekne, co se stalo, a sloučení zůstane ve stromu jako záz
   ([A5](A5-tree-check.md)) a **Odvolat sloučení…** ([A8.12](#A8.12)).
 - Po sloučení souboru jiného programu do stávajícího stromu se karta **Co teď** neukáže; kontrola dat je tady.
   Nový strom ze souboru jiného programu kartu dostane ([S6.4](S6-tree-from-another-program.md#S6.4)).
+- Krok 6 a Historie sloučení uvádějí i **Doplněné údaje** a počet spojených pramenů, se stejnými čísly jako krok 5.
 - **Historie sloučení:** každé sloučení do stromu s datem, zdrojem, počty (nové, spojené, údaje) a stavem **platí**,
   **zčásti odvolané** nebo **odvolané**. U sloučení **Otevřít výčet** a **Odvolat…**; v okně i **Zálohy…**
   a **Historie změn…**. Celý strom vrátí Zálohy; tady jde odvolat jen to, co přineslo jedno sloučení.
@@ -306,7 +337,7 @@ Po zápisu krok 6 řekne, co se stalo, a sloučení zůstane ve stromu jako záz
   → **Historie sloučení…**.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step6-done.ts (notes inHistory, noNextCard), src/merge/ui.ts step6Env (noNextCard = !newTree && gedcom) · src/ui/tree-actions.ts:199 menuHistory (jen se záznamy) · src/ui/merge-history-ui.ts · strings.ts mergeWizard.doneTitle, doneTotals, doneBackup, showInTree, saveAsList, checkTree, undoMerge, inHistory, noNextCard, menuHistory, histTitle, histLead, stValid, stPartial, stUndone, histCounts, openList, undoEllipsis, histBackups, histChanges · CHANGELOG.cs.md 3.32.0 (datová verze 26) · spec 134 §9 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step6-done.ts (notes inHistory, noNextCard), src/merge/ui.ts step6Env (noNextCard = !newTree && gedcom) · src/ui/tree-actions.ts:199 menuHistory (jen se záznamy) · src/ui/merge-history-ui.ts · strings.ts mergeWizard.doneTitle, doneTotals, doneBackup, showInTree, saveAsList, checkTree, undoMerge, inHistory, noNextCard, menuHistory, histTitle, histLead, stValid, stPartial, stUndone, histCounts, openList, undoEllipsis, histBackups, histChanges · CHANGELOG.cs.md 3.32.0 (datová verze 26) · spec 134 §9 · app:235afcd5, 834ceab8 (doplněné údaje a spojené prameny v kroku 6 a historii) -->
 
 <a id="A8.12"></a>
 ## A8.12 Odvolání sloučení
@@ -314,21 +345,23 @@ Po zápisu krok 6 řekne, co se stalo, a sloučení zůstane ve stromu jako záz
 **Odvolat sloučení** vezme zpět jen to, co přineslo jedno sloučení. Práce udělaná po sloučení nezmizí.
 
 - **Co se odvolá:** **Odeberou se** nové osoby sloučení s jeho páry, prameny, místy a soubory; **Vrátí se** změněné
-  údaje na hodnotu před sloučením; **Spojení se zruší**: osoby stromu zůstanou, jen bez údajů z importu.
+  údaje na hodnotu před sloučením; **Vrátí se ve stromu** páry, osoby, prameny a soubory stromu, na které sloučení
+  navázalo, jak byly před ním; **Spojení se zruší**: osoby stromu zůstanou, jen bez údajů z importu.
 - **Zůstane, protože se od té doby změnilo:** osoba nebo údaj upravený po sloučení, údaj potvrzený, osoba s novým
   příbuzným, věc, na které staví pozdější sloučení, a věc, kterou cituje něco, co zůstává. U každé položky jde zvolit
   **Ponechat** nebo **Odvolat**.
 - Obrázek, který sloučení nahradilo, vrátí jen záloha **Před sloučením**. Průvodce ukáže i rozdíl proti obnovení
   zálohy: záloha by vrátila i všechno ostatní, co se od sloučení ve stromu stalo.
 - **Odvolat vše**, nebo **Vybrat jen některé…** (odvolá se jen zaškrtnuté). Zčásti odvolané sloučení jde odvolat
-  dál. Odvolání si vezme zálohu, je v historii změn a jde ho vrátit (**Vrátit odvolání**).
+  dál. Odvolání si vezme zálohu **Před odvoláním sloučení**, vždy, i s vypnutými automatickými zálohami; rotace ji
+  nesmaže, dokud jde sloučení vrátit. Odvolání je v historii změn a jde ho vrátit (**Vrátit odvolání**).
 - **Hranice:** zamčený strom jde odvolat po odemknutí ve Správě stromů; strom jen ke čtení, až půjde upravovat.
   Když na sloučení staví pozdější sloučení, průvodce to řekne. Odvolání sloučení, které už je ve výzkumu, popisuje
   [A8.13](#A8.13).
 - **Ovládání:** krok 6 → **Odvolat sloučení…**; **Historie sloučení…** → **Odvolat…**; tlačítko „Odebrat N osob“.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/undo-plan.ts, src/merge/undo-view.ts, src/ui/merge-history-ui.ts (zápis se zálohou write.ts writeUndo, AuditLogManager, toast s redo) · strings.ts mergeWizard.undoTitle, undoLead, uRemove, uRestore, uUnjoin, uRemoveDesc, uRestoreDesc, uUnjoinDesc, uKeepHead, uEdited, uProven, uRelative, uLaterMerge, uUsed, uPicture, segKeep, segUndo, vsBackup, pickSome, pickAll, pickLead, btnUndo, builtOn, partlyDone, lockedUndo, undoReadOnly, undoNothing, undone, redo · spec 134 §10 -->
+<!-- zdroj: app:debf50cc src/merge/undo-plan.ts, src/merge/undo-view.ts, src/ui/merge-history-ui.ts (zápis se zálohou write.ts writeUndo, AuditLogManager, toast s redo) · strings.ts mergeWizard.undoTitle, undoLead, uRemove, uRestore, uUnjoin, uRemoveDesc, uRestoreDesc, uUnjoinDesc, uKeepHead, uEdited, uProven, uRelative, uLaterMerge, uUsed, uPicture, segKeep, segUndo, vsBackup, pickSome, pickAll, pickLead, btnUndo, builtOn, partlyDone, lockedUndo, undoReadOnly, undoNothing, undone, redo · spec 134 §10 · app:235afcd5 strings.ts mergeWizard.uTree, uTreeDesc · e2a6d712 strings.ts backups pre-merge-undo „Před odvoláním sloučení“ (134 N5, keepFor) -->
 
 <a id="A8.13"></a>
 ## A8.13 Sloučení do stromu s výzkumem
@@ -343,15 +376,24 @@ v kroku 6.
   jeho kroku.
 - Výzkum starší verze posílání po sloučení nezná: pošle se celý strom přes **Co se pošle**
   ([S1](S1-connecting-app-and-research.md)).
-- **Odvolání před odesláním:** výzkum nedostane nic. **Po odeslání:** výzkum osoby sám nesmaže. Aplikace odvolá hned
-  a řekne krok v terminálu výzkumu (`strom sync undo I…` s **Kopírovat**), nebo odkáže na nápovědu **Osoba odebraná
-  v aplikaci** ([S2.6](S2-edits-from-the-app.md#S2.6)). Do té doby výzkum při příští verzi osoby vrátí a aplikace je
-  nabídne k odebrání.
+- **Co se pošle:** úvodní věta má stejná čísla jako seznam pod ní: „Do výzkumu Horákovi: 5 nových osob, 2 další
+  změněné osoby, 3 páry, 4 prameny.“ Spojovací „?“ není nová osoba; nový pár se počítá u svých partnerů a **Páry**
+  jsou jen vlastní změny páru. Bez přesného seznamu zůstane věta s tím, co sloučení přineslo.
+- **Odvolání před odesláním:** výzkum nedostane nic. **Po odeslání:** výzkum osoby sám nesmaže. Odvolání v aplikaci
+  odebere i osoby, kterým odeslání dalo číslo výzkumu (číslo není úprava). Dialog řekne „Sloučení bylo {datum}
+  odesláno do výzkumu, takže výzkum jeho osoby už má. Odvolání v aplikaci je odtamtud neodebere.“ a „V aplikaci se
+  odvolání provede hned. Ve výzkumu je potřeba jeden krok v terminálu výzkumu:“ s příkazem `strom sync undo I0042`
+  a **Kopírovat**; se známým číslem vstupu i **Vzít zpět ve výzkumu**, jinak `I…` a kde číslo najít (`strom input
+  list`). Hlášení „Sloučení odvoláno…“ nabídne **Vzít zpět ve výzkumu**. Jinak dialog odkáže na nápovědu **Osoba odebraná v aplikaci**
+  ([S2.6](S2-edits-from-the-app.md#S2.6)). Do té doby výzkum při příští verzi osoby vrátí a aplikace je nabídne
+  k odebrání.
 - **Hranice:**
-  - **Nový strom** z importu na výzkum napojený nebude;
+  - **Nový strom** z importu na výzkum napojený nebude; zápis do nového stromu (kopie cíle s importem) je kopie bez
+    výzkumu ([S1.10](S1-connecting-app-and-research.md#S1.10));
+  - kopie stromu z výzkumu a strom bez výzkumu po sloučení nic neposílají;
   - když je na výzkum napojený zdroj a cíl ne, napojení se do cíle nepřenese; průvodce nabídne **Prohodit**;
   - když jsou napojené oba stromy, vazba ani čísla zdroje se nepřenesou a osoby zdroje jsou ve výzkumu cíle nové;
   - když jsou stejní lidé i v jiném stromu napojeném na výzkum, průvodce na to upozorní.
 - **Platí od:** aplikace 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 -->
+<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) -->

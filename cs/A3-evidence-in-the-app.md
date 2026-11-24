@@ -338,7 +338,8 @@ s výzkumem nebo Archivem Stromu ukazuje i soubory výzkumu, které ve stromu ni
   udělá úkol pro agenta ([R11.1](R11-material-from-the-user.md#R11.1)). **Přidat i jako přílohu do stromu** dá do
   stromu i náhled. Celou složku pošle **Přidat materiály…** v menu výzkumu
   ([R11.4](R11-material-from-the-user.md#R11.4)) i v záhlaví okna **Materiály** ([A3.5.15](#A3.5.15)). U Archivu
-  Stromu je to **Přidat materiál…** a **Uložit i do stromu** (obrázky a PDF do 2 MB).
+  Stromu je to **Přidat materiál…** a **Uložit i do stromu** (obrázky a PDF do 2 MB). Sken s víc osobami jde
+  poslat k celému seznamu osob ([A3.5.18](#A3.5.18)).
 - Když výzkum neběží, poslané soubory čekají v prohlížeči. Když výzkum osobu ještě nezná, pošlou se po dalším
   poslání stromu.
 - **Hranice:**
@@ -828,6 +829,42 @@ Jde je prohlédnout a smazat natrvalo; když z nich vznikl pramen, jen spolu s n
 - **Platí od:** aplikace 3.31.0 s výzkumem 1.36.0
 
 <!-- zdroj: app:36601947 src/materials-overview.ts (druh tree za bránou material.trees, trees=1; mimo třídění, hromadné akce, bez osoby, počty Projít; podrobnosti nejdou upravit), src/material-delete.ts treeFileSource, retractSources, blockedBy (409 material.source-live) · 2a406d67 dlaždice a řádek (Soubor rodokmenu · velikost, štítek zdroje), filtr Druh, nabídka Podrobnosti + Smazat natrvalo… (list zespodu), Podrobnosti bez náhledu, dialog bez pramene bez Jen skrýt · b40b22e4 dvoudílný dialog · d9af4b16 (ne Ve stromu, ani štítek, ani filtr) · e2e/material-tree-delete.spec.ts (hlavička) · strings.ts materials.treeFile, kindTrees, treeFileOf, treeDetails, del.textTree, noRefsTree, bothTitle, bothIntro, partSource, partFile, laterNoFile, fileSourceSub, understandFile, bothGo, bothChanged, bothNone, bothToast · SPEC.md 1120-app-117-smazani, 1120-app-108-diry · spec 117 §5–§7 -->
+
+<a id="A3.5.18"></a>
+### A3.5.18 Materiál k seznamu osob
+
+Sken, na kterém je víc osob stromu (sčítací arch, stránka matriky), jde výzkumu poslat k celému seznamu osob místo
+jedné osoby. Pole **Týká se** je první pole dialogu **Poslat materiál do výzkumu**: **Osoba** (osoba, ze které se
+dialog otevřel), u pramene **Jen pramen**, a pod **Seznam osob** seznamy stromu ([A11](A11-lists-of-people.md)).
+
+- **Co se pošle:** seznam, jak je v okamžiku poslání: název, druh, pravidlo automatického seznamu a výzkumná čísla
+  jeho osob; osoba dialogu je první, i když v seznamu není. Výzkum materiál k seznamu uloží a seznam si ponechá
+  beze změny ([R11.7](R11-material-from-the-user.md#R11.7)). Věta nad tlačítkem řekne kam: „Výzkum soubory uloží
+  ke všem osobám seznamu (5) …“, u pramene „… k prameni a ke všem osobám seznamu (5) …“.
+- **Seznam do 50 osob:** soubory dostanou všechny jeho osoby, které výzkum zná.
+- **Seznam nad 50 osob:** „Seznam má víc než 50 osob: výzkum dostane název seznamu a výčet jeho osob, osoby si
+  dohledá sám.“ (u automatického seznamu „… název a pravidlo seznamu …“). Soubory dostane jen osoba dialogu, u
+  pramene žádná.
+- **Hranice:**
+  - osoby seznamu, které výzkum ještě nezná, se k materiálu nepřipojí („Osoby seznamu, které výzkum zatím nezná
+    (2), se k materiálu nepřipojí.“). Seznam, ze kterého výzkum nezná nikoho, má v nabídce „výzkum osoby zatím
+    nezná“ a materiál jde jako dřív k osobě dialogu;
+  - prázdný seznam vybrat nejde („prázdný“). Automatický seznam se spočítá znovu při otevření nabídky;
+  - **Přidat i jako přílohu do stromu** dá přílohu jen osobě dialogu: „Příloha vznikne jen u osoby Jan Horák, ne u
+    ostatních osob seznamu.“;
+  - volba platí jen v otevřeném dialogu; každé otevření začíná osobou nebo pramenem;
+  - když výzkum seznam nepřijme, dialog zůstane otevřený se soubory („Seznam se do výzkumu nepodařilo poslat,
+    soubory zůstaly v dialogu.“). Když výzkum seznam, na který soubor odkazuje, nemá, aplikace mu ho pošle znovu;
+  - pole je jen u výzkumu, který materiál k seznamu přijímá; u pramene jen u výzkumu, který přijímá i sken pramene
+    k seznamu. Jinak dialog pole nemá a soubory jdou k osobě nebo prameni jako dřív. Pole chybí i tehdy, když
+    výzkum neběží a soubory nemůžou počkat v prohlížeči (šifrovaný strom, Safari).
+- **Ovládání:** **Poslat materiál…** u osoby nebo **Poslat materiál k prameni…** → **Týká se** → seznam. Nabídka
+  (na telefonu list zespodu): Enter, mezerník nebo ↓ ji otevře, ↑/↓ posouvá, Enter vybere, Esc zavře. Od 9 seznamů
+  má pole **Hledat seznam…**. Po poslání hláška „Posláno do výzkumu: 3 soubory k seznamu „Sčítání 1869“ (5 osob).
+  …“; v Archivu Stromu „Uloženo v Archivu Stromu: … k seznamu …“.
+- **Platí od:** aplikace 3.32.0 s výzkumem 1.37.0
+
+<!-- zdroj: app:cd621161 src/material-list.ts (MATERIAL_LIST_PEOPLE 50, PUT lists/<listRef> name/kind/rule/persons/missing/at, materialListRef, snímek s osobou dialogu první, X-Strom-Person všichni známí do 50 jinak jen osoba dialogu, '' u pramene, bez známých osob materiál jako dřív), src/ui/material-concern-ui.ts (Týká se: Osoba / Pramen / Jen pramen, Seznam osob, FIND_FROM 9, prázdný disabled, listUnknown, popover a list na telefonu, klávesy, volba jen v otevřeném dialogu), src/ui/material-ui.ts (brány media.list a media.list.source, 404 media.no-list → seznam znovu, listFailed dialog otevřený, cantWait pole skryté) · 27452fd4 e2e/material-list.spec.ts · f5315651, 53752e6a · strings.ts material.concern, concernPerson, concernSource, concernLists, sourceOnly, listEmpty, listFind, listUnknown, whereList, whereListBig, whereSourceList, bigRule, bigPersons, missingNote, alsoAttachListHint, listFailed, sentToastList, sentWaitToastList, savedArchiveToastList · dirigent:spec/137 K2, prace/1123-app-137-linie-material (B1–B3) · research:de5f709d, 778846e6 (media.list, media.list.source) -->
 
 <a id="A3.6"></a>
 ## A3.6 Prameny osoby

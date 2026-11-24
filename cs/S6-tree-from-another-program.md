@@ -188,10 +188,14 @@ vrátit.
   - záloha **Před sloučením** zůstane, dokud jde sloučení odvolat: rotace záloh ji nesmaže. Když by kvůli ní
     musela odejít jiná, průvodce se zeptá ([A8.10](A8-merging-trees.md#A8.10));
   - bez zálohy se sloučení nezapíše;
+  - odvolání sloučení si vezme vlastní zálohu **Před odvoláním sloučení**, také vždy; rotace ji nesmaže, dokud jde
+    sloučení vrátit;
+  - odpojení kopie od sdíleného výzkumu si vezme zálohu **Před úpravou dat pro novou verzi**
+    ([S1.10.2](S1-connecting-app-and-research.md#S1.10.2));
   - jedno sloučení jde vzít zpět i bez obnovení celé zálohy: **Odvolat sloučení…**
     ([A8.12](A8-merging-trees.md#A8.12)). Záloha vrátí celý strom, i se vším, co se od sloučení stalo.
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie -->
 
 <a id="S6.6"></a>
 ## S6.6 Export zpět do programu, nebo ke sdílení

@@ -178,8 +178,8 @@ vidět. Velký strom s mnoha fotkami se tak vejde do paměti, kterou prohlíže�
   - odhad vychází z velikosti stromu, obrázků a počtu otevřených oken, ne z měření prohlížeče; je to varování,
     ne zákaz.
 - **Obrázky sdílené mezi kopiemi:** každý obrázek je v úložišti prohlížeče jednou, podle obsahu, a sdílí ho všechny
-  stromy, zálohy i kopie, které ho mají. **Duplikovat** ve Správě stromů dá úplnou samostatnou kopii stromu
-  s obrázky, které nezabírají místo podruhé. Smazání kopie nebo zálohy nesmaže obrázek, který používá jiný strom.
+  stromy, zálohy i kopie, které ho mají. **Kopie celého stromu** ([A14.3](A14-trees-and-structure.md#A14.3)) dá úplnou
+  samostatnou kopii stromu s obrázky, které nezabírají místo podruhé. Smazání kopie nebo zálohy nesmaže obrázek, který používá jiný strom.
   Obrázek, který už nepoužívá žádný strom, záloha ani otevřené okno, se smaže při úklidu po týdnu.
 - Stejný obrázek ve dvou stromech je při sloučení stejný obrázek, ne rozdíl ([A8](A8-merging-trees.md)).
 - **Hranice:**
@@ -188,7 +188,8 @@ vidět. Velký strom s mnoha fotkami se tak vejde do paměti, kterou prohlíže�
   - mez se týká paměti stránky, ne místa na disku: místo v úložišti prohlížeče hlídají zálohy a okno **Kde jsou
     data** ([S8.1](#S8.1)).
 - **Ovládání:** oznámení „Strom „…“ se blíží mezi paměti, kterou tento prohlížeč aplikaci dává…“; otázka **Paměť
-  nemusí stačit**; Správa stromů → **Duplikovat**.
+  nemusí stačit**; **Změnit strukturu…** → **Kopie celého stromu**. Správa stromů má u velikosti takového stromu
+  „· obrázky sdílené“ ([A14.1](A14-trees-and-structure.md#A14.1)).
 - **Platí od:** aplikace 3.32.0; obrázky jednou podle obsahu od aplikace 3.1.0
 
-<!-- zdroj: dirigent:spec/135-obrazky-mimo-pamet-stromu (K1.1–K1.4, P2, P3) · app:c5931983 (strom v paměti drží odkazy), 6b425e41 (úklid poolu dvoufázově po 7 dnech, kořen memory), e6ce052c (proudové výstupy JSON/uložená aplikace), fcc7c21b (GED po obrázcích), e6a0a8c2 (upozornění), 6e55a1dc (sloučení nad odkazy, rovnost obrázků podle obsahu) · src/memory-limit.ts (DEFAULT_LIMIT 2048 MB, TOUCH_LIMIT 1024 MB, odhad z JSON stromu bez obrázků + 25 MB za další okno, OUTPUT_IMAGE_FACTOR / WHOLE_OUTPUT_IMAGE_FACTOR) · src/ui/memory-limit-ui.ts checkMemoryNotice (jednou za relaci a strom, toast hold), outputNearLimit, canLeaveOut · src/media-pool.ts POOL_UNUSED_GRACE_MS (7 dní) · app:2ba2408a (pool obrázků, v3.1.0) · strings.ts memoryLimit.title, notice, output, outputAll, book, poster, leaveOut, import, continue, treeManager.duplicate · dirigent:prace/1122-app-135/karta.md (měření D9a: 20k × 4000 obr. 518 → 55 MB, bez obrázků 53 MB) · dirigent:test/vysledek-1123-scenare-app.md (Duplikovat: samostatná kopie se sdílenými obrázky, smazání kopie nesmaže obrázky jiných) · CHANGELOG.cs.md 3.32.0 (Velké stromy s fotkami) -->
+<!-- zdroj: dirigent:spec/135-obrazky-mimo-pamet-stromu (K1.1–K1.4, P2, P3) · app:c5931983 (strom v paměti drží odkazy), 6b425e41 (úklid poolu dvoufázově po 7 dnech, kořen memory), e6ce052c (proudové výstupy JSON/uložená aplikace), fcc7c21b (GED po obrázcích), e6a0a8c2 (upozornění), 6e55a1dc (sloučení nad odkazy, rovnost obrázků podle obsahu) · src/memory-limit.ts (DEFAULT_LIMIT 2048 MB, TOUCH_LIMIT 1024 MB, odhad z JSON stromu bez obrázků + 25 MB za další okno, OUTPUT_IMAGE_FACTOR / WHOLE_OUTPUT_IMAGE_FACTOR) · src/ui/memory-limit-ui.ts checkMemoryNotice (jednou za relaci a strom, toast hold), outputNearLimit, canLeaveOut · src/media-pool.ts POOL_UNUSED_GRACE_MS (7 dní) · app:2ba2408a (pool obrázků, v3.1.0) · strings.ts memoryLimit.title, notice, output, outputAll, book, poster, leaveOut, import, continue, treeManager.duplicate · dirigent:prace/1122-app-135/karta.md (měření D9a: 20k × 4000 obr. 518 → 55 MB, bez obrázků 53 MB) · dirigent:test/vysledek-1123-scenare-app.md (Duplikovat: samostatná kopie se sdílenými obrázky, smazání kopie nesmaže obrázky jiných) · CHANGELOG.cs.md 3.32.0 (Velké stromy s fotkami) · app:e9f50b62 (Duplikovat nahrazeno Kopií celého stromu ve Změnit strukturu) · 7b967fd8 treeManager.imagesShared -->

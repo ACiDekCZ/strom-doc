@@ -35,11 +35,13 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [A5 Kontrola stromu](A5-tree-check.md): co aplikace ve stromu hlídá, s jakými prahy, a Není chyba
 - [A6 Pohledy a výběr osob](A6-views.md): Rodina, Potomci, Časová osa, Vějíř, Mapa, rod v pohledu, Tabulka a pohled v samostatném okně
 - [A7 Kniha, stránky a export](A7-book-pages-and-export.md): kdo je žijící, ochrana žijících, kniha rodu, stránky, uložené HTML
-- [A8 Sloučení stromů](A8-merging-trees.md): sloučení souboru, stromu nebo pohledu do nového stromu, párování osob
+- [A8 Sloučení stromů](A8-merging-trees.md): průvodce sloučením souboru, stromu nebo výběru do stromu, párování osob, historie a odvolání sloučení
 - [A9 Ovládání aplikace](A9-using-the-app.md): kde co je, čitelné názvy prvků, úpravy při sledování výzkumu, agent v aplikaci, dolní lišta na telefonu a tabletu
 - [A10 Jedna událost u více osob](A10-shared-events.md): společná událost domácnosti (Spolu s), Sjednotit, Spojit do jedné události, kmotři a svědci v životě osoby, sloučení a starší stromy
 - [A11 Seznamy osob](A11-lists-of-people.md): pevný, automatický a pracovní seznam, pravidla, Zmrazit, ruční řazení, Přidat do seznamu, Uložit jako seznam, údaj „přidáno“, odškrtávání hotových, export seznamu
 - [A12 Portrét a fotka svazku](A12-portrait-and-couple-photo.md): editor výřezu portrétu, originál se štítkem Portrét, Upravit výřez, Jako portrét…, fotka svazku a portréty z ní, kde se ukážou, export, GEDCOM a verze dat 24
+- [A13 Statistiky stromu](A13-tree-statistics.md): okno Statistiky, témata, rozsah a období narození, proklik do Tabulky, export CSV
+- [A14 Správa stromů a změna struktury](A14-trees-and-structure.md): Správa stromů, rozpracovaná sloučení, Změnit strukturu…, nový strom z výběru, kopie celého stromu, rozdělení, spojení do jiného stromu
 
 ## S Aplikace a výzkum spolu
 

@@ -382,3 +382,32 @@ o roztřídění, nebo dokud v nastavení výzkumu nezapne, že poslané soubory
 - **Platí od:** výzkum 1.36.0
 
 <!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) · app:strings.ts read.menu (položka menu s „…“, titulek read.title bez) · dirigent:prace/1122-app-nalezy-330 -->
+
+<a id="R11.7"></a>
+## R11.7 Materiál k seznamu osob
+
+Aplikace Strom může poslat sken k celému seznamu osob (sčítací arch, stránka matriky), ne k jedné osobě
+([A3.5.18](A3-evidence-in-the-app.md#A3.5.18)). Výzkum seznam uloží tak, jak přišel, a agent jména ze skenu páruje
+nejdřív s osobami seznamu.
+
+- **Hlídá kód:**
+  - aplikace pošle nejdřív seznam (název, druh: pevný, automatický nebo pracovní, pravidlo, výzkumná čísla osob,
+    kolik osob výzkum nezná, čas) a každý soubor na něj odkáže. Most seznam drží, dokud ho soubor nepoužije; nové
+    poslání téhož seznamu ho nahradí. Soubor, který odkáže na seznam, jenž výzkum nemá, most odmítne a aplikace
+    seznam pošle znovu;
+  - podklad si seznam ponechá, jak byl poslán: zapíše se do výzkumu (`notes/lists/`, v historii) a už se nemění;
+  - seznam do 50 osob: všechny jeho osoby jsou osoby podkladu. Delší seznam je jen pojmenovaný; výčet jeho osob je
+    v souboru seznamu a agent si je dohledá sám (`strom person show P…`);
+  - úkol podkladu, když vznikne ([R11.6](#R11.6)), se jmenuje podle seznamu. Zadání agenta seznam uvede (název,
+    druh, pravidlo, počet osob, kolik jich výzkum ještě nemá, datum poslání) a řekne, že každé přečtené jméno se
+    páruje nejdřív s osobami seznamu a v celém stromu se hledá (`strom find "<jméno>"`) jen jméno, které žádné
+    z nich neodpovídá;
+  - sken pramene poslaný k seznamu zůstane obrazem pramene a seznam si ponechá stejně; úkol k jeho přečtení má mezi
+    osobami, kterých se týká, osoby seznamu (do 50);
+  - seznam nejvýš 100 000 osob a 2 MB; jinak most seznam odmítne;
+  - v Archivu Stromu se seznam jen uloží k materiálu, nic víc.
+- **Ovládání:** aplikace: **Poslat materiál…** → **Týká se** → seznam ([A3.5.18](A3-evidence-in-the-app.md#A3.5.18)).
+  Terminál: `strom input show I…` ukáže řádek seznamu (název, počet osob, kolik jich výzkum nemá, pravidlo, soubor).
+- **Platí od:** výzkum 1.37.0 (sken pramene k seznamu také 1.37.0)
+
+<!-- zdroj: research:de5f709d src/core/lists.ts (LIST_ID, LIST_PEOPLE 50, LIST_MAX 100 000, LIST_BODY_MAX 2 MB, .strom/lists/<id>.json, notes/lists/<hash>.json, takeList), src/core/live.ts PUT <token>/lists/<id> (list.bad-body 400, list.large 413), X-Strom-List-Ref, media.no-list 404, BRIDGE_FEATURES media.list, src/brief/brief.ts listLine, src/commands/intake.ts (řádek list v input show, --list), src/core/model.ts Input.list · 5f429022 (soubor seznamu jako zapsaná operace, i v archivu) · 778846e6 scanLists (media.list.source: sken pramene, osoby seznamu do 50 v about úkolu, „match each name you read on it to them first … strom find“) · CHANGELOG.md 1.37.0 „Material sent to a list of people“ · dirigent:spec/137 K2.2, K2.4, K2.5 · app:docs/ZADANI_VYZKUM_material-seznam.md (Odpověď výzkumu) -->
