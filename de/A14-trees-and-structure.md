@@ -55,6 +55,11 @@ Zeile kommen aus dem Register der Stammbäume; die Daten des Stammbaums werden d
   6. **Stammbaum löschen…**.
 - Fußzeile des Fensters: **Alle exportieren**, **Neuer Stammbaum**, **Schließen**. Ab 6 Stammbäumen steht über der
   Liste das Feld **Stammbäume durchsuchen…**.
+- **Ablegen auf einer Zeile:** eine GEDCOM-Datei oder ein Strom-Stammbaum (`.json`), auf der Zeile eines Stammbaums
+  abgelegt, öffnet den Zusammenführungs-Assistenten mit diesem Stammbaum als Ziel; die Zeile eines Stammbaums, mit der
+  Maus auf eine andere Zeile gezogen, führt ihn über den Assistenten in diesen Stammbaum zusammen. Die Zeile unter
+  einer gezogenen Datei ist gestrichelt umrandet und sagt „Ablegen: {Datei} zum Stammbaum {Stammbaum} hinzufügen“
+  ([A8.5.1](A8-merging-trees.md#A8.5.1)).
 - **Grenzen:**
   - ein gesperrter Stammbaum hat in ⋯ nur Lesen und **Entsperren**; ein Stammbaum, den eine neuere Version der App
     gespeichert hat, nur Lesen;
@@ -67,7 +72,7 @@ Zeile kommen aus dem Register der Stammbäume; die Daten des Stammbaums werden d
   auf dem Telefon das Blatt der Stammbäume → **Stammbäume verwalten ›**.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:3110125c src/ui/tree-management.ts renderTreeManagerList (stats z indexu, badges, canStructure, pendingRow, mergeFacts subPending 134 S-P2, pendingOrphans, targetGone, searchable ≥ 6) · fbd97361 src/tree-row.ts treeOriginLine (research → copy → fromTree → importedFrom → none) · src/ui/tree-actions.ts treeActionGroups (overview, research, settings, structure, manage, delete, trees; manageTrees jen mimo správu) · 7b967fd8 strings.ts treeManager.imagesShared, imagesSharedTip (134 S-P1) · bcb2a0fa (kopie s vypnutým přepínačem, ◎ Sleduje se živě, zápis stojí) · strings.ts structure.research, followed, writeStopped, fromTree, fromGedcom, fromFile, mergeHistory, pendingRow, savedAt, pendingOrphans, targetGone, treeManager.* -->
+<!-- zdroj: app:3110125c src/ui/tree-management.ts renderTreeManagerList (stats z indexu, badges, canStructure, pendingRow, mergeFacts subPending 134 S-P2, pendingOrphans, targetGone, searchable ≥ 6) · fbd97361 src/tree-row.ts treeOriginLine (research → copy → fromTree → importedFrom → none) · src/ui/tree-actions.ts treeActionGroups (overview, research, settings, structure, manage, delete, trees; manageTrees jen mimo správu) · 7b967fd8 strings.ts treeManager.imagesShared, imagesSharedTip (134 S-P1) · bcb2a0fa (kopie s vypnutým přepínačem, ◎ Sleduje se živě, zápis stojí) · strings.ts structure.research, followed, writeStopped, fromTree, fromGedcom, fromFile, mergeHistory, pendingRow, savedAt, pendingOrphans, targetGone, treeManager.* · app:73ee4625 src/tree-drop.ts, src/ui/tree-management.ts (puštění na řádek) · strings.ts mergeWizard.dropOnTree -->
 
 <a id="A14.2"></a>
 ## A14.2 Struktur ändern…
@@ -83,6 +88,7 @@ Stammbaum geschehen soll. Bei jeder Option steht, welcher Stammbaum sich ändert
 | **Aufteilen** | **In Familien…** | nach Stammlinien, Zweigen oder aus Sicht einer Person entstehen neue Stammbäume ([A14.4](#A14.4)) |
 | | **Nicht verbundene Teile trennen…** | aus Teilen, die nichts verbindet, entstehen neue Stammbäume ([A14.4](#A14.4)) |
 | **Zusammenführen** | **Auswahl oder ganzen Stammbaum in einen anderen…** | über den Zusammenführungs-Assistenten; der Zielstammbaum ändert sich, rückgängig machbar ([A14.5](#A14.5)) |
+| | **Aus einem anderen Stammbaum in diesen Stammbaum…** | ein anderer Stammbaum der App über den Zusammenführungs-Assistenten; dieser Stammbaum ändert sich, rückgängig machbar ([A14.5](#A14.5)) |
 | | **Aus einer Datei in diesen Stammbaum…** | GEDCOM oder Strom-Datei (JSON) über den Zusammenführungs-Assistenten; dieser Stammbaum ändert sich, rückgängig machbar ([A14.5](#A14.5)) |
 
 Neuer Stammbaum, Kopie und Aufteilen ändern den ursprünglichen Stammbaum nicht.
@@ -97,7 +103,13 @@ Neuer Stammbaum, Kopie und Aufteilen ändern den ursprünglichen Stammbaum nicht
     anderen Stammbaum.“ Ein Ziel, in das gerade nicht geschrieben werden kann, graut die Option nicht aus: warum, sagt
     der Zusammenführungs-Assistent ([A8.5](A8-merging-trees.md#A8.5));
   - **Aus einer Datei…** bei einem live verfolgten Stammbaum: „Der Stammbaum wird live verfolgt; hineinschreiben geht
-    gerade nicht.“ mit dem Link **Verfolgung beenden**.
+    gerade nicht.“ mit dem Link **Verfolgung beenden**;
+  - **Aus einem anderen Stammbaum in diesen Stammbaum…**, der erste Grund, der zutrifft: „Es gibt keinen anderen
+    Stammbaum.“ → „Nach dem Öffnen des Stammbaums.“ → „Der Stammbaum wird live verfolgt; hineinschreiben geht gerade
+    nicht.“ mit dem Link **Verfolgung beenden**.
+- Alle Optionen sind ohne Scrollen auf einem Notebook-Bildschirm mit 1366 × 657 und mit 1024 × 768 zu sehen, auch
+  mit den ausgegrauten Optionen und den Gründen darunter. Wo unter dem Fensterrand noch etwas ist, blendet der untere
+  Teil des Fensters aus.
 - **Grenzen:** ein gesperrter Stammbaum und ein Stammbaum nur zum Lesen haben das Fenster nicht (der Eintrag fehlt).
   Bei den Optionen hat das Fenster **Schließen**, bei den weiteren Schritten **Zurück** · **Abbrechen** und die
   Schaltfläche des Schritts; aus Stammbäume verwalten geöffnet, kehrt es dorthin zurück.
@@ -106,7 +118,7 @@ Neuer Stammbaum, Kopie und Aufteilen ändern den ursprünglichen Stammbaum nicht
   Pfeiltasten nach oben und unten, Pos1 und Ende wechseln zwischen den aktiven Optionen.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:a9bc0b6b src/structure-options.ts (OPTIONS, STRUCTURE_GROUPS, blocked: select notOpen, parts connected, into noOther, file notOpen/followed+stopFollowing; readOnly bez dialogu), src/ui/structure-ui.ts structureOptionRow (důvod pod volbou, Ukončit sledování), structureOpenTree, structureRunOption, arrowKeys · defe53b4 (Zavřít na volbách, Zpět · Zrušit · primární na krocích) · 45d5be44 (telefon) · strings.ts structure.intro, group.*, opt*, why*, openTree, research.stop -->
+<!-- zdroj: app:a9bc0b6b src/structure-options.ts (OPTIONS, STRUCTURE_GROUPS, blocked: select notOpen, parts connected, into noOther, file notOpen/followed+stopFollowing; readOnly bez dialogu), src/ui/structure-ui.ts structureOptionRow (důvod pod volbou, Ukončit sledování), structureOpenTree, structureRunOption, arrowKeys · defe53b4 (Zavřít na volbách, Zpět · Zrušit · primární na krocích) · 45d5be44 (telefon) · strings.ts structure.intro, group.*, opt*, why*, openTree, research.stop · app:5e85dfc1 src/structure-options.ts (from: noOther → notOpen → followed + stopFollowing) · fef250eb, f4050b1c (všechny volby bez posouvání do 1366 × 657 a 1024 × 768, rozplynutí spodku okna) · dirigent:spec/139 K3.2, K3.3 -->
 
 <a id="A14.3"></a>
 ## A14.3 Neuer Stammbaum aus einer Auswahl und Kopie des ganzen Stammbaums
@@ -204,15 +216,26 @@ machen ([A8.12](A8-merging-trees.md#A8.12)).
 
   **Weiter zum Assistenten** öffnet den Assistenten, in dem der Zielstammbaum gewählt wird. Dieser Stammbaum ändert
   sich nicht.
+- **Aus einem anderen Stammbaum in diesen Stammbaum…** öffnet **Aus einem anderen Stammbaum übernehmen**, den Schritt
+  „aus welchem Stammbaum“: „Welcher Stammbaum in diesen übernommen wird. Gewählt wird der ganze; eingrenzen lässt er
+  sich im ersten Schritt des Assistenten.“ Angeboten werden alle anderen Stammbäume der App alphabetisch, auch
+  ausgeblendete und Kopien, jeder mit „N Personen · Zeile der Herkunft · Ausgeblendet“ ([A14.1](#A14.1)). **Weiter
+  zum Assistenten** öffnet den Zusammenführungs-Assistenten mit dem gewählten ganzen Stammbaum als Import und diesem
+  Stammbaum als Ziel ([A8.5](A8-merging-trees.md#A8.5)). Der gewählte Stammbaum ändert sich nicht; dieser Stammbaum
+  ändert sich erst nach der Bestätigung im Assistenten, und das Zusammenführen lässt sich rückgängig machen
+  (**Rückgängig** in der Meldung, **Verlauf der Zusammenführungen**). Ein langer Name ohne Leerzeichen wird auf dem
+  Telefon in der Zeile umbrochen.
 - **Aus einer Datei in diesen Stammbaum…:** **GEDCOM-Datei (.ged)** (aus einem anderen Programm: MyHeritage, Geni,
   Ancestry, Gramps…) oder **Strom-Datei (.json)** (ein Export aus Strom, etwa von Verwandten). Nach der Dateiauswahl
   öffnet sich der Zusammenführungs-Assistent mit diesem Stammbaum als Ziel. In den Stammbaum wird nichts geschrieben,
   bis der Assistent es bestätigt.
 - **Grenzen:** wenn gerade kein Stammbaum die Zusammenführung aufnehmen kann, bleibt das Fenster Struktur ändern, und
-  der Assistent sagt, warum. Aus einer Datei hinzufügen geht nur in einen geöffneten Stammbaum, der nicht live verfolgt
-  wird. Was nach einer Zusammenführung an die Forschung gesendet wird, regelt [A8.13](A8-merging-trees.md#A8.13).
-- **Bedienung:** **Struktur ändern…** › **Auswahl oder ganzen Stammbaum in einen anderen…**, **Aus einer Datei in
-  diesen Stammbaum…**
+  der Assistent sagt, warum. Aus einer Datei und aus einem anderen Stammbaum hinzufügen geht nur in einen geöffneten
+  Stammbaum, der nicht live verfolgt wird. Was nach einer Zusammenführung an die Forschung gesendet wird, regelt
+  [A8.13](A8-merging-trees.md#A8.13).
+- **Bedienung:** **Struktur ändern…** › **Auswahl oder ganzen Stammbaum in einen anderen…**, **Aus einem anderen
+  Stammbaum in diesen Stammbaum…**, **Aus einer Datei in diesen Stammbaum…**; eine Datei oder die Zeile eines
+  Stammbaums, auf einer Zeile von Stammbäume verwalten abgelegt ([A8.5.1](A8-merging-trees.md#A8.5.1))
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:f0c5a3fb src/ui/structure-ui.ts structureJoinWhatStep, structureJoin (whole → showMergeTreesDialog, selection → structureWhoStep mode join → mergeSubsetInto „{strom} — {co}“), structureFileStep (startGedcomImportPlain, startJsonImportIntoTree) · 29d02a8c joinPartners · strings.ts structure.joinTitle, joinWhatIntro, joinWhole, joinWholeDesc, joinSelection, joinSelectionDesc, joinNote, continueGuide, joinPartners, fileTitle, fileGed*, fileJson*, fileNote -->
+<!-- zdroj: app:f0c5a3fb src/ui/structure-ui.ts structureJoinWhatStep, structureJoin (whole → showMergeTreesDialog, selection → structureWhoStep mode join → mergeSubsetInto „{strom} — {co}“), structureFileStep (startGedcomImportPlain, startJsonImportIntoTree) · 29d02a8c joinPartners · strings.ts structure.joinTitle, joinWhatIntro, joinWhole, joinWholeDesc, joinSelection, joinSelectionDesc, joinNote, continueGuide, joinPartners, fileTitle, fileGed*, fileJson*, fileNote · app:5e85dfc1 src/ui/structure-ui.ts (from: ostatní stromy podle abecedy, persons · treeOriginText · hiddenBadge; celý strom jako import, otevřený strom cíl) · fef250eb (dlouhý název na telefonu) · strings.ts structure.optFrom, optFromDesc, fromTitle, fromStep, fromIntro, fromNote · dirigent:spec/139 K3.2 -->

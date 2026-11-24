@@ -162,6 +162,9 @@ Schritten. In den Stammbaum wird nichts geschrieben, bis das Schreiben im Schrit
 | anderer Stammbaum | **Stammbäume zusammenführen** | **Struktur ändern…** › **Auswahl oder ganzen Stammbaum in einen anderen…** › **Der ganze Stammbaum** ([A14.5](A14-trees-and-structure.md#A14.5)); das Ziel ist der geöffnete Stammbaum, beim geöffneten Stammbaum ein anderer |
 | Auswahl von Personen des Stammbaums (Stammlinie, Liste, Linie, Ansicht, von Hand) | **Stammbäume zusammenführen** | **Struktur ändern…** › **Auswahl oder ganzen Stammbaum in einen anderen…** › **Eine Auswahl…** |
 | GEDCOM- oder Strom-Datei (JSON) in den geöffneten Stammbaum | **Stammbaum importieren** | **Struktur ändern…** › **Aus einer Datei in diesen Stammbaum…** |
+| anderer Stammbaum in den geöffneten Stammbaum | **Stammbäume zusammenführen** | **Struktur ändern…** › **Aus einem anderen Stammbaum in diesen Stammbaum…** ([A14.5](A14-trees-and-structure.md#A14.5)) |
+| GEDCOM-Datei oder Strom-Stammbaum (`.json`), auf dem Fenster der App abgelegt | **Stammbaum importieren** | die Datei auf das Fenster ziehen; Ziel ist der geöffnete Stammbaum ([A8.5.1](#A8.5.1)) |
+| Datei, auf der Zeile eines Stammbaums in Stammbäume verwalten abgelegt, Zeile eines Stammbaums auf eine andere Zeile gezogen | **Stammbaum importieren** / **Stammbäume zusammenführen** | Stammbäume verwalten; Ziel ist der Stammbaum der Zeile, auf der abgelegt wurde ([A8.5.1](#A8.5.1)) |
 | aus einem anderen Strom gesendete Änderungen | **Empfangene Änderungen** | Vorschau der empfangenen Änderungen → **Im Detail prüfen** |
 
 - **Schritte:** **Was damit** ([A8.6](#A8.6)), **Wer ist wer** ([A8.7](#A8.7)), **Wen hinzufügen** ([A8.8](#A8.8)),
@@ -193,6 +196,49 @@ Schritten. In den Stammbaum wird nichts geschrieben, bis das Schreiben im Schrit
 
 <!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md · app:52171573 (dotaz 10: větší okno, lišta kroků s počty, pod 1100 px číslem) · 6e36ad08 (V-N4: cílový strom v nadpisu, stavovém řádku, Porovnat, řádku rozpracovaného) · a9bc0b6b, f0c5a3fb (139: Sloučit do jiného stromu a Sloučit pohled do… nahrazené Změnit strukturu; mergeViewInto bez volajícího) · strings.ts structure.pendingRow -->
 
+<a id="A8.5.1"></a>
+### A8.5.1 Eine mit der Maus abgelegte Datei oder ein Stammbaum
+
+Eine GEDCOM-Datei und ein Strom-Stammbaum (`.json`) lassen sich durch Ziehen in den Assistenten bringen: auf das
+Fenster der App oder auf die Zeile eines Stammbaums in Stammbäume verwalten. Was geschieht, bestimmen die Datei und die
+Stelle, an der sie abgelegt wird.
+
+- **Auf dem Fenster der App:**
+  - eine `.ged`-Datei öffnet den Assistenten **Stammbaum importieren** mit dem Ziel im geöffneten Stammbaum
+    (**Neuer Stammbaum**, **Zu Stammbaum hinzufügen**, **Nur vergleichen**);
+  - eine `.json`-Datei wird zuerst gelesen. Ein Stammbaum öffnet denselben Assistenten; ein verschlüsselter Stammbaum
+    fragt vorher nach dem Passwort. Die Sicherung **Alle exportieren** und ein Änderungspaket aus einem anderen Strom
+    gehen den Weg des JSON-Imports. Eine andere `.json`-Datei ist für eine Forschung, die Stapel annimmt, Material
+    ([R11.4](R11-material-from-the-user.md#R11.4)); sonst sagt die App „{Datei} ist keine lesbare Stammbaumdatei
+    (.json). Nichts wurde geändert.“;
+  - mehrere Dateien auf einmal gehen bei einer Forschung, die Stapel annimmt, in einen Stapel; sonst entscheidet die
+    erste Datei;
+  - während des Ziehens wird eine einzelne Datei vom Typ JSON als Stammbaum genommen: die Aufschrift über dem Fenster
+    sagt, dass sich der Assistent öffnet, kein Stapel;
+  - eine andere Datei lehnt das Fenster ab: „Hier können nur GEDCOM-Dateien (.ged) und Strom-Stammbäume (.json)
+    abgelegt werden.“ Der leere Bildschirm bietet „.ged- oder .json-Datei zum Öffnen hier ablegen“ an.
+- **Auf der Zeile eines Stammbaums in Stammbäume verwalten:**
+  - eine `.ged`- oder `.json`-Datei, auf einer Zeile abgelegt, öffnet den Assistenten mit der Auswahl **Zu Stammbaum
+    hinzufügen** und dem Stammbaum dieser Zeile als Ziel. Der geöffnete Stammbaum bleibt geöffnet; das Schließen des
+    Assistenten führt zurück zu Stammbäume verwalten;
+  - die Zeile eines Stammbaums, mit der Maus auf eine andere Zeile gezogen, öffnet den Assistenten **Stammbäume
+    zusammenführen**: der gezogene Stammbaum ist der Import, der Stammbaum darunter das Ziel;
+  - die Zeile unter einer gezogenen Datei ist gestrichelt umrandet und sagt, was das Ablegen tut: „Ablegen: {Datei}
+    zum Stammbaum {Stammbaum} hinzufügen“;
+  - ein Stammbaum, in den gerade nicht geschrieben werden kann (gesperrt, live verfolgt, aus einer neueren
+    App-Version), wird nicht zum Ziel: der Assistent bleibt bei der Auswahl **Zu Stammbaum hinzufügen** ohne gewähltes
+    Ziel, und die Kachel dieses Stammbaums in Schritt 1 sagt, warum. Ein anderer Stammbaum wird nicht von selbst
+    gewählt;
+  - eine Zeile, die auf sich selbst abgelegt wird, Ablegen per Berührung oder in einer schreibgeschützt geöffneten App
+    bewirkt nichts. Das Menü ⋯ der Zeile bleibt.
+- **Grenzen:** ohne den Assistenten wird nichts geschrieben; das Schreiben gilt wie jedes Zusammenführen und lässt
+  sich zurücknehmen ([A8.12](#A8.12)).
+- **Bedienung:** eine Datei auf das Fenster oder auf eine Zeile von Stammbäume verwalten ziehen; die Zeile eines
+  Stammbaums auf eine andere Zeile ziehen.
+- **Gilt seit:** App 3.32.0
+
+<!-- zdroj: app:b907d506 src/drop-route.ts dropRoute (guide-ged, json, batch, refuse), jsonDropKind (tree / šifrovaný, app-file: záloha Exportovat vše a balíček změn, other), dragLooksLikeJson · strings.ts onlyGedcom, dropHint, unreadableJson · app:73ee4625 src/tree-drop.ts treeRowDrop (sám na sebe, jen ke čtení nic), treeRowFileRoute, počáteční cíl (blokovaný strom nevybrán, důvod na dlaždici kroku 1, keepAdd) · src/ui/tree-management.ts (čárkovaný řádek, dotyk nic, ⋯ zůstává) · strings.ts mergeWizard.dropOnTree · dirigent:spec/134 K10.2, K10.3 -->
+
 <a id="A8.6"></a>
 ## A8.6 Schritt 1: Was damit
 
@@ -203,7 +249,7 @@ die schon im Stammbaum ist.
 |---|---|
 | **Neuer Stammbaum** | ein neuer Stammbaum mit den Personen des Imports entsteht; er wird nicht mit einer Forschung verbunden; bestehende Stammbäume bleiben unverändert |
 | **Zu Stammbaum hinzufügen** | die Personen des Imports werden dem gewählten Stammbaum hinzugefügt (**In welchen Stammbaum**) |
-| **Nur vergleichen** | dieselben Schritte werden durchlaufen, aber nichts wird geschrieben; die Liste lässt sich am Ende speichern |
+| **Nur vergleichen** | dieselben Schritte werden durchlaufen, aber nichts wird geschrieben (Stammbaum, Sicherungen oder Dateien); die Liste lässt sich am Ende speichern |
 | **Als JSON speichern** | **JSON herunterladen** lädt die umgewandelten Daten als `.json`-Datei herunter; in den Stammbaum wird nichts geschrieben |
 
 - **Was mit einer Person geschieht, die schon im Stammbaum ist** (bei **Zu Stammbaum hinzufügen**):
@@ -220,9 +266,12 @@ die schon im Stammbaum ist.
 - **Tauschen** kehrt bei zwei Stammbäumen um, was wohin hinzugefügt wird.
 - Dieselbe Datei, erneut in den Stammbaum zusammengeführt, erkennt der Assistent und sagt, wie viele Personen neu
   sind; die beim letzten Mal verbundenen Personen werden nicht verdoppelt. So kommen nur die Personen hinzu, die beim
-  letzten Mal ausgelassen wurden. Dasselbe gilt für einen Stammbaum: „Der Stammbaum Horákovi wurde schon am
-  12. 11. 2026 hierher zusammengeführt. Nur 5 Personen sind neu; 40 sind mit der Zusammenführung vom 12. 11. 2026
-  verbunden und werden nicht verdoppelt.“
+  letzten Mal ausgelassen wurden. Dasselbe gilt für einen Stammbaum: „Der Stammbaum Horákovi wurde schon hierher
+  zusammengeführt (12. 11. 2026). Nur 5 Personen sind neu; 40 sind mit dieser früheren Zusammenführung verbunden und
+  werden nicht verdoppelt.“
+- **Regeln nach Programm:** eine GEDCOM-Datei aus einem Programm, für das eine Regel gespeichert ist, hat den Umfang
+  und die Wahl aus Schritt 4 vorausgefüllt: „Vorausgefüllt nach der für Dateien aus {Programm} gespeicherten Regel
+  (änderbar).“ ([A8.6.1](#A8.6.1))
 - Eine Kopie eines Stammbaums und ein Stammbaum ohne Forschung haben in Schritt 1 die Beschreibung „Kopie des
   Stammbaums „{Name}“ · ohne Forschung“; bei einem Ziel ohne Forschung steht „{Stammbaum} hat keine Forschung: nach
   der Zusammenführung wird nichts gesendet.“ ([S1.10](S1-connecting-app-and-research.md#S1.10)).
@@ -235,7 +284,39 @@ die schon im Stammbaum ist.
   geöffneten Stammbaum geht der Import nur als **Neuer Stammbaum**.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch -->
+<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch · app:02165311 strings.ts mergeWizard.repeat, repeatTree (datum dřívějšího sloučení v závorce) · app:fcddfcab (Jen porovnat: otisk všech stromů, záloh a souborů před a po; writePlan/applyPlan plán porovnání odmítnou) src/merge/write.ts · app:ad0ea45a strings.ts mergeWizard.prefilledFrom -->
+
+<a id="A8.6.1"></a>
+### A8.6.1 Regeln für die Dateien eines Programms
+
+Der Umfang aus Schritt 1 und die Regeln aus Schritt 4 lassen sich für GEDCOM-Dateien aus demselben Programm merken.
+Die nächste Datei aus diesem Programm beginnt den Assistenten damit; sie lassen sich ändern.
+
+- **Speichern:** in Schritt 5 steht über der Schaltfläche zum Schreiben das Kontrollkästchen „Für Dateien aus
+  {Programm} merken: Umfang c), Mein Stammbaum gilt“ (mit Regeln nach Art der Angabe „…, mit Ausnahmen nach Art der
+  Angabe“). Darunter: „Beim nächsten Mal wird Schritt 1 damit vorausgefüllt (änderbar). Gespeicherte Regeln stehen
+  unter Einstellungen → Daten und Datenschutz.“ Das Kästchen ist standardmäßig nicht angekreuzt, auch bei einem
+  vorausgefüllten Schritt 1.
+- **Wann gespeichert wird:** erst nach dem Schreiben; bei **Nur vergleichen** nach **Liste speichern…**. Ein
+  geschlossener Assistent speichert nichts.
+- **Was gespeichert wird:** Umfang und Regeln für das ganze Zusammenführen und nach Art der Angabe. Regeln für eine
+  Person oder einen Wert werden nicht gespeichert: sie gehören zu den Personen eines Stammbaums. Für ein Programm gilt
+  eine Regel; eine neuere ersetzt die ältere.
+- **Wo:** in den Einstellungen dieses Geräts, nicht im Stammbaum. **Einstellungen** → **Daten und Datenschutz** →
+  **Gespeicherte Importregeln** („Füllen Schritt 1 des Import-Assistenten für Dateien aus demselben Programm vor.“)
+  hat eine Zeile für jedes Programm (Umfang · Regeln) mit **Entfernen**. Ohne gespeicherte Regel wird die Gruppe
+  nicht angezeigt.
+- **Vorausfüllen:** Schritt 1 der nächsten Datei aus demselben Programm hat Umfang und Regeln aus der gespeicherten
+  Regel und unter dem Umfang den Satz „Vorausgefüllt nach der für Dateien aus {Programm} gespeicherten Regel
+  (änderbar).“ Ein unvollendetes Zusammenführen behält seine Wahl.
+- **Grenzen:** nur eine GEDCOM-Datei, die das Programm nennt, das sie erstellt hat (Kopf der Datei, `HEAD.SOUR`), und
+  nur bei **Zu Stammbaum hinzufügen** und **Nur vergleichen**. Stammbaum, Auswahl und `.json`-Datei nennen kein
+  Programm; **Neuer Stammbaum** hat weder Umfang noch Regeln.
+- **Bedienung:** Schritt 5 des Assistenten; **Einstellungen** → **Daten und Datenschutz** → **Gespeicherte
+  Importregeln**.
+- **Gilt seit:** App 3.32.0
+
+<!-- zdroj: app:ad0ea45a src/merge/saved-rules.ts sourceProgram (jen ged s program), canRemember (add | compare, ne json), ruleFromChoices (scope, rules.all, rules.kind; ne osoba ani hodnota), applySavedRule, rememberLabel, savedRuleDetail · src/merge/steps/step5-plan.ts:549 (políčko nad tlačítkem, rememberNote) · strings.ts mergeWizard.rememberRules, rememberNote, rememberKinds, prefilledFrom, settings.rulesSetting, rulesSettingHint, rulesRowDetail, rulesRemove, groupData · dirigent:spec/134 K10.4 -->
 
 <a id="A8.7"></a>
 ## A8.7 Schritt 2: Wer ist wer
@@ -267,10 +348,27 @@ die geschrieben wird, ist immer sichtbar und lässt sich aufheben.
   stehen zeilenweise, von den Einträgen die ersten drei und „N weitere ▸“ / **Einklappen**. Der Rest der
   Unentschiedenen steht in der Fußzeile der Liste; die Liste lässt sich zu einer schmalen Leiste einklappen
   (**Paarliste ausblenden** / **Paarliste einblenden**). Auf dem Telefon ist der Schritt unverändert.
+- **Wo sich der Schritt öffnet:** wartet in **Vielleicht gleich** ein unentschiedenes Paar, öffnet sich Schritt 2
+  dort, beim ersten davon (auch nach der Rückkehr aus Schritt 1 oder aus einem späteren Schritt und bei einem
+  unvollendeten Zusammenführen); sonst bei der zuletzt gezeigten Gruppe. Eine innerhalb des Schritts von Hand
+  umgeschaltete Gruppe bleibt.
+- **Zu entscheiden N** in den Zahlen (auf dem Telefon die Zeile der Zahlen) und „· N zu entscheiden“ unter Schritt 2
+  führen zum ersten unentschiedenen Paar in **Vielleicht gleich** (auf dem Telefon zu seinem Kopf). Bleiben nur
+  unverbundene Gruppen, führen sie zu Schritt 3. Bei 0 und nach dem Schreiben führen sie nirgendwohin.
+- **Partner einer verbundenen Person:** ist eine Person des Imports verbunden und sind es auch ihre gemeinsamen
+  Kinder, wird ihr Partner aus dem Import in **Vielleicht gleich** mit dem anderen Elternteil dieser Kinder im
+  Stammbaum angeboten, mit dem Grund „Partner einer verbundenen Person, gemeinsame Kinder“, auch bei anderem
+  Nachnamen (Geburtsname × Name nach der Heirat). Bedingungen: das Geschlecht unterscheidet sich nicht, und ein
+  Vorname ist gleich (Initiale oder Kurzform des Namens nur bei ähnlichem Nachnamen oder wenn es der Nachname des
+  Partners nach der Heirat ist). Der Wert liegt unter der Grenze 80, es entscheidet also der Mensch. Ein schwächeres
+  Paar einer anderen Person ohne solchen Beleg (Namensvetterin, Schwägerin) tritt zurück. Ein in Schritt 2
+  bestätigter oder von Hand gewählter Ehemann bringt so auch die Ehefrau.
+- Ein in Schritt 4 mit **Dieselbe Person** verbundenes Paar ([A8.9](#A8.9)) hat in Schritt 2 den Grund „dieselbe
+  Person, gewählt in Schritt 4“.
 - **Grenzen:** bei **Neuer Stammbaum** wird der Schritt übersprungen: alle Personen sind neu.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) -->
+<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) · app:e1c98f45 (K10.5: otevření na první nerozhodnuté dvojici Možná stejní, jinak skupina naposled; K rozhodnutí N a · N k rozhodnutí jako tlačítka, jen nenapojené → krok 3, při 0 a po zápisu nic) strings.ts mergeWizard.cntPending, subPending · app:fd66ae63 (K10.6: partner spojené osoby se společnými spojenými dětmi, pod AUTO_CONFIRM_SCORE, pohlaví, jedno křestní jméno, iniciála či zkrácený tvar jen při podobném příjmení nebo příjmení po sňatku; slabší dvojice ustoupí; manžel potvrzený v kroku 2 přivede manželku) strings.ts merge.matchReasons.partner_shared_children · app:d6333eab strings.ts mergeWizard.joinedInStep4 · dirigent:spec/134 K10.5, K10.6 -->
 
 <a id="A8.8"></a>
 ## A8.8 Schritt 3: Wen hinzufügen
@@ -315,13 +413,24 @@ Stammbaum.
   **Belegte Angabe überschreiben?**; nach dem Schreiben ist die Angabe „Aus Stammbaum“, und der Beleg bleibt als
   Quelle bei der Person.
 - **Widersprüche bei Beziehungen** (andere Eltern, zweiter Partner, andere Heirat, dritter Elternteil, Schleife
-  Vorfahr–Nachkomme) werden immer einzeln entschieden: **Meins behalten**, **Aus dem Import** oder **Beides**. Eine
-  Schleife wird nie geschrieben.
+  Vorfahr–Nachkomme) entscheidet keine Sammelwahl: **Meins behalten**, **Aus dem Import** oder **Beides** wird bei
+  jeder Zeile gewählt. Eine Schleife wird nie geschrieben.
+- **Kinder eines Paars:** Kinder, deren Eltern denselben Widerspruch haben (dritter Elternteil, andere Eltern), sind
+  eine Zeile mit Anzahl („dritter Elternteil · 6 Kinder“, die Namen der ersten drei und „+3“) und werden einmal für
+  alle entschieden. Die Zahl der Widersprüche im Schritt zählt Zeilen.
+- **Dieselbe Person:** bei einem dritten Elternteil oder zweiten Partner, der für den Stammbaum neu ist, gibt es
+  zusätzlich die Wahl **Dieselbe Person**, wenn auf der anderen Seite eine Person des Stammbaums steht, die der Import
+  nicht kennt. Sie verbindet beide Personen wie eine Entscheidung aus Schritt 2 (ein von Hand gewähltes Paar, das mit
+  dem Zusammenführen gespeichert wird wie jedes andere). Widersprüche, die dadurch wegfallen, verschwinden, und die
+  Zahlen werden neu berechnet. Unter den Widersprüchen steht „Als dieselbe Person verbunden: {Person des Imports} =
+  {Person des Stammbaums}“ mit **Rückgängig** (stellt die Entscheidung wieder her, die vorher galt). Nicht angeboten
+  wird sie bei anderem Geschlecht, bei einer Person des Stammbaums, die schon mit jemand anderem verbunden ist, bei
+  einer Verbindung, die eine Schleife ergäbe, und beim verbindenden „?“.
 - **Grenzen:** beim Umfang **a)** und **b)** wird der Schritt übersprungen; gibt es Widersprüche bei Beziehungen,
   zeigt er nur sie. Bei **Neuer Stammbaum** wird er immer übersprungen.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step4-rules.ts (relOnly, s4SkippedTitle, protected), src/merge/plan.ts:438 relationConflicts, :534 (scope a), :542 (scope b jen prázdné) · src/merge/wizard-steps.ts step4 (newTree, scope a/b skip) · strings.ts mergeWizard.ruleAll, ruleOrder, rMine, rImport, rBoth, rPrecise, rEach, rDefault, importSays, kinds, protectedLine, protKinds, protTitle, protText, protAfter, relConf, relKinds, relAlways, keepMine, fromImport, both, loopNever, step4Skipped, s4SkippedTitle, relOnly · spec 134 §7, K0.3 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step4-rules.ts (relOnly, s4SkippedTitle, protected), src/merge/plan.ts:438 relationConflicts, :534 (scope a), :542 (scope b jen prázdné) · src/merge/wizard-steps.ts step4 (newTree, scope a/b skip) · strings.ts mergeWizard.ruleAll, ruleOrder, rMine, rImport, rBoth, rPrecise, rEach, rDefault, importSays, kinds, protectedLine, protKinds, protTitle, protText, protAfter, relConf, relKinds, relAlways, keepMine, fromImport, both, loopNever, step4Skipped, s4SkippedTitle, relOnly · spec 134 §7, K0.3 · app:d6333eab (K10.7, K10.8: děti jednoho páru se stejným rozporem jeden řádek, počet řádků; Stejná osoba u třetího rodiče či druhého partnera, spojení jako rozhodnutí kroku 2, Zpět; ne jiné pohlaví, osoba spojená s jiným, smyčka, „?“) strings.ts mergeWizard.relChildren, samePerson, samePersonTitle, joinedSame, undoSame · dirigent:spec/134 K10.7, K10.8 -->
 
 <a id="A8.10"></a>
 ## A8.10 Schritt 5: Was passiert, und das Schreiben
@@ -331,8 +440,9 @@ das, was die Liste zeigt.
 
 - **Liste:** **Neu**, **Verbunden**, **Geänderte Angaben**, **Ergänzte Angaben**, **Verbundene Quellen**, **Paare und
   Verbindungen**, **Quellen**, **Orte**, **Fotos und Dateien**, **Nicht übernommen** (bei jeder Person warum: Schritt
-  und Wahl) und **Wird nicht übernommen**. Ein Eintrag lässt sich abwählen. **Liste speichern…** speichert sie in
-  eine Datei.
+  und Wahl) und **Wird nicht übernommen**. Ein Eintrag lässt sich abwählen. **Liste speichern…** speichert sie als
+  Text (`.txt`) und als Daten (`.json`); der Text endet mit den Zahlen in Worten („Verbunden 40 · Neu 5 · Nicht
+  übernommen 0 · Zu entscheiden 0 · = 45 Personen im Import“).
 - **Ergänzte Angaben** (nur wenn es welche gibt): leere Angaben verbundener Personen, die das Schreiben ergänzt,
   zeilenweise Person · Angabe (E-Mail, weitere Namensformen, Ereignisse, Quellen, eine offene Frage…).
 - **Verbundene Quellen:** eine Quelle des Quellstammbaums wird nur mit derselben Quelle des Zielstammbaums verbunden
@@ -359,13 +469,17 @@ das, was die Liste zeigt.
   nicht: nichts wurde gespeichert.“ Das Fenster während des Schreibens zu schließen schadet nicht: das Schreiben wird
   beendet, oder es wird nichts geschrieben.
 - Das Schreiben ist ein Schritt **Rückgängig**.
-- **Grenzen:** bei **Nur vergleichen** wird nichts geschrieben; die Liste lässt sich speichern. Die Prüfung zählt die
-  durch den Umfang **b)** ergänzten leeren Angaben nicht zu **Geänderte Angaben**.
+- **Regeln merken:** bei einer GEDCOM-Datei, die ihr Programm nennt, steht über der Schaltfläche „Für Dateien aus
+  {Programm} merken: …“ ([A8.6.1](#A8.6.1)).
+- **Grenzen:** bei **Nur vergleichen** ist die Hauptschaltfläche **Liste speichern…**: sie speichert die Liste und
+  schließt den Assistenten. Geschrieben wird nichts: Stammbaum, Sicherungen und Dateien bleiben, wie sie waren, und
+  einen Vergleichsplan lässt die App nicht zum Schreiben durch. Die Prüfung zählt die durch den Umfang **b)**
+  ergänzten leeren Angaben nicht zu **Geänderte Angaben**.
 - **Bedienung:** die Schaltfläche „N Personen hinzufügen, M Angaben ändern“, mit ergänzten Angaben „…, F ergänzen“,
   beim neuen Stammbaum „Stammbaum mit N Personen anlegen“.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto -->
+<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto · app:fcddfcab (K10.1) src/merge/write.ts (plán compare se nezapíše), src/merge/plan-export.ts exportPlan (počty slovy cntTotal), src/merge/ui.ts savePlan (.txt a .json), src/merge/wizard-ui.ts primary (compare: savePlan, finishCompare) · app:ad0ea45a step5-plan.ts merge-s5-remember -->
 
 <a id="A8.11"></a>
 ## A8.11 Schritt 6: Was passiert ist, und der Verlauf der Zusammenführungen

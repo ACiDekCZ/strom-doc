@@ -69,8 +69,13 @@ through the bridge.
   older research everything is as before.
 - **From app 3.31.0 with research 1.36.0:** with several runs **Now** has a block for each run; each is followed and
   stopped on its own ([S4.1.8](#S4.1.8)).
+- **From app 3.32.0 with research 1.37.0:** when the agent saves a book's images through its browser
+  ([R9.5](R9-archives.md#R9.5)), its row says "agent saving images (k of n)" at the task: in the live panel, in
+  **Now** with one run, in a direction's row, in a run's block and at the directions. No progress bar; the number
+  grows with the images. Such a task is not in **Awaiting action** nor in the counts
+  ([R6.2.1](R6-awaiting-action.md#R6.2.1)). With an older research the rows are as before.
 
-<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, (3.28.0: app 8da3f11e MINI_OPEN_KEY strom-research-mini-open, miniPanelFolded, rememberMiniPanelFolded, ne na telefonu; otevřený Přehled panel nerozbalí), :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · spec 036 K1.8 · malý panel: app 2c018779 src/ui/research-ui.ts, research-directions-ui.ts (pod nadpisem linie jen jak) · 3.27.0 spec 057: app f05fff8e src/ui/research-actions-ui.ts overviewRows (research-item-overview první; stop při sledování, jinak followLive, ne bez agenta), src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (live.researchLink v záhlaví focus) · 28bbebeb src/ui/live-section-prefs.ts TOP_DEFAULTS (month.price false), research-overview-ui.ts appendOverviewSummary, strings.ts live.spendSessions, spendAmount · 87a6ea88 live.dirWorkedOn · strings.ts live.openOverview · 3.31.0: app 7be40d24 src/ui/landscape-panel-fold.ts (MQ_PHONE_LANDSCAPE, jen rozbalený panel, images nebo toast message, nerozbalí se sám, nepamatuje se) · SPEC.md 1120-app-108-diry · spec 116 · 3.31.0 spec 127: app:f89b5166, 040e42e6 src/research-holds.ts workingHoldText, waitsText, src/ui/research-ui.ts pausedText (statePaused · waitsArchive), workingHoldEl, src/ui/research-overview-ui.ts:921, src/research-link.ts features task.holds, archive.holds · strings.ts live.holdLast, holdFreeBy, waitsArchive · research cs.json who.agent -->
+<!-- zdroj: app:v3.21.2 src/ui/research-ui.ts:223 PANEL_CHANGES, (3.28.0: app 8da3f11e MINI_OPEN_KEY strom-research-mini-open, miniPanelFolded, rememberMiniPanelFolded, ne na telefonu; otevřený Přehled panel nerozbalí), :227 AUTO_FOLD, :3326 appendQueueSection(…, 3), renderLivePanel, renderIdleResearchPanel · src/ui/research-overview-ui.ts:5 (≥1280), :51 FOLDED_BY_DEFAULT, :53 GROUP_MS, :59 MAX_STEPS, :74, :309-311 · strings.ts live.overviewTitle, research.panelLabel, research.stop, research.atWork, research.queue · 3.27.0 Teď: app 4e4f6d8c src/research-link.ts WORKING_HELPS_FEATURE (working.helps), sanitizeWorking (helps jen s linií, branch) · src/ui/research-offline-ui.ts workingWhyText (helps → qWhyHelps + qWhyHow / qWhyHowBranch; větev mimo linie → qWhyOutBranch, ve skupině qWhyHowBranch) · src/ui/research-overview-ui.ts (Teď: důvod místo názvu linie) · strings.ts live.qWhyHelps, qWhyHow.*, qWhyHowBranch, qWhyOutBranch · spec 036 K1.8 · malý panel: app 2c018779 src/ui/research-ui.ts, research-directions-ui.ts (pod nadpisem linie jen jak) · 3.27.0 spec 057: app f05fff8e src/ui/research-actions-ui.ts overviewRows (research-item-overview první; stop při sledování, jinak followLive, ne bez agenta), src/ui/tree-actions.ts researchOverview · 8d564b35 src/ui/tree-overview.ts treeOverviewResearchLinkHtml (live.researchLink v záhlaví focus) · 28bbebeb src/ui/live-section-prefs.ts TOP_DEFAULTS (month.price false), research-overview-ui.ts appendOverviewSummary, strings.ts live.spendSessions, spendAmount · 87a6ea88 live.dirWorkedOn · strings.ts live.openOverview · 3.31.0: app 7be40d24 src/ui/landscape-panel-fold.ts (MQ_PHONE_LANDSCAPE, jen rozbalený panel, images nebo toast message, nerozbalí se sám, nepamatuje se) · SPEC.md 1120-app-108-diry · spec 116 · 3.31.0 spec 127: app:f89b5166, 040e42e6 src/research-holds.ts workingHoldText, waitsText, src/ui/research-ui.ts pausedText (statePaused · waitsArchive), workingHoldEl, src/ui/research-overview-ui.ts:921, src/research-link.ts features task.holds, archive.holds · strings.ts live.holdLast, holdFreeBy, waitsArchive · research cs.json who.agent · 3.32.0: app:7a10c93f (working[].saving jen s working.saving: kniha, dvě celá čísla, saved ≤ of) strings.ts live.workingSaving · research:81de7cdb src/core/live.ts working[].saving, feature working.saving -->
 
 <a id="S4.1.1"></a>
 ### S4.1.1 Follow the agent in the tree
@@ -1013,12 +1018,23 @@ waiting. A newly added item is then at the top and does not get lost among place
     panel is unchanged (except with a research with books, [S4.4.4](#S4.4.4)).
 - **With a research that knows books** (research 1.35.0): the switch **Groups** is a choice **Archive** | **Book** |
   **No groups**, and the order has a fourth option **Most tasks** ([S4.4.4](#S4.4.4)).
+- **From app 3.32.0 with research 1.37.0:** the order **Most helpful**: by how much dealing with an item gives the
+  research. For each item with tasks behind it, the research sends a score and a reason
+  ([R6.4.1](R6-awaiting-action.md#R6.4.1)):
+  - the highest score at the top; the same score keeps the research's order, items without a score (stories,
+    conflicts, places…) are at the end;
+  - groups as in an order by time: each place stands where its most helpful item stands; groups off give one list;
+  - the research's reason stands quietly under the row, only in this order ("a new generation: the parents of Jan
+    Horák · the direct line · unblocks 3 tasks"); in the overview, in the overview window, on a phone and in the
+    small panel with books. A long word without spaces wraps in the row;
+  - the choice is remembered like the other orders. An older research sends no score and does not have the choice;
+    a remembered **Most helpful** shows there as **Recommended**, and the choice stays remembered.
 - **Controls:** app: **Research overview → Awaiting action**, the button "⇅ Recommended ▾" after the kind chips (in
   the overview window in the section's sticky head) with the menu **Recommended** · **Newest first** · **Oldest
   first**, on a phone the sheet **Order**; the switch **Groups**.
 - **Since:** app 3.30.0
 
-<!-- zdroj: app:f3bb5631 src/research-waiting.ts WaitingOrder, WAITING_ORDERS, waitingSince (at), sortWaitingByTime (stejný čas v pořadí výzkumu, bez času na konci), phaseRows (recommended = groupWaiting; skupiny podle první položky, Ostatní a Místa také; bez skupin FLAT_GROUP), waitingPhases (todo i sent) · src/live-time.ts formatWaitingSince (do hodiny relativně, dnes čas, včera, den, den s rokem) · src/ui/waiting-order-ui.ts WAITING_ORDER_KEY strom-live-overview-waiting-order, WAITING_GROUPS_KEY, storedWaitingOrder, watchWaitingOrderStorage (storage event), noteWaitingNew (todoWaiting, waitingSeen; strom bez záznamu nic nového), waitingSideEl, waitingGroupTagEl, ORDER_ICON · src/ui/research-overview-ui.ts overviewWaitingOrderEl (total >= 2; přepínač role switch jen v časovém pořadí a se skupinami; list na telefonu isPhoneBar / sheet) · src/ui/overview-columns-ui.ts (lepkavá hlava v okně) · src/ui/hypothesis-waiting-ui.ts (hlava a pata za fázi) · src/ui/live-section-prefs.ts waitingSeen, noteWaitingSeen · strings.ts live.waitingOrder, waitingOrderRec, waitingOrderNew, waitingOrderOld, waitingGroups, waitingNewTag, waitingNewCount, waitingSinceYesterday, waitingOtherGroup, places.waiting.group · e2e/overview-waiting-order.spec.ts · CHANGELOG.cs.md 3.30.0 „Pořadí v Čeká na vyřízení“ · spec 083 K5.1–K5.4, rozhodnutí H1–H5 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md -->
+<!-- zdroj: app:f3bb5631 src/research-waiting.ts WaitingOrder, WAITING_ORDERS, waitingSince (at), sortWaitingByTime (stejný čas v pořadí výzkumu, bez času na konci), phaseRows (recommended = groupWaiting; skupiny podle první položky, Ostatní a Místa také; bez skupin FLAT_GROUP), waitingPhases (todo i sent) · src/live-time.ts formatWaitingSince (do hodiny relativně, dnes čas, včera, den, den s rokem) · src/ui/waiting-order-ui.ts WAITING_ORDER_KEY strom-live-overview-waiting-order, WAITING_GROUPS_KEY, storedWaitingOrder, watchWaitingOrderStorage (storage event), noteWaitingNew (todoWaiting, waitingSeen; strom bez záznamu nic nového), waitingSideEl, waitingGroupTagEl, ORDER_ICON · src/ui/research-overview-ui.ts overviewWaitingOrderEl (total >= 2; přepínač role switch jen v časovém pořadí a se skupinami; list na telefonu isPhoneBar / sheet) · src/ui/overview-columns-ui.ts (lepkavá hlava v okně) · src/ui/hypothesis-waiting-ui.ts (hlava a pata za fázi) · src/ui/live-section-prefs.ts waitingSeen, noteWaitingSeen · strings.ts live.waitingOrder, waitingOrderRec, waitingOrderNew, waitingOrderOld, waitingGroups, waitingNewTag, waitingNewCount, waitingSinceYesterday, waitingOtherGroup, places.waiting.group · e2e/overview-waiting-order.spec.ts · CHANGELOG.cs.md 3.30.0 „Pořadí v Čeká na vyřízení“ · spec 083 K5.1–K5.4, rozhodnutí H1–H5 · dirigent:test/vysledek-1116-app-103-odkazy-083-razeni.md · 3.32.0: app:5979d5c4 src/research-waiting.ts (gain: nejvyšší skóre, stejné v pořadí výzkumu, bez gain na konci; skupiny jako časové pořadí), src/research-link.ts (waiting[].gain jen s waiting.gain), src/ui/waiting-order-ui.ts, src/ui/research-overview-ui.ts (důvod pod řádkem jen v pořadí gain), f4050b1c (zalomení dlouhého slova) · strings.ts live.waitingOrderGain · research:44d3f750 src/core/waitgain.ts · dirigent:spec/105 K4.1 -->
 
 <a id="S4.4.4"></a>
 ### S4.4.4 Awaiting action by book
@@ -1336,6 +1352,32 @@ most**: how many runs may work on the tree at once, the run of the whole queue a
 - **Since:** app 3.31.0 (research 1.36.0)
 
 <!-- zdroj: app:4de0835a src/ui/research-tree-settings-ui.ts renderResearchRunsRow (pod dl.research-tree-agent; bez run.limit, v archivu a bez agenta se nekreslí; RUN_LIMIT_MIN 1, cap z výzkumu), setResearchRunsMax (POST settings/runs, 403 runs.raise → runsMaxRaise + příkaz) · src/research-runs.ts atRunLimit · strings.ts research.runsMax, runsMaxHint, runsMaxRaise, live.runsLimitReached, runsSettingsLink · research:src/core/live.ts runsLimitWrite, src/core/liveruns.ts runLimits (cap 10) · app:docs/ZADANI_DEV_beh-po-liniich.md §5 · dirigent:spec/126 K2.3 -->
+
+<a id="S4.4.13"></a>
+### S4.4.13 Research for this tree › Materials: sort with the agent without asking
+
+In the group **Materials** of the window **Research for this tree…** there is the switch **Sort with the agent
+without asking** ([R11.5.3](R11-material-from-the-user.md#R11.5.3)). It can be switched off in the app; switched on
+only in the research terminal.
+
+- **Switch:** “Sort with the agent… does not say the cost before each sorting; it still starts only on a click. Each
+  sorting uses the subscription or credit. Switching it on is possible only in the research terminal.” It is off by
+  default; it shows what the research says.
+- **Limits:**
+  - the app writes switching off through the bridge at once;
+  - switching on is refused by the research: the switch stays off, and under it stands “Not switched on. The command
+    for the research terminal:” with the command `strom config set sort.confirm no --for-tree` to copy. The sentence
+    goes as soon as the research says it is on;
+  - on: the dialog **Sort with the agent…** does not say the cost; sorting still starts only by its button, and the
+    AI tag and the number of files stay ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8));
+  - only with a research that offers the setting; not in the Strom archive nor at a research waiting for an agent.
+    Without the bridge the switch is inactive as with **The agent goes through files sent to the research by
+    itself** ([S4.4.11](#S4.4.11)).
+- **Controls:** app: **Research → Other actions → Research for this tree… → Materials → Sort with the agent without
+  asking** (only switching off). Terminal: `strom config set sort.confirm no|ask --for-tree`.
+- **Since:** app 3.32.0 (research 1.37.0)
+
+<!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 -->
 
 <a id="S4.5"></a>
 ## S4.5 Actions that open the research

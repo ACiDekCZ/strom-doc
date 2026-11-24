@@ -16,8 +16,13 @@ The list is worked out from the research each time; nothing is written into it.
 - **Controls:** app: the section **Awaiting action** · terminal: the menu **What waits (n)**, the status line
   **Waiting: N** · the page for the phone: **What waits · N**.
 - **Since:** research 1.3.0. The list by where things are dealt with, and in the app, from 1.14.0 (app 3.11.0).
+- **From research 1.37.0:** images the agent's browser saves ([R9.5](R9-archives.md#R9.5)) are the agent's work.
+  While the agent's session saves them, the task is not in the list, nor in the counts, labels and notices; the
+  Strom app shows it as work ("agent saving images (k of n)", [S4.1](S4-research-from-the-app.md#S4.1)). Only an
+  image the browser held back and saving whose session ended mid-way wait for a person ([R6.2.1](#R6.2.1)). Waits
+  written earlier show so by themselves.
 
-<!-- zdroj: research:src/core/waiting.ts:1-12, waitingFor :303-460 (filtr :321), actsAsArchive (v1.15.0) · src/cli/menu.ts:234, :379 · CHANGELOG.cs.md 1.14.0 · app:src/ui/research-overview-ui.ts research.waiting -->
+<!-- zdroj: research:src/core/waiting.ts:1-12, waitingFor :303-460 (filtr :321), actsAsArchive (v1.15.0) · src/cli/menu.ts:234, :379 · CHANGELOG.cs.md 1.14.0 · app:src/ui/research-overview-ui.ts research.waiting · 1.37.0: research:81de7cdb src/core/waiting.ts savedByAgentNow (ne ve waitingFor ani v počtech; zadržený snímek a sezení, které už úkol nedrží, čekají na člověka), src/core/ownsave.ts agentSaveWait · aae8f1aa src/cli/menu-waiting.ts (terminál Co čeká bez snímků, které ukládá agent) · 1c8a4380 (vlastní čekání agenta na snímek je hned člověka) -->
 
 <a id="R6.1.1"></a>
 ### R6.1.1 The count and what is only in the terminal
@@ -71,9 +76,18 @@ archive's permission**, **letter**, **family**, **web**, **other**.
 - **From research 1.35.0:** a wait for images written otherwise (images only in words, several books, a book the
   research does not have) is not written by `strom task wait`, and `strom task audit` finds such tasks and fixes them
   ([R6.9](#R6.9)).
+- **From research 1.37.0:** a file whose image number cannot be told (`000.jpg`) does not hold up the other images:
+  it stays lying and is reported once. Files named otherwise (by entries, `001-004.jpg`) are taken in in the folder's
+  order when nothing more is saved for 20 minutes; a task to which only part of the images came returns after the
+  same time with what came and what is missing ([R9.6](R9-archives.md#R9.6)).
+- **From research 1.37.0:** a wait for images the agent's browser saves tells a person only two things: an image
+  held back by the browser ("downloading several files from … to be allowed in the browser …") and saving stopped
+  by the end of the session ("saving through the agent's browser stopped at image 12 of B0003 …: the agent's session
+  ended — the next session goes on with it; or images 12-15 to be saved by hand from … into the task's folder").
+  This holds also for waits written by an older research.
 - **Since:** research 1.0.0. Waking after saving from 1.15.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
+<!-- zdroj: research:62e335eb, 6fee0f71 src/core/inboxwait.ts (000.jpg jednou, pořadí složky po 20 min, částečný příchod) · 81de7cdb src/core/waiting.ts waitOnNow, ownSaveSaid (browser.wait.held, browser.wait.stopped) · src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
 
 <a id="R6.2.2"></a>
 ### R6.2.2 A site to check
@@ -196,8 +210,38 @@ message.
 - **From research 1.35.0:** the research sends with an item also its book. The app 3.30.0 can group the items by book
   ([S4.4.4](S4-research-from-the-app.md#S4.4.4)); **What waits** has an overview of the books with the most tasks
   ([R6.8](#R6.8)).
+- **From research 1.37.0:** at an item with tasks behind it, it also sends how much dealing with it helps
+  ([R6.4.1](#R6.4.1)).
 
 <!-- zdroj: research:src/core/waiting.ts:73 SECTION_RANK, :75 DECIDE_RANK, :468 together, :478-492 ordered · src/core/waitkind.ts:238 waitGroupOf · assets/lang/cs.json:2313-2320 wait.group.* (:2359) · src/cli/menu-waiting.ts:205-232 · app:strings.ts:11958 waitingFilterLabel -->
+
+<a id="R6.4.1"></a>
+### R6.4.1 What helps most
+
+For each item with tasks behind it, the research works out how much dealing with it grows the family tree, and says
+why in a few words. The cost of a download is not weighed; only how much the tree grows counts. Nothing is read,
+sent or written.
+
+- **Score:** the sum of parts:
+  - **a new generation** (+50): the person the item concerns stands at the edge of the tree without both parents or
+    one of them, and the research is heading there (within the line's scope, not beyond its limit, not at a paused,
+    finished or probably living person, not at a parent who is only not documented). The part names one such
+    person: the highest generation in the line, then the lowest ID;
+  - **the direct line** (+30): the person the item concerns is an ancestor of the people the research is for;
+  - **tasks** (+10 for each, at most 10): the tasks dealing with it frees – its own, and each open or parked task that
+    needs the book of one of them. Other waiting tasks of the same book do not count; each is an item of its own.
+    It is said only from two tasks.
+- **Reason:** the parts in the research's language joined by " · ": "a new generation: the parents of Jan Horák"
+  (or "a new generation: the father of …", "a new generation: the mother of …"), "the direct line", "unblocks 3
+  tasks". An item with one task and nothing else has a score without a reason.
+- **Limits:** items without tasks (stories, sends, conflicts, places, branches, hypotheses, new wordings of a
+  transcription) and items with the score 0 have no score. It is worked out once for the whole **What waits**.
+- **Controls:** app: the order **Most helpful** in **Awaiting action** ([S4.4.3](S4-research-from-the-app.md#S4.4.3)).
+  Terminal: `strom task list --state waiting --order gain` (only with `--state waiting`, without `--book` and
+  `--off-tree`).
+- **Since:** research 1.37.0 (app 3.32.0)
+
+<!-- zdroj: research:44d3f750 src/core/waitgain.ts GAIN_POINTS (generation 50, line 30, task 10), UNBLOCKS_MAX 10, waitGains (edgeReach scope in, ne proof; kinship 0; bookOfTask, bookTasks open + parked; část unblocks od n ≥ 2; bez skóre 0), gainSays · src/core/waiting.ts (gain), src/core/live.ts waiting[].gain, feature waiting.gain · src/commands/tasks.ts task list --order gain (task.order) · assets/lang/cs.json wait.gain.* · CHANGELOG.cs.md 1.37.0 „Co nejvíc pomůže“ · dirigent:spec/105 K4.1 -->
 
 <a id="R6.5"></a>
 ## R6.5 What can be dealt with where

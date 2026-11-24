@@ -141,6 +141,9 @@ written to the tree until the write is confirmed in the step **What will happen*
 | another tree | **Merge trees** | **Change structure…** › **A selection or the whole tree into another tree…** › **The whole tree** ([A14.5](A14-trees-and-structure.md#A14.5)); the target is the open tree, for the open tree another one |
 | a selection of the tree's people (family line, list, line, view, by hand) | **Merge trees** | **Change structure…** › **A selection or the whole tree into another tree…** › **A selection…** |
 | a GEDCOM or Strom (JSON) file into the open tree | **Import a family tree** | **Change structure…** › **Add from a file to this tree…** |
+| another tree into the open tree | **Merge trees** | **Change structure…** › **From another tree into this tree…** ([A14.5](A14-trees-and-structure.md#A14.5)) |
+| a GEDCOM file or a Strom tree (`.json`) dropped on the app's window | **Import a family tree** | dragging the file onto the window; the target is the open tree ([A8.5.1](#A8.5.1)) |
+| a file dropped on a tree's row in Manage trees, a tree's row dragged onto another row | **Import a family tree** / **Merge trees** | Manage trees; the target is the tree of the row it was dropped on ([A8.5.1](#A8.5.1)) |
 | changes sent from another Strom | **Received changes** | the preview of received changes → **Review in detail** |
 
 - **Steps:** **What to do** ([A8.6](#A8.6)), **Who is who** ([A8.7](#A8.7)), **Whom to add** ([A8.8](#A8.8)), **Who
@@ -169,6 +172,42 @@ written to the tree until the write is confirmed in the step **What will happen*
 
 <!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md · app:52171573 (dotaz 10: větší okno, lišta kroků s počty, pod 1100 px číslem) · 6e36ad08 (V-N4: cílový strom v nadpisu, stavovém řádku, Porovnat, řádku rozpracovaného) · a9bc0b6b, f0c5a3fb (139: Sloučit do jiného stromu a Sloučit pohled do… nahrazené Změnit strukturu; mergeViewInto bez volajícího) · strings.ts structure.pendingRow -->
 
+<a id="A8.5.1"></a>
+### A8.5.1 A file or tree dropped with the mouse
+
+A GEDCOM file and a Strom tree (`.json`) can be brought into the guide by dragging: onto the app's window, or onto a
+tree's row in Manage trees. What happens is decided by the file and by the place where it is dropped.
+
+- **On the app's window:**
+  - one `.ged` file opens the guide **Import a family tree** with the target in the open tree (**New tree**, **Add to
+    a tree**, **Only compare**);
+  - one `.json` file is read first. A tree opens the same guide; an encrypted tree asks for the password first.
+    The backup **Export all** and a package of changes from another Strom go the way of the JSON import. Another
+    `.json` file is material for a research that accepts batches ([R11.4](R11-material-from-the-user.md#R11.4));
+    otherwise the app says “{file} is not a readable family tree file (.json). Nothing changed.”;
+  - several files at once go into a batch with a research that accepts batches; otherwise the first file decides;
+  - while dragging, one file of the JSON type is taken as a tree: the banner above the window says that the guide
+    opens, not a batch;
+  - any other file is refused by the window: “Only GEDCOM files (.ged) and Strom trees (.json) can be dropped here.”
+    The empty screen offers “Drop a .ged or .json file to open it”.
+- **On a tree's row in Manage trees:**
+  - a `.ged` or `.json` file dropped on a row opens the guide with the option **Add to a tree** and the tree of that
+    row as the target. The open tree stays open; closing the guide returns to Manage trees;
+  - a tree's row dragged with the mouse onto another row opens the guide **Merge trees**: the dragged tree is the
+    import, the tree under it the target;
+  - the row under a dragged file has a dashed outline and says what the drop does: “Drop: add {file} to the tree
+    {tree}”;
+  - a tree that cannot be written to now (locked, followed live, from a newer app version) does not become the
+    target: the guide stays at the option **Add to a tree** with no target chosen, and the tile of that tree in
+    step 1 says why. No other tree is chosen by itself;
+  - a row dropped on itself, a drop by touch, or a drop in an app open read-only does nothing. The row's ⋯ menu
+    stays.
+- **Limits:** nothing is written without the guide; the write counts as any merge and can be undone ([A8.12](#A8.12)).
+- **Controls:** dragging a file onto the window or onto a row of Manage trees; dragging a tree's row onto another row.
+- **Since:** app 3.32.0
+
+<!-- zdroj: app:b907d506 src/drop-route.ts dropRoute (guide-ged, json, batch, refuse), jsonDropKind (tree / šifrovaný, app-file: záloha Exportovat vše a balíček změn, other), dragLooksLikeJson · strings.ts onlyGedcom, dropHint, unreadableJson · app:73ee4625 src/tree-drop.ts treeRowDrop (sám na sebe, jen ke čtení nic), treeRowFileRoute, počáteční cíl (blokovaný strom nevybrán, důvod na dlaždici kroku 1, keepAdd) · src/ui/tree-management.ts (čárkovaný řádek, dotyk nic, ⋯ zůstává) · strings.ts mergeWizard.dropOnTree · dirigent:spec/134 K10.2, K10.3 -->
+
 <a id="A8.6"></a>
 ## A8.6 Step 1: What to do
 
@@ -178,7 +217,7 @@ The first step chooses what to do with the import, into which tree, and what hap
 |---|---|
 | **New tree** | a new tree with the import's people is created; it will not be linked to a research; existing trees stay unchanged |
 | **Add to a tree** | the import's people are added to the chosen tree (**Into which tree**) |
-| **Only compare** | the same steps are gone through, but nothing is written; the list can be saved at the end |
+| **Only compare** | the same steps are gone through, but nothing is written (the tree, backups or files); the list can be saved at the end |
 | **Save as JSON** | **Download JSON** downloads the converted data as a `.json` file; nothing is written to a tree |
 
 - **What to do with a person already in the tree** (with **Add to a tree**):
@@ -195,8 +234,10 @@ The first step chooses what to do with the import, into which tree, and what hap
 - **Swap** with two trees reverses what is added into what.
 - The same file merged into the tree again is recognized by the guide, which says how many people are new; the people
   joined last time are not doubled. So only the people left out last time are added. The same holds for a tree: “The
-  tree Horákovi was already merged into this one 12. 11. 2026. Only 5 people are new; 40 are joined with the merge of
-  12. 11. 2026 and will not be duplicated.”
+  tree Horákovi was already merged into this one (12. 11. 2026). Only 5 people are new; 40 are joined with that
+  earlier merge and will not be duplicated.”
+- **Rules by program:** a GEDCOM file from a program for which a rule is saved has the scope and the choices of step 4
+  filled in: “Filled in from the rule saved for files from {program} (can be changed).” ([A8.6.1](#A8.6.1))
 - A copy of a tree and a tree without a research have in step 1 the description “copy of the tree “{name}” · no
   research”; at a target without a research stands “{tree} has no research: nothing is sent after the merge.”
   ([S1.10](S1-connecting-app-and-research.md#S1.10)).
@@ -208,7 +249,36 @@ The first step chooses what to do with the import, into which tree, and what hap
   a tree open read-only the import is possible only as a **New tree**.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch -->
+<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch · app:02165311 strings.ts mergeWizard.repeat, repeatTree (datum dřívějšího sloučení v závorce) · app:fcddfcab (Jen porovnat: otisk všech stromů, záloh a souborů před a po; writePlan/applyPlan plán porovnání odmítnou) src/merge/write.ts · app:ad0ea45a strings.ts mergeWizard.prefilledFrom -->
+
+<a id="A8.6.1"></a>
+### A8.6.1 Rules for the files of one program
+
+The scope from step 1 and the rules of step 4 can be remembered for GEDCOM files from the same program. The next file
+from that program starts the guide with them; they can be changed.
+
+- **Saving:** in step 5, above the write button, stands the checkbox “Remember for files from {program}: scope c),
+  My tree wins” (with rules by kind of detail “…, with exceptions by kind of detail”). Under it: “Next time step 1 is
+  filled in with it (can be changed). Saved rules are in Settings → Data and privacy.” The checkbox is unticked by
+  default, even with a filled-in step 1.
+- **When it is saved:** only after the write; with **Only compare** after **Save the list…**. A closed guide saves
+  nothing.
+- **What is saved:** the scope and the rules for the whole merge and by kind of detail. Rules for one person or one
+  value are not saved: they belong to the people of one tree. One rule holds for one program; a newer one replaces
+  the older one.
+- **Where:** in the settings of this device, not in the tree. **Settings** → **Data and privacy** → **Saved import
+  rules** (“Fill in step 1 of the import guide for files from the same program.”) has a row for each program
+  (scope · rules) with **Remove**. Without a saved rule the group is not shown.
+- **Prefilling:** step 1 of the next file from the same program has the scope and the rules from the saved rule, and
+  under the scope the sentence “Filled in from the rule saved for files from {program} (can be changed).” An
+  unfinished merge keeps its choices.
+- **Limits:** only a GEDCOM file that names the program that created it (the file's header, `HEAD.SOUR`), and only
+  with **Add to a tree** and **Only compare**. A tree, a selection and a `.json` file name no program; **New tree** has
+  neither a scope nor rules.
+- **Controls:** step 5 of the guide; **Settings** → **Data and privacy** → **Saved import rules**.
+- **Since:** app 3.32.0
+
+<!-- zdroj: app:ad0ea45a src/merge/saved-rules.ts sourceProgram (jen ged s program), canRemember (add | compare, ne json), ruleFromChoices (scope, rules.all, rules.kind; ne osoba ani hodnota), applySavedRule, rememberLabel, savedRuleDetail · src/merge/steps/step5-plan.ts:549 (políčko nad tlačítkem, rememberNote) · strings.ts mergeWizard.rememberRules, rememberNote, rememberKinds, prefilledFrom, settings.rulesSetting, rulesSettingHint, rulesRowDetail, rulesRemove, groupData · dirigent:spec/134 K10.4 -->
 
 <a id="A8.7"></a>
 ## A8.7 Step 2: Who is who
@@ -238,10 +308,25 @@ always visible and can be undone.
   itself with a fixed header (the column “Import · {file}”). Relatives are row by row, of the records the first three
   and “N more ▸” / **Collapse**. The rest of the undecided is in the footer of the list; the list can be folded into a
   narrow bar (**Hide the list of pairs** / **Show the list of pairs**). On a phone the step is unchanged.
+- **Where the step opens:** when an undecided pair waits in **Maybe the same**, step 2 opens there, on the first of
+  them (also after returning from step 1 or from a later step, and with an unfinished merge); otherwise on the group
+  shown last. A group switched by hand inside the step stays.
+- **To decide N** in the counts (on a phone the row of counts) and “· N to decide” under step 2 lead to the first
+  undecided pair in **Maybe the same** (on a phone to its header). When only unlinked groups remain, they lead to
+  step 3. At 0 and after the write they lead nowhere.
+- **Partner of a joined person:** when a person of the import is joined and their shared children are too, their
+  partner from the import is offered in **Maybe the same** with the other parent of those children in the tree, with
+  the reason “Partner of a joined person, shared children”, even with a different surname (birth × married).
+  Conditions: the sex does not differ and one given name is the same (an initial or a short form of the name only
+  with a similar surname, or when it is the partner's married surname). The score is under the threshold of 80, so
+  a person decides. A weaker pair of another person without such evidence (a namesake, a sister-in-law) gives way.
+  A husband confirmed or chosen by hand in step 2 brings the wife this way too.
+- A pair joined in step 4 with **Same person** ([A8.9](#A8.9)) has in step 2 the reason “same person, chosen in
+  step 4”.
 - **Limits:** with **New tree** the step is skipped: all people are new.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) -->
+<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) · app:e1c98f45 (K10.5: otevření na první nerozhodnuté dvojici Možná stejní, jinak skupina naposled; K rozhodnutí N a · N k rozhodnutí jako tlačítka, jen nenapojené → krok 3, při 0 a po zápisu nic) strings.ts mergeWizard.cntPending, subPending · app:fd66ae63 (K10.6: partner spojené osoby se společnými spojenými dětmi, pod AUTO_CONFIRM_SCORE, pohlaví, jedno křestní jméno, iniciála či zkrácený tvar jen při podobném příjmení nebo příjmení po sňatku; slabší dvojice ustoupí; manžel potvrzený v kroku 2 přivede manželku) strings.ts merge.matchReasons.partner_shared_children · app:d6333eab strings.ts mergeWizard.joinedInStep4 · dirigent:spec/134 K10.5, K10.6 -->
 
 <a id="A8.8"></a>
 ## A8.8 Step 3: Whom to add
@@ -281,13 +366,23 @@ Step 4 decides the details that the joined people have differently. Without a pe
   bulk choice; it can be changed only one by one. Overwriting a proven detail asks **Overwrite a documented
   detail?**; after the write the detail is “From a family tree” and the record stays with the person as a source.
 - **Relationship conflicts** (other parents, a second partner, a different marriage, a third parent, an
-  ancestor–descendant loop) are always decided one by one: **Keep mine**, **From the import** or **Both**. A loop is
-  never written.
+  ancestor–descendant loop) are not decided by a bulk choice: **Keep mine**, **From the import** or **Both** is chosen
+  at each row. A loop is never written.
+- **Children of one couple:** children whose parents have the same conflict (a third parent, other parents) are one
+  row with a count (“third parent · 6 children”, the names of the first three and “+3”) and are decided once for all
+  of them. The count of conflicts in the step counts rows.
+- **Same person:** at a third parent or a second partner who is new to the tree, when on the other side stands one
+  person of the tree whom the import does not know, there is in addition the choice **Same person**. It joins both
+  people as a decision of step 2 (a pair chosen by hand, saved with the merge like any other). Conflicts that this
+  removes disappear and the counts are recalculated. Under the conflicts stands “Joined as the same person: {person of
+  the import} = {person of the tree}” with **Undo** (it restores the decision that held before). It is not offered with
+  a different sex, at a person of the tree already joined with someone else, at a join that would make a loop, nor at
+  a linking “?”.
 - **Limits:** with the scopes **a)** and **b)** the step is skipped; when there are relationship conflicts, it shows
   only them. With **New tree** it is always skipped.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step4-rules.ts (relOnly, s4SkippedTitle, protected), src/merge/plan.ts:438 relationConflicts, :534 (scope a), :542 (scope b jen prázdné) · src/merge/wizard-steps.ts step4 (newTree, scope a/b skip) · strings.ts mergeWizard.ruleAll, ruleOrder, rMine, rImport, rBoth, rPrecise, rEach, rDefault, importSays, kinds, protectedLine, protKinds, protTitle, protText, protAfter, relConf, relKinds, relAlways, keepMine, fromImport, both, loopNever, step4Skipped, s4SkippedTitle, relOnly · spec 134 §7, K0.3 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step4-rules.ts (relOnly, s4SkippedTitle, protected), src/merge/plan.ts:438 relationConflicts, :534 (scope a), :542 (scope b jen prázdné) · src/merge/wizard-steps.ts step4 (newTree, scope a/b skip) · strings.ts mergeWizard.ruleAll, ruleOrder, rMine, rImport, rBoth, rPrecise, rEach, rDefault, importSays, kinds, protectedLine, protKinds, protTitle, protText, protAfter, relConf, relKinds, relAlways, keepMine, fromImport, both, loopNever, step4Skipped, s4SkippedTitle, relOnly · spec 134 §7, K0.3 · app:d6333eab (K10.7, K10.8: děti jednoho páru se stejným rozporem jeden řádek, počet řádků; Stejná osoba u třetího rodiče či druhého partnera, spojení jako rozhodnutí kroku 2, Zpět; ne jiné pohlaví, osoba spojená s jiným, smyčka, „?“) strings.ts mergeWizard.relChildren, samePerson, samePersonTitle, joinedSame, undoSame · dirigent:spec/134 K10.7, K10.8 -->
 
 <a id="A8.10"></a>
 ## A8.10 Step 5: What will happen, and the write
@@ -297,7 +392,9 @@ shows.
 
 - **List:** **New**, **Joined**, **Detail changes**, **Filled-in details**, **Joined sources**, **Couples and
   links**, **Sources**, **Places**, **Photos and files**, **Not added** (for each person why: the step and the choice)
-  and **Not taken over**. An item can be unticked. **Save the list…** saves it to a file.
+  and **Not taken over**. An item can be unticked. **Save the list…** saves it as text (`.txt`) and as data (`.json`);
+  the text ends with the counts in words (“Joined 40 · New 5 · Not added 0 · To decide 0 · = 45 people in the
+  import”).
 - **Filled-in details** (only when there are some): empty details of joined people that the write fills in, row by
   row person · detail (e-mail, other forms of the name, events, sources, an open question…).
 - **Joined sources:** a source of the source tree is joined only with the same source of the target tree (the same
@@ -322,13 +419,16 @@ shows.
   match: nothing was saved.” Closing the window during the write breaks nothing: the write finishes, or nothing is
   written.
 - The write is one **Undo** step.
-- **Limits:** with **Only compare** nothing is written; the list can be saved. The check does not count the empty
-  details filled in by the scope **b)** into **Detail changes**.
+- **Remember rules:** at a GEDCOM file that names its program, above the button stands “Remember for files from
+  {program}: …” ([A8.6.1](#A8.6.1)).
+- **Limits:** with **Only compare** the main button is **Save the list…**: it saves the list and closes the guide.
+  Nothing is written: the tree, backups and files stay as they were, and the app does not let a comparison plan through
+  to the write. The check does not count the empty details filled in by the scope **b)** into **Detail changes**.
 - **Controls:** the button “Add N people, change M details”, with filled-in details “…, fill in F”, for a new tree
   “Create a tree with N people”.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto -->
+<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto · app:fcddfcab (K10.1) src/merge/write.ts (plán compare se nezapíše), src/merge/plan-export.ts exportPlan (počty slovy cntTotal), src/merge/ui.ts savePlan (.txt a .json), src/merge/wizard-ui.ts primary (compare: savePlan, finishCompare) · app:ad0ea45a step5-plan.ts merge-s5-remember -->
 
 <a id="A8.11"></a>
 ## A8.11 Step 6: What happened, and Merge history

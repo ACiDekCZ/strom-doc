@@ -146,6 +146,9 @@ Do drzewa nic się nie zapisuje, dopóki zapis nie zostanie potwierdzony w kroku
 | inne drzewo | **Scalanie drzew** | **Zmień strukturę…** › **Wybór lub całe drzewo do innego drzewa…** › **Całe drzewo** ([A14.5](A14-trees-and-structure.md#A14.5)); celem jest otwarte drzewo, przy otwartym drzewie inne |
 | wybór osób drzewa (ród, lista, linia, widok, ręcznie) | **Scalanie drzew** | **Zmień strukturę…** › **Wybór lub całe drzewo do innego drzewa…** › **Wybór…** |
 | plik GEDCOM lub Strom (JSON) do otwartego drzewa | **Import drzewa** | **Zmień strukturę…** › **Dodaj z pliku do tego drzewa…** |
+| inne drzewo do otwartego drzewa | **Scalanie drzew** | **Zmień strukturę…** › **Z innego drzewa do tego drzewa…** ([A14.5](A14-trees-and-structure.md#A14.5)) |
+| plik GEDCOM lub drzewo Strom (`.json`) upuszczone na okno aplikacji | **Import drzewa** | przeciągnięcie pliku na okno; celem jest otwarte drzewo ([A8.5.1](#A8.5.1)) |
+| plik upuszczony na wiersz drzewa w Zarządzaniu drzewami, wiersz drzewa przeciągnięty na inny wiersz | **Import drzewa** / **Scalanie drzew** | Zarządzanie drzewami; celem jest drzewo wiersza, na który upuszczono ([A8.5.1](#A8.5.1)) |
 | zmiany wysłane z innego Stromu | **Otrzymane zmiany** | podgląd otrzymanych zmian → **Przejrzyj szczegółowo** |
 
 - **Kroki:** **Co z tym** ([A8.6](#A8.6)), **Kto jest kim** ([A8.7](#A8.7)), **Kogo dodać** ([A8.8](#A8.8)), **Kto
@@ -175,6 +178,46 @@ Do drzewa nic się nie zapisuje, dopóki zapis nie zostanie potwierdzony w kroku
 
 <!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md · app:52171573 (dotaz 10: větší okno, lišta kroků s počty, pod 1100 px číslem) · 6e36ad08 (V-N4: cílový strom v nadpisu, stavovém řádku, Porovnat, řádku rozpracovaného) · a9bc0b6b, f0c5a3fb (139: Sloučit do jiného stromu a Sloučit pohled do… nahrazené Změnit strukturu; mergeViewInto bez volajícího) · strings.ts structure.pendingRow -->
 
+<a id="A8.5.1"></a>
+### A8.5.1 Plik lub drzewo upuszczone myszą
+
+Plik GEDCOM i drzewo Strom (`.json`) można przenieść do kreatora przeciągnięciem: na okno aplikacji albo na wiersz
+drzewa w Zarządzaniu drzewami. Co się stanie, zależy od pliku i od miejsca, w którym zostanie upuszczony.
+
+- **Na okno aplikacji:**
+  - jeden plik `.ged` otwiera kreator **Import drzewa** z celem w otwartym drzewie (**Nowe drzewo**, **Dodaj do
+    drzewa**, **Tylko porównaj**);
+  - jeden plik `.json` zostaje najpierw odczytany. Drzewo otwiera ten sam kreator; zaszyfrowane drzewo najpierw pyta
+    o hasło. Kopia zapasowa **Eksportuj wszystko** i paczka zmian z innego Stromu idą drogą importu JSON. Inny plik
+    `.json` jest dla badania, które przyjmuje partie, materiałem ([R11.4](R11-material-from-the-user.md#R11.4));
+    w przeciwnym razie aplikacja mówi „{plik} nie jest czytelnym plikiem drzewa genealogicznego (.json). Nic się nie
+    zmieniło.”;
+  - kilka plików naraz trafia przy badaniu, które przyjmuje partie, do partii; w przeciwnym razie rozstrzyga pierwszy
+    plik;
+  - podczas przeciągania jeden plik typu JSON jest traktowany jako drzewo: napis nad oknem mówi, że otworzy się
+    kreator, nie partia;
+  - inny plik okno odrzuca: „Tutaj można przeciągnąć tylko pliki GEDCOM (.ged) i drzewa Strom (.json).” Pusty ekran
+    proponuje „Wystarczy upuścić plik .ged lub .json, a otworzy się”.
+- **Na wiersz drzewa w Zarządzaniu drzewami:**
+  - plik `.ged` lub `.json` upuszczony na wiersz otwiera kreator z opcją **Dodaj do drzewa** i drzewem tego wiersza
+    jako celem. Otwarte drzewo zostaje otwarte; zamknięcie kreatora wraca do Zarządzania drzewami;
+  - wiersz drzewa przeciągnięty myszą na inny wiersz otwiera kreator **Scalanie drzew**: przeciągnięte drzewo jest
+    importem, drzewo pod nim celem;
+  - wiersz pod przeciąganym plikiem ma przerywane obramowanie i mówi, co zrobi upuszczenie: „Upuszczenie: dodanie
+    {plik} do drzewa {drzewo}”;
+  - drzewo, do którego teraz nie można zapisać (zablokowane, śledzone na żywo, z nowszej wersji aplikacji), nie
+    staje się celem: kreator zostaje przy opcji **Dodaj do drzewa** bez wybranego celu, a kafelek tego drzewa
+    w kroku 1 mówi dlaczego. Inne drzewo nie wybiera się samo;
+  - wiersz upuszczony sam na siebie, upuszczenie dotykiem albo w aplikacji tylko do odczytu nic nie robi. Menu ⋯
+    wiersza zostaje.
+- **Granice:** bez kreatora nic się nie zapisze; zapis obowiązuje jak każde scalenie i można go cofnąć
+  ([A8.12](#A8.12)).
+- **Obsługa:** przeciągnięcie pliku na okno albo na wiersz Zarządzania drzewami; przeciągnięcie wiersza drzewa na inny
+  wiersz.
+- **Obowiązuje od:** aplikacja 3.32.0
+
+<!-- zdroj: app:b907d506 src/drop-route.ts dropRoute (guide-ged, json, batch, refuse), jsonDropKind (tree / šifrovaný, app-file: záloha Exportovat vše a balíček změn, other), dragLooksLikeJson · strings.ts onlyGedcom, dropHint, unreadableJson · app:73ee4625 src/tree-drop.ts treeRowDrop (sám na sebe, jen ke čtení nic), treeRowFileRoute, počáteční cíl (blokovaný strom nevybrán, důvod na dlaždici kroku 1, keepAdd) · src/ui/tree-management.ts (čárkovaný řádek, dotyk nic, ⋯ zůstává) · strings.ts mergeWizard.dropOnTree · dirigent:spec/134 K10.2, K10.3 -->
+
 <a id="A8.6"></a>
 ## A8.6 Krok 1: Co z tym
 
@@ -185,7 +228,7 @@ w drzewie.
 |---|---|
 | **Nowe drzewo** | powstaje nowe drzewo z osobami importu; nie będzie połączone z badaniem; istniejące drzewa zostają bez zmian |
 | **Dodaj do drzewa** | osoby importu zostają dodane do wybranego drzewa (**Do którego drzewa**) |
-| **Tylko porównaj** | przechodzi się te same kroki, ale nic się nie zapisuje; zestawienie można na końcu zapisać |
+| **Tylko porównaj** | przechodzi się te same kroki, ale nic się nie zapisuje (drzewo, kopie zapasowe ani pliki); zestawienie można na końcu zapisać |
 | **Zapisz jako JSON** | **Pobierz JSON** pobiera przekonwertowane dane jako plik `.json`; do drzewa nic się nie zapisuje |
 
 - **Co z osobą, która już jest w drzewie** (przy **Dodaj do drzewa**):
@@ -202,8 +245,10 @@ w drzewie.
 - **Zamień** przy dwóch drzewach odwraca, co do czego się dodaje.
 - Ten sam plik scalony do drzewa ponownie kreator rozpoznaje i mówi, ile osób jest nowych; osoby połączone ostatnio
   się nie podwajają. Dodają się więc tylko osoby, które ostatnio pominięto. To samo dotyczy drzewa: „Drzewo Horákovi
-  zostało już tu scalone 12. 11. 2026. Nowych jest tylko 5 osób; 40 połączono ze scaleniem z 12. 11. 2026 i nie
-  zostaną zdublowane.”
+  zostało już tu scalone (12. 11. 2026). Nowych jest tylko 5 osób; 40 połączono z tamtym wcześniejszym scaleniem
+  i nie zostaną zdublowane.”
+- **Reguły według programu:** plik GEDCOM z programu, dla którego zapisano regułę, ma zakres i wybory kroku 4
+  wypełnione: „Wypełnione według reguły zapisanej dla plików z {program} (można zmienić).” ([A8.6.1](#A8.6.1))
 - Kopia drzewa i drzewo bez badania mają w kroku 1 opis „kopia drzewa „{nazwa}” · bez badania”; przy celu bez badania
   stoi „{drzewo} nie ma badania: po scaleniu nic nie jest wysyłane.” ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Granice:** celem nie może być drzewo zablokowane (odblokować można w Zarządzaniu drzewami) ani drzewo z nowszej
@@ -214,7 +259,36 @@ w drzewie.
   tylko do odczytu import jest możliwy tylko jako **Nowe drzewo**.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch -->
+<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch · app:02165311 strings.ts mergeWizard.repeat, repeatTree (datum dřívějšího sloučení v závorce) · app:fcddfcab (Jen porovnat: otisk všech stromů, záloh a souborů před a po; writePlan/applyPlan plán porovnání odmítnou) src/merge/write.ts · app:ad0ea45a strings.ts mergeWizard.prefilledFrom -->
+
+<a id="A8.6.1"></a>
+### A8.6.1 Reguły dla plików jednego programu
+
+Zakres z kroku 1 i reguły kroku 4 można zapamiętać dla plików GEDCOM z tego samego programu. Następny plik z tego
+programu zacznie kreator z nimi; można je zmienić.
+
+- **Zapisanie:** w kroku 5 nad przyciskiem zapisu stoi pole wyboru „Zapamiętać dla plików z {program}: zakres c),
+  Obowiązuje moje drzewo” (z regułami według rodzaju danej „…, z wyjątkami według rodzaju danej”). Pod nim:
+  „Następnym razem krok 1 zostanie tak wypełniony (można zmienić). Zapisane reguły są w Ustawieniach → Dane
+  i prywatność.” Pole jest domyślnie niezaznaczone, także przy wypełnionym kroku 1.
+- **Kiedy się zapisuje:** dopiero po zapisie; przy **Tylko porównaj** po **Zapisz zestawienie…**. Zamknięty kreator
+  nic nie zapisuje.
+- **Co się zapisuje:** zakres i reguły dla całego scalenia i według rodzaju danej. Reguły dla jednej osoby lub jednej
+  wartości się nie zapisują: należą do ludzi jednego drzewa. Dla jednego programu obowiązuje jedna reguła; nowsza
+  zastępuje starszą.
+- **Gdzie:** w ustawieniach tego urządzenia, nie w drzewie. **Ustawienia** → **Dane i prywatność** → **Zapisane
+  reguły importu** („Wypełniają krok 1 kreatora importu dla plików z tego samego programu.”) ma wiersz dla każdego
+  programu (zakres · reguły) z **Usuń**. Bez zapisanej reguły grupa się nie pokazuje.
+- **Wypełnienie:** krok 1 następnego pliku z tego samego programu ma zakres i reguły z zapisanej reguły, a pod
+  zakresem zdanie „Wypełnione według reguły zapisanej dla plików z {program} (można zmienić).” Niedokończone scalanie
+  zachowuje swoje wybory.
+- **Granice:** tylko plik GEDCOM, który podaje program, który go utworzył (nagłówek pliku, `HEAD.SOUR`), i tylko przy
+  **Dodaj do drzewa** i **Tylko porównaj**. Drzewo, wybór i plik `.json` programu nie podają; **Nowe drzewo** nie ma
+  zakresu ani reguł.
+- **Obsługa:** krok 5 kreatora; **Ustawienia** → **Dane i prywatność** → **Zapisane reguły importu**.
+- **Obowiązuje od:** aplikacja 3.32.0
+
+<!-- zdroj: app:ad0ea45a src/merge/saved-rules.ts sourceProgram (jen ged s program), canRemember (add | compare, ne json), ruleFromChoices (scope, rules.all, rules.kind; ne osoba ani hodnota), applySavedRule, rememberLabel, savedRuleDetail · src/merge/steps/step5-plan.ts:549 (políčko nad tlačítkem, rememberNote) · strings.ts mergeWizard.rememberRules, rememberNote, rememberKinds, prefilledFrom, settings.rulesSetting, rulesSettingHint, rulesRowDetail, rulesRemove, groupData · dirigent:spec/134 K10.4 -->
 
 <a id="A8.7"></a>
 ## A8.7 Krok 2: Kto jest kim
@@ -245,10 +319,24 @@ jest zawsze widoczne i można je cofnąć.
   nagłówkiem (kolumna „Import · {plik}”). Krewni są w wierszach, z zapisów pierwsze trzy i „jeszcze N ▸” / **Zwiń**.
   Reszta nierozstrzygniętych jest w stopce listy; listę można złożyć do wąskiego paska (**Ukryj listę par** /
   **Pokaż listę par**). Na telefonie krok jest bez zmian.
+- **Gdzie krok się otwiera:** gdy w **Może ci sami** czeka nierozstrzygnięta para, krok 2 otwiera się tam, na
+  pierwszej z nich (także po powrocie z kroku 1 lub z późniejszego kroku i przy niedokończonym scalaniu);
+  w przeciwnym razie na grupie pokazanej ostatnio. Grupa przełączona ręcznie wewnątrz kroku zostaje.
+- **Do decyzji N** w liczbach (na telefonie wiersz liczb) i „· N do decyzji” pod krokiem 2 prowadzą do pierwszej
+  nierozstrzygniętej pary w **Może ci sami** (na telefonie do jej nagłówka). Gdy zostają tylko niepołączone grupy,
+  prowadzą do kroku 3. Przy 0 i po zapisie nie prowadzą nigdzie.
+- **Partner połączonej osoby:** gdy osoba importu jest połączona, a jej wspólne dzieci też, jej partner z importu
+  zostaje zaproponowany w **Może ci sami** z drugim rodzicem tych dzieci w drzewie, z powodem „Partner połączonej
+  osoby, wspólne dzieci”, także przy innym nazwisku (rodowym × po ślubie). Warunki: płeć się nie różni i jedno imię
+  jest takie samo (inicjał lub skrócona forma imienia tylko przy podobnym nazwisku albo gdy to nazwisko partnera po
+  ślubie). Wynik jest poniżej progu 80, rozstrzyga więc człowiek. Słabsza para innej osoby bez takiego dowodu
+  (imienniczka, szwagierka) ustępuje. Mąż potwierdzony lub wybrany ręcznie w kroku 2 przyprowadzi tak także żonę.
+- Para połączona w kroku 4 opcją **Ta sama osoba** ([A8.9](#A8.9)) ma w kroku 2 powód „ta sama osoba, wybrano
+  w kroku 4”.
 - **Granice:** przy **Nowe drzewo** krok zostaje pominięty: wszystkie osoby są nowe.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) -->
+<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) · app:e1c98f45 (K10.5: otevření na první nerozhodnuté dvojici Možná stejní, jinak skupina naposled; K rozhodnutí N a · N k rozhodnutí jako tlačítka, jen nenapojené → krok 3, při 0 a po zápisu nic) strings.ts mergeWizard.cntPending, subPending · app:fd66ae63 (K10.6: partner spojené osoby se společnými spojenými dětmi, pod AUTO_CONFIRM_SCORE, pohlaví, jedno křestní jméno, iniciála či zkrácený tvar jen při podobném příjmení nebo příjmení po sňatku; slabší dvojice ustoupí; manžel potvrzený v kroku 2 přivede manželku) strings.ts merge.matchReasons.partner_shared_children · app:d6333eab strings.ts mergeWizard.joinedInStep4 · dirigent:spec/134 K10.5, K10.6 -->
 
 <a id="A8.8"></a>
 ## A8.8 Krok 3: Kogo dodać
@@ -287,13 +375,24 @@ Krok 4 rozstrzyga dane, które połączone osoby mają inaczej. Bez wyboru czło
 - **Dane chronione:** danej w drzewie oznaczonej „udokumentowane”, „potwierdzone” albo „z badań” wybór zbiorczy nie
   zmieni; można ją zmienić tylko pojedynczo. Nadpisanie udokumentowanej danej pyta **Nadpisać udokumentowaną
   daną?**; po zapisie dana jest „Z drzewa”, a dokument zostaje przy osobie jako źródło.
-- **Sprzeczności powiązań** (inni rodzice, drugi partner, inny ślub, trzeci rodzic, pętla przodek–potomek)
-  rozstrzyga się zawsze pojedynczo: **Zostaw moje**, **Z importu** albo **Oba**. Pętla nigdy się nie zapisze.
+- **Sprzeczności powiązań** (inni rodzice, drugi partner, inny ślub, trzeci rodzic, pętla przodek–potomek) wybór
+  zbiorczy nie rozstrzyga: **Zostaw moje**, **Z importu** albo **Oba** wybiera się przy każdym wierszu. Pętla nigdy
+  się nie zapisze.
+- **Dzieci jednej pary:** dzieci, których rodzice mają tę samą sprzeczność (trzeci rodzic, inni rodzice), są jednym
+  wierszem z liczbą („trzeci rodzic · 6 dzieci”, imiona pierwszych trzech i „+3”) i rozstrzyga się je raz za
+  wszystkie. Liczba sprzeczności w kroku liczy wiersze.
+- **Ta sama osoba:** przy trzecim rodzicu lub drugim partnerze, który jest dla drzewa nowy, gdy po drugiej stronie
+  stoi jedna osoba drzewa, której import nie zna, jest dodatkowo opcja **Ta sama osoba**. Łączy obie osoby jak decyzja
+  kroku 2 (ręcznie wybrana para, zapisze się ze scaleniem jak każda inna). Sprzeczności, które przez to odpadną,
+  znikną, a liczby zostaną przeliczone. Pod sprzecznościami stoi „Połączono jako tę samą osobę: {osoba importu} =
+  {osoba drzewa}” z **Cofnij** (przywraca decyzję, która obowiązywała wcześniej). Nie jest proponowana przy innej
+  płci, przy osobie drzewa połączonej już z kimś innym, przy połączeniu, które utworzyłoby pętlę, ani przy łączącym
+  „?”.
 - **Granice:** przy zakresie **a)** i **b)** krok zostaje pominięty; gdy są sprzeczności powiązań, pokazuje tylko je.
   Przy **Nowe drzewo** zostaje pominięty zawsze.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step4-rules.ts (relOnly, s4SkippedTitle, protected), src/merge/plan.ts:438 relationConflicts, :534 (scope a), :542 (scope b jen prázdné) · src/merge/wizard-steps.ts step4 (newTree, scope a/b skip) · strings.ts mergeWizard.ruleAll, ruleOrder, rMine, rImport, rBoth, rPrecise, rEach, rDefault, importSays, kinds, protectedLine, protKinds, protTitle, protText, protAfter, relConf, relKinds, relAlways, keepMine, fromImport, both, loopNever, step4Skipped, s4SkippedTitle, relOnly · spec 134 §7, K0.3 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step4-rules.ts (relOnly, s4SkippedTitle, protected), src/merge/plan.ts:438 relationConflicts, :534 (scope a), :542 (scope b jen prázdné) · src/merge/wizard-steps.ts step4 (newTree, scope a/b skip) · strings.ts mergeWizard.ruleAll, ruleOrder, rMine, rImport, rBoth, rPrecise, rEach, rDefault, importSays, kinds, protectedLine, protKinds, protTitle, protText, protAfter, relConf, relKinds, relAlways, keepMine, fromImport, both, loopNever, step4Skipped, s4SkippedTitle, relOnly · spec 134 §7, K0.3 · app:d6333eab (K10.7, K10.8: děti jednoho páru se stejným rozporem jeden řádek, počet řádků; Stejná osoba u třetího rodiče či druhého partnera, spojení jako rozhodnutí kroku 2, Zpět; ne jiné pohlaví, osoba spojená s jiným, smyčka, „?“) strings.ts mergeWizard.relChildren, samePerson, samePersonTitle, joinedSame, undoSame · dirigent:spec/134 K10.7, K10.8 -->
 
 <a id="A8.10"></a>
 ## A8.10 Krok 5: Co się stanie i zapis
@@ -303,7 +402,9 @@ zestawienie.
 
 - **Zestawienie:** **Nowi**, **Połączeni**, **Zmiany danych**, **Uzupełnione dane**, **Połączone źródła**, **Pary
   i powiązania**, **Źródła**, **Miejsca**, **Zdjęcia i pliki**, **Niedodani** (przy każdej osobie dlaczego: krok
-  i wybór) i **Nie zostanie przejęte**. Pozycję można odznaczyć. **Zapisz zestawienie…** zapisuje je do pliku.
+  i wybór) i **Nie zostanie przejęte**. Pozycję można odznaczyć. **Zapisz zestawienie…** zapisuje je jako tekst
+  (`.txt`) i jako dane (`.json`); tekst kończy się liczbami słownie („Połączeni 40 · Nowi 5 · Niedodani 0 · Do decyzji
+  0 · = 45 osób w imporcie”).
 - **Uzupełnione dane** (tylko gdy jakieś są): puste dane połączonych osób, które zapis uzupełni, w wierszach osoba ·
   dana (e-mail, inne formy imienia i nazwiska, wydarzenia, źródła, otwarte pytanie…).
 - **Połączone źródła:** źródło z drzewa źródłowego łączy się tylko z tym samym źródłem drzewa docelowego (ten sam
@@ -325,13 +426,16 @@ zestawienie.
   zapisuje się na ślepo. Przed zapisem sprawdza się sumy i odwołania; gdy się nie zgadzają: „Sumy się nie zgadzają:
   nic nie zapisano.” Zamknięcie okna w trakcie zapisu niczego nie zepsuje: zapis się dokończy albo nic się nie zapisze.
 - Zapis to jeden krok **Cofnij**.
-- **Granice:** przy **Tylko porównaj** nic się nie zapisuje; zestawienie można zapisać. Kontrola nie liczy do **Zmiany
-  danych** pustych danych uzupełnionych zakresem **b)**.
+- **Zapamiętanie reguł:** przy pliku GEDCOM, który podaje swój program, nad przyciskiem stoi „Zapamiętać dla plików
+  z {program}: …” ([A8.6.1](#A8.6.1)).
+- **Granice:** przy **Tylko porównaj** głównym przyciskiem jest **Zapisz zestawienie…**: zapisuje zestawienie i zamyka
+  kreator. Nic się nie zapisuje: drzewo, kopie zapasowe i pliki zostają, jak były, a planu porównania aplikacja nie
+  dopuści do zapisu. Kontrola nie liczy do **Zmiany danych** pustych danych uzupełnionych zakresem **b)**.
 - **Obsługa:** przycisk „Dodaj N osób, zmień M danych”, z uzupełnionymi danymi „…, uzupełnij F”, przy nowym drzewie
   „Utwórz drzewo z N osobami”.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto -->
+<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto · app:fcddfcab (K10.1) src/merge/write.ts (plán compare se nezapíše), src/merge/plan-export.ts exportPlan (počty slovy cntTotal), src/merge/ui.ts savePlan (.txt a .json), src/merge/wizard-ui.ts primary (compare: savePlan, finishCompare) · app:ad0ea45a step5-plan.ts merge-s5-remember -->
 
 <a id="A8.11"></a>
 ## A8.11 Krok 6: Co się stało i Historia scaleń

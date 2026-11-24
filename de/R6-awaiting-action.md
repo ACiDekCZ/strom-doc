@@ -16,8 +16,14 @@ nur dort erledigt wird. Die Liste wird jedes Mal aus der Forschung berechnet, in
 - **Bedienung:** App: Abschnitt **Wartet auf Bearbeitung** · Terminal: Menü **Was wartet (n)**, Statuszeile
   **Wartet: N** · Seite für das Telefon: **Wartet · N**.
 - **Gilt seit:** Forschung 1.3.0. Die Liste nach Orten der Erledigung und in der App seit 1.14.0 (App 3.11.0).
+- **Ab Forschung 1.37.0:** Bilder, die der Browser des Agenten speichert ([R9.5](R9-archives.md#R9.5)), sind
+  Arbeit des Agenten. Solange die Sitzung des Agenten sie speichert, steht die Aufgabe nicht in der Liste, auch nicht
+  in den Zahlen, Etiketten und Hinweisen; die Strom-App zeigt sie als Arbeit („Agent speichert Aufnahmen (k von n)“,
+  [S4.1](S4-research-from-the-app.md#S4.1)). Auf den Menschen wartet nur ein Bild, das der Browser zurückgehalten
+  hat, und ein Speichern, dessen Sitzung mittendrin endete ([R6.2.1](#R6.2.1)). Früher geschriebene Wartezustände
+  zeigen sich so von selbst.
 
-<!-- zdroj: research:src/core/waiting.ts:1-12, waitingFor :303-460 (filtr :321), actsAsArchive (v1.15.0) · src/cli/menu.ts:234, :379 · CHANGELOG.cs.md 1.14.0 · app:src/ui/research-overview-ui.ts research.waiting -->
+<!-- zdroj: research:src/core/waiting.ts:1-12, waitingFor :303-460 (filtr :321), actsAsArchive (v1.15.0) · src/cli/menu.ts:234, :379 · CHANGELOG.cs.md 1.14.0 · app:src/ui/research-overview-ui.ts research.waiting · 1.37.0: research:81de7cdb src/core/waiting.ts savedByAgentNow (ne ve waitingFor ani v počtech; zadržený snímek a sezení, které už úkol nedrží, čekají na člověka), src/core/ownsave.ts agentSaveWait · aae8f1aa src/cli/menu-waiting.ts (terminál Co čeká bez snímků, které ukládá agent) · 1c8a4380 (vlastní čekání agenta na snímek je hned člověka) -->
 
 <a id="R6.1.1"></a>
 ### R6.1.1 Die Zahl und was nur im Terminal ist
@@ -72,9 +78,20 @@ gebraucht wird. Die Art des Wartens bestimmt den Abschnitt, die Gruppe und die m
 - **Ab Forschung 1.35.0:** ein anders erfasstes Warten auf Bilder (Bilder nur in Worten, mehrere Bücher, ein Buch, das
   die Forschung nicht hat) schreibt `strom task wait` nicht, und `strom task audit` findet solche Aufgaben und
   korrigiert sie ([R6.9](#R6.9)).
+- **Ab Forschung 1.37.0:** eine Datei, aus der sich die Bildnummer nicht erkennen lässt (`000.jpg`), hält die
+  übrigen Bilder nicht auf: sie bleibt liegen und wird einmal gemeldet. Anders benannte Dateien (nach Einträgen,
+  `001-004.jpg`) werden in der Reihenfolge des Ordners übernommen, wenn 20 Minuten lang nichts mehr gespeichert
+  wird; eine Aufgabe, für die nur ein Teil der Bilder kam, kehrt nach derselben Zeit mit dem zurück, was kam und was
+  fehlt ([R9.6](R9-archives.md#R9.6)).
+- **Ab Forschung 1.37.0:** das Warten auf Bilder, die der Browser des Agenten speichert, sagt dem Menschen nur zwei
+  Dinge: ein vom Browser zurückgehaltenes Bild („im Browser das Herunterladen mehrerer Dateien von … erlauben …“)
+  und ein durch das Ende der Sitzung angehaltenes Speichern („Speichern über den Browser des Agenten bei Aufnahme 12
+  des Buches B0003 … angehalten: die Sitzung des Agenten ist beendet – die nächste Sitzung setzt es fort; oder die
+  Aufnahmen 12-15 von Hand von … in den Ordner der Aufgabe speichern“). Das gilt auch für Wartezustände, die eine
+  ältere Forschung geschrieben hat.
 - **Gilt seit:** Forschung 1.0.0. Wecken nach dem Speichern seit 1.15.0.
 
-<!-- zdroj: research:src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
+<!-- zdroj: research:62e335eb, 6fee0f71 src/core/inboxwait.ts (000.jpg jednou, pořadí složky po 20 min, částečný příchod) · 81de7cdb src/core/waiting.ts waitOnNow, ownSaveSaid (browser.wait.held, browser.wait.stopped) · src/commands/tasks.ts:1000-1025 (--images, inbox) · src/commands/media.ts:135-170 wakeWaiting · assets/method/waiting.md · app:src/research-waiting.ts:251 waitingActions (folder) · src/ui/research-overview-ui.ts:1023, src/ui/waiting-task-ui.ts:231 · src/strings.ts waitingTask.openFolder -->
 
 <a id="R6.2.2"></a>
 ### R6.2.2 Seite prüfen
@@ -200,8 +217,40 @@ Nachricht erledigen lassen.
 - **Ab Forschung 1.35.0:** die Forschung sendet beim Eintrag auch sein Buch. Die App 3.30.0 kann die Einträge nach
   Buch gruppieren ([S4.4.4](S4-research-from-the-app.md#S4.4.4)); in **Was wartet** gibt es eine Übersicht der Bücher
   mit den meisten Aufgaben ([R6.8](#R6.8)).
+- **Ab Forschung 1.37.0:** bei einem Eintrag, hinter dem Aufgaben stehen, sendet sie auch, wie viel seine Erledigung
+  hilft ([R6.4.1](#R6.4.1)).
 
 <!-- zdroj: research:src/core/waiting.ts:73 SECTION_RANK, :75 DECIDE_RANK, :468 together, :478-492 ordered · src/core/waitkind.ts:238 waitGroupOf · assets/lang/cs.json:2313-2320 wait.group.* (:2359) · src/cli/menu-waiting.ts:205-232 · app:strings.ts:11958 waitingFilterLabel -->
+
+<a id="R6.4.1"></a>
+### R6.4.1 Was am meisten hilft
+
+Zu jedem Eintrag, hinter dem Aufgaben stehen, berechnet die Forschung, wie sehr seine Erledigung den Stammbaum
+erweitert, und sagt mit wenigen Worten, warum. Die Kosten eines Downloads werden nicht gewichtet; es zählt nur, um
+wie viel der Stammbaum wächst. Nichts wird gelesen, gesendet oder geschrieben.
+
+- **Punktzahl:** die Summe der Teile:
+  - **neue Generation** (+50): die Person, die der Eintrag betrifft, steht am Rand des Stammbaums ohne beide Eltern
+    oder einen von ihnen, und die Forschung steuert auf sie zu (im Umfang der Linie, nicht jenseits ihrer Grenze,
+    nicht bei einer pausierten, fertigen oder wahrscheinlich lebenden Person, nicht bei einem Elternteil, der nur
+    nicht belegt ist). Der Teil nennt eine solche Person: die höchste Generation in der Linie, dann die niedrigste ID;
+  - **direkte Linie** (+30): die Person, die der Eintrag betrifft, ist ein Vorfahre der Menschen, für die die
+    Forschung ist;
+  - **Aufgaben** (+10 für jede, höchstens 10): die Aufgaben, die die Erledigung freigibt – die eigenen und jede
+    offene oder zurückgestellte Aufgabe, die das Buch einer von ihnen braucht. Andere wartende Aufgaben desselben
+    Buches zählen nicht; jede ist ein eigener Eintrag. Gesagt wird es erst ab zwei Aufgaben.
+- **Grund:** die Teile in der Sprache der Forschung, verbunden mit „ · “: „eine neue Generation: die Eltern von Jan
+  Horák“ (oder „eine neue Generation: der Vater von …“, „eine neue Generation: die Mutter von …“), „die direkte
+  Linie“, „gibt 3 Aufgaben frei“. Ein Eintrag mit einer Aufgabe und sonst nichts hat eine Punktzahl ohne Grund.
+- **Grenzen:** Einträge ohne Aufgaben (Erzählungen, Sendungen, Widersprüche, Orte, Zweige, Hypothesen, neue
+  Fassungen einer Transkription) und Einträge mit der Punktzahl 0 haben keine Punktzahl. Berechnet wird einmal für
+  das ganze **Was wartet**.
+- **Bedienung:** App: Reihenfolge **Am hilfreichsten** in **Wartet auf Bearbeitung**
+  ([S4.4.3](S4-research-from-the-app.md#S4.4.3)). Terminal: `strom task list --state waiting --order gain` (nur mit
+  `--state waiting`, ohne `--book` und `--off-tree`).
+- **Gilt seit:** Forschung 1.37.0 (App 3.32.0)
+
+<!-- zdroj: research:44d3f750 src/core/waitgain.ts GAIN_POINTS (generation 50, line 30, task 10), UNBLOCKS_MAX 10, waitGains (edgeReach scope in, ne proof; kinship 0; bookOfTask, bookTasks open + parked; část unblocks od n ≥ 2; bez skóre 0), gainSays · src/core/waiting.ts (gain), src/core/live.ts waiting[].gain, feature waiting.gain · src/commands/tasks.ts task list --order gain (task.order) · assets/lang/cs.json wait.gain.* · CHANGELOG.cs.md 1.37.0 „Co nejvíc pomůže“ · dirigent:spec/105 K4.1 -->
 
 <a id="R6.5"></a>
 ## R6.5 Was sich wo erledigen lässt

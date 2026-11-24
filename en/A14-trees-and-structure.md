@@ -51,6 +51,10 @@ the register of trees; the tree's data are not read for them.
   6. **Delete tree…**.
 - The window's footer: **Export all**, **New tree**, **Close**. From 6 trees there is the field **Search trees…**
   above the list.
+- **Dropping on a row:** a GEDCOM file or a Strom tree (`.json`) dropped on a tree's row opens the merge guide with
+  this tree as the target; a tree's row dragged with the mouse onto another row merges it into that tree through the
+  guide. The row under a dragged file has a dashed outline and says "Drop: add {file} to the tree {tree}"
+  ([A8.5.1](A8-merging-trees.md#A8.5.1)).
 - **Limits:**
   - a locked tree has in ⋯ only reading and **Unlock**; a tree saved by a newer version of the app only reading;
   - **Duplicate**, **Merge into another tree…**, **Split** and **Separate disconnected parts** are not in ⋯; they are
@@ -62,7 +66,7 @@ the register of trees; the tree's data are not read for them.
   trees → **Manage trees ›**.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:3110125c src/ui/tree-management.ts renderTreeManagerList (stats z indexu, badges, canStructure, pendingRow, mergeFacts subPending 134 S-P2, pendingOrphans, targetGone, searchable ≥ 6) · fbd97361 src/tree-row.ts treeOriginLine (research → copy → fromTree → importedFrom → none) · src/ui/tree-actions.ts treeActionGroups (overview, research, settings, structure, manage, delete, trees; manageTrees jen mimo správu) · 7b967fd8 strings.ts treeManager.imagesShared, imagesSharedTip (134 S-P1) · bcb2a0fa (kopie s vypnutým přepínačem, ◎ Sleduje se živě, zápis stojí) · strings.ts structure.research, followed, writeStopped, fromTree, fromGedcom, fromFile, mergeHistory, pendingRow, savedAt, pendingOrphans, targetGone, treeManager.* -->
+<!-- zdroj: app:3110125c src/ui/tree-management.ts renderTreeManagerList (stats z indexu, badges, canStructure, pendingRow, mergeFacts subPending 134 S-P2, pendingOrphans, targetGone, searchable ≥ 6) · fbd97361 src/tree-row.ts treeOriginLine (research → copy → fromTree → importedFrom → none) · src/ui/tree-actions.ts treeActionGroups (overview, research, settings, structure, manage, delete, trees; manageTrees jen mimo správu) · 7b967fd8 strings.ts treeManager.imagesShared, imagesSharedTip (134 S-P1) · bcb2a0fa (kopie s vypnutým přepínačem, ◎ Sleduje se živě, zápis stojí) · strings.ts structure.research, followed, writeStopped, fromTree, fromGedcom, fromFile, mergeHistory, pendingRow, savedAt, pendingOrphans, targetGone, treeManager.* · app:73ee4625 src/tree-drop.ts, src/ui/tree-management.ts (puštění na řádek) · strings.ts mergeWizard.dropOnTree -->
 
 <a id="A14.2"></a>
 ## A14.2 Change structure…
@@ -78,6 +82,7 @@ changes."
 | **Split** | **Into families…** | new trees are created by family lines, branches or one person's view ([A14.4](#A14.4)) |
 | | **Separate disconnected parts…** | new trees are created from parts that nothing connects ([A14.4](#A14.4)) |
 | **Join** | **A selection or the whole tree into another tree…** | through the merge guide; the target tree changes, can be undone ([A14.5](#A14.5)) |
+| | **From another tree into this tree…** | another tree of the app through the merge guide; this tree changes, can be undone ([A14.5](#A14.5)) |
 | | **Add from a file to this tree…** | GEDCOM or a Strom file (JSON) through the merge guide; this tree changes, can be undone ([A14.5](#A14.5)) |
 
 A new tree, a copy and a split do not change the original tree.
@@ -91,7 +96,12 @@ A new tree, a copy and a split do not change the original tree.
     target that cannot be written to now does not grey the option: why, the merge guide says
     ([A8.5](A8-merging-trees.md#A8.5));
   - **Add from a file…** at a tree followed live: "The tree is followed live; it cannot be written to now." with the
-    link **End following**.
+    link **End following**;
+  - **From another tree into this tree…**, the first reason that applies: "There is no other tree." → "Once the tree
+    is open." → "The tree is followed live; it cannot be written to now." with the link **End following**.
+- All options are visible without scrolling on a notebook screen of 1366 × 657 and of 1024 × 768, even with the
+  greyed options and the reasons under them. Where something is still below the window's edge, the bottom of the
+  window fades out.
 - **Limits:** a locked tree and a read-only tree do not have the window (the item is missing). On the options the
   window has **Close**, on further steps **Back** · **Cancel** and the step's button; opened from Manage trees it
   returns there.
@@ -100,7 +110,7 @@ A new tree, a copy and a split do not change the original tree.
   active options.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:a9bc0b6b src/structure-options.ts (OPTIONS, STRUCTURE_GROUPS, blocked: select notOpen, parts connected, into noOther, file notOpen/followed+stopFollowing; readOnly bez dialogu), src/ui/structure-ui.ts structureOptionRow (důvod pod volbou, Ukončit sledování), structureOpenTree, structureRunOption, arrowKeys · defe53b4 (Zavřít na volbách, Zpět · Zrušit · primární na krocích) · 45d5be44 (telefon) · strings.ts structure.intro, group.*, opt*, why*, openTree, research.stop -->
+<!-- zdroj: app:a9bc0b6b src/structure-options.ts (OPTIONS, STRUCTURE_GROUPS, blocked: select notOpen, parts connected, into noOther, file notOpen/followed+stopFollowing; readOnly bez dialogu), src/ui/structure-ui.ts structureOptionRow (důvod pod volbou, Ukončit sledování), structureOpenTree, structureRunOption, arrowKeys · defe53b4 (Zavřít na volbách, Zpět · Zrušit · primární na krocích) · 45d5be44 (telefon) · strings.ts structure.intro, group.*, opt*, why*, openTree, research.stop · app:5e85dfc1 src/structure-options.ts (from: noOther → notOpen → followed + stopFollowing) · fef250eb, f4050b1c (všechny volby bez posouvání do 1366 × 657 a 1024 × 768, rozplynutí spodku okna) · dirigent:spec/139 K3.2, K3.3 -->
 
 <a id="A14.3"></a>
 ## A14.3 New tree from a selection and a copy of the whole tree
@@ -188,14 +198,22 @@ It is written only after confirmation in the guide and can be undone ([A8.12](A8
     of chosen children – 9 people in all." The import is named "{tree} — {what}" in the guide.
 
   **Continue to the guide** opens the guide, where the target tree is chosen. This tree does not change.
+- **From another tree into this tree…** opens **Add from another tree**, the step "from which tree": "Which tree to add
+  to this tree. The whole tree is chosen; the guide's first step can narrow it." It offers all other trees of the app
+  in alphabetical order, hidden ones and copies too, each with "N people · line of origin · Hidden"
+  ([A14.1](#A14.1)). **Continue to the guide** opens the merge guide with the chosen whole tree as the import and this
+  tree as the target ([A8.5](A8-merging-trees.md#A8.5)). The chosen tree does not change; this tree changes only after
+  confirmation in the guide, and the merge can be undone (**Undo** in the notice, **Merge history**). A long name
+  without spaces wraps in the row on a phone.
 - **Add from a file to this tree…:** **GEDCOM file (.ged)** (from another program: MyHeritage, Geni, Ancestry,
   Gramps…) or **Strom file (.json)** (an export from Strom, for example from a relative). After the file is chosen,
   the merge guide opens with this tree as the target. Nothing is written to the tree until the guide confirms it.
 - **Limits:** when no tree can take the merge now, the window Change structure stays and the guide says why. Adding
-  from a file works only into an open tree that is not followed live. What is sent to the research after a merge is
-  covered by [A8.13](A8-merging-trees.md#A8.13).
-- **Controls:** **Change structure…** › **A selection or the whole tree into another tree…**, **Add from a file to
-  this tree…**
+  from a file and from another tree works only into an open tree that is not followed live. What is sent to the
+  research after a merge is covered by [A8.13](A8-merging-trees.md#A8.13).
+- **Controls:** **Change structure…** › **A selection or the whole tree into another tree…**, **From another tree
+  into this tree…**, **Add from a file to this tree…**; a file or a tree's row dropped on a row of Manage trees
+  ([A8.5.1](A8-merging-trees.md#A8.5.1))
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:f0c5a3fb src/ui/structure-ui.ts structureJoinWhatStep, structureJoin (whole → showMergeTreesDialog, selection → structureWhoStep mode join → mergeSubsetInto „{strom} — {co}“), structureFileStep (startGedcomImportPlain, startJsonImportIntoTree) · 29d02a8c joinPartners · strings.ts structure.joinTitle, joinWhatIntro, joinWhole, joinWholeDesc, joinSelection, joinSelectionDesc, joinNote, continueGuide, joinPartners, fileTitle, fileGed*, fileJson*, fileNote -->
+<!-- zdroj: app:f0c5a3fb src/ui/structure-ui.ts structureJoinWhatStep, structureJoin (whole → showMergeTreesDialog, selection → structureWhoStep mode join → mergeSubsetInto „{strom} — {co}“), structureFileStep (startGedcomImportPlain, startJsonImportIntoTree) · 29d02a8c joinPartners · strings.ts structure.joinTitle, joinWhatIntro, joinWhole, joinWholeDesc, joinSelection, joinSelectionDesc, joinNote, continueGuide, joinPartners, fileTitle, fileGed*, fileJson*, fileNote · app:5e85dfc1 src/ui/structure-ui.ts (from: ostatní stromy podle abecedy, persons · treeOriginText · hiddenBadge; celý strom jako import, otevřený strom cíl) · fef250eb (dlouhý název na telefonu) · strings.ts structure.optFrom, optFromDesc, fromTitle, fromStep, fromIntro, fromNote · dirigent:spec/139 K3.2 -->

@@ -311,8 +311,26 @@ images itself, one at a time: it opens the image in Chrome and saves what the ar
 - **Since:** research 1.27.0. A held-back image is reported since research 1.30.0, a tab not drawn since 1.31.0. The
   research mark in the file's name, the book without `--recordset`, tidying late copies, waiting for a download being
   written and an image viewer out of reach since 1.33.0.
+- **From research 1.37.0 (several images at once):**
+  - `--image 40,41,45` or `--image 40-45` (at most 10 images) with one `--at` for each in their order, or one address
+    with `{n}` in place of the number, gives one shorter script for all of them. The script tells an image by the
+    tab's address and refuses another page;
+  - each image is still on its own page, which the agent opens at a person's pace under strom's watching; no range.
+    One `strom media add --inbox --waiting` after the last one takes them all in;
+  - an image of the list whose page has not been opened yet never counts as held back by the browser;
+  - Claude Code with more than three images hands them to the tree's helper `strom-image-saver`: a small context,
+    only the tools saving needs, at most 10 images per call, the person's model `model.cheap`, else the model of the
+    agent that started it. Its pages count with the agent's pages, and the same watching applies to them.
+- **From research 1.37.0 (waiting):** while the agent's session saves images, the task does not wait for a person and
+  the Strom app shows it as the agent's work ([R6.1](R6-awaiting-action.md#R6.1)). Waiting for a person are: an image
+  held back by the browser (said right at the start of the wait), saving stopped by the end of the session (the next
+  session goes on with it, or a person saves the images; [R6.2.1](R6-awaiting-action.md#R6.2.1)) and a wait the agent
+  writes itself for the same task (`strom task wait --images` after `strom media save`): unfinished saves are dropped
+  and the task is at once in **What waits** with its words. A task waiting for an image whose page the watching
+  refused (a site's limit used up) returns to the queue at the end of the session, with a note of which images
+  remain.
 
-<!-- zdroj: research:a4a2f6c0 src/core/browser.ts SaveRecord, HELD_AFTER_MS 5000 · src/commands/media.ts heldSaves, heldLine (media add --inbox --waiting) · assets/lang/cs.json browser.wait.held · research:src/commands/media.ts:1206-1294 media save (browserGate, guarded browser, permission browser) · commit dadd91e7 (viewer paged on) · src/core/browserhelp.ts agentBrowserAdvice · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · research:c6b6444d, dee0bb03 src/core/browser.ts VIEWER_HIDDEN_MS = 30_000, CAPTURE_JS (čekání jen na snímky kreslené karty, NOT_SHOWN, „the viewer's tiles did not all come in 30 s“, „the viewer was paged to another image … nothing saved“) · CHANGELOG.cs.md 1.31.0 · 1.33.0: research:7306f2a7 src/core/browser.ts researchMark (8 hex z id), waitFileBase (strom-<značka>-T…-NNNN), staré jméno jen podle SaveRecord.file · f6de01b7 src/commands/media.ts saveBookOf (kniha bez --recordset), tidyDownloads, TAKEN_KEEP_MS 14 dní · 903ce928 media add --inbox --waiting (zapisované stahování, STROM_DOWNLOAD_WAIT_MS, heldSaves dl.unfinished) · f5339b36 findViewer (OpenSeadragon v kódu stránky), hláška „strom cannot reach it … nothing saved“ · strom help media save · CHANGELOG.cs.md 1.33.0 -->
+<!-- zdroj: research:a4a2f6c0 src/core/browser.ts SaveRecord, HELD_AFTER_MS 5000 · src/commands/media.ts heldSaves, heldLine (media add --inbox --waiting) · assets/lang/cs.json browser.wait.held · research:src/commands/media.ts:1206-1294 media save (browserGate, guarded browser, permission browser) · commit dadd91e7 (viewer paged on) · src/core/browserhelp.ts agentBrowserAdvice · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · research:c6b6444d, dee0bb03 src/core/browser.ts VIEWER_HIDDEN_MS = 30_000, CAPTURE_JS (čekání jen na snímky kreslené karty, NOT_SHOWN, „the viewer's tiles did not all come in 30 s“, „the viewer was paged to another image … nothing saved“) · CHANGELOG.cs.md 1.31.0 · 1.33.0: research:7306f2a7 src/core/browser.ts researchMark (8 hex z id), waitFileBase (strom-<značka>-T…-NNNN), staré jméno jen podle SaveRecord.file · f6de01b7 src/commands/media.ts saveBookOf (kniha bez --recordset), tidyDownloads, TAKEN_KEEP_MS 14 dní · 903ce928 media add --inbox --waiting (zapisované stahování, STROM_DOWNLOAD_WAIT_MS, heldSaves dl.unfinished) · f5339b36 findViewer (OpenSeadragon v kódu stránky), hláška „strom cannot reach it … nothing saved“ · strom help media save · CHANGELOG.cs.md 1.33.0 · 1.37.0: research:66ef4451 src/commands/media.ts media save (--image seznam nebo rozsah, nejvýš 10, --at ke každému nebo {n}; skript pozná snímek podle adresy karty; neotevřená stránka není zadržená), agent strom-image-saver (model.cheap, delegate hook) · 81de7cdb, aae8f1aa src/core/waiting.ts savedByAgentNow, waitOnNow · 1c8a4380 (task wait --images po media save: uložení zahozena, čekání hned člověka) · src/core/ownsave.ts unsavedOwnWait, saveNeverOpened (návrat do fronty s koncem sezení) · CHANGELOG.cs.md 1.37.0 -->
 
 <a id="R9.5.1"></a>
 ### R9.5.1 A sharper copy of an image
@@ -331,8 +349,23 @@ the archive's viewer zoomed in, or at its full resolution.
 - **Limits:** only the whole image, not an excerpt of it.
 - **Controls:** terminal (agent): `strom media save T… --image <number> --recordset B… --at <address> --again`.
 - **Since:** research 1.33.0
+- **From research 1.37.0:** `strom media add --inbox --waiting` takes in a copy saved with `--again` at once: the
+  same scan, sharper, goes beside as a copy (the image is the one with the most pixels), another scan of the image
+  becomes the image, and the one so far is withdrawn and kept (the one a source cites stays beside). Nothing is put
+  aside or confirmed, no `strom media aside --take` at each image.
+- **From research 1.37.0 (screenshot):** a properly saved copy comes ahead of a screenshot, even with fewer pixels.
+  A copy counts as a screenshot when its original name is a screenshot's name (or it is a PNG beside a JPEG) and its
+  aspect ratio differs from another copy of the image by more than 15 %. A copy downloaded by a downloader or saved
+  by the agent's browser (the name `strom-…-T…-NNNN.jpg`) is never a screenshot. Otherwise the order by pixels
+  holds. It is worked out from the records each time, so an older research reads it the same way.
+- **From research 1.37.0 (citations to another copy):** `strom media cites M…` lists the sources that cite the copy
+  and other copies of the same image; with `--move-to M…` it moves them to another copy of the whole image (each
+  source in one edit; the old copy stays and is not withdrawn). The excerpt of a place goes with them only when
+  strom recognizes both files as the same scan turned the same way and it is not a screenshot beside a scan;
+  otherwise it stays on the old copy and the listing gives the commands to mark it anew. An excerpt of the whole
+  image always goes. Nothing is moved by itself; `--dry-run` says what would happen.
 
-<!-- zdroj: research:6651b60b src/commands/media.ts media save --again, againPending, settleAgain · src/core/media.ts findImage (nejvíc pixelů, ne část) · src/core/browser.ts SaveRecord.again · strom help media save (--again) · dirigent:prace/1114-vyzkum-z-hlidani-2/vysledek-sub1.md (A2, otevřené: výřez ne; citace na M… zůstávají) · CHANGELOG.cs.md 1.33.0 -->
+<!-- zdroj: research:6651b60b src/commands/media.ts media save --again, againPending, settleAgain · src/core/media.ts findImage (nejvíc pixelů, ne část) · src/core/browser.ts SaveRecord.again · strom help media save (--again) · dirigent:prace/1114-vyzkum-z-hlidani-2/vysledek-sub1.md (A2, otevřené: výřez ne; citace na M… zůstávají) · CHANGELOG.cs.md 1.33.0 · 1.37.0: research:66ef4451 (--again převzato hned, bez media aside --take) · a2fe388d src/core/media.ts rankCopies (jméno snímku obrazovky, poměr stran > 15 %), src/commands/media.ts media cites --move-to (výřez jen u téhož skenu, jinak příkazy) · d93be067 (PNG vedle JPEG; savedProperly: stahovač nebo jméno strom-…) · 0c7ed4d3 · strom help media cites · CHANGELOG.cs.md 1.37.0 -->
 
 <a id="R9.5.2"></a>
 ### R9.5.2 A browser that draws the tab slowly
@@ -441,8 +474,26 @@ research.
     the same is said;
   - `.jp2` files from the portal of Moravský zemský archiv are counted back ([R6.8.2](R6-awaiting-action.md#R6.8.2))
     in the folder of a waiting task too.
+- **From research 1.37.0 (scans saved by hand):**
+  - an image's number can be anywhere in the name (`__0236.jpg`, `Lhota_11__125.jpg`, `fond12_kniha3_236.jpg`): of
+    several numbers, the one that belongs to the images asked for, the one that changes between the folder's files,
+    else the last one before the extension. A screenshot's date and time is never taken as a number, nor a year after
+    the number (`33 1784.jpg`) when it is not known which images; a name with two numbers asked for is not guessed but
+    reported;
+  - a file whose image number cannot be told (`000.jpg`) does not hold up the others: it stays lying and is reported
+    once, without advice to rename it;
+  - files named by the entries on them (`001-004.jpg`) or by the portal's own numbers are taken in in the folder's
+    order as the book's next images when nothing more is saved for 20 minutes. The entries stay recorded at the
+    image, and the task returns with a list of which file is which image;
+  - another sheet under the same number (`7a.jpg`) is told by its content: a copy, a zoomed-in part of the image, or
+    a scan of its own saved under its name; it is never hidden as a copy by its name alone. This holds in the same
+    and in a later batch, after the task's return and with `strom media add --inbox <folder>`;
+  - a task to which only part of the images came returns after 20 minutes of quiet with what came and what is
+    missing; never sooner. A scan on the boundary of two years is counted once;
+  - files named by the image's number are taken as before; nothing is renumbered. The status, the menu and the
+    bridge's log say when the folder will be taken in and what stayed lying (local time).
 
-<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/commands/media.ts:403-478 (same sha under its number → 200 same: true, added []; another number/book → 409 waiting.image-same) · src/core/waiting.ts actionsOf, archiveGroup · src/core/waitkind.ts waitGroupOf (repo: before archive:, host:) · assets/method/waiting.md "Images saved by hand" (the one exception, 7bd55fa1) · assets/method/reading.md · src/commands/guide.ts rule 7 · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask · 1.33.0: research:bfa01a34 src/commands/media.ts media view (snímek, na který úkol čeká: kdo a další krok) · research:dddeb8a6 src/core/media.ts copyless (COPY_WORD copy/kopie/kopia/…, COPY_PAREN, COPY_BARE jen za číslem), namedByNumber · src/core/inboxwait.ts numberFiles (pořadí jen bez souboru pojmenovaného samým číslem; times .jp2 i u čekajících), bookTimes · src/commands/media.ts registerImages clashed, takeFiles (kolize → rename `${f}.same-as-${same}`, jinak leží; SetAside), asideLine (live.log, výpis ⚠, aside v JSON) · research:18fd10ec COPY_BARE \p{Nd}+\p{L}? („33a 2.jpg“) · CHANGELOG.cs.md 1.35.0 (research:e263eacb) -->
+<!-- zdroj: research:src/commands/tasks.ts:1041 task wait (--images, folder) · src/core/media.ts:117 inboxFolderFor · src/core/inboxwait.ts:25 SETTLE_MS · src/core/inboxwatch.ts:1-8 (30 s) · src/commands/media.ts:141-180 wakeWaiting · src/core/live.ts waiting/<T> answer, PUT /media (X-Strom-Task, X-Strom-Image, 409 waiting.image-same) · src/commands/media.ts:403-478 (same sha under its number → 200 same: true, added []; another number/book → 409 waiting.image-same) · src/core/waiting.ts actionsOf, archiveGroup · src/core/waitkind.ts waitGroupOf (repo: before archive:, host:) · assets/method/waiting.md "Images saved by hand" (the one exception, 7bd55fa1) · assets/method/reading.md · src/commands/guide.ts rule 7 · src/agents/files.ts:80-95 · CHANGELOG.cs.md 1.27.0 · app:CHANGELOG.cs.md 3.23.0 · src/research-waiting.ts:216-272 (actions, order), :448-488 assignImages · src/research-waiting-write.ts:532 WAITING_ANSWER_MAX · src/ui/research-overview-ui.ts:698-812 group head · src/strings.ts live.waitingTask · 1.33.0: research:bfa01a34 src/commands/media.ts media view (snímek, na který úkol čeká: kdo a další krok) · research:dddeb8a6 src/core/media.ts copyless (COPY_WORD copy/kopie/kopia/…, COPY_PAREN, COPY_BARE jen za číslem), namedByNumber · src/core/inboxwait.ts numberFiles (pořadí jen bez souboru pojmenovaného samým číslem; times .jp2 i u čekajících), bookTimes · src/commands/media.ts registerImages clashed, takeFiles (kolize → rename `${f}.same-as-${same}`, jinak leží; SetAside), asideLine (live.log, výpis ⚠, aside v JSON) · research:18fd10ec COPY_BARE \p{Nd}+\p{L}? („33a 2.jpg“) · CHANGELOG.cs.md 1.35.0 (research:e263eacb) · 1.37.0: research:62e335eb src/core/inboxwait.ts (000.jpg leží, akty jako záznamy, cizí jména v pořadí složky po STROM_INBOX_QUIET_MS 20 min, část snímků po tichu), 7a2a04cc src/core/media.ts findPart, 6fee0f71 (7a podle obsahu v každém převzetí i media add --inbox <složka>; soubor ležící schválně řečen jednou; místní čas) · src/core/media.ts (číslo kdekoli v názvu) · assets/method/waiting.md (sken na hranici jednou) · CHANGELOG.cs.md 1.37.0 · dirigent:spec/141 K1.1–K1.6, K2.2 -->
 
 <a id="R9.7"></a>
 ## R9.7 An automatic session and a chat
@@ -498,7 +549,9 @@ the table says "Claude + Chrome", it means Claude Code with the Claude in Chrome
 3. Otherwise the agent sets `strom task wait T… --images B…:40-45`. The task is in the state **waiting**, in What
    waits under the archive's name, with a folder in the inbox.
 4. With the permission **through the browser** and with Claude + Chrome, the agent saves the images itself
-   ([R9.5](#R9.5)) and takes them in.
+   ([R9.5](#R9.5)) and takes them in. From research 1.37.0 the task meanwhile does not wait for a person and is not
+   in What waits; only an image held back by the browser or saving stopped by the end of the session passes to a
+   person.
 5. Otherwise a person saves the images into the folder or sends them from the app (**Add images**) ([R9.9](#R9.9)).
 6. Taking in: the bridge at once, otherwise the start of the next session, or the command
    `strom media add --inbox --waiting`.
@@ -510,7 +563,7 @@ the table says "Claude + Chrome", it means Claude Code with the Claude in Chrome
 
 - **Since:** research 1.27.0, Strom app 3.23.0
 
-<!-- zdroj: research:src/commands/media.ts:141 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/core/inboxwatch.ts · src/commands/session.ts takeWaiting · src/core/live.ts waiting answer -->
+<!-- zdroj: research:src/commands/media.ts:141 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/core/inboxwatch.ts · src/commands/session.ts takeWaiting · src/core/live.ts waiting answer · 1.37.0: research:81de7cdb src/core/waiting.ts savedByAgentNow -->
 
 <a id="R9.9"></a>
 ## R9.9 What a person does
@@ -816,8 +869,16 @@ event **Census** ([A10.1](A10-shared-events.md#A10.1)).
   `--member P0002:"head of the household":41 --member P0003:"wife of the head":36 --others "farmhand, 19"`
   records Jan Horák as head of household (41) and Marie Horáková as wife (36), both as of 31 Dec 1890.
 - **Since:** research 1.36.0, app 3.31.0
+- **From research 1.37.0:**
+  - a person's census written as a custom event with a census name ("Census", "Sčítání lidu", "Volkszählung"…) goes
+    to the Strom app as a census (`1 CENS`); the record in the research stays as it was written. A couple's event and
+    a name with something more stay as they are. App 3.32.0 no longer shows such a census struck through when
+    loading the research's version ([S2.7.1](S2-edits-from-the-app.md#S2.7.1));
+  - `strom check` warns of two censuses of one person with the same date (`two-censuses`) and advises keeping the one
+    that says more (household, citations) and withdrawing the other with `strom event retract`;
+  - the same words of a record cited twice go into the note of a fact, name or family only once.
 
-<!-- zdroj: research:8dba2e52 src/commands/household.ts census add (--source, --date, --place, --house, --member, --others, --note, --locator, --transcript/--quote, --information, --status, --country; sameHouse, elsewhere) · src/core/household.ts addHousehold (census.member.none, record.none, merged/retracted, census.member.twice, census.living, relace chybí, census.head.twice, domácnost už zapsaná; jeden člen bez share id, vztah do poznámky; others jen v poznámce), parseMember, alignCopies · src/gedcom/export.ts (2 NOTE bez řádků kopie) · src/commands/people.ts alignCopies u note edit/retract/restore, cite, event edit, event main · research:ece404b9 src/core/origin.ts (přijatý návrh na všechny kopie), censusDay jedna tabulka · research:5a73905e assets/archives.json censusDays CZ · research:d2bef48e src/core/household.ts householdRoleOf, src/core/phrases.ts HOUSEHOLD_ROLES, HOUSEHOLD_ROLES_ALSO, HOUSEHOLD_OF_HEAD · test/cli/census-household.test.ts, census-reader.test.ts · assets/method/census.md „Reading and recording“ · CHANGELOG.cs.md 1.36.0 · dirigent:spec/106 K3.1–K3.3 · dirigent:prace/1120-vyzkum-106-scitani Výsledek (census add i při vypnutí, stav jen výslovně) -->
+<!-- zdroj: research:8dba2e52 src/commands/household.ts census add (--source, --date, --place, --house, --member, --others, --note, --locator, --transcript/--quote, --information, --status, --country; sameHouse, elsewhere) · src/core/household.ts addHousehold (census.member.none, record.none, merged/retracted, census.member.twice, census.living, relace chybí, census.head.twice, domácnost už zapsaná; jeden člen bez share id, vztah do poznámky; others jen v poznámce), parseMember, alignCopies · src/gedcom/export.ts (2 NOTE bez řádků kopie) · src/commands/people.ts alignCopies u note edit/retract/restore, cite, event edit, event main · research:ece404b9 src/core/origin.ts (přijatý návrh na všechny kopie), censusDay jedna tabulka · research:5a73905e assets/archives.json censusDays CZ · research:d2bef48e src/core/household.ts householdRoleOf, src/core/phrases.ts HOUSEHOLD_ROLES, HOUSEHOLD_ROLES_ALSO, HOUSEHOLD_OF_HEAD · test/cli/census-household.test.ts, census-reader.test.ts · assets/method/census.md „Reading and recording“ · CHANGELOG.cs.md 1.36.0 · dirigent:spec/106 K3.1–K3.3 · dirigent:prace/1120-vyzkum-106-scitani Výsledek (census add i při vypnutí, stav jen výslovně) · 1.37.0: research:6aa96d31 src/gedcom/export.ts (vlastní událost sčítání jako 1 CENS), src/core/labelkind.ts kindOfLabel, strom check two-censuses, poznámka bez zdvojených slov · CHANGELOG.cs.md 1.37.0 · dirigent:K052 -->
 
 <a id="R9.12.4"></a>
 ### R9.12.4 Census records off: tasks set aside

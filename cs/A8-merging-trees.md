@@ -249,7 +249,7 @@ Rozsah z kroku 1 a pravidla kroku 4 jde zapamatovat pro soubory GEDCOM z téhož
 programu začne průvodce s nimi; jde je změnit.
 
 - **Uložit:** v kroku 5 nad tlačítkem zápisu stojí zaškrtávací políčko „Zapamatovat pro soubory z {program}: rozsah
-  c), Platí můj strom“ (s pravidly podle druhu údaje „… s výjimkami podle druhu údaje“). Pod ním: „Příště se v kroku 1
+  c), Platí můj strom“ (s pravidly podle druhu údaje „…, s výjimkami podle druhu údaje“). Pod ním: „Příště se v kroku 1
   předvyplní (jde změnit). Uložená pravidla jsou v Nastavení → Data a soukromí.“ Políčko je ve výchozím stavu
   nezaškrtnuté, i u předvyplněného kroku 1.
 - **Kdy se uloží:** až po zápisu; u **Jen porovnat** po **Uložit výčet…**. Zavřený průvodce nic neuloží.
