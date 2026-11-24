@@ -893,6 +893,8 @@ with in the app and what only in the research is said in [R6.5](R6-awaiting-acti
   - an item waiting for images begins with the block **Deliver** with steps ([S4.4.7](#S4.4.7)).
 - **From app 3.30.0 with research 1.35.0:** a task whose wait for images is not written the way strom needs it has
   a mark and, in the open item, a fix in one step ([S4.4.8](#S4.4.8), [S4.4.9](#S4.4.9)).
+- **From app 3.32.0 with research 1.37.0:** an item that can be returned to the agent has the line **Now** and the
+  button **Retry with the agent**, an archive's band **Retry all with the agent** ([S4.4.14](#S4.4.14)).
 
 <!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
@@ -1192,6 +1194,9 @@ which they are done. The result is files in a folder, not an answer.
 - **Controls:** app: **Research overview → Awaiting action**, a click on an item with images; in the small panel
   **Add images**.
 - **Since:** app 3.30.0
+- **From app 3.32.0 with research 1.37.0:** with a task that can be returned to the agent, the line **Now** and
+  **Retry with the agent** stand under the block; as the main action it makes the step **Add images** outlined
+  ([S4.4.14](#S4.4.14)).
 
 <!-- zdroj: app:449e6962, 429839f0 src/ui/waiting-task-ui.ts waitingTakesImages (waitingActions images přes most), waitingAnswerTexts (answerImagesLabel, answerImagesHint), waitingDeliverEl (věta deliverSentence, phone → deliverPhone bez kroků, kroky deliverSteps web → folder → images, krok ② books.folderBook přes odkaz book jen s book.folder, jinak openFolder task?do=folder se značkou, ③ haveImages waiting-action--primary → openWaitingImages, deliver-pair šipka s krokem, is-column), panel dialog (column, upload: true, title haveImages) · src/research-waiting.ts waitingForImages (images, web s inbox), waitingDeliver (chybějící čísla jen u detail full; kniha jen ze seznamu se složkou), deliverSentence, deliverWebUrl (w.url, jinak bookWebUrl), deliverSteps · src/ui/research-overview-ui.ts appendWaitingTaskActions deliver (answer → link-button cannotGet, ostatní pod ⋯, na telefonu nic pod ⋯) · strings.ts live.waitingTask.deliverLabel, deliverBook, deliverTask, deliverBookAny, deliverTaskAny, deliverPhone, stepAria, cannotGet, answerImagesLabel, answerImagesHint · e2e/waiting-images.spec.ts, overview-waiting-books.spec.ts · ZADANI_DEV_knihy-zahlavi.md §5 · dirigent:prace/1117-app-knihy-zahlavi (D12, D13) -->
 
@@ -1378,6 +1383,63 @@ only in the research terminal.
 - **Since:** app 3.32.0 (research 1.37.0)
 
 <!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 -->
+
+<a id="S4.4.14"></a>
+### S4.4.14 Retry with the agent
+
+An item the research allows to be returned to the agent ([R6.7.3](R6-awaiting-action.md#R6.7.3)) says why it waits
+now and has the button **Retry with the agent**. An archive's group with more such items returns them at once.
+
+- **The line Now** (the opened item, in place of the note about the browser): **Now:** and the reason by the
+  research:
+  - "The agent's browser held back downloads from … Once automatic downloads are allowed in the agent's browser
+    profile, the agent saves them itself." (without a known website "… from the archive's website …");
+  - "Saving the images stopped; the agent's session ended midway.";
+  - "The agent's browser is ready now; the agent saves the images itself.";
+  - "The page is in an archive viewer images cannot be saved from: the agent only reads them on screen, no image is
+    saved.";
+  - the extension not connected: "With the Claude in Chrome extension the agent would save the images itself. Once
+    the extension is connected, the task can go back to the agent." and on a computer a link to the extension; the
+    agent without a browser: "With Claude Code and the Claude in Chrome extension the agent would save the images
+    itself.";
+  - an item returned before that waits again ends with "– retried 18:40, held back again" (or "waiting again"); the
+    time today, "yesterday 18:40", otherwise with the day and month.
+- **The item's button:** **Retry with the agent** with the number of images the task still misses ("· 2 images"),
+  for a page only read on screen "· read only"; without a known number, no number.
+  - It is the main action when the agent can go on at once (downloads held back, saving stopped, the browser ready,
+    reading on screen); the step **Add images** of the block **Deliver** ([S4.4.7](#S4.4.7)) is then only outlined.
+    With the extension not connected or the agent without a browser it is outlined beside the main action.
+  - With the block **Deliver** it stands under the line **Now**, otherwise among the item's actions.
+  - A click returns the task at once, without a confirmation: the item disappears and a notice says "Returned to the
+    agent – it takes it up next." (the research is working), otherwise "Returned to the agent – first in the queue;
+    the agent takes it up at the next start."
+  - A refusal stands in the item's row: "The task now waits for something else; not returned.", "The task can no
+    longer go back.", "The research is not responding; nothing was returned."
+- **Limit:** an item returned 3 times in 24 hours has in place of the button "Can go back to the agent again tomorrow
+  9:12 – 3 attempts in 24 hours."
+- **An archive's group:** in the band of an archive ([S4.4](#S4.4)) with at least two items that can be returned now
+  stands **Retry all with the agent (N tasks, M images)**, also in a folded group:
+  - the numbers are of the whole group, not only of the items a search shows. When an item does not say its number
+    of images, it says "at least M images"; when all are only read on screen, "read only"; without known images only
+    "(N tasks)". The items at the limit follow the button: "· 1 only tomorrow 9:12";
+  - a click opens in place the question "Return 2 tasks (5 images) to the agent? They go to the front of the queue."
+    with **Return** and **Cancel** (also Esc). **Return** returns all the group's items that can go back at once, or
+    none; the notice "Returned to the agent: 2 tasks, first in the queue.", on a refusal "Nothing was returned: …" and
+    the button stays;
+  - when two or more items of the group wait for the same reason, the line **Now** stands once in the band and the
+    items do not have it.
+  - In groups by book and with questions about places, the group's button is not there.
+- **Phone:** only the line **Now** and the sentence "Returning to the agent is possible in the app on a computer."
+  (at the limit the sentence of the limit), without buttons; each item has its own line **Now**.
+- **Limits:** only in the **Research overview** and its own window ([S4.1.6](#S4.1.6)), not in the small panel;
+  only with a research that can return tasks. With an older research the item has neither the line **Now** nor the
+  button. An agent does not run the button: only a person returns tasks ([R6.6](R6-awaiting-action.md#R6.6)).
+- **Controls:** app: **Research overview → Awaiting action**, the opened item, **Retry with the agent**; in an
+  archive's band **Retry all with the agent** · terminal: **What waits** → **Return to the agent**
+  ([R6.7.3](R6-awaiting-action.md#R6.7.3)).
+- **Since:** app 3.32.0 (research 1.37.0)
+
+<!-- zdroj: app:c574752a, 3c6a554d, 75b71f5a src/research-waiting.ts waitingRetryReason (held/heldNoHost, stopped, ready, screen, no-extension waitNoExt + afterExt + extLink, agent-without-browser waitAgent, again → againHeld/againWaits), retryWhenText (dnes, včera, zítra, den a měsíc), waitingRetryCount, waitingRetryLimitText, waitingRetryMain (ne no-extension/agent-without-browser), waitingActions ctx.retry (jen přehled, ne telefon, w.retry.can), waitingGroupRetry (n, atLeast, readOnly, later), groupRetry*Text, waitingGroupRetryReason (≥ 2, stejné why+host) · src/ui/research-overview-ui.ts waitingRetryEl (Teď, limit, telefon R.phone, tlačítko primary/secondary), waitingRetryOffered (ne sheet, can, writes.retry), waitingGroupRetryOffer (ne sheet, ne kniha, ne místa, offer.n < 2 → nic, celá skupina s.waiting), waitingGroupRetryNow (ne telefon), browserNote jen bez w.retry · src/ui/waiting-task-ui.ts waitingDeliverEl retryMain (③ obrysová) · src/ui/research-waiting-write-ui.ts retryWaitingItem (doneRunning/doneIdle podle běhu, limit → can false, waitingRetryRefusedText) · src/ui/overview-window-ui.ts waiting-agent-retry, waiting-group-agent-retry · src/research-link.ts WAITING_RETRY_FEATURE · strings.ts live.waitingRetry, research.browser.waitNoExt, waitAgent · e2e/waiting-retry.spec.ts, waiting-retry-group.spec.ts · dirigent:prace/1124-app-089-zkusit-znovu (Výsledek, odchylky sub1–sub3), spec/089 K1.1–K3.1 -->
 
 <a id="S4.5"></a>
 ## S4.5 Actions that open the research

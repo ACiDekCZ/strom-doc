@@ -562,6 +562,10 @@ the table says "Claude + Chrome", it means Claude Code with the Claude in Chrome
    nothing in the folder yet.
 
 - **Since:** research 1.27.0, Strom app 3.23.0
+- **From research 1.37.0:** a task that passed to a person because of the agent's browser (downloads held back,
+  saving stopped), or that waits for images of a book the agent's browser may go to, is returned to the agent by a
+  person once the obstacle is gone ([R6.7.3](R6-awaiting-action.md#R6.7.3)); the task goes first in the queue and
+  back to step 4.
 
 <!-- zdroj: research:src/commands/media.ts:141 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/core/inboxwatch.ts · src/commands/session.ts takeWaiting · src/core/live.ts waiting answer · 1.37.0: research:81de7cdb src/core/waiting.ts savedByAgentNow -->
 

@@ -602,6 +602,10 @@ laufendem Chrome gemeint.
    Archiv warten und im Ordner noch nichts haben.
 
 - **Gilt seit:** Forschung 1.27.0, Strom-App 3.23.0
+- **Ab Forschung 1.37.0:** eine Aufgabe, die wegen des Browsers des Agenten an den Menschen ging (zurückgehaltene
+  Downloads, angehaltenes Speichern) oder auf Aufnahmen eines Buchs wartet, zu dem der Browser des Agenten darf, gibt
+  der Mensch an den Agenten zurück, sobald das Hindernis weg ist ([R6.7.3](R6-awaiting-action.md#R6.7.3)); die
+  Aufgabe kommt sofort an die Reihe und zurück zu Schritt 4.
 
 <!-- zdroj: research:src/commands/media.ts:141 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/core/inboxwatch.ts · src/commands/session.ts takeWaiting · src/core/live.ts waiting answer · 1.37.0: research:81de7cdb src/core/waiting.ts savedByAgentNow -->
 

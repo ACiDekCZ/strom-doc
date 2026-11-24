@@ -962,6 +962,9 @@ erledigen lässt und was nur in der Forschung, sagt [R6.5](R6-awaiting-action.md
 - **Ab App 3.30.0 mit Forschung 1.35.0:** eine Aufgabe, deren Warten auf Bilder nicht so erfasst ist, wie strom es
   braucht, hat eine Marke und im geöffneten Eintrag eine Korrektur in einem Schritt ([S4.4.8](#S4.4.8),
   [S4.4.9](#S4.4.9)).
+- **Ab App 3.32.0 mit Forschung 1.37.0:** ein Eintrag, der an den Agenten zurückgehen kann, hat die Zeile **Jetzt**
+  und die Schaltfläche **Erneut über den Agenten versuchen**, die Leiste eines Archivs **Alle erneut über den Agenten
+  versuchen** ([S4.4.14](#S4.4.14)).
 
 <!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
@@ -1285,6 +1288,9 @@ in der Reihenfolge, in der sie gemacht werden. Das Ergebnis sind Dateien in eine
 - **Bedienung:** App: **Forschungsübersicht → Wartet auf Bearbeitung**, Klick auf einen Eintrag mit Bildern; im
   kleinen Panel **Bilder hinzufügen**.
 - **Gilt seit:** App 3.30.0
+- **Ab App 3.32.0 mit Forschung 1.37.0:** bei einer Aufgabe, die an den Agenten zurückgehen kann, stehen unter dem
+  Block die Zeile **Jetzt** und **Erneut über den Agenten versuchen**; als Hauptaktion macht sie den Schritt **Bilder
+  hinzufügen** umrandet ([S4.4.14](#S4.4.14)).
 
 <!-- zdroj: app:449e6962, 429839f0 src/ui/waiting-task-ui.ts waitingTakesImages (waitingActions images přes most), waitingAnswerTexts (answerImagesLabel, answerImagesHint), waitingDeliverEl (věta deliverSentence, phone → deliverPhone bez kroků, kroky deliverSteps web → folder → images, krok ② books.folderBook přes odkaz book jen s book.folder, jinak openFolder task?do=folder se značkou, ③ haveImages waiting-action--primary → openWaitingImages, deliver-pair šipka s krokem, is-column), panel dialog (column, upload: true, title haveImages) · src/research-waiting.ts waitingForImages (images, web s inbox), waitingDeliver (chybějící čísla jen u detail full; kniha jen ze seznamu se složkou), deliverSentence, deliverWebUrl (w.url, jinak bookWebUrl), deliverSteps · src/ui/research-overview-ui.ts appendWaitingTaskActions deliver (answer → link-button cannotGet, ostatní pod ⋯, na telefonu nic pod ⋯) · strings.ts live.waitingTask.deliverLabel, deliverBook, deliverTask, deliverBookAny, deliverTaskAny, deliverPhone, stepAria, cannotGet, answerImagesLabel, answerImagesHint · e2e/waiting-images.spec.ts, overview-waiting-books.spec.ts · ZADANI_DEV_knihy-zahlavi.md §5 · dirigent:prace/1117-app-knihy-zahlavi (D12, D13) -->
 
@@ -1479,6 +1485,68 @@ App; einschalten nur im Terminal der Forschung.
 - **Gilt seit:** App 3.32.0 (Forschung 1.37.0)
 
 <!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 -->
+
+<a id="S4.4.14"></a>
+### S4.4.14 Erneut über den Agenten versuchen
+
+Ein Eintrag, den die Forschung an den Agenten zurückgeben lässt ([R6.7.3](R6-awaiting-action.md#R6.7.3)), sagt, warum
+er jetzt wartet, und hat die Schaltfläche **Erneut über den Agenten versuchen**. Die Gruppe eines Archivs mit mehreren
+solchen Einträgen gibt sie auf einmal zurück.
+
+- **Zeile Jetzt** (geöffneter Eintrag, statt des Hinweises zum Browser): **Jetzt:** und der Grund nach der Forschung:
+  - „Der Browser des Agenten hat Downloads von … zurückgehalten. Sobald automatische Downloads im Browserprofil des
+    Agenten erlaubt sind, speichert der Agent sie selbst.“ (ohne bekannte Website „… von der Website des Archivs …“);
+  - „Das Speichern der Bilder wurde unterbrochen; die Sitzung des Agenten endete mittendrin.“;
+  - „Der Browser des Agenten ist jetzt bereit; der Agent speichert die Bilder selbst.“;
+  - „Die Seite liegt in einem Archiv-Viewer, aus dem sich keine Bilder speichern lassen: Der Agent liest sie nur am
+    Bildschirm, kein Bild wird gespeichert.“;
+  - Erweiterung nicht verbunden: „Mit der Erweiterung Claude in Chrome würde der Agent die Bilder selbst speichern.
+    Sobald die Erweiterung verbunden ist, kann die Aufgabe an den Agenten zurückgehen.“ und am Computer ein Link zur
+    Erweiterung; der Agent ohne Browser: „Mit Claude Code und der Erweiterung Claude in Chrome würde der Agent die
+    Bilder selbst speichern.“;
+  - ein schon zurückgegebener Eintrag, der wieder wartet, endet mit „– erneut versucht 18:40, wieder
+    zurückgehalten“ (oder „wartet wieder“); die Zeit heute, „gestern 18:40“, sonst mit Tag und Monat.
+- **Schaltfläche des Eintrags:** **Erneut über den Agenten versuchen** mit der Zahl der Bilder, die der Aufgabe noch
+  fehlen („· 2 Bilder“), bei einer Seite nur zum Lesen am Bildschirm „· nur lesen“; ohne bekannte Zahl ohne Zahl.
+  - Sie ist die Hauptaktion, wenn der Agent sofort weitermachen kann (zurückgehaltene Downloads, unterbrochenes
+    Speichern, bereiter Browser, Lesen am Bildschirm); der Schritt **Bilder hinzufügen** des Blocks **Liefern**
+    ([S4.4.7](#S4.4.7)) ist dann nur umrandet. Mit nicht verbundener Erweiterung oder einem Agenten ohne Browser ist
+    sie umrandet neben der Hauptaktion.
+  - Beim Block **Liefern** steht sie unter der Zeile **Jetzt**, sonst zwischen den Aktionen des Eintrags.
+  - Ein Klick gibt die Aufgabe sofort zurück, ohne Bestätigung: der Eintrag verschwindet und eine Meldung sagt „An den
+    Agenten zurückgegeben – er nimmt sie als Nächstes.“ (die Forschung arbeitet gerade), sonst „An den Agenten
+    zurückgegeben – als Erstes in der Warteschlange; der Agent nimmt sie beim nächsten Start.“
+  - Eine Ablehnung steht in der Zeile des Eintrags: „Die Aufgabe wartet inzwischen auf etwas anderes; nicht
+    zurückgegeben.“, „Die Aufgabe kann nicht mehr zurückgehen.“, „Die Recherche antwortet gerade nicht; nichts wurde
+    zurückgegeben.“
+- **Limit:** ein Eintrag, der 3× in 24 Stunden zurückgegeben wurde, hat statt der Schaltfläche „Kann ab morgen 9:12
+  wieder an den Agenten zurückgehen – 3 Versuche in 24 Stunden.“
+- **Gruppe eines Archivs:** in der Leiste eines Archivs ([S4.4](#S4.4)) mit mindestens zwei Einträgen, die jetzt
+  zurückgehen können, steht **Alle erneut über den Agenten versuchen (N Aufgaben, M Bilder)**, auch bei einer
+  eingeklappten Gruppe:
+  - die Zahlen gelten für die ganze Gruppe, nicht nur für die Einträge, die eine Suche zeigt. Sagt ein Eintrag seine
+    Zahl der Bilder nicht, steht „mindestens M Bilder“; sind alle nur zum Lesen am Bildschirm, „nur lesen“; ohne
+    bekannte Bilder nur „(N Aufgaben)“. Die Einträge am Limit stehen hinter der Schaltfläche: „· 1 erst ab morgen
+    9:12“;
+  - ein Klick öffnet an Ort und Stelle die Frage „2 Aufgaben (5 Bilder) an den Agenten zurückgeben? Sie kommen sofort
+    an die Reihe.“ mit **Zurückgeben** und **Abbrechen** (auch Esc). **Zurückgeben** gibt alle Einträge der Gruppe,
+    die zurückgehen können, auf einmal zurück, oder keinen; die Meldung „An den Agenten zurückgegeben: 2 Aufgaben,
+    sofort an der Reihe.“, bei einer Ablehnung „Nichts wurde zurückgegeben: …“, und die Schaltfläche bleibt;
+  - warten zwei oder mehr Einträge der Gruppe aus demselben Grund, steht die Zeile **Jetzt** einmal in der Leiste und
+    die Einträge haben sie nicht.
+  - In Gruppen nach Buch und bei Fragen zu Orten gibt es die Schaltfläche der Gruppe nicht.
+- **Telefon:** nur die Zeile **Jetzt** und der Satz „Zurückgeben an den Agenten geht in der App am Computer.“ (am
+  Limit der Satz des Limits), ohne Schaltflächen; jeder Eintrag hat seine eigene Zeile **Jetzt**.
+- **Grenzen:** nur in der **Forschungsübersicht** und ihrem eigenen Fenster ([S4.1.6](#S4.1.6)), nicht im kleinen
+  Panel; nur mit einer Forschung, die das Zurückgeben kann. Mit einer älteren Forschung hat der Eintrag weder die
+  Zeile **Jetzt** noch die Schaltfläche. Ein Agent startet die Schaltfläche nicht: zurückgeben darf nur der Mensch
+  ([R6.6](R6-awaiting-action.md#R6.6)).
+- **Bedienung:** App: **Forschungsübersicht → Wartet auf Bearbeitung**, geöffneter Eintrag, **Erneut über den
+  Agenten versuchen**; in der Leiste eines Archivs **Alle erneut über den Agenten versuchen** · Terminal: **Was
+  wartet** → **An den Agenten zurückgeben** ([R6.7.3](R6-awaiting-action.md#R6.7.3)).
+- **Gilt seit:** App 3.32.0 (Forschung 1.37.0)
+
+<!-- zdroj: app:c574752a, 3c6a554d, 75b71f5a src/research-waiting.ts waitingRetryReason (held/heldNoHost, stopped, ready, screen, no-extension waitNoExt + afterExt + extLink, agent-without-browser waitAgent, again → againHeld/againWaits), retryWhenText (dnes, včera, zítra, den a měsíc), waitingRetryCount, waitingRetryLimitText, waitingRetryMain (ne no-extension/agent-without-browser), waitingActions ctx.retry (jen přehled, ne telefon, w.retry.can), waitingGroupRetry (n, atLeast, readOnly, later), groupRetry*Text, waitingGroupRetryReason (≥ 2, stejné why+host) · src/ui/research-overview-ui.ts waitingRetryEl (Teď, limit, telefon R.phone, tlačítko primary/secondary), waitingRetryOffered (ne sheet, can, writes.retry), waitingGroupRetryOffer (ne sheet, ne kniha, ne místa, offer.n < 2 → nic, celá skupina s.waiting), waitingGroupRetryNow (ne telefon), browserNote jen bez w.retry · src/ui/waiting-task-ui.ts waitingDeliverEl retryMain (③ obrysová) · src/ui/research-waiting-write-ui.ts retryWaitingItem (doneRunning/doneIdle podle běhu, limit → can false, waitingRetryRefusedText) · src/ui/overview-window-ui.ts waiting-agent-retry, waiting-group-agent-retry · src/research-link.ts WAITING_RETRY_FEATURE · strings.ts live.waitingRetry, research.browser.waitNoExt, waitAgent · e2e/waiting-retry.spec.ts, waiting-retry-group.spec.ts · dirigent:prace/1124-app-089-zkusit-znovu (Výsledek, odchylky sub1–sub3), spec/089 K1.1–K3.1 -->
 
 <a id="S4.5"></a>
 ## S4.5 Aktionen, die die Forschung öffnen

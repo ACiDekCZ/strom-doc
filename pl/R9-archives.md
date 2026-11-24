@@ -559,6 +559,10 @@ mówi „Claude + Chrome”, chodzi o Claude Code z rozszerzeniem Claude in Chro
    w folderze jeszcze nic nie mają.
 
 - **Obowiązuje od:** badanie 1.27.0, aplikacja Strom 3.23.0
+- **Od badania 1.37.0:** zadanie, które przeszło na człowieka z powodu przeglądarki agenta (wstrzymane pobieranie,
+  zatrzymane zapisywanie) albo czeka na skany księgi, do której przeglądarka agenta ma dostęp, człowiek zwraca
+  agentowi, gdy przeszkoda minęła ([R6.7.3](R6-awaiting-action.md#R6.7.3)); zadanie trafia od razu na początek
+  kolejki i wraca do kroku 4.
 
 <!-- zdroj: research:src/commands/media.ts:141 wakeWaiting · src/core/archivewait.ts:188 wakeForArchive · src/core/inboxwatch.ts · src/commands/session.ts takeWaiting · src/core/live.ts waiting answer · 1.37.0: research:81de7cdb src/core/waiting.ts savedByAgentNow -->
 

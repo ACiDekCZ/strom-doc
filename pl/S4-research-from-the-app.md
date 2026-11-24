@@ -872,6 +872,9 @@ w aplikacji, a co tylko w badaniu, mówi [R6.5](R6-awaiting-action.md#R6.5).
   - pozycja czekająca na skany zaczyna się blokiem **Dostarczyć** z krokami ([S4.4.7](#S4.4.7)).
 - **Od aplikacji 3.30.0 z badaniem 1.35.0:** zadanie, którego czekanie na skany nie jest zapisane tak, jak potrzebuje
   tego strom, ma oznaczenie, a w otwartej pozycji poprawkę w jednym kroku ([S4.4.8](#S4.4.8), [S4.4.9](#S4.4.9)).
+- **Od aplikacji 3.32.0 z badaniem 1.37.0:** pozycja, którą można zwrócić agentowi, ma wiersz **Teraz** i przycisk
+  **Spróbuj ponownie przez agenta**, pasek archiwum **Spróbuj ponownie wszystkie przez agenta**
+  ([S4.4.14](#S4.4.14)).
 
 <!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
@@ -1172,6 +1175,9 @@ w jakiej się je wykonuje. Wynikiem są pliki w folderze, a nie odpowiedź.
 - **Obsługa:** aplikacja: **Przegląd badania → Czeka na załatwienie**, kliknięcie w pozycję ze skanami; w małym
   panelu **Dodaj skany**.
 - **Obowiązuje od:** aplikacja 3.30.0
+- **Od aplikacji 3.32.0 z badaniem 1.37.0:** przy zadaniu, które można zwrócić agentowi, pod blokiem stoją wiersz
+  **Teraz** i **Spróbuj ponownie przez agenta**; jako główne działanie sprawia, że krok **Dodaj skany** jest
+  obrysowany ([S4.4.14](#S4.4.14)).
 
 <!-- zdroj: app:449e6962, 429839f0 src/ui/waiting-task-ui.ts waitingTakesImages (waitingActions images přes most), waitingAnswerTexts (answerImagesLabel, answerImagesHint), waitingDeliverEl (věta deliverSentence, phone → deliverPhone bez kroků, kroky deliverSteps web → folder → images, krok ② books.folderBook přes odkaz book jen s book.folder, jinak openFolder task?do=folder se značkou, ③ haveImages waiting-action--primary → openWaitingImages, deliver-pair šipka s krokem, is-column), panel dialog (column, upload: true, title haveImages) · src/research-waiting.ts waitingForImages (images, web s inbox), waitingDeliver (chybějící čísla jen u detail full; kniha jen ze seznamu se složkou), deliverSentence, deliverWebUrl (w.url, jinak bookWebUrl), deliverSteps · src/ui/research-overview-ui.ts appendWaitingTaskActions deliver (answer → link-button cannotGet, ostatní pod ⋯, na telefonu nic pod ⋯) · strings.ts live.waitingTask.deliverLabel, deliverBook, deliverTask, deliverBookAny, deliverTaskAny, deliverPhone, stepAria, cannotGet, answerImagesLabel, answerImagesHint · e2e/waiting-images.spec.ts, overview-waiting-books.spec.ts · ZADANI_DEV_knihy-zahlavi.md §5 · dirigent:prace/1117-app-knihy-zahlavi (D12, D13) -->
 
@@ -1356,6 +1362,62 @@ badania.
 - **Obowiązuje od:** aplikacja 3.32.0 (badanie 1.37.0)
 
 <!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 -->
+
+<a id="S4.4.14"></a>
+### S4.4.14 Spróbuj ponownie przez agenta
+
+Pozycja, którą badanie pozwala zwrócić agentowi ([R6.7.3](R6-awaiting-action.md#R6.7.3)), mówi, dlaczego czeka teraz,
+i ma przycisk **Spróbuj ponownie przez agenta**. Grupa archiwum z kilkoma takimi pozycjami zwraca je naraz.
+
+- **Wiersz Teraz** (otwarta pozycja, zamiast uwagi o przeglądarce): **Teraz:** i powód według badania:
+  - „Przeglądarka agenta wstrzymała pobieranie z … Po zezwoleniu na automatyczne pobieranie w profilu przeglądarki
+    agenta agent zapisze je sam.” (bez znanej strony „… ze strony archiwum …”);
+  - „Zapisywanie skanów zatrzymało się; sesja agenta zakończyła się w połowie.”;
+  - „Przeglądarka agenta jest teraz gotowa; agent sam zapisze skany.”;
+  - „Strona jest w przeglądarce archiwum, z której nie da się zapisać skanów: agent tylko odczyta je z ekranu,
+    żaden skan nie zostanie zapisany.”;
+  - rozszerzenie niepodłączone: „Z rozszerzeniem Claude in Chrome agent zapisałby skany sam. Po podłączeniu
+    rozszerzenia zadanie można zwrócić agentowi.” i na komputerze odnośnik do rozszerzenia; agent bez przeglądarki:
+    „Z Claude Code i rozszerzeniem Claude in Chrome agent zapisałby skany sam.”;
+  - pozycja już zwrócona, która znów czeka, kończy się „– ponowiono 18:40, znów wstrzymane” (albo „znów czeka”);
+    czas dziś, „wczoraj 18:40”, w przeciwnym razie z dniem i miesiącem.
+- **Przycisk pozycji:** **Spróbuj ponownie przez agenta** z liczbą skanów, których zadaniu brakuje („· 2 skany”), przy
+  stronie tylko do odczytu z ekranu „· tylko odczyt”; bez znanej liczby bez liczby.
+  - Jest głównym działaniem, gdy agent może kontynuować od razu (wstrzymane pobieranie, zatrzymane zapisywanie,
+    gotowa przeglądarka, odczyt z ekranu); krok **Dodaj skany** bloku **Dostarczyć** ([S4.4.7](#S4.4.7)) jest wtedy
+    tylko obrysowany. Przy niepodłączonym rozszerzeniu albo agencie bez przeglądarki jest obrysowany obok głównego
+    działania.
+  - Przy bloku **Dostarczyć** stoi pod wierszem **Teraz**, w przeciwnym razie wśród działań pozycji.
+  - Kliknięcie zwraca zadanie od razu, bez potwierdzenia: pozycja znika, a powiadomienie mówi „Zwrócono agentowi –
+    zajmie się nim jako następnym.” (badanie właśnie pracuje), w przeciwnym razie „Zwrócono agentowi – pierwsze
+    w kolejce; agent zajmie się nim przy następnym uruchomieniu.”
+  - Odmowa stoi w wierszu pozycji: „Zadanie czeka teraz na coś innego; nie zwrócono.”, „Zadania nie można już
+    zwrócić.”, „Badanie teraz nie odpowiada; nic nie zwrócono.”
+- **Limit:** pozycja zwrócona 3× w ciągu 24 godzin ma zamiast przycisku „Można zwrócić agentowi ponownie jutro 9:12
+  – 3 próby w ciągu 24 godzin.”
+- **Grupa archiwum:** w pasku archiwum ([S4.4](#S4.4)) z co najmniej dwiema pozycjami, które można zwrócić teraz,
+  stoi **Spróbuj ponownie wszystkie przez agenta (N zadań, M skanów)**, także przy zwiniętej grupie:
+  - liczby dotyczą całej grupy, nie tylko pozycji, które pokazuje wyszukiwanie. Gdy któraś pozycja nie podaje liczby
+    skanów, stoi „co najmniej M skanów”; gdy wszystkie są tylko do odczytu z ekranu, „tylko odczyt”; bez znanych
+    skanów tylko „(N zadań)”. Pozycje przy limicie są za przyciskiem: „· 1 dopiero jutro 9:12”;
+  - kliknięcie otwiera na miejscu pytanie „Zwrócić agentowi 2 zadania (5 skanów)? Trafią od razu na początek
+    kolejki.” z **Zwróć** i **Anuluj** (także Esc). **Zwróć** zwraca naraz wszystkie pozycje grupy, które można
+    zwrócić, albo żadnej; powiadomienie „Zwrócono agentowi: 2 zadania, od razu w kolejce.”, przy odmowie „Nic nie
+    zwrócono: …”, a przycisk zostaje;
+  - gdy dwie lub więcej pozycji grupy czeka z tego samego powodu, wiersz **Teraz** stoi raz w pasku, a pozycje go nie
+    mają.
+  - W grupach według księgi i przy pytaniach o miejsca przycisku grupy nie ma.
+- **Telefon:** tylko wiersz **Teraz** i zdanie „Zwrot agentowi jest możliwy w aplikacji na komputerze.” (przy limicie
+  zdanie limitu), bez przycisków; każda pozycja ma własny wiersz **Teraz**.
+- **Granice:** tylko w **Przeglądzie badania** i jego osobnym oknie ([S4.1.6](#S4.1.6)), nie w małym panelu; tylko
+  z badaniem, które umie zwrot. Ze starszym badaniem pozycja nie ma ani wiersza **Teraz**, ani przycisku. Agent
+  przycisku nie uruchamia: zwraca tylko człowiek ([R6.6](R6-awaiting-action.md#R6.6)).
+- **Obsługa:** aplikacja: **Przegląd badania → Czeka na załatwienie**, otwarta pozycja, **Spróbuj ponownie przez
+  agenta**; w pasku archiwum **Spróbuj ponownie wszystkie przez agenta** · terminal: **Co czeka** → **Zwrócić
+  agentowi** ([R6.7.3](R6-awaiting-action.md#R6.7.3)).
+- **Obowiązuje od:** aplikacja 3.32.0 (badanie 1.37.0)
+
+<!-- zdroj: app:c574752a, 3c6a554d, 75b71f5a src/research-waiting.ts waitingRetryReason (held/heldNoHost, stopped, ready, screen, no-extension waitNoExt + afterExt + extLink, agent-without-browser waitAgent, again → againHeld/againWaits), retryWhenText (dnes, včera, zítra, den a měsíc), waitingRetryCount, waitingRetryLimitText, waitingRetryMain (ne no-extension/agent-without-browser), waitingActions ctx.retry (jen přehled, ne telefon, w.retry.can), waitingGroupRetry (n, atLeast, readOnly, later), groupRetry*Text, waitingGroupRetryReason (≥ 2, stejné why+host) · src/ui/research-overview-ui.ts waitingRetryEl (Teď, limit, telefon R.phone, tlačítko primary/secondary), waitingRetryOffered (ne sheet, can, writes.retry), waitingGroupRetryOffer (ne sheet, ne kniha, ne místa, offer.n < 2 → nic, celá skupina s.waiting), waitingGroupRetryNow (ne telefon), browserNote jen bez w.retry · src/ui/waiting-task-ui.ts waitingDeliverEl retryMain (③ obrysová) · src/ui/research-waiting-write-ui.ts retryWaitingItem (doneRunning/doneIdle podle běhu, limit → can false, waitingRetryRefusedText) · src/ui/overview-window-ui.ts waiting-agent-retry, waiting-group-agent-retry · src/research-link.ts WAITING_RETRY_FEATURE · strings.ts live.waitingRetry, research.browser.waitNoExt, waitAgent · e2e/waiting-retry.spec.ts, waiting-retry-group.spec.ts · dirigent:prace/1124-app-089-zkusit-znovu (Výsledek, odchylky sub1–sub3), spec/089 K1.1–K3.1 -->
 
 <a id="S4.5"></a>
 ## S4.5 Działania, które otwierają badanie
