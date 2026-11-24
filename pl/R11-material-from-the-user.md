@@ -397,3 +397,33 @@ sam (`intake.auto`).
 - **Obowiązuje od:** badanie 1.36.0
 
 <!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) · app:strings.ts read.menu (položka menu s „…“, titulek read.title bez) · dirigent:prace/1122-app-nalezy-330 -->
+
+<a id="R11.7"></a>
+## R11.7 Materiał do listy osób
+
+Aplikacja Strom może wysłać skan do całej listy osób (arkusz spisu, strona księgi metrykalnej), a nie do jednej osoby
+([A3.5.18](A3-evidence-in-the-app.md#A3.5.18)). Badanie zapisuje listę tak, jak przyszła, a agent dopasowuje imiona
+ze skanu najpierw do osób z listy.
+
+- **Pilnuje kod:**
+  - aplikacja wysyła najpierw listę (nazwa, rodzaj: stała, automatyczna lub robocza, reguła, numery osób w badaniu,
+    ile osób badanie nie zna, czas), a każdy plik się do niej odwołuje. Most trzyma listę, dopóki nie użyje jej
+    plik; ponowne wysłanie tej samej listy ją zastępuje. Plik, który odwołuje się do listy, której badanie nie ma,
+    most odrzuca, a aplikacja wysyła listę ponownie;
+  - materiał zachowuje listę taką, jak została wysłana: zapisuje się w badaniu (`notes/lists/`, w historii) i już
+    się nie zmienia;
+  - lista do 50 osób: wszystkie jej osoby są osobami materiału. Dłuższa lista jest tylko nazwana; spis jej osób jest
+    w pliku listy, a agent wyszukuje je sam (`strom person show P…`);
+  - zadanie materiału, gdy powstanie ([R11.6](#R11.6)), nazywa się według listy. Zlecenie agenta podaje listę (nazwa,
+    rodzaj, reguła, liczba osób, ilu badanie jeszcze nie ma, data wysłania) i mówi, że każde odczytane imię dopasowuje
+    się najpierw do osób z listy, a w całym drzewie szuka się (`strom find "<imię>"`) tylko imienia, które nie
+    odpowiada żadnej z nich;
+  - skan źródła wysłany do listy pozostaje obrazem źródła i tak samo zachowuje listę; zadanie jego odczytania ma
+    wśród osób, których dotyczy, osoby z listy (do 50);
+  - lista ma najwyżej 100 000 osób i 2 MB; w przeciwnym razie most listę odrzuca;
+  - w Archiwum Strom lista tylko zapisuje się przy materiale, nic więcej.
+- **Obsługa:** aplikacja: **Wyślij materiał…** → **Dotyczy** → lista ([A3.5.18](A3-evidence-in-the-app.md#A3.5.18)).
+  Terminal: `strom input show I…` pokazuje wiersz listy (nazwa, liczba osób, ilu badanie nie ma, reguła, plik).
+- **Obowiązuje od:** badanie 1.37.0 (skan źródła do listy również 1.37.0)
+
+<!-- zdroj: research:de5f709d src/core/lists.ts (LIST_ID, LIST_PEOPLE 50, LIST_MAX 100 000, LIST_BODY_MAX 2 MB, .strom/lists/<id>.json, notes/lists/<hash>.json, takeList), src/core/live.ts PUT <token>/lists/<id> (list.bad-body 400, list.large 413), X-Strom-List-Ref, media.no-list 404, BRIDGE_FEATURES media.list, src/brief/brief.ts listLine, src/commands/intake.ts (řádek list v input show, --list), src/core/model.ts Input.list · 5f429022 (soubor seznamu jako zapsaná operace, i v archivu) · 778846e6 scanLists (media.list.source: sken pramene, osoby seznamu do 50 v about úkolu, „match each name you read on it to them first … strom find“) · CHANGELOG.md 1.37.0 „Material sent to a list of people“ · dirigent:spec/137 K2.2, K2.4, K2.5 · app:docs/ZADANI_VYZKUM_material-seznam.md (Odpověď výzkumu) -->

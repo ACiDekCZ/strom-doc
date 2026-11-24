@@ -371,7 +371,7 @@ nowhere in the tree (**only in the archive**).
   attachment in the tree** puts a preview into the tree too. A whole folder is sent by **Add materials…** in the
   research menu ([R11.4](R11-material-from-the-user.md#R11.4)) and in the header of the window **Materials**
   ([A3.5.15](#A3.5.15)). With the Strom archive it is **Add material…** and **Also save to the tree** (images and
-  PDF up to 2 MB).
+  PDF up to 2 MB). A scan with several people can be sent for a whole list of people ([A3.5.18](#A3.5.18)).
 - When the research is not running, the sent files wait in the browser. When the research does not know the person
   yet, they are sent after the next sending of the tree.
 - **Limits:**
@@ -892,6 +892,46 @@ app. They can be viewed and deleted permanently; when a source was made from one
 - **Since:** app 3.31.0 with research 1.36.0
 
 <!-- zdroj: app:36601947 src/materials-overview.ts (druh tree za bránou material.trees, trees=1; mimo třídění, hromadné akce, bez osoby, počty Projít; podrobnosti nejdou upravit), src/material-delete.ts treeFileSource, retractSources, blockedBy (409 material.source-live) · 2a406d67 dlaždice a řádek (Soubor rodokmenu · velikost, štítek zdroje), filtr Druh, nabídka Podrobnosti + Smazat natrvalo… (list zespodu), Podrobnosti bez náhledu, dialog bez pramene bez Jen skrýt · b40b22e4 dvoudílný dialog · d9af4b16 (ne Ve stromu, ani štítek, ani filtr) · e2e/material-tree-delete.spec.ts (hlavička) · strings.ts materials.treeFile, kindTrees, treeFileOf, treeDetails, del.textTree, noRefsTree, bothTitle, bothIntro, partSource, partFile, laterNoFile, fileSourceSub, understandFile, bothGo, bothChanged, bothNone, bothToast · SPEC.md 1120-app-117-smazani, 1120-app-108-diry · spec 117 §5–§7 -->
+
+<a id="A3.5.18"></a>
+### A3.5.18 Material for a list of people
+
+A scan with several people of the tree on it (a census sheet, a register page) can be sent to the research for a
+whole list of people instead of one person. The field **Concerns** is the first field of the dialog **Send material to
+the research**: **Person** (the person the dialog was opened from), for a source **Source only**, and under **List of
+people** the tree's lists ([A11](A11-lists-of-people.md)).
+
+- **What is sent:** the list as it is at the moment of sending: the name, the kind, the rule of an automatic list and
+  the research numbers of its people; the dialog's person is first, even when not on the list. The research stores
+  the material for the list and keeps the list unchanged ([R11.7](R11-material-from-the-user.md#R11.7)). The sentence
+  above the button says where: "The research stores the files with every person on the list (5) …", for a source
+  "… with the source and every person on the list (5) …".
+- **A list of up to 50 people:** the files go to all its people the research knows.
+- **A list of over 50 people:** "The list has more than 50 people: the research gets its name and the list of its
+  people and looks them up itself." (for an automatic list "… its name and rule …"). The files go only to the
+  dialog's person, for a source to nobody.
+- **Limits:**
+  - people on the list the research does not know yet are not linked to the material ("People on the list the
+    research does not know yet (2) are not linked to the material."). A list of which the research knows nobody has
+    "the research does not know these people yet" in the menu, and the material goes to the dialog's person as before;
+  - an empty list cannot be chosen ("empty"). An automatic list is computed again when the menu opens;
+  - **Also add as an attachment in the tree** gives the attachment only to the dialog's person: "The attachment is
+    added only to Jan Horák, not to the other people on the list.";
+  - the choice holds only in the open dialog; each opening starts with the person or the source;
+  - when the research does not accept the list, the dialog stays open with the files ("The list could not be sent to
+    the research; the files stay in the dialog."). When the research does not have the list a file refers to, the app
+    sends it again;
+  - the field is there only with a research that accepts material for a list; for a source only with a research that
+    also accepts a scan of a source for a list. Otherwise the dialog has no field and the files go to the person or
+    the source as before. The field is also missing when the research is not running and the files cannot wait in
+    the browser (an encrypted tree, Safari).
+- **Controls:** **Send material…** at a person or **Send material for this source…** → **Concerns** → the list. The
+  menu (on a phone a sheet from the bottom): Enter, Space or ↓ opens it, ↑/↓ moves, Enter chooses, Esc closes. From 9
+  lists it has the field **Find a list…**. After sending the notice "Sent to the research: 3 files for the list
+  “Sčítání 1869” (5 people). …"; in the Strom archive "Saved in the Strom archive: … for the list …".
+- **Since:** app 3.32.0 with research 1.37.0
+
+<!-- zdroj: app:cd621161 src/material-list.ts (MATERIAL_LIST_PEOPLE 50, PUT lists/<listRef> name/kind/rule/persons/missing/at, materialListRef, snímek s osobou dialogu první, X-Strom-Person všichni známí do 50 jinak jen osoba dialogu, '' u pramene, bez známých osob materiál jako dřív), src/ui/material-concern-ui.ts (Týká se: Osoba / Pramen / Jen pramen, Seznam osob, FIND_FROM 9, prázdný disabled, listUnknown, popover a list na telefonu, klávesy, volba jen v otevřeném dialogu), src/ui/material-ui.ts (brány media.list a media.list.source, 404 media.no-list → seznam znovu, listFailed dialog otevřený, cantWait pole skryté) · 27452fd4 e2e/material-list.spec.ts · f5315651, 53752e6a · strings.ts material.concern, concernPerson, concernSource, concernLists, sourceOnly, listEmpty, listFind, listUnknown, whereList, whereListBig, whereSourceList, bigRule, bigPersons, missingNote, alsoAttachListHint, listFailed, sentToastList, sentWaitToastList, savedArchiveToastList · dirigent:spec/137 K2, prace/1123-app-137-linie-material (B1–B3) · research:de5f709d, 778846e6 (media.list, media.list.source) -->
 
 <a id="A3.6"></a>
 ## A3.6 Sources of a person

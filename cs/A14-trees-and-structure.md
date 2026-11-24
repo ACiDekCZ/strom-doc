@@ -47,7 +47,7 @@ z rejstříku stromů; data stromu se kvůli nim nečtou.
   3. **Přejmenovat…**, **Výchozí osoba a pohled** ([A6.1.1](A6-views.md#A6.1.1)), **Otevírat při spuštění**,
      výchozí nastavení osy života, u otevřeného stromu **Místa** a **Tvary příjmení**;
   4. **Změnit strukturu…**;
-  5. **Skrýt** / **Zobrazit**, **Zamknout** / **Odemknout**;
+  5. **Skrýt strom** / **Zobrazit strom**, **Zamknout strom** / **Odemknout strom**;
   6. **Smazat strom…**.
 - Pata okna: **Exportovat vše**, **Nový strom**, **Zavřít**. Od 6 stromů je nad seznamem pole **Hledat strom…**.
 - **Hranice:**

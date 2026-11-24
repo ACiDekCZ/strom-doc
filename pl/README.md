@@ -35,11 +35,13 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [A5 Kontrola drzewa](A5-tree-check.md): czego aplikacja pilnuje w drzewie, z jakimi progami, oraz To nie błąd
 - [A6 Widoki i wybór osób](A6-views.md): Rodzina, Potomkowie, Oś czasu, Wachlarz, Mapa, ród w widoku, Tabela i widok w osobnym oknie
 - [A7 Księga, strony i eksport](A7-book-pages-and-export.md): kto jest żyjący, ochrona żyjących, księga rodu, strony, zapisany HTML
-- [A8 Scalanie drzew](A8-merging-trees.md): scalanie pliku, drzewa lub widoku w nowe drzewo, parowanie osób
+- [A8 Scalanie drzew](A8-merging-trees.md): kreator scalania pliku, drzewa lub wyboru z drzewem, parowanie osób, historia i cofanie scalenia
 - [A9 Obsługa aplikacji](A9-using-the-app.md): gdzie co jest, czytelne nazwy elementów, edycja podczas śledzenia badania, agent w aplikacji, dolny pasek na telefonie i tablecie
 - [A10 Jedno wydarzenie wielu osób](A10-shared-events.md): wspólne wydarzenie gospodarstwa (Razem z), Ujednolić, Połącz w jedno wydarzenie, chrzestni i świadkowie w życiu osoby, scalanie i starsze drzewa
 - [A11 Listy osób](A11-lists-of-people.md): lista stała, automatyczna i robocza, reguły, Zamroź, ręczna kolejność, Dodaj do listy, zapisanie jako listy, data dodania, odhaczanie gotowych, eksport listy
 - [A12 Portret i zdjęcie pary](A12-portrait-and-couple-photo.md): edytor kadrowania portretu, oryginał z etykietą Portret, Edytuj kadr, Jako portret…, zdjęcie pary i portrety z niego, gdzie je widać, eksport, GEDCOM i wersja danych 24
+- [A13 Statystyki drzewa](A13-tree-statistics.md): okno Statystyki, tematy, zakres i okres urodzenia, od wartości do Tabeli, eksport CSV
+- [A14 Zarządzanie drzewami i zmiana struktury](A14-trees-and-structure.md): Zarządzanie drzewami, rozpoczęte scalania, Zmień strukturę…, nowe drzewo z wyboru, kopia całego drzewa, podział, połączenie z innym drzewem
 
 ## S Aplikacja i badanie razem
 

@@ -200,11 +200,15 @@ można więc wrócić.
   - kopia **Przed scaleniem** zostaje, dopóki scalenie można cofnąć: rotacja kopii zapasowych jej nie usuwa. Gdyby
     z jej powodu musiała odejść inna, kreator zapyta ([A8.10](A8-merging-trees.md#A8.10));
   - bez kopii zapasowej scalenie się nie zapisze;
+  - cofnięcie scalenia robi własną kopię zapasową **Przed cofnięciem scalenia**, także zawsze; rotacja jej nie usuwa,
+    dopóki scalenie można przywrócić;
+  - odłączenie kopii od wspólnego badania robi kopię zapasową **Przed dostosowaniem danych do nowej wersji**
+    ([S1.10.2](S1-connecting-app-and-research.md#S1.10.2));
   - jedno scalenie można cofnąć także bez przywracania całej kopii zapasowej: **Cofnij scalenie…**
     ([A8.12](A8-merging-trees.md#A8.12)). Kopia zapasowa przywraca całe drzewo, razem ze wszystkim, co stało się od
     scalenia.
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie -->
 
 <a id="S6.6"></a>
 ## S6.6 Eksport z powrotem do programu lub do udostępnienia

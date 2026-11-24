@@ -467,7 +467,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A13 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Statistiky stromu | Tree statistics | Statistik des Stammbaums | Statystyki drzewa |
 | A13.1 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Okno Statistiky | The Statistics window | Das Fenster Statistik | Okno Statystyki |
 | A13.2 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Témata a jak se počítají | Topics and how they are counted | Themen und wie sie gezählt werden | Tematy i jak się je liczy |
-| A13.3 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Rozsah a období narození | Scope and period of birth | Bereich und Geburtszeitraum | Zakres i okres urodzenia |
+| A13.3 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Rozsah a období narození | Scope and period of birth | Umfang und Geburtszeitraum | Zakres i okres urodzenia |
 | A13.4 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Z hodnoty do Tabulky | From a value to the Table | Von einem Wert zur Tabelle | Od wartości do Tabeli |
 | A13.5 | A13-tree-statistics.md | aplikace 3.32.0 | platí | Export CSV | CSV export | CSV-Export | Eksport CSV |
 | A14 | A14-trees-and-structure.md | aplikace 3.32.0 | platí | Správa stromů a změna struktury | Managing trees and changing the structure | Stammbäume verwalten und die Struktur ändern | Zarządzanie drzewami i zmiana struktury |

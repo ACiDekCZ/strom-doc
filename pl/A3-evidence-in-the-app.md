@@ -366,7 +366,7 @@ w archiwum**).
   drzewa też podgląd. Cały folder wysyła **Dodaj materiały…** w menu badania
   ([R11.4](R11-material-from-the-user.md#R11.4)) i w nagłówku okna **Materiały** ([A3.5.15](#A3.5.15)). Przy
   Archiwum Strom to **Dodaj materiał…** i **Również w drzewie**
-  (obrazy i PDF do 2 MB).
+  (obrazy i PDF do 2 MB). Skan z kilkoma osobami można wysłać do całej listy osób ([A3.5.18](#A3.5.18)).
 - Gdy badanie nie działa, wysłane pliki czekają w przeglądarce. Gdy badanie jeszcze nie zna osoby, zostaną wysłane po
   kolejnym wysłaniu drzewa.
 - **Granice:**
@@ -880,6 +880,43 @@ aplikacji. Można je obejrzeć i usunąć trwale; gdy powstało z nich źródło
 - **Obowiązuje od:** aplikacja 3.31.0 z badaniem 1.36.0
 
 <!-- zdroj: app:36601947 src/materials-overview.ts (druh tree za bránou material.trees, trees=1; mimo třídění, hromadné akce, bez osoby, počty Projít; podrobnosti nejdou upravit), src/material-delete.ts treeFileSource, retractSources, blockedBy (409 material.source-live) · 2a406d67 dlaždice a řádek (Soubor rodokmenu · velikost, štítek zdroje), filtr Druh, nabídka Podrobnosti + Smazat natrvalo… (list zespodu), Podrobnosti bez náhledu, dialog bez pramene bez Jen skrýt · b40b22e4 dvoudílný dialog · d9af4b16 (ne Ve stromu, ani štítek, ani filtr) · e2e/material-tree-delete.spec.ts (hlavička) · strings.ts materials.treeFile, kindTrees, treeFileOf, treeDetails, del.textTree, noRefsTree, bothTitle, bothIntro, partSource, partFile, laterNoFile, fileSourceSub, understandFile, bothGo, bothChanged, bothNone, bothToast · SPEC.md 1120-app-117-smazani, 1120-app-108-diry · spec 117 §5–§7 -->
+
+<a id="A3.5.18"></a>
+### A3.5.18 Materiał do listy osób
+
+Skan, na którym jest kilka osób z drzewa (arkusz spisu, strona księgi metrykalnej), można wysłać do badania do całej
+listy osób zamiast do jednej osoby. Pole **Dotyczy** jest pierwszym polem okna **Wysyłanie materiału do badania**:
+**Osoba** (osoba, z której okno otwarto), przy źródle **Tylko źródło**, a pod **Lista osób** listy drzewa
+([A11](A11-lists-of-people.md)).
+
+- **Co zostaje wysłane:** lista taka, jaka jest w chwili wysłania: nazwa, rodzaj, reguła listy automatycznej i numery
+  jej osób w badaniu; osoba okna jest pierwsza, nawet gdy na liście nie ma. Badanie zapisuje materiał do listy
+  i zachowuje listę bez zmian ([R11.7](R11-material-from-the-user.md#R11.7)). Zdanie nad przyciskiem mówi dokąd:
+  „Badanie zapisze pliki przy wszystkich osobach z listy (5) …”, przy źródle „… przy źródle i wszystkich osobach
+  z listy (5) …”.
+- **Lista do 50 osób:** pliki dostają wszystkie jej osoby, które badanie zna.
+- **Lista ponad 50 osób:** „Lista ma ponad 50 osób: badanie otrzyma jej nazwę i spis osób, a osoby wyszuka samo.”
+  (przy liście automatycznej „… jej nazwę i regułę …”). Pliki dostaje tylko osoba okna, przy źródle nikt.
+- **Granice:**
+  - osoby z listy, których badanie jeszcze nie zna, nie zostaną powiązane z materiałem („Osoby z listy, których
+    badanie jeszcze nie zna (2), nie zostaną powiązane z materiałem.”). Lista, z której badanie nie zna nikogo, ma
+    w menu „badanie nie zna jeszcze tych osób”, a materiał idzie jak dotąd do osoby okna;
+  - pustej listy nie można wybrać („pusta”). Lista automatyczna oblicza się ponownie przy otwarciu menu;
+  - **Również jako załącznik w drzewie** daje załącznik tylko osobie okna: „Załącznik pojawi się tylko przy osobie
+    Jan Horák, nie przy pozostałych osobach z listy.”;
+  - wybór obowiązuje tylko w otwartym oknie; każde otwarcie zaczyna od osoby lub źródła;
+  - gdy badanie listy nie przyjmie, okno zostaje otwarte z plikami („Nie udało się wysłać listy do badania; pliki
+    zostały w oknie.”). Gdy badanie nie ma listy, do której odwołuje się plik, aplikacja wysyła mu ją ponownie;
+  - pole jest tylko przy badaniu, które przyjmuje materiał do listy; przy źródle tylko przy badaniu, które przyjmuje
+    także skan źródła do listy. W przeciwnym razie okno pola nie ma, a pliki idą jak dotąd do osoby lub źródła. Pola
+    nie ma także wtedy, gdy badanie nie działa, a pliki nie mogą czekać w przeglądarce (zaszyfrowane drzewo, Safari).
+- **Obsługa:** **Wyślij materiał…** przy osobie lub **Wyślij materiał do źródła…** → **Dotyczy** → lista. Menu (na
+  telefonie arkusz od dołu): Enter, spacja lub ↓ je otwiera, ↑/↓ przesuwa, Enter wybiera, Esc zamyka. Od 9 list ma
+  pole **Szukaj listy…**. Po wysłaniu komunikat „Wysłano do badania: 3 pliki do listy „Sčítání 1869” (5 osób). …”;
+  w Archiwum Strom „Zapisano w Archiwum Strom: … do listy …”.
+- **Obowiązuje od:** aplikacja 3.32.0 z badaniem 1.37.0
+
+<!-- zdroj: app:cd621161 src/material-list.ts (MATERIAL_LIST_PEOPLE 50, PUT lists/<listRef> name/kind/rule/persons/missing/at, materialListRef, snímek s osobou dialogu první, X-Strom-Person všichni známí do 50 jinak jen osoba dialogu, '' u pramene, bez známých osob materiál jako dřív), src/ui/material-concern-ui.ts (Týká se: Osoba / Pramen / Jen pramen, Seznam osob, FIND_FROM 9, prázdný disabled, listUnknown, popover a list na telefonu, klávesy, volba jen v otevřeném dialogu), src/ui/material-ui.ts (brány media.list a media.list.source, 404 media.no-list → seznam znovu, listFailed dialog otevřený, cantWait pole skryté) · 27452fd4 e2e/material-list.spec.ts · f5315651, 53752e6a · strings.ts material.concern, concernPerson, concernSource, concernLists, sourceOnly, listEmpty, listFind, listUnknown, whereList, whereListBig, whereSourceList, bigRule, bigPersons, missingNote, alsoAttachListHint, listFailed, sentToastList, sentWaitToastList, savedArchiveToastList · dirigent:spec/137 K2, prace/1123-app-137-linie-material (B1–B3) · research:de5f709d, 778846e6 (media.list, media.list.source) -->
 
 <a id="A3.6"></a>
 ## A3.6 Źródła osoby

@@ -438,3 +438,35 @@ einschaltet, dass der Agent gesendete Dateien selbst durchgeht (`intake.auto`).
 - **Gilt seit:** Forschung 1.36.0
 
 <!-- zdroj: research:da86bbe7, 90f33705 src/core/config.ts:400 intake.auto (tree: true, off|on, výchozí off), :962 intakeAuto · src/commands/setup.ts:1311, :1655-1673 intakeDecision (requireHuman, STROM_FOR_APP bez agenta, off kdokoli) · src/commands/intake.ts:202-225 (--sort, --text vždy úkol), :829-848 input batch done --sort/--no-sort · src/cli/menu-research.ts:110-125 (ui.intake.sort.ask, výchozí ne; ui.intake.done.waits) · src/cli/menu-settings.ts:98, :247-250 · src/core/live.ts:6693 POST /intake, BRIDGE_FEATURES intake.auto · cs.json ui.settings.intake(.about, .on, .off), ui.intake.sort.ask, ui.intake.done.waits · CHANGELOG.cs.md 1.36.0 · dirigent:spec/130 K1.1–K1.3, K2.1, K3.1, K4.1, rozhodnutí 21. 11. · app:docs/ZADANI_VYZKUM_trideni-davek.md (Most, Doplněk K1.3) · app:strings.ts read.menu (položka menu s „…“, titulek read.title bez) · dirigent:prace/1122-app-nalezy-330 -->
+
+<a id="R11.7"></a>
+## R11.7 Material zu einer Personenliste
+
+Die Strom-App kann einen Scan zu einer ganzen Personenliste senden (ein Zählungsbogen, eine Matrikelseite), nicht zu
+einer Person ([A3.5.18](A3-evidence-in-the-app.md#A3.5.18)). Die Forschung speichert die Liste so, wie sie kam, und
+der Agent ordnet die Namen aus dem Scan zuerst den Personen der Liste zu.
+
+- **Prüft der Code:**
+  - die App sendet zuerst die Liste (Name, Art: fest, automatisch oder Arbeitsliste, Regel, Nummern der Personen in
+    der Forschung, wie viele Personen die Forschung nicht kennt, Zeit), und jede Datei verweist auf sie. Die Brücke
+    hält die Liste, bis eine Datei sie verwendet; erneutes Senden derselben Liste ersetzt sie. Eine Datei, die auf
+    eine Liste verweist, die die Forschung nicht hat, lehnt die Brücke ab, und die App sendet die Liste erneut;
+  - die Unterlage behält die Liste so, wie sie gesendet wurde: sie wird in die Forschung geschrieben
+    (`notes/lists/`, im Verlauf) und ändert sich nicht mehr;
+  - eine Liste bis 50 Personen: alle ihre Personen sind Personen der Unterlage. Eine längere Liste ist nur benannt;
+    das Verzeichnis ihrer Personen steht in der Datei der Liste, und der Agent sucht sie selbst heraus
+    (`strom person show P…`);
+  - die Aufgabe der Unterlage, wenn sie entsteht ([R11.6](#R11.6)), heißt nach der Liste. Der Auftrag des Agenten
+    nennt die Liste (Name, Art, Regel, Zahl der Personen, wie viele die Forschung noch nicht hat, Datum des Sendens)
+    und sagt, dass jeder gelesene Name zuerst den Personen der Liste zugeordnet und nur ein Name, der keiner von
+    ihnen entspricht, im ganzen Stammbaum gesucht wird (`strom find "<Name>"`);
+  - ein zu einer Liste gesendeter Scan einer Quelle bleibt ein Bild der Quelle und behält die Liste ebenso; die
+    Aufgabe, ihn zu lesen, hat unter den Personen, die sie betrifft, die Personen der Liste (bis 50);
+  - eine Liste hat höchstens 100 000 Personen und 2 MB; sonst lehnt die Brücke die Liste ab;
+  - im Strom-Archiv wird die Liste nur beim Material gespeichert, sonst nichts.
+- **Bedienung:** App: **Material senden…** → **Betrifft** → Liste ([A3.5.18](A3-evidence-in-the-app.md#A3.5.18)).
+  Terminal: `strom input show I…` zeigt die Zeile der Liste (Name, Zahl der Personen, wie viele die Forschung nicht
+  hat, Regel, Datei).
+- **Gilt seit:** Forschung 1.37.0 (Scan einer Quelle zu einer Liste ebenfalls 1.37.0)
+
+<!-- zdroj: research:de5f709d src/core/lists.ts (LIST_ID, LIST_PEOPLE 50, LIST_MAX 100 000, LIST_BODY_MAX 2 MB, .strom/lists/<id>.json, notes/lists/<hash>.json, takeList), src/core/live.ts PUT <token>/lists/<id> (list.bad-body 400, list.large 413), X-Strom-List-Ref, media.no-list 404, BRIDGE_FEATURES media.list, src/brief/brief.ts listLine, src/commands/intake.ts (řádek list v input show, --list), src/core/model.ts Input.list · 5f429022 (soubor seznamu jako zapsaná operace, i v archivu) · 778846e6 scanLists (media.list.source: sken pramene, osoby seznamu do 50 v about úkolu, „match each name you read on it to them first … strom find“) · CHANGELOG.md 1.37.0 „Material sent to a list of people“ · dirigent:spec/137 K2.2, K2.4, K2.5 · app:docs/ZADANI_VYZKUM_material-seznam.md (Odpověď výzkumu) -->

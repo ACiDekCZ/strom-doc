@@ -201,9 +201,12 @@ miejsce; to, co przybyło, ubyło albo się zmieniło, pokazuje się krótko ruc
   - wyłączony **Ruch przy wczytywaniu zmian** i ograniczenie ruchu w systemie pokazują zmiany od razu, tylko
     wyróżnione („W systemie włączono ograniczenie ruchu, dlatego zmiany pojawiają się bez ruchu.”).
 - **Obsługa:** aplikacja: **Ustawienia → Śledzenie badania → Ruch przy wczytywaniu zmian** (domyślnie włączony).
+- **Od aplikacji 3.32.0:** osoba zastępcza „?”, która przy wczytaniu dostała nowe ID, nie jest ani nowa, ani usunięta:
+  nie ogłasza jej ani znacznik przy krawędzi, ani czytnik ekranu; ogłaszane są tylko prawdziwe osoby. Dotyczy to też
+  stanu po wysłaniu do badania i po cofnięciu scalenia.
 - **Obowiązuje od:** aplikacja 3.24.0
 
-<!-- zdroj: app:src/live-transition.ts LIVE (move 320 ms, maxAnimatedNew=12, maxChangedForScene=60, ×0.875 touch), src/live-diff.ts (merge guess: surname, birth ±1, parent/partner) · strings.ts settings.liveMotion, liveMotionHelp, liveMotionReduced, edgeAdded · CHANGELOG.cs.md 3.24.0 · spec 055 -->
+<!-- zdroj: app:src/live-transition.ts LIVE (move 320 ms, maxAnimatedNew=12, maxChangedForScene=60, ×0.875 touch), src/live-diff.ts (merge guess: surname, birth ±1, parent/partner) · strings.ts settings.liveMotion, liveMotionHelp, liveMotionReduced, edgeAdded · CHANGELOG.cs.md 3.24.0 · spec 055 · 3.32.0: app:6c90cc34 (134 V-N6: realPeople, zástupná „?“ s novým ID se nehlásí) -->
 
 <a id="S4.1.5"></a>
 ### S4.1.5 Przegląd badania bez śledzenia

@@ -208,9 +208,12 @@ place; what was added, removed or changed shows briefly with motion.
   - **Motion when changes load** turned off, and reduced motion in the system, show the changes at once, only
     highlighted ("Reduced motion is on in the system, so changes appear without motion.").
 - **Controls:** app: **Settings → Following research → Motion when changes load** (on by default).
+- **From app 3.32.0:** a placeholder person "?" that got a new ID in a load is neither new nor removed: neither the
+  mark at the edge nor the screen reader announces it; only real people are announced. This also holds after a send
+  to the research and after undoing a merge.
 - **Since:** app 3.24.0
 
-<!-- zdroj: app:src/live-transition.ts LIVE (move 320 ms, maxAnimatedNew=12, maxChangedForScene=60, ×0.875 touch), src/live-diff.ts (merge guess: surname, birth ±1, parent/partner) · strings.ts settings.liveMotion, liveMotionHelp, liveMotionReduced, edgeAdded · CHANGELOG.cs.md 3.24.0 · spec 055 -->
+<!-- zdroj: app:src/live-transition.ts LIVE (move 320 ms, maxAnimatedNew=12, maxChangedForScene=60, ×0.875 touch), src/live-diff.ts (merge guess: surname, birth ±1, parent/partner) · strings.ts settings.liveMotion, liveMotionHelp, liveMotionReduced, edgeAdded · CHANGELOG.cs.md 3.24.0 · spec 055 · 3.32.0: app:6c90cc34 (134 V-N6: realPeople, zástupná „?“ s novým ID se nehlásí) -->
 
 <a id="S4.1.5"></a>
 ### S4.1.5 The Research overview without following

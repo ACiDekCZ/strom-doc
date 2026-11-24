@@ -35,11 +35,13 @@ Parts R (the research), A (the app) and S (the app and the research together) ar
 - [A5 Tree check](A5-tree-check.md): what the app watches in the tree, with which thresholds, and Not an error
 - [A6 Views and the choice of people](A6-views.md): Family, Descendants, Timeline, Fan, Map, a family line in the view, Table and a view in a separate window
 - [A7 Book, pages and export](A7-book-pages-and-export.md): who is living, privacy of living people, the family book, pages, saved HTML
-- [A8 Merging trees](A8-merging-trees.md): merging a file, a tree or a view into a new tree, matching people
+- [A8 Merging trees](A8-merging-trees.md): the guide merging a file, a tree or a selection into a tree, matching people, the merge history and undoing a merge
 - [A9 Using the app](A9-using-the-app.md): where things are, readable names of controls, editing while following the research, the agent in the app, the bottom bar on a phone and a tablet
 - [A10 One event of several people](A10-shared-events.md): a household's shared event (Shared with), Make all match, Join into one event, godparents and witnesses in a person's life, merging and older trees
 - [A11 Lists of people](A11-lists-of-people.md): fixed, automatic and checklist, rules, Freeze, manual order, Add to list, Save as list, the date added, ticking off done, exporting a list
 - [A12 The portrait and the couple's photo](A12-portrait-and-couple-photo.md): the portrait crop editor, the original tagged Portrait, Edit crop, As portrait…, the couple's photo and portraits from it, where they appear, export, GEDCOM and data version 24
+- [A13 Tree statistics](A13-tree-statistics.md): the Statistics window, topics, scope and period of birth, from a value to the Table, CSV export
+- [A14 Managing trees and changing the structure](A14-trees-and-structure.md): Manage trees, pending merges, Change structure…, a new tree from a selection, a copy of the whole tree, splitting, joining into another tree
 
 ## S The app and the research together
 

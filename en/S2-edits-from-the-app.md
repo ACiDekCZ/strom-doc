@@ -112,6 +112,9 @@ nothing about that.
   sent again: that send did not carry this tree's people. The changes stay here.” A send by itself and leaving the
   page say nothing; the mark shows the edits waiting.
 - **The sample tree** is never sent to a research ([S1.3.1](S1-connecting-app-and-research.md#S1.3.1)).
+- **From app 3.32.0:** a copy of a tree from a research is not sent to the research at all, not even with the button.
+  When the research asks for the changes through a link, the tree that belongs to the research is sent
+  ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Limits:** from research 1.34.0 the research itself also refuses a small other tree under its connection
   ([S2.5](#S2.5)). A send taken back that did not carry the tree's people is not offered again ([S2.7](#S2.7)).
 - **Since:** app 3.29.0

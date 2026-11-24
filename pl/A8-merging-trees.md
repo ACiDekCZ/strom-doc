@@ -3,8 +3,9 @@
 
 Jak aplikacja Strom scala dwa drzewa genealogiczne: plik GEDCOM z drzewem, dwa drzewa albo widok z drzewem. Opisuje
 aplikację 3.21.2; zmiany z nowszej wersji mają przy sobie jej numer. Od aplikacji 3.32.0 każde scalenie prowadzi
-kreator **Scalanie drzew** w sześciu krokach ([A8.5](#A8.5) do [A8.13](#A8.13)). Scalenie zduplikowanej osoby
-wewnątrz jednego drzewa to inna sprawa ([A5.6](A5-tree-check.md#A5.6)).
+kreator **Scalanie drzew** w sześciu krokach ([A8.5](#A8.5) do [A8.13](#A8.13)), a łączenie drzew oferuje **Zmień
+strukturę…** ([A14.5](A14-trees-and-structure.md#A14.5)). Scalenie zduplikowanej osoby wewnątrz jednego drzewa to
+inna sprawa ([A5.6](A5-tree-check.md#A5.6)).
 
 <a id="A8.1"></a>
 ## A8.1 Scalenie zawsze zakłada nowe drzewo
@@ -142,8 +143,9 @@ Do drzewa nic się nie zapisuje, dopóki zapis nie zostanie potwierdzony w kroku
 | Skąd | Kreator | Obsługa |
 |---|---|---|
 | plik GEDCOM | **Import drzewa** | **Import → Import GEDCOM**; z Zarządzania drzewami zaczyna się opcją **Nowe drzewo** |
-| inne drzewo | **Scalanie drzew** | Zarządzanie drzewami, ⋯ przy drzewie → **Scal z innym drzewem…** (celem jest otwarte drzewo) |
-| osoby właśnie wyświetlone w widoku | **Scalanie drzew** | działania drzewa → **Scal widok z…** |
+| inne drzewo | **Scalanie drzew** | **Zmień strukturę…** › **Wybór lub całe drzewo do innego drzewa…** › **Całe drzewo** ([A14.5](A14-trees-and-structure.md#A14.5)); celem jest otwarte drzewo, przy otwartym drzewie inne |
+| wybór osób drzewa (ród, lista, linia, widok, ręcznie) | **Scalanie drzew** | **Zmień strukturę…** › **Wybór lub całe drzewo do innego drzewa…** › **Wybór…** |
+| plik GEDCOM lub Strom (JSON) do otwartego drzewa | **Import drzewa** | **Zmień strukturę…** › **Dodaj z pliku do tego drzewa…** |
 | zmiany wysłane z innego Stromu | **Otrzymane zmiany** | podgląd otrzymanych zmian → **Przejrzyj szczegółowo** |
 
 - **Kroki:** **Co z tym** ([A8.6](#A8.6)), **Kto jest kim** ([A8.7](#A8.7)), **Kogo dodać** ([A8.8](#A8.8)), **Kto
@@ -151,19 +153,27 @@ Do drzewa nic się nie zapisuje, dopóki zapis nie zostanie potwierdzony w kroku
   dla wybranej drogi niczego nie rozstrzyga, zostaje pominięty, a kreator mówi to przy nim.
 - Nad krokami stoją bieżące liczby osób importu: **Połączeni**, **Nowi**, **Niedodani** i **Do decyzji**; ich suma
   to liczba osób importu.
+- Na szerszym oknie (tablet, komputer) kreator zajmuje prawie cały ekran, a kroki z liczbami są na jednym pasku:
+  liczby słownie i „= N osób w imporcie”; poniżej 1100 px szerokości pozostałe kroki mają tylko liczbę. Na telefonie
+  kreator jest bez zmian.
+- Kreator uruchomiony ze źródła (otwarte drzewo scala się do innego) wszędzie wymienia drzewo docelowe: w tytule,
+  w wierszu stanu, w „Porównaj … z drzewem …” i w wierszu niedokończonego scalania.
 - Porównanie dużego drzewa pokazuje postęp i szacunek czasu. **Przerwij** nic nie gubi: wybory z kroku 1 zostają,
   a porównanie można uruchomić ponownie.
 - Kreator zamknięty przed zapisem mówi „Jeszcze nic nie zapisano.”, a decyzje można **Zapisz na później**. Zapisane
-  scalanie czeka w Zarządzaniu drzewami w **Niedokończone scalania**. Gdy drzewo docelowe w międzyczasie się
-  zmieniło, kreator mówi to przy kontynuacji; propozycje zostają przeliczone, rozstrzygnięte pary zostają.
+  scalanie czeka w Zarządzaniu drzewami pod swoim drzewem docelowym jako **Niedokończone scalanie**
+  ([A14.1](A14-trees-and-structure.md#A14.1)). Gdy drzewo docelowe w międzyczasie się zmieniło, kreator mówi to
+  przy kontynuacji; propozycje zostają przeliczone, rozstrzygnięte pary zostają.
 - Scalenie, które ostatnio się nie zakończyło (zamknięte okno, awaria), aplikacja zgłasza przy następnym otwarciu:
   drzewo i plik są bez zmian.
 - **Granice:** plik GEDCOM do pustego drzewa nadal wstawia się przez **Wstaw do drzewa** bez kreatora
   ([A2](A2-loading-a-family-tree.md)). Scalenie dwóch osób jednego drzewa to inna sprawa
   ([A5.6](A5-tree-check.md#A5.6)).
-- **Obowiązuje od:** aplikacja 3.32.0; wcześniej scalenie zawsze zakładało nowe drzewo ([A8.1](#A8.1))
+- **Obowiązuje od:** aplikacja 3.32.0; wcześniej scalenie zawsze zakładało nowe drzewo ([A8.1](#A8.1)). Dawniejsze
+  **Scal z innym drzewem…** w ⋯ Zarządzania drzewami i **Scal widok z…** zastąpiło w tej samej wersji **Zmień
+  strukturę…**.
 
-<!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md -->
+<!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md · app:52171573 (dotaz 10: větší okno, lišta kroků s počty, pod 1100 px číslem) · 6e36ad08 (V-N4: cílový strom v nadpisu, stavovém řádku, Porovnat, řádku rozpracovaného) · a9bc0b6b, f0c5a3fb (139: Sloučit do jiného stromu a Sloučit pohled do… nahrazené Změnit strukturu; mergeViewInto bez volajícího) · strings.ts structure.pendingRow -->
 
 <a id="A8.6"></a>
 ## A8.6 Krok 1: Co z tym
@@ -191,7 +201,11 @@ w drzewie.
   listę…** zapisuje listę. Nic z tego nie zginie po cichu.
 - **Zamień** przy dwóch drzewach odwraca, co do czego się dodaje.
 - Ten sam plik scalony do drzewa ponownie kreator rozpoznaje i mówi, ile osób jest nowych; osoby połączone ostatnio
-  się nie podwajają. Dodają się więc tylko osoby, które ostatnio pominięto.
+  się nie podwajają. Dodają się więc tylko osoby, które ostatnio pominięto. To samo dotyczy drzewa: „Drzewo Horákovi
+  zostało już tu scalone 12. 11. 2026. Nowych jest tylko 5 osób; 40 połączono ze scaleniem z 12. 11. 2026 i nie
+  zostaną zdublowane.”
+- Kopia drzewa i drzewo bez badania mają w kroku 1 opis „kopia drzewa „{nazwa}” · bez badania”; przy celu bez badania
+  stoi „{drzewo} nie ma badania: po scaleniu nic nie jest wysyłane.” ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Granice:** celem nie może być drzewo zablokowane (odblokować można w Zarządzaniu drzewami) ani drzewo z nowszej
   wersji aplikacji. Drzewo, na którym właśnie działa śledzenie badania na żywo (◎ **Śledź agenta w drzewie**), jest
   tylko do odczytu; kreator proponuje przy nim **Wyłącz śledzenie i scal tutaj**: przed zapisem zapisze się kopia
@@ -200,7 +214,7 @@ w drzewie.
   tylko do odczytu import jest możliwy tylko jako **Nowe drzewo**.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch -->
 
 <a id="A8.7"></a>
 ## A8.7 Krok 2: Kto jest kim
@@ -221,13 +235,20 @@ jest zawsze widoczne i można je cofnąć.
 - **Dlaczego tak** wymienia tylko to, co dają oba zapisy: „Dokładne imię i nazwisko oraz data urodzenia” tylko przy
   tej samej dacie urodzenia po obu stronach, przy zgodności samego roku „Imię i nazwisko oraz rok urodzenia”,
   w przeciwnym razie „Dokładne imię i nazwisko”.
-- **Pozostałe nierozstrzygnięte** można załatwić naraz: **Dodaj jako nowe** (kreator ostrzega, że może to zdublować
-  osoby, które już są w drzewie) albo **Nie dodawaj**. Dopóki zostaje nierozstrzygnięta para, kreator nie puszcza
-  dalej.
+- **Pozostałe nierozstrzygnięte** można załatwić naraz: „Pozostałe N nierozstrzygnięte:” **Dodaj jako nowe (N)**
+  (kreator ostrzega, że może to zdublować osoby, które już są w drzewie) albo **Nie dodawaj (N)**. Pary z tymi samymi
+  rodzicami, dzieckiem lub partnerem zbiorcza decyzja pomija; pod przyciskami stoi „2 pary z tymi samymi rodzicami,
+  dzieckiem lub partnerem trzeba rozstrzygnąć pojedynczo.” Gdy zostają tylko takie, zostaje tylko to zdanie. Dopóki
+  zostaje nierozstrzygnięta para, krok 3 się nie odblokuje.
+- **Na szerszym oknie:** nad parą jest wiersz sterowania (‹ ukryj listę · „Para i z n” · grupa · ↑ ↓ · decyzja),
+  kandydaci z drzewa są w wierszach („2 kandydaci w drzewie Horákovi”), a tabela pary przewija się sama ze stałym
+  nagłówkiem (kolumna „Import · {plik}”). Krewni są w wierszach, z zapisów pierwsze trzy i „jeszcze N ▸” / **Zwiń**.
+  Reszta nierozstrzygniętych jest w stopce listy; listę można złożyć do wąskiego paska (**Ukryj listę par** /
+  **Pokaż listę par**). Na telefonie krok jest bez zmian.
 - **Granice:** przy **Nowe drzewo** krok zostaje pominięty: wszystkie osoby są nowe.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear -->
+<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) -->
 
 <a id="A8.8"></a>
 ## A8.8 Krok 3: Kogo dodać
@@ -280,9 +301,20 @@ Krok 4 rozstrzyga dane, które połączone osoby mają inaczej. Bez wyboru czło
 Krok 5 pokazuje całe zestawienie zmian według grup. Zapisuje się dopiero jego przyciskiem i tylko to, co pokazuje
 zestawienie.
 
-- **Zestawienie:** **Nowi**, **Połączeni**, **Zmiany danych**, **Pary i powiązania**, **Źródła**, **Miejsca**,
-  **Zdjęcia i pliki**, **Niedodani** (przy każdej osobie dlaczego: krok i wybór) i **Nie zostanie przejęte**. Pozycję
-  można odznaczyć. **Zapisz zestawienie…** zapisuje je do pliku.
+- **Zestawienie:** **Nowi**, **Połączeni**, **Zmiany danych**, **Uzupełnione dane**, **Połączone źródła**, **Pary
+  i powiązania**, **Źródła**, **Miejsca**, **Zdjęcia i pliki**, **Niedodani** (przy każdej osobie dlaczego: krok
+  i wybór) i **Nie zostanie przejęte**. Pozycję można odznaczyć. **Zapisz zestawienie…** zapisuje je do pliku.
+- **Uzupełnione dane** (tylko gdy jakieś są): puste dane połączonych osób, które zapis uzupełni, w wierszach osoba ·
+  dana (e-mail, inne formy imienia i nazwiska, wydarzenia, źródła, otwarte pytanie…).
+- **Połączone źródła:** źródło z drzewa źródłowego łączy się tylko z tym samym źródłem drzewa docelowego (ten sam
+  numer badania, cytat albo tytuł, archiwum i miejsce): „1 źródło połączone z istniejącym”. Grupa **Źródła** wymienia
+  tylko nowe. Źródła drzewa źródłowego nie łączą się między sobą: dwa zapisy jednej księgi metrykalnej, które różnią
+  się tylko numerem źródła w badaniu, zostają dwa. Wynik ma więc te same źródła bez względu na kierunek (**Zamień**).
+- **Liczby zgadzają się wszędzie:** nowe pary i zmiany danych to w kroku 5, w kroku 6, w zapisie scalenia i w oknie
+  cofnięcia ta sama liczba co to, co się zapisze. Łączący „?” bez dzieci ani zakres **d)** pary nie dodają ani nie
+  zgłaszają; dwie osoby importu połączone z jedną osobą zmieniają daną raz (także w kroku 4).
+- Inne zdjęcie o tej samej nazwie i rozmiarze jest w **Zmiany danych** jako „Zdjęcie: photo (3222) → inne zdjęcie
+  o tej samej nazwie i rozmiarze” (także w kroku 4, w Historii scaleń, w cofnięciu i w zapisanym zestawieniu).
 - **Gdzie zapisać:** **Zapisz do …** albo **Zapisz do nowego drzewa** (kopia drzewa docelowego z importem; drzewo
   docelowe zostaje bez zmian).
 - **Kopia zapasowa:** przed zapisem do drzewa powstaje kopia **Przed scaleniem**, zawsze, także przy wyłączonych
@@ -295,10 +327,11 @@ zestawienie.
 - Zapis to jeden krok **Cofnij**.
 - **Granice:** przy **Tylko porównaj** nic się nie zapisuje; zestawienie można zapisać. Kontrola nie liczy do **Zmiany
   danych** pustych danych uzupełnionych zakresem **b)**.
-- **Obsługa:** przycisk „Dodaj N osób, zmień M danych”, przy nowym drzewie „Utwórz drzewo z N osobami”.
+- **Obsługa:** przycisk „Dodaj N osób, zmień M danych”, z uzupełnionymi danymi „…, uzupełnij F”, przy nowym drzewie
+  „Utwórz drzewo z N osobami”.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto -->
 
 <a id="A8.11"></a>
 ## A8.11 Krok 6: Co się stało i Historia scaleń
@@ -311,6 +344,8 @@ Po zapisie krok 6 mówi, co się stało, a scalenie zostaje w drzewie jako zapis
   ([A5](A5-tree-check.md)) i **Cofnij scalenie…** ([A8.12](#A8.12)).
 - Po scaleniu pliku innego programu do istniejącego drzewa karta **Co dalej** się nie pokazuje; sprawdzanie danych
   jest tutaj. Nowe drzewo z pliku innego programu kartę dostaje ([S6.4](S6-tree-from-another-program.md#S6.4)).
+- Krok 6 i Historia scaleń podają też **Uzupełnione dane** i liczbę połączonych źródeł, z tymi samymi liczbami co
+  krok 5.
 - **Historia scaleń:** każde scalenie do drzewa z datą, źródłem, liczbami (nowe, połączone, dane) i stanem
   **obowiązuje**, **częściowo cofnięte** albo **cofnięte**. Przy scaleniu **Otwórz zestawienie** i **Cofnij…**; w oknie
   także **Kopie…** i **Historia zmian…**. Całe drzewo przywracają kopie zapasowe; tu można cofnąć tylko to, co wniosło
@@ -321,7 +356,7 @@ Po zapisie krok 6 mówi, co się stało, a scalenie zostaje w drzewie jako zapis
   ⋯ przy drzewie → **Historia scaleń…**.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step6-done.ts (notes inHistory, noNextCard), src/merge/ui.ts step6Env (noNextCard = !newTree && gedcom) · src/ui/tree-actions.ts:199 menuHistory (jen se záznamy) · src/ui/merge-history-ui.ts · strings.ts mergeWizard.doneTitle, doneTotals, doneBackup, showInTree, saveAsList, checkTree, undoMerge, inHistory, noNextCard, menuHistory, histTitle, histLead, stValid, stPartial, stUndone, histCounts, openList, undoEllipsis, histBackups, histChanges · CHANGELOG.cs.md 3.32.0 (datová verze 26) · spec 134 §9 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step6-done.ts (notes inHistory, noNextCard), src/merge/ui.ts step6Env (noNextCard = !newTree && gedcom) · src/ui/tree-actions.ts:199 menuHistory (jen se záznamy) · src/ui/merge-history-ui.ts · strings.ts mergeWizard.doneTitle, doneTotals, doneBackup, showInTree, saveAsList, checkTree, undoMerge, inHistory, noNextCard, menuHistory, histTitle, histLead, stValid, stPartial, stUndone, histCounts, openList, undoEllipsis, histBackups, histChanges · CHANGELOG.cs.md 3.32.0 (datová verze 26) · spec 134 §9 · app:235afcd5, 834ceab8 (doplněné údaje a spojené prameny v kroku 6 a historii) -->
 
 <a id="A8.12"></a>
 ## A8.12 Cofnięcie scalenia
@@ -329,23 +364,25 @@ Po zapisie krok 6 mówi, co się stało, a scalenie zostaje w drzewie jako zapis
 **Cofnij scalenie** bierze z powrotem tylko to, co wniosło jedno scalenie. Praca wykonana po scaleniu nie znika.
 
 - **Co się cofa:** **Zostaną usunięte** nowe osoby scalenia z jego parami, źródłami, miejscami i plikami; **Zostaną
-  przywrócone** zmienione dane do wartości sprzed scalenia; **Połączenia zostaną cofnięte**: osoby drzewa zostaną,
-  tylko bez danych z importu.
+  przywrócone** zmienione dane do wartości sprzed scalenia; **Zostaną przywrócone w drzewie** pary, osoby, źródła
+  i pliki drzewa, z którymi scalenie się powiązało, jak były przed nim; **Połączenia zostaną cofnięte**: osoby drzewa
+  zostaną, tylko bez danych z importu.
 - **Zostanie, bo od tego czasu się zmieniło:** osoba lub dana edytowana po scaleniu, dana potwierdzona, osoba z nowym
   krewnym, rzecz, na której opiera się późniejsze scalenie, i rzecz, którą cytuje coś, co zostaje. Przy każdej pozycji
   można wybrać **Zostaw** albo **Cofnij**.
 - Obraz, który scalenie zastąpiło, przywraca tylko kopia **Przed scaleniem**. Kreator pokazuje też różnicę wobec
   przywrócenia kopii: kopia cofnęłaby też wszystko inne, co od scalenia stało się w drzewie.
 - **Cofnij wszystko** albo **Wybierz tylko niektóre…** (cofa się tylko to, co jest zaznaczone). Częściowo cofnięte
-  scalenie można cofać dalej. Cofnięcie robi kopię zapasową, jest w historii zmian i można je odwrócić (**Przywróć
-  scalenie**).
+  scalenie można cofać dalej. Cofnięcie robi kopię zapasową **Przed cofnięciem
+  scalenia**, zawsze, także przy wyłączonych automatycznych kopiach; rotacja jej nie usunie, dopóki scalenie można
+  przywrócić. Cofnięcie jest w historii zmian i można je odwrócić (**Przywróć scalenie**).
 - **Granice:** zablokowane drzewo można cofnąć po odblokowaniu w Zarządzaniu drzewami; drzewo tylko do odczytu, gdy
   będzie można je edytować. Gdy na scaleniu opiera się późniejsze scalenie, kreator to mówi. Cofnięcie scalenia, które
   jest już w badaniu, opisuje [A8.13](#A8.13).
 - **Obsługa:** krok 6 → **Cofnij scalenie…**; **Historia scaleń…** → **Cofnij…**; przycisk „Usuń N osób”.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/undo-plan.ts, src/merge/undo-view.ts, src/ui/merge-history-ui.ts (zápis se zálohou write.ts writeUndo, AuditLogManager, toast s redo) · strings.ts mergeWizard.undoTitle, undoLead, uRemove, uRestore, uUnjoin, uRemoveDesc, uRestoreDesc, uUnjoinDesc, uKeepHead, uEdited, uProven, uRelative, uLaterMerge, uUsed, uPicture, segKeep, segUndo, vsBackup, pickSome, pickAll, pickLead, btnUndo, builtOn, partlyDone, lockedUndo, undoReadOnly, undoNothing, undone, redo · spec 134 §10 -->
+<!-- zdroj: app:debf50cc src/merge/undo-plan.ts, src/merge/undo-view.ts, src/ui/merge-history-ui.ts (zápis se zálohou write.ts writeUndo, AuditLogManager, toast s redo) · strings.ts mergeWizard.undoTitle, undoLead, uRemove, uRestore, uUnjoin, uRemoveDesc, uRestoreDesc, uUnjoinDesc, uKeepHead, uEdited, uProven, uRelative, uLaterMerge, uUsed, uPicture, segKeep, segUndo, vsBackup, pickSome, pickAll, pickLead, btnUndo, builtOn, partlyDone, lockedUndo, undoReadOnly, undoNothing, undone, redo · spec 134 §10 · app:235afcd5 strings.ts mergeWizard.uTree, uTreeDesc · e2a6d712 strings.ts backups pre-merge-undo „Před odvoláním sloučení“ (134 N5, keepFor) -->
 
 <a id="A8.13"></a>
 ## A8.13 Scalenie do drzewa z badaniem
@@ -360,15 +397,24 @@ rozstrzyga człowiek w kroku 6.
   pracuje, wysłanie czeka na koniec jego kroku.
 - Badanie w starszej wersji nie zna wysyłania po scaleniu: całe drzewo wysyła się przez **Co zostanie wysłane**
   ([S1](S1-connecting-app-and-research.md)).
-- **Cofnięcie przed wysłaniem:** badanie nic nie dostaje. **Po wysłaniu:** badanie samo osób nie usuwa. Aplikacja
-  cofa od razu i podaje krok w terminalu badania (`strom sync undo I…` z **Kopiuj**) albo odsyła do pomocy **Osoba
-  usunięta w aplikacji** ([S2.6](S2-edits-from-the-app.md#S2.6)). Do tego czasu badanie przy następnej wersji
-  przywróci osoby, a aplikacja zaproponuje ich usunięcie.
+- **Co zostanie wysłane:** zdanie wstępne ma te same liczby co lista pod nim: „Do badań Horákovi: 5 nowych osób,
+  2 inne zmienione osoby, 3 pary, 4 źródła.” Łączący „?” nie jest nową osobą; nowa para liczy się przy swoich
+  partnerach, a **Pary** to tylko własne zmiany pary. Bez dokładnej listy zostaje zdanie z tym, co scalenie wniosło.
+- **Cofnięcie przed wysłaniem:** badanie nic nie dostaje. **Po wysłaniu:** badanie samo osób nie usuwa. Cofnięcie
+  w aplikacji usuwa także osoby, którym wysłanie nadało numer badania (numer nie jest edycją). Okno mówi „Scalenie
+  wysłano do badań {data}, więc badania mają już jego osoby. Cofnięcie w aplikacji nie usunie ich stamtąd.” oraz
+  „W aplikacji cofnięcie nastąpi od razu. W badaniach potrzebny jest jeden krok w terminalu badań:” z poleceniem
+  `strom sync undo I0042` i **Kopiuj**; przy znanym numerze materiału także **Cofnij w badaniu**, w przeciwnym razie
+  `I…` i gdzie numer znaleźć (`strom input list`). Komunikat „Scalenie cofnięte…” proponuje **Cofnij w badaniu**.
+  W przeciwnym razie okno odsyła do pomocy **Osoba usunięta w aplikacji** ([S2.6](S2-edits-from-the-app.md#S2.6)).
+  Do tego czasu badanie przy następnej wersji przywróci osoby, a aplikacja zaproponuje ich usunięcie.
 - **Granice:**
-  - **Nowe drzewo** z importu nie będzie połączone z badaniem;
+  - **Nowe drzewo** z importu nie będzie połączone z badaniem; zapis do nowego drzewa (kopia celu z importem) to
+    kopia bez badania ([S1.10](S1-connecting-app-and-research.md#S1.10));
+  - kopia drzewa z badania i drzewo bez badania po scaleniu nic nie wysyłają;
   - gdy z badaniem jest połączone źródło, a cel nie, połączenie nie przechodzi do celu; kreator proponuje **Zamień**;
   - gdy połączone są oba drzewa, powiązanie ani numery źródła nie przechodzą, a osoby źródła są w badaniu celu nowe;
   - gdy te same osoby są też w innym drzewie połączonym z badaniem, kreator na to zwraca uwagę.
 - **Obowiązuje od:** aplikacja 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 -->
+<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) -->

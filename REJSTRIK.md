@@ -1650,8 +1650,8 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | Jazyk | Termín | Definice |
 |---|---|---|
 | cs | Správa stromů · Změnit strukturu… | Okno se všemi stromy prohlížeče (počty, původ, rozpracovaná sloučení, export) a okno akcí, které ze stromu dělají jiné stromy: nový strom z výběru, kopie celého stromu, rozdělení, spojení do jiného stromu, přidání ze souboru. |
-| en | Manage trees · Change structure… | The window with all trees of the browser (counts, origin, unfinished merges, export) and the window of actions that make other trees out of a tree: a new tree from a selection, a copy of the whole tree, splitting, joining into another tree, adding from a file. |
-| de | Stammbäume verwalten · Struktur ändern… | Das Fenster mit allen Stammbäumen des Browsers (Anzahlen, Herkunft, angefangene Zusammenführungen, Export) und das Fenster der Aktionen, die aus einem Stammbaum andere Stammbäume machen: neuer Stammbaum aus einer Auswahl, Kopie des ganzen Stammbaums, Aufteilen, Zusammenführen in einen anderen Stammbaum, Hinzufügen aus einer Datei. |
+| en | Manage trees · Change structure… | The window with all trees of the browser (counts, origin, pending merges, export) and the window of actions that make other trees out of a tree: a new tree from a selection, a copy of the whole tree, splitting, joining into another tree, adding from a file. |
+| de | Stammbäume verwalten · Struktur ändern… | Das Fenster mit allen Stammbäumen des Browsers (Anzahlen, Herkunft, ausstehende Zusammenführungen, Export) und das Fenster der Aktionen, die aus einem Stammbaum andere Stammbäume machen: neuer Stammbaum aus einer Auswahl, Kopie des ganzen Stammbaums, Aufteilen, Zusammenführen in einen anderen Stammbaum, Hinzufügen aus einer Datei. |
 | pl | Zarządzanie drzewami · Zmień strukturę… | Okno ze wszystkimi drzewami przeglądarki (liczby, pochodzenie, rozpoczęte scalenia, eksport) i okno działań, które z drzewa robią inne drzewa: nowe drzewo z wyboru, kopia całego drzewa, podział, połączenie z innym drzewem, dodanie z pliku. |
 
 - **Čísla:** [A14.1](cs/A14-trees-and-structure.md#A14.1), A14.2, A14.3, A14.4, A14.5
@@ -1663,7 +1663,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 |---|---|---|
 | cs | Statistiky | Okno s podrobnými počty stromu po tématech (jména, místa, věk, děti, povolání…) v rozsahu a období narození; z hodnoty vede do Tabulky a jde uložit jako CSV. |
 | en | Statistics | The window with detailed counts of the tree by topic (names, places, age, children, occupations…) within a scope and a period of birth; a value leads to the Table and it can be saved as CSV. |
-| de | Statistik | Das Fenster mit ausführlichen Zahlen des Stammbaums nach Themen (Namen, Orte, Alter, Kinder, Berufe…) in einem Bereich und Geburtszeitraum; ein Wert führt zur Tabelle, und es lässt sich als CSV speichern. |
+| de | Statistik | Das Fenster mit ausführlichen Zahlen des Stammbaums nach Themen (Namen, Orte, Alter, Kinder, Berufe…) in einem Umfang und Geburtszeitraum; ein Wert führt zur Tabelle, und es lässt sich als CSV speichern. |
 | pl | Statystyki | Okno ze szczegółowymi liczbami drzewa według tematów (imiona, miejsca, wiek, dzieci, zawody…) w zakresie i okresie urodzenia; wartość prowadzi do Tabeli, a całość można zapisać jako CSV. |
 
 - **Čísla:** [A13.1](cs/A13-tree-statistics.md#A13.1), A13.2, A13.3, A13.4, A13.5

@@ -203,11 +203,15 @@ thus be restored.
   - the backup **Before merge** stays while the merge can be undone: the rotation of backups does not delete it. When
     another one would have to go because of it, the guide asks ([A8.10](A8-merging-trees.md#A8.10));
   - without a backup the merge is not written;
+  - undoing a merge takes its own backup **Before undoing a merge**, also always; the rotation does not delete it while
+    the merge can be restored;
+  - detaching a copy from a shared research takes the backup **Before the data update of a new version**
+    ([S1.10.2](S1-connecting-app-and-research.md#S1.10.2));
   - a single merge can be taken back without restoring the whole backup: **Undo the merge…**
     ([A8.12](A8-merging-trees.md#A8.12)). A backup brings back the whole tree, including everything that has happened
     since the merge.
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie -->
 
 <a id="S6.6"></a>
 ## S6.6 Export back to the program, or to share

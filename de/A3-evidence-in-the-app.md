@@ -398,6 +398,7 @@ oder Strom-Archiv zeigt es auch Dateien der Forschung, die im Stammbaum nirgends
   in den Stammbaum. Einen ganzen Ordner sendet **Materialien hinzufügen…** im Menü der Forschung
   ([R11.4](R11-material-from-the-user.md#R11.4)) und im Kopf des Fensters **Materialien** ([A3.5.15](#A3.5.15)).
   Beim Strom-Archiv sind es **Material hinzufügen…** und **Auch im Stammbaum speichern** (Bilder und PDF bis 2 MB).
+  Ein Scan mit mehreren Personen lässt sich zu einer ganzen Personenliste senden ([A3.5.18](#A3.5.18)).
 - Läuft die Forschung nicht, warten die gesendeten Dateien im Browser. Kennt die Forschung die Person noch nicht,
   werden sie nach dem nächsten Senden des Stammbaums gesendet.
 - **Grenzen:**
@@ -955,6 +956,49 @@ mit ihr.
 - **Gilt seit:** App 3.31.0 mit Forschung 1.36.0
 
 <!-- zdroj: app:36601947 src/materials-overview.ts (druh tree za bránou material.trees, trees=1; mimo třídění, hromadné akce, bez osoby, počty Projít; podrobnosti nejdou upravit), src/material-delete.ts treeFileSource, retractSources, blockedBy (409 material.source-live) · 2a406d67 dlaždice a řádek (Soubor rodokmenu · velikost, štítek zdroje), filtr Druh, nabídka Podrobnosti + Smazat natrvalo… (list zespodu), Podrobnosti bez náhledu, dialog bez pramene bez Jen skrýt · b40b22e4 dvoudílný dialog · d9af4b16 (ne Ve stromu, ani štítek, ani filtr) · e2e/material-tree-delete.spec.ts (hlavička) · strings.ts materials.treeFile, kindTrees, treeFileOf, treeDetails, del.textTree, noRefsTree, bothTitle, bothIntro, partSource, partFile, laterNoFile, fileSourceSub, understandFile, bothGo, bothChanged, bothNone, bothToast · SPEC.md 1120-app-117-smazani, 1120-app-108-diry · spec 117 §5–§7 -->
+
+<a id="A3.5.18"></a>
+### A3.5.18 Material zu einer Personenliste
+
+Ein Scan, auf dem mehrere Personen des Stammbaums stehen (ein Zählungsbogen, eine Matrikelseite), lässt sich der
+Forschung zu einer ganzen Personenliste statt zu einer Person senden. Das Feld **Betrifft** ist das erste Feld des
+Dialogs **Material an die Forschung senden**: **Person** (die Person, aus der sich der Dialog geöffnet hat), bei einer
+Quelle **Nur die Quelle**, und unter **Personenliste** die Listen des Stammbaums ([A11](A11-lists-of-people.md)).
+
+- **Was gesendet wird:** die Liste, wie sie im Moment des Sendens ist: Name, Art, Regel einer automatischen Liste und
+  die Nummern ihrer Personen in der Forschung; die Person des Dialogs steht an erster Stelle, auch wenn sie nicht in
+  der Liste ist. Die Forschung speichert das Material zur Liste und behält die Liste unverändert
+  ([R11.7](R11-material-from-the-user.md#R11.7)). Der Satz über der Schaltfläche sagt, wohin: „Die Forschung
+  speichert die Dateien bei allen Personen der Liste (5) …“, bei einer Quelle „… bei der Quelle und allen Personen
+  der Liste (5) …“.
+- **Liste bis 50 Personen:** die Dateien bekommen alle ihre Personen, die die Forschung kennt.
+- **Liste über 50 Personen:** „Die Liste hat mehr als 50 Personen: Die Forschung bekommt ihren Namen und das
+  Verzeichnis ihrer Personen und sucht sie selbst heraus.“ (bei einer automatischen Liste „… ihren Namen und ihre
+  Regel …“). Die Dateien bekommt nur die Person des Dialogs, bei einer Quelle niemand.
+- **Grenzen:**
+  - Personen der Liste, die die Forschung noch nicht kennt, werden nicht mit dem Material verknüpft („Personen der
+    Liste, die die Forschung noch nicht kennt (2), werden nicht mit dem Material verknüpft.“). Eine Liste, von der
+    die Forschung niemanden kennt, hat im Menü „die Forschung kennt diese Personen noch nicht“, und das Material geht
+    wie bisher zur Person des Dialogs;
+  - eine leere Liste lässt sich nicht wählen („leer“). Eine automatische Liste wird beim Öffnen des Menüs neu
+    berechnet;
+  - **Auch als Anhang im Stammbaum hinzufügen** gibt den Anhang nur der Person des Dialogs: „Der Anhang entsteht nur
+    bei Jan Horák, nicht bei den anderen Personen der Liste.“;
+  - die Wahl gilt nur im geöffneten Dialog; jedes Öffnen beginnt mit der Person oder der Quelle;
+  - nimmt die Forschung die Liste nicht an, bleibt der Dialog mit den Dateien offen („Die Liste ließ sich nicht an
+    die Forschung senden; die Dateien bleiben im Dialog.“). Hat die Forschung die Liste, auf die eine Datei verweist,
+    nicht, sendet die App sie ihr erneut;
+  - das Feld gibt es nur bei einer Forschung, die Material zu einer Liste annimmt; bei einer Quelle nur bei einer
+    Forschung, die auch den Scan einer Quelle zu einer Liste annimmt. Sonst hat der Dialog das Feld nicht, und die
+    Dateien gehen wie bisher zur Person oder Quelle. Das Feld fehlt auch, wenn die Forschung nicht läuft und die
+    Dateien nicht im Browser warten können (verschlüsselter Stammbaum, Safari).
+- **Bedienung:** **Material senden…** bei einer Person oder **Material zur Quelle senden…** → **Betrifft** → Liste.
+  Das Menü (auf dem Telefon eine Liste von unten): Enter, Leertaste oder ↓ öffnet es, ↑/↓ bewegt, Enter wählt, Esc
+  schließt. Ab 9 Listen hat es das Feld **Liste suchen…**. Nach dem Senden die Meldung „An die Forschung gesendet:
+  3 Dateien zur Liste „Sčítání 1869“ (5 Personen). …“; im Strom-Archiv „Im Strom-Archiv gespeichert: … zur Liste …“.
+- **Gilt seit:** App 3.32.0 mit Forschung 1.37.0
+
+<!-- zdroj: app:cd621161 src/material-list.ts (MATERIAL_LIST_PEOPLE 50, PUT lists/<listRef> name/kind/rule/persons/missing/at, materialListRef, snímek s osobou dialogu první, X-Strom-Person všichni známí do 50 jinak jen osoba dialogu, '' u pramene, bez známých osob materiál jako dřív), src/ui/material-concern-ui.ts (Týká se: Osoba / Pramen / Jen pramen, Seznam osob, FIND_FROM 9, prázdný disabled, listUnknown, popover a list na telefonu, klávesy, volba jen v otevřeném dialogu), src/ui/material-ui.ts (brány media.list a media.list.source, 404 media.no-list → seznam znovu, listFailed dialog otevřený, cantWait pole skryté) · 27452fd4 e2e/material-list.spec.ts · f5315651, 53752e6a · strings.ts material.concern, concernPerson, concernSource, concernLists, sourceOnly, listEmpty, listFind, listUnknown, whereList, whereListBig, whereSourceList, bigRule, bigPersons, missingNote, alsoAttachListHint, listFailed, sentToastList, sentWaitToastList, savedArchiveToastList · dirigent:spec/137 K2, prace/1123-app-137-linie-material (B1–B3) · research:de5f709d, 778846e6 (media.list, media.list.source) -->
 
 <a id="A3.6"></a>
 ## A3.6 Quellen einer Person

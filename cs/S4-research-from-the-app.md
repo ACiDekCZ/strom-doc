@@ -191,9 +191,12 @@ co přibylo, ubylo nebo se změnilo, se krátce ukáže pohybem.
   - vypnutý **Pohyb při načtení změn** i omezený pohyb v systému ukážou změny hned, jen zvýrazněné („Systém má
     zapnutý omezený pohyb, změny se proto ukážou bez pohybu.“).
 - **Ovládání:** aplikace: **Nastavení → Sledování výzkumu → Pohyb při načtení změn** (výchozí zapnuto).
+- **Od aplikace 3.32.0:** zástupná osoba „?“, která při načtení dostala nové ID, není nová ani odebraná: značka u okraje
+  ani čtečka obrazovky ji neohlásí, oznámí se jen skutečné osoby. Platí i po odeslání do výzkumu a po odvolání
+  sloučení.
 - **Platí od:** aplikace 3.24.0
 
-<!-- zdroj: app:src/live-transition.ts LIVE (move 320 ms, maxAnimatedNew=12, maxChangedForScene=60, ×0.875 touch), src/live-diff.ts (merge guess: surname, birth ±1, parent/partner) · strings.ts settings.liveMotion, liveMotionHelp, liveMotionReduced, edgeAdded · CHANGELOG.cs.md 3.24.0 · spec 055 -->
+<!-- zdroj: app:src/live-transition.ts LIVE (move 320 ms, maxAnimatedNew=12, maxChangedForScene=60, ×0.875 touch), src/live-diff.ts (merge guess: surname, birth ±1, parent/partner) · strings.ts settings.liveMotion, liveMotionHelp, liveMotionReduced, edgeAdded · CHANGELOG.cs.md 3.24.0 · spec 055 · 3.32.0: app:6c90cc34 (134 V-N6: realPeople, zástupná „?“ s novým ID se nehlásí) -->
 
 <a id="S4.1.5"></a>
 ### S4.1.5 Přehled výzkumu bez sledování

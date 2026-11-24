@@ -4,8 +4,9 @@
 Wie die Strom-App zwei Stammbäume zusammenführt: eine GEDCOM-Datei mit einem Stammbaum, zwei Stammbäume oder eine
 Ansicht mit einem Stammbaum. Beschrieben wird die App 3.21.2; Änderungen aus einer neueren Version tragen deren Nummer.
 Ab App 3.32.0 führt jedes Zusammenführen der Assistent **Stammbäume zusammenführen** in sechs Schritten
-([A8.5](#A8.5) bis [A8.13](#A8.13)). Das Zusammenführen einer doppelten Person innerhalb eines Stammbaums ist etwas
-anderes ([A5.6](A5-tree-check.md#A5.6)).
+([A8.5](#A8.5) bis [A8.13](#A8.13)), und das Verbinden von Stammbäumen bietet **Struktur ändern…**
+([A14.5](A14-trees-and-structure.md#A14.5)). Das Zusammenführen einer doppelten Person innerhalb eines Stammbaums ist
+etwas anderes ([A5.6](A5-tree-check.md#A5.6)).
 
 <a id="A8.1"></a>
 ## A8.1 Zusammenführen legt immer einen neuen Stammbaum an
@@ -158,8 +159,9 @@ Schritten. In den Stammbaum wird nichts geschrieben, bis das Schreiben im Schrit
 | Woher | Assistent | Bedienung |
 |---|---|---|
 | GEDCOM-Datei | **Stammbaum importieren** | **Import → GEDCOM importieren**; aus Stammbäume verwalten beginnt er mit der Auswahl **Neuer Stammbaum** |
-| anderer Stammbaum | **Stammbäume zusammenführen** | Stammbäume verwalten, ⋯ beim Stammbaum → **Mit Stammbaum zusammenführen…** (das Ziel ist der geöffnete Stammbaum) |
-| gerade in der Ansicht gezeigte Personen | **Stammbäume zusammenführen** | Aktionen des Stammbaums → **Ansicht zusammenführen mit…** |
+| anderer Stammbaum | **Stammbäume zusammenführen** | **Struktur ändern…** › **Auswahl oder ganzen Stammbaum in einen anderen…** › **Der ganze Stammbaum** ([A14.5](A14-trees-and-structure.md#A14.5)); das Ziel ist der geöffnete Stammbaum, beim geöffneten Stammbaum ein anderer |
+| Auswahl von Personen des Stammbaums (Stammlinie, Liste, Linie, Ansicht, von Hand) | **Stammbäume zusammenführen** | **Struktur ändern…** › **Auswahl oder ganzen Stammbaum in einen anderen…** › **Eine Auswahl…** |
+| GEDCOM- oder Strom-Datei (JSON) in den geöffneten Stammbaum | **Stammbaum importieren** | **Struktur ändern…** › **Aus einer Datei in diesen Stammbaum…** |
 | aus einem anderen Strom gesendete Änderungen | **Empfangene Änderungen** | Vorschau der empfangenen Änderungen → **Im Detail prüfen** |
 
 - **Schritte:** **Was damit** ([A8.6](#A8.6)), **Wer ist wer** ([A8.7](#A8.7)), **Wen hinzufügen** ([A8.8](#A8.8)),
@@ -167,20 +169,29 @@ Schritten. In den Stammbaum wird nichts geschrieben, bis das Schreiben im Schrit
   Schritt, der für den gewählten Weg nichts entscheidet, wird übersprungen, und der Assistent sagt es bei ihm.
 - Über den Schritten stehen laufende Zahlen der Personen des Imports: **Verbunden**, **Neu**, **Nicht übernommen** und
   **Zu entscheiden**; ihre Summe ist die Zahl der Personen des Imports.
+- Auf einem breiteren Fenster (Tablet, Computer) nimmt der Assistent fast den ganzen Bildschirm ein, und die Schritte
+  mit den Zahlen stehen in einer Leiste: die Zahlen in Worten und „= N Personen im Import“; unter 1100 px Breite
+  haben die übrigen Schritte nur eine Zahl. Auf dem Telefon ist der Assistent unverändert.
+- Ein von der Quelle aus gestarteter Assistent (der geöffnete Stammbaum wird in einen anderen zusammengeführt) nennt
+  überall den Zielstammbaum: in der Überschrift, in der Statuszeile, in „… mit dem Stammbaum … vergleichen“ und in der
+  Zeile der unvollendeten Zusammenführung.
 - Der Vergleich eines großen Stammbaums zeigt den Fortschritt und eine Zeitschätzung. **Abbrechen** verliert nichts:
   die Wahl aus Schritt 1 bleibt, und der Vergleich lässt sich neu starten.
 - Ein vor dem Schreiben geschlossener Assistent sagt „Noch ist nichts geschrieben.“, und die Entscheidungen lassen sich
-  **Für später speichern**. Das gespeicherte Zusammenführen wartet unter Stammbäume verwalten bei **Ausstehende
-  Zusammenführungen**. Hat sich der Zielstammbaum inzwischen geändert, sagt der Assistent es beim Fortsetzen; die
-  Vorschläge werden neu berechnet, entschiedene Paare bleiben.
+  **Für später speichern**. Das gespeicherte Zusammenführen wartet unter Stammbäume verwalten bei seinem
+  Zielstammbaum als **Unvollendete Zusammenführung** ([A14.1](A14-trees-and-structure.md#A14.1)). Hat sich der
+  Zielstammbaum inzwischen geändert, sagt der Assistent es beim Fortsetzen; die Vorschläge werden neu berechnet,
+  entschiedene Paare bleiben.
 - Ein Zusammenführen, das beim letzten Mal nicht beendet wurde (geschlossenes Fenster, Absturz), meldet die App beim
   nächsten Öffnen: Stammbaum und Datei sind unverändert.
 - **Grenzen:** eine GEDCOM-Datei in einen leeren Stammbaum wird weiter über **In Stammbaum einfügen** ohne Assistenten
   eingefügt ([A2](A2-loading-a-family-tree.md)). Das Zusammenführen zweier Personen eines Stammbaums ist etwas anderes
   ([A5.6](A5-tree-check.md#A5.6)).
-- **Gilt seit:** App 3.32.0; früher legte das Zusammenführen immer einen neuen Stammbaum an ([A8.1](#A8.1))
+- **Gilt seit:** App 3.32.0; früher legte das Zusammenführen immer einen neuen Stammbaum an ([A8.1](#A8.1)). Die
+  früheren **Mit Stammbaum zusammenführen…** im ⋯ von Stammbäume verwalten und **Ansicht zusammenführen mit…** ersetzte
+  in derselben Version **Struktur ändern…**.
 
-<!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md -->
+<!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md · app:52171573 (dotaz 10: větší okno, lišta kroků s počty, pod 1100 px číslem) · 6e36ad08 (V-N4: cílový strom v nadpisu, stavovém řádku, Porovnat, řádku rozpracovaného) · a9bc0b6b, f0c5a3fb (139: Sloučit do jiného stromu a Sloučit pohled do… nahrazené Změnit strukturu; mergeViewInto bez volajícího) · strings.ts structure.pendingRow -->
 
 <a id="A8.6"></a>
 ## A8.6 Schritt 1: Was damit
@@ -209,7 +220,12 @@ die schon im Stammbaum ist.
 - **Tauschen** kehrt bei zwei Stammbäumen um, was wohin hinzugefügt wird.
 - Dieselbe Datei, erneut in den Stammbaum zusammengeführt, erkennt der Assistent und sagt, wie viele Personen neu
   sind; die beim letzten Mal verbundenen Personen werden nicht verdoppelt. So kommen nur die Personen hinzu, die beim
-  letzten Mal ausgelassen wurden.
+  letzten Mal ausgelassen wurden. Dasselbe gilt für einen Stammbaum: „Der Stammbaum Horákovi wurde schon am
+  12. 11. 2026 hierher zusammengeführt. Nur 5 Personen sind neu; 40 sind mit der Zusammenführung vom 12. 11. 2026
+  verbunden und werden nicht verdoppelt.“
+- Eine Kopie eines Stammbaums und ein Stammbaum ohne Forschung haben in Schritt 1 die Beschreibung „Kopie des
+  Stammbaums „{Name}“ · ohne Forschung“; bei einem Ziel ohne Forschung steht „{Stammbaum} hat keine Forschung: nach
+  der Zusammenführung wird nichts gesendet.“ ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Grenzen:** Ziel kann weder ein gesperrter Stammbaum sein (Entsperren unter Stammbäume verwalten) noch ein
   Stammbaum aus einer neueren App-Version. Ein Stammbaum, auf dem gerade das Live-Verfolgen der Forschung läuft
   (◎ **Agenten im Stammbaum folgen**), ist schreibgeschützt; der Assistent bietet bei ihm **Folgen ausschalten und
@@ -219,7 +235,7 @@ die schon im Stammbaum ist.
   geöffneten Stammbaum geht der Import nur als **Neuer Stammbaum**.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch -->
 
 <a id="A8.7"></a>
 ## A8.7 Schritt 2: Wer ist wer
@@ -239,13 +255,22 @@ die geschrieben wird, ist immer sichtbar und lässt sich aufheben.
   **Gleich** mit dem Grund „Schon früher aus dieser Quelle zusammengeführt“, und nichts wird verdoppelt.
 - **Warum ja** nennt nur, was beide Einträge hergeben: „Exakter Name und Geburtsdatum“ nur bei gleichem Geburtsdatum
   auf beiden Seiten, bei Übereinstimmung nur des Jahres „Name und Geburtsjahr“, sonst „Exakter Name“.
-- Die **Übrigen unentschiedenen** lassen sich auf einmal erledigen: **Als neu hinzufügen** (der Assistent warnt, dass
-  das Personen verdoppeln kann, die schon im Stammbaum sind) oder **Nicht übernehmen**. Solange ein unentschiedenes
-  Paar bleibt, lässt der Assistent nicht weiter.
+- Die **Übrigen unentschiedenen** lassen sich auf einmal erledigen: „Übrige N unentschieden:“ **Als neu hinzufügen
+  (N)** (der Assistent warnt, dass das Personen verdoppeln kann, die schon im Stammbaum sind) oder **Nicht übernehmen
+  (N)**. Paare mit denselben Eltern, demselben Kind oder demselben Partner lässt die Sammelentscheidung aus; unter den
+  Schaltflächen steht „2 Paare mit denselben Eltern, demselben Kind oder demselben Partner sind einzeln zu
+  entscheiden.“ Bleiben nur solche, bleibt nur dieser Satz. Solange ein unentschiedenes Paar bleibt, wird Schritt 3
+  nicht freigegeben.
+- **Auf einem breiteren Fenster:** über dem Paar ist eine Zeile mit Bedienelementen (‹ Liste ausblenden · „Paar i von
+  n“ · Gruppe · ↑ ↓ · Entscheidung), die Kandidaten des Stammbaums stehen in Zeilen („2 Kandidaten im Stammbaum
+  Horákovi“), und die Tabelle des Paars rollt selbst mit festem Kopf (Spalte „Import · {Datei}“). Die Verwandten
+  stehen zeilenweise, von den Einträgen die ersten drei und „N weitere ▸“ / **Einklappen**. Der Rest der
+  Unentschiedenen steht in der Fußzeile der Liste; die Liste lässt sich zu einer schmalen Leiste einklappen
+  (**Paarliste ausblenden** / **Paarliste einblenden**). Auf dem Telefon ist der Schritt unverändert.
 - **Grenzen:** bei **Neuer Stammbaum** wird der Schritt übersprungen: alle Personen sind neu.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear -->
+<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) -->
 
 <a id="A8.8"></a>
 ## A8.8 Schritt 3: Wen hinzufügen
@@ -304,9 +329,24 @@ Stammbaum.
 Schritt 5 zeigt die ganze Liste der Änderungen nach Gruppen. Geschrieben wird erst mit seiner Schaltfläche und nur
 das, was die Liste zeigt.
 
-- **Liste:** **Neu**, **Verbunden**, **Geänderte Angaben**, **Paare und Verbindungen**, **Quellen**, **Orte**, **Fotos
-  und Dateien**, **Nicht übernommen** (bei jeder Person warum: Schritt und Wahl) und **Wird nicht übernommen**. Ein
-  Eintrag lässt sich abwählen. **Liste speichern…** speichert sie in eine Datei.
+- **Liste:** **Neu**, **Verbunden**, **Geänderte Angaben**, **Ergänzte Angaben**, **Verbundene Quellen**, **Paare und
+  Verbindungen**, **Quellen**, **Orte**, **Fotos und Dateien**, **Nicht übernommen** (bei jeder Person warum: Schritt
+  und Wahl) und **Wird nicht übernommen**. Ein Eintrag lässt sich abwählen. **Liste speichern…** speichert sie in
+  eine Datei.
+- **Ergänzte Angaben** (nur wenn es welche gibt): leere Angaben verbundener Personen, die das Schreiben ergänzt,
+  zeilenweise Person · Angabe (E-Mail, weitere Namensformen, Ereignisse, Quellen, eine offene Frage…).
+- **Verbundene Quellen:** eine Quelle des Quellstammbaums wird nur mit derselben Quelle des Zielstammbaums verbunden
+  (dieselbe Nummer der Forschung, Zitation oder Titel, Archiv und Ort): „1 Quelle mit einer vorhandenen verbunden“.
+  Die Gruppe **Quellen** führt nur neue auf. Die Quellen des Quellstammbaums werden untereinander nicht verbunden:
+  zwei Einträge einer Matrik, die sich nur in der Quellennummer der Forschung unterscheiden, bleiben zwei. Das
+  Ergebnis hat so dieselben Quellen unabhängig von der Richtung (**Tauschen**).
+- **Die Summen stimmen überall:** neue Paare und geänderte Angaben sind in Schritt 5, in Schritt 6, im Eintrag der
+  Zusammenführung und im Dialog des Zurücknehmens dieselbe Zahl wie das, was geschrieben wird. Ein verbindendes „?“
+  ohne Kinder und der Umfang **d)** fügen kein Paar hinzu und melden keines; zwei Personen des Imports, die mit einer
+  Person verbunden sind, ändern eine Angabe einmal (auch in Schritt 4).
+- Ein anderes Foto mit gleichem Namen und gleicher Größe steht unter **Geänderte Angaben** als „Foto: photo (3222) →
+  ein anderes Foto mit gleichem Namen und gleicher Größe“ (auch in Schritt 4, im Verlauf der Zusammenführungen, beim
+  Zurücknehmen und in der gespeicherten Liste).
 - **Wohin schreiben:** **In … schreiben** oder **In neuen Stammbaum** (Kopie des Zielstammbaums mit dem Import; der
   Zielstammbaum bleibt unverändert).
 - **Sicherung:** vor dem Schreiben in den Stammbaum entsteht die Sicherung **Vor dem Zusammenführen**, immer, auch
@@ -321,11 +361,11 @@ das, was die Liste zeigt.
 - Das Schreiben ist ein Schritt **Rückgängig**.
 - **Grenzen:** bei **Nur vergleichen** wird nichts geschrieben; die Liste lässt sich speichern. Die Prüfung zählt die
   durch den Umfang **b)** ergänzten leeren Angaben nicht zu **Geänderte Angaben**.
-- **Bedienung:** die Schaltfläche „N Personen hinzufügen, M Angaben ändern“, beim neuen Stammbaum „Stammbaum mit
-  N Personen anlegen“.
+- **Bedienung:** die Schaltfläche „N Personen hinzufügen, M Angaben ändern“, mit ergänzten Angaben „…, F ergänzen“,
+  beim neuen Stammbaum „Stammbaum mit N Personen anlegen“.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto -->
 
 <a id="A8.11"></a>
 ## A8.11 Schritt 6: Was passiert ist, und der Verlauf der Zusammenführungen
@@ -340,6 +380,8 @@ sich später zurückkehren lässt.
 - Nach dem Zusammenführen der Datei eines anderen Programms in einen bestehenden Stammbaum erscheint die Karte **Wie
   weiter** nicht; die Datenprüfung ist hier. Ein neuer Stammbaum aus der Datei eines anderen Programms bekommt die
   Karte ([S6.4](S6-tree-from-another-program.md#S6.4)).
+- Schritt 6 und der Verlauf der Zusammenführungen führen auch **Ergänzte Angaben** und die Zahl der verbundenen
+  Quellen auf, mit denselben Zahlen wie Schritt 5.
 - **Verlauf der Zusammenführungen:** jedes Zusammenführen in den Stammbaum mit Datum, Quelle, Zahlen (neu, verbunden,
   Angaben) und dem Stand **gilt**, **teilweise zurückgenommen** oder **zurückgenommen**. Beim Zusammenführen **Liste
   öffnen** und **Zurücknehmen…**; im Fenster auch **Sicherungen…** und **Änderungsverlauf…**. Den ganzen Stammbaum
@@ -350,7 +392,7 @@ sich später zurückkehren lässt.
   Zusammenführungen hat); Stammbäume verwalten, ⋯ beim Stammbaum → **Verlauf der Zusammenführungen…**.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step6-done.ts (notes inHistory, noNextCard), src/merge/ui.ts step6Env (noNextCard = !newTree && gedcom) · src/ui/tree-actions.ts:199 menuHistory (jen se záznamy) · src/ui/merge-history-ui.ts · strings.ts mergeWizard.doneTitle, doneTotals, doneBackup, showInTree, saveAsList, checkTree, undoMerge, inHistory, noNextCard, menuHistory, histTitle, histLead, stValid, stPartial, stUndone, histCounts, openList, undoEllipsis, histBackups, histChanges · CHANGELOG.cs.md 3.32.0 (datová verze 26) · spec 134 §9 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step6-done.ts (notes inHistory, noNextCard), src/merge/ui.ts step6Env (noNextCard = !newTree && gedcom) · src/ui/tree-actions.ts:199 menuHistory (jen se záznamy) · src/ui/merge-history-ui.ts · strings.ts mergeWizard.doneTitle, doneTotals, doneBackup, showInTree, saveAsList, checkTree, undoMerge, inHistory, noNextCard, menuHistory, histTitle, histLead, stValid, stPartial, stUndone, histCounts, openList, undoEllipsis, histBackups, histChanges · CHANGELOG.cs.md 3.32.0 (datová verze 26) · spec 134 §9 · app:235afcd5, 834ceab8 (doplněné údaje a spojené prameny v kroku 6 a historii) -->
 
 <a id="A8.12"></a>
 ## A8.12 Zurücknehmen einer Zusammenführung
@@ -359,8 +401,9 @@ sich später zurückkehren lässt.
 Zusammenführen getan wurde, verschwindet nicht.
 
 - **Was zurückgenommen wird:** **Entfernt**: die neuen Personen der Zusammenführung mit ihren Paaren, Quellen, Orten
-  und Dateien; **Wiederhergestellt**: geänderte Angaben, auf den Wert vor der Zusammenführung; **Verbindungen
-  aufgehoben**: die Personen des Stammbaums bleiben, nur ohne Angaben aus dem Import.
+  und Dateien; **Wiederhergestellt**: geänderte Angaben, auf den Wert vor der Zusammenführung; **Im Stammbaum
+  wiederhergestellt**: seine Paare, Personen, Quellen und Dateien, an die die Zusammenführung anknüpfte, wie vor ihr;
+  **Verbindungen aufgehoben**: die Personen des Stammbaums bleiben, nur ohne Angaben aus dem Import.
 - **Bleibt, weil seither geändert:** eine nach dem Zusammenführen bearbeitete Person oder Angabe, eine bestätigte
   Angabe, eine Person mit einem neuen Verwandten, etwas, worauf eine spätere Zusammenführung aufbaut, und etwas, das
   noch von etwas zitiert wird, das bleibt. Bei jedem Eintrag lässt sich **Behalten** oder **Zurücknehmen** wählen.
@@ -368,7 +411,9 @@ Zusammenführen getan wurde, verschwindet nicht.
   Assistent zeigt auch den Unterschied zum Wiederherstellen der Sicherung: die Sicherung würde auch alles andere
   zurücksetzen, was seit der Zusammenführung im Stammbaum geschah.
 - **Alles zurücknehmen** oder **Nur einige wählen…** (zurückgenommen wird nur, was angekreuzt ist). Eine teilweise
-  zurückgenommene Zusammenführung lässt sich weiter zurücknehmen. Das Zurücknehmen legt eine Sicherung an, steht im
+  zurückgenommene Zusammenführung lässt sich weiter zurücknehmen. Das Zurücknehmen legt die Sicherung **Vor dem
+  Rückgängigmachen der Zusammenführung** an, immer, auch bei ausgeschalteten automatischen Sicherungen; die Rotation
+  löscht sie nicht, solange sich die Zusammenführung wiederherstellen lässt. Das Zurücknehmen steht im
   Änderungsverlauf und lässt sich rückgängig machen (**Zurücknahme rückgängig machen**).
 - **Grenzen:** ein gesperrter Stammbaum lässt sich nach dem Entsperren unter Stammbäume verwalten zurücknehmen; ein
   schreibgeschützter, sobald er bearbeitet werden kann. Baut eine spätere Zusammenführung auf der Zusammenführung auf,
@@ -378,7 +423,7 @@ Zusammenführen getan wurde, verschwindet nicht.
   **Zurücknehmen…**; die Schaltfläche „N Personen entfernen“.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/undo-plan.ts, src/merge/undo-view.ts, src/ui/merge-history-ui.ts (zápis se zálohou write.ts writeUndo, AuditLogManager, toast s redo) · strings.ts mergeWizard.undoTitle, undoLead, uRemove, uRestore, uUnjoin, uRemoveDesc, uRestoreDesc, uUnjoinDesc, uKeepHead, uEdited, uProven, uRelative, uLaterMerge, uUsed, uPicture, segKeep, segUndo, vsBackup, pickSome, pickAll, pickLead, btnUndo, builtOn, partlyDone, lockedUndo, undoReadOnly, undoNothing, undone, redo · spec 134 §10 -->
+<!-- zdroj: app:debf50cc src/merge/undo-plan.ts, src/merge/undo-view.ts, src/ui/merge-history-ui.ts (zápis se zálohou write.ts writeUndo, AuditLogManager, toast s redo) · strings.ts mergeWizard.undoTitle, undoLead, uRemove, uRestore, uUnjoin, uRemoveDesc, uRestoreDesc, uUnjoinDesc, uKeepHead, uEdited, uProven, uRelative, uLaterMerge, uUsed, uPicture, segKeep, segUndo, vsBackup, pickSome, pickAll, pickLead, btnUndo, builtOn, partlyDone, lockedUndo, undoReadOnly, undoNothing, undone, redo · spec 134 §10 · app:235afcd5 strings.ts mergeWizard.uTree, uTreeDesc · e2a6d712 strings.ts backups pre-merge-undo „Před odvoláním sloučení“ (134 N5, keepFor) -->
 
 <a id="A8.13"></a>
 ## A8.13 Zusammenführen in einen Stammbaum mit Forschung
@@ -394,13 +439,26 @@ Forschung geht nichts von selbst. Über das Senden entscheidet der Mensch in Sch
   Brücke; kein Agent wird gestartet. Arbeitet der Agent gerade, wartet das Senden bis zum Ende seines Schritts.
 - Eine Forschung älterer Version kennt das Senden nach einem Zusammenführen nicht: der ganze Stammbaum wird über
   **Was gesendet wird** gesendet ([S1](S1-connecting-app-and-research.md)).
+- **Was gesendet wird:** der einleitende Satz hat dieselben Zahlen wie die Liste darunter: „An die Forschung
+  Horákovi: 5 neue Personen, 2 weitere geänderte Personen, 3 Paare, 4 Quellen.“ Ein verbindendes „?“ ist keine neue
+  Person; ein neues Paar wird bei seinen Partnern gezählt, und **Paare** sind nur die eigenen Änderungen des Paars.
+  Ohne genaue Liste bleibt der Satz mit dem, was die Zusammenführung brachte.
 - **Zurücknehmen vor dem Senden:** die Forschung bekommt nichts. **Nach dem Senden:** die Forschung löscht Personen
-  nicht von selbst. Die App nimmt sofort zurück und nennt den Schritt im Terminal der Forschung
-  (`strom sync undo I…` mit **Kopieren**) oder verweist auf die Hilfe **In der App entfernte Person**
-  ([S2.6](S2-edits-from-the-app.md#S2.6)). Bis dahin bringt die Forschung mit ihrer nächsten Version die Personen
-  zurück, und die App bietet sie zum Entfernen an.
+  nicht von selbst. Das Zurücknehmen in der App entfernt auch die Personen, denen das Senden eine Nummer der Forschung
+  gab (die Nummer ist keine Bearbeitung). Der Dialog sagt „Die Zusammenführung wurde am {Datum} an die Forschung
+  gesendet, die Forschung hat ihre Personen also schon. Das Zurücknehmen in der App entfernt sie dort nicht.“ und „In
+  der App erfolgt das Zurücknehmen sofort. In der Forschung ist ein Schritt im Terminal der Forschung nötig:“ mit dem
+  Befehl `strom sync undo I0042` und **Kopieren**; mit bekannter Nummer der Unterlage auch **In der Forschung
+  zurücknehmen**, sonst `I…` und wo die Nummer zu finden ist (`strom input list`). Die Meldung „Zusammenführung
+  zurückgenommen…“ bietet **In der Forschung zurücknehmen** an. Sonst verweist der Dialog auf die Hilfe **In der App
+  entfernte Person** ([S2.6](S2-edits-from-the-app.md#S2.6)). Bis dahin bringt die Forschung mit ihrer nächsten
+  Version die Personen zurück, und die App bietet sie zum Entfernen an.
 - **Grenzen:**
-  - ein **Neuer Stammbaum** aus einem Import wird nicht mit einer Forschung verbunden;
+  - ein **Neuer Stammbaum** aus einem Import wird nicht mit einer Forschung verbunden; das Schreiben in einen neuen
+    Stammbaum (Kopie des Ziels mit dem Import) ist eine Kopie ohne Forschung
+    ([S1.10](S1-connecting-app-and-research.md#S1.10));
+  - eine Kopie eines Stammbaums aus der Forschung und ein Stammbaum ohne Forschung senden nach der Zusammenführung
+    nichts;
   - ist die Quelle mit einer Forschung verbunden und das Ziel nicht, geht die Verbindung nicht auf das Ziel über; der
     Assistent bietet **Tauschen** an;
   - sind beide Stammbäume verbunden, gehen weder Verbindung noch Nummern der Quelle über, und die Personen der Quelle
@@ -409,4 +467,4 @@ Forschung geht nichts von selbst. Über das Senden entscheidet der Mensch in Sch
     darauf hin.
 - **Gilt seit:** App 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 -->
+<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) -->

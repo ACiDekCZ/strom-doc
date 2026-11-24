@@ -194,9 +194,9 @@ storage only when it is visible. A large tree with many photos thus fits into th
   - the estimate comes from the size of the tree, the images and the number of open windows, not from a measurement
     by the browser; it is a warning, not a ban.
 - **Images shared between copies:** each image is in the browser's storage once, by its content, and is shared by all
-  the trees, backups and copies that have it. **Duplicate** in Manage trees gives a complete, separate copy of the tree
-  with images that do not take up space a second time. Deleting a copy or a backup does not delete an image another
-  tree uses. An image no tree, backup or open window uses any longer is deleted at a clean-up after a week.
+  the trees, backups and copies that have it. **Copy of the whole tree** ([A14.3](A14-trees-and-structure.md#A14.3))
+  gives a complete, separate copy of the tree with images that do not take up space a second time. Deleting a copy or
+  a backup does not delete an image another tree uses. An image no tree, backup or open window uses any longer is deleted at a clean-up after a week.
 - The same image in two trees is the same image when merging, not a difference ([A8](A8-merging-trees.md)).
 - **Limits:**
   - the book, the family pages, the poster, a package of changes and a password-protected file hold the images in
@@ -204,7 +204,8 @@ storage only when it is visible. A large tree with many photos thus fits into th
   - the limit concerns the page's memory, not space on the disk: space in the browser's storage is watched by the
     backups and the window **Where the data is** ([S8.1](#S8.1)).
 - **Controls:** the notice "The tree “…” is close to the memory this browser gives the app…"; the question **Memory
-  may not be enough**; Manage trees → **Duplicate**.
+  may not be enough**; **Change structure…** → **Copy of the whole tree**. Manage trees shows "· images shared" at the
+  size of such a tree ([A14.1](A14-trees-and-structure.md#A14.1)).
 - **Since:** app 3.32.0; images once by content from app 3.1.0
 
-<!-- zdroj: dirigent:spec/135-obrazky-mimo-pamet-stromu (K1.1–K1.4, P2, P3) · app:c5931983 (strom v paměti drží odkazy), 6b425e41 (úklid poolu dvoufázově po 7 dnech, kořen memory), e6ce052c (proudové výstupy JSON/uložená aplikace), fcc7c21b (GED po obrázcích), e6a0a8c2 (upozornění), 6e55a1dc (sloučení nad odkazy, rovnost obrázků podle obsahu) · src/memory-limit.ts (DEFAULT_LIMIT 2048 MB, TOUCH_LIMIT 1024 MB, odhad z JSON stromu bez obrázků + 25 MB za další okno, OUTPUT_IMAGE_FACTOR / WHOLE_OUTPUT_IMAGE_FACTOR) · src/ui/memory-limit-ui.ts checkMemoryNotice (jednou za relaci a strom, toast hold), outputNearLimit, canLeaveOut · src/media-pool.ts POOL_UNUSED_GRACE_MS (7 dní) · app:2ba2408a (pool obrázků, v3.1.0) · strings.ts memoryLimit.title, notice, output, outputAll, book, poster, leaveOut, import, continue, treeManager.duplicate · dirigent:prace/1122-app-135/karta.md (měření D9a: 20k × 4000 obr. 518 → 55 MB, bez obrázků 53 MB) · dirigent:test/vysledek-1123-scenare-app.md (Duplikovat: samostatná kopie se sdílenými obrázky, smazání kopie nesmaže obrázky jiných) · CHANGELOG.cs.md 3.32.0 (Velké stromy s fotkami) -->
+<!-- zdroj: dirigent:spec/135-obrazky-mimo-pamet-stromu (K1.1–K1.4, P2, P3) · app:c5931983 (strom v paměti drží odkazy), 6b425e41 (úklid poolu dvoufázově po 7 dnech, kořen memory), e6ce052c (proudové výstupy JSON/uložená aplikace), fcc7c21b (GED po obrázcích), e6a0a8c2 (upozornění), 6e55a1dc (sloučení nad odkazy, rovnost obrázků podle obsahu) · src/memory-limit.ts (DEFAULT_LIMIT 2048 MB, TOUCH_LIMIT 1024 MB, odhad z JSON stromu bez obrázků + 25 MB za další okno, OUTPUT_IMAGE_FACTOR / WHOLE_OUTPUT_IMAGE_FACTOR) · src/ui/memory-limit-ui.ts checkMemoryNotice (jednou za relaci a strom, toast hold), outputNearLimit, canLeaveOut · src/media-pool.ts POOL_UNUSED_GRACE_MS (7 dní) · app:2ba2408a (pool obrázků, v3.1.0) · strings.ts memoryLimit.title, notice, output, outputAll, book, poster, leaveOut, import, continue, treeManager.duplicate · dirigent:prace/1122-app-135/karta.md (měření D9a: 20k × 4000 obr. 518 → 55 MB, bez obrázků 53 MB) · dirigent:test/vysledek-1123-scenare-app.md (Duplikovat: samostatná kopie se sdílenými obrázky, smazání kopie nesmaže obrázky jiných) · CHANGELOG.cs.md 3.32.0 (Velké stromy s fotkami) · app:e9f50b62 (Duplikovat nahrazeno Kopií celého stromu ve Změnit strukturu) · 7b967fd8 treeManager.imagesShared -->

@@ -222,9 +222,12 @@ die bleiben, behalten ihren Platz; was hinzukam, wegfiel oder sich änderte, zei
     sofort, nur hervorgehoben („Im System ist reduzierte Bewegung aktiv, Änderungen erscheinen daher ohne
     Bewegung.“).
 - **Bedienung:** App: **Einstellungen → Forschung verfolgen → Bewegung beim Laden von Änderungen** (standardmäßig an).
+- **Ab App 3.32.0:** eine Platzhalterperson „?“, die beim Laden eine neue ID bekam, ist weder neu noch entfernt:
+  weder die Marke am Rand noch ein Bildschirmleser kündigt sie an; angekündigt werden nur echte Personen. Das gilt
+  auch nach dem Senden an die Forschung und nach dem Rückgängigmachen einer Zusammenführung.
 - **Gilt seit:** App 3.24.0
 
-<!-- zdroj: app:src/live-transition.ts LIVE (move 320 ms, maxAnimatedNew=12, maxChangedForScene=60, ×0.875 touch), src/live-diff.ts (merge guess: surname, birth ±1, parent/partner) · strings.ts settings.liveMotion, liveMotionHelp, liveMotionReduced, edgeAdded · CHANGELOG.cs.md 3.24.0 · spec 055 -->
+<!-- zdroj: app:src/live-transition.ts LIVE (move 320 ms, maxAnimatedNew=12, maxChangedForScene=60, ×0.875 touch), src/live-diff.ts (merge guess: surname, birth ±1, parent/partner) · strings.ts settings.liveMotion, liveMotionHelp, liveMotionReduced, edgeAdded · CHANGELOG.cs.md 3.24.0 · spec 055 · 3.32.0: app:6c90cc34 (134 V-N6: realPeople, zástupná „?“ s novým ID se nehlásí) -->
 
 <a id="S4.1.5"></a>
 ### S4.1.5 Forschungsübersicht ohne Folgen

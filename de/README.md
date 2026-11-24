@@ -36,11 +36,13 @@ dauerhaft.
 - [A5 Prüfung des Stammbaums](A5-tree-check.md): was die App im Stammbaum überwacht, mit welchen Schwellen, und Kein Fehler
 - [A6 Ansichten und Auswahl der Personen](A6-views.md): Familie, Nachkommen, Zeitleiste, Fächer, Karte, die Stammlinie in der Ansicht, Tabelle und eine Ansicht in einem eigenen Fenster
 - [A7 Buch, Seiten und Export](A7-book-pages-and-export.md): wer lebend ist, Schutz lebender Personen, Familienbuch, Seiten, gespeichertes HTML
-- [A8 Zusammenführen von Stammbäumen](A8-merging-trees.md): Zusammenführen einer Datei, eines Stammbaums oder einer Ansicht in einen neuen Stammbaum, Abgleich der Personen
+- [A8 Zusammenführen von Stammbäumen](A8-merging-trees.md): der Assistent zum Zusammenführen einer Datei, eines Stammbaums oder einer Auswahl in einen Stammbaum, Abgleich der Personen, Verlauf und Rückgängigmachen einer Zusammenführung
 - [A9 Bedienung der App](A9-using-the-app.md): wo was ist, lesbare Namen der Bedienelemente, Bearbeiten beim Verfolgen der Forschung, der Agent in der App, die untere Leiste auf Telefon und Tablet
 - [A10 Ein Ereignis mehrerer Personen](A10-shared-events.md): das gemeinsame Ereignis eines Haushalts (Gemeinsam mit), Angleichen, Zu einem Ereignis verbinden, Paten und Zeugen im Leben einer Person, Zusammenführen und ältere Stammbäume
 - [A11 Personenlisten](A11-lists-of-people.md): feste, automatische Liste und Arbeitsliste, Regeln, Einfrieren, manuelle Reihenfolge, Zur Personenliste hinzufügen, Als Personenliste speichern, das Hinzufügedatum, Erledigtes abhaken, Export einer Liste
 - [A12 Porträt und Paarfoto](A12-portrait-and-couple-photo.md): der Editor für den Porträtausschnitt, das Original mit der Markierung Porträt, Ausschnitt bearbeiten, Als Porträt…, das Paarfoto und Porträts daraus, wo sie erscheinen, Export, GEDCOM und Datenversion 24
+- [A13 Statistik des Stammbaums](A13-tree-statistics.md): das Fenster Statistik, Themen, Umfang und Geburtszeitraum, von einem Wert zur Tabelle, CSV-Export
+- [A14 Stammbäume verwalten und die Struktur ändern](A14-trees-and-structure.md): Stammbäume verwalten, ausstehende Zusammenführungen, Struktur ändern…, neuer Stammbaum aus einer Auswahl, Kopie des ganzen Stammbaums, Aufteilen, Zusammenführen in einen anderen Stammbaum
 
 ## S App und Forschung zusammen
 

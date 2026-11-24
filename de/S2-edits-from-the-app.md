@@ -119,6 +119,9 @@ anderen Stammbaum ändert daran nichts.
   von selbst und das Verlassen der Seite melden nichts; wartende Änderungen zeigt die Markierung.
 - **Der Beispiel-Stammbaum** wird nie an eine Forschung gesendet
   ([S1.3.1](S1-connecting-app-and-research.md#S1.3.1)).
+- **Ab App 3.32.0:** eine Kopie eines Stammbaums aus einer Forschung wird gar nicht an die Forschung gesendet, auch
+  nicht mit der Schaltfläche. Bittet die Forschung über einen Link um die Änderungen, wird der Stammbaum gesendet, der
+  zur Forschung gehört ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Grenzen:** seit Forschung 1.34.0 lehnt auch die Forschung selbst einen kleinen anderen Stammbaum unter ihrer
   Verbindung ab ([S2.5](#S2.5)). Ein zurückgenommenes Senden, das die Personen des Stammbaums nicht trug, wird nicht
   wieder angeboten ([S2.7](#S2.7)).

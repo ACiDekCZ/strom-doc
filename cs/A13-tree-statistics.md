@@ -18,7 +18,7 @@ Okno **Statistiky: <strom>** má vlevo témata ve skupinách a vpravo tabulku vy
   - **Akce › Strom › Statistiky** (hned pod **Přehled stromu**);
   - ve Správě stromů v nabídce ⋯ u stromu, ve skupině s **Přehled stromu**, **Kvalita dat**, **Zálohy**, **Historie
     sloučení** a **Historie změn** ([A14.1](A14-trees-and-structure.md#A14.1));
-  - na telefonu **Další › Zobrazení › Statistiky**; okno začne na tlačítku **Téma**, téma a rozsah se volí v listu
+  - na telefonu **Více › Pohled › Statistiky**; okno začne na tlačítku **Téma**, téma a rozsah se volí v listu
     zespodu;
   - odkaz **Podrobně** v **Přehled stromu**: u detailu rodu (**Křestní jména** s rozsahem toho rodu), u **Věk při
     úmrtí** (**Věk dožití**), u **Děti na pár podle generací** (**Počet dětí na pár**), u **Narození podle měsíců**

@@ -190,8 +190,8 @@ jednej stronie.
   - szacunek wychodzi z rozmiaru drzewa, obrazów i liczby otwartych okien, nie z pomiaru przeglądarki; to
     ostrzeżenie, nie zakaz.
 - **Obrazy wspólne dla kopii:** każdy obraz jest w pamięci przeglądarki raz, według zawartości, i dzielą go wszystkie
-  drzewa, kopie zapasowe i kopie, które go mają. **Duplikuj** w Zarządzaniu drzewami daje pełną, samodzielną kopię
-  drzewa z obrazami, które nie zajmują miejsca drugi raz. Usunięcie kopii lub kopii zapasowej nie usunie obrazu,
+  drzewa, kopie zapasowe i kopie, które go mają. **Kopia całego drzewa** ([A14.3](A14-trees-and-structure.md#A14.3))
+  daje pełną, samodzielną kopię drzewa z obrazami, które nie zajmują miejsca drugi raz. Usunięcie kopii lub kopii zapasowej nie usunie obrazu,
   którego używa inne drzewo. Obraz, którego nie używa już żadne drzewo, kopia zapasowa ani otwarte okno, usuwa się
   przy porządkowaniu po tygodniu.
 - Ten sam obraz w dwóch drzewach jest przy scalaniu tym samym obrazem, nie różnicą ([A8](A8-merging-trees.md)).
@@ -201,7 +201,8 @@ jednej stronie.
   - granica dotyczy pamięci strony, nie miejsca na dysku: miejsca w pamięci przeglądarki pilnują kopie zapasowe
     i okno **Gdzie są dane** ([S8.1](#S8.1)).
 - **Obsługa:** powiadomienie „Drzewo „…” zbliża się do granicy pamięci, którą ta przeglądarka daje aplikacji…”;
-  pytanie **Pamięci może nie wystarczyć**; Zarządzanie drzewami → **Duplikuj**.
+  pytanie **Pamięci może nie wystarczyć**; **Zmień strukturę…** → **Kopia całego drzewa**. Zarządzanie drzewami ma
+  przy rozmiarze takiego drzewa „· obrazy wspólne” ([A14.1](A14-trees-and-structure.md#A14.1)).
 - **Obowiązuje od:** aplikacja 3.32.0; obrazy raz według zawartości od aplikacji 3.1.0
 
-<!-- zdroj: dirigent:spec/135-obrazky-mimo-pamet-stromu (K1.1–K1.4, P2, P3) · app:c5931983 (strom v paměti drží odkazy), 6b425e41 (úklid poolu dvoufázově po 7 dnech, kořen memory), e6ce052c (proudové výstupy JSON/uložená aplikace), fcc7c21b (GED po obrázcích), e6a0a8c2 (upozornění), 6e55a1dc (sloučení nad odkazy, rovnost obrázků podle obsahu) · src/memory-limit.ts (DEFAULT_LIMIT 2048 MB, TOUCH_LIMIT 1024 MB, odhad z JSON stromu bez obrázků + 25 MB za další okno, OUTPUT_IMAGE_FACTOR / WHOLE_OUTPUT_IMAGE_FACTOR) · src/ui/memory-limit-ui.ts checkMemoryNotice (jednou za relaci a strom, toast hold), outputNearLimit, canLeaveOut · src/media-pool.ts POOL_UNUSED_GRACE_MS (7 dní) · app:2ba2408a (pool obrázků, v3.1.0) · strings.ts memoryLimit.title, notice, output, outputAll, book, poster, leaveOut, import, continue, treeManager.duplicate · dirigent:prace/1122-app-135/karta.md (měření D9a: 20k × 4000 obr. 518 → 55 MB, bez obrázků 53 MB) · dirigent:test/vysledek-1123-scenare-app.md (Duplikovat: samostatná kopie se sdílenými obrázky, smazání kopie nesmaže obrázky jiných) · CHANGELOG.cs.md 3.32.0 (Velké stromy s fotkami) -->
+<!-- zdroj: dirigent:spec/135-obrazky-mimo-pamet-stromu (K1.1–K1.4, P2, P3) · app:c5931983 (strom v paměti drží odkazy), 6b425e41 (úklid poolu dvoufázově po 7 dnech, kořen memory), e6ce052c (proudové výstupy JSON/uložená aplikace), fcc7c21b (GED po obrázcích), e6a0a8c2 (upozornění), 6e55a1dc (sloučení nad odkazy, rovnost obrázků podle obsahu) · src/memory-limit.ts (DEFAULT_LIMIT 2048 MB, TOUCH_LIMIT 1024 MB, odhad z JSON stromu bez obrázků + 25 MB za další okno, OUTPUT_IMAGE_FACTOR / WHOLE_OUTPUT_IMAGE_FACTOR) · src/ui/memory-limit-ui.ts checkMemoryNotice (jednou za relaci a strom, toast hold), outputNearLimit, canLeaveOut · src/media-pool.ts POOL_UNUSED_GRACE_MS (7 dní) · app:2ba2408a (pool obrázků, v3.1.0) · strings.ts memoryLimit.title, notice, output, outputAll, book, poster, leaveOut, import, continue, treeManager.duplicate · dirigent:prace/1122-app-135/karta.md (měření D9a: 20k × 4000 obr. 518 → 55 MB, bez obrázků 53 MB) · dirigent:test/vysledek-1123-scenare-app.md (Duplikovat: samostatná kopie se sdílenými obrázky, smazání kopie nesmaže obrázky jiných) · CHANGELOG.cs.md 3.32.0 (Velké stromy s fotkami) · app:e9f50b62 (Duplikovat nahrazeno Kopií celého stromu ve Změnit strukturu) · 7b967fd8 treeManager.imagesShared -->

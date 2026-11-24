@@ -202,8 +202,9 @@ Browser einer Seite gibt.
   - die Schätzung geht von der Größe des Stammbaums, der Bilder und der Zahl offener Fenster aus, nicht von einer
     Messung des Browsers; sie ist eine Warnung, kein Verbot.
 - **Zwischen Kopien geteilte Bilder:** jedes Bild liegt im Speicher des Browsers einmal, nach seinem Inhalt, und alle
-  Stammbäume, Sicherungen und Kopien, die es haben, teilen es. **Duplizieren** in Stammbäume verwalten ergibt eine
-  vollständige eigenständige Kopie des Stammbaums mit Bildern, die keinen zweiten Platz belegen. Das Löschen einer
+  Stammbäume, Sicherungen und Kopien, die es haben, teilen es. **Kopie des ganzen Stammbaums**
+  ([A14.3](A14-trees-and-structure.md#A14.3)) ergibt eine vollständige eigenständige Kopie des Stammbaums mit Bildern,
+  die keinen zweiten Platz belegen. Das Löschen einer
   Kopie oder Sicherung löscht kein Bild, das ein anderer Stammbaum verwendet. Ein Bild, das kein Stammbaum, keine
   Sicherung und kein offenes Fenster mehr verwendet, wird beim Aufräumen nach einer Woche gelöscht.
 - Dasselbe Bild in zwei Stammbäumen ist beim Zusammenführen dasselbe Bild, kein Unterschied
@@ -214,7 +215,8 @@ Browser einer Seite gibt.
   - die Grenze betrifft den Speicher der Seite, nicht den Platz auf dem Datenträger: den Platz im Speicher des Browsers
     überwachen die Sicherungen und das Fenster **Wo die Daten liegen** ([S8.1](#S8.1)).
 - **Bedienung:** der Hinweis „Der Stammbaum „…“ nähert sich dem Speicher, den dieser Browser der App gibt…“; die
-  Frage **Der Speicher reicht womöglich nicht**; Stammbäume verwalten → **Duplizieren**.
+  Frage **Der Speicher reicht womöglich nicht**; **Struktur ändern…** → **Kopie des ganzen Stammbaums**. Stammbäume
+  verwalten zeigt bei der Größe eines solchen Stammbaums „· Bilder geteilt“ ([A14.1](A14-trees-and-structure.md#A14.1)).
 - **Gilt seit:** App 3.32.0; Bilder einmal nach Inhalt ab App 3.1.0
 
-<!-- zdroj: dirigent:spec/135-obrazky-mimo-pamet-stromu (K1.1–K1.4, P2, P3) · app:c5931983 (strom v paměti drží odkazy), 6b425e41 (úklid poolu dvoufázově po 7 dnech, kořen memory), e6ce052c (proudové výstupy JSON/uložená aplikace), fcc7c21b (GED po obrázcích), e6a0a8c2 (upozornění), 6e55a1dc (sloučení nad odkazy, rovnost obrázků podle obsahu) · src/memory-limit.ts (DEFAULT_LIMIT 2048 MB, TOUCH_LIMIT 1024 MB, odhad z JSON stromu bez obrázků + 25 MB za další okno, OUTPUT_IMAGE_FACTOR / WHOLE_OUTPUT_IMAGE_FACTOR) · src/ui/memory-limit-ui.ts checkMemoryNotice (jednou za relaci a strom, toast hold), outputNearLimit, canLeaveOut · src/media-pool.ts POOL_UNUSED_GRACE_MS (7 dní) · app:2ba2408a (pool obrázků, v3.1.0) · strings.ts memoryLimit.title, notice, output, outputAll, book, poster, leaveOut, import, continue, treeManager.duplicate · dirigent:prace/1122-app-135/karta.md (měření D9a: 20k × 4000 obr. 518 → 55 MB, bez obrázků 53 MB) · dirigent:test/vysledek-1123-scenare-app.md (Duplikovat: samostatná kopie se sdílenými obrázky, smazání kopie nesmaže obrázky jiných) · CHANGELOG.cs.md 3.32.0 (Velké stromy s fotkami) -->
+<!-- zdroj: dirigent:spec/135-obrazky-mimo-pamet-stromu (K1.1–K1.4, P2, P3) · app:c5931983 (strom v paměti drží odkazy), 6b425e41 (úklid poolu dvoufázově po 7 dnech, kořen memory), e6ce052c (proudové výstupy JSON/uložená aplikace), fcc7c21b (GED po obrázcích), e6a0a8c2 (upozornění), 6e55a1dc (sloučení nad odkazy, rovnost obrázků podle obsahu) · src/memory-limit.ts (DEFAULT_LIMIT 2048 MB, TOUCH_LIMIT 1024 MB, odhad z JSON stromu bez obrázků + 25 MB za další okno, OUTPUT_IMAGE_FACTOR / WHOLE_OUTPUT_IMAGE_FACTOR) · src/ui/memory-limit-ui.ts checkMemoryNotice (jednou za relaci a strom, toast hold), outputNearLimit, canLeaveOut · src/media-pool.ts POOL_UNUSED_GRACE_MS (7 dní) · app:2ba2408a (pool obrázků, v3.1.0) · strings.ts memoryLimit.title, notice, output, outputAll, book, poster, leaveOut, import, continue, treeManager.duplicate · dirigent:prace/1122-app-135/karta.md (měření D9a: 20k × 4000 obr. 518 → 55 MB, bez obrázků 53 MB) · dirigent:test/vysledek-1123-scenare-app.md (Duplikovat: samostatná kopie se sdílenými obrázky, smazání kopie nesmaže obrázky jiných) · CHANGELOG.cs.md 3.32.0 (Velké stromy s fotkami) · app:e9f50b62 (Duplikovat nahrazeno Kopií celého stromu ve Změnit strukturu) · 7b967fd8 treeManager.imagesShared -->

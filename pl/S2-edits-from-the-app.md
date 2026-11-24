@@ -110,6 +110,9 @@ w tym nie zmienia.
   tego drzewa. Zmiany zostają tutaj.“ Wysyłka sama z siebie i opuszczenie strony niczego nie zgłaszają; czekające
   zmiany pokazuje znacznik.
 - **Drzewo przykładowe** nigdy nie jest wysyłane do badania ([S1.3.1](S1-connecting-app-and-research.md#S1.3.1)).
+- **Od aplikacji 3.32.0:** kopia drzewa z badania w ogóle nie jest wysyłana do badania, nawet przyciskiem. Gdy badanie
+  poprosi o zmiany odnośnikiem, wysyłane jest drzewo, które należy do badania
+  ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Granice:** od badania 1.34.0 małe inne drzewo pod połączeniem badania odrzuca też samo badanie ([S2.5](#S2.5)).
   Cofnięte wysłanie, które nie niosło osób drzewa, nie jest ponownie proponowane ([S2.7](#S2.7)).
 - **Obowiązuje od:** aplikacja 3.29.0

@@ -3,7 +3,8 @@
 
 How the Strom app merges two family trees: a GEDCOM file with a tree, two trees, or a view with a tree. Describes the
 app 3.21.2; changes from a later version carry its number. From app 3.32.0 every merge is led by the guide **Merge
-trees** in six steps ([A8.5](#A8.5) to [A8.13](#A8.13)). Merging a duplicate person within one tree is a different
+trees** in six steps ([A8.5](#A8.5) to [A8.13](#A8.13)), and joining trees is offered by **Change structure…**
+([A14.5](A14-trees-and-structure.md#A14.5)). Merging a duplicate person within one tree is a different
 matter ([A5.6](A5-tree-check.md#A5.6)).
 
 <a id="A8.1"></a>
@@ -137,8 +138,9 @@ written to the tree until the write is confirmed in the step **What will happen*
 | From | Guide | Controls |
 |---|---|---|
 | a GEDCOM file | **Import a family tree** | **Import → Import GEDCOM**; from Manage trees it starts with the option **New tree** |
-| another tree | **Merge trees** | Manage trees, ⋯ at the tree → **Merge into another tree…** (the target is the open tree) |
-| the people shown in the view right now | **Merge trees** | the tree's actions → **Merge view into…** |
+| another tree | **Merge trees** | **Change structure…** › **A selection or the whole tree into another tree…** › **The whole tree** ([A14.5](A14-trees-and-structure.md#A14.5)); the target is the open tree, for the open tree another one |
+| a selection of the tree's people (family line, list, line, view, by hand) | **Merge trees** | **Change structure…** › **A selection or the whole tree into another tree…** › **A selection…** |
+| a GEDCOM or Strom (JSON) file into the open tree | **Import a family tree** | **Change structure…** › **Add from a file to this tree…** |
 | changes sent from another Strom | **Received changes** | the preview of received changes → **Review in detail** |
 
 - **Steps:** **What to do** ([A8.6](#A8.6)), **Who is who** ([A8.7](#A8.7)), **Whom to add** ([A8.8](#A8.8)), **Who
@@ -146,19 +148,26 @@ written to the tree until the write is confirmed in the step **What will happen*
   that decides nothing for the chosen path is skipped, and the guide says so at it.
 - Above the steps stand running counts of the import's people: **Joined**, **New**, **Not added** and **To decide**;
   their sum is the number of people in the import.
+- On a wider window (tablet, computer) the guide takes up almost the whole screen and the steps with the counts are in
+  one bar: the counts in words and “= N people in the import”; under 1100 px of width the other steps have only a
+  number. On a phone the guide is unchanged.
+- A guide started from the source (the open tree is merged into another one) names the target tree everywhere: in the
+  title, in the status line, in “Compare … with the tree …” and in the row of the unfinished merge.
 - Comparing a large tree shows progress and an estimate of time. **Stop** loses nothing: the choices of step 1 stay
   and the comparison can be run again.
 - A guide closed before the write says “Nothing has been written yet.” and the decisions can be kept with **Save for
-  later**. The saved merge waits in Manage trees under **Pending merges**. When the target tree has changed
-  meanwhile, the guide says so on continuing; the suggestions are recalculated, the decided pairs stay.
+  later**. The saved merge waits in Manage trees under its target tree as an **Unfinished merge**
+  ([A14.1](A14-trees-and-structure.md#A14.1)). When the target tree has changed meanwhile, the guide says so on
+  continuing; the suggestions are recalculated, the decided pairs stay.
 - A merge that did not finish last time (a closed window, a crash) is reported by the app on the next opening: the
   tree and the file are unchanged.
 - **Limits:** a GEDCOM file into an empty tree is still inserted through **Insert into tree** without the guide
   ([A2](A2-loading-a-family-tree.md)). Merging two people of one tree is a different matter
   ([A5.6](A5-tree-check.md#A5.6)).
-- **Since:** app 3.32.0; before, a merge always created a new tree ([A8.1](#A8.1))
+- **Since:** app 3.32.0; before, a merge always created a new tree ([A8.1](#A8.1)). The earlier **Merge into another
+  tree…** in ⋯ of Manage trees and **Merge view into…** were replaced in the same version by **Change structure…**.
 
-<!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md -->
+<!-- zdroj: app:debf50cc (3.32.0) src/merge/ui.ts startMerge, repeatLine, resume, step6Env · src/merge/wizard-steps.ts stepInfo (přeskočené kroky) · src/merge/wizard-ui.ts title (titleImport, titleTrees, titleShare, titleCompare) · src/ui/import-export.ts openGedcomGuide (prázdný strom → showGedcomResultDialog), src/ui/merge-ui.ts (crashed, pendingMergeFound) · src/ui/share-ui.ts reviewChangePacketInMerge · strings.ts mergeWizard.steps, cntJoined, cntNew, cntSkipped, cntPending, cntTotal, comparing, comparingNote, stop, closeMsg, savedLater, resumeChanged, crashed, treeManager.mergeInto, menu.mergeViewInto, shareDiff.reviewDetail, merge.pendingMerges · CHANGELOG.cs.md 3.32.0 · dirigent:spec/134-bezpecne-slouceni-stromu §1–§13 · dirigent:test/vysledek-1123-scenare-app.md · app:52171573 (dotaz 10: větší okno, lišta kroků s počty, pod 1100 px číslem) · 6e36ad08 (V-N4: cílový strom v nadpisu, stavovém řádku, Porovnat, řádku rozpracovaného) · a9bc0b6b, f0c5a3fb (139: Sloučit do jiného stromu a Sloučit pohled do… nahrazené Změnit strukturu; mergeViewInto bez volajícího) · strings.ts structure.pendingRow -->
 
 <a id="A8.6"></a>
 ## A8.6 Step 1: What to do
@@ -185,7 +194,12 @@ The first step chooses what to do with the import, into which tree, and what hap
   example; **Save list…** saves the list. None of it is lost silently.
 - **Swap** with two trees reverses what is added into what.
 - The same file merged into the tree again is recognized by the guide, which says how many people are new; the people
-  joined last time are not doubled. So only the people left out last time are added.
+  joined last time are not doubled. So only the people left out last time are added. The same holds for a tree: “The
+  tree Horákovi was already merged into this one 12. 11. 2026. Only 5 people are new; 40 are joined with the merge of
+  12. 11. 2026 and will not be duplicated.”
+- A copy of a tree and a tree without a research have in step 1 the description “copy of the tree “{name}” · no
+  research”; at a target without a research stands “{tree} has no research: nothing is sent after the merge.”
+  ([S1.10](S1-connecting-app-and-research.md#S1.10)).
 - **Limits:** the target cannot be a locked tree (it can be unlocked in Manage trees) or a tree from a newer app
   version. A tree on which live following of the research is running right now (◎ **Follow the agent in the tree**)
   is read-only; for it the guide offers **Turn off following and merge here**: a backup is saved before writing,
@@ -194,7 +208,7 @@ The first step chooses what to do with the import, into which tree, and what hap
   a tree open read-only the import is possible only as a **New tree**.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step1-what.ts (mode, scope, notTaken, swap, repeat), src/merge/ui.ts repeatLine (isRepeatOf podle otisku souboru, importedBefore), src/merge/plan.ts:715–717 (d: updateOnly, a: joinedDetails none, b: empty) · strings.ts mergeWizard.modeNew, modeNewDesc, modeAdd, modeAddDesc, modeCompare, modeCompareDesc, modeJson, modeJsonDesc, btnJson, whichTree, existingWhat, scopeA–scopeD, scopeADesc–scopeDDesc, notTaken, notTakenNote, saveList, swap, repeat, blockLive, blockLiveAction, blockLocked, blockReadOnly, blockNewer · app:166fbffd, 5c4bcc0c (1123-134 bod 10: blokuje jen strom s běžícím sledováním, kopie stromu výzkumu jde; nabídka Vypnout sledování a sloučit sem) src/live-follow-block.ts · CHANGELOG.cs.md 3.32.0 („tentýž soubor sloučený znovu přidá jen osoby, které se minule vynechaly“) · spec 134 K0.7 · app:7b967fd8 strings.ts mergeWizard.repeatTree (134 N1 doplněk) · bcb2a0fa strings.ts research.copyOf, structure.mergeNoResearch -->
 
 <a id="A8.7"></a>
 ## A8.7 Step 2: Who is who
@@ -214,12 +228,20 @@ always visible and can be undone.
   is doubled.
 - **Why yes** names only what both records give: “Exact name and birth date” only with the same birth date on both
   sides, with only the year matching “Name and birth year”, otherwise “Exact name”.
-- The **Remaining undecided** can be settled at once: **Add as new** (the guide warns that this can double people
-  already in the tree), or **Do not add**. While an undecided pair remains, the guide does not go on.
+- The **Remaining undecided** can be settled at once: “Remaining N undecided:” **Add as new (N)** (the guide warns
+  that this can double people already in the tree), or **Do not add (N)**. Pairs with the same parents, child or
+  partner are left out of the bulk decision; below the buttons stands “2 pairs with the same parents, child or partner
+  need deciding one by one.” When only such pairs remain, only that sentence stays. While an undecided pair remains,
+  step 3 does not unlock.
+- **On a wider window:** above the pair is a row of controls (‹ hide the list · “Pair i of n” · group · ↑ ↓ ·
+  decision), the tree's candidates are in rows (“2 candidates in the tree Horákovi”) and the pair's table scrolls by
+  itself with a fixed header (the column “Import · {file}”). Relatives are row by row, of the records the first three
+  and “N more ▸” / **Collapse**. The rest of the undecided is in the footer of the list; the list can be folded into a
+  narrow bar (**Hide the list of pairs** / **Show the list of pairs**). On a phone the step is unchanged.
 - **Limits:** with **New tree** the step is skipped: all people are new.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear -->
+<!-- zdroj: app:debf50cc src/merge/steps/step2-who.ts pairRows (AUTO_CONFIRM_SCORE → same, jinak maybe), decisions, recalc, rest · src/merge/executor.ts AUTO_CONFIRM_SCORE = 80 · src/merge/wizard-steps.ts stepInfo (step2 skip newTree, person-pending blokuje) · strings.ts mergeWizard.grpMaybe, grpSame, grpNew, rows, whyYes, whyNo, decSame, decNew, decOther, decSkip, decKeys, keysHint, recalc, restLabel, restAdd, restSkip, restAddWarn, sameNote · spec 134 §4 · app:1046e99b (1123-134 N1, N3) strings.ts merge.matchReasons.merged_before, exact_name, exact_name_gender_birthdate, name_gender_birthyear · app:878f29b7, f6dc2c4f strings.ts mergeWizard.restOneByOne (134 N2: stejní rodiče, dítě, partner) · 0af3e450, 642b2d05 (dotaz 10: řádek ovládání, candidatesIn, importCol, recordsMore, recordsLess, pairsHide, pairsShow, zbytek v patě) -->
 
 <a id="A8.8"></a>
 ## A8.8 Step 3: Whom to add
@@ -273,9 +295,22 @@ Step 4 decides the details that the joined people have differently. Without a pe
 Step 5 shows the whole list of changes by group. The write happens only with its button, and only what the list
 shows.
 
-- **List:** **New**, **Joined**, **Detail changes**, **Couples and links**, **Sources**, **Places**, **Photos and
-  files**, **Not added** (for each person why: the step and the choice) and **Not taken over**. An item can be
-  unticked. **Save the list…** saves it to a file.
+- **List:** **New**, **Joined**, **Detail changes**, **Filled-in details**, **Joined sources**, **Couples and
+  links**, **Sources**, **Places**, **Photos and files**, **Not added** (for each person why: the step and the choice)
+  and **Not taken over**. An item can be unticked. **Save the list…** saves it to a file.
+- **Filled-in details** (only when there are some): empty details of joined people that the write fills in, row by
+  row person · detail (e-mail, other forms of the name, events, sources, an open question…).
+- **Joined sources:** a source of the source tree is joined only with the same source of the target tree (the same
+  research number, citation, or title, archive and place): “1 source joined with an existing one”. The group
+  **Sources** lists only new ones. The sources of the source tree are not joined with each other: two records of one
+  register that differ only in the research's source number stay two. So the result has the same sources whatever
+  the direction (**Swap**).
+- **The totals match everywhere:** new couples and detail changes are the same number in step 5, in step 6, in the
+  merge's record and in the undo dialog as what is written. A linking “?” without children and the scope **d)**
+  neither add nor report a couple; two people of the import joined with one person change a detail once (in step 4
+  too).
+- Another photo with the same name and size is in **Detail changes** as “Photo: photo (3222) → another photo of the
+  same name and size” (in step 4, in Merge history, in the undo and in the saved list too).
 - **Where to write:** **Write into …**, or **Write into a new tree** (a copy of the target tree with the import; the
   target tree stays unchanged).
 - **Backup:** before writing into the tree the backup **Before merge** is made, always, even with automatic backups
@@ -289,10 +324,11 @@ shows.
 - The write is one **Undo** step.
 - **Limits:** with **Only compare** nothing is written; the list can be saved. The check does not count the empty
   details filled in by the scope **b)** into **Detail changes**.
-- **Controls:** the button “Add N people, change M details”, for a new tree “Create a tree with N people”.
+- **Controls:** the button “Add N people, change M details”, with filled-in details “…, fill in F”, for a new tree
+  “Create a tree with N people”.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step5-plan.ts (skupiny, retentionAsk, targetChanged), src/merge/write.ts (backupBeforeMerge keepFor, storageFull, badTotals, one undo step strings.undo.mergeTrees) · src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor mimo rotaci) · src/snapshots.ts planRetention (keepFor se nesmaže) · strings.ts mergeWizard.gNew, gJoined, gFields, gLinks, gSources, gPlaces, gMedia, gSkipped, gNotTaken, skipWhy, whereTo, writeInto, writeNew, writeNewDesc, backupLine, savePlan, btnWrite, btnNewTree, backupFailed, retentionAsk, keepBoth, dropOldest, targetChanged, replanned, writingSafe, badTotals · dirigent:test/vysledek-1123-scenare-app.md N1 (doplněná prázdná pole se v kroku 5 nepočítají) · spec 134 §8, K0.2, K0.4, K0.5 · app:235afcd5 (134 N4, S-N2, S-N1: gFills, btnWrite …, doplnit F, jeden počet párů a údajů) · 834ceab8 (134 S-N3: gSourcesJoined, sourcesJoinedSum, prameny zdroje se mezi sebou nespojují) · a2567f81 strings.ts mergeWizard.otherPhoto -->
 
 <a id="A8.11"></a>
 ## A8.11 Step 6: What happened, and Merge history
@@ -305,6 +341,8 @@ After the write, step 6 says what happened, and the merge stays in the tree as a
   tree** ([A5](A5-tree-check.md)) and **Undo the merge…** ([A8.12](#A8.12)).
 - After merging another program's file into an existing tree the card **What next** does not show; the data check is
   here. A new tree from another program's file gets the card ([S6.4](S6-tree-from-another-program.md#S6.4)).
+- Step 6 and Merge history also list **Filled-in details** and the number of joined sources, with the same numbers as
+  step 5.
 - **Merge history:** each merge into the tree with its date, source, counts (new, joined, details) and the state
   **stands**, **partly undone** or **undone**. At a merge **Open the list** and **Undo…**; in the window also
   **Backups…** and **Change history…**. Backups restore the whole tree; here only what one merge brought can be
@@ -315,7 +353,7 @@ After the write, step 6 says what happened, and the merge stays in the tree as a
   tree → **Merge history…**.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/steps/step6-done.ts (notes inHistory, noNextCard), src/merge/ui.ts step6Env (noNextCard = !newTree && gedcom) · src/ui/tree-actions.ts:199 menuHistory (jen se záznamy) · src/ui/merge-history-ui.ts · strings.ts mergeWizard.doneTitle, doneTotals, doneBackup, showInTree, saveAsList, checkTree, undoMerge, inHistory, noNextCard, menuHistory, histTitle, histLead, stValid, stPartial, stUndone, histCounts, openList, undoEllipsis, histBackups, histChanges · CHANGELOG.cs.md 3.32.0 (datová verze 26) · spec 134 §9 -->
+<!-- zdroj: app:debf50cc src/merge/steps/step6-done.ts (notes inHistory, noNextCard), src/merge/ui.ts step6Env (noNextCard = !newTree && gedcom) · src/ui/tree-actions.ts:199 menuHistory (jen se záznamy) · src/ui/merge-history-ui.ts · strings.ts mergeWizard.doneTitle, doneTotals, doneBackup, showInTree, saveAsList, checkTree, undoMerge, inHistory, noNextCard, menuHistory, histTitle, histLead, stValid, stPartial, stUndone, histCounts, openList, undoEllipsis, histBackups, histChanges · CHANGELOG.cs.md 3.32.0 (datová verze 26) · spec 134 §9 · app:235afcd5, 834ceab8 (doplněné údaje a spojené prameny v kroku 6 a historii) -->
 
 <a id="A8.12"></a>
 ## A8.12 Undoing a merge
@@ -323,8 +361,9 @@ After the write, step 6 says what happened, and the merge stays in the tree as a
 **Undo the merge** takes back only what one merge brought. Work done after the merge does not disappear.
 
 - **What is undone:** **Removed**: the new people of the merge with its couples, sources, places and files;
-  **Restored**: the changed details, back to their value before the merge; **Joins undone**: the tree's people stay,
-  only without the import's details.
+  **Restored**: the changed details, back to their value before the merge; **Restored in the tree**: the tree's
+  couples, people, sources and files the merge linked to, as they were before it; **Joins undone**: the tree's people
+  stay, only without the import's details.
 - **Stays because it changed since:** a person or a detail edited after the merge, a confirmed detail, a person with
   a new relative, a thing a later merge builds on, and a thing cited by something that stays. For each item
   **Keep** or **Undo** can be chosen.
@@ -332,14 +371,16 @@ After the write, step 6 says what happened, and the merge stays in the tree as a
   difference from restoring the backup: the backup would also revert everything else done in the tree since the
   merge.
 - **Undo everything**, or **Choose only some…** (only what is ticked is undone). A partly undone merge can be undone
-  further. The undo takes a backup, is in the change history and can be reverted (**Redo the merge**).
+  further. The undo takes the backup **Before undoing a merge**, always, even with automatic backups turned off;
+  rotation does not delete it while the merge can be restored. The undo is in the change history and can be reverted
+  (**Redo the merge**).
 - **Limits:** a locked tree can be undone after unlocking in Manage trees; a read-only tree once it can be edited.
   When a later merge builds on the merge, the guide says so. Undoing a merge that is already in the research is
   described in [A8.13](#A8.13).
 - **Controls:** step 6 → **Undo the merge…**; **Merge history…** → **Undo…**; the button “Remove N people”.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/undo-plan.ts, src/merge/undo-view.ts, src/ui/merge-history-ui.ts (zápis se zálohou write.ts writeUndo, AuditLogManager, toast s redo) · strings.ts mergeWizard.undoTitle, undoLead, uRemove, uRestore, uUnjoin, uRemoveDesc, uRestoreDesc, uUnjoinDesc, uKeepHead, uEdited, uProven, uRelative, uLaterMerge, uUsed, uPicture, segKeep, segUndo, vsBackup, pickSome, pickAll, pickLead, btnUndo, builtOn, partlyDone, lockedUndo, undoReadOnly, undoNothing, undone, redo · spec 134 §10 -->
+<!-- zdroj: app:debf50cc src/merge/undo-plan.ts, src/merge/undo-view.ts, src/ui/merge-history-ui.ts (zápis se zálohou write.ts writeUndo, AuditLogManager, toast s redo) · strings.ts mergeWizard.undoTitle, undoLead, uRemove, uRestore, uUnjoin, uRemoveDesc, uRestoreDesc, uUnjoinDesc, uKeepHead, uEdited, uProven, uRelative, uLaterMerge, uUsed, uPicture, segKeep, segUndo, vsBackup, pickSome, pickAll, pickLead, btnUndo, builtOn, partlyDone, lockedUndo, undoReadOnly, undoNothing, undone, redo · spec 134 §10 · app:235afcd5 strings.ts mergeWizard.uTree, uTreeDesc · e2a6d712 strings.ts backups pre-merge-undo „Před odvoláním sloučení“ (134 N5, keepFor) -->
 
 <a id="A8.13"></a>
 ## A8.13 A merge into a tree with a research
@@ -354,12 +395,23 @@ decides about sending in step 6.
   agent is started. When the agent is working right now, sending waits until it finishes its step.
 - A research of an older version does not know sending after a merge: the whole tree is sent via **What will be
   sent** ([S1](S1-connecting-app-and-research.md)).
+- **What will be sent:** the opening sentence has the same numbers as the list below it: “To the research Horákovi:
+  5 new people, 2 other people changed, 3 couples, 4 sources.” A linking “?” is not a new person; a new couple is
+  counted with its partners, and **Couples** are only the couple's own changes. Without an exact list the sentence
+  stays with what the merge brought.
 - **Undo before sending:** the research gets nothing. **After sending:** the research does not delete people by
-  itself. The app undoes at once and gives the step in the research's terminal (`strom sync undo I…` with **Copy**),
-  or points to the help **A person removed in the app** ([S2.6](S2-edits-from-the-app.md#S2.6)). Until then the
-  research brings the people back with its next version and the app offers them for removal.
+  itself. The undo in the app also removes the people to whom the sending gave a research number (the number is not
+  an edit). The dialog says “The merge was sent to the research on {date}, so the research has its people. An undo in
+  the app does not remove them there.” and “In the app the undo happens at once. In the research one step in the
+  research’s terminal is needed:” with the command `strom sync undo I0042` and **Copy**; with a known input number
+  also **Take back in the research**, otherwise `I…` and where to find the number (`strom input list`). The notice
+  “Merge undone…” offers **Take back in the research**. Otherwise the dialog points to the help **A person removed in
+  the app** ([S2.6](S2-edits-from-the-app.md#S2.6)). Until then the research brings the people back with its next
+  version and the app offers them for removal.
 - **Limits:**
-  - a **New tree** from an import will not be linked to a research;
+  - a **New tree** from an import will not be linked to a research; writing into a new tree (a copy of the target with
+    the import) is a copy without a research ([S1.10](S1-connecting-app-and-research.md#S1.10));
+  - a copy of a tree from the research and a tree without a research send nothing after the merge;
   - when the source is linked to a research and the target is not, the link does not carry over to the target; the
     guide offers **Swap**;
   - when both trees are linked, neither the source's link nor its numbers carry over, and the source's people are new
@@ -367,4 +419,4 @@ decides about sending in step 6.
   - when the same people are also in another tree linked to a research, the guide points this out.
 - **Since:** app 3.32.0
 
-<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 -->
+<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) -->
