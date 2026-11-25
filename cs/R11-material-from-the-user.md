@@ -125,7 +125,8 @@ Složku, ZIP nebo krabici dokumentů poslanou z aplikace výzkum přijme jako je
 - **Jen metodika:**
   - agent si nejdřív levně prohlédne všechny soubory úkolu (náhledy v mřížce) a každý hned zařadí: záznam
     (pramen), dokument, fotka, nesouvisející, a čí je. Do hloubky čte jen to, co patří lidem výzkumu;
-  - o žijící osobě se nic nezapíše; soubor se jen zařadí;
+  - o žijící osobě se do výzkumu 1.36.0 nic nezapsalo, soubor se jen zařadil. Od 1.37.0 se materiál žijícího zařadí
+    a zapíše jako u kohokoli jiného; ochrana žijících patří k exportu ([A7.2](A7-book-pages-and-export.md#A7.2));
   - skeny jedné knihy (mnoho číslovaných snímků) se nečtou soubor po souboru: zapíšou se jako kniha a čtou se
     z ní zápisy jako z každé knihy ([R8](R8-reading-scans.md));
   - úkol se zavře, až je každý jeho soubor zařazený; další část dávky je vlastní úkol.
@@ -141,7 +142,13 @@ Složku, ZIP nebo krabici dokumentů poslanou z aplikace výzkum přijme jako je
 - **Platí od:** výzkum 1.12.0; dávka z telefonu 1.18.0
 - **Od výzkumu 1.36.0:** úkoly roztřídění vzniknou jen se zapnutým `intake.auto`, nebo když člověk o roztřídění
   dávky požádá; jinak se dávka uzavře bez úkolů a soubory čekají v Materiálech neroztříděné ([R11.6](#R11.6)).
+- **Od výzkumu 1.37.0:** soubor poslaný z aplikace Strom (z dávky i materiál osoby), který ve stromu aplikace ještě
+  nemá místo a který `strom input sort` zařadí jako záznam, dokument nebo fotku osob, dostane místo u nich: dva
+  partneři jednoho svazku u svazku, jinak u každé osoby. Aplikace ho pak ukáže u osoby, ne jen v okně
+  **Materiály**. Místo nedostane soubor, který ve stromu místo má nebo jehož místo bylo v aplikaci odebráno,
+  skrytý, nesouvisející, vlastní materiál výzkumu, ani osoba z něj odebraná.
 
+<!-- zdroj: 1.37.0: research:ce89202a src/commands/intake.ts input sort (MediaLink, pořadí za posledním souborem místa; pár u FAM, jinak u INDI; --json placed; bez místa: má místo nebo odebrané, skrytý, unrelated, vlastní, odebraná osoba) · assets/method/intake.md „Someone living: sort and record as anyone.“ · CHANGELOG.cs.md 1.37.0 „Materiál z aplikace zařazený do stromu“ -->
 <!-- zdroj: research:src/core/batches.ts hlavička, BATCH_TASK_FILES=25 (od v1.12.0), BATCH_IDLE_MS, PHONE_BATCH_IDLE_MS (od v1.18.0) · research:src/commands/intake.ts input batch done (--idle), input sort (unrelated --reason) · research:assets/method/intake.md "A batch from the Strom app" -->
 
 <a id="R11.5"></a>
@@ -266,7 +273,8 @@ druh a vazby na osoby, svazky, jejich události a prameny stromu, s důvodem a j
     `confirm: "no"`). Nikdy samo od sebe; běh, který nikdo nesleduje, se ptá dál (a bez člověka skončí s kódem 4);
   - `no` nastaví jen člověk ve vlastním terminálu: `strom config set` se ho zeptá („Třídit soubory materiálu
     čtenáři výzkumu hned, jak se o to požádá, bez dotazu na placená čtení? …“). Agent nebo příkaz bez jeho terminálu
-    dostane kód 4 a nic se nezmění. Zpět na `ask` nebo zrušit může kdokoli, i aplikace Strom
+    dostane kód 4 a nic se nezmění. Pro jeden výzkum ho nastaví i aplikace Strom na tomto počítači po potvrzení
+    v jejím dialogu; záznam mostu to řekne jednou řádkou. Zpět na `ask` nebo zrušit může kdokoli, i aplikace Strom
     ([S4.4.13](S4-research-from-the-app.md#S4.4.13));
   - s `--for-tree` platí pro tento výzkum, jinak pro tento počítač. Limity třídění se nemění.
 

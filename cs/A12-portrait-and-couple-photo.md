@@ -244,6 +244,9 @@ svazků, na stránkách osob a v knize rodu.
   mezi fotky a originály portrétů mezi přílohy.
 - **Ovládání:** Tabulka › Svazky, výběr sloupců; stránka osoby; export **Kniha rodu**.
 - **Platí od:** aplikace 3.30.0
+- **Od aplikace 3.31.0:** Vějíř ukazuje portréty se zapnutými **Portréty** ([A6.4.2](A6-views.md#A6.4.2)); od 3.32.0
+  v každém prstenci, kde je dost místa, a na plakátu a v tisku od 7 mm ([A6.4.3](A6-views.md#A6.4.3)). Fotku svazku
+  vějíř neukazuje.
 
 <!-- zdroj: app:45f7ca2a src/ui/table-view/table-columns.ts:732 uPhoto (group uextra, skrytý, kind thumb), thumbCell (strings.table.yes, sortKey), table-filter.ts presence (withPhoto / withoutPhoto), prohlížeč s Udělat portréty… a Vrátit, telefon (D10) · app:fd1f0c3c src/person-page.ts couplePhotoItems (první v galerii, popisek, počet obrázků, bez skupiny obrázků / žijící partner pod ochranou), rodinné stránky totéž, src/book-blocks.ts couplePhotoHtml (jen parts.media, popisek fields.marriageRow / book.partners + datum), src/book-css.ts .book-photo--couple max-height 110mm · app:50e49518 src/ui/tree-overview.ts a src/attachments.ts: fotka svazku mezi fotkami, originál portrétu je příloha · ZADANI_DEV §5, §8, D10, D12 · strings.ts tableCols.uPhoto, tableFilter.withPhoto, withoutPhoto, table.groups.uextra, personPage.sec.materials, relationships.unionPhotoCaption, book.parts.media -->
 

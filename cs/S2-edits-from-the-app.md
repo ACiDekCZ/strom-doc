@@ -61,7 +61,13 @@ s oddíly **Zapsáno** a **Nezapsáno**.
 
 - **Hranice:** když přesný seznam nejde spočítat, pošle se strom, jak je, a výzkum zapíše jen rozdíly.
 - **Platí od:** aplikace 3.14.0
+- **Od aplikace 3.32.0 (výzkum 1.37.0):** poslání říká, ze kterého prohlížeče přišlo: trvalé náhodné id uložené
+  v tom prohlížeči a čitelné jméno z prohlížeče a systému (např. „Chrome · Mac“, nepřekládá se, nic osobního).
+  Obojí jde jen s posláním do výzkumu, exportovaný soubor ho nikdy nenese. Změna v historii výzkumu poslaná z jiného
+  prohlížeče má za sebou „z Chrome · Mac“; vrácené poslání z jiného prohlížeče řekne „Posláno z Chrome · Mac.“. Prohlížeč bez
+  jména zastoupí prvních 8 znaků jeho id. Se starším výzkumem se vše čte jako dosud.
 
+<!-- zdroj: 3.32.0: app:src/device-client.ts (DEVICE_ID_KEY strom-device-id, browserOf, systemOf, deviceNameOf „Chrome · Mac“), src/research-link.ts:5883-5957 1 _STROM_CLIENT / 2 NAME jen při poslání do mostu, src/conflict-devices.ts otherDeviceWords, deviceWords (ID_SHOWN 8), src/ui/research-ui.ts:838-842, src/ui/research-sync-ui.ts:3556-3560 · strings.ts research.fromDevice, research.sentFromDevice · research:3856505e src/core/sync.ts _STROM_CLIENT · spec 094 K2.4 -->
 <!-- zdroj: app:strings.ts changes.willSendTitle, changes.kind*, changes.inexact, changes.writtenSection, changes.notWrittenSection · CHANGELOG.cs.md 3.14.0 -->
 
 <a id="S2.2.2"></a>

@@ -240,6 +240,19 @@ konci. Všechny mají definice ve všech čtyřech jazycích.
 
 - **Čísla:** [R3.5.1](cs/R3-verification-and-citation.md#R3.5.1), R3.5.2, A3.1.3, R3.8
 
+<a id="religion"></a>
+### Náboženství
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Náboženství (`RELI`) · v aplikaci Vyznání | Údaj osoby: víra tak, jak ji zápis u osoby píše (slovem nebo značkou ve sloupci), s citací zápisu a jeho datem. Nikdy se neodvozuje; jedna víra je jeden údaj, změněné vyznání je další. |
+| en | Religion (`RELI`) | A person's fact: the faith as the record writes it of them (a word or a mark in its column), with the record cited and its date. Never inferred; one faith is one fact, a changed faith another. |
+| de | Religion (`RELI`) · in der App Konfession | Eine Angabe der Person: die Konfession, wie der Eintrag sie bei ihr schreibt (als Wort oder Zeichen in der Spalte), mit dem Eintrag als Quelle und seinem Datum. Nie erschlossen; eine Konfession ist eine Angabe, eine gewechselte eine weitere. |
+| pl | Wyznanie (`RELI`) | Fakt osoby: wiara tak, jak zapisuje ją akt przy osobie (słowem lub znakiem w kolumnie), z cytowaniem aktu i jego datą. Nigdy nie wywodzone; jedna wiara to jeden fakt, zmienione wyznanie kolejny. |
+
+- **Genealogicky:** vyznání v matrice (sloupec náboženství).
+- **Čísla:** [R3.11](cs/R3-verification-and-citation.md#R3.11), A6.7.2
+
 <a id="report-a-problem"></a>
 ### Nahlásit problém
 
@@ -768,6 +781,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A8.10](cs/A8-merging-trees.md#A8.10), A8.11
 
+<a id="person-email"></a>
+### E-mail osoby
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | E-mail (kontakt osoby) | Adresy e-mailu osoby jako její kontakt, ne událost ani bydliště. V aplikaci pole v úpravě osoby, v GEDCOM `1 RESI` / `2 EMAIL` nebo `1 EMAIL`; žijící osoba ho do exportu nedá a agent výzkumu ho nedostane. |
+| en | E-mail (a person's contact) | A person's e-mail addresses as their contact, not an event or a residence. In the app a field when editing a person, in GEDCOM `1 RESI` / `2 EMAIL` or `1 EMAIL`; a living person's stays out of an export and the research's agent never gets it. |
+| de | E-Mail (Kontakt der Person) | Die E-Mail-Adressen einer Person als ihr Kontakt, kein Ereignis und kein Wohnort. In der App ein Feld beim Bearbeiten der Person, in GEDCOM `1 RESI` / `2 EMAIL` oder `1 EMAIL`; die einer lebenden Person bleibt aus dem Export heraus, und der Agent der Forschung bekommt sie nie. |
+| pl | E-mail (kontakt osoby) | Adresy e-mail osoby jako jej kontakt, nie wydarzenie ani miejsce zamieszkania. W aplikacji pole przy edycji osoby, w GEDCOM `1 RESI` / `2 EMAIL` lub `1 EMAIL`; adres osoby żyjącej nie trafia do eksportu, a agent badania nigdy go nie dostaje. |
+
+- **Čísla:** [S6.9](cs/S6-tree-from-another-program.md#S6.9)
+
 <a id="couple-photo"></a>
 ### Fotka svazku
 
@@ -1241,12 +1266,12 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Spouštění agenta z aplikace Strom: s potvrzením · bez potvrzení (`run.confirm` ask · no) | Nastavení tohoto počítače, pro všechny jeho výzkumy. **S potvrzením** (výchozí) se terminál před prací agenta, o kterou požádala aplikace, zeptá **Pokračovat?**; **bez potvrzení** ji spustí hned a řekne to jednou řádkou. Dotaz s cenou v penězích, souhlasy, mazání, odeslání žádosti a podmínka samostatné práce se ptají dál. Zapíná jen člověk. |
-| en | Starting the agent from the Strom app: asked first · without the question (`run.confirm` ask · no) | A setting of this computer, for all its researches. **Asked first** (the default): before agent's work that the app asked for, the terminal asks **Go on?**; **without the question** it starts the work at once and says so in one line. A question with a price in money, consents, deletions, a request sent and the condition of working alone still ask. Only a person turns it on. |
-| de | Agent aus der Strom-App starten: mit Rückfrage · ohne Rückfrage (`run.confirm` ask · no) | Eine Einstellung dieses Computers, für alle seine Forschungen. **Mit Rückfrage** (Standard) fragt das Terminal vor Arbeit des Agenten, um die die App gebeten hat, **Fortfahren?**; **ohne Rückfrage** startet es sie sofort und sagt es in einer Zeile. Eine Frage mit einem Preis in Geld, Zustimmungen, Löschen, das Absenden einer Anfrage und die Bedingung der Alleinarbeit fragen weiter. Einschalten kann es nur der Mensch. |
-| pl | Uruchamianie agenta z aplikacji Strom: z potwierdzeniem · bez potwierdzenia (`run.confirm` ask · no) | Ustawienie tego komputera, dla wszystkich jego badań. **Z potwierdzeniem** (domyślnie) terminal przed pracą agenta, o którą poprosiła aplikacja, pyta **Kontynuować?**; **bez potwierdzenia** uruchamia ją od razu i mówi o tym jedną linią. Pytanie z ceną w pieniądzach, zgody, usuwanie, wysłanie prośby i warunek samodzielnej pracy pytają dalej. Włącza je tylko człowiek. |
+| cs | Spouštění agenta z aplikace Strom: s potvrzením · bez potvrzení (`run.confirm` ask · no) · Spouštět agenta bez potvrzení (aplikace) | Nastavení tohoto počítače, pro všechny jeho výzkumy. **S potvrzením** (výchozí) se terminál před prací agenta, o kterou požádala aplikace, zeptá **Pokračovat?**; **bez potvrzení** ji spustí hned a řekne to jednou řádkou. Dotaz s cenou v penězích, souhlasy, mazání, odeslání žádosti a podmínka samostatné práce se ptají dál. Zapíná jen člověk: v terminálu, nebo po potvrzení v aplikaci na počítači s výzkumem. |
+| en | Starting the agent from the Strom app: asked first · without the question (`run.confirm` ask · no) · Start the agent without confirming (app) | A setting of this computer, for all its researches. **Asked first** (the default): before agent's work that the app asked for, the terminal asks **Go on?**; **without the question** it starts the work at once and says so in one line. A question with a price in money, consents, deletions, a request sent and the condition of working alone still ask. Only a person turns it on: in the terminal, or after a confirmation in the app on the computer with the research. |
+| de | Agent aus der Strom-App starten: mit Rückfrage · ohne Rückfrage (`run.confirm` ask · no) · Agenten ohne Bestätigung starten (app) | Eine Einstellung dieses Computers, für alle seine Forschungen. **Mit Rückfrage** (Standard) fragt das Terminal vor Arbeit des Agenten, um die die App gebeten hat, **Fortfahren?**; **ohne Rückfrage** startet es sie sofort und sagt es in einer Zeile. Eine Frage mit einem Preis in Geld, Zustimmungen, Löschen, das Absenden einer Anfrage und die Bedingung der Alleinarbeit fragen weiter. Einschalten kann es nur der Mensch: im Terminal oder nach einer Bestätigung in der App auf dem Computer mit der Forschung. |
+| pl | Uruchamianie agenta z aplikacji Strom: z potwierdzeniem · bez potwierdzenia (`run.confirm` ask · no) · Start agenta bez potwierdzenia (aplikacja) | Ustawienie tego komputera, dla wszystkich jego badań. **Z potwierdzeniem** (domyślnie) terminal przed pracą agenta, o którą poprosiła aplikacja, pyta **Kontynuować?**; **bez potwierdzenia** uruchamia ją od razu i mówi o tym jedną linią. Pytanie z ceną w pieniądzach, zgody, usuwanie, wysłanie prośby i warunek samodzielnej pracy pytają dalej. Włącza je tylko człowiek: w terminalu albo po potwierdzeniu w aplikacji na komputerze z badaniem. |
 
-- **Čísla:** [S4.5.5](cs/S4-research-from-the-app.md#S4.5.5), S4.5, R7.1.2, R5.6
+- **Čísla:** [S4.5.5](cs/S4-research-from-the-app.md#S4.5.5), S4.4.15, S4.5, R7.1.2, R5.6
 
 <a id="send-mode"></a>
 ### Posílat úpravy
@@ -1769,10 +1794,10 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Třídit agentem bez ptaní (app) · `sort.confirm no` | Nastavení výzkumu, se kterým třídění materiálu agentem neříká cenu před každým tříděním; spustí se dál jen na požádání. Zapnout ho jde jen v terminálu výzkumu, vypnout i v aplikaci. |
-| en | Sort with the agent without asking (app) · `sort.confirm no` | A setting of the research with which sorting material with the agent does not say the cost before each sorting; it still starts only when asked. It can be switched on only in the research terminal, switched off in the app too. |
-| de | Mit dem Agenten sortieren ohne Nachfrage (app) · `sort.confirm no` | Eine Einstellung der Forschung, mit der das Sortieren von Material mit dem Agenten die Kosten nicht vor jedem Sortieren nennt; es startet weiterhin nur auf Anforderung. Einschalten lässt es sich nur im Terminal der Forschung, ausschalten auch in der App. |
-| pl | Porządkowanie agentem bez pytania (app) · `sort.confirm no` | Ustawienie badania, z którym porządkowanie materiałów agentem nie podaje kosztu przed każdym porządkowaniem; nadal startuje tylko na żądanie. Włączyć je można tylko w terminalu badania, wyłączyć także w aplikacji. |
+| cs | Třídit agentem bez ptaní (app) · `sort.confirm no` | Nastavení výzkumu, se kterým třídění materiálu agentem neříká cenu před každým tříděním; spustí se dál jen na požádání. Zapnout ho jde v terminálu výzkumu, nebo po potvrzení v aplikaci na počítači s výzkumem; vypnout i v aplikaci. |
+| en | Sort with the agent without asking (app) · `sort.confirm no` | A setting of the research with which sorting material with the agent does not say the cost before each sorting; it still starts only when asked. It can be switched on in the research terminal, or after a confirmation in the app on the computer with the research; switched off in the app too. |
+| de | Mit dem Agenten sortieren ohne Nachfrage (app) · `sort.confirm no` | Eine Einstellung der Forschung, mit der das Sortieren von Material mit dem Agenten die Kosten nicht vor jedem Sortieren nennt; es startet weiterhin nur auf Anforderung. Einschalten lässt es sich im Terminal der Forschung oder nach einer Bestätigung in der App auf dem Computer mit der Forschung; ausschalten auch in der App. |
+| pl | Porządkowanie agentem bez pytania (app) · `sort.confirm no` | Ustawienie badania, z którym porządkowanie materiałów agentem nie podaje kosztu przed każdym porządkowaniem; nadal startuje tylko na żądanie. Włączyć je można w terminalu badania albo po potwierdzeniu w aplikacji na komputerze z badaniem; wyłączyć także w aplikacji. |
 
 - **Čísla:** [S4.4.13](cs/S4-research-from-the-app.md#S4.4.13), R11.5.3, A3.5.8
 

@@ -306,3 +306,43 @@ a drží si původ každého údaje ([S6.3](#S6.3)).
 - **Platí od:** výzkum 1.30.0
 
 <!-- zdroj: research:v1.30.0 CHANGELOG.cs.md 1.30.0 · src/core/import.ts ImportResult.candidates, notTaken · src/commands/intake.ts:300-313 · assets/lang/cs.json ui.intake.candidates, ui.intake.notTaken* · strom help fixes run („readers, proven-originals and origins are set right by themselves once, run again only after strom fixes undo“) · dirigent:prace/1108-vyzkum-066-u3, 1108-vyzkum-066-u8 Výsledek (origins-1, nejisté → user; Gramps bez _UID kandidáti) · research:94d75934 src/core/originfix.ts ORIGINS_TREE_SETTLED origins-tree-1 (podle historie: stejná hodnota hned po převzetí, ne před ním, stejná dnes), settleOrigins · cs.json ui.fixes.origins.example.tree · strom help fixes show -->
+
+<a id="S6.9"></a>
+## S6.9 E-mail osoby: kontakt, ne bydliště
+
+E-mailová adresa osoby je její **kontakt**, ne událost ani místo, kde osoba žila. GEDCOM ji drží v adrese pod
+událostí: MyHeritage zapisuje e-mail jako bydliště (`1 RESI` / `2 EMAIL`), jiné programy jako `1 EMAIL` přímo
+u osoby. Aplikace i výzkum z toho dělají kontakt osoby.
+
+- **Hlídá kód (aplikace):**
+  - bydliště, které nese jen kontakt (e-mail, telefon, web, fax, prázdnou adresu nebo adresu jen se štítkem
+    „Email“; bez data, místa, skutečné adresy, poznámky, pramene a souboru), se načte jako kontakt osoby, ne jako
+    událost. Bydliště s něčím vlastním zůstane bydlištěm a jeho e-mail přejde do kontaktu (už ne jako řádek
+    poznámky). `1 EMAIL` u osoby je také kontakt;
+  - strom uložený starší verzí aplikace převede při každém načtení řádky e-mailu, které tam zapsal import, do
+    kontaktu. Nic, co napsal člověk, se nemění; prázdné bydliště zůstane v datech, jen se v seznamu událostí
+    neukazuje;
+  - každá adresa je v kontaktu jednou (bez ohledu na velká a malá písmena), nejvýš 254 znaků, bez mezer;
+  - export GEDCOM zapíše každou adresu jako `1 RESI` / `2 EMAIL`; **Zpět do {program}** zapíše `1 EMAIL`, který
+    soubor měl u osoby, stejně jako on ([S6.6](#S6.6));
+  - ochrana žijících ([A7.2](A7-book-pages-and-export.md#A7.2)): žijící osoba kontakt do exportu nedá;
+  - stránka osoby ukáže adresy jako odkaz na e-mail jen v okně aplikace; stránka uložená do souboru kontakt nemá;
+  - do výzkumu jde kontakt jen s výzkumem, který kontakty drží; staršímu výzkumu, který by ho přečetl jako
+    bydliště bez místa, se nepošle a aplikace si ho drží sama.
+- **Hlídá kód (výzkum):**
+  - e-maily z rodokmenu (bydliště jen s e-mailem, starší poznámka aplikace „E-mail: …“) se stanou kontaktem osoby;
+    `strom person show` a karta osoby ho ukážou zvlášť od údajů. Nikdy z něj není událost ani bydliště a agent ho
+    nedostane;
+  - synchronizace s aplikací e-maily přidává a odebírá jako jiné úpravy;
+  - kontrola `strom fixes contact-residences` („Kontakty zapsané jako bydliště“) najde bydliště, která z e-mailů
+    udělal starší výzkum. Oprava přesune e-maily do kontaktu (každý jednou), bydliště jen s kontaktem stáhne
+    s důvodem a štítek „Email“ odebere z domu; nic nesmaže. Bydliště s citovaným záznamem, s lidmi nebo s vlastní
+    poznámkou zůstane, jak je. Opravu spustí jen člověk, je zdarma a `strom fixes undo contact-residences` ji vrátí.
+- **Data:** kontakt nese strom od verze dat 26; starší verze aplikace takový strom otevře jen ke čtení.
+- **Ovládání:** aplikace: úprava osoby, oddíl **Fotografie a poznámky**, pole **E-mail** (víc adres oddělených
+  čárkou); pole je vidět se zapnutým **Nastavení → Karta osoby → Pokročilá pole**, nebo když osoba adresu má.
+  Terminál: `strom person show`, `strom fixes show contact-residences`, `strom fixes run contact-residences`,
+  `strom fixes undo contact-residences`.
+- **Platí od:** aplikace 3.32.0, výzkum 1.37.0
+
+<!-- zdroj: app:972e73d7 src/person-contact.ts (hlavička: pravidlo RESI jen s kontaktem, 1 EMAIL; cleanEmail EMAIL_MAX 254, bez mezer; sameEmail bez velikosti písmen; isContactResidence, isEmptyResidence, moveContactsIntoPeople při každém načtení), src/ged-exporter.ts contacts (výchozí ano, do výzkumu jen s person.contact; 1 RESI / 2 EMAIL; Zpět do: 1 EMAIL jak byl), src/privacy.ts (žijící bez emails) · app:0603165b index.html #emails-group v Fotografie a poznámky, src/ui/person-modal.ts applyAdvancedFieldVisibility emails-group, emailsFromInput (čárky, středníky, mezery), src/person-page.ts jen c.app, mailto, src/ui/person-events.ts shownEvents (prázdné bydliště skryté) · src/version.ts STROM_DATA_VERSION 26 · strings.ts labels.emails, placeholders.emails, personModal.sectionPhotoNotes · research:ce89202a src/core/live.ts person.contact (1 RESI / 2 EMAIL, nejvýš tři na RESI), src/commands/fixchecks.ts CONTACT_RESIDENCES, src/commands/fixes.ts contact-residences · cs.json ui.fixes.contact-residences.* · CHANGELOG.cs.md 1.37.0 „E-maily osoby jsou kontakt“, app CHANGELOG.cs.md 3.32.0 Data · dirigent:spec/134 K0.10, U11 -->

@@ -71,12 +71,20 @@ dělat automaticky; podrobná tabulka úrovní je v [R8.2](R8-reading-scans.md#R
   - zakázaná cesta `/` (celý obrazový server) zavře i prohlížeč agenta: snímky jen ručně;
   - weby jednoho archivu (např. digitální archiv a badatelna jednoho zemského archivu) mají každý svůj záznam;
     v Co čeká se ale ukazují pod jedním jménem archivu ([R9.6](#R9.6)).
+- **Od výzkumu 1.37.0:** kniha zapsaná ve výzkumu pod archivem, jejíž adresa je na portálu ze seznamu archivů
+  (např. Porta fontium, Acta Publica), už portál nedělá tak přísným jako ten archiv: portál se řídí svými podmínkami
+  a ostatními zdroji. Vlastní portál archivu pod jinou adresou, u kterého seznam uvádí podmínky na webu archivu (např.
+  eBadatelna SOA Praha), archiv drží dál. Úroveň, kterou strom drží z dřívějška, zůstane, dokud nerozhodne člověk
+  v Co čeká. Kde záznam archivu web drží přes knihu, `strom doctor`, otázka v Co čeká a `strom allow archive`
+  jmenují archiv, knihu i web: „záznam archivu ve výzkumu R… (…) přes jeho knihu … na … (strom recordset show …)“.
 - **Proč:** metodika chce dodržet podmínky každého archivu. Kam robots.txt pustí jen prohlížeč, jde nejvýš prohlížeč
   se svolením člověka a jeho tempem; co seznam archivů nechává na ruce člověka, ukládá člověk.
 - **Ovládání:** terminál: `strom net web --check <adresa>` (co by strom udělal s adresou), menu archivů, `strom
   allow archive` (jen člověk). Aplikace: Čeká na vyřízení.
-- **Platí od:** výzkum 1.14.0. Další archivy Česka, Německa a Polska a obrazový server od 1.27.0.
+- **Platí od:** výzkum 1.14.0. Další archivy Česka, Německa a Polska a obrazový server od 1.27.0. Portál ze seznamu
+  podle svých podmínek, ne podle knihy jiného archivu, od 1.37.0.
 
+<!-- zdroj: 1.37.0: research:91631d2e, 66a521fa src/core/terms.ts listStates, treeLevel (kniha jen tam, kde seznam podmínky webu neuvádí; vlastní portál archivu s podmínkami na webu archivu drží), src/core/floor.ts FloorHold tree recordset, holdText, floorWhat · cs.json ui.archive.floor.hold.treeSet · CHANGELOG.cs.md 1.37.0 -->
 <!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel (robots "Disallow: /" → browserOnly, restricted; robotsYield: openByTerms + robotsNamesAi false), :789-803 allows (browserOnly + manual → nothing) · assets/archives.json (level, browserOnly, pace, disallow, imagesFrom, quote, quoteFrom, checked; metrikai.lt, lagis, gov, online-ofb restricted + browserOnly; ebadatelna.soapraha.cz manual) · src/core/knownterms.ts imagesFrom · test/unit/known-terms.test.ts (imagesFrom closed whole ⇒ manual) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 (c3ee4422) -->
 
 <a id="R9.1.1"></a>
@@ -145,13 +153,27 @@ hookem před každým stažením a počítá požadavky na každý web.
     strom jednou za sezení a web zeptá člověka;
   - na volné místo strom čeká nejvýš 30 s; odmítnuto je i tehdy, když web strom nechává být, má vyčerpaný limit nebo
     hodinový strop.
+- **Od výzkumu 1.37.0 (vyčerpaný limit):**
+  - po `web.perHost` stránkách agent slyší, kdy web zase dá stránky: v tomto sezení už žádné, nebo od určité doby
+    (limit tohoto počítače, stránky všech sezení za dobu jednoho sezení). Úkol zůstane otevřený, nikdy hotový ani
+    vzdaný kvůli limitu; do té doby jiná práce, jinak konec sezení. Stránka webu se dřív znovu nezkouší a na limit se
+    nečeká; po třetím odmítnutí stejného webu v sezení agent slyší, že má sezení ukončit;
+  - `strom run` úkol, jehož práce vede na takový web (ukládání snímku prohlížečem agenta, nebo kniha jen na tom webu
+    bez stahovače), zatím vynechá a vezme jiný: „· T… zatím vynechán: stránky … jsou pro tento počítač vyčerpané
+    do …“. Sezení na takovém webu začne, až je volná nejméně třetina limitu (10 z výchozích 30);
+  - když jiný úkol není: běh s `--loop` nebo `--until` počká (bez agenta, nic se neodešle; „⏸ čekání do … – zbylé
+    úkoly potřebují stránky …“), jiný běh skončí a řekne kdy („do … není co dělat – …“). Pro aplikaci Strom je to
+    hotový běh, ne chyba;
+  - úkol čekající na snímek, který prohlížeč agenta nikdy neuložil (stránka odmítnutá), se s koncem sezení vrátí do
+    fronty; nikdy se o něm neřekne, že ho prohlížeč zadržel.
 - **Jen metodika:** u odmítnutého webu nejdřív jiná cesta. Hledání se zapíše s výsledkem neprůkazné (`strom search
   add … --result inconclusive`). Teprve když je pramen dál nutný, úkol čeká na člověka, aby web ověřil
   (`strom task wait --check`, [R6.2.2](R6-awaiting-action.md#R6.2.2)).
 - **Proč:** stažení webu i prohlížeč agenta se počítají a zpomalují spolu, aby žádná cesta nešla rychleji než jiná.
-- **Ovládání:** terminál (agent): `strom net web --check <adresa>`.
-- **Platí od:** výzkum 1.14.0
+- **Ovládání:** terminál (agent): `strom net web --check <adresa>`; `strom run`.
+- **Platí od:** výzkum 1.14.0; vyčerpaný limit od 1.37.0
 
+<!-- zdroj: 1.37.0: research:ce89202a src/core/web.ts ManyWhen, whenText, WEB_REFUSED_LOOP 3, manyText · src/core/webfull.ts (runWebFree perHost/3, WebFull) · src/core/machine.ts siteFreeAt · src/commands/session.ts:1311-1390 webOut, gateHolds (--loop, --until), stopCode web · cs.json ui.run.skip.web, ui.run.web.wait, ui.run.stop.web · CHANGELOG.cs.md 1.37.0 „Vyčerpaný limit webu“ -->
 <!-- zdroj: research:src/core/webgate.ts webGate (TERMS_PER_DAY, browserOnly advice, otherWay) · src/core/web.ts WEB_SOFT 12, WEB_SOFT_GAP_MS, WEB_PER_HOST 30, WEB_WAIT_MAX_MS · src/core/config.ts web.perHost · assets/method/locate.md -->
 
 <a id="R9.4"></a>

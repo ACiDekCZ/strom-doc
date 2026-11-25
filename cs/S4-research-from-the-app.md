@@ -401,7 +401,8 @@ výzkumu** jeden blok na každý běh: běh celé fronty i běh každé linie zv
     **Linii zase bere celá fronta.** Pak blok zmizí. Nové otevření aplikace skončené bloky neukazuje.
 - **Pořadí bloků:** běh celé fronty první, pak běhy linií v pořadí linií ([R2.1.4](R2-lines-and-queue.md#R2.1.4)).
   Nadpis oddílu je „Teď · 3 agenti“; souhrn **Stav** při dvou a více bězích „Pracují 3 agenti“ a případně „1 čeká na
-  limit do 14:00“.
+  limit do 14:00“. Od aplikace 3.32.0 se počítá i běh, který čeká na archiv, prohlížeč archivu nebo stahování: pak
+  jen „1 čeká“ (bez času).
 - **Akce bloku:**
   - **Ukázat ve stromu**: lidé linie, u běhu celé fronty osoba, na které agent pracuje;
   - **Sledovat tento běh** / **● Sleduje se**: jen při dvou a více bězích a zapnutém sledování;
@@ -427,7 +428,7 @@ výzkumu** jeden blok na každý běh: běh celé fronty i běh každé linie zv
   `strom run stop <run-…> [--finish]`.
 - **Platí od:** aplikace 3.31.0 (výzkum 1.36.0)
 
-<!-- zdroj: app:4de0835a src/research-runs.ts (run.lines, RUN_ENDED_MS 60 s, orderRuns obecný první a linie v pořadí, runCount, noteEndedRuns jen v paměti) · src/ui/research-overview-ui.ts vykreslení bloku (runStateWorking/Starting/Limit/Archive/Waiting/WaitingUntil/Browser/Download/Finishing/Ended, runBrowserNote, runSkips, runFinishesThen, runEndedText jen limit|error, runAfterStop), overviewRunActions (Ukázat ve stromu; Sledovat tento běh jen ≥ 2 běhy a sledování, ne telefon; Zastavit s run.stop u working|waiting, ne telefon; Dokončit a skončit finish?run= u working a čekání na prohlížeč nebo stahování) · src/ui/live-follow-ui.ts pilulka followRunPill, followRunMenu, followOff · strings.ts live.nowAgents, stateAgents, stateAgentsWaiting, runWhole, run*, followRun* · app:docs/ZADANI_DEV_beh-po-liniich.md §3, §4, §7, Kolo 2 C2 · dirigent:spec/126 K2.1, K2.2, K2.5, prace/1121-app-126-linie, 1122-app-126-kolo2 · research: /status runs[], runsEnded[] (POST runs/stop) -->
+<!-- zdroj: 3.32.0: app:f09e9722 src/research-runs-text.ts runsWaitingText (stateAgentsWaitingAny, když některý běh nečeká na limit) · app:4de0835a src/research-runs.ts (run.lines, RUN_ENDED_MS 60 s, orderRuns obecný první a linie v pořadí, runCount, noteEndedRuns jen v paměti) · src/ui/research-overview-ui.ts vykreslení bloku (runStateWorking/Starting/Limit/Archive/Waiting/WaitingUntil/Browser/Download/Finishing/Ended, runBrowserNote, runSkips, runFinishesThen, runEndedText jen limit|error, runAfterStop), overviewRunActions (Ukázat ve stromu; Sledovat tento běh jen ≥ 2 běhy a sledování, ne telefon; Zastavit s run.stop u working|waiting, ne telefon; Dokončit a skončit finish?run= u working a čekání na prohlížeč nebo stahování) · src/ui/live-follow-ui.ts pilulka followRunPill, followRunMenu, followOff · strings.ts live.nowAgents, stateAgents, stateAgentsWaiting, runWhole, run*, followRun* · app:docs/ZADANI_DEV_beh-po-liniich.md §3, §4, §7, Kolo 2 C2 · dirigent:spec/126 K2.1, K2.2, K2.5, prace/1121-app-126-linie, 1122-app-126-kolo2 · research: /status runs[], runsEnded[] (POST runs/stop) -->
 
 <a id="S4.2"></a>
 ## S4.2 Fronta v aplikaci
@@ -1235,25 +1236,31 @@ pracovat najednou, běh celé fronty i běhy linií dohromady ([R7.10.1](R7-when
 ### S4.4.13 Výzkum u stromu › Materiály: třídit agentem bez ptaní
 
 Ve skupině **Materiály** okna **Výzkum u tohoto stromu…** je přepínač **Třídit agentem bez ptaní**
-([R11.5.3](R11-material-from-the-user.md#R11.5.3)). Vypnout ho jde v aplikaci; zapnout jen v terminálu výzkumu.
+([R11.5.3](R11-material-from-the-user.md#R11.5.3)). Vypnout ho jde v aplikaci hned, zapnout v aplikaci po potvrzení
+nebo v terminálu výzkumu.
 
 - **Přepínač:** „Roztřídit agentem… neříká cenu před každým tříděním, spustí se ale dál jen kliknutím. Každé třídění
-  čerpá předplatné nebo kredit. Zapnout jde jen v terminálu výzkumu.“ Ve výchozím stavu je vypnutý; ukazuje to, co
-  řekne výzkum.
+  čerpá předplatné nebo kredit. Platí pro tento strom.“ Ve výchozím stavu je vypnutý; ukazuje to, co řekne výzkum.
 - **Hranice:**
-  - vypnutí aplikace zapíše přes most hned;
-  - zapnutí výzkum odmítne: přepínač zůstane vypnutý a pod ním stojí „Nezapnuto. Příkaz pro terminál výzkumu:“
-    s příkazem `strom config set sort.confirm no --for-tree` ke zkopírování. Věta zmizí, jakmile výzkum řekne, že je
-    zapnuto;
+  - vypnutí aplikace zapíše přes most hned, bez dotazu;
+  - zapnutí se nejdřív zeptá: **Třídit agentem bez ptaní?** „Třídění pak nežádá potvrzení ceny pokaždé a čerpá
+    předplatné nebo kredit AI agenta bez dalšího dotazu. Platí pro tento strom.“ s **Zapnout**. **Zrušit** nic
+    nezapíše a přepínač zůstane vypnutý. Po **Zapnout** výzkum zapíše `sort.confirm no` pro tento výzkum a do záznamu
+    mostu jednu řádku, že dotaz vypnula aplikace Strom na tomto počítači;
+  - zapnout z aplikace jde jen v aplikaci na počítači s výzkumem a s výzkumem, který to nabízí. Jinak výzkum zapnutí
+    odmítne: přepínač zůstane vypnutý a pod ním stojí „Nezapnuto. Příkaz pro terminál výzkumu:“ s příkazem
+    `strom config set sort.confirm no --for-tree` ke zkopírování. Věta zmizí, jakmile výzkum řekne, že je zapnuto.
+    Výzkum, který zapnutí z aplikace nenabízí, má v popisu přepínače i větu „Zapnout jde jen v terminálu výzkumu.“
+    a aplikace se pak předem neptá;
   - zapnuto: dialog **Roztřídit agentem…** cenu neříká; třídění se dál spustí jen jeho tlačítkem a štítek AI i počet
     souborů zůstanou ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8));
   - jen s výzkumem, který nastavení nabízí; ne v Archivu Stromu ani u výzkumu, který čeká na agenta. Bez mostu je
     přepínač neaktivní jako u **Soubory poslané do výzkumu projde agent sám** ([S4.4.11](#S4.4.11)).
-- **Ovládání:** aplikace: **Výzkum → Další → Výzkum u tohoto stromu… → Materiály → Třídit agentem bez ptaní**
-  (jen vypnout). Terminál: `strom config set sort.confirm no|ask --for-tree`.
+- **Ovládání:** aplikace: **Výzkum → Další → Výzkum u tohoto stromu… → Materiály → Třídit agentem bez ptaní**.
+  Terminál: `strom config set sort.confirm no|ask --for-tree`.
 - **Platí od:** aplikace 3.32.0 (výzkum 1.37.0)
 
-<!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 -->
+<!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 · zapnutí z aplikace: app:e02c706d switchResearchConfirm (s SORT_CONFIRM_APP_FEATURE showConfirm sortConfirmAskText/Title, confirmSwitchOn; Zrušit nic), raiseNote (403 sort.raise → sortConfirmRaise + příkaz), bez sort.confirm.app sortConfirmTerminalOnly a bez dialogu · strings.ts history.sortConfirmAskTitle, sortConfirmAskText, confirmSwitchOn · research:ce89202a src/core/live.ts sortConfirmWrite (lowersFrom: jen fetch prohlížeče na tomto počítači, jinak 403 sort.raise {command}), noteLive ui.live.unasked.sort · BRIDGE_FEATURES sort.confirm.app · dirigent:spec/123 P2 K2.1–K2.6 -->
 
 <a id="S4.4.14"></a>
 ### S4.4.14 Zkusit znovu přes agenta
@@ -1307,6 +1314,33 @@ a má tlačítko **Zkusit znovu přes agenta**. Skupina archivu s víc takovými
 - **Platí od:** aplikace 3.32.0 (výzkum 1.37.0)
 
 <!-- zdroj: app:c574752a, 3c6a554d, 75b71f5a src/research-waiting.ts waitingRetryReason (held/heldNoHost, stopped, ready, screen, no-extension waitNoExt + afterExt + extLink, agent-without-browser waitAgent, again → againHeld/againWaits), retryWhenText (dnes, včera, zítra, den a měsíc), waitingRetryCount, waitingRetryLimitText, waitingRetryMain (ne no-extension/agent-without-browser), waitingActions ctx.retry (jen přehled, ne telefon, w.retry.can), waitingGroupRetry (n, atLeast, readOnly, later), groupRetry*Text, waitingGroupRetryReason (≥ 2, stejné why+host) · src/ui/research-overview-ui.ts waitingRetryEl (Teď, limit, telefon R.phone, tlačítko primary/secondary), waitingRetryOffered (ne sheet, can, writes.retry), waitingGroupRetryOffer (ne sheet, ne kniha, ne místa, offer.n < 2 → nic, celá skupina s.waiting), waitingGroupRetryNow (ne telefon), browserNote jen bez w.retry · src/ui/waiting-task-ui.ts waitingDeliverEl retryMain (③ obrysová) · src/ui/research-waiting-write-ui.ts retryWaitingItem (doneRunning/doneIdle podle běhu, limit → can false, waitingRetryRefusedText) · src/ui/overview-window-ui.ts waiting-agent-retry, waiting-group-agent-retry · src/research-link.ts WAITING_RETRY_FEATURE · strings.ts live.waitingRetry, research.browser.waitNoExt, waitAgent · e2e/waiting-retry.spec.ts, waiting-retry-group.spec.ts · dirigent:prace/1124-app-089-zkusit-znovu (Výsledek, odchylky sub1–sub3), spec/089 K1.1–K3.1 -->
+
+<a id="S4.4.15"></a>
+### S4.4.15 Výzkum u stromu › Spouštění agenta: spouštět agenta bez potvrzení
+
+Ve skupině **Spouštění agenta** okna **Výzkum u tohoto stromu…** je přepínač **Spouštět agenta bez potvrzení**:
+nastavení tohoto počítače `run.confirm` ([S4.5.5](#S4.5.5)) z aplikace. Vypnout ho jde hned, zapnout po potvrzení.
+
+- **Přepínač:** „Akce z aplikace, které spouštějí agenta, se v terminálu výzkumu rozběhnou bez potvrzení. Každý běh
+  čerpá předplatné nebo kredit. Platí pro všechny výzkumy na tomto počítači.“ Ve výchozím stavu je vypnutý; ukazuje
+  to, co řekne výzkum.
+- **Hranice:**
+  - platí pro všechny výzkumy na tomto počítači, ne jen pro tento strom;
+  - vypnutí aplikace zapíše přes most hned, bez dotazu (`strom config unset run.confirm`);
+  - zapnutí se nejdřív zeptá: **Spouštět agenta bez potvrzení?** „Akce z aplikace, které spouštějí AI agenta, se pak
+    v terminálu výzkumu rozběhnou bez dotazu a čerpají předplatné nebo kredit AI. Platí pro všechny výzkumy na tomto
+    počítači.“ s **Zapnout**. **Zrušit** nic nezapíše a přepínač zůstane vypnutý. Po **Zapnout** výzkum zapíše
+    `run.confirm no` a do záznamu mostu jednu řádku, že dotaz vypnula aplikace Strom na tomto počítači;
+  - zapnout jde jen v aplikaci na počítači s výzkumem. Jinak výzkum zapnutí odmítne: přepínač zůstane vypnutý a pod
+    ním stojí „Nezapnuto. Příkaz pro terminál výzkumu:“ s příkazem `strom config set run.confirm no` ke zkopírování;
+  - co se pak spustí bez dotazu a co se ptá dál, určuje výzkum ([S4.5.5](#S4.5.5)); dotaz s cenou v penězích zůstává;
+  - jen s výzkumem, který nastavení nabízí; ne v Archivu Stromu ani u výzkumu, který čeká na agenta. Bez mostu je
+    přepínač neaktivní jako u **Soubory poslané do výzkumu projde agent sám** ([S4.4.11](#S4.4.11)).
+- **Ovládání:** aplikace: **Výzkum → Další → Výzkum u tohoto stromu… → Spouštění agenta → Spouštět agenta bez
+  potvrzení**. Terminál: [S4.5.5](#S4.5.5).
+- **Platí od:** aplikace 3.32.0 (výzkum 1.37.0)
+
+<!-- zdroj: app:e02c706d src/ui/research-tree-settings-ui.ts runConfirm (RUN_CONFIRM_FEATURE, /status.work.confirm, ne bez agenta), renderResearchIntakeRow (fieldset runConfirmSection), switchResearchConfirm (vypnout hned; zapnout showConfirm runConfirmAskText/Title, confirmSwitchOn; Zrušit nic), setResearchRunConfirm (raise → raiseNote sortConfirmRaise + příkaz; archive → řádek pryč; bez mostu storiesBridgeDown) · src/history-bridge.ts postBridgeRunConfirm · strings.ts history.runConfirmSection, runConfirmTitle, runConfirmDesc, runConfirmAskTitle, runConfirmAskText, confirmSwitchOn, sortConfirmRaise · research:ce89202a src/core/live.ts POST /settings/run (ask: config unset run.confirm; no: jen fetch prohlížeče na tomto počítači, jinak 403 run.raise {command: strom config set run.confirm no}; 409 run.archive), noteLive ui.live.unasked.run · BRIDGE_FEATURES run.confirm · dirigent:spec/123 P2 K2.1–K2.6 -->
 
 <a id="S4.5"></a>
 ## S4.5 Akce, které otevřou výzkum
@@ -1466,13 +1500,14 @@ předplatné nebo kredit AI, a čeká na ano ([S4.5](#S4.5)). **Bez potvrzení**
   - **bez potvrzení** zapne jen člověk: terminál řekne, co se dál ptá, a chce druhé ano (Enter = ne). Když nastavení
     spouští agent nebo příkaz bez terminálu, ptá se člověka okno systému; bez okna strom nastavení odmítne.
     Zpět na **s potvrzením** smí kdokoli, bez dotazu;
-  - aplikace Strom volbu nemá ani nemění. Hodnotu ukazuje `strom config` a zpráva `strom error`
-    ([R13](R13-reporting-a-problem.md#R13)).
+  - aplikace Strom ji ukazuje a mění v okně **Výzkum u tohoto stromu…** přepínačem **Spouštět agenta bez potvrzení**
+    ([S4.4.15](#S4.4.15)); zapnutí tam chce potvrzení v dialogu aplikace a jde jen na počítači s výzkumem. Hodnotu
+    ukazuje `strom config` a zpráva `strom error` ([R13](R13-reporting-a-problem.md#R13)).
 - **Ovládání:** terminál: menu **Nastavení** → **Jazyk, agent, model, co smí agent sám, příběhy… (průvodce
   nastavením)** → **Spouštění agenta z aplikace Strom: …** → **Ptát se před spuštěním (výchozí)** nebo **Spouštět bez
   potvrzení**; `strom config set run.confirm no`, zpět `strom config unset run.confirm`. Platnou hodnotu ukáže
-  `strom config where`.
-- **Platí od:** výzkum 1.36.0
+  `strom config where`. Aplikace: [S4.4.15](#S4.4.15).
+- **Platí od:** výzkum 1.36.0; 1.37.0 (aplikace 3.32.0): zapnout i vypnout jde i z aplikace Strom na tomto počítači
 
 <!-- zdroj: research:8aa0f374 src/core/config.ts run.confirm (ask|no, tree: false, env žádná), Settings.runConfirm · src/cli/menu-links.ts asksToStart (priced || runConfirm !== no || !ctx.interactive || isAgent → asks; jinak ui.link.noconfirm) u openTask (priced = taskEstimate), waitingDo chat, placesRun (priced = est.session.usd || fronta), workRun, workOn · src/commands/links.ts conflict do=agent, chat (direction/person) · placeSearch dál asks (placeCost), review/research ui.link.tasks dál asks · src/commands/setup.ts setUserSetting run.confirm no → requireHumanYes (ui.consent.run.confirm), FALLBACKS run.confirm ask · src/cli/context.ts requireHuman (terminál → humanYes, jinak okno systému, jinak odmítnutí) · src/cli/menu-settings.ts runConfirmStep (ui.runconfirm.*, ui.runconfirm.about; jen !archive), unset pro ask · src/core/report.ts CONFIG_PLAIN runConfirm · cs.json ui.settings.runconfirm, ui.runconfirm.*, ui.link.noconfirm · strom help link · CHANGELOG.cs.md 1.36.0 „Agent z aplikace Strom bez potvrzení“ · test/cli/run-confirm.test.ts, test/cli/gates.test.ts · spec 123 K1.1–K1.5 (K1.4 bez zápisu do logu výzkumu: rozhodnutí dirigenta 20. 11.) -->
 
@@ -1488,7 +1523,8 @@ v terminálu výzkumu, i když to začne kliknutím v aplikaci.
     ([R6.1.1](R6-awaiting-action.md#R6.1.1)).
   - Potvrzují se v terminálu: vše se značkou terminál nebo AI ([S4.5.1](#S4.5.1)), v 3.21.2 i akce linií a fronty.
     Práci agenta bez ceny v penězích jde od výzkumu 1.36.0 spouštět bez potvrzení ([S4.5.5](#S4.5.5)); tuto volbu
-    zapíná jen člověk v terminálu.
+    zapíná jen člověk: v terminálu, nebo od aplikace 3.32.0 s výzkumem 1.37.0 po potvrzení v aplikaci na počítači
+    s výzkumem ([S4.4.15](#S4.4.15)).
   - Na telefonu odkazy nejsou; odpovídá se ve výzkumu na počítači ([S5](S5-phone.md)).
 - **Platí od:** aplikace 3.4.0 (výzkum 1.6.0)
 - **Od aplikace 3.22.0:** s výzkumem 1.26.0 jdou bez terminálu linie ([S4.3.1](#S4.3.1)), práce mimo linie po

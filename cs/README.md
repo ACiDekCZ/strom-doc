@@ -13,7 +13,7 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 
 - [R1 Výzkum v kostce](R1-research-in-brief.md): jak výzkum pracuje jako celek, na jedné stránce
 - [R2 Linie a fronta](R2-lines-and-queue.md): na čem agent pracuje a v jakém pořadí
-- [R3 Ověřování a citace](R3-verification-and-citation.md): stupně jistoty, co musí platit pro Doložené, prameny a vodítka
+- [R3 Ověřování a citace](R3-verification-and-citation.md): stupně jistoty, co musí platit pro Doložené, prameny a vodítka, náboženství jako údaj
 - [R4 Místa](R4-places.md): ztotožnění míst, názvy a příslušnost, co rozhoduje člověk
 - [R5 Rozpory](R5-conflicts.md): jak rozpor vzniká, kdo ho rozhoduje, co agent nepřepíše
 - [R6 Čeká na vyřízení](R6-awaiting-action.md): co výzkum potřebuje od člověka a kde se to vyřizuje
@@ -50,7 +50,7 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [S3 Co ví výzkum](S3-what-the-research-knows.md): rozpory, hypotézy, prohledáno a Nad osobou v aplikaci
 - [S4 Výzkum řízený z aplikace](S4-research-from-the-app.md): panel a přehled výzkumu, fronta, linie, akce do terminálu
 - [S5 Telefon](S5-phone.md): stránka výzkumu v telefonu, párování, fotky po dávkách
-- [S6 Strom z jiného programu](S6-tree-from-another-program.md): rodokmen z MyHeritage, Gramps, FamilySearch a programů pro Windows: co se načte, značky spolehlivosti, údaje z rodokmenu jako vodítka, karta Co teď, zálohy, export zpět, opakovaný import
+- [S6 Strom z jiného programu](S6-tree-from-another-program.md): rodokmen z MyHeritage, Gramps, FamilySearch a programů pro Windows: co se načte, značky spolehlivosti, údaje z rodokmenu jako vodítka, karta Co teď, zálohy, export zpět, opakovaný import, e-mail osoby jako kontakt
 - [S7 Spolehlivost údajů a ověření podle originálů](S7-reliability-and-verification.md): značky u údajů a na kartičce, Ověřit u údaje, u osoby a ve stromu, ověřování ve frontě výzkumu, Potvrdit podle skenu, co jde s mostem a bez něj
 - [S8 Kde jsou data](S8-where-the-data-are.md): co je jen v prohlížeči, co je ve výzkumu a v Archivu Stromu, fotky a přílohy stromu ve výzkumu, ukazatel Jen v prohlížeči, fotky, které se nepodařilo načíst, balík a odebrání stromu
 
