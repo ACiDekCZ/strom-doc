@@ -450,6 +450,14 @@ nenapsáno) · `neplatí od <verze>`.
 | A11.2.1 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Doplnit podle pravidla | Add from the rule | Nach Regel ergänzen | Uzupełnij według reguły |
 | A11.2.2 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Zmrazit automatický seznam | Freezing an automatic list | Eine automatische Liste einfrieren | Zamrażanie listy automatycznej |
 | A11.2.3 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Pravidlo, které už nic nenajde | A rule that finds nothing any more | Eine Regel, die nichts mehr findet | Reguła, która nic już nie znajduje |
+| A11.2.4 | A11-lists-of-people.md | aplikace 3.32.0 | platí | Vlastní pravidlo: podmínky a skupiny | Custom rule: conditions and groups | Eigene Regel: Bedingungen und Gruppen | Własna reguła: warunki i grupy |
+| A11.2.5 | A11-lists-of-people.md | aplikace 3.32.0 | platí | Podmínky vlastního pravidla | Conditions of a custom rule | Bedingungen einer eigenen Regel | Warunki własnej reguły |
+| A11.2.6 | A11-lists-of-people.md | aplikace 3.32.0 | platí | Rodina osoby | Family of a person | Familie einer Person | Rodzina osoby |
+| A11.2.7 | A11-lists-of-people.md | aplikace 3.32.0 | platí | Místo a okolí | Place and surroundings | Ort und Umgebung | Miejsce i okolica |
+| A11.2.8 | A11-lists-of-people.md | aplikace 3.32.0 | platí | Jiný seznam | Another list | Andere Liste | Inna lista |
+| A11.2.9 | A11-lists-of-people.md | aplikace 3.32.0 | platí | Počty a Ukázat ve stromu | Counts and Show in the tree | Zahlen und Im Stammbaum zeigen | Liczby i Pokaż w drzewie |
+| A11.2.10 | A11-lists-of-people.md | aplikace 3.32.0 | platí | Šablony seznamů | List templates | Vorlagen für Listen | Szablony list |
+| A11.2.11 | A11-lists-of-people.md | aplikace 3.32.0 | platí | Chybějící osoba, místo nebo seznam v pravidle | A missing person, place or list in a rule | Fehlende Person, fehlender Ort oder fehlende Liste in einer Regel | Brakująca osoba, miejsce lub lista w regule |
 | A11.3 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Správa seznamů: Seznamy osob | Managing the lists: Lists of people | Listen verwalten: Personenlisten | Zarządzanie listami: Listy osób |
 | A11.3.1 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Souhrn seznamu | The summary of a list | Die Zusammenfassung einer Liste | Podsumowanie listy |
 | A11.4 | A11-lists-of-people.md | aplikace 3.30.0 | platí | Řazení seznamu | The order of a list | Die Sortierung einer Liste | Sortowanie listy |

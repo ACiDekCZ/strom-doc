@@ -1777,6 +1777,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A6.1.2](cs/A6-views.md#A6.1.2)
 
+<a id="list-template"></a>
+### Šablona seznamu
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Šablona · Začít ze šablony · Uložit jako šablonu | Připravené vlastní pravidlo seznamu osob bez osob, míst a seznamů, ty se doplní při použití. Vestavěné šablony jsou po skupinách, vlastní se ukládají v zařízení, ne ve stromu. Nabízí se jen při zakládání nového seznamu. |
+| en | Template · Start from a template · Save as template | A ready custom rule of a list of people without people, places and lists, which are filled in when it is used. The built-in templates are in groups, own templates are saved on the device, not in the tree. Offered only when a new list is made. |
+| de | Vorlage · Mit Vorlage beginnen · Als Vorlage speichern | Eine vorbereitete eigene Regel einer Personenliste ohne Personen, Orte und Listen, die bei der Verwendung ergänzt werden. Die eingebauten Vorlagen sind nach Gruppen geordnet, eigene werden auf dem Gerät gespeichert, nicht im Stammbaum. Nur beim Anlegen einer neuen Liste angeboten. |
+| pl | Szablon · Zacznij od szablonu · Zapisz jako szablon | Gotowa własna reguła listy osób bez osób, miejsc i list, które uzupełnia się przy użyciu. Szablony wbudowane są według grup, własne zapisują się na urządzeniu, nie w drzewie. Oferowany tylko przy zakładaniu nowej listy. |
+
+- **Čísla:** [A11.2.10](cs/A11-lists-of-people.md#A11.2.10), A11.3
+
 <a id="table-view"></a>
 ### Tabulka
 
@@ -1860,6 +1872,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Prawdopodobnie ta sama osoba · Dwie osoby · Niepewne · Scalono w badaniu (app) · `strom person compare` (terminal) | Jak badanie oceniło parę możliwego duplikatu według swoich danych: rodziców, lat, płci i zapisów w źródłach. |
 
 - **Čísla:** [A5.6.1](cs/A5-tree-check.md#A5.6.1)
+
+<a id="custom-list-rule"></a>
+### Vlastní pravidlo
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Vlastní pravidlo · Platí všechny · Platí kterákoli · kromě | Pravidlo seznamu osob složené z podmínek (rodina osoby, období, místo a okolí, údaje, jiný seznam…) ve skupinách nejvýš tří úrovní. Skupina spojí podmínky slovy „a zároveň“ nebo „nebo“, „kromě“ osoby ubere. Seznam s ním může být pevný i automatický. |
+| en | Custom rule · All apply · Any applies · except | A rule of a list of people put together from conditions (family of a person, periods, place and surroundings, facts, another list…) in groups of at most three levels. A group joins its conditions with “and” or “or”, “except” takes people away. A list with it can be fixed or automatic. |
+| de | Eigene Regel · Alle gelten · Mindestens eine gilt · außer | Eine aus Bedingungen (Familie einer Person, Zeiträume, Ort und Umgebung, Angaben, andere Liste…) zusammengesetzte Regel einer Personenliste in Gruppen von höchstens drei Ebenen. Eine Gruppe verbindet ihre Bedingungen mit „und“ oder „oder“, „außer“ nimmt Personen weg. Eine Liste damit kann fest oder automatisch sein. |
+| pl | Własna reguła · Wszystkie · Którykolwiek · oprócz | Reguła listy osób złożona z warunków (rodzina osoby, okresy, miejsce i okolica, dane, inna lista…) w grupach najwyżej trzech poziomów. Grupa łączy warunki słowami „i” lub „lub”, „oprócz” odejmuje osoby. Lista z nią może być stała lub automatyczna. |
+
+- **Čísla:** [A11.2.4](cs/A11-lists-of-people.md#A11.2.4), A11.2.5, A11.2.6, A11.2.7, A11.2.8, A11.2.9, A11.2.11, A11.2, A11.3
 
 <a id="undo-send"></a>
 ### Vrátit poslední poslání
