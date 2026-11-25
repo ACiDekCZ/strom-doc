@@ -376,8 +376,9 @@ Programme als `1 EMAIL` direkt bei der Person. Die App und die Forschung machen 
     in den Export;
   - die Personenseite zeigt die Adressen als E-Mail-Link nur im Fenster der App; eine in eine Datei gespeicherte Seite
     hat keinen Kontakt;
-  - in die Forschung geht der Kontakt nur mit einer Forschung, die Kontakte hält; einer älteren Forschung, die ihn als
-    Wohnort ohne Ort lesen würde, wird er nicht gesendet, und die App hält ihn selbst.
+  - in die Forschung geht der Kontakt nur mit einer Forschung,
+    die Kontakte hält; einer älteren Forschung, die ihn als Wohnort ohne Ort lesen würde, wird er nicht gesendet,
+    und die App hält ihn selbst.
 - **Prüft der Code (Forschung):**
   - E-Mails aus einem Stammbaum (ein Wohnort nur mit einer E-Mail, die ältere Notiz der App „E-Mail: …“) werden zum
     Kontakt der Person; `strom person show` und die Personenkarte zeigen ihn getrennt von den Angaben. Nie wird daraus
