@@ -65,7 +65,14 @@ w ten sam sposób **Co zostało zapisane** z sekcjami **Zapisano** i **Nie zapis
 - **Granice:** gdy dokładnej listy nie da się policzyć, drzewo wysyła się takie, jakie jest, a badanie zapisuje tylko
   różnice.
 - **Obowiązuje od:** aplikacja 3.14.0
+- **Od aplikacji 3.32.0 (badanie 1.37.0):** wysłanie mówi, z której przeglądarki przyszło: trwały losowy identyfikator
+  zapisany w tej przeglądarce i czytelna nazwa z przeglądarki i systemu (np. „Chrome · Mac”, nie tłumaczy się, nic
+  osobistego). Jedno i drugie idzie tylko z wysłaniem do badania, wyeksportowany plik nigdy go nie niesie. Zmiana
+  w historii badania wysłana z innej przeglądarki ma za sobą „z Chrome · Mac”; zwrócone wysłanie z innej przeglądarki
+  powie „Wysłano z Chrome · Mac.”. Przeglądarkę bez nazwy zastępuje pierwszych 8 znaków jej identyfikatora. Ze
+  starszym badaniem wszystko czyta się jak dotąd.
 
+<!-- zdroj: 3.32.0: app:src/device-client.ts (DEVICE_ID_KEY strom-device-id, browserOf, systemOf, deviceNameOf „Chrome · Mac“), src/research-link.ts:5883-5957 1 _STROM_CLIENT / 2 NAME jen při poslání do mostu, src/conflict-devices.ts otherDeviceWords, deviceWords (ID_SHOWN 8), src/ui/research-ui.ts:838-842, src/ui/research-sync-ui.ts:3556-3560 · strings.ts research.fromDevice, research.sentFromDevice · research:3856505e src/core/sync.ts _STROM_CLIENT · spec 094 K2.4 -->
 <!-- zdroj: app:strings.ts changes.willSendTitle, changes.kind*, changes.inexact, changes.writtenSection, changes.notWrittenSection · CHANGELOG.cs.md 3.14.0 -->
 
 <a id="S2.2.2"></a>

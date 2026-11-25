@@ -268,6 +268,9 @@ the relationships, in the Unions table, on person pages and in the family book.
   **Tree overview** counts couples' photos among the photos and the originals of portraits among the attachments.
 - **Controls:** Table › Unions, the choice of columns; the person page; export **Family book**.
 - **Since:** app 3.30.0
+- **From app 3.31.0:** The fan shows portraits with **Portraits** switched on ([A6.4.2](A6-views.md#A6.4.2)); from
+  3.32.0 in every ring where there is room, and on the poster and in print from 7 mm ([A6.4.3](A6-views.md#A6.4.3)).
+  The fan does not show the couple's photo.
 
 <!-- zdroj: app:45f7ca2a src/ui/table-view/table-columns.ts:732 uPhoto (group uextra, skrytý, kind thumb), thumbCell (strings.table.yes, sortKey), table-filter.ts presence (withPhoto / withoutPhoto), prohlížeč s Udělat portréty… a Vrátit, telefon (D10) · app:fd1f0c3c src/person-page.ts couplePhotoItems (první v galerii, popisek, počet obrázků, bez skupiny obrázků / žijící partner pod ochranou), rodinné stránky totéž, src/book-blocks.ts couplePhotoHtml (jen parts.media, popisek fields.marriageRow / book.partners + datum), src/book-css.ts .book-photo--couple max-height 110mm · app:50e49518 src/ui/tree-overview.ts a src/attachments.ts: fotka svazku mezi fotkami, originál portrétu je příloha · ZADANI_DEV §5, §8, D10, D12 · strings.ts tableCols.uPhoto, tableFilter.withPhoto, withoutPhoto, table.groups.uextra, personPage.sec.materials, relationships.unionPhotoCaption, book.parts.media -->
 

@@ -76,13 +76,22 @@ strom may do automatically; the detailed table of levels is in [R8.2](R8-reading
   - the forbidden path `/` (the whole image server) closes the agent's browser too: images by hand only;
   - the sites of one archive (e.g. the digital archive and the reading room of one regional archive) each have their
     own entry; in What waits, however, they show under one archive name ([R9.6](#R9.6)).
+- **From research 1.37.0:** a book recorded in the research under an archive whose address is on a portal from the
+  list of archives (e.g. Porta fontium, Acta Publica) no longer makes the portal as strict as that archive: the
+  portal follows its own terms and the other sources. An archive's own portal at another address, for which the list
+  gives the terms on the archive's website (e.g. eBadatelna SOA Praha), the archive still holds. A level that strom
+  holds from before stays until a person decides in What waits. Where the archive's record holds a site through a
+  book, `strom doctor`, the question in What waits and `strom allow archive` name the archive, the book and the site:
+  "the research's record of the archive R… (…) through its book … on … (strom recordset show …)".
 - **Why:** the method wants the terms of every archive kept. Where robots.txt lets in only a browser, at most a
   browser goes, with a person's permission and at a person's pace; what the list of archives keeps for a person's
   hand, a person saves.
 - **Controls:** terminal: `strom net web --check <address>` (what strom would do with an address), the archives menu,
   `strom allow archive` (a person only). App: Awaiting action.
-- **Since:** research 1.14.0. Further archives of Czechia, Germany and Poland and the image server from 1.27.0.
+- **Since:** research 1.14.0. Further archives of Czechia, Germany and Poland and the image server from 1.27.0. A
+  portal from the list by its own terms, not by the book of another archive, from 1.37.0.
 
+<!-- zdroj: 1.37.0: research:91631d2e, 66a521fa src/core/terms.ts listStates, treeLevel (kniha jen tam, kde seznam podmínky webu neuvádí; vlastní portál archivu s podmínkami na webu archivu drží), src/core/floor.ts FloorHold tree recordset, holdText, floorWhat · cs.json ui.archive.floor.hold.treeSet · CHANGELOG.cs.md 1.37.0 -->
 <!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel (robots "Disallow: /" → browserOnly, restricted; robotsYield: openByTerms + robotsNamesAi false), :789-803 allows (browserOnly + manual → nothing) · assets/archives.json (level, browserOnly, pace, disallow, imagesFrom, quote, quoteFrom, checked; metrikai.lt, lagis, gov, online-ofb restricted + browserOnly; ebadatelna.soapraha.cz manual) · src/core/knownterms.ts imagesFrom · test/unit/known-terms.test.ts (imagesFrom closed whole ⇒ manual) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 (c3ee4422) -->
 
 <a id="R9.1.1"></a>
@@ -159,14 +168,30 @@ tool. strom checks it by a hook before every fetch and counts the requests to ea
     strom asks the person once per session and site;
   - strom waits at most 30 s for a free slot; it also refuses when the site is one strom leaves alone, or has used up
     its limit or its hourly cap.
+- **From research 1.37.0 (a used-up limit):**
+  - after `web.perHost` pages the agent hears when the site will give pages again: none more in this session, or from
+    a certain time (the limit of this computer, the pages of all sessions over the time of one session). The task
+    stays open, never done or given up because of the limit; until then other work, otherwise the end of the session.
+    A page of the site is not tried again earlier and nobody waits for the limit; after the third refusal of the same
+    site in a session the agent hears that it should end the session;
+  - `strom run` leaves out for now a task whose work leads to such a site (saving an image by the agent's browser, or
+    a book only on that site without a downloader) and takes another one: "· T… left for now: the pages of … for this
+    computer are used up until …". A session on such a site starts once at least a third of the limit is free (10 of
+    the default 30);
+  - when there is no other task: a run with `--loop` or `--until` waits (without an agent, nothing is sent; "⏸ waiting
+    until … — the tasks left need pages of …"), another run ends and says when ("nothing to do until … — …"). For the
+    Strom app this is a finished run, not an error;
+  - a task waiting for an image that the agent's browser never saved (the page refused) goes back to the queue with
+    the end of the session; it is never said of it that the browser held it back.
 - **Method only:** for a refused site, another way first. The search is recorded with the result inconclusive
   (`strom search add … --result inconclusive`). Only when the source is still needed does the task wait for a person
   to check the site (`strom task wait --check`, [R6.2.2](R6-awaiting-action.md#R6.2.2)).
 - **Why:** web fetches and the agent's browser are counted and slowed together, so that no way goes faster than
   another.
-- **Controls:** terminal (agent): `strom net web --check <address>`.
-- **Since:** research 1.14.0
+- **Controls:** terminal (agent): `strom net web --check <address>`; `strom run`.
+- **Since:** research 1.14.0; the used-up limit from 1.37.0
 
+<!-- zdroj: 1.37.0: research:ce89202a src/core/web.ts ManyWhen, whenText, WEB_REFUSED_LOOP 3, manyText · src/core/webfull.ts (runWebFree perHost/3, WebFull) · src/core/machine.ts siteFreeAt · src/commands/session.ts:1311-1390 webOut, gateHolds (--loop, --until), stopCode web · cs.json ui.run.skip.web, ui.run.web.wait, ui.run.stop.web · CHANGELOG.cs.md 1.37.0 „Vyčerpaný limit webu“ -->
 <!-- zdroj: research:src/core/webgate.ts webGate (TERMS_PER_DAY, browserOnly advice, otherWay) · src/core/web.ts WEB_SOFT 12, WEB_SOFT_GAP_MS, WEB_PER_HOST 30, WEB_WAIT_MAX_MS · src/core/config.ts web.perHost · assets/method/locate.md -->
 
 <a id="R9.4"></a>

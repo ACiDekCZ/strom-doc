@@ -425,7 +425,9 @@ osobno. Każdy przebieg można śledzić i zatrzymać osobno.
     aplikacji zakończonych bloków nie pokazuje.
 - **Kolejność bloków:** najpierw przebieg całej kolejki, potem przebiegi linii w kolejności linii
   ([R2.1.4](R2-lines-and-queue.md#R2.1.4)). Nagłówek sekcji to „Teraz · agenci: 3”; podsumowanie **Stan** przy dwóch
-  i więcej przebiegach „Pracuje agentów: 3” i ewentualnie „1 czeka na limit do 14:00”.
+  i więcej przebiegach „Pracuje agentów: 3” i ewentualnie „1 czeka na limit do 14:00”. Od aplikacji 3.32.0 liczy się
+  także przebieg, który czeka na archiwum, przeglądarkę archiwum albo pobieranie: wtedy tylko „1 czeka” (bez
+  godziny).
 - **Akcje bloku:**
   - **Pokaż w drzewie**: osoby linii, przy przebiegu całej kolejki osoba, nad którą pracuje agent;
   - **Śledź ten przebieg** / **● Śledzony**: tylko przy dwóch i więcej przebiegach i włączonym śledzeniu;
@@ -453,7 +455,7 @@ osobno. Każdy przebieg można śledzić i zatrzymać osobno.
   `strom run stop <run-…> [--finish]`.
 - **Obowiązuje od:** aplikacja 3.31.0 (badanie 1.36.0)
 
-<!-- zdroj: app:4de0835a src/research-runs.ts (run.lines, RUN_ENDED_MS 60 s, orderRuns obecný první a linie v pořadí, runCount, noteEndedRuns jen v paměti) · src/ui/research-overview-ui.ts vykreslení bloku (runStateWorking/Starting/Limit/Archive/Waiting/WaitingUntil/Browser/Download/Finishing/Ended, runBrowserNote, runSkips, runFinishesThen, runEndedText jen limit|error, runAfterStop), overviewRunActions (Ukázat ve stromu; Sledovat tento běh jen ≥ 2 běhy a sledování, ne telefon; Zastavit s run.stop u working|waiting, ne telefon; Dokončit a skončit finish?run= u working a čekání na prohlížeč nebo stahování) · src/ui/live-follow-ui.ts pilulka followRunPill, followRunMenu, followOff · strings.ts live.nowAgents, stateAgents, stateAgentsWaiting, runWhole, run*, followRun* · app:docs/ZADANI_DEV_beh-po-liniich.md §3, §4, §7, Kolo 2 C2 · dirigent:spec/126 K2.1, K2.2, K2.5, prace/1121-app-126-linie, 1122-app-126-kolo2 · research: /status runs[], runsEnded[] (POST runs/stop) -->
+<!-- zdroj: 3.32.0: app:f09e9722 src/research-runs-text.ts runsWaitingText (stateAgentsWaitingAny, když některý běh nečeká na limit) · app:4de0835a src/research-runs.ts (run.lines, RUN_ENDED_MS 60 s, orderRuns obecný první a linie v pořadí, runCount, noteEndedRuns jen v paměti) · src/ui/research-overview-ui.ts vykreslení bloku (runStateWorking/Starting/Limit/Archive/Waiting/WaitingUntil/Browser/Download/Finishing/Ended, runBrowserNote, runSkips, runFinishesThen, runEndedText jen limit|error, runAfterStop), overviewRunActions (Ukázat ve stromu; Sledovat tento běh jen ≥ 2 běhy a sledování, ne telefon; Zastavit s run.stop u working|waiting, ne telefon; Dokončit a skončit finish?run= u working a čekání na prohlížeč nebo stahování) · src/ui/live-follow-ui.ts pilulka followRunPill, followRunMenu, followOff · strings.ts live.nowAgents, stateAgents, stateAgentsWaiting, runWhole, run*, followRun* · app:docs/ZADANI_DEV_beh-po-liniich.md §3, §4, §7, Kolo 2 C2 · dirigent:spec/126 K2.1, K2.2, K2.5, prace/1121-app-126-linie, 1122-app-126-kolo2 · research: /status runs[], runsEnded[] (POST runs/stop) -->
 
 <a id="S4.2"></a>
 ## S4.2 Kolejka w aplikacji
@@ -1342,26 +1344,33 @@ naraz pracować nad drzewem, przebieg całej kolejki i przebiegi linii razem
 ### S4.4.13 Badanie dla drzewa › Materiały: porządkowanie agentem bez pytania
 
 W grupie **Materiały** okna **Badanie dla tego drzewa…** jest przełącznik **Porządkowanie agentem bez pytania**
-([R11.5.3](R11-material-from-the-user.md#R11.5.3)). Wyłączyć go można w aplikacji; włączyć tylko w terminalu
-badania.
+([R11.5.3](R11-material-from-the-user.md#R11.5.3)). Wyłączyć go można w aplikacji od razu, włączyć w aplikacji po
+potwierdzeniu albo w terminalu badania.
 
 - **Przełącznik:** „Uporządkuj agentem… nie podaje kosztu przed każdym porządkowaniem; nadal startuje tylko po
-  kliknięciu. Każde porządkowanie zużywa subskrypcję lub kredyt. Włączyć można tylko w terminalu badania.” Domyślnie
-  jest wyłączony; pokazuje to, co mówi badanie.
+  kliknięciu. Każde porządkowanie zużywa subskrypcję lub kredyt. Dotyczy tego drzewa.” Domyślnie jest wyłączony;
+  pokazuje to, co mówi badanie.
 - **Granice:**
-  - wyłączenie aplikacja zapisuje przez most od razu;
-  - włączenie badanie odrzuca: przełącznik zostaje wyłączony, a pod nim stoi „Nie włączono. Polecenie dla terminalu
+  - wyłączenie aplikacja zapisuje przez most od razu, bez pytania;
+  - włączenie najpierw pyta: **Porządkować agentem bez pytania?** „Porządkowanie nie prosi wtedy za każdym razem
+    o potwierdzenie kosztu i zużywa subskrypcję lub kredyt agenta AI bez dodatkowego pytania. Dotyczy tego drzewa.”
+    z **Włącz**. **Anuluj** nic nie zapisuje i przełącznik zostaje wyłączony. Po **Włącz** badanie zapisuje
+    `sort.confirm no` dla tego badania, a do dziennika mostu jedną linię, że pytanie wyłączyła aplikacja Strom na tym
+    komputerze;
+  - włączyć z aplikacji można tylko w aplikacji na komputerze z badaniem i przy badaniu, które to oferuje. Inaczej
+    badanie włączenie odrzuca: przełącznik zostaje wyłączony, a pod nim stoi „Nie włączono. Polecenie dla terminalu
     badania:” z poleceniem `strom config set sort.confirm no --for-tree` do skopiowania. Zdanie znika, gdy tylko
-    badanie powie, że jest włączone;
+    badanie powie, że jest włączone. Badanie, które włączenia z aplikacji nie oferuje, ma w opisie przełącznika także
+    zdanie „Włączyć można tylko w terminalu badania.”, a aplikacja wtedy wcześniej nie pyta;
   - włączony: okno **Uporządkuj agentem…** nie podaje kosztu; porządkowanie nadal startuje tylko jego przyciskiem,
     a etykieta AI i liczba plików zostają ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8));
   - tylko z badaniem, które oferuje to ustawienie; nie w Archiwum Strom ani przy badaniu, które czeka na agenta. Bez
     mostu przełącznik jest nieaktywny jak przy **Pliki wysłane do badania agent przejrzy sam** ([S4.4.11](#S4.4.11)).
 - **Obsługa:** aplikacja: **Badanie → Więcej → Badanie dla tego drzewa… → Materiały → Porządkowanie agentem bez
-  pytania** (tylko wyłączenie). Terminal: `strom config set sort.confirm no|ask --for-tree`.
+  pytania**. Terminal: `strom config set sort.confirm no|ask --for-tree`.
 - **Obowiązuje od:** aplikacja 3.32.0 (badanie 1.37.0)
 
-<!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 -->
+<!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 · zapnutí z aplikace: app:e02c706d switchResearchConfirm (s SORT_CONFIRM_APP_FEATURE showConfirm sortConfirmAskText/Title, confirmSwitchOn; Zrušit nic), raiseNote (403 sort.raise → sortConfirmRaise + příkaz), bez sort.confirm.app sortConfirmTerminalOnly a bez dialogu · strings.ts history.sortConfirmAskTitle, sortConfirmAskText, confirmSwitchOn · research:ce89202a src/core/live.ts sortConfirmWrite (lowersFrom: jen fetch prohlížeče na tomto počítači, jinak 403 sort.raise {command}), noteLive ui.live.unasked.sort · BRIDGE_FEATURES sort.confirm.app · dirigent:spec/123 P2 K2.1–K2.6 -->
 
 <a id="S4.4.14"></a>
 ### S4.4.14 Spróbuj ponownie przez agenta
@@ -1418,6 +1427,37 @@ i ma przycisk **Spróbuj ponownie przez agenta**. Grupa archiwum z kilkoma takim
 - **Obowiązuje od:** aplikacja 3.32.0 (badanie 1.37.0)
 
 <!-- zdroj: app:c574752a, 3c6a554d, 75b71f5a src/research-waiting.ts waitingRetryReason (held/heldNoHost, stopped, ready, screen, no-extension waitNoExt + afterExt + extLink, agent-without-browser waitAgent, again → againHeld/againWaits), retryWhenText (dnes, včera, zítra, den a měsíc), waitingRetryCount, waitingRetryLimitText, waitingRetryMain (ne no-extension/agent-without-browser), waitingActions ctx.retry (jen přehled, ne telefon, w.retry.can), waitingGroupRetry (n, atLeast, readOnly, later), groupRetry*Text, waitingGroupRetryReason (≥ 2, stejné why+host) · src/ui/research-overview-ui.ts waitingRetryEl (Teď, limit, telefon R.phone, tlačítko primary/secondary), waitingRetryOffered (ne sheet, can, writes.retry), waitingGroupRetryOffer (ne sheet, ne kniha, ne místa, offer.n < 2 → nic, celá skupina s.waiting), waitingGroupRetryNow (ne telefon), browserNote jen bez w.retry · src/ui/waiting-task-ui.ts waitingDeliverEl retryMain (③ obrysová) · src/ui/research-waiting-write-ui.ts retryWaitingItem (doneRunning/doneIdle podle běhu, limit → can false, waitingRetryRefusedText) · src/ui/overview-window-ui.ts waiting-agent-retry, waiting-group-agent-retry · src/research-link.ts WAITING_RETRY_FEATURE · strings.ts live.waitingRetry, research.browser.waitNoExt, waitAgent · e2e/waiting-retry.spec.ts, waiting-retry-group.spec.ts · dirigent:prace/1124-app-089-zkusit-znovu (Výsledek, odchylky sub1–sub3), spec/089 K1.1–K3.1 -->
+
+<a id="S4.4.15"></a>
+### S4.4.15 Badanie dla drzewa › Uruchamianie agenta: start agenta bez potwierdzenia
+
+W grupie **Uruchamianie agenta** okna **Badanie dla tego drzewa…** jest przełącznik **Start agenta bez
+potwierdzenia**: ustawienie tego komputera `run.confirm` ([S4.5.5](#S4.5.5)) z aplikacji. Wyłączyć go można od
+razu, włączyć po potwierdzeniu.
+
+- **Przełącznik:** „Akcje aplikacji, które uruchamiają agenta, startują w terminalu badania bez potwierdzenia. Każde
+  uruchomienie zużywa subskrypcję lub kredyt. Dotyczy wszystkich badań na tym komputerze.” Domyślnie jest wyłączony;
+  pokazuje to, co mówi badanie.
+- **Granice:**
+  - dotyczy wszystkich badań na tym komputerze, nie tylko tego drzewa;
+  - wyłączenie aplikacja zapisuje przez most od razu, bez pytania (`strom config unset run.confirm`);
+  - włączenie najpierw pyta: **Uruchamiać agenta bez potwierdzenia?** „Akcje aplikacji, które uruchamiają agenta AI,
+    startują wtedy w terminalu badania bez pytania i zużywają subskrypcję lub kredyt AI. Dotyczy wszystkich badań na
+    tym komputerze.” z **Włącz**. **Anuluj** nic nie zapisuje i przełącznik zostaje wyłączony. Po **Włącz** badanie
+    zapisuje `run.confirm no`, a do dziennika mostu jedną linię, że pytanie wyłączyła aplikacja Strom na tym
+    komputerze;
+  - włączyć można tylko w aplikacji na komputerze z badaniem. Inaczej badanie włączenie odrzuca: przełącznik zostaje
+    wyłączony, a pod nim stoi „Nie włączono. Polecenie dla terminalu badania:” z poleceniem
+    `strom config set run.confirm no` do skopiowania;
+  - co potem uruchamia się bez pytania, a co nadal pyta, decyduje badanie ([S4.5.5](#S4.5.5)); pytanie z ceną
+    w pieniądzach zostaje;
+  - tylko z badaniem, które oferuje to ustawienie; nie w Archiwum Strom ani przy badaniu, które czeka na agenta. Bez
+    mostu przełącznik jest nieaktywny jak przy **Pliki wysłane do badania agent przejrzy sam** ([S4.4.11](#S4.4.11)).
+- **Obsługa:** aplikacja: **Badanie → Więcej → Badanie dla tego drzewa… → Uruchamianie agenta → Start agenta bez
+  potwierdzenia**. Terminal: [S4.5.5](#S4.5.5).
+- **Obowiązuje od:** aplikacja 3.32.0 (badanie 1.37.0)
+
+<!-- zdroj: app:e02c706d src/ui/research-tree-settings-ui.ts runConfirm (RUN_CONFIRM_FEATURE, /status.work.confirm, ne bez agenta), renderResearchIntakeRow (fieldset runConfirmSection), switchResearchConfirm (vypnout hned; zapnout showConfirm runConfirmAskText/Title, confirmSwitchOn; Zrušit nic), setResearchRunConfirm (raise → raiseNote sortConfirmRaise + příkaz; archive → řádek pryč; bez mostu storiesBridgeDown) · src/history-bridge.ts postBridgeRunConfirm · strings.ts history.runConfirmSection, runConfirmTitle, runConfirmDesc, runConfirmAskTitle, runConfirmAskText, confirmSwitchOn, sortConfirmRaise · research:ce89202a src/core/live.ts POST /settings/run (ask: config unset run.confirm; no: jen fetch prohlížeče na tomto počítači, jinak 403 run.raise {command: strom config set run.confirm no}; 409 run.archive), noteLive ui.live.unasked.run · BRIDGE_FEATURES run.confirm · dirigent:spec/123 P2 K2.1–K2.6 -->
 
 <a id="S4.5"></a>
 ## S4.5 Działania, które otwierają badanie
@@ -1593,13 +1633,16 @@ praca agenta uruchamia się od razu, a terminal mówi o tym jedną linią: **▶
   - **bez potwierdzenia** włącza tylko człowiek: terminal mówi, co jest nadal pytane, i chce drugiego tak (Enter =
     nie). Gdy ustawienie zmienia agent lub polecenie bez terminala, człowieka pyta okno systemu; bez okna strom
     ustawienie odrzuca. Powrót do **z potwierdzeniem** może zrobić każdy, bez pytania;
-  - aplikacja Strom tego ustawienia nie ma i go nie zmienia. Wartość pokazuje `strom config` i raport `strom error`
+  - aplikacja Strom pokazuje je i zmienia w oknie **Badanie dla tego drzewa…** przełącznikiem **Start agenta bez
+    potwierdzenia** ([S4.4.15](#S4.4.15)); włączenie wymaga tam potwierdzenia w oknie aplikacji i działa tylko na
+    komputerze z badaniem. Wartość pokazuje `strom config` i raport `strom error`
     ([R13](R13-reporting-a-problem.md#R13)).
 - **Obsługa:** terminal: menu **Ustawienia** → **Język, agent, model, co agent może sam, opowieści… (kreator
   ustawień)** → **Uruchamianie agenta z aplikacji Strom: …** → **Pytać przed uruchomieniem (domyślnie)** lub
   **Uruchamiać bez potwierdzenia**; `strom config set run.confirm no`, z powrotem `strom config unset run.confirm`.
-  Obowiązującą wartość pokazuje `strom config where`.
-- **Obowiązuje od:** badanie 1.36.0
+  Obowiązującą wartość pokazuje `strom config where`. Aplikacja: [S4.4.15](#S4.4.15).
+- **Obowiązuje od:** badanie 1.36.0; 1.37.0 (aplikacja 3.32.0): włączyć i wyłączyć można także z aplikacji Strom na
+  tym komputerze
 
 <!-- zdroj: research:8aa0f374 src/core/config.ts run.confirm (ask|no, tree: false, env žádná), Settings.runConfirm · src/cli/menu-links.ts asksToStart (priced || runConfirm !== no || !ctx.interactive || isAgent → asks; jinak ui.link.noconfirm) u openTask (priced = taskEstimate), waitingDo chat, placesRun (priced = est.session.usd || fronta), workRun, workOn · src/commands/links.ts conflict do=agent, chat (direction/person) · placeSearch dál asks (placeCost), review/research ui.link.tasks dál asks · src/commands/setup.ts setUserSetting run.confirm no → requireHumanYes (ui.consent.run.confirm), FALLBACKS run.confirm ask · src/cli/context.ts requireHuman (terminál → humanYes, jinak okno systému, jinak odmítnutí) · src/cli/menu-settings.ts runConfirmStep (ui.runconfirm.*, ui.runconfirm.about; jen !archive), unset pro ask · src/core/report.ts CONFIG_PLAIN runConfirm · cs.json ui.settings.runconfirm, ui.runconfirm.*, ui.link.noconfirm · strom help link · CHANGELOG.cs.md 1.36.0 „Agent z aplikace Strom bez potvrzení“ · test/cli/run-confirm.test.ts, test/cli/gates.test.ts · spec 123 K1.1–K1.5 (K1.4 bez zápisu do logu výzkumu: rozhodnutí dirigenta 20. 11.) -->
 
@@ -1615,7 +1658,8 @@ zawsze w terminalu badania, nawet gdy zaczyna się kliknięciem w aplikacji.
     ([R6.1.1](R6-awaiting-action.md#R6.1.1)).
   - Potwierdza się w terminalu: wszystko z oznaczeniem terminal lub AI ([S4.5.1](#S4.5.1)), w 3.21.2 także akcje
     linii i kolejki. Od badania 1.36.0 pracę agenta bez ceny w pieniądzach można uruchamiać bez potwierdzenia
-    ([S4.5.5](#S4.5.5)); włącza to tylko człowiek, w terminalu.
+    ([S4.5.5](#S4.5.5)); włącza to tylko człowiek: w terminalu albo od aplikacji 3.32.0 z badaniem 1.37.0 po
+    potwierdzeniu w aplikacji na komputerze z badaniem ([S4.4.15](#S4.4.15)).
   - Na telefonie linków nie ma; odpowiada się w badaniu na komputerze ([S5](S5-phone.md)).
 - **Obowiązuje od:** aplikacja 3.4.0 (badanie 1.6.0)
 - **Od aplikacji 3.22.0:** z badaniem 1.26.0 bez terminala działają linie ([S4.3.1](#S4.3.1)), praca poza liniami

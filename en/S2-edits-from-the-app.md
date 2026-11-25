@@ -66,7 +66,14 @@ with new coordinates and surname variants. Each group has its own section. After
 - **Limits:** when the exact list cannot be computed, the tree is sent as it is and the research writes only the
   differences.
 - **Since:** app 3.14.0
+- **From app 3.32.0 (research 1.37.0):** a send says which browser it came from: a lasting random id stored in that
+  browser and a readable name from the browser and the system (e.g. "Chrome · Mac", not translated, nothing
+  personal). Both go only with a send to the research; an exported file never carries them. A change in the
+  research's history sent from another browser has "from Chrome · Mac" after it; a returned send from another browser
+  says "Sent from Chrome · Mac.". A browser without a name is stood for by the first 8 characters of its id. With an
+  older research everything reads as before.
 
+<!-- zdroj: 3.32.0: app:src/device-client.ts (DEVICE_ID_KEY strom-device-id, browserOf, systemOf, deviceNameOf „Chrome · Mac“), src/research-link.ts:5883-5957 1 _STROM_CLIENT / 2 NAME jen při poslání do mostu, src/conflict-devices.ts otherDeviceWords, deviceWords (ID_SHOWN 8), src/ui/research-ui.ts:838-842, src/ui/research-sync-ui.ts:3556-3560 · strings.ts research.fromDevice, research.sentFromDevice · research:3856505e src/core/sync.ts _STROM_CLIENT · spec 094 K2.4 -->
 <!-- zdroj: app:strings.ts changes.willSendTitle, changes.kind*, changes.inexact, changes.writtenSection, changes.notWrittenSection · CHANGELOG.cs.md 3.14.0 -->
 
 <a id="S2.2.2"></a>

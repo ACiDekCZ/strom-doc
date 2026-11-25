@@ -82,14 +82,24 @@ Die Stufe sagt, was strom automatisch tun darf; die ausführliche Tabelle der St
   - der verbotene Pfad `/` (der ganze Bildserver) schließt auch den Browser des Agenten: Bilder nur von Hand;
   - die Websites eines Archivs (z. B. das digitale Archiv und der Lesesaal eines Landesarchivs) haben jede ihren
     eigenen Eintrag; in Was wartet erscheinen sie aber unter einem Namen des Archivs ([R9.6](#R9.6)).
+- **Ab Forschung 1.37.0:** ein in der Forschung unter einem Archiv erfasstes Buch, dessen Adresse auf einem Portal aus
+  der Liste der Archive liegt (z. B. Porta fontium, Acta Publica), macht das Portal nicht mehr so streng wie dieses
+  Archiv: das Portal richtet sich nach seinen Bedingungen und den übrigen Quellen. Ein eigenes Portal des Archivs
+  unter einer anderen Adresse, bei dem die Liste die Bedingungen auf der Website des Archivs angibt (z. B. eBadatelna
+  SOA Praha), hält das Archiv weiter. Eine Stufe, die strom von früher hält, bleibt, bis der Mensch in Was wartet
+  entscheidet. Wo der Archiveintrag eine Website über ein Buch hält, nennen `strom doctor`, die Frage in Was wartet
+  und `strom allow archive` das Archiv, das Buch und die Website: „dem Archiveintrag der Forschung R… (…) über sein
+  Buch … auf … (strom recordset show …)“.
 - **Warum:** die Methodik will die Bedingungen jedes Archivs einhalten. Wohin robots.txt nur einen Browser lässt,
   geht höchstens ein Browser, mit Erlaubnis des Menschen und in seinem Tempo; was die Liste der Archive der Hand des
   Menschen überlässt, speichert der Mensch.
 - **Bedienung:** Terminal: `strom net web --check <Adresse>` (was strom mit einer Adresse tun würde), Menü der Archive,
   `strom allow archive` (nur der Mensch). App: Wartet auf Bearbeitung.
 - **Gilt seit:** Forschung 1.14.0. Weitere Archive Tschechiens, Deutschlands und Polens und der Bildserver seit
-  1.27.0.
+  1.27.0. Ein Portal aus der Liste nach seinen eigenen Bedingungen, nicht nach dem Buch eines anderen Archivs, seit
+  1.37.0.
 
+<!-- zdroj: 1.37.0: research:91631d2e, 66a521fa src/core/terms.ts listStates, treeLevel (kniha jen tam, kde seznam podmínky webu neuvádí; vlastní portál archivu s podmínkami na webu archivu drží), src/core/floor.ts FloorHold tree recordset, holdText, floorWhat · cs.json ui.archive.floor.hold.treeSet · CHANGELOG.cs.md 1.37.0 -->
 <!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel (robots "Disallow: /" → browserOnly, restricted; robotsYield: openByTerms + robotsNamesAi false), :789-803 allows (browserOnly + manual → nothing) · assets/archives.json (level, browserOnly, pace, disallow, imagesFrom, quote, quoteFrom, checked; metrikai.lt, lagis, gov, online-ofb restricted + browserOnly; ebadatelna.soapraha.cz manual) · src/core/knownterms.ts imagesFrom · test/unit/known-terms.test.ts (imagesFrom closed whole ⇒ manual) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 (c3ee4422) -->
 
 <a id="R9.1.1"></a>
@@ -168,15 +178,31 @@ Web ab. strom prüft ihn mit einem Hook vor jedem Abruf und zählt die Anfragen 
     abgelehnt, im Chat fragt strom den Menschen einmal pro Sitzung und Website;
   - auf einen freien Platz wartet strom höchstens 30 s; abgelehnt wird auch, wenn strom die Website in Ruhe lässt,
     ihr Limit erschöpft ist oder die stündliche Obergrenze erreicht ist.
+- **Ab Forschung 1.37.0 (erschöpftes Limit):**
+  - nach `web.perHost` Seiten erfährt der Agent, wann die Website wieder Seiten gibt: in dieser Sitzung keine mehr,
+    oder ab einer bestimmten Zeit (das Limit dieses Computers, die Seiten aller Sitzungen über die Dauer einer
+    Sitzung). Die Aufgabe bleibt offen, nie erledigt oder aufgegeben wegen des Limits; bis dahin andere Arbeit, sonst
+    Ende der Sitzung. Eine Seite der Website wird nicht früher erneut versucht, und auf das Limit wird nicht gewartet;
+    nach der dritten Ablehnung derselben Website in einer Sitzung erfährt der Agent, dass er die Sitzung beenden soll;
+  - `strom run` lässt eine Aufgabe, deren Arbeit auf eine solche Website führt (Speichern eines Bildes durch den
+    Browser des Agenten oder ein Buch nur auf dieser Website ohne Downloader), vorerst aus und nimmt eine andere:
+    „· T… vorerst ausgelassen: die Seiten von … für diesen Computer sind bis … aufgebraucht“. Eine Sitzung auf einer
+    solchen Website beginnt, sobald mindestens ein Drittel des Limits frei ist (10 der standardmäßigen 30);
+  - wenn es keine andere Aufgabe gibt: ein Lauf mit `--loop` oder `--until` wartet (ohne Agenten, nichts wird
+    gesendet; „⏸ Warten bis … — die übrigen Aufgaben brauchen Seiten von …“), ein anderer Lauf endet und sagt, wann
+    („bis … nichts zu tun – …“). Für die Strom-App ist das ein beendeter Lauf, kein Fehler;
+  - eine Aufgabe, die auf ein Bild wartet, das der Browser des Agenten nie gespeichert hat (Seite abgelehnt), kehrt
+    mit dem Ende der Sitzung in die Warteschlange zurück; nie wird von ihr gesagt, der Browser habe sie zurückgehalten.
 - **Nur Methodik:** bei einer abgelehnten Website zuerst ein anderer Weg. Die Suche wird mit dem Ergebnis unklar
   erfasst (`strom search add … --result inconclusive`). Erst wenn die Quelle weiter nötig ist, wartet die
   Aufgabe darauf, dass der Mensch die Website prüft (`strom task wait --check`,
   [R6.2.2](R6-awaiting-action.md#R6.2.2)).
 - **Warum:** Webabrufe und der Browser des Agenten werden zusammen gezählt und gebremst, damit kein Weg schneller geht
   als ein anderer.
-- **Bedienung:** Terminal (Agent): `strom net web --check <Adresse>`.
-- **Gilt seit:** Forschung 1.14.0
+- **Bedienung:** Terminal (Agent): `strom net web --check <Adresse>`; `strom run`.
+- **Gilt seit:** Forschung 1.14.0; erschöpftes Limit seit 1.37.0
 
+<!-- zdroj: 1.37.0: research:ce89202a src/core/web.ts ManyWhen, whenText, WEB_REFUSED_LOOP 3, manyText · src/core/webfull.ts (runWebFree perHost/3, WebFull) · src/core/machine.ts siteFreeAt · src/commands/session.ts:1311-1390 webOut, gateHolds (--loop, --until), stopCode web · cs.json ui.run.skip.web, ui.run.web.wait, ui.run.stop.web · CHANGELOG.cs.md 1.37.0 „Vyčerpaný limit webu“ -->
 <!-- zdroj: research:src/core/webgate.ts webGate (TERMS_PER_DAY, browserOnly advice, otherWay) · src/core/web.ts WEB_SOFT 12, WEB_SOFT_GAP_MS, WEB_PER_HOST 30, WEB_WAIT_MAX_MS · src/core/config.ts web.perHost · assets/method/locate.md -->
 
 <a id="R9.4"></a>

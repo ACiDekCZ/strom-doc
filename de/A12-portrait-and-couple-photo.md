@@ -287,6 +287,9 @@ ist: in den Beziehungen, in der Tabelle der Verbindungen, auf Personenseiten und
   **Stammbaum-Überblick** zählt Paarfotos zu den Fotos und Originale von Porträts zu den Anhängen.
 - **Bedienung:** Tabelle › Verbindungen, Auswahl der Spalten; Personenseite; Export **Familienbuch**.
 - **Gilt seit:** App 3.30.0
+- **Ab App 3.31.0:** Der Fächer zeigt Porträts bei eingeschalteten **Porträts** ([A6.4.2](A6-views.md#A6.4.2)); ab
+  3.32.0 in jedem Ring, wo Platz ist, und auf dem Plakat und im Druck ab 7 mm ([A6.4.3](A6-views.md#A6.4.3)). Das
+  Paarfoto zeigt der Fächer nicht.
 
 <!-- zdroj: app:45f7ca2a src/ui/table-view/table-columns.ts:732 uPhoto (group uextra, skrytý, kind thumb), thumbCell (strings.table.yes, sortKey), table-filter.ts presence (withPhoto / withoutPhoto), prohlížeč s Udělat portréty… a Vrátit, telefon (D10) · app:fd1f0c3c src/person-page.ts couplePhotoItems (první v galerii, popisek, počet obrázků, bez skupiny obrázků / žijící partner pod ochranou), rodinné stránky totéž, src/book-blocks.ts couplePhotoHtml (jen parts.media, popisek fields.marriageRow / book.partners + datum), src/book-css.ts .book-photo--couple max-height 110mm · app:50e49518 src/ui/tree-overview.ts a src/attachments.ts: fotka svazku mezi fotkami, originál portrétu je příloha · ZADANI_DEV §5, §8, D10, D12 · strings.ts tableCols.uPhoto, tableFilter.withPhoto, withoutPhoto, table.groups.uextra, personPage.sec.materials, relationships.unionPhotoCaption, book.parts.media -->
 

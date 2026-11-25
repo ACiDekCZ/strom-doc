@@ -327,3 +327,46 @@ The research takes over a family tree from another program with the command `str
 - **Since:** research 1.30.0
 
 <!-- zdroj: research:v1.30.0 CHANGELOG.cs.md 1.30.0 · src/core/import.ts ImportResult.candidates, notTaken · src/commands/intake.ts:300-313 · assets/lang/cs.json ui.intake.candidates, ui.intake.notTaken* · strom help fixes run („readers, proven-originals and origins are set right by themselves once, run again only after strom fixes undo“) · dirigent:prace/1108-vyzkum-066-u3, 1108-vyzkum-066-u8 Výsledek (origins-1, nejisté → user; Gramps bez _UID kandidáti) · research:94d75934 src/core/originfix.ts ORIGINS_TREE_SETTLED origins-tree-1 (podle historie: stejná hodnota hned po převzetí, ne před ním, stejná dnes), settleOrigins · cs.json ui.fixes.origins.example.tree · strom help fixes show -->
+
+<a id="S6.9"></a>
+## S6.9 A person's e-mail: a contact, not a residence
+
+A person's e-mail address is their **contact**, not an event nor a place where the person lived. GEDCOM keeps it in an
+address under an event: MyHeritage writes an e-mail as a residence (`1 RESI` / `2 EMAIL`), other programs as `1 EMAIL`
+directly at the person. The app and the research make a contact of the person from it.
+
+- **Enforced by the code (app):**
+  - a residence that carries only a contact (an e-mail, a phone, a web address, a fax, an empty address or an address
+    with only the label "Email"; without a date, a place, a real address, a note, a source and a file) is loaded as
+    the person's contact, not as an event. A residence with something of its own stays a residence and its e-mail
+    goes into the contact (no longer as a line of the note). `1 EMAIL` at a person is a contact too;
+  - a tree saved by an older version of the app has the e-mail lines that the import wrote there turned into the
+    contact at each loading. Nothing a person wrote changes; an empty residence stays in the data, it is only not
+    shown in the list of events;
+  - each address is in the contact once (regardless of upper and lower case), at most 254 characters, without spaces;
+  - the GEDCOM export writes each address as `1 RESI` / `2 EMAIL`; **Back to {program}** writes a `1 EMAIL` that the
+    file had at the person the same way as the file did ([S6.6](#S6.6));
+  - the privacy of living people ([A7.2](A7-book-pages-and-export.md#A7.2)): a living person's contact does not go
+    into an export;
+  - the person page shows the addresses as an e-mail link only in the app's window; a page saved to a file has no
+    contact;
+  - the contact goes to the research only with a research that keeps contacts; an older research, which would read
+    it as a residence without a place, is not sent it, and the app keeps it itself.
+- **Enforced by the code (research):**
+  - e-mails from a family tree (a residence with only an e-mail, the app's older note "E-mail: …") become the
+    person's contact; `strom person show` and the person card show it apart from the facts. It never becomes an event
+    or a residence, and the agent does not get it;
+  - the sync with the app adds and removes e-mails like other edits;
+  - the check `strom fixes contact-residences` ("Contacts kept as residences") finds the residences that an older
+    research made from e-mails. The fix moves the e-mails into the contact (each once), retracts a residence with only
+    a contact with a reason and removes the label "Email" from the house; it deletes nothing. A residence with a cited
+    record, with people or with a note of its own stays as it is. Only a person runs the fix, it is free and
+    `strom fixes undo contact-residences` takes it back.
+- **Data:** a tree carries the contact from data version 26; an older version of the app opens such a tree read-only.
+- **Controls:** app: editing a person, the section **Photo and notes**, the field **E-mail** (more addresses
+  separated by commas); the field is visible with **Settings → Person card → Advanced fields** switched on, or when
+  the person has an address. Terminal: `strom person show`, `strom fixes show contact-residences`,
+  `strom fixes run contact-residences`, `strom fixes undo contact-residences`.
+- **Since:** app 3.32.0, research 1.37.0
+
+<!-- zdroj: app:972e73d7 src/person-contact.ts (hlavička: pravidlo RESI jen s kontaktem, 1 EMAIL; cleanEmail EMAIL_MAX 254, bez mezer; sameEmail bez velikosti písmen; isContactResidence, isEmptyResidence, moveContactsIntoPeople při každém načtení), src/ged-exporter.ts contacts (výchozí ano, do výzkumu jen s person.contact; 1 RESI / 2 EMAIL; Zpět do: 1 EMAIL jak byl), src/privacy.ts (žijící bez emails) · app:0603165b index.html #emails-group v Fotografie a poznámky, src/ui/person-modal.ts applyAdvancedFieldVisibility emails-group, emailsFromInput (čárky, středníky, mezery), src/person-page.ts jen c.app, mailto, src/ui/person-events.ts shownEvents (prázdné bydliště skryté) · src/version.ts STROM_DATA_VERSION 26 · strings.ts labels.emails, placeholders.emails, personModal.sectionPhotoNotes · research:ce89202a src/core/live.ts person.contact (1 RESI / 2 EMAIL, nejvýš tři na RESI), src/commands/fixchecks.ts CONTACT_RESIDENCES, src/commands/fixes.ts contact-residences · cs.json ui.fixes.contact-residences.* · CHANGELOG.cs.md 1.37.0 „E-maily osoby jsou kontakt“, app CHANGELOG.cs.md 3.32.0 Data · dirigent:spec/134 K0.10, U11 -->

@@ -622,8 +622,9 @@ kind and links (people, event, source) with a short reason. Nothing is written u
   app.
 - **Since:** app 3.30.0, research 1.35.0
 - **From app 3.32.0 with research 1.37.0:** with a research with **Sort with the agent without asking** (switched
-  on only in the terminal, [S4.4.13](S4-research-from-the-app.md#S4.4.13)) the dialog does not say the cost before
-  sorting. Sorting still starts only by the button in the dialog; the AI tag and the number of files stay.
+  on in the app after a confirmation or in the terminal, [S4.4.13](S4-research-from-the-app.md#S4.4.13)) the
+  dialog does not say the cost before sorting. Sorting still starts only by the button in the dialog; the AI tag and
+  the number of files stay.
 
 <!-- zdroj: app:9752aead (jeden pruh nad archivem, pruhy dávek a nabídka nad vším pryč, dávka z ⋯), 2fbab382 src/material-sort.ts sortNext, 1047b9d6 (běh do 1 500 souborů, bez material.sortRun jedna dávka) · app:1affd46e, d5b6ef8e src/ui/material-sort-ui.ts (odeslání jen klikem v dialogu), src/materials.ts SORT_MAX_FILES=50, SORT_MAX_TEXT=2000 · src/ui/materials-window.ts materialSortGate (sel-sort) · src/ui/batch-ui.ts doneSort · app:2a6dd268 pramen z výzkumu s REFN S… · strings.ts materials.agentSort.* (will, keep, privacy, cost, tooMany, errLimit, errQueue, errNotReady, offRun, phone, write, useProposal, undoRow) · research:87376d11 POST /material/sort, cc709045 material.sort jen s agentem · app:32f1e29f src/ui/material-sort-ui.ts (counted jen s job.filesDone: run k z n, progressbar aria-valuenow; jinak runFiles, is-indeterminate; runNote), strings.ts agentSort.queued, run, runFiles, runNote · app:30688d6b src/materials.ts parseSortUnproposed, material-sort-ui.ts (unassigned && !p → unproposed[why], said na jednom řádku s title), strings.ts agentSort.unproposed.* · research:ae866bb7 filesDone, unproposed, čtení textu · app:8a8131be src/material-sort.ts sortNeedy, sortWholeOffered (narrowed, remembered, jedna dávka se stejným počtem), materials-window.ts sortWholeClosed, strings.ts agentSort.stripWhole, closeWhole · app:a947b426 sortCandidates (dávka, filtr, celé okno: jen bez titulku nebo osoby; výběr vše) · 3.32.0: app:7674ee44 src/ui/material-sort-ui.ts (sort.confirm no: bez věty o ceně) · dirigent:spec/102 U8 -->
 

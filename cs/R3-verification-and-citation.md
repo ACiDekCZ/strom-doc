@@ -611,7 +611,7 @@ Náboženství, které zápis u osoby uvádí (slovem ve sloupci nebo značkou v
     citaci k údaji, který už osoba má; bez citace se nezapíše nic. Změněné vyznání, nebo první znovu po jiném, je
     samostatný údaj (katolík, který přestoupil a vrátil se, má tři údaje);
   - víru strom pozná jen v jasných tvarech (česky, německy, latinsky, polsky, několik v cyrilici), slovo po slově:
-    nikdy slovo, které tak jen začíná („Katharina“, „Israel“ bez tečky), ani víra farnosti, kostela, obřadu, matriky,
+    nikdy slovo, které tak jen začíná („Evangelista“, „Israel“ bez tečky), ani víra farnosti, kostela, obřadu, matriky,
     školy nebo ulice („římskokatolická farnost“, „katolický křest“, „Židovská ulice“). Tvar, který je i jménem („Žid“,
     „Mos.“, „Kath.“), platí jen pod označením náboženství nebo v jeho sloupci; nejisté čtení („katol. (?)“, „snad“)
     není žádné;

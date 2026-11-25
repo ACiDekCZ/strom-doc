@@ -146,7 +146,9 @@ Stapel an. Der Agent sortiert ihn dann nach Aufgaben.
   - der Agent sieht zuerst günstig alle Dateien der Aufgabe durch (Vorschauen im Raster) und ordnet jede gleich ein:
     Eintrag (Quelle), Dokument, Foto, nicht zugehörig, und wem sie gehört. Gründlich liest er nur, was zu den
     Personen der Forschung gehört;
-  - über eine lebende Person wird nichts erfasst; die Datei wird nur eingeordnet;
+  - über eine lebende Person wurde bis Forschung 1.36.0 nichts erfasst, die Datei wurde nur eingeordnet. Ab 1.37.0
+    wird das Material einer lebenden Person eingeordnet und erfasst wie bei jeder anderen; der Schutz lebender
+    Personen gehört zum Export ([A7.2](A7-book-pages-and-export.md#A7.2));
   - die Scans eines Buches (viele nummerierte Bilder) werden nicht Datei für Datei gelesen: sie werden als Buch
     erfasst, und die Einträge werden daraus gelesen wie aus jedem Buch ([R8](R8-reading-scans.md));
   - die Aufgabe wird geschlossen, wenn jede ihrer Dateien eingeordnet ist; ein weiterer Teil des Stapels ist eine
@@ -165,7 +167,14 @@ Stapel an. Der Agent sortiert ihn dann nach Aufgaben.
 - **Ab Forschung 1.36.0:** Aufgaben zum Sortieren entstehen nur bei eingeschaltetem `intake.auto` oder wenn ein
   Mensch um das Sortieren des Stapels bittet; sonst wird der Stapel ohne Aufgaben geschlossen, und die Dateien warten
   unsortiert in den Materialien ([R11.6](#R11.6)).
+- **Ab Forschung 1.37.0:** eine aus der Strom-App gesendete Datei (aus einem Stapel, auch Material einer Person),
+  die im Stammbaum der App noch keine Stelle hat und die `strom input sort` als Eintrag, Dokument oder Foto von
+  Personen einordnet, bekommt eine Stelle bei ihnen: zwei Partner einer Partnerschaft bei der Partnerschaft, sonst
+  bei jeder Person. Die App zeigt sie dann bei der Person, nicht nur im Fenster **Materialien**. Keine Stelle bekommt
+  eine Datei, die im Stammbaum eine Stelle hat oder deren Stelle in der App entfernt wurde, eine verborgene, eine
+  nicht zugehörige, eigenes Material der Forschung, auch nicht bei einer daraus entfernten Person.
 
+<!-- zdroj: 1.37.0: research:ce89202a src/commands/intake.ts input sort (MediaLink, pořadí za posledním souborem místa; pár u FAM, jinak u INDI; --json placed; bez místa: má místo nebo odebrané, skrytý, unrelated, vlastní, odebraná osoba) · assets/method/intake.md „Someone living: sort and record as anyone.“ · CHANGELOG.cs.md 1.37.0 „Materiál z aplikace zařazený do stromu“ -->
 <!-- zdroj: research:src/core/batches.ts hlavička, BATCH_TASK_FILES=25 (od v1.12.0), BATCH_IDLE_MS, PHONE_BATCH_IDLE_MS (od v1.18.0) · research:src/commands/intake.ts input batch done (--idle), input sort (unrelated --reason) · research:assets/method/intake.md "A batch from the Strom app" -->
 
 <a id="R11.5"></a>
@@ -308,8 +317,10 @@ Begründung und Sicherheit. In die Forschung wird nichts geschrieben.
     Menschen mit Code 4);
   - `no` setzt nur der Mensch in seinem eigenen Terminal: `strom config set` fragt ihn („Dateien des Materials von
     Lesern der Forschung sofort sortieren, wenn darum gebeten wird, ohne Rückfrage zu den bezahlten Lesungen? …“).
-    Ein Agent oder ein Befehl ohne sein Terminal bekommt Code 4, und nichts ändert sich. Zurück auf `ask` setzen oder
-    aufheben kann es jeder, auch die Strom-App ([S4.4.13](S4-research-from-the-app.md#S4.4.13));
+    Ein Agent oder ein Befehl ohne sein Terminal bekommt Code 4, und nichts ändert sich. Für eine Forschung setzt es
+    auch die Strom-App auf diesem Computer nach einer Bestätigung in ihrem Dialog; das Protokoll der Brücke sagt es in
+    einer Zeile. Zurück auf `ask` setzen oder aufheben kann es jeder, auch die Strom-App
+    ([S4.4.13](S4-research-from-the-app.md#S4.4.13));
   - mit `--for-tree` gilt es für diese Forschung, sonst für diesen Computer. Die Grenzen des Sortierens ändern sich
     nicht.
 

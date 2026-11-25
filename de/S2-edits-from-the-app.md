@@ -71,7 +71,14 @@ Schreiben zeigt sie auf dieselbe Weise **Was geschrieben wurde** mit den Abschni
 - **Grenzen:** lässt sich die genaue Liste nicht berechnen, wird der Stammbaum gesendet, wie er ist, und die
   Forschung schreibt nur die Unterschiede.
 - **Gilt seit:** App 3.14.0
+- **Ab App 3.32.0 (Forschung 1.37.0):** eine Sendung sagt, aus welchem Browser sie kam: eine dauerhafte zufällige ID,
+  in diesem Browser gespeichert, und ein lesbarer Name aus Browser und System (z. B. „Chrome · Mac“, nicht übersetzt,
+  nichts Persönliches). Beides geht nur mit einer Sendung an die Forschung; eine exportierte Datei trägt es nie. Eine
+  Änderung im Verlauf der Forschung, die aus einem anderen Browser gesendet wurde, hat „von Chrome · Mac“ hinter sich;
+  eine zurückgegebene Sendung aus einem anderen Browser sagt „Gesendet von Chrome · Mac.“. Einen Browser ohne Namen
+  vertreten die ersten 8 Zeichen seiner ID. Mit einer älteren Forschung liest sich alles wie bisher.
 
+<!-- zdroj: 3.32.0: app:src/device-client.ts (DEVICE_ID_KEY strom-device-id, browserOf, systemOf, deviceNameOf „Chrome · Mac“), src/research-link.ts:5883-5957 1 _STROM_CLIENT / 2 NAME jen při poslání do mostu, src/conflict-devices.ts otherDeviceWords, deviceWords (ID_SHOWN 8), src/ui/research-ui.ts:838-842, src/ui/research-sync-ui.ts:3556-3560 · strings.ts research.fromDevice, research.sentFromDevice · research:3856505e src/core/sync.ts _STROM_CLIENT · spec 094 K2.4 -->
 <!-- zdroj: app:strings.ts changes.willSendTitle, changes.kind*, changes.inexact, changes.writtenSection, changes.notWrittenSection · CHANGELOG.cs.md 3.14.0 -->
 
 <a id="S2.2.2"></a>

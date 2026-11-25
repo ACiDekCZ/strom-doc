@@ -470,7 +470,8 @@ jeder Richtung einzeln. Jeder Lauf lässt sich einzeln verfolgen und anhalten.
 - **Reihenfolge der Blöcke:** zuerst der Lauf der ganzen Warteschlange, dann die Läufe der Richtungen in der
   Reihenfolge der Richtungen ([R2.1.4](R2-lines-and-queue.md#R2.1.4)). Die Überschrift des Bereichs ist „Jetzt · 3
   Agenten“; die Zusammenfassung **Status** bei zwei und mehr Läufen „3 Agenten arbeiten“ und gegebenenfalls „1 wartet
-  auf das Limit bis 14:00“.
+  auf das Limit bis 14:00“. Ab App 3.32.0 zählt auch ein Lauf, der auf ein Archiv, den Archiv-Browser oder einen
+  Download wartet: dann nur „1 wartet“ (ohne Uhrzeit).
 - **Aktionen des Blocks:**
   - **Im Stammbaum zeigen**: die Personen der Richtung, beim Lauf der ganzen Warteschlange die Person, an der der
     Agent arbeitet;
@@ -503,7 +504,7 @@ jeder Richtung einzeln. Jeder Lauf lässt sich einzeln verfolgen und anhalten.
   `strom run stop <run-…> [--finish]`.
 - **Gilt seit:** App 3.31.0 (Forschung 1.36.0)
 
-<!-- zdroj: app:4de0835a src/research-runs.ts (run.lines, RUN_ENDED_MS 60 s, orderRuns obecný první a linie v pořadí, runCount, noteEndedRuns jen v paměti) · src/ui/research-overview-ui.ts vykreslení bloku (runStateWorking/Starting/Limit/Archive/Waiting/WaitingUntil/Browser/Download/Finishing/Ended, runBrowserNote, runSkips, runFinishesThen, runEndedText jen limit|error, runAfterStop), overviewRunActions (Ukázat ve stromu; Sledovat tento běh jen ≥ 2 běhy a sledování, ne telefon; Zastavit s run.stop u working|waiting, ne telefon; Dokončit a skončit finish?run= u working a čekání na prohlížeč nebo stahování) · src/ui/live-follow-ui.ts pilulka followRunPill, followRunMenu, followOff · strings.ts live.nowAgents, stateAgents, stateAgentsWaiting, runWhole, run*, followRun* · app:docs/ZADANI_DEV_beh-po-liniich.md §3, §4, §7, Kolo 2 C2 · dirigent:spec/126 K2.1, K2.2, K2.5, prace/1121-app-126-linie, 1122-app-126-kolo2 · research: /status runs[], runsEnded[] (POST runs/stop) -->
+<!-- zdroj: 3.32.0: app:f09e9722 src/research-runs-text.ts runsWaitingText (stateAgentsWaitingAny, když některý běh nečeká na limit) · app:4de0835a src/research-runs.ts (run.lines, RUN_ENDED_MS 60 s, orderRuns obecný první a linie v pořadí, runCount, noteEndedRuns jen v paměti) · src/ui/research-overview-ui.ts vykreslení bloku (runStateWorking/Starting/Limit/Archive/Waiting/WaitingUntil/Browser/Download/Finishing/Ended, runBrowserNote, runSkips, runFinishesThen, runEndedText jen limit|error, runAfterStop), overviewRunActions (Ukázat ve stromu; Sledovat tento běh jen ≥ 2 běhy a sledování, ne telefon; Zastavit s run.stop u working|waiting, ne telefon; Dokončit a skončit finish?run= u working a čekání na prohlížeč nebo stahování) · src/ui/live-follow-ui.ts pilulka followRunPill, followRunMenu, followOff · strings.ts live.nowAgents, stateAgents, stateAgentsWaiting, runWhole, run*, followRun* · app:docs/ZADANI_DEV_beh-po-liniich.md §3, §4, §7, Kolo 2 C2 · dirigent:spec/126 K2.1, K2.2, K2.5, prace/1121-app-126-linie, 1122-app-126-kolo2 · research: /status runs[], runsEnded[] (POST runs/stop) -->
 
 <a id="S4.2"></a>
 ## S4.2 Warteschlange in der App
@@ -1463,17 +1464,25 @@ Läufe der Richtungen zusammen ([R7.10.1](R7-when-the-agent-works.md#R7.10.1)).
 
 In der Gruppe **Materialien** des Fensters **Forschung für diesen Stammbaum…** steht der Schalter **Mit dem Agenten
 sortieren ohne Nachfrage** ([R11.5.3](R11-material-from-the-user.md#R11.5.3)). Ausschalten lässt er sich in der
-App; einschalten nur im Terminal der Forschung.
+App sofort, einschalten in der App nach einer Bestätigung oder im Terminal der Forschung.
 
 - **Schalter:** „Mit dem Agenten sortieren… nennt die Kosten nicht vor jedem Sortieren; es startet weiterhin nur per
-  Klick. Jedes Sortieren nutzt das Abo oder Guthaben. Einschalten lässt es sich nur im Terminal der Forschung.“
-  Standardmäßig ist er ausgeschaltet; er zeigt, was die Forschung sagt.
+  Klick. Jedes Sortieren nutzt das Abo oder Guthaben. Gilt für diesen Stammbaum.“ Standardmäßig ist er
+  ausgeschaltet; er zeigt, was die Forschung sagt.
 - **Grenzen:**
-  - das Ausschalten schreibt die App sofort über die Brücke;
-  - das Einschalten lehnt die Forschung ab: der Schalter bleibt ausgeschaltet, und darunter steht „Nicht
-    eingeschaltet. Befehl für das Terminal der Forschung:“ mit dem Befehl
+  - das Ausschalten schreibt die App sofort über die Brücke, ohne Rückfrage;
+  - das Einschalten fragt zuerst: **Mit dem Agenten sortieren ohne Nachfrage?** „Das Sortieren fragt dann nicht mehr
+    jedes Mal nach der Bestätigung der Kosten und nutzt das Abo oder Guthaben des KI-Agenten ohne weitere
+    Nachfrage. Gilt für diesen Stammbaum.“ mit **Einschalten**. **Abbrechen** schreibt nichts, und der Schalter
+    bleibt ausgeschaltet. Nach **Einschalten** schreibt die Forschung `sort.confirm no` für diese Forschung und eine
+    Zeile ins Protokoll der Brücke, dass die Strom-App auf diesem Computer die Rückfrage ausgeschaltet hat;
+  - einschalten aus der App lässt es sich nur in der App auf dem Computer mit der Forschung und mit einer Forschung,
+    die das anbietet. Sonst lehnt die Forschung das Einschalten ab: der Schalter bleibt ausgeschaltet, und darunter
+    steht „Nicht eingeschaltet. Befehl für das Terminal der Forschung:“ mit dem Befehl
     `strom config set sort.confirm no --for-tree` zum Kopieren. Der Satz verschwindet, sobald die Forschung sagt,
-    dass er eingeschaltet ist;
+    dass er eingeschaltet ist. Eine Forschung, die das Einschalten aus der App nicht anbietet, hat in der
+    Beschreibung des Schalters auch den Satz „Einschalten lässt es sich nur im Terminal der Forschung.“, und die App
+    fragt dann nicht vorher;
   - eingeschaltet: der Dialog **Mit dem Agenten sortieren…** nennt die Kosten nicht; das Sortieren startet weiterhin
     nur mit seiner Schaltfläche, und das Etikett KI und die Zahl der Dateien bleiben
     ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8));
@@ -1481,10 +1490,10 @@ App; einschalten nur im Terminal der Forschung.
     auf einen Agenten wartet. Ohne Brücke ist der Schalter inaktiv wie bei **An die Forschung gesendete Dateien geht
     der Agent selbst durch** ([S4.4.11](#S4.4.11)).
 - **Bedienung:** App: **Forschung → Weitere Aktionen → Forschung für diesen Stammbaum… → Materialien → Mit dem
-  Agenten sortieren ohne Nachfrage** (nur ausschalten). Terminal: `strom config set sort.confirm no|ask --for-tree`.
+  Agenten sortieren ohne Nachfrage**. Terminal: `strom config set sort.confirm no|ask --for-tree`.
 - **Gilt seit:** App 3.32.0 (Forschung 1.37.0)
 
-<!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 -->
+<!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 · zapnutí z aplikace: app:e02c706d switchResearchConfirm (s SORT_CONFIRM_APP_FEATURE showConfirm sortConfirmAskText/Title, confirmSwitchOn; Zrušit nic), raiseNote (403 sort.raise → sortConfirmRaise + příkaz), bez sort.confirm.app sortConfirmTerminalOnly a bez dialogu · strings.ts history.sortConfirmAskTitle, sortConfirmAskText, confirmSwitchOn · research:ce89202a src/core/live.ts sortConfirmWrite (lowersFrom: jen fetch prohlížeče na tomto počítači, jinak 403 sort.raise {command}), noteLive ui.live.unasked.sort · BRIDGE_FEATURES sort.confirm.app · dirigent:spec/123 P2 K2.1–K2.6 -->
 
 <a id="S4.4.14"></a>
 ### S4.4.14 Erneut über den Agenten versuchen
@@ -1547,6 +1556,38 @@ solchen Einträgen gibt sie auf einmal zurück.
 - **Gilt seit:** App 3.32.0 (Forschung 1.37.0)
 
 <!-- zdroj: app:c574752a, 3c6a554d, 75b71f5a src/research-waiting.ts waitingRetryReason (held/heldNoHost, stopped, ready, screen, no-extension waitNoExt + afterExt + extLink, agent-without-browser waitAgent, again → againHeld/againWaits), retryWhenText (dnes, včera, zítra, den a měsíc), waitingRetryCount, waitingRetryLimitText, waitingRetryMain (ne no-extension/agent-without-browser), waitingActions ctx.retry (jen přehled, ne telefon, w.retry.can), waitingGroupRetry (n, atLeast, readOnly, later), groupRetry*Text, waitingGroupRetryReason (≥ 2, stejné why+host) · src/ui/research-overview-ui.ts waitingRetryEl (Teď, limit, telefon R.phone, tlačítko primary/secondary), waitingRetryOffered (ne sheet, can, writes.retry), waitingGroupRetryOffer (ne sheet, ne kniha, ne místa, offer.n < 2 → nic, celá skupina s.waiting), waitingGroupRetryNow (ne telefon), browserNote jen bez w.retry · src/ui/waiting-task-ui.ts waitingDeliverEl retryMain (③ obrysová) · src/ui/research-waiting-write-ui.ts retryWaitingItem (doneRunning/doneIdle podle běhu, limit → can false, waitingRetryRefusedText) · src/ui/overview-window-ui.ts waiting-agent-retry, waiting-group-agent-retry · src/research-link.ts WAITING_RETRY_FEATURE · strings.ts live.waitingRetry, research.browser.waitNoExt, waitAgent · e2e/waiting-retry.spec.ts, waiting-retry-group.spec.ts · dirigent:prace/1124-app-089-zkusit-znovu (Výsledek, odchylky sub1–sub3), spec/089 K1.1–K3.1 -->
+
+<a id="S4.4.15"></a>
+### S4.4.15 Forschung für diesen Stammbaum › Start des Agenten: Agenten ohne Bestätigung starten
+
+In der Gruppe **Start des Agenten** des Fensters **Forschung für diesen Stammbaum…** steht der Schalter **Agenten
+ohne Bestätigung starten**: die Einstellung dieses Computers `run.confirm` ([S4.5.5](#S4.5.5)) aus der App.
+Ausschalten lässt er sich sofort, einschalten nach einer Bestätigung.
+
+- **Schalter:** „Aktionen der App, die den Agenten starten, laufen im Terminal der Forschung ohne Bestätigung an.
+  Jeder Lauf nutzt das Abo oder Guthaben. Gilt für alle Forschungen auf diesem Computer.“ Standardmäßig ist er
+  ausgeschaltet; er zeigt, was die Forschung sagt.
+- **Grenzen:**
+  - er gilt für alle Forschungen auf diesem Computer, nicht nur für diesen Stammbaum;
+  - das Ausschalten schreibt die App sofort über die Brücke, ohne Rückfrage (`strom config unset run.confirm`);
+  - das Einschalten fragt zuerst: **Agenten ohne Bestätigung starten?** „Aktionen der App, die den KI-Agenten
+    starten, laufen dann im Terminal der Forschung ohne Nachfrage an und nutzen das Abo oder Guthaben der KI. Gilt
+    für alle Forschungen auf diesem Computer.“ mit **Einschalten**. **Abbrechen** schreibt nichts, und der Schalter
+    bleibt ausgeschaltet. Nach **Einschalten** schreibt die Forschung `run.confirm no` und eine Zeile ins Protokoll
+    der Brücke, dass die Strom-App auf diesem Computer die Rückfrage ausgeschaltet hat;
+  - einschalten lässt er sich nur in der App auf dem Computer mit der Forschung. Sonst lehnt die Forschung das
+    Einschalten ab: der Schalter bleibt ausgeschaltet, und darunter steht „Nicht eingeschaltet. Befehl für das
+    Terminal der Forschung:“ mit dem Befehl `strom config set run.confirm no` zum Kopieren;
+  - was dann ohne Rückfrage startet und was weiter fragt, bestimmt die Forschung ([S4.5.5](#S4.5.5)); eine Frage mit
+    einem Preis in Geld bleibt;
+  - nur mit einer Forschung, die die Einstellung anbietet; nicht im Strom-Archiv und nicht bei einer Forschung, die
+    auf einen Agenten wartet. Ohne Brücke ist der Schalter inaktiv wie bei **An die Forschung gesendete Dateien geht
+    der Agent selbst durch** ([S4.4.11](#S4.4.11)).
+- **Bedienung:** App: **Forschung → Weitere Aktionen → Forschung für diesen Stammbaum… → Start des Agenten → Agenten
+  ohne Bestätigung starten**. Terminal: [S4.5.5](#S4.5.5).
+- **Gilt seit:** App 3.32.0 (Forschung 1.37.0)
+
+<!-- zdroj: app:e02c706d src/ui/research-tree-settings-ui.ts runConfirm (RUN_CONFIRM_FEATURE, /status.work.confirm, ne bez agenta), renderResearchIntakeRow (fieldset runConfirmSection), switchResearchConfirm (vypnout hned; zapnout showConfirm runConfirmAskText/Title, confirmSwitchOn; Zrušit nic), setResearchRunConfirm (raise → raiseNote sortConfirmRaise + příkaz; archive → řádek pryč; bez mostu storiesBridgeDown) · src/history-bridge.ts postBridgeRunConfirm · strings.ts history.runConfirmSection, runConfirmTitle, runConfirmDesc, runConfirmAskTitle, runConfirmAskText, confirmSwitchOn, sortConfirmRaise · research:ce89202a src/core/live.ts POST /settings/run (ask: config unset run.confirm; no: jen fetch prohlížeče na tomto počítači, jinak 403 run.raise {command: strom config set run.confirm no}; 409 run.archive), noteLive ui.live.unasked.run · BRIDGE_FEATURES run.confirm · dirigent:spec/123 P2 K2.1–K2.6 -->
 
 <a id="S4.5"></a>
 ## S4.5 Aktionen, die die Forschung öffnen
@@ -1731,13 +1772,16 @@ Rückfrage** startet die Arbeit des Agenten sofort, und das Terminal sagt es in 
   - **ohne Rückfrage** schaltet nur der Mensch ein: Das Terminal sagt, was weiter gefragt wird, und will ein zweites
     Ja (Enter = nein). Stellt es ein Agent oder ein Befehl ohne Terminal ein, fragt ein Systemfenster den Menschen;
     ohne Fenster lehnt strom die Einstellung ab. Zurück zu **mit Rückfrage** darf jeder, ohne Frage;
-  - die Strom-App hat diese Einstellung nicht und ändert sie nicht. Den Wert zeigen `strom config` und der Bericht
+  - die Strom-App zeigt und ändert sie im Fenster **Forschung für diesen Stammbaum…** mit dem Schalter **Agenten
+    ohne Bestätigung starten** ([S4.4.15](#S4.4.15)); das Einschalten verlangt dort eine Bestätigung im Dialog der
+    App und geht nur auf dem Computer mit der Forschung. Den Wert zeigen `strom config` und der Bericht
     `strom error` ([R13](R13-reporting-a-problem.md#R13)).
 - **Bedienung:** Terminal: Menü **Einstellungen** → **Sprache, Agent, Modell, was der Agent allein darf, Geschichten…
   (die Einrichtung)** → **Agent aus der Strom-App starten: …** → **Vor dem Start fragen (Standard)** oder **Ohne
   Rückfrage starten**; `strom config set run.confirm no`, zurück `strom config unset run.confirm`. Den geltenden Wert
-  zeigt `strom config where`.
-- **Gilt seit:** Forschung 1.36.0
+  zeigt `strom config where`. App: [S4.4.15](#S4.4.15).
+- **Gilt seit:** Forschung 1.36.0; 1.37.0 (App 3.32.0): ein- und ausschalten lässt es sich auch aus der Strom-App
+  auf diesem Computer
 
 <!-- zdroj: research:8aa0f374 src/core/config.ts run.confirm (ask|no, tree: false, env žádná), Settings.runConfirm · src/cli/menu-links.ts asksToStart (priced || runConfirm !== no || !ctx.interactive || isAgent → asks; jinak ui.link.noconfirm) u openTask (priced = taskEstimate), waitingDo chat, placesRun (priced = est.session.usd || fronta), workRun, workOn · src/commands/links.ts conflict do=agent, chat (direction/person) · placeSearch dál asks (placeCost), review/research ui.link.tasks dál asks · src/commands/setup.ts setUserSetting run.confirm no → requireHumanYes (ui.consent.run.confirm), FALLBACKS run.confirm ask · src/cli/context.ts requireHuman (terminál → humanYes, jinak okno systému, jinak odmítnutí) · src/cli/menu-settings.ts runConfirmStep (ui.runconfirm.*, ui.runconfirm.about; jen !archive), unset pro ask · src/core/report.ts CONFIG_PLAIN runConfirm · cs.json ui.settings.runconfirm, ui.runconfirm.*, ui.link.noconfirm · strom help link · CHANGELOG.cs.md 1.36.0 „Agent z aplikace Strom bez potvrzení“ · test/cli/run-confirm.test.ts, test/cli/gates.test.ts · spec 123 K1.1–K1.5 (K1.4 bez zápisu do logu výzkumu: rozhodnutí dirigenta 20. 11.) -->
 
@@ -1753,7 +1797,8 @@ immer im Terminal der Forschung bestätigt, auch wenn es mit einem Klick in der 
     Warteschlange und die Einträge **Nur hier im Terminal** ([R6.1.1](R6-awaiting-action.md#R6.1.1)).
   - Im Terminal bestätigt werden: alles mit der Marke Terminal oder KI ([S4.5.1](#S4.5.1)), in 3.21.2 auch Aktionen
     der Linien und der Warteschlange. Ab Forschung 1.36.0 kann die Arbeit des Agenten ohne Preis in Geld ohne
-    Bestätigung starten ([S4.5.5](#S4.5.5)); das schaltet nur der Mensch ein, im Terminal.
+    Bestätigung starten ([S4.5.5](#S4.5.5)); das schaltet nur der Mensch ein: im Terminal, oder ab App 3.32.0 mit
+    Forschung 1.37.0 nach einer Bestätigung in der App auf dem Computer mit der Forschung ([S4.4.15](#S4.4.15)).
   - Auf dem Telefon gibt es keine Links; geantwortet wird in der Forschung am Computer ([S5](S5-phone.md)).
 - **Gilt seit:** App 3.4.0 (Forschung 1.6.0)
 - **Ab App 3.22.0:** mit der Forschung 1.26.0 gehen ohne Terminal die Linien ([S4.3.1](#S4.3.1)), die Arbeit

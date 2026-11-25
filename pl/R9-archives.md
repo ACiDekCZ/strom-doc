@@ -77,13 +77,22 @@ strom może robić automatycznie; szczegółowa tabela poziomów jest w [R8.2](R
   - zakazana ścieżka `/` (cały serwer obrazów) zamyka także przeglądarkę agenta: skany tylko ręcznie;
   - witryny jednego archiwum (np. archiwum cyfrowe i czytelnia jednego archiwum krajowego) mają każda swój zapis;
     w Co czeka pokazują się jednak pod jedną nazwą archiwum ([R9.6](#R9.6)).
+- **Od badania 1.37.0:** księga zapisana w badaniu pod archiwum, której adres jest na portalu z listy archiwów (np.
+  Porta fontium, Acta Publica), już nie czyni portalu tak surowym jak to archiwum: portal kieruje się swoimi warunkami
+  i pozostałymi źródłami. Własny portal archiwum pod innym adresem, przy którym lista podaje warunki na stronie
+  archiwum (np. eBadatelna SOA Praha), archiwum trzyma dalej. Poziom, który strom trzyma z wcześniej, zostaje, dopóki
+  nie zdecyduje człowiek w Co czeka. Tam, gdzie wpis archiwum trzyma witrynę przez księgę, `strom doctor`, pytanie
+  w Co czeka i `strom allow archive` wymieniają archiwum, księgę i witrynę: „wpis archiwum w badaniu R… (…) przez
+  jego księgę … na … (strom recordset show …)”.
 - **Dlaczego:** metodyka chce przestrzegać warunków każdego archiwum. Tam, gdzie robots.txt wpuszcza tylko
   przeglądarkę, idzie najwyżej przeglądarka, za zgodą człowieka i w jego tempie; to, co lista archiwów zostawia
   ręce człowieka, zapisuje człowiek.
 - **Obsługa:** terminal: `strom net web --check <adres>` (co strom zrobiłby z adresem), menu archiwów, `strom
   allow archive` (tylko człowiek). Aplikacja: Czeka na załatwienie.
-- **Obowiązuje od:** badanie 1.14.0. Kolejne archiwa Czech, Niemiec i Polski oraz serwer obrazów od 1.27.0.
+- **Obowiązuje od:** badanie 1.14.0. Kolejne archiwa Czech, Niemiec i Polski oraz serwer obrazów od 1.27.0. Portal
+  z listy według swoich warunków, nie według księgi innego archiwum, od 1.37.0.
 
+<!-- zdroj: 1.37.0: research:91631d2e, 66a521fa src/core/terms.ts listStates, treeLevel (kniha jen tam, kde seznam podmínky webu neuvádí; vlastní portál archivu s podmínkami na webu archivu drží), src/core/floor.ts FloorHold tree recordset, holdText, floorWhat · cs.json ui.archive.floor.hold.treeSet · CHANGELOG.cs.md 1.37.0 -->
 <!-- zdroj: research:src/core/terms.ts:566-680 archiveLevel (robots "Disallow: /" → browserOnly, restricted; robotsYield: openByTerms + robotsNamesAi false), :789-803 allows (browserOnly + manual → nothing) · assets/archives.json (level, browserOnly, pace, disallow, imagesFrom, quote, quoteFrom, checked; metrikai.lt, lagis, gov, online-ofb restricted + browserOnly; ebadatelna.soapraha.cz manual) · src/core/knownterms.ts imagesFrom · test/unit/known-terms.test.ts (imagesFrom closed whole ⇒ manual) · src/core/browserhelp.ts browserHelps (disallow "/") · CHANGELOG.cs.md 1.26.0, 1.27.0 (c3ee4422) -->
 
 <a id="R9.1.1"></a>
@@ -160,14 +169,30 @@ sprawdza go hookiem przed każdym pobraniem i liczy zapytania do każdej witryny
     strom pyta człowieka raz na sesję i witrynę;
   - na wolne miejsce strom czeka najwyżej 30 s; odrzucone jest także wtedy, gdy strom daje witrynie spokój albo gdy ma
     ona wyczerpany limit lub godzinowy pułap.
+- **Od badania 1.37.0 (wyczerpany limit):**
+  - po `web.perHost` stronach agent słyszy, kiedy witryna znowu da strony: w tej sesji już żadnych albo od określonego
+    czasu (limit tego komputera, strony wszystkich sesji w czasie jednej sesji). Zadanie zostaje otwarte, nigdy
+    wykonane ani porzucone z powodu limitu; do tego czasu inna praca, inaczej koniec sesji. Strony witryny nie próbuje
+    się wcześniej ponownie i na limit się nie czeka; po trzeciej odmowie tej samej witryny w sesji agent słyszy, że
+    ma sesję zakończyć;
+  - `strom run` zadanie, którego praca prowadzi na taką witrynę (zapis skanu przeglądarką agenta albo księga tylko na
+    tej witrynie bez programu pobierającego), na razie pomija i bierze inne: „· T… na razie pominięte: strony … dla
+    tego komputera są wyczerpane do …”. Sesja na takiej witrynie zaczyna się, gdy wolna jest co najmniej jedna
+    trzecia limitu (10 z domyślnych 30);
+  - gdy innego zadania nie ma: przebieg z `--loop` albo `--until` czeka (bez agenta, nic się nie wysyła; „⏸ oczekiwanie
+    do … – pozostałe zadania potrzebują stron …”), inny przebieg się kończy i mówi kiedy („do … nie ma nic do zrobienia
+    – …”). Dla aplikacji Strom to zakończony przebieg, nie błąd;
+  - zadanie czekające na skan, którego przeglądarka agenta nigdy nie zapisała (strona odrzucona), wraca z końcem
+    sesji do kolejki; nigdy się o nim nie mówi, że przeglądarka je wstrzymała.
 - **Tylko metodyka:** przy odrzuconej witrynie najpierw inna droga. Wyszukiwanie zapisuje się z wynikiem
   nierozstrzygającym (`strom search add … --result inconclusive`). Dopiero gdy źródło jest nadal konieczne, zadanie
   czeka na człowieka, aby sprawdził witrynę (`strom task wait --check`, [R6.2.2](R6-awaiting-action.md#R6.2.2)).
 - **Dlaczego:** pobieranie stron i przeglądarka agenta liczą się i zwalniają razem, aby żadna droga nie szła szybciej
   niż inna.
-- **Obsługa:** terminal (agent): `strom net web --check <adres>`.
-- **Obowiązuje od:** badanie 1.14.0
+- **Obsługa:** terminal (agent): `strom net web --check <adres>`; `strom run`.
+- **Obowiązuje od:** badanie 1.14.0; wyczerpany limit od 1.37.0
 
+<!-- zdroj: 1.37.0: research:ce89202a src/core/web.ts ManyWhen, whenText, WEB_REFUSED_LOOP 3, manyText · src/core/webfull.ts (runWebFree perHost/3, WebFull) · src/core/machine.ts siteFreeAt · src/commands/session.ts:1311-1390 webOut, gateHolds (--loop, --until), stopCode web · cs.json ui.run.skip.web, ui.run.web.wait, ui.run.stop.web · CHANGELOG.cs.md 1.37.0 „Vyčerpaný limit webu“ -->
 <!-- zdroj: research:src/core/webgate.ts webGate (TERMS_PER_DAY, browserOnly advice, otherWay) · src/core/web.ts WEB_SOFT 12, WEB_SOFT_GAP_MS, WEB_PER_HOST 30, WEB_WAIT_MAX_MS · src/core/config.ts web.perHost · assets/method/locate.md -->
 
 <a id="R9.4"></a>

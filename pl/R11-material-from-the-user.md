@@ -131,7 +131,9 @@ na zadania.
 - **Tylko metodyka:**
   - agent najpierw tanio przegląda wszystkie pliki zadania (miniatury w siatce) i każdy od razu klasyfikuje: akt
     (źródło), dokument, zdjęcie, niezwiązany, i do kogo należy. Dokładnie czyta tylko to, co dotyczy ludzi badania;
-  - o żyjącej osobie nic się nie zapisuje; plik tylko się klasyfikuje;
+  - o żyjącej osobie do badania 1.36.0 nic się nie zapisywało, plik tylko się klasyfikowało. Od 1.37.0 materiał
+    osoby żyjącej klasyfikuje się i zapisuje jak u każdego innego; ochrona osób żyjących należy do eksportu
+    ([A7.2](A7-book-pages-and-export.md#A7.2));
   - skanów jednej księgi (wiele numerowanych skanów) nie czyta się plik po pliku: zapisuje się je jako księgę i czyta
     się z niej wpisy jak z każdej księgi ([R8](R8-reading-scans.md));
   - zadanie zamyka się, gdy każdy jego plik jest sklasyfikowany; kolejna część partii to osobne zadanie.
@@ -148,7 +150,13 @@ na zadania.
 - **Od badania 1.36.0:** zadania porządkowania powstają tylko przy włączonym `intake.auto` albo gdy człowiek poprosi
   o uporządkowanie partii; inaczej partia zamyka się bez zadań, a pliki czekają w Materiałach nieuporządkowane
   ([R11.6](#R11.6)).
+- **Od badania 1.37.0:** plik wysłany z aplikacji Strom (z partii, także materiał osoby), który w drzewie aplikacji
+  nie ma jeszcze miejsca i który `strom input sort` sklasyfikuje jako akt, dokument albo zdjęcie osób, dostaje
+  miejsce przy nich: dwoje partnerów jednego związku przy związku, inaczej przy każdej osobie. Aplikacja pokazuje go
+  wtedy przy osobie, nie tylko w oknie **Materiały**. Miejsca nie dostaje plik, który w drzewie miejsce ma albo
+  którego miejsce w aplikacji usunięto, ukryty, niezwiązany, własny materiał badania ani osoba z niego usunięta.
 
+<!-- zdroj: 1.37.0: research:ce89202a src/commands/intake.ts input sort (MediaLink, pořadí za posledním souborem místa; pár u FAM, jinak u INDI; --json placed; bez místa: má místo nebo odebrané, skrytý, unrelated, vlastní, odebraná osoba) · assets/method/intake.md „Someone living: sort and record as anyone.“ · CHANGELOG.cs.md 1.37.0 „Materiál z aplikace zařazený do stromu“ -->
 <!-- zdroj: research:src/core/batches.ts hlavička, BATCH_TASK_FILES=25 (od v1.12.0), BATCH_IDLE_MS, PHONE_BATCH_IDLE_MS (od v1.18.0) · research:src/commands/intake.ts input batch done (--idle), input sort (unrelated --reason) · research:assets/method/intake.md "A batch from the Strom app" -->
 
 <a id="R11.5"></a>
@@ -276,7 +284,9 @@ badania nic się nie zapisuje.
     się kodem 4);
   - `no` ustawia tylko człowiek we własnym terminalu: `strom config set` go pyta („Sortować pliki materiału przez
     czytelników badania od razu na prośbę, bez pytania o płatne odczyty? …”). Agent albo polecenie bez jego terminalu
-    dostaje kod 4 i nic się nie zmienia. Z powrotem na `ask` albo anulować może każdy, także aplikacja Strom
+    dostaje kod 4 i nic się nie zmienia. Dla jednego badania ustawia go także aplikacja Strom na tym komputerze po
+    potwierdzeniu w swoim oknie; dziennik mostu mówi o tym jedną linią. Z powrotem na `ask` albo anulować może każdy,
+    także aplikacja Strom
     ([S4.4.13](S4-research-from-the-app.md#S4.4.13));
   - z `--for-tree` obowiązuje dla tego badania, inaczej dla tego komputera. Granice porządkowania się nie zmieniają.
 

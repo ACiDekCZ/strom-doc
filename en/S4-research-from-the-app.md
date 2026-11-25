@@ -438,7 +438,9 @@ separately. Each run can be followed and stopped on its own.
     goes. A new opening of the app does not show ended blocks.
 - **Order of the blocks:** the run of the whole queue first, then the runs of directions in the order of the
   directions ([R2.1.4](R2-lines-and-queue.md#R2.1.4)). The section's heading is “Now · 3 agents”; the summary
-  **State** with two or more runs “3 agents working” and possibly “1 waiting for the limit until 14:00”.
+  **State** with two or more runs “3 agents working” and possibly “1 waiting for the limit until 14:00”. From app
+  3.32.0 a run waiting for an archive, the archive browser or a download is counted too: then only “1 waiting”
+  (without a time).
 - **The block's actions:**
   - **Show in tree**: the people of the direction, at the run of the whole queue the person the agent works on;
   - **Follow this run** / **● Followed**: only with two or more runs and with following switched on;
@@ -466,7 +468,7 @@ separately. Each run can be followed and stopped on its own.
   `strom run stop <run-…> [--finish]`.
 - **Since:** app 3.31.0 (research 1.36.0)
 
-<!-- zdroj: app:4de0835a src/research-runs.ts (run.lines, RUN_ENDED_MS 60 s, orderRuns obecný první a linie v pořadí, runCount, noteEndedRuns jen v paměti) · src/ui/research-overview-ui.ts vykreslení bloku (runStateWorking/Starting/Limit/Archive/Waiting/WaitingUntil/Browser/Download/Finishing/Ended, runBrowserNote, runSkips, runFinishesThen, runEndedText jen limit|error, runAfterStop), overviewRunActions (Ukázat ve stromu; Sledovat tento běh jen ≥ 2 běhy a sledování, ne telefon; Zastavit s run.stop u working|waiting, ne telefon; Dokončit a skončit finish?run= u working a čekání na prohlížeč nebo stahování) · src/ui/live-follow-ui.ts pilulka followRunPill, followRunMenu, followOff · strings.ts live.nowAgents, stateAgents, stateAgentsWaiting, runWhole, run*, followRun* · app:docs/ZADANI_DEV_beh-po-liniich.md §3, §4, §7, Kolo 2 C2 · dirigent:spec/126 K2.1, K2.2, K2.5, prace/1121-app-126-linie, 1122-app-126-kolo2 · research: /status runs[], runsEnded[] (POST runs/stop) -->
+<!-- zdroj: 3.32.0: app:f09e9722 src/research-runs-text.ts runsWaitingText (stateAgentsWaitingAny, když některý běh nečeká na limit) · app:4de0835a src/research-runs.ts (run.lines, RUN_ENDED_MS 60 s, orderRuns obecný první a linie v pořadí, runCount, noteEndedRuns jen v paměti) · src/ui/research-overview-ui.ts vykreslení bloku (runStateWorking/Starting/Limit/Archive/Waiting/WaitingUntil/Browser/Download/Finishing/Ended, runBrowserNote, runSkips, runFinishesThen, runEndedText jen limit|error, runAfterStop), overviewRunActions (Ukázat ve stromu; Sledovat tento běh jen ≥ 2 běhy a sledování, ne telefon; Zastavit s run.stop u working|waiting, ne telefon; Dokončit a skončit finish?run= u working a čekání na prohlížeč nebo stahování) · src/ui/live-follow-ui.ts pilulka followRunPill, followRunMenu, followOff · strings.ts live.nowAgents, stateAgents, stateAgentsWaiting, runWhole, run*, followRun* · app:docs/ZADANI_DEV_beh-po-liniich.md §3, §4, §7, Kolo 2 C2 · dirigent:spec/126 K2.1, K2.2, K2.5, prace/1121-app-126-linie, 1122-app-126-kolo2 · research: /status runs[], runsEnded[] (POST runs/stop) -->
 
 <a id="S4.2"></a>
 ## S4.2 The queue in the app
@@ -1362,27 +1364,35 @@ most**: how many runs may work on the tree at once, the run of the whole queue a
 ### S4.4.13 Research for this tree › Materials: sort with the agent without asking
 
 In the group **Materials** of the window **Research for this tree…** there is the switch **Sort with the agent
-without asking** ([R11.5.3](R11-material-from-the-user.md#R11.5.3)). It can be switched off in the app; switched on
-only in the research terminal.
+without asking** ([R11.5.3](R11-material-from-the-user.md#R11.5.3)). It can be switched off in the app at once;
+switched on in the app after a confirmation or in the research terminal.
 
 - **Switch:** “Sort with the agent… does not say the cost before each sorting; it still starts only on a click. Each
-  sorting uses the subscription or credit. Switching it on is possible only in the research terminal.” It is off by
-  default; it shows what the research says.
+  sorting uses the subscription or credit. Applies to this tree.” It is off by default; it shows what the research
+  says.
 - **Limits:**
-  - the app writes switching off through the bridge at once;
-  - switching on is refused by the research: the switch stays off, and under it stands “Not switched on. The command
-    for the research terminal:” with the command `strom config set sort.confirm no --for-tree` to copy. The sentence
-    goes as soon as the research says it is on;
+  - the app writes switching off through the bridge at once, without a question;
+  - switching on asks first: **Sort with the agent without asking?** “Sorting then no longer asks to confirm the cost
+    each time and uses the subscription or credit of the AI agent without another question. Applies to this tree.”
+    with **Switch on**. **Cancel** writes nothing and the switch stays off. After **Switch on** the research writes
+    `sort.confirm no` for this research and one line in the bridge's log that the Strom app on this computer turned
+    the question off;
+  - switching on from the app is possible only in the app on the computer with the research and with a research that
+    offers it. Otherwise the research refuses switching on: the switch stays off, and under it stands “Not switched
+    on. The command for the research terminal:” with the command `strom config set sort.confirm no --for-tree` to
+    copy. The sentence goes as soon as the research says it is on. A research that does not offer switching on from
+    the app also has in the switch's description the sentence “Switching it on is possible only in the research
+    terminal.” and the app then does not ask beforehand;
   - on: the dialog **Sort with the agent…** does not say the cost; sorting still starts only by its button, and the
     AI tag and the number of files stay ([A3.5.8](A3-evidence-in-the-app.md#A3.5.8));
   - only with a research that offers the setting; not in the Strom archive nor at a research waiting for an agent.
     Without the bridge the switch is inactive as with **The agent goes through files sent to the research by
     itself** ([S4.4.11](#S4.4.11)).
 - **Controls:** app: **Research → Other actions → Research for this tree… → Materials → Sort with the agent without
-  asking** (only switching off). Terminal: `strom config set sort.confirm no|ask --for-tree`.
+  asking**. Terminal: `strom config set sort.confirm no|ask --for-tree`.
 - **Since:** app 3.32.0 (research 1.37.0)
 
-<!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 -->
+<!-- zdroj: app:7674ee44 src/ui/research-tree-settings-ui.ts sortConfirm, showSort (SORT_CONFIRM_FEATURE, /status.sort, ne bez agenta), setResearchSortConfirm (POST /settings/sort ask hned; 403 sort.raise → příkaz, přepínač vypnutý, dokud status neřekne no; bez mostu storiesBridgeDown) · src/research-link.ts postBridgeSortConfirm · src/ui/material-sort-ui.ts (no: bez ceny, jen tlačítkem, štítek AI a počet) · strings.ts history.sortConfirmTitle, sortConfirmDesc, sortConfirmRaise · research:5520e0ac src/core/live.ts POST /settings/sort (403 sort.raise {command}, 409 sort.archive), /status sort · dirigent:spec/102 U8 · zapnutí z aplikace: app:e02c706d switchResearchConfirm (s SORT_CONFIRM_APP_FEATURE showConfirm sortConfirmAskText/Title, confirmSwitchOn; Zrušit nic), raiseNote (403 sort.raise → sortConfirmRaise + příkaz), bez sort.confirm.app sortConfirmTerminalOnly a bez dialogu · strings.ts history.sortConfirmAskTitle, sortConfirmAskText, confirmSwitchOn · research:ce89202a src/core/live.ts sortConfirmWrite (lowersFrom: jen fetch prohlížeče na tomto počítači, jinak 403 sort.raise {command}), noteLive ui.live.unasked.sort · BRIDGE_FEATURES sort.confirm.app · dirigent:spec/123 P2 K2.1–K2.6 -->
 
 <a id="S4.4.14"></a>
 ### S4.4.14 Retry with the agent
@@ -1440,6 +1450,38 @@ now and has the button **Retry with the agent**. An archive's group with more su
 - **Since:** app 3.32.0 (research 1.37.0)
 
 <!-- zdroj: app:c574752a, 3c6a554d, 75b71f5a src/research-waiting.ts waitingRetryReason (held/heldNoHost, stopped, ready, screen, no-extension waitNoExt + afterExt + extLink, agent-without-browser waitAgent, again → againHeld/againWaits), retryWhenText (dnes, včera, zítra, den a měsíc), waitingRetryCount, waitingRetryLimitText, waitingRetryMain (ne no-extension/agent-without-browser), waitingActions ctx.retry (jen přehled, ne telefon, w.retry.can), waitingGroupRetry (n, atLeast, readOnly, later), groupRetry*Text, waitingGroupRetryReason (≥ 2, stejné why+host) · src/ui/research-overview-ui.ts waitingRetryEl (Teď, limit, telefon R.phone, tlačítko primary/secondary), waitingRetryOffered (ne sheet, can, writes.retry), waitingGroupRetryOffer (ne sheet, ne kniha, ne místa, offer.n < 2 → nic, celá skupina s.waiting), waitingGroupRetryNow (ne telefon), browserNote jen bez w.retry · src/ui/waiting-task-ui.ts waitingDeliverEl retryMain (③ obrysová) · src/ui/research-waiting-write-ui.ts retryWaitingItem (doneRunning/doneIdle podle běhu, limit → can false, waitingRetryRefusedText) · src/ui/overview-window-ui.ts waiting-agent-retry, waiting-group-agent-retry · src/research-link.ts WAITING_RETRY_FEATURE · strings.ts live.waitingRetry, research.browser.waitNoExt, waitAgent · e2e/waiting-retry.spec.ts, waiting-retry-group.spec.ts · dirigent:prace/1124-app-089-zkusit-znovu (Výsledek, odchylky sub1–sub3), spec/089 K1.1–K3.1 -->
+
+<a id="S4.4.15"></a>
+### S4.4.15 Research for this tree › Starting the agent: start the agent without confirming
+
+In the group **Starting the agent** of the window **Research for this tree…** there is the switch **Start the agent
+without confirming**: the setting of this computer `run.confirm` ([S4.5.5](#S4.5.5)) from the app. It can be switched
+off at once, switched on after a confirmation.
+
+- **Switch:** “Actions in the app that start the agent run in the research terminal without a confirmation. Each run
+  uses the subscription or credit. Applies to all researches on this computer.” It is off by default; it shows what
+  the research says.
+- **Limits:**
+  - it applies to all researches on this computer, not only to this tree;
+  - the app writes switching off through the bridge at once, without a question (`strom config unset run.confirm`);
+  - switching on asks first: **Start the agent without confirming?** “Actions in the app that start the AI agent then
+    run in the research terminal without a question and use the subscription or credit of the AI. Applies to all
+    researches on this computer.” with **Switch on**. **Cancel** writes nothing and the switch stays off. After
+    **Switch on** the research writes `run.confirm no` and one line in the bridge's log that the Strom app on this
+    computer turned the question off;
+  - switching on is possible only in the app on the computer with the research. Otherwise the research refuses
+    switching on: the switch stays off, and under it stands “Not switched on. The command for the research terminal:”
+    with the command `strom config set run.confirm no` to copy;
+  - what then starts without a question and what still asks is decided by the research ([S4.5.5](#S4.5.5)); a
+    question with a price in money stays;
+  - only with a research that offers the setting; not in the Strom archive nor at a research waiting for an agent.
+    Without the bridge the switch is inactive as with **The agent goes through files sent to the research by
+    itself** ([S4.4.11](#S4.4.11)).
+- **Controls:** app: **Research → Other actions → Research for this tree… → Starting the agent → Start the agent
+  without confirming**. Terminal: [S4.5.5](#S4.5.5).
+- **Since:** app 3.32.0 (research 1.37.0)
+
+<!-- zdroj: app:e02c706d src/ui/research-tree-settings-ui.ts runConfirm (RUN_CONFIRM_FEATURE, /status.work.confirm, ne bez agenta), renderResearchIntakeRow (fieldset runConfirmSection), switchResearchConfirm (vypnout hned; zapnout showConfirm runConfirmAskText/Title, confirmSwitchOn; Zrušit nic), setResearchRunConfirm (raise → raiseNote sortConfirmRaise + příkaz; archive → řádek pryč; bez mostu storiesBridgeDown) · src/history-bridge.ts postBridgeRunConfirm · strings.ts history.runConfirmSection, runConfirmTitle, runConfirmDesc, runConfirmAskTitle, runConfirmAskText, confirmSwitchOn, sortConfirmRaise · research:ce89202a src/core/live.ts POST /settings/run (ask: config unset run.confirm; no: jen fetch prohlížeče na tomto počítači, jinak 403 run.raise {command: strom config set run.confirm no}; 409 run.archive), noteLive ui.live.unasked.run · BRIDGE_FEATURES run.confirm · dirigent:spec/123 P2 K2.1–K2.6 -->
 
 <a id="S4.5"></a>
 ## S4.5 Actions that open the research
@@ -1617,13 +1659,16 @@ and where the question is turned on again.
   - only a person turns on **without the question**: the terminal says what is still asked and wants a second yes
     (Enter = no). When an agent or a command without a terminal sets it, a system window asks the person; without a
     window strom refuses the setting. Anyone may go back to **asked first**, without a question;
-  - the Strom app has no such setting and does not change it. The value is shown by `strom config` and by the report
+  - the Strom app shows and changes it in the window **Research for this tree…** with the switch **Start the agent
+    without confirming** ([S4.4.15](#S4.4.15)); switching on there wants a confirmation in the app's dialog and is
+    possible only on the computer with the research. The value is shown by `strom config` and by the report
     `strom error` ([R13](R13-reporting-a-problem.md#R13)).
 - **Controls:** terminal: the menu **Settings** → **Language, agent, model, what the agent may do alone, stories… (the
   setup)** → **Starting the agent from the Strom app: …** → **Ask before it starts (default)** or **Start without the
   question**; `strom config set run.confirm no`, back `strom config unset run.confirm`. The value in force is shown by
-  `strom config where`.
-- **Since:** research 1.36.0
+  `strom config where`. App: [S4.4.15](#S4.4.15).
+- **Since:** research 1.36.0; 1.37.0 (app 3.32.0): it can be switched on and off also from the Strom app on this
+  computer
 
 <!-- zdroj: research:8aa0f374 src/core/config.ts run.confirm (ask|no, tree: false, env žádná), Settings.runConfirm · src/cli/menu-links.ts asksToStart (priced || runConfirm !== no || !ctx.interactive || isAgent → asks; jinak ui.link.noconfirm) u openTask (priced = taskEstimate), waitingDo chat, placesRun (priced = est.session.usd || fronta), workRun, workOn · src/commands/links.ts conflict do=agent, chat (direction/person) · placeSearch dál asks (placeCost), review/research ui.link.tasks dál asks · src/commands/setup.ts setUserSetting run.confirm no → requireHumanYes (ui.consent.run.confirm), FALLBACKS run.confirm ask · src/cli/context.ts requireHuman (terminál → humanYes, jinak okno systému, jinak odmítnutí) · src/cli/menu-settings.ts runConfirmStep (ui.runconfirm.*, ui.runconfirm.about; jen !archive), unset pro ask · src/core/report.ts CONFIG_PLAIN runConfirm · cs.json ui.settings.runconfirm, ui.runconfirm.*, ui.link.noconfirm · strom help link · CHANGELOG.cs.md 1.36.0 „Agent z aplikace Strom bez potvrzení“ · test/cli/run-confirm.test.ts, test/cli/gates.test.ts · spec 123 K1.1–K1.5 (K1.4 bez zápisu do logu výzkumu: rozhodnutí dirigenta 20. 11.) -->
 
@@ -1639,7 +1684,8 @@ research's terminal, even when it starts with a click in the app.
     Strom app)** ([R6.1.1](R6-awaiting-action.md#R6.1.1)).
   - Confirmed in the terminal: everything with the mark terminal or AI ([S4.5.1](#S4.5.1)), in 3.21.2 also the
     actions of directions and of the queue. From research 1.36.0 the agent's work without a price in money can start
-    without confirmation ([S4.5.5](#S4.5.5)); only a person turns this on, in the terminal.
+    without confirmation ([S4.5.5](#S4.5.5)); only a person turns this on: in the terminal, or from app 3.32.0 with
+    research 1.37.0 after a confirmation in the app on the computer with the research ([S4.4.15](#S4.4.15)).
   - On a phone there are no links; answers are given in the research on the computer ([S5](S5-phone.md)).
 - **Since:** app 3.4.0 (research 1.6.0)
 - **From app 3.22.0:** with research 1.26.0 directions ([S4.3.1](#S4.3.1)), work outside the directions by branches

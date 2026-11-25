@@ -258,6 +258,9 @@ w relacjach, w tabeli związków, na stronach osób i w księdze rodu.
   liczy zdjęcia par do zdjęć, a oryginały portretów do załączników.
 - **Obsługa:** Tabela › Związki, wybór kolumn; strona osoby; eksport **Księga rodu**.
 - **Obowiązuje od:** aplikacja 3.30.0
+- **Od aplikacji 3.31.0:** Wachlarz pokazuje portrety przy włączonej opcji **Portrety** ([A6.4.2](A6-views.md#A6.4.2));
+  od 3.32.0 w każdym pierścieniu, gdzie jest miejsce, a na plakacie i w druku od 7 mm
+  ([A6.4.3](A6-views.md#A6.4.3)). Zdjęcia pary wachlarz nie pokazuje.
 
 <!-- zdroj: app:45f7ca2a src/ui/table-view/table-columns.ts:732 uPhoto (group uextra, skrytý, kind thumb), thumbCell (strings.table.yes, sortKey), table-filter.ts presence (withPhoto / withoutPhoto), prohlížeč s Udělat portréty… a Vrátit, telefon (D10) · app:fd1f0c3c src/person-page.ts couplePhotoItems (první v galerii, popisek, počet obrázků, bez skupiny obrázků / žijící partner pod ochranou), rodinné stránky totéž, src/book-blocks.ts couplePhotoHtml (jen parts.media, popisek fields.marriageRow / book.partners + datum), src/book-css.ts .book-photo--couple max-height 110mm · app:50e49518 src/ui/tree-overview.ts a src/attachments.ts: fotka svazku mezi fotkami, originál portrétu je příloha · ZADANI_DEV §5, §8, D10, D12 · strings.ts tableCols.uPhoto, tableFilter.withPhoto, withoutPhoto, table.groups.uextra, personPage.sec.materials, relationships.unionPhotoCaption, book.parts.media -->
 
