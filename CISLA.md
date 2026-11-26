@@ -404,6 +404,13 @@ nenapsáno) · `neplatí od <verze>`.
 | A7.6 | A7-book-pages-and-export.md | aplikace 3.18.0 | platí | Stránka osoby | Person page | Personenseite | Strona osoby |
 | A7.7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Uložené HTML (samostatný soubor) | Saved HTML (a standalone file) | Gespeichertes HTML (eigenständige Datei) | Zapisany HTML (samodzielny plik) |
 | A7.8 | A7-book-pages-and-export.md | aplikace 2.8.0 | platí | Vyprávění | Stories | Erzählungen | Opowieść |
+| A7.9 | A7-book-pages-and-export.md | aplikace 3.33.0 | platí | Darovat rodokmen | Give a family tree | Stammbaum verschenken | Podarować rodowód |
+| A7.9.1 | A7-book-pages-and-export.md | aplikace 3.33.0 | platí | Kdo v rodokmenu bude (výřez) | Who is in it (the cut) | Wer dazugehört (der Ausschnitt) | Kto w nim będzie (wycinek) |
+| A7.9.2 | A7-book-pages-and-export.md | aplikace 3.33.0 | platí | Údaje žijících v daru | Living people in the gift | Lebende Personen im Geschenk | Dane żyjących w prezencie |
+| A7.9.3 | A7-book-pages-and-export.md | aplikace 3.33.0 | platí | Co v balíčku bude | What the package holds | Inhalt des Pakets | Co będzie w paczce |
+| A7.9.4 | A7-book-pages-and-export.md | aplikace 3.33.0 | platí | Průvodní list (Začít zde) | Cover letter (Start here) | Begleitbrief (Hier beginnen) | List przewodni (Zacznij tutaj) |
+| A7.9.5 | A7-book-pages-and-export.md | aplikace 3.33.0 | platí | Hromadně pro seznam osob nebo výběr | In bulk for a list of people or a selection | In Serie für eine Personenliste oder Auswahl | Hurtowo dla listy osób lub wyboru |
+| A7.9.6 | A7-book-pages-and-export.md | aplikace 3.33.0 | platí | Rozsah exportu Rodokmen osoby | The export scope Person’s family tree | Exportumfang Stammbaum einer Person | Zakres eksportu Rodowód osoby |
 | A8 | A8-merging-trees.md | aplikace 1.0.0 | platí | Sloučení stromů | Merging trees | Zusammenführen von Stammbäumen | Scalanie drzew |
 | A8.1 | A8-merging-trees.md | aplikace 1.0.0 | neplatí od 3.32.0 | Sloučení vždy založí nový strom | A merge always creates a new tree | Zusammenführen legt immer einen neuen Stammbaum an | Scalenie zawsze zakłada nowe drzewo |
 | A8.2 | A8-merging-trees.md | aplikace 1.0.0 | platí | Párování osob | Pairing people | Abgleich der Personen | Łączenie osób w pary |

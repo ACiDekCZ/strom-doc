@@ -35,7 +35,7 @@ dauerhaft.
 - [A4 Stammlinien und Nachnamen](A4-surnames-and-families.md): Stammlinie und Stammvater, Eingeheiratete, weibliche Formen von Nachnamen, Namenssuche
 - [A5 Prüfung des Stammbaums](A5-tree-check.md): was die App im Stammbaum überwacht, mit welchen Schwellen, und Kein Fehler
 - [A6 Ansichten und Auswahl der Personen](A6-views.md): Familie, Nachkommen, Zeitleiste, Fächer, Karte, die Stammlinie in der Ansicht, Tabelle und eine Ansicht in einem eigenen Fenster
-- [A7 Buch, Seiten und Export](A7-book-pages-and-export.md): wer lebend ist, Schutz lebender Personen, Familienbuch, Seiten, gespeichertes HTML
+- [A7 Buch, Seiten und Export](A7-book-pages-and-export.md): wer lebend ist, Schutz lebender Personen, Familienbuch, Seiten, gespeichertes HTML, Stammbaum einer Person verschenken, Exportumfang Stammbaum einer Person
 - [A8 Zusammenführen von Stammbäumen](A8-merging-trees.md): der Assistent zum Zusammenführen einer Datei, eines Stammbaums oder einer Auswahl in einen Stammbaum, Abgleich der Personen, Verlauf und Rückgängigmachen einer Zusammenführung
 - [A9 Bedienung der App](A9-using-the-app.md): wo was ist, lesbare Namen der Bedienelemente, Bearbeiten beim Verfolgen der Forschung, der Agent in der App, die untere Leiste auf Telefon und Tablet
 - [A10 Ein Ereignis mehrerer Personen](A10-shared-events.md): das gemeinsame Ereignis eines Haushalts (Gemeinsam mit), Angleichen, Zu einem Ereignis verbinden, Paten und Zeugen im Leben einer Person, Zusammenführen und ältere Stammbäume

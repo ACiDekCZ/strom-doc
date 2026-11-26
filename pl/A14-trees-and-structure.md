@@ -179,8 +179,13 @@ usunąć w Zarządzaniu drzewami.
   rodzinami **Wydziel niepołączone części…** ([S6.4](S6-tree-from-another-program.md#S6.4)); Przegląd drzewa,
   **Szybkie działania** ([A5](A5-tree-check.md)). Z obu okien prowadzi droga z powrotem do Zmień strukturę.
 - **Obowiązuje od:** aplikacja 3.32.0 (w oknie Zmień strukturę); sam podział jest starszy
+- **Od aplikacji 3.33.0:** przy **Z perspektywy osoby** jest odnośnik „Tylko dla jednej osoby, bez dzielenia drzewa:
+  **Podarować rodowód…**” (tylko przy otwartym drzewie). Prezent drzewa nie dzieli, a jego wycinek ma własną zasadę
+  ([A7.9.1](A7-book-pages-and-export.md#A7.9.1)): w odróżnieniu od Z perspektywy osoby bierze także innych partnerów
+  przodków i partnerów całego rodzeństwa przodków; pasierbów bierze tylko u obdarowanego, a partnerów partnerów nie
+  bierze.
 
-<!-- zdroj: app:src/ui/split-families-ui.ts (kopie, originál nedotčen), src/split-families.ts · src/ui/split-ui.ts (nespojené části, components.ts) · src/ui/structure-ui.ts structureRunOption families (aktivní: showSplitFamiliesDialog, jinak showSplitFamiliesPickerDialog), parts showSplitDialog · 3e3b6c35 (cesta zpět do Změnit strukturu, oddělená část pojmenuje svůj strom, části spočítané jednou) · strings.ts splitFamilies.*, split.* -->
+<!-- zdroj: app:src/ui/split-families-ui.ts (kopie, originál nedotčen), src/split-families.ts · src/ui/split-ui.ts (nespojené části, components.ts) · src/ui/structure-ui.ts structureRunOption families (aktivní: showSplitFamiliesDialog, jinak showSplitFamiliesPickerDialog), parts showSplitDialog · 3.33.0: app:src/ui/split-families-ui.ts splitFamiliesGiftOffered, #splitfam-gift, strings.ts giftTree.splitLead · rozdíl řezů: app:src/__tests__/gift-tree.test.ts (srovnání s decomposeIntoFamilies perspective), dirigent:prace/1126-app-093-darovat-rodokmen (A1 shoda s Z pohledu osoby) · 3e3b6c35 (cesta zpět do Změnit strukturu, oddělená část pojmenuje svůj strom, části spočítané jednou) · strings.ts splitFamilies.*, split.* · 3e3b6c35 (cesta zpět do Změnit strukturu, oddělená část pojmenuje svůj strom, části spočítané jednou) · strings.ts splitFamilies.*, split.* -->
 
 <a id="A14.5"></a>
 ## A14.5 Połącz

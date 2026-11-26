@@ -1477,6 +1477,19 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A4.1](cs/A4-surnames-and-families.md#A4.1), A4.1.1, A4.2, A4.4, A6.4.1, A6.4.2
 
+<a id="give-a-family-tree"></a>
+### Darovat rodokmen · Rodokmen osoby
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Darovat rodokmen… · Rodokmen osoby · obdarovaný | Kus stromu z pohledu jedné osoby (obdarovaného) nebo páru: jeho předci s partnery, sourozenci předků s rodinami do zvolené hloubky, vlastní domácnost a potomci; bez předků partnerů. Darovat rodokmen z něj udělá balíček ZIP s průvodním listem, aplikací, stránkami, knihou, vějířem a GEDCOM; Rodokmen osoby je tentýž výřez jako rozsah exportu a výběr knihy a stránek. Data stromu se nemění. |
+| en | Give a family tree… · Person’s family tree · recipient | A piece of the tree from one person’s (the recipient’s) or a couple’s point of view: their ancestors with partners, the ancestors’ siblings with their families up to the chosen depth, their own household and descendants; without the partners’ ancestors. Give a family tree makes a ZIP package of it with a cover letter, the app, pages, a book, a fan and GEDCOM; Person’s family tree is the same cut as an export scope and a choice for the book and the pages. The tree’s data do not change. |
+| de | Stammbaum verschenken… · Stammbaum einer Person · beschenkte Person | Ein Teil des Stammbaums aus der Sicht einer Person (der beschenkten) oder eines Paares: ihre Vorfahren mit Partnern, die Geschwister der Vorfahren mit ihren Familien bis zur gewählten Tiefe, der eigene Haushalt und die Nachkommen; ohne die Vorfahren der Partner. Stammbaum verschenken macht daraus ein ZIP-Paket mit Begleitbrief, App, Seiten, Buch, Fächer und GEDCOM; Stammbaum einer Person ist derselbe Ausschnitt als Exportumfang und als Auswahl für Buch und Seiten. Die Daten des Stammbaums ändern sich nicht. |
+| pl | Podarować rodowód… · Rodowód osoby · obdarowany | Część drzewa z perspektywy jednej osoby (obdarowanego) lub pary: jej przodkowie z partnerami, rodzeństwo przodków z rodzinami do wybranej głębokości, własni domownicy i potomkowie; bez przodków partnerów. Podarować rodowód robi z niej paczkę ZIP z listem przewodnim, aplikacją, stronami, księgą, wachlarzem i GEDCOM; Rodowód osoby to ten sam wycinek jako zakres eksportu i wybór dla księgi i stron. Dane drzewa się nie zmieniają. |
+
+- **Nepoužívat:** „export stromu osoby“ ani „nový strom“: dar strom nedělí ani nekopíruje (to je Rozdělit, [A14.4](cs/A14-trees-and-structure.md#A14.4)).
+- **Čísla:** [A7.9](cs/A7-book-pages-and-export.md#A7.9), A7.9.1, A7.9.2, A7.9.3, A7.9.4, A7.9.5, A7.9.6, A7.4.1, A7.3
+
 <a id="search-scope"></a>
 ### Rozsah hledání
 

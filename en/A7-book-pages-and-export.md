@@ -2,7 +2,7 @@
 # A7 Book, pages and export
 
 What the Strom app puts out of the tree (the family book, pages, files for the family and for other programs) and how
-it protects living people in them. Describes the app 3.21.2.
+it protects living people in them. Describes the app 3.21.2; changes from a newer version carry its number.
 
 | Output | What it is |
 |---|---|
@@ -12,6 +12,7 @@ it protects living people in them. Describes the app 3.21.2.
 | **App with data (HTML)** | a standalone file with the app and the tree ([A7.7](#A7.7)) |
 | **Send to a relative** | one file by e-mail to open, complete and send back |
 | **Poster** | the current view as SVG, PNG or a multi-page PDF |
+| **Give a family tree** | a ZIP package with the family tree of one person or a couple: cover letter, app, pages, book, fan, GEDCOM ([A7.9](#A7.9)) |
 | **Data backup (JSON)**, **GEDCOM**, **Person table (CSV)** | data for restoring and for other programs ([A2](A2-loading-a-family-tree.md)); custom columns, filter and sort: the export from the Table view ([A6.7.9](A6-views.md#A6.7.9)) |
 
 - The backup and the app with data can be encrypted with a password (**Encrypt with a password**); GEDCOM cannot.
@@ -112,12 +113,17 @@ In the export, next to privacy, the **Content** is chosen: what is saved into th
   archive ([A7.2](#A7.2)).
 - **From app 3.30.0:** the choice **What to export** has besides **Whole tree** and **Current view only** also
   **List of people**: the JSON backup and GEDCOM with only the people of the list ([A11.9](A11-lists-of-people.md#A11.9)).
+- **From app 3.33.0:** **What to export** also has **Person’s family tree…** ([A7.9.6](#A7.9.6)). **Current view
+  only** and Person’s family tree work in all export formats: **Send to a relative**, **App with data (HTML)**,
+  **Data backup (JSON)**, **Poster**, **Family book**, **Linked pages**, **GEDCOM** and **Person table (CSV)**;
+  before only the JSON backup and the poster. The output of the view opens on the person in focus. Only **Link to a
+  file…** stays with the whole tree.
 - **From app 3.30.0:** **Photos** also include the originals of portraits and the couples' photos. Without photos
   these disappear too, also when attachments are exported; without attachments, portraits stay without the link to
   the original ([A12.7](A12-portrait-and-couple-photo.md#A12.7)).
 - **Since:** app 2.4.0
 
-<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList -->
+<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList · 3.33.0: app:index.html data-view-ok, data-person-ok (všechny volby kromě Propojit se souborem), src/ui/import-export.ts exportScoped (pohled: defaultPersonId = fokus), commit 6408f8f9, strings.ts exportMenu.scopePerson, familyPages.exportPages -->
 
 <a id="A7.4"></a>
 ## A7.4 Family book
@@ -162,8 +168,12 @@ The family book is a book to read from the start: a family tree, families by gen
 - **Limits:** the line of ancestors and descendants is carried by biological and adoptive parents. A step-parent and
   a foster parent do not carry the line. The father means the male parent, biological before adoptive.
 - **Since:** app 3.19.0; Selected people app 3.21.0
+- **From app 3.33.0:** the choice **Person’s family tree** (ancestors and their families) in the book and the pages:
+  the people of the chosen person's gift cut with the choice **Families of the ancestors up to** ([A7.9.1](#A7.9.1));
+  the family chapters run by generation from the oldest ancestors. The book's title is “Family tree of name”. A child
+  outside the cut may also be named in a chapter's family.
 
-<!-- zdroj: app:src/lineage.ts selection, :279 isDescentLink · strings.ts book.dlg.kind, book.dlg.kindHint -->
+<!-- zdroj: app:src/lineage.ts selection, :279 isDescentLink · strings.ts book.dlg.kind, book.dlg.kindHint · 3.33.0: app:src/book-model.ts kind 'gift' (giftCutIds, giftLevels: generace od nejstarších), src/book-options.ts titleGift, src/ui/book-ui.ts giftDepth, commity 6408f8f9, 040aaaaf · dirigent:prace/1126-app-093-darovat-rodokmen (B5: kniha jmenuje i dítě mimo výřez) -->
 
 <a id="A7.5"></a>
 ## A7.5 Family pages and tree pages
@@ -265,3 +275,202 @@ sources document the facts, a story only retells them ([A3.6](A3-evidence-in-the
 - **Since:** app 2.8.0; couple's stories and the person page 3.18.0; in the family book 3.19.0
 
 <!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 -->
+
+<a id="A7.9"></a>
+## A7.9 Give a family tree
+
+**Give a family tree…** prepares for one person (the recipient) or a couple one ZIP file with their piece of the
+family tree: the ancestors, the families around them and their own household, not the owner's whole tree. The guide
+has six steps: **For whom**, **Who is in it** ([A7.9.1](#A7.9.1)), **Living people** ([A7.9.2](#A7.9.2)), **What
+the package holds** ([A7.9.3](#A7.9.3)), **Cover letter** ([A7.9.4](#A7.9.4)) and **Preview and create**.
+
+- The default person of the cut is the recipient; the app in the package opens on them. The tree's data do not
+  change; the cut is only the scope of the output, not a new tree.
+- **For whom:** **One person**, **A couple** (one package for two; the second person is suggested as a partner from
+  the tree) or **A list of people or a selection** ([A7.9.5](#A7.9.5)). The action is offered only for a person who
+  has at least parents, a partner or a child in the tree.
+- **Straight to preview ›** jumps to step 6 with the default settings or the settings from last time; every step can
+  still be changed afterwards.
+- The whole package is made in the browser; nothing is sent anywhere. On a computer the ZIP downloads as soon as it
+  is made; on a phone it does not download by itself and offers **Share…** and **Save to Files**. When the browser
+  does not allow the download, **Download again** works without making it again while the window is open.
+- Before making it, the app checks whether the browser has enough memory ([A9.7.1](A9-using-the-app.md#A9.7.1)).
+  When memory runs out, nothing is made and the guide offers **Try without photos** or **Without the app**.
+- The settings (cut, living people, contents, letter) are saved with the person or the couple on this device, not in
+  the tree's data nor in an export. The next package for them starts from them (**Settings from last time**; **Start
+  over with defaults**) and says how many people have joined or left the cut since then. The person's menu shows the
+  date of the last package next to the action.
+- **Controls:** the menu of a person's card (right button, long press on a phone) and ⋯ on the person page: **Give
+  a family tree…**; **Actions › For the family › Give a family tree…**; in the window **Split into families** at
+  **One person's view**, “Only for one person, without splitting the tree: **Give a family tree…**”
+  ([A14.4](A14-trees-and-structure.md#A14.4)); the menu of a list of people and of a selection: **Give a family tree
+  to each person…**; Export, scope **Person’s family tree…**, link **Whole gift package…** ([A7.9.6](#A7.9.6)).
+  The action is not offered in a read-only tree.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:src/ui/gift-tree-ui.ts (canGiftTree, giftMenuMeta, giftDownload jen na počítači, Sdílet/Uložit do Souborů na telefonu, confirmMemoryForOutput, GiftOutOfMemory → Zkusit bez fotek / Bez aplikace) · src/gift-guide.ts giftHasFamily, giftGuideStart, giftSuggestedPartner · src/gift-memory.ts (localStorage strom.gift.{treeId}, nikdy v datech) · src/gift-tree.ts giftCutData (defaultPersonId = obdarovaný) · src/ui/context-menu.ts gift-tree, src/ui/person-page-ui.ts, index.html Pro rodinu, src/ui/split-families-ui.ts splitfam-gift, src/ui/selection-picker-ui.ts, src/ui/person-list-hooks.ts · strings.ts giftTree.menu, title, stepNames, fast, menuList, splitLead, guide.mode, guide.lastH, restart, guide.cutChanged, make.share, make.saveFiles, make.downloadAgain, make.withoutApp, make.tryWithoutPhotos, review.local · dirigent:spec/093 K1.1, K2.4, K5.1, K5.4, K5.5 · dirigent:prace/1126-app-093-darovat-rodokmen (rozhodnutí B3) -->
+
+<a id="A7.9.1"></a>
+### A7.9.1 Who is in it (the cut)
+
+The cut is a piece of the tree from the recipient's point of view.
+
+| Always in the cut | Not in the cut |
+|---|---|
+| the recipient, their partners and all their descendants with partners | the partners' ancestors (of the recipient's partners and of the ancestors' partners) |
+| their siblings with all descendants and their partners | people linked to the recipient only through partners |
+| all available direct ancestors and their partners | people with no link to the recipient (separate parts of the tree) |
+| the siblings of every ancestor with partners (without a family when the depth does not take it) | placeholder people |
+| the recipient's stepchildren (their partners' children) with their families | |
+
+- **Families of the ancestors up to** (depth): **No one** · **First cousins** (the parents’ siblings with their
+  families) · **Second cousins** (the grandparents’ siblings with their families too) · **Everyone** (all blood
+  relatives of the ancestors). The default is Second cousins. The family of an ancestor's sibling is all their
+  descendants and the partners of all of them.
+- **Families of the ancestors’ siblings:** the family of each ancestor's sibling can be checked or unchecked
+  separately, also beyond the depth; an unchecked sibling stays in the cut alone with partners. The same in the
+  preview from the card's menu (**Remove family…**, **Add family…**). For an ancestor's half-sibling the row names
+  their other parent.
+- The line of ancestors and descendants runs through birth and adoptive parents, not through a step-parent or a foster
+  parent ([A7.4.1](#A7.4.1)).
+- A couple: the cut is the union of the cuts of both.
+- **Limits:** a person with no ancestors in the tree has a cut of only themselves, partners and descendants; the
+  guide says so and the depth is not used. The guide announces a cut of 600 people or more with an estimate of the
+  package size.
+- **Controls:** the step **Who is in it**: the preview with the number of people and generations, **Families of the
+  ancestors up to**, **Families of the ancestors’ siblings**.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:src/gift-tree.ts recipientCut (familySet up all, down all, width cousins, cousins = hloubka, spouses 'spouses', siblingFamilies = výjimky), stepchildrenOf (D5), giftCutIds (pár = sjednocení), giftBranchCandidates (half, otherParentId), GIFT_DEFAULT_DEPTH = 2 · src/lineage.ts familySet (sourozenci linie vždy, potomci předků do degree + 1, partneři krve), addDescendants, descentParents · src/__tests__/gift-tree.test.ts (hloubky, předci partnerů, ostrov) · strings.ts giftTree.cut.depthH, depth, depthDesc, branchesH, branchesNote, menuRemove, menuAdd, noAncestors, outLine, otherParent, largeLead · src/ui/gift-tree-ui.ts (≥ 600 osob) · dirigent:spec/093 K1.2, K1.3, K1.4 -->
+
+<a id="A7.9.2"></a>
+### A7.9.2 Living people in the gift
+
+The privacy of living people ([A7.1](#A7.1), [A7.2](#A7.2)) is applied once over the cut and all parts of the package
+(the app, the pages, the book, the fan, GEDCOM and the cover letter) get the same protected data. What is hidden in
+one part is not in any other.
+
+- **The recipient's household is always in full:** the recipient, their partners except divorced and separated ones,
+  and their children. For a couple both of them and the children of each. Stepchildren go in full only as an
+  exception.
+- **Exceptions:** a person checked in the list **Living people in the tree** is in full (checked = in full).
+- **Other living people:** the privacy choices of [A7.2](#A7.2), by default **Initials + birth year**.
+- **For the living shown in full** each kind can be turned off:
+
+| Kind | Default | What turning it off removes |
+|---|---|---|
+| **Birth dates** | yes | the date of birth and baptism; the year stays |
+| **Addresses and residences** | yes | the addresses of birth, death and events, the couple's address, residence and census events |
+| **Contacts (e-mail, phone)** | no | the person's e-mails ([S6.9](S6-tree-from-another-program.md#S6.9)), note lines with an e-mail, another program's own lines (phones among them) |
+| **Photos** | yes | the person's portrait and attachments |
+| **Notes and stories** | no | notes, stories, the open question |
+| **Religion** | yes | the religion fact ([R3.11](R3-verification-and-citation.md#R3.11)) and rites: baptism, confirmation, first communion, bar and bat mitzvah, ordination |
+| **Sources with personal details** | yes | the citations of the person and of their events |
+
+- **For the deceased:** **Causes of death**, **Notes and stories**, **Sources and their scans**; by default all kept.
+  The sources of the deceased stay even with the privacy of living people.
+- By default the recipient's household therefore carries addresses but not e-mails, phones and notes; other living
+  people only initials and the birth year. When the privacy shortens something for living people, the cover letter
+  says so in its footer.
+- Without photos (step 4), photos, attachments and source clippings disappear for all people. The research workshop
+  never goes into the gift ([A7.3](#A7.3)).
+- **Controls:** the step **Living people**: **Living people in the tree**, **Other living people**, **For the living
+  shown in full**, **For the deceased**.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:src/gift-tree.ts defaultGiftPrivacy (others initials; sensitive contacts:false, notes:false, ostatní true; dead vše true), giftHouseholdIds (bez rozvedených a odloučených; pár jen oba; děti každého), giftProtectedData (jednou před výstupy, keepDeceasedSources, stripResearchWork, stripMedia bez fotek), giftShortensLiving · src/privacy.ts LivingSensitive (komentář druhů), maskSensitive, maskSensitiveCouple, maskEvent, keepsEvent RELIGION_EVENTS, RESIDENCE_EVENTS, BIRTH_DATE_EVENTS, maskDeceased · strings.ts giftTree.guide.livingH, checkedFull, othersH, sensitiveH, sensitive, deadH, dead, giftTree.cover.shortened · test/vysledek-1126-app-093.md (Soukromí K6.2, K6.4) · dirigent:spec/093 K6.1–K6.4 -->
+
+<a id="A7.9.3"></a>
+### A7.9.3 What the package holds
+
+The ZIP `Family tree – <name> – <year>.zip` holds the folder `Family tree – <name>`:
+
+| File | What it is |
+|---|---|
+| `Start here.html` | the cover letter with links to the rest ([A7.9.4](#A7.9.4)); always included |
+| `Family tree (app).html` | the Strom app with the cut in one file ([A7.7](#A7.7)); opens offline on the recipient with a welcome and the message |
+| `Family pages/` | the pages of the cut ([A7.5](#A7.5)) |
+| `Family book.html` | the book of the cut to print ([A7.4](#A7.4)); PDF through the browser's print |
+| `Ancestor fan.svg`, `.png` | the recipient's direct ancestors in one picture, 3 to 10 generations; for a couple one fan for each |
+| `For other programs/Family tree.ged` | the cut in the GEDCOM format |
+
+- Every part except the cover letter can be turned off; by default all are on, with photos. The guide shows an
+  estimate of the compressed size, also without photos and without the app.
+- The book has the book settings ([A7.4](#A7.4), **Book settings…**), the fan its look (**Fan look…**).
+- The file names are in the language of the cover letter; the ZIP's name can be changed in step 6.
+- **Limits:** on a Mac the ZIP is unpacked correctly by the Finder; the `unzip` tool in the terminal cannot handle
+  names with diacritics.
+- **Controls:** the step **What the package holds**: **Parts of the package**, **Photos** (**With photos** /
+  **Without photos**), **Contents of the ZIP file**.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:src/gift-package.ts giftFileNames (složka, Začít zde, aplikace, stránky, kniha, vějíř na osobu u páru, Pro jiné programy/Rodokmen.ged), buildGiftPackage, estimateGiftSize · src/gift-tree.ts defaultGiftParts · src/filenames.ts unicodeFileName · strings.ts giftTree.files, giftTree.pkg.part, partsH, photosH, bookSettings, fanLook, zipH, zipNote, review.fileName · test/vysledek-1126-app-093.md (ZIP rozbalený ditto, macOS unzip) · dirigent:spec/093 K5.2, K5.3 -->
+
+<a id="A7.9.4"></a>
+### A7.9.4 Cover letter (Start here)
+
+`Start here.html` is the first page of the package: the message, figures from the family tree and links to the
+rest.
+
+- **Message:** a template by language and motif, freely editable (**Insert the template again**). The salutation
+  placeholder in the message (cs `[oslovení]`, en `[name]`, de `[Name]`, pl `[imię]`) is replaced by the
+  **Salutation**; the default is the first name, both for a couple. Further **Signature** (shown in the letter and
+  when the app opens) and **Date** (today by default).
+- **Letter language:** Czech, English, German, Polish; the app's language by default. **Motif:** **No motif**
+  (default) or **Christmas**.
+- **The family tree in numbers** are figures from the cut, not from the whole tree: the number of people and
+  generations, the oldest ancestor, family lines, places and the family's path, the oldest record, people by
+  generation.
+- **What the package holds:** links to the parts; whoever opens them without unpacking the ZIP gets instructions
+  for unpacking.
+- The letter can be printed on A4.
+- **Controls:** the step **Cover letter** with a preview of the opening page; in step 6 **Open in a window**.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:src/gift-cover.ts buildGiftCover, giftFacts, giftLetterTemplate, giftDefaultSalutation, giftMessage (všechny čtyři tokeny) · strings.ts giftTree.salutationToken, template.none, template.xmas, cover.*, letter.langH, langName, motif, salutationH, messageH, reinsert, dateH, numbersH, guide.signature · dirigent:prace/1126-app-093-darovat-rodokmen (rozhodnutí A3, B3b tisk A4) · dirigent:spec/093 K7.1–K7.4 -->
+
+<a id="A7.9.5"></a>
+### A7.9.5 In bulk for a list of people or a selection
+
+From a list of people ([A11](A11-lists-of-people.md)) or a selection a package is made for each person separately.
+
+- The table **Recipients** shows each with the salutation and the number of people and of living people. **Spouses
+  and partners as one package** joins couples. A person with no parents, partner or child in the tree gets no
+  package.
+- Steps 2–5 set everyone at once; **Edit…** gives one person settings of their own, **Back to common** cancels them.
+  `[name]` in the message is filled with each recipient's salutation.
+- The result is one ZIP `Family trees <year>.zip` with a finished ZIP for each person or couple, or single ZIPs in
+  a chosen folder (**Save to folder…**). The packages are made person by person so that memory is enough; **Cancel
+  all** also deletes what has already been made. A package that cannot be made shows as a warning row; the others
+  are made.
+- The settings are saved with each person.
+- **Limits:** making packages in bulk runs only on a computer; a phone makes a package for one person or a couple.
+- **Controls:** the menu of a list of people and of a selection: **Give a family tree to each person…**; in the
+  guide the step **For whom**, **A list of people or a selection**.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:src/gift-batch.ts · src/gift-package.ts buildGiftBatch, giftBatchFileName · src/ui/gift-tree-ui.ts (mode list jen mimo telefon, showDirectoryPicker, Zrušit vše maže zapsané) · src/ui/selection-picker-ui.ts (ne na telefonní liště), src/ui/person-list-hooks.ts · strings.ts giftTree.batch.*, guide.mode.list, guide.listPhoneWhy, guide.listPhoneNote, menuList · dirigent:prace/1126-app-093-darovat-rodokmen (B4: zrušení u složky smaže zapsané ZIPy) · dirigent:spec/093 K8.1–K8.3 -->
+
+<a id="A7.9.6"></a>
+### A7.9.6 The export scope Person’s family tree
+
+In Export, **What to export** has the choice **Person’s family tree…**: the cut of one person ([A7.9.1](#A7.9.1)) in
+any format, without the guide.
+
+- The person is the one in focus; another can be chosen. The depth **Families of the ancestors up to** is taken
+  from that person's last gift, otherwise Second cousins; the manual exceptions for the ancestors' siblings are not
+  used by Export.
+- Formats: **Send to a relative**, **App with data (HTML)**, **Data backup (JSON)**, **Poster**, **Family book**,
+  **Linked pages**, **GEDCOM**, **Person table (CSV)**. The output opens on the chosen person and counts
+  relationships and generations from them.
+- The book and the pages get the choice **Person’s family tree** ([A7.4.1](#A7.4.1)). The poster switches the view to
+  the chosen person and makes a poster of the view.
+- The privacy of living people is the export's choice ([A7.2.1](#A7.2.1)) and applies to all living people, also to
+  the chosen person's household. The gift's choices ([A7.9.2](#A7.9.2)) are only in **Whole gift package…**, which
+  opens the guide with the same person and depth.
+- **Limits:** only for the open tree.
+- **Controls:** Export › **What to export** › **Person’s family tree…**: **Person’s family tree** (choice of the
+  person), **Families of the ancestors up to**, **Whole gift package…**
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:src/ui/import-export.ts showExportDialog (fokus), setExportPerson (hloubka z paměti daru), exportPersonCutIds (branches {}), renderExportScope (scope person jen aktivní strom), exportScoped, shareFromExportDialog, posterFromExportDialog, bookFromExportDialog (selection gift), exportPersonTreeJSON, exportTargetTreeApp (scopedExportData, defaultPersonId), openGiftFromExport · index.html data-person-ok · src/subtree.ts scopedExportData · strings.ts exportMenu.scopePerson, personPick, personFrom, personFull, *PersonDesc, familyPages.exportPages · dirigent:spec/093 K2.1–K2.4 -->

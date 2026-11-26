@@ -2,7 +2,7 @@
 # A7 Kniha, stránky a export
 
 Co aplikace Strom dává ze stromu ven (kniha rodu, stránky, soubory pro rodinu i pro jiné programy) a jak přitom
-chrání žijící osoby. Popisuje aplikaci 3.21.2.
+chrání žijící osoby. Popisuje aplikaci 3.21.2; změny z novější verze mají u sebe její číslo.
 
 | Výstup | Co to je |
 |---|---|
@@ -12,6 +12,7 @@ chrání žijící osoby. Popisuje aplikaci 3.21.2.
 | **Aplikace i s daty (HTML)** | samostatný soubor s aplikací a stromem ([A7.7](#A7.7)) |
 | **Poslat rodině** | jeden soubor e-mailem k otevření, doplnění a poslání zpět |
 | **Plakát** | aktuální pohled jako SVG, PNG nebo vícestránkové PDF |
+| **Darovat rodokmen** | balíček ZIP s rodokmenem jedné osoby nebo páru: průvodní list, aplikace, stránky, kniha, vějíř, GEDCOM ([A7.9](#A7.9)) |
 | **Záloha dat (JSON)**, **GEDCOM**, **Tabulka osob (CSV)** | data pro obnovení a pro jiné programy ([A2](A2-loading-a-family-tree.md)); vlastní sloupce, filtr a řazení: export z pohledu Tabulka ([A6.7.9](A6-views.md#A6.7.9)) |
 
 - Zálohu a aplikaci s daty jde zašifrovat heslem (**Zašifrovat heslem**); GEDCOM ne. Šifrování funguje jen na zabezpečené
@@ -110,12 +111,16 @@ Při exportu se vedle ochrany volí **Obsah**: co se uloží do souboru.
   ([A7.2](#A7.2)).
 - **Od aplikace 3.30.0:** volba **Co exportovat** má vedle **Celý strom** a **Jen aktuální pohled** i **Seznam osob**:
   záloha JSON a GEDCOM jen s osobami seznamu ([A11.9](A11-lists-of-people.md#A11.9)).
+- **Od aplikace 3.33.0:** **Co exportovat** má i **Rodokmen osoby…** ([A7.9.6](#A7.9.6)). **Jen aktuální pohled**
+  a Rodokmen osoby jdou ve všech formátech exportu: **Poslat rodině**, **Aplikace i s daty (HTML)**, **Záloha dat
+  (JSON)**, **Plakát**, **Kniha rodu**, **Propojené stránky**, **GEDCOM** a **Tabulka osob (CSV)**; dřív jen záloha
+  JSON a plakát. Výstup pohledu se otevře na zaměřené osobě. Celý strom zůstává jen **Propojit se souborem…**.
 - **Od aplikace 3.30.0:** **Fotky** jsou i originály portrétů a fotky svazků. Bez fotek zmizí i ty, také když se
   přílohy exportují; bez příloh zůstanou portréty bez propojení na originál
   ([A12.7](A12-portrait-and-couple-photo.md#A12.7)).
 - **Platí od:** aplikace 2.4.0
 
-<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList -->
+<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList · 3.33.0: app:index.html data-view-ok, data-person-ok (všechny volby kromě Propojit se souborem), src/ui/import-export.ts exportScoped (pohled: defaultPersonId = fokus), commit 6408f8f9, strings.ts exportMenu.scopePerson, familyPages.exportPages -->
 
 <a id="A7.4"></a>
 ## A7.4 Kniha rodu
@@ -158,8 +163,11 @@ Kniha rodu je kniha ke čtení od začátku: rodokmen, rodiny po generacích, vy
 - **Hranice:** linii předků a potomků nesou rodiče biologičtí a osvojitelé. Nevlastní rodič a pěstoun linii
   nenesou. Otcem se rozumí rodič muž, biologický před osvojitelem.
 - **Platí od:** aplikace 3.19.0; Vybrané osoby aplikace 3.21.0
+- **Od aplikace 3.33.0:** výběr **Rodokmen osoby** (předci a jejich rodiny) v knize i ve stránkách: osoby výřezu
+  daru zvolené osoby s volbou **Rodiny předků po** ([A7.9.1](#A7.9.1)); kapitoly rodin jdou po generacích od
+  nejstarších předků. Název knihy je „Rodokmen: jméno“. V rodině kapitoly může být jmenované i dítě mimo výřez.
 
-<!-- zdroj: app:src/lineage.ts selection, :279 isDescentLink · strings.ts book.dlg.kind, book.dlg.kindHint -->
+<!-- zdroj: app:src/lineage.ts selection, :279 isDescentLink · strings.ts book.dlg.kind, book.dlg.kindHint · 3.33.0: app:src/book-model.ts kind 'gift' (giftCutIds, giftLevels: generace od nejstarších), src/book-options.ts titleGift, src/ui/book-ui.ts giftDepth, commity 6408f8f9, 040aaaaf · dirigent:prace/1126-app-093-darovat-rodokmen (B5: kniha jmenuje i dítě mimo výřez) -->
 
 <a id="A7.5"></a>
 ## A7.5 Stránky rodu a stránky stromu
@@ -253,3 +261,187 @@ prameny, vyprávění je jen převypráví ([A3.6](A3-evidence-in-the-app.md#A3.
 - **Platí od:** aplikace 2.8.0; vyprávění páru a stránka osoby 3.18.0; v knize rodu 3.19.0
 
 <!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 -->
+
+<a id="A7.9"></a>
+## A7.9 Darovat rodokmen
+
+**Darovat rodokmen…** připraví pro jednu osobu (obdarovaného) nebo pár jeden soubor ZIP s jejich kusem rodokmenu:
+předci, rodiny kolem nich a vlastní domácnost, ne celý strom vlastníka. Průvodce má šest kroků: **Pro koho**,
+**Kdo v rodokmenu bude** ([A7.9.1](#A7.9.1)), **Údaje žijících** ([A7.9.2](#A7.9.2)), **Co v balíčku bude**
+([A7.9.3](#A7.9.3)), **Průvodní list** ([A7.9.4](#A7.9.4)) a **Náhled a vytvořit**.
+
+- Výchozí osobou výřezu je obdarovaný; aplikace v balíčku se otevře na něm. Data stromu se nemění; výřez je jen
+  rozsah výstupu, ne nový strom.
+- **Pro koho:** **Jedna osoba**, **Pár** (jeden balíček pro dva; druhá osoba je navržena jako partner ze stromu) nebo
+  **Seznam osob nebo výběr** ([A7.9.5](#A7.9.5)). Akce se nabízí jen u osoby, která má ve stromu aspoň rodiče,
+  partnera nebo dítě.
+- **Rovnou na náhled ›** přeskočí na krok 6 s výchozím nastavením nebo s nastavením z minula; každý krok jde upravit
+  i potom.
+- Balíček vzniká celý v prohlížeči; nic se nikam neposílá. Na počítači se ZIP po vytvoření hned stáhne; na
+  telefonu se nestahuje sám a nabídne **Sdílet…** a **Uložit do Souborů**. Když prohlížeč stažení nepovolí, jde
+  **Stáhnout znovu** bez nového vytváření, dokud je okno otevřené.
+- Před vytvořením se ověří, zda prohlížeči stačí paměť ([A9.7.1](A9-using-the-app.md#A9.7.1)). Když paměť
+  dojde, nic nevznikne a průvodce nabídne **Zkusit bez fotek** nebo **Bez aplikace**.
+- Nastavení (výřez, údaje žijících, obsah, list) se uloží u osoby nebo páru na tomto zařízení, ne do dat stromu
+  ani do exportu. Příští balíček pro ně začne z něj (**Nastavení z minula**; **Začít znovu s výchozím**) a řekne,
+  kolik osob od minula ve výřezu přibylo nebo ubylo. Nabídka osoby ukazuje u akce datum posledního balíčku.
+- **Ovládání:** nabídka karty osoby (pravé tlačítko, na telefonu dlouhý stisk) a ⋯ na stránce osoby: **Darovat
+  rodokmen…**; **Akce › Pro rodinu › Darovat rodokmen…**; v okně **Rozdělit na rodiny** u volby **Z pohledu osoby**
+  „Jen pro jednu osobu, bez rozdělení stromu: **Darovat rodokmen…**“ ([A14.4](A14-trees-and-structure.md#A14.4));
+  nabídka seznamu osob a výběru: **Darovat rodokmen každé osobě…**; Export, rozsah **Rodokmen osoby…**, odkaz
+  **Celý dárkový balíček…** ([A7.9.6](#A7.9.6)). V režimu čtení se akce nenabízí.
+- **Platí od:** aplikace 3.33.0
+
+<!-- zdroj: app:src/ui/gift-tree-ui.ts (canGiftTree, giftMenuMeta, giftDownload jen na počítači, Sdílet/Uložit do Souborů na telefonu, confirmMemoryForOutput, GiftOutOfMemory → Zkusit bez fotek / Bez aplikace) · src/gift-guide.ts giftHasFamily, giftGuideStart, giftSuggestedPartner · src/gift-memory.ts (localStorage strom.gift.{treeId}, nikdy v datech) · src/gift-tree.ts giftCutData (defaultPersonId = obdarovaný) · src/ui/context-menu.ts gift-tree, src/ui/person-page-ui.ts, index.html Pro rodinu, src/ui/split-families-ui.ts splitfam-gift, src/ui/selection-picker-ui.ts, src/ui/person-list-hooks.ts · strings.ts giftTree.menu, title, stepNames, fast, menuList, splitLead, guide.mode, guide.lastH, restart, guide.cutChanged, make.share, make.saveFiles, make.downloadAgain, make.withoutApp, make.tryWithoutPhotos, review.local · dirigent:spec/093 K1.1, K2.4, K5.1, K5.4, K5.5 · dirigent:prace/1126-app-093-darovat-rodokmen (rozhodnutí B3) -->
+
+<a id="A7.9.1"></a>
+### A7.9.1 Kdo v rodokmenu bude (výřez)
+
+Výřez je kus stromu z pohledu obdarovaného.
+
+| Ve výřezu je vždy | Ve výřezu není |
+|---|---|
+| obdarovaný, jeho partneři a všichni jeho potomci s partnery | předci partnerů (partnerů obdarovaného i partnerů předků) |
+| jeho sourozenci se všemi potomky a jejich partnery | osoby spojené s obdarovaným jen přes partnery |
+| všichni dostupní přímí předci a jejich partneři | osoby bez vazby k obdarovanému (oddělené části stromu) |
+| sourozenci každého předka s partnery (bez rodiny, když ji hloubka nebere) | zástupné osoby |
+| nevlastní děti obdarovaného (děti jeho partnerů) s jejich rodinami | |
+
+- **Rodiny předků po** (hloubka): **Nikdo** · **Bratranci** (sourozenci rodičů s rodinami) · **Druzí bratranci**
+  (i sourozenci prarodičů s rodinami) · **Všichni** (všichni pokrevní příbuzní předků). Výchozí jsou Druzí bratranci.
+  Rodina sourozence předka jsou všichni jeho potomci a partneři všech z nich.
+- **Rodiny sourozenců předků:** u každého sourozence předka jde rodinu zaškrtnout nebo odškrtnout zvlášť, i mimo
+  hloubku; odškrtnutý zůstane ve výřezu sám s partnery. Totéž v náhledu z nabídky karty (**Odebrat rodinu…**,
+  **Přidat rodinu…**). U polorodého sourozence předka řádek řekne jeho druhého rodiče.
+- Linii předků a potomků nesou rodiče biologičtí a osvojitelé, ne nevlastní rodič a pěstoun
+  ([A7.4.1](#A7.4.1)).
+- Pár: výřez je spojení výřezů obou.
+- **Hranice:** osoba bez předků ve stromu má výřez jen sebe, partnery a potomky; průvodce to řekne a hloubka se
+  nepoužije. Výřez od 600 osob průvodce ohlásí s odhadem velikosti balíčku.
+- **Ovládání:** krok **Kdo v rodokmenu bude**: náhled s počtem osob a generací, **Rodiny předků po**, **Rodiny
+  sourozenců předků**.
+- **Platí od:** aplikace 3.33.0
+
+<!-- zdroj: app:src/gift-tree.ts recipientCut (familySet up all, down all, width cousins, cousins = hloubka, spouses 'spouses', siblingFamilies = výjimky), stepchildrenOf (D5), giftCutIds (pár = sjednocení), giftBranchCandidates (half, otherParentId), GIFT_DEFAULT_DEPTH = 2 · src/lineage.ts familySet (sourozenci linie vždy, potomci předků do degree + 1, partneři krve), addDescendants, descentParents · src/__tests__/gift-tree.test.ts (hloubky, předci partnerů, ostrov) · strings.ts giftTree.cut.depthH, depth, depthDesc, branchesH, branchesNote, menuRemove, menuAdd, noAncestors, outLine, otherParent, largeLead · src/ui/gift-tree-ui.ts (≥ 600 osob) · dirigent:spec/093 K1.2, K1.3, K1.4 -->
+
+<a id="A7.9.2"></a>
+### A7.9.2 Údaje žijících v daru
+
+Ochrana žijících ([A7.1](#A7.1), [A7.2](#A7.2)) se použije jednou nad výřezem a všechny části balíčku (aplikace,
+stránky, kniha, vějíř, GEDCOM i průvodní list) dostanou stejná chráněná data. Co je skryté v jedné části, není
+v žádné jiné.
+
+- **Domácnost obdarovaného je vždy plně:** obdarovaný, jeho partneři kromě rozvedených a odloučených a jeho děti.
+  U páru oba a děti každého z nich. Nevlastní děti jdou plně jen jako výjimka.
+- **Výjimky:** v seznamu **Žijící v rodokmenu** zaškrtnutá osoba je plně (zaškrtnuté = plně).
+- **Ostatní žijící:** volby ochrany z [A7.2](#A7.2), výchozí **Iniciály + rok narození**.
+- **U žijících ukázaných plně** jde vypnout po druzích:
+
+| Druh | Výchozí | Co vypnutí odebere |
+|---|---|---|
+| **Data narození** | ano | datum narození a křtu; zůstane rok |
+| **Adresy a bydliště** | ano | adresy narození, úmrtí a událostí, adresu páru, události bydliště a sčítání |
+| **Kontakty (e-mail, telefon)** | ne | e-maily osoby ([S6.9](S6-tree-from-another-program.md#S6.9)), řádky poznámek s e-mailem, vlastní řádky jiného programu (v nich telefony) |
+| **Fotky** | ano | portrét a přílohy osoby |
+| **Poznámky a příběhy** | ne | poznámky, vyprávění, otevřenou otázku |
+| **Vyznání** | ano | údaj o vyznání ([R3.11](R3-verification-and-citation.md#R3.11)) a obřady: křest, biřmování, první přijímání, bar a bat micva, svěcení |
+| **Prameny s osobními údaji** | ano | citace osoby a jejích událostí |
+
+- **U zemřelých:** **Příčiny úmrtí**, **Poznámky a příběhy**, **Prameny a jejich snímky**; výchozí vše ponechat.
+  Prameny zemřelých zůstávají i při ochraně žijících.
+- Ve výchozím stavu tedy domácnost obdarovaného ponese adresy, ale ne e-maily, telefony a poznámky; ostatní žijící
+  jen iniciály a rok narození. Když ochrana něco u žijících zkrátí, průvodní list to řekne v patičce.
+- Bez fotek (krok 4) zmizí fotky, přílohy a výřezy pramenů u všech osob. Pracovní dílna výzkumu se do daru nedává
+  nikdy ([A7.3](#A7.3)).
+- **Ovládání:** krok **Údaje žijících**: **Žijící v rodokmenu**, **Ostatní žijící**, **U žijících ukázaných
+  plně**, **U zemřelých**.
+- **Platí od:** aplikace 3.33.0
+
+<!-- zdroj: app:src/gift-tree.ts defaultGiftPrivacy (others initials; sensitive contacts:false, notes:false, ostatní true; dead vše true), giftHouseholdIds (bez rozvedených a odloučených; pár jen oba; děti každého), giftProtectedData (jednou před výstupy, keepDeceasedSources, stripResearchWork, stripMedia bez fotek), giftShortensLiving · src/privacy.ts LivingSensitive (komentář druhů), maskSensitive, maskSensitiveCouple, maskEvent, keepsEvent RELIGION_EVENTS, RESIDENCE_EVENTS, BIRTH_DATE_EVENTS, maskDeceased · strings.ts giftTree.guide.livingH, checkedFull, othersH, sensitiveH, sensitive, deadH, dead, giftTree.cover.shortened · test/vysledek-1126-app-093.md (Soukromí K6.2, K6.4) · dirigent:spec/093 K6.1–K6.4 -->
+
+<a id="A7.9.3"></a>
+### A7.9.3 Co v balíčku bude
+
+ZIP `Rodokmen – <jméno> – <rok>.zip` má uvnitř složku `Rodokmen – <jméno>`:
+
+| Soubor | Co to je |
+|---|---|
+| `Začít zde.html` | průvodní list s rozcestníkem ([A7.9.4](#A7.9.4)); je vždy |
+| `Rodokmen (aplikace).html` | aplikace Strom s výřezem v jednom souboru ([A7.7](#A7.7)); otevře se offline na obdarovaném s uvítáním a vzkazem |
+| `Stránky rodiny/` | stránky výřezu ([A7.5](#A7.5)) |
+| `Kniha rodu.html` | kniha výřezu k tisku ([A7.4](#A7.4)); PDF tiskem z prohlížeče |
+| `Vějíř předků.svg`, `.png` | přímí předci obdarovaného v jednom obrázku, 3 až 10 generací; u páru jeden vějíř pro každého |
+| `Pro jiné programy/Rodokmen.ged` | výřez ve formátu GEDCOM |
+
+- Každou část kromě průvodního listu jde vypnout; výchozí jsou všechny zapnuté, s fotkami. Průvodce ukazuje odhad
+  velikosti po kompresi, i bez fotek a bez aplikace.
+- Kniha má nastavení knihy ([A7.4](#A7.4), **Nastavení knihy…**), vějíř vzhled vějíře (**Vzhled vějíře…**).
+- Jména souborů jsou v jazyce průvodního listu; jméno ZIPu jde v kroku 6 přepsat.
+- **Hranice:** na Macu rozbalí ZIP správně Finder; nástroj `unzip` v terminálu neumí jména s diakritikou.
+- **Ovládání:** krok **Co v balíčku bude**: **Části balíčku**, **Fotky** (**S fotkami** / **Bez fotek**), **Obsah
+  souboru ZIP**.
+- **Platí od:** aplikace 3.33.0
+
+<!-- zdroj: app:src/gift-package.ts giftFileNames (složka, Začít zde, aplikace, stránky, kniha, vějíř na osobu u páru, Pro jiné programy/Rodokmen.ged), buildGiftPackage, estimateGiftSize · src/gift-tree.ts defaultGiftParts · src/filenames.ts unicodeFileName · strings.ts giftTree.files, giftTree.pkg.part, partsH, photosH, bookSettings, fanLook, zipH, zipNote, review.fileName · test/vysledek-1126-app-093.md (ZIP rozbalený ditto, macOS unzip) · dirigent:spec/093 K5.2, K5.3 -->
+
+<a id="A7.9.4"></a>
+### A7.9.4 Průvodní list (Začít zde)
+
+`Začít zde.html` je první stránka balíčku: vzkaz, čísla z rodokmenu a rozcestník.
+
+- **Vzkaz:** šablona podle jazyka a motivu, jde libovolně přepsat (**Vložit šablonu znovu**). Zástupné slovo
+  oslovení ve vzkazu (cs `[oslovení]`, en `[name]`, de `[Name]`, pl `[imię]`) se nahradí **Oslovením**; výchozí je
+  křestní jméno, u páru obě. Dále **Podpis** (ukáže se v listu a po otevření aplikace) a **Datum** (výchozí dnes).
+- **Jazyk listu:** čeština, angličtina, němčina, polština; výchozí jazyk aplikace. **Motiv:** **Bez motivu**
+  (výchozí) nebo **Vánoce**.
+- **Rodokmen v číslech** jsou čísla z výřezu, ne z celého stromu: počet osob a generací, nejstarší předek, rody,
+  místa a cesta rodiny, nejstarší záznam, osoby po generacích.
+- **Co je v balíčku:** rozcestník částí s odkazy; kdo je otevře bez rozbalení ZIPu, dostane návod k rozbalení.
+- List jde vytisknout na A4.
+- **Ovládání:** krok **Průvodní list** s náhledem úvodní stránky; v kroku 6 **Otevřít v okně**.
+- **Platí od:** aplikace 3.33.0
+
+<!-- zdroj: app:src/gift-cover.ts buildGiftCover, giftFacts, giftLetterTemplate, giftDefaultSalutation, giftMessage (všechny čtyři tokeny) · strings.ts giftTree.salutationToken, template.none, template.xmas, cover.*, letter.langH, langName, motif, salutationH, messageH, reinsert, dateH, numbersH, guide.signature · dirigent:prace/1126-app-093-darovat-rodokmen (rozhodnutí A3, B3b tisk A4) · dirigent:spec/093 K7.1–K7.4 -->
+
+<a id="A7.9.5"></a>
+### A7.9.5 Hromadně pro seznam osob nebo výběr
+
+Ze seznamu osob ([A11](A11-lists-of-people.md)) nebo výběru vznikne balíček pro každou osobu zvlášť.
+
+- Tabulka **Obdarovaní** ukazuje každého s oslovením, počtem osob a žijících. **Manželé a partneři jako jeden
+  balíček** spojí páry. Osoba, která ve stromu nemá rodiče, partnera ani dítě, balíček nedostane.
+- Kroky 2–5 nastaví všechny najednou; **Upravit…** dá jedné osobě vlastní nastavení, **Vrátit na společné** ho zruší.
+  `[oslovení]` ve vzkazu se doplní za oslovení každého obdarovaného.
+- Výsledek je jeden ZIP `Rodokmeny <rok>.zip` s hotovým ZIPem pro každou osobu nebo pár, nebo jednotlivé ZIPy ve
+  zvolené složce (**Uložit do složky…**). Balíčky vznikají osoba po osobě, aby stačila paměť; **Zrušit vše** smaže
+  i to, co už vzniklo. Balíček, který se nevytvoří, se ukáže jako varovný řádek, ostatní vzniknou.
+- Nastavení se uloží u každé osoby.
+- **Hranice:** hromadné vytváření běží jen na počítači; na telefonu jde balíček pro jednu osobu nebo pár.
+- **Ovládání:** nabídka seznamu osob a výběru: **Darovat rodokmen každé osobě…**; v průvodci krok **Pro koho**,
+  **Seznam osob nebo výběr**.
+- **Platí od:** aplikace 3.33.0
+
+<!-- zdroj: app:src/gift-batch.ts · src/gift-package.ts buildGiftBatch, giftBatchFileName · src/ui/gift-tree-ui.ts (mode list jen mimo telefon, showDirectoryPicker, Zrušit vše maže zapsané) · src/ui/selection-picker-ui.ts (ne na telefonní liště), src/ui/person-list-hooks.ts · strings.ts giftTree.batch.*, guide.mode.list, guide.listPhoneWhy, guide.listPhoneNote, menuList · dirigent:prace/1126-app-093-darovat-rodokmen (B4: zrušení u složky smaže zapsané ZIPy) · dirigent:spec/093 K8.1–K8.3 -->
+
+<a id="A7.9.6"></a>
+### A7.9.6 Rozsah exportu Rodokmen osoby
+
+V Exportu má **Co exportovat** volbu **Rodokmen osoby…**: výřez jedné osoby ([A7.9.1](#A7.9.1)) v kterémkoli
+formátu, bez průvodce.
+
+- Osoba je ta, která je zrovna zaměřená; jde vybrat jinou. Hloubka **Rodiny předků po** se bere z posledního daru
+  té osoby, jinak Druzí bratranci; ruční výjimky sourozenců předků Export nepoužije.
+- Formáty: **Poslat rodině**, **Aplikace i s daty (HTML)**, **Záloha dat (JSON)**, **Plakát**, **Kniha rodu**,
+  **Propojené stránky**, **GEDCOM**, **Tabulka osob (CSV)**. Výstup se otevře na zvolené osobě a vztahy a generace
+  počítá od ní.
+- Kniha a stránky dostanou výběr **Rodokmen osoby** ([A7.4.1](#A7.4.1)). Plakát přepne pohled na zvolenou osobu a
+  vytvoří plakát pohledu.
+- Ochrana žijících je volba exportu ([A7.2.1](#A7.2.1)) a platí pro všechny žijící, i pro domácnost zvolené osoby.
+  Volby daru ([A7.9.2](#A7.9.2)) má jen **Celý dárkový balíček…**, který otevře průvodce se stejnou osobou a
+  hloubkou.
+- **Hranice:** jen pro otevřený strom.
+- **Ovládání:** Export › **Co exportovat** › **Rodokmen osoby…**: **Rodokmen osoby** (výběr osoby), **Rodiny předků
+  po**, **Celý dárkový balíček…**
+- **Platí od:** aplikace 3.33.0
+
+<!-- zdroj: app:src/ui/import-export.ts showExportDialog (fokus), setExportPerson (hloubka z paměti daru), exportPersonCutIds (branches {}), renderExportScope (scope person jen aktivní strom), exportScoped, shareFromExportDialog, posterFromExportDialog, bookFromExportDialog (selection gift), exportPersonTreeJSON, exportTargetTreeApp (scopedExportData, defaultPersonId), openGiftFromExport · index.html data-person-ok · src/subtree.ts scopedExportData · strings.ts exportMenu.scopePerson, personPick, personFrom, personFull, *PersonDesc, familyPages.exportPages · dirigent:spec/093 K2.1–K2.4 -->

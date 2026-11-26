@@ -34,7 +34,7 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [A4 Rody a příjmení](A4-surnames-and-families.md): rod a zakladatel, přivdaní, ženské tvary příjmení, hledání jmen
 - [A5 Kontrola stromu](A5-tree-check.md): co aplikace ve stromu hlídá, s jakými prahy, a Není chyba
 - [A6 Pohledy a výběr osob](A6-views.md): Rodina, Potomci, Časová osa, Vějíř, Mapa, rod v pohledu, Tabulka a pohled v samostatném okně
-- [A7 Kniha, stránky a export](A7-book-pages-and-export.md): kdo je žijící, ochrana žijících, kniha rodu, stránky, uložené HTML
+- [A7 Kniha, stránky a export](A7-book-pages-and-export.md): kdo je žijící, ochrana žijících, kniha rodu, stránky, uložené HTML, darovat rodokmen osoby, rozsah exportu Rodokmen osoby
 - [A8 Sloučení stromů](A8-merging-trees.md): průvodce sloučením souboru, stromu nebo výběru do stromu, párování osob, historie a odvolání sloučení
 - [A9 Ovládání aplikace](A9-using-the-app.md): kde co je, čitelné názvy prvků, úpravy při sledování výzkumu, agent v aplikaci, dolní lišta na telefonu a tabletu
 - [A10 Jedna událost u více osob](A10-shared-events.md): společná událost domácnosti (Spolu s), Sjednotit, Spojit do jedné události, kmotři a svědci v životě osoby, sloučení a starší stromy

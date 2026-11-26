@@ -173,8 +173,12 @@ stromů.
   rodinami **Oddělit nespojené části…** ([S6.4](S6-tree-from-another-program.md#S6.4)); Přehled stromu, **Rychlé
   akce** ([A5](A5-tree-check.md)). Z obou oken vede cesta zpět do Změnit strukturu.
 - **Platí od:** aplikace 3.32.0 (v okně Změnit strukturu); rozdělení samo je starší
+- **Od aplikace 3.33.0:** u volby **Z pohledu osoby** je odkaz „Jen pro jednu osobu, bez rozdělení stromu:
+  **Darovat rodokmen…**“ (jen u otevřeného stromu). Dar strom nedělí a jeho výřez má vlastní pravidlo
+  ([A7.9.1](A7-book-pages-and-export.md#A7.9.1)): na rozdíl od Z pohledu osoby bere i další partnery předků a
+  partnery všech sourozenců předků; nevlastní děti bere jen u obdarovaného a partnery partnerů nebere.
 
-<!-- zdroj: app:src/ui/split-families-ui.ts (kopie, originál nedotčen), src/split-families.ts · src/ui/split-ui.ts (nespojené části, components.ts) · src/ui/structure-ui.ts structureRunOption families (aktivní: showSplitFamiliesDialog, jinak showSplitFamiliesPickerDialog), parts showSplitDialog · 3e3b6c35 (cesta zpět do Změnit strukturu, oddělená část pojmenuje svůj strom, části spočítané jednou) · strings.ts splitFamilies.*, split.* -->
+<!-- zdroj: app:src/ui/split-families-ui.ts (kopie, originál nedotčen), src/split-families.ts · src/ui/split-ui.ts (nespojené části, components.ts) · src/ui/structure-ui.ts structureRunOption families (aktivní: showSplitFamiliesDialog, jinak showSplitFamiliesPickerDialog), parts showSplitDialog · 3.33.0: app:src/ui/split-families-ui.ts splitFamiliesGiftOffered, #splitfam-gift, strings.ts giftTree.splitLead · rozdíl řezů: app:src/__tests__/gift-tree.test.ts (srovnání s decomposeIntoFamilies perspective), dirigent:prace/1126-app-093-darovat-rodokmen (A1 shoda s Z pohledu osoby) · 3e3b6c35 (cesta zpět do Změnit strukturu, oddělená část pojmenuje svůj strom, části spočítané jednou) · strings.ts splitFamilies.*, split.* -->
 
 <a id="A14.5"></a>
 ## A14.5 Spojit

@@ -196,8 +196,13 @@ ungewollter lässt sich in Stammbäume verwalten löschen.
   Stammbaum-Überblick, **Schnellaktionen** ([A5](A5-tree-check.md)). Aus beiden Fenstern führt ein Weg zurück zu
   Struktur ändern.
 - **Gilt seit:** App 3.32.0 (im Fenster Struktur ändern); das Aufteilen selbst ist älter
+- **Ab App 3.33.0:** bei **Sicht einer Person** steht der Link „Nur für eine Person, ohne den Baum zu teilen:
+  **Stammbaum verschenken…**“ (nur beim geöffneten Stammbaum). Das Geschenk teilt den Stammbaum nicht, und sein
+  Ausschnitt hat eine eigene Regel ([A7.9.1](A7-book-pages-and-export.md#A7.9.1)): anders als Sicht einer Person nimmt
+  er auch weitere Partner der Vorfahren und die Partner aller Geschwister der Vorfahren; Stiefkinder nimmt er nur bei
+  der beschenkten Person und Partner von Partnern gar nicht.
 
-<!-- zdroj: app:src/ui/split-families-ui.ts (kopie, originál nedotčen), src/split-families.ts · src/ui/split-ui.ts (nespojené části, components.ts) · src/ui/structure-ui.ts structureRunOption families (aktivní: showSplitFamiliesDialog, jinak showSplitFamiliesPickerDialog), parts showSplitDialog · 3e3b6c35 (cesta zpět do Změnit strukturu, oddělená část pojmenuje svůj strom, části spočítané jednou) · strings.ts splitFamilies.*, split.* -->
+<!-- zdroj: app:src/ui/split-families-ui.ts (kopie, originál nedotčen), src/split-families.ts · src/ui/split-ui.ts (nespojené části, components.ts) · src/ui/structure-ui.ts structureRunOption families (aktivní: showSplitFamiliesDialog, jinak showSplitFamiliesPickerDialog), parts showSplitDialog · 3.33.0: app:src/ui/split-families-ui.ts splitFamiliesGiftOffered, #splitfam-gift, strings.ts giftTree.splitLead · rozdíl řezů: app:src/__tests__/gift-tree.test.ts (srovnání s decomposeIntoFamilies perspective), dirigent:prace/1126-app-093-darovat-rodokmen (A1 shoda s Z pohledu osoby) · 3e3b6c35 (cesta zpět do Změnit strukturu, oddělená část pojmenuje svůj strom, části spočítané jednou) · strings.ts splitFamilies.*, split.* · 3e3b6c35 (cesta zpět do Změnit strukturu, oddělená část pojmenuje svůj strom, části spočítané jednou) · strings.ts splitFamilies.*, split.* -->
 
 <a id="A14.5"></a>
 ## A14.5 Zusammenführen

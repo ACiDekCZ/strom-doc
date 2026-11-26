@@ -34,7 +34,7 @@ Parts R (the research), A (the app) and S (the app and the research together) ar
 - [A4 Family lines and surnames](A4-surnames-and-families.md): the family line and its founder, people married in, female surname forms, finding names
 - [A5 Tree check](A5-tree-check.md): what the app watches in the tree, with which thresholds, and Not an error
 - [A6 Views and the choice of people](A6-views.md): Family, Descendants, Timeline, Fan, Map, a family line in the view, Table and a view in a separate window
-- [A7 Book, pages and export](A7-book-pages-and-export.md): who is living, privacy of living people, the family book, pages, saved HTML
+- [A7 Book, pages and export](A7-book-pages-and-export.md): who is living, privacy of living people, the family book, pages, saved HTML, giving a person's family tree, the export scope Person’s family tree
 - [A8 Merging trees](A8-merging-trees.md): the guide merging a file, a tree or a selection into a tree, matching people, the merge history and undoing a merge
 - [A9 Using the app](A9-using-the-app.md): where things are, readable names of controls, editing while following the research, the agent in the app, the bottom bar on a phone and a tablet
 - [A10 One event of several people](A10-shared-events.md): a household's shared event (Shared with), Make all match, Join into one event, godparents and witnesses in a person's life, merging and older trees

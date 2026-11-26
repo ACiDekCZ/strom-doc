@@ -2,7 +2,7 @@
 # A7 Księga, strony i eksport
 
 Co aplikacja Strom daje z drzewa na zewnątrz (księga rodu, strony, pliki dla rodziny i dla innych programów) i jak
-przy tym chroni osoby żyjące. Opisuje aplikację 3.21.2.
+przy tym chroni osoby żyjące. Opisuje aplikację 3.21.2; zmiany z nowszej wersji mają przy sobie jej numer.
 
 | Wynik | Co to jest |
 |---|---|
@@ -12,6 +12,7 @@ przy tym chroni osoby żyjące. Opisuje aplikację 3.21.2.
 | **Aplikacja z danymi (HTML)** | samodzielny plik z aplikacją i drzewem ([A7.7](#A7.7)) |
 | **Wyślij rodzinie** | jeden plik e-mailem do otwarcia, uzupełnienia i odesłania |
 | **Plakat** | bieżący widok jako SVG, PNG lub wielostronicowy PDF |
+| **Podarować rodowód** | paczka ZIP z rodowodem jednej osoby lub pary: list przewodni, aplikacja, strony, księga, wachlarz, GEDCOM ([A7.9](#A7.9)) |
 | **Kopia zapasowa danych (JSON)**, **GEDCOM**, **Tabela osób (CSV)** | dane do przywrócenia i dla innych programów ([A2](A2-loading-a-family-tree.md)); własne kolumny, filtr i sortowanie: eksport z widoku Tabela ([A6.7.9](A6-views.md#A6.7.9)) |
 
 - Kopię zapasową i aplikację z danymi można zaszyfrować hasłem (**Zaszyfruj hasłem**); GEDCOM nie. Szyfrowanie działa
@@ -110,12 +111,17 @@ Przy eksporcie obok ochrony wybiera się **Zawartość**: co zapisze się w plik
   archiwum ([A7.2](#A7.2)).
 - **Od aplikacji 3.30.0:** wybór **Co eksportować** ma obok **Całe drzewo** i **Tylko bieżący widok** także
   **Lista osób**: kopia zapasowa JSON i GEDCOM tylko z osobami listy ([A11.9](A11-lists-of-people.md#A11.9)).
+- **Od aplikacji 3.33.0:** **Co eksportować** ma także **Rodowód osoby…** ([A7.9.6](#A7.9.6)). **Tylko bieżący
+  widok** i Rodowód osoby działają we wszystkich formatach eksportu: **Wyślij rodzinie**, **Aplikacja z danymi
+  (HTML)**, **Kopia zapasowa danych (JSON)**, **Plakat**, **Księga rodu**, **Połączone strony**, **GEDCOM** i **Tabela
+  osób (CSV)**; wcześniej tylko kopia JSON i plakat. Wynik widoku otwiera się na osobie w centrum. Tylko **Połącz z
+  plikiem…** zostaje przy całym drzewie.
 - **Od aplikacji 3.30.0:** **Zdjęcia** to także oryginały portretów i zdjęcia par. Bez zdjęć znikają również one,
   także gdy eksportuje się załączniki; bez załączników portrety zostają bez powiązania z oryginałem
   ([A12.7](A12-portrait-and-couple-photo.md#A12.7)).
 - **Obowiązuje od:** aplikacja 2.4.0
 
-<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList -->
+<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList · 3.33.0: app:index.html data-view-ok, data-person-ok (všechny volby kromě Propojit se souborem), src/ui/import-export.ts exportScoped (pohled: defaultPersonId = fokus), commit 6408f8f9, strings.ts exportMenu.scopePerson, familyPages.exportPages -->
 
 <a id="A7.4"></a>
 ## A7.4 Księga rodu
@@ -159,8 +165,12 @@ Księga rodu to księga do czytania od początku: drzewo genealogiczne, rodziny 
 - **Granice:** linię przodków i potomków niosą rodzice biologiczni i przysposabiający. Przybrany rodzic i rodzic
   zastępczy linii nie niosą. Przez ojca rozumie się rodzica mężczyznę, biologicznego przed przysposabiającym.
 - **Obowiązuje od:** aplikacja 3.19.0; Wybrane osoby aplikacja 3.21.0
+- **Od aplikacji 3.33.0:** wybór **Rodowód osoby** (przodkowie i ich rodziny) w księdze i stronach: osoby wycinka
+  prezentu wybranej osoby z wyborem **Rodziny przodków do** ([A7.9.1](#A7.9.1)); rozdziały rodzin idą według pokoleń
+  od najstarszych przodków. Tytuł księgi to „Rodowód: imię”. W rodzinie rozdziału może być wymienione także dziecko
+  spoza wycinka.
 
-<!-- zdroj: app:src/lineage.ts selection, :279 isDescentLink · strings.ts book.dlg.kind, book.dlg.kindHint -->
+<!-- zdroj: app:src/lineage.ts selection, :279 isDescentLink · strings.ts book.dlg.kind, book.dlg.kindHint · 3.33.0: app:src/book-model.ts kind 'gift' (giftCutIds, giftLevels: generace od nejstarších), src/book-options.ts titleGift, src/ui/book-ui.ts giftDepth, commity 6408f8f9, 040aaaaf · dirigent:prace/1126-app-093-darovat-rodokmen (B5: kniha jmenuje i dítě mimo výřez) -->
 
 <a id="A7.5"></a>
 ## A7.5 Strony rodu i strony drzewa
@@ -258,3 +268,194 @@ dokumentują źródła, opowieść je tylko opowiada ([A3.6](A3-evidence-in-the-
 - **Obowiązuje od:** aplikacja 2.8.0; opowieści par i strona osoby 3.18.0; w Księdze rodu 3.19.0
 
 <!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 -->
+
+<a id="A7.9"></a>
+## A7.9 Podarować rodowód
+
+**Podarować rodowód…** przygotowuje dla jednej osoby (obdarowanego) lub pary jeden plik ZIP z ich częścią rodowodu:
+przodkowie, rodziny wokół nich i własni domownicy, nie całe drzewo właściciela. Kreator ma sześć kroków: **Dla
+kogo**, **Kto w nim będzie** ([A7.9.1](#A7.9.1)), **Dane żyjących** ([A7.9.2](#A7.9.2)), **Co będzie w paczce**
+([A7.9.3](#A7.9.3)), **List przewodni** ([A7.9.4](#A7.9.4)) i **Podgląd i utworzenie**.
+
+- Osobą startową wycinka jest obdarowany; aplikacja w paczce otwiera się na nim. Dane drzewa się nie zmieniają;
+  wycinek to tylko zakres wyniku, nie nowe drzewo.
+- **Dla kogo:** **Jedna osoba**, **Para** (jedna paczka dla dwojga; druga osoba jest proponowana jako partner z
+  drzewa) albo **Lista osób lub wybór** ([A7.9.5](#A7.9.5)). Akcja jest oferowana tylko przy osobie, która ma w drzewie
+  co najmniej rodziców, partnera lub dziecko.
+- **Od razu do podglądu ›** przechodzi do kroku 6 z ustawieniami domyślnymi albo z ostatniego razu; każdy krok można
+  zmienić także potem.
+- Paczka powstaje w całości w przeglądarce; nic nie jest nigdzie wysyłane. Na komputerze ZIP pobiera się zaraz po
+  utworzeniu; na telefonie nie pobiera się sam i oferuje **Udostępnij…** oraz **Zapisz w Plikach**. Gdy przeglądarka
+  nie pozwoli na pobranie, działa **Pobierz ponownie** bez ponownego tworzenia, dopóki okno jest otwarte.
+- Przed utworzeniem sprawdza się, czy przeglądarce wystarczy pamięci ([A9.7.1](A9-using-the-app.md#A9.7.1)). Gdy
+  pamięci zabraknie, nic nie powstaje, a kreator proponuje **Spróbuj bez zdjęć** lub **Bez aplikacji**.
+- Ustawienia (wycinek, dane żyjących, zawartość, list) zapisują się przy osobie lub parze na tym urządzeniu, nie w
+  danych drzewa ani w eksporcie. Następna paczka dla nich zaczyna od nich (**Ustawienia z ostatniego razu**; **Zacznij
+  od nowa z domyślnymi**) i mówi, ile osób od tamtej pory do wycinka przybyło lub ubyło. Menu osoby pokazuje przy
+  akcji datę ostatniej paczki.
+- **Obsługa:** menu karty osoby (prawy przycisk, na telefonie długie naciśnięcie) i ⋯ na stronie osoby: **Podarować
+  rodowód…**; **Akcje › Dla rodziny › Podarować rodowód…**; w oknie **Podziel na rodziny** przy **Z perspektywy
+  osoby** „Tylko dla jednej osoby, bez dzielenia drzewa: **Podarować rodowód…**”
+  ([A14.4](A14-trees-and-structure.md#A14.4)); menu listy osób i wyboru: **Podarować rodowód każdej osobie…**;
+  Eksport, zakres **Rodowód osoby…**, odnośnik **Cała paczka prezentowa…** ([A7.9.6](#A7.9.6)). W drzewie tylko do
+  odczytu akcja nie jest oferowana.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:src/ui/gift-tree-ui.ts (canGiftTree, giftMenuMeta, giftDownload jen na počítači, Sdílet/Uložit do Souborů na telefonu, confirmMemoryForOutput, GiftOutOfMemory → Zkusit bez fotek / Bez aplikace) · src/gift-guide.ts giftHasFamily, giftGuideStart, giftSuggestedPartner · src/gift-memory.ts (localStorage strom.gift.{treeId}, nikdy v datech) · src/gift-tree.ts giftCutData (defaultPersonId = obdarovaný) · src/ui/context-menu.ts gift-tree, src/ui/person-page-ui.ts, index.html Pro rodinu, src/ui/split-families-ui.ts splitfam-gift, src/ui/selection-picker-ui.ts, src/ui/person-list-hooks.ts · strings.ts giftTree.menu, title, stepNames, fast, menuList, splitLead, guide.mode, guide.lastH, restart, guide.cutChanged, make.share, make.saveFiles, make.downloadAgain, make.withoutApp, make.tryWithoutPhotos, review.local · dirigent:spec/093 K1.1, K2.4, K5.1, K5.4, K5.5 · dirigent:prace/1126-app-093-darovat-rodokmen (rozhodnutí B3) -->
+
+<a id="A7.9.1"></a>
+### A7.9.1 Kto w nim będzie (wycinek)
+
+Wycinek to część drzewa z perspektywy obdarowanego.
+
+| W wycinku zawsze | W wycinku nie ma |
+|---|---|
+| obdarowany, jego partnerzy i wszyscy jego potomkowie z partnerami | przodków partnerów (partnerów obdarowanego i partnerów przodków) |
+| jego rodzeństwo ze wszystkimi potomkami i ich partnerami | osób powiązanych z obdarowanym tylko przez partnerów |
+| wszyscy dostępni bezpośredni przodkowie i ich partnerzy | osób bez powiązania z obdarowanym (oddzielne części drzewa) |
+| rodzeństwo każdego przodka z partnerami (bez rodziny, gdy głębokość jej nie obejmuje) | osób zastępczych |
+| pasierbowie obdarowanego (dzieci jego partnerów) z ich rodzinami | |
+
+- **Rodziny przodków do** (głębokość): **Nikt** · **Kuzyni** (rodzeństwo rodziców z rodzinami) · **Kuzyni drugiego
+  stopnia** (także rodzeństwo dziadków z rodzinami) · **Wszyscy** (wszyscy krewni przodków). Domyślnie Kuzyni
+  drugiego stopnia. Rodzina rodzeństwa przodka to wszyscy jego potomkowie i partnerzy ich wszystkich.
+- **Rodziny rodzeństwa przodków:** rodzinę każdego z rodzeństwa przodka można zaznaczyć lub odznaczyć osobno, także
+  poza głębokością; odznaczony zostaje w wycinku sam z partnerami. To samo w podglądzie z menu karty (**Usunąć
+  rodzinę…**, **Dodać rodzinę…**). Przy przyrodnim rodzeństwie przodka wiersz podaje jego drugiego rodzica.
+- Linię przodków i potomków niosą rodzice biologiczni i przysposabiający, nie ojczym, macocha ani rodzic zastępczy
+  ([A7.4.1](#A7.4.1)).
+- Para: wycinek to suma wycinków obojga.
+- **Granice:** osoba bez przodków w drzewie ma wycinek tylko z siebie, partnerów i potomków; kreator to mówi, a
+  głębokość nie jest używana. Wycinek od 600 osób kreator zgłasza z szacunkiem wielkości paczki.
+- **Obsługa:** krok **Kto w nim będzie**: podgląd z liczbą osób i pokoleń, **Rodziny przodków do**, **Rodziny
+  rodzeństwa przodków**.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:src/gift-tree.ts recipientCut (familySet up all, down all, width cousins, cousins = hloubka, spouses 'spouses', siblingFamilies = výjimky), stepchildrenOf (D5), giftCutIds (pár = sjednocení), giftBranchCandidates (half, otherParentId), GIFT_DEFAULT_DEPTH = 2 · src/lineage.ts familySet (sourozenci linie vždy, potomci předků do degree + 1, partneři krve), addDescendants, descentParents · src/__tests__/gift-tree.test.ts (hloubky, předci partnerů, ostrov) · strings.ts giftTree.cut.depthH, depth, depthDesc, branchesH, branchesNote, menuRemove, menuAdd, noAncestors, outLine, otherParent, largeLead · src/ui/gift-tree-ui.ts (≥ 600 osob) · dirigent:spec/093 K1.2, K1.3, K1.4 -->
+
+<a id="A7.9.2"></a>
+### A7.9.2 Dane żyjących w prezencie
+
+Ochrona osób żyjących ([A7.1](#A7.1), [A7.2](#A7.2)) jest stosowana raz nad wycinkiem i wszystkie części paczki
+(aplikacja, strony, księga, wachlarz, GEDCOM i list przewodni) dostają te same chronione dane. Co jest ukryte w
+jednej części, nie ma go w żadnej innej.
+
+- **Domownicy obdarowanego są zawsze w całości:** obdarowany, jego partnerzy poza rozwiedzionymi i żyjącymi w
+  separacji oraz jego dzieci. Przy parze oboje i dzieci każdego z nich. Pasierbowie idą w całości tylko jako wyjątek.
+- **Wyjątki:** osoba zaznaczona na liście **Żyjący w rodowodzie** jest w całości (zaznaczone = w całości).
+- **Pozostali żyjący:** wybór ochrony z [A7.2](#A7.2), domyślnie **Inicjały + rok urodzenia**.
+- **U żyjących pokazanych w całości** każdy rodzaj można wyłączyć:
+
+| Rodzaj | Domyślnie | Co usuwa wyłączenie |
+|---|---|---|
+| **Daty urodzenia** | tak | datę urodzenia i chrztu; rok zostaje |
+| **Adresy i miejsca zamieszkania** | tak | adresy urodzenia, śmierci i wydarzeń, adres pary, wydarzenia zamieszkania i spisu |
+| **Kontakty (e-mail, telefon)** | nie | e-maile osoby ([S6.9](S6-tree-from-another-program.md#S6.9)), wiersze notatek z e-mailem, własne wiersze innego programu (w nich telefony) |
+| **Zdjęcia** | tak | portret i załączniki osoby |
+| **Notatki i historie** | nie | notatki, opowieści, otwarte pytanie |
+| **Wyznanie** | tak | dane o wyznaniu ([R3.11](R3-verification-and-citation.md#R3.11)) i obrzędy: chrzest, bierzmowanie, pierwsza komunia, bar i bat micwa, święcenia |
+| **Źródła z danymi osobowymi** | tak | cytaty osoby i jej wydarzeń |
+
+- **U zmarłych:** **Przyczyny śmierci**, **Notatki i historie**, **Źródła i ich skany**; domyślnie wszystko zostaje.
+  Źródła zmarłych zostają także przy ochronie żyjących.
+- Domyślnie więc domownicy obdarowanego niosą adresy, ale nie e-maile, telefony i notatki; pozostali żyjący tylko
+  inicjały i rok urodzenia. Gdy ochrona coś u żyjących skróci, list przewodni mówi to w stopce.
+- Bez zdjęć (krok 4) znikają zdjęcia, załączniki i wycinki źródeł u wszystkich osób. Warsztat badania nigdy nie
+  trafia do prezentu ([A7.3](#A7.3)).
+- **Obsługa:** krok **Dane żyjących**: **Żyjący w rodowodzie**, **Pozostali żyjący**, **U żyjących pokazanych w
+  całości**, **U zmarłych**.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:src/gift-tree.ts defaultGiftPrivacy (others initials; sensitive contacts:false, notes:false, ostatní true; dead vše true), giftHouseholdIds (bez rozvedených a odloučených; pár jen oba; děti každého), giftProtectedData (jednou před výstupy, keepDeceasedSources, stripResearchWork, stripMedia bez fotek), giftShortensLiving · src/privacy.ts LivingSensitive (komentář druhů), maskSensitive, maskSensitiveCouple, maskEvent, keepsEvent RELIGION_EVENTS, RESIDENCE_EVENTS, BIRTH_DATE_EVENTS, maskDeceased · strings.ts giftTree.guide.livingH, checkedFull, othersH, sensitiveH, sensitive, deadH, dead, giftTree.cover.shortened · test/vysledek-1126-app-093.md (Soukromí K6.2, K6.4) · dirigent:spec/093 K6.1–K6.4 -->
+
+<a id="A7.9.3"></a>
+### A7.9.3 Co będzie w paczce
+
+ZIP `Drzewo – <imię> – <rok>.zip` zawiera folder `Drzewo – <imię>`:
+
+| Plik | Co to jest |
+|---|---|
+| `Zacznij tutaj.html` | list przewodni z drogowskazem ([A7.9.4](#A7.9.4)); jest zawsze |
+| `Drzewo (aplikacja).html` | aplikacja Strom z wycinkiem w jednym pliku ([A7.7](#A7.7)); otwiera się offline na obdarowanym z powitaniem i wiadomością |
+| `Strony rodziny/` | strony wycinka ([A7.5](#A7.5)) |
+| `Księga rodu.html` | księga wycinka do druku ([A7.4](#A7.4)); PDF przez drukowanie z przeglądarki |
+| `Wachlarz przodków.svg`, `.png` | bezpośredni przodkowie obdarowanego na jednym obrazie, od 3 do 10 pokoleń; przy parze jeden wachlarz dla każdego |
+| `Dla innych programów/Drzewo.ged` | wycinek w formacie GEDCOM |
+
+- Każdą część poza listem przewodnim można wyłączyć; domyślnie wszystkie są włączone, ze zdjęciami. Kreator pokazuje
+  szacunek rozmiaru po kompresji, także bez zdjęć i bez aplikacji.
+- Księga ma ustawienia księgi ([A7.4](#A7.4), **Ustawienia księgi…**), wachlarz swój wygląd (**Wygląd wachlarza…**).
+- Nazwy plików są w języku listu przewodniego; nazwę ZIP-a można zmienić w kroku 6.
+- **Granice:** na Macu ZIP poprawnie rozpakowuje Finder; narzędzie `unzip` w terminalu nie radzi sobie z nazwami ze
+  znakami diakrytycznymi.
+- **Obsługa:** krok **Co będzie w paczce**: **Części paczki**, **Zdjęcia** (**Ze zdjęciami** / **Bez zdjęć**),
+  **Zawartość pliku ZIP**.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:src/gift-package.ts giftFileNames (složka, Začít zde, aplikace, stránky, kniha, vějíř na osobu u páru, Pro jiné programy/Rodokmen.ged), buildGiftPackage, estimateGiftSize · src/gift-tree.ts defaultGiftParts · src/filenames.ts unicodeFileName · strings.ts giftTree.files, giftTree.pkg.part, partsH, photosH, bookSettings, fanLook, zipH, zipNote, review.fileName · test/vysledek-1126-app-093.md (ZIP rozbalený ditto, macOS unzip) · dirigent:spec/093 K5.2, K5.3 -->
+
+<a id="A7.9.4"></a>
+### A7.9.4 List przewodni (Zacznij tutaj)
+
+`Zacznij tutaj.html` to pierwsza strona paczki: wiadomość, liczby z rodowodu i drogowskaz.
+
+- **Wiadomość:** szablon według języka i motywu, dowolnie do zmiany (**Wstaw szablon ponownie**). Słowo zastępcze
+  zwrotu w wiadomości (cs `[oslovení]`, en `[name]`, de `[Name]`, pl `[imię]`) zastępuje **Zwrot**; domyślnie jest to
+  imię, przy parze oba. Dalej **Podpis** (widoczny w liście i po otwarciu aplikacji) i **Data** (domyślnie dziś).
+- **Język listu:** czeski, angielski, niemiecki, polski; domyślnie język aplikacji. **Motyw:** **Bez motywu**
+  (domyślnie) albo **Boże Narodzenie**.
+- **Rodowód w liczbach** to liczby z wycinka, nie z całego drzewa: liczba osób i pokoleń, najstarszy przodek, rody,
+  miejsca i droga rodziny, najstarszy zapis, osoby według pokoleń.
+- **Co jest w paczce:** drogowskaz do części z odnośnikami; kto otworzy je bez rozpakowania ZIP-a, dostaje
+  instrukcję rozpakowania.
+- List można wydrukować na A4.
+- **Obsługa:** krok **List przewodni** z podglądem strony startowej; w kroku 6 **Otwórz w oknie**.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:src/gift-cover.ts buildGiftCover, giftFacts, giftLetterTemplate, giftDefaultSalutation, giftMessage (všechny čtyři tokeny) · strings.ts giftTree.salutationToken, template.none, template.xmas, cover.*, letter.langH, langName, motif, salutationH, messageH, reinsert, dateH, numbersH, guide.signature · dirigent:prace/1126-app-093-darovat-rodokmen (rozhodnutí A3, B3b tisk A4) · dirigent:spec/093 K7.1–K7.4 -->
+
+<a id="A7.9.5"></a>
+### A7.9.5 Hurtowo dla listy osób lub wyboru
+
+Z listy osób ([A11](A11-lists-of-people.md)) lub wyboru powstaje paczka dla każdej osoby osobno.
+
+- Tabela **Obdarowani** pokazuje każdego ze zwrotem, liczbą osób i żyjących. **Małżonkowie i partnerzy jako jedna
+  paczka** łączy pary. Osoba, która w drzewie nie ma rodziców, partnera ani dziecka, paczki nie dostaje.
+- Kroki 2–5 ustawiają wszystkich naraz; **Edytuj…** daje jednej osobie własne ustawienia, **Przywróć wspólne** je
+  znosi. `[imię]` w wiadomości uzupełnia się zwrotem każdego obdarowanego.
+- Wynikiem jest jeden ZIP `Drzewa <rok>.zip` z gotowym ZIP-em dla każdej osoby lub pary albo pojedyncze ZIP-y w
+  wybranym folderze (**Zapisz do folderu…**). Paczki powstają osoba po osobie, żeby wystarczyło pamięci; **Anuluj
+  wszystko** usuwa także to, co już powstało. Paczka, której nie da się utworzyć, pokazuje się jako wiersz
+  ostrzeżenia; pozostałe powstają.
+- Ustawienia zapisują się przy każdej osobie.
+- **Granice:** tworzenie wielu paczek działa tylko na komputerze; na telefonie powstaje paczka dla jednej osoby lub
+  pary.
+- **Obsługa:** menu listy osób i wyboru: **Podarować rodowód każdej osobie…**; w kreatorze krok **Dla kogo**,
+  **Lista osób lub wybór**.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:src/gift-batch.ts · src/gift-package.ts buildGiftBatch, giftBatchFileName · src/ui/gift-tree-ui.ts (mode list jen mimo telefon, showDirectoryPicker, Zrušit vše maže zapsané) · src/ui/selection-picker-ui.ts (ne na telefonní liště), src/ui/person-list-hooks.ts · strings.ts giftTree.batch.*, guide.mode.list, guide.listPhoneWhy, guide.listPhoneNote, menuList · dirigent:prace/1126-app-093-darovat-rodokmen (B4: zrušení u složky smaže zapsané ZIPy) · dirigent:spec/093 K8.1–K8.3 -->
+
+<a id="A7.9.6"></a>
+### A7.9.6 Zakres eksportu Rodowód osoby
+
+W Eksporcie **Co eksportować** ma wybór **Rodowód osoby…**: wycinek jednej osoby ([A7.9.1](#A7.9.1)) w dowolnym
+formacie, bez kreatora.
+
+- Osobą jest ta, która jest właśnie w centrum; można wybrać inną. Głębokość **Rodziny przodków do** pochodzi z
+  ostatniego prezentu tej osoby, w przeciwnym razie Kuzyni drugiego stopnia; ręcznych wyjątków rodzeństwa przodków
+  Eksport nie używa.
+- Formaty: **Wyślij rodzinie**, **Aplikacja z danymi (HTML)**, **Kopia zapasowa danych (JSON)**, **Plakat**,
+  **Księga rodu**, **Połączone strony**, **GEDCOM**, **Tabela osób (CSV)**. Wynik otwiera się na wybranej osobie i
+  liczy pokrewieństwa i pokolenia od niej.
+- Księga i strony dostają wybór **Rodowód osoby** ([A7.4.1](#A7.4.1)). Plakat przełącza widok na wybraną osobę i
+  tworzy plakat widoku.
+- Ochrona osób żyjących jest wyborem eksportu ([A7.2.1](#A7.2.1)) i dotyczy wszystkich żyjących, także domowników
+  wybranej osoby. Wybory prezentu ([A7.9.2](#A7.9.2)) ma tylko **Cała paczka prezentowa…**, która otwiera kreator z tą
+  samą osobą i głębokością.
+- **Granice:** tylko dla otwartego drzewa.
+- **Obsługa:** Eksport › **Co eksportować** › **Rodowód osoby…**: **Rodowód osoby** (wybór osoby), **Rodziny przodków
+  do**, **Cała paczka prezentowa…**
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:src/ui/import-export.ts showExportDialog (fokus), setExportPerson (hloubka z paměti daru), exportPersonCutIds (branches {}), renderExportScope (scope person jen aktivní strom), exportScoped, shareFromExportDialog, posterFromExportDialog, bookFromExportDialog (selection gift), exportPersonTreeJSON, exportTargetTreeApp (scopedExportData, defaultPersonId), openGiftFromExport · index.html data-person-ok · src/subtree.ts scopedExportData · strings.ts exportMenu.scopePerson, personPick, personFrom, personFull, *PersonDesc, familyPages.exportPages · dirigent:spec/093 K2.1–K2.4 -->
