@@ -54,5 +54,6 @@ dauerhaft.
 - [S6 Stammbaum aus einem anderen Programm](S6-tree-from-another-program.md): ein Stammbaum aus MyHeritage, Gramps, FamilySearch und Windows-Programmen: was geladen wird, Zuverlässigkeitsmarken, Angaben aus dem Stammbaum als Hinweise, die Karte Wie weiter, Sicherungen, Export zurück, wiederholter Import, die E-Mail einer Person als Kontakt
 - [S7 Zuverlässigkeit von Angaben und Prüfung an den Originalen](S7-reliability-and-verification.md): Marken an Angaben und auf dem Kärtchen, Prüfen an einer Angabe, bei einer Person und im Baum, Prüfung in der Warteschlange der Forschung, Anhand des Scans bestätigen, was mit der Brücke geht und was ohne sie
 - [S8 Wo die Daten liegen](S8-where-the-data-are.md): was nur im Browser liegt, was in der Forschung und im Strom-Archiv liegt, Fotos und Anhänge des Stammbaums in der Forschung, die Anzeige Nur im Browser, Fotos, die nicht geladen werden konnten, Paket und Entfernen eines Stammbaums
+- [S9 Am Beispiel ausprobieren](S9-trying-the-sample.md): das Beispiel aus dem Web und aus einer Datei ohne Installation, das Etikett Beispiel, ein neueres Beispiel, das kleine Beispiel ohne Netz, die Beispielforschung `strom demo` und ihr Löschen
 
 Lizenz: [CC BY 4.0](../LICENSE). Die Texte dürfen mit Quellenangabe geteilt und bearbeitet werden.

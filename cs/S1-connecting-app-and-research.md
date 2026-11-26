@@ -120,8 +120,10 @@ Ukázkový strom slouží k vyzkoušení aplikace. S výzkumem se nikdy nepropoj
   označí. Ukázka, která už s výzkumem propojená je, se neoznačí a zůstane propojená.
 - **Ovládání:** aplikace: **Vyzkoušet ukázkový strom**
 - **Platí od:** aplikace 3.29.0
+- **Od aplikace 3.33.0:** volba se jmenuje **Vyzkoušet malou ukázku** (**Nový strom** a odkaz u prázdného stromu) a strom
+  má štítek **Ukázka**. Ukázka s výzkumem z webu nebo ze souboru je jiný strom ([S9](S9-trying-the-sample.md)).
 
-<!-- zdroj: app:bbcc2b17 src/types.ts TreeMetadata.demo · src/demo-sample.ts (starší ukázka podle obsahu; propojená se neoznačí) · src/tree-manager.ts, src/ui/import-export.ts (označení při otevření a importu) · src/ui/research-promo-ui.ts showResearchInfoDialog (demo → demo.noResearch, nic se nenastaví) · src/ui/research-adopt-ui.ts (nikdy ukázka) · src/ui/research-follow-ui.ts researchFollowBeforeSwitch(null) · strings.ts demo.tryDemo, demo.noResearch, research.menuItem · CHANGELOG.cs.md 3.29.0 „Přepnutí stromu“ · prace/1115-app-prepnuti-stromu -->
+<!-- zdroj: app:bbcc2b17 src/types.ts TreeMetadata.demo · src/demo-sample.ts (starší ukázka podle obsahu; propojená se neoznačí) · src/tree-manager.ts, src/ui/import-export.ts (označení při otevření a importu) · src/ui/research-promo-ui.ts showResearchInfoDialog (demo → demo.noResearch, nic se nenastaví) · src/ui/research-adopt-ui.ts (nikdy ukázka) · src/ui/research-follow-ui.ts researchFollowBeforeSwitch(null) · strings.ts demo.tryDemo, demo.noResearch, research.menuItem · 3.33.0: index.html demo.tryDemoSmall, src/tree-row.ts treeSampleKind (demo) · CHANGELOG.cs.md 3.29.0 „Přepnutí stromu“ · prace/1115-app-prepnuti-stromu -->
 
 <a id="S1.4"></a>
 ## S1.4 Sledování živě

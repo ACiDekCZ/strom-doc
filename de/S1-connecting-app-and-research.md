@@ -133,8 +133,11 @@ wird an eine Forschung gesendet.
   markiert und bleibt verbunden.
 - **Bedienung:** App: **Beispiel-Stammbaum ausprobieren**
 - **Gilt seit:** App 3.29.0
+- **Ab App 3.33.0:** die Wahl heißt **Kleines Beispiel ausprobieren** (**Neuer Stammbaum** und der Link bei einem
+  leeren Stammbaum), und der Stammbaum hat das Etikett **Beispiel**. Das Beispiel mit Forschung aus dem Web oder aus
+  einer Datei ist ein anderer Stammbaum ([S9](S9-trying-the-sample.md)).
 
-<!-- zdroj: app:bbcc2b17 src/types.ts TreeMetadata.demo · src/demo-sample.ts (starší ukázka podle obsahu; propojená se neoznačí) · src/tree-manager.ts, src/ui/import-export.ts (označení při otevření a importu) · src/ui/research-promo-ui.ts showResearchInfoDialog (demo → demo.noResearch, nic se nenastaví) · src/ui/research-adopt-ui.ts (nikdy ukázka) · src/ui/research-follow-ui.ts researchFollowBeforeSwitch(null) · strings.ts demo.tryDemo, demo.noResearch, research.menuItem · CHANGELOG.cs.md 3.29.0 „Přepnutí stromu“ · prace/1115-app-prepnuti-stromu -->
+<!-- zdroj: app:bbcc2b17 src/types.ts TreeMetadata.demo · src/demo-sample.ts (starší ukázka podle obsahu; propojená se neoznačí) · src/tree-manager.ts, src/ui/import-export.ts (označení při otevření a importu) · src/ui/research-promo-ui.ts showResearchInfoDialog (demo → demo.noResearch, nic se nenastaví) · src/ui/research-adopt-ui.ts (nikdy ukázka) · src/ui/research-follow-ui.ts researchFollowBeforeSwitch(null) · strings.ts demo.tryDemo, demo.noResearch, research.menuItem · 3.33.0: index.html demo.tryDemoSmall, src/tree-row.ts treeSampleKind (demo) · CHANGELOG.cs.md 3.29.0 „Přepnutí stromu“ · prace/1115-app-prepnuti-stromu -->
 
 <a id="S1.4"></a>
 ## S1.4 Live verfolgen

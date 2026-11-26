@@ -1862,6 +1862,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A6.1](cs/A6-views.md#A6.1), A1.3, A6.1.1, A6.1.6, A6.6
 
+<a id="sample"></a>
+### Ukázka
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Ukázka (štítek) · Vyzkoušet na ukázce (web) · Vyzkoušet ukázku s výzkumem · Vyzkoušet malou ukázku (app) · ukázkový výzkum (`strom demo`) | Vymyšlená rodina k vyzkoušení Stromu bez vlastních dat, v aplikaci jako samostatný strom se štítkem **Ukázka**, v terminálu jako ukázkový výzkum ve vlastní složce. Vlastní stromy a výzkumy se nemění; ukázka se maže jako strom, ukázkový výzkum příkazem `strom demo --remove`. Malá ukázka (rod Bergů) je přímo v aplikaci a otevře se i bez sítě. |
+| en | Sample (tag) · Try the sample (web) · Try the sample with research · Try the small sample (app) · sample research (`strom demo`) | A made-up family for trying Strom without own data: in the app a tree of its own with the tag **Sample**, in the terminal a sample research in a folder of its own. Own trees and researches do not change; the sample is deleted as a tree, the sample research with `strom demo --remove`. The small sample (the Berg family) is in the app itself and opens without a network too. |
+| de | Beispiel (Etikett) · Am Beispiel ausprobieren (web) · Beispiel mit Forschung ausprobieren · Kleines Beispiel ausprobieren (app) · Beispielforschung (`strom demo`) | Eine erfundene Familie, um Strom ohne eigene Daten auszuprobieren: in der App ein eigener Stammbaum mit dem Etikett **Beispiel**, im Terminal eine Beispielforschung in einem eigenen Ordner. Eigene Stammbäume und Forschungen ändern sich nicht; das Beispiel wird wie ein Stammbaum gelöscht, die Beispielforschung mit `strom demo --remove`. Das kleine Beispiel (Familie Berg) ist in der App selbst und öffnet sich auch ohne Netz. |
+| pl | Przykład (etykieta) · Wypróbuj na przykładzie (web) · Wypróbuj przykład z badaniami · Wypróbuj mały przykład (app) · przykładowe badanie (`strom demo`) | Zmyślona rodzina do wypróbowania Stroma bez własnych danych: w aplikacji osobne drzewo z etykietą **Przykład**, w terminalu przykładowe badanie we własnym folderze. Własne drzewa i badania się nie zmieniają; przykład usuwa się jak drzewo, przykładowe badanie poleceniem `strom demo --remove`. Mały przykład (ród Bergów) jest w samej aplikacji i otwiera się także bez sieci. |
+
+- **Čísla:** [S9](cs/S9-trying-the-sample.md#S9), S9.1, S9.1.1, S9.1.2, S9.2, S9.3, S9.4, S9.4.1, S1.3.1
+
 <a id="saved-import-rules"></a>
 ### Uložená pravidla importu
 

@@ -53,5 +53,6 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [S6 Drzewo z innego programu](S6-tree-from-another-program.md): drzewo z MyHeritage, Gramps, FamilySearch i programów dla Windows: co się wczytuje, znaczniki wiarygodności, dane z drzewa jako wskazówki, karta Co dalej, kopie zapasowe, eksport z powrotem, ponowny import, e-mail osoby jako kontakt
 - [S7 Wiarygodność danych i weryfikacja według oryginałów](S7-reliability-and-verification.md): znaczniki przy danych i na karcie, Zweryfikuj przy danej, przy osobie i w drzewie, weryfikacja w kolejce badania, Potwierdź według skanu, co działa z mostem, a co bez niego
 - [S8 Gdzie są dane](S8-where-the-data-are.md): co jest tylko w przeglądarce, co jest w badaniu i w Archiwum Strom, zdjęcia i załączniki drzewa w badaniu, wskaźnik Tylko w przeglądarce, zdjęcia, których nie udało się wczytać, paczka i usunięcie drzewa
+- [S9 Wypróbuj na przykładzie](S9-trying-the-sample.md): przykład ze strony i z pliku bez instalacji, etykieta Przykład, nowszy przykład, mały przykład bez sieci, przykładowe badanie `strom demo` i jego usunięcie
 
 Licencja: [CC BY 4.0](../LICENSE). Teksty można udostępniać i przerabiać z podaniem źródła.

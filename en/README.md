@@ -53,5 +53,6 @@ Parts R (the research), A (the app) and S (the app and the research together) ar
 - [S6 A tree from another program](S6-tree-from-another-program.md): a family tree from MyHeritage, Gramps, FamilySearch and Windows programs: what loads, reliability marks, family-tree facts as leads, the What next card, backups, export back, repeated import, a person's e-mail as a contact
 - [S7 Reliability of facts and verification against the originals](S7-reliability-and-verification.md): marks at facts and on the card, Verify at a fact, at a person and in the tree, verifying in the research's queue, Confirm against the scan, what works with the bridge and without it
 - [S8 Where the data are](S8-where-the-data-are.md): what is only in the browser, what is in the research and in the Strom archive, the tree's photos and attachments in the research, the indicator Only in browser, photos that could not be loaded, the pack and removing a tree
+- [S9 Trying the sample](S9-trying-the-sample.md): the sample from the web and from a file without installing, the tag Sample, a newer sample, the small sample without a network, the sample research `strom demo` and deleting it
 
 License: [CC BY 4.0](../LICENSE). The texts may be shared and adapted with attribution.

@@ -127,8 +127,11 @@ research.
   opened or imported. A sample that is already connected to a research is not marked and stays connected.
 - **Controls:** app: **Try a sample tree**
 - **Since:** app 3.29.0
+- **From app 3.33.0:** the choice is called **Try the small sample** (**New tree** and the link at an empty tree) and the
+  tree has the tag **Sample**. The sample with research from the web or from a file is another tree
+  ([S9](S9-trying-the-sample.md)).
 
-<!-- zdroj: app:bbcc2b17 src/types.ts TreeMetadata.demo · src/demo-sample.ts (starší ukázka podle obsahu; propojená se neoznačí) · src/tree-manager.ts, src/ui/import-export.ts (označení při otevření a importu) · src/ui/research-promo-ui.ts showResearchInfoDialog (demo → demo.noResearch, nic se nenastaví) · src/ui/research-adopt-ui.ts (nikdy ukázka) · src/ui/research-follow-ui.ts researchFollowBeforeSwitch(null) · strings.ts demo.tryDemo, demo.noResearch, research.menuItem · CHANGELOG.cs.md 3.29.0 „Přepnutí stromu“ · prace/1115-app-prepnuti-stromu -->
+<!-- zdroj: app:bbcc2b17 src/types.ts TreeMetadata.demo · src/demo-sample.ts (starší ukázka podle obsahu; propojená se neoznačí) · src/tree-manager.ts, src/ui/import-export.ts (označení při otevření a importu) · src/ui/research-promo-ui.ts showResearchInfoDialog (demo → demo.noResearch, nic se nenastaví) · src/ui/research-adopt-ui.ts (nikdy ukázka) · src/ui/research-follow-ui.ts researchFollowBeforeSwitch(null) · strings.ts demo.tryDemo, demo.noResearch, research.menuItem · 3.33.0: index.html demo.tryDemoSmall, src/tree-row.ts treeSampleKind (demo) · CHANGELOG.cs.md 3.29.0 „Přepnutí stromu“ · prace/1115-app-prepnuti-stromu -->
 
 <a id="S1.4"></a>
 ## S1.4 Following live

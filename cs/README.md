@@ -53,5 +53,6 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [S6 Strom z jiného programu](S6-tree-from-another-program.md): rodokmen z MyHeritage, Gramps, FamilySearch a programů pro Windows: co se načte, značky spolehlivosti, údaje z rodokmenu jako vodítka, karta Co teď, zálohy, export zpět, opakovaný import, e-mail osoby jako kontakt
 - [S7 Spolehlivost údajů a ověření podle originálů](S7-reliability-and-verification.md): značky u údajů a na kartičce, Ověřit u údaje, u osoby a ve stromu, ověřování ve frontě výzkumu, Potvrdit podle skenu, co jde s mostem a bez něj
 - [S8 Kde jsou data](S8-where-the-data-are.md): co je jen v prohlížeči, co je ve výzkumu a v Archivu Stromu, fotky a přílohy stromu ve výzkumu, ukazatel Jen v prohlížeči, fotky, které se nepodařilo načíst, balík a odebrání stromu
+- [S9 Vyzkoušet na ukázce](S9-trying-the-sample.md): ukázka z webu a ze souboru bez instalace, štítek Ukázka, novější ukázka, malá ukázka bez sítě, ukázkový výzkum `strom demo` a jeho smazání
 
 Licence: [CC BY 4.0](../LICENSE). Texty je možné sdílet a upravovat s uvedením zdroje.
