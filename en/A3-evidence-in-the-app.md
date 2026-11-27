@@ -505,8 +505,13 @@ a link to the person or the source.
   person's **Materials**, the rows of attachments, the file viewer). The dialog says "The tree is followed live and is
   read-only. Linking is possible after following ends; the choice stays." and offers **End following**; until then
   linking is not possible. A locked person still does not have the action.
+- **From app 3.33.0:** for a file the research has too, **Link to…** also writes the chosen people (and the person
+  of a fact or event) to the research through the bridge, as ⋯ **Assign to a person…** does. The window **Materials**
+  then shows them at the file at once, and the next sorting does not offer the file ([A3.5.19](#A3.5.19)). When the
+  research does not take the write, the error notice offers to try again. **Undo** takes back only the tree; the
+  people written to the research stay. Only with the bridge running.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B · 3.33.0: app:223a4272 src/ui/material-attach-ui.ts attachResearchAssign (REFN osob míst, soubory s file a ne tree, bez osob výzkumu researchPersonsOf), writeAssign s caps.assign a bridgeUp, materialErrorToast s opakováním · dirigent:spec/147 K3, prace/1127-app-147-materialy (Omezení: Zpět jen strom) -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 A source from a file and the evidence of a source
@@ -693,8 +698,16 @@ research, even when a filter shows only a part; there are no bands under the bat
 - **Controls:** the window **Materials** → the sorting band; ⋯ of a batch → **Sort with the agent…**; the window
   **The agent's proposal**.
 - **Since:** app 3.30.0, research 1.35.0
+- **From app 3.33.0:**
+  - files the agent left out or could not read are sent again next time, and the end of the proposal says so: "The
+    agent left them out or could not read them: they go to the agent again next time.", for a part of them "N files
+    the agent left out or could not read: they go to the agent again next time. The others …". Only the others carry
+    the tag **Not assigned by the agent** and are not sent again;
+  - a file whose proposal was accepted or rejected is handled, and the band does not count it among the unsorted
+    files ([A3.5.19](#A3.5.19));
+  - when a sorting or a run ends, the window **Materials** reads the list from the research again.
 
-<!-- zdroj: app:9752aead src/material-sort.ts sortStripState (A–F nad celým archivem i s filtrem; × jen v A a E), src/ui/material-sort-ui.ts materialSortStripView, konec návrhu (endTitle, endRun, restLine, restNote, leftLine, leftNote, nothingLeft, endFoot, closeAsk, closeText), materialSortCloseAsk · src/ui/materials-window.ts mwSortWholeClose (sortClosedState do změny stavu), ⋯ dávky (sort) · app:17585b94 materialsBatchAdded (stripAdded) · app:0b0c9d4f (telefon, strom jen ke čtení, výzkum neběží, starší výzkum bez běhů: olderNext, olderRun) · strings.ts materials.agentSort.stripWhole, reviewHand, handle, pending, doneLine, sortNextN, allSorted, closeProposal, readOnlyNote, phoneShort, hideCopies, copiesLine -->
+<!-- zdroj: app:9752aead src/material-sort.ts sortStripState (A–F nad celým archivem i s filtrem; × jen v A a E), src/ui/material-sort-ui.ts materialSortStripView, konec návrhu (endTitle, endRun, restLine, restNote, leftLine, leftNote, nothingLeft, endFoot, closeAsk, closeText), materialSortCloseAsk · src/ui/materials-window.ts mwSortWholeClose (sortClosedState do změny stavu), ⋯ dávky (sort) · app:17585b94 materialsBatchAdded (stripAdded) · app:0b0c9d4f (telefon, strom jen ke čtení, výzkum neběží, starší výzkum bez běhů: olderNext, olderRun) · strings.ts materials.agentSort.stripWhole, reviewHand, handle, pending, doneLine, sortNextN, allSorted, closeProposal, readOnlyNote, phoneShort, hideCopies, copiesLine · 3.33.0: app:223a4272 src/ui/material-sort-ui.ts konec návrhu (again = left-out | reader-failed → leftNoteAgain, leftNoteSome), mwLoad po konci třídění i běhu, src/material-sort.ts sortLeftIds (left-out a reader-failed se neukládají), sortStripState next = sortNext bez left · strings.ts materials.agentSort.leftNote, leftNoteSome, leftNoteAgain · dirigent:spec/147 K5, K6 -->
 
 <a id="A3.5.11"></a>
 ### A3.5.11 What to sort: batches and what is not sent
@@ -802,8 +815,12 @@ or that it is sorted through a source.
   ([R11.5.4](R11-material-from-the-user.md#R11.5.4)); without it the files show as before.
 - **Controls:** the window **Materials** (tiles, **List**, **Filters**); the file viewer.
 - **Since:** app 3.30.0, research 1.35.0
+- **From app 3.33.0:** a file whose proposal was accepted or rejected carries **Proposal accepted** or **Proposal
+  rejected**, never **Not assigned by the agent**, and is not in the filter **Not assigned by the agent**
+  ([A3.5.19](#A3.5.19)). For a file not about the family, the file viewer gives **Not about the family** in "Why not";
+  without a kept reason "The reader said nothing about the file", never "The agent left the file out".
 
-<!-- zdroj: app:2fbab382 src/ui/materials-window.ts (agentLeft, copyOf jen u souboru bez titulku nebo osoby, ne skrytý ani zdroj pramene), mwSortTagHtml, filtr left (fLeft), src/ui/material-viewer-ui.ts (unassignedWhy + said nebo unproposed[why]) · app:4bf66048 src/materials-overview.ts, src/ui/materials-window.ts mwSourceOfTag, src/ui/material-uses-ui.ts (zdroj pramene: přiřazený, bez Bez osoby a Bez pramene) · strings.ts materials.agentSort.fLeft, tagLeft, tagCopy, tagSourceOf, sourceOfN, usesSourceOf, viaInput, viaMedia, viaExcerpt, citedBy, keptViaSource · research:0cc2cfca src/core/live.ts GET /material (uses.of, left, sameAs) -->
+<!-- zdroj: app:2fbab382 src/ui/materials-window.ts (agentLeft, copyOf jen u souboru bez titulku nebo osoby, ne skrytý ani zdroj pramene), mwSortTagHtml, filtr left (fLeft), src/ui/material-viewer-ui.ts (unassignedWhy + said nebo unproposed[why]) · app:4bf66048 src/materials-overview.ts, src/ui/materials-window.ts mwSourceOfTag, src/ui/material-uses-ui.ts (zdroj pramene: přiřazený, bez Bez osoby a Bez pramene) · strings.ts materials.agentSort.fLeft, tagLeft, tagCopy, tagSourceOf, sourceOfN, usesSourceOf, viaInput, viaMedia, viaExcerpt, citedBy, keptViaSource · research:0cc2cfca src/core/live.ts GET /material (uses.of, left, sameAs) · 3.33.0: app:223a4272 src/ui/materials-window.ts mwSortMarks (sortLeftDecided → sortDecided, ne agentLeft), mwSortTag (tagAccepted, tagRefused), src/ui/material-viewer-ui.ts (unrelated → reason.unrelated, jinak unproposed nothing-said) · strings.ts materials.agentSort.tagAccepted, tagRefused · dirigent:spec/147 K6 -->
 
 <a id="A3.5.15"></a>
 ### A3.5.15 Add materials… in the window
@@ -936,6 +953,45 @@ people** the tree's lists ([A11](A11-lists-of-people.md)).
 - **Since:** app 3.32.0 with research 1.37.0
 
 <!-- zdroj: app:cd621161 src/material-list.ts (MATERIAL_LIST_PEOPLE 50, PUT lists/<listRef> name/kind/rule/persons/missing/at, materialListRef, snímek s osobou dialogu první, X-Strom-Person všichni známí do 50 jinak jen osoba dialogu, '' u pramene, bez známých osob materiál jako dřív), src/ui/material-concern-ui.ts (Týká se: Osoba / Pramen / Jen pramen, Seznam osob, FIND_FROM 9, prázdný disabled, listUnknown, popover a list na telefonu, klávesy, volba jen v otevřeném dialogu), src/ui/material-ui.ts (brány media.list a media.list.source, 404 media.no-list → seznam znovu, listFailed dialog otevřený, cantWait pole skryté) · 27452fd4 e2e/material-list.spec.ts · f5315651, 53752e6a · strings.ts material.concern, concernPerson, concernSource, concernLists, sourceOnly, listEmpty, listFind, listUnknown, whereList, whereListBig, whereSourceList, bigRule, bigPersons, missingNote, alsoAttachListHint, listFailed, sentToastList, sentWaitToastList, savedArchiveToastList · dirigent:spec/137 K2, prace/1123-app-137-linie-material (B1–B3) · research:de5f709d, 778846e6 (media.list, media.list.source) -->
+
+<a id="A3.5.19"></a>
+### A3.5.19 An accepted and a rejected proposal
+
+A file whose proposal from sorting ([A3.5.8](#A3.5.8)) a person decided is handled, accepted or rejected. The next
+sorting does not offer it, and the sorting band ([A3.5.10](#A3.5.10)) counts it neither among the unsorted files nor
+in **Sort the next (N)…**.
+
+- **An accepted proposal:** a file that has everything the last finished sorting proposed for it (title, kind and
+  date the same as proposed, all the proposed people) is handled, even when the proposal had no person. This holds
+  for files accepted earlier too; nothing is written for it ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
+- **A rejected proposal:** after **Reject** the file stays without title and person, but it is handled. **Undo** in
+  **Done** takes the decision back, and the file is offered again next time.
+- **The tag:** a file that still lacks a title or a person after the decision carries the tag **Proposal accepted**
+  or **Proposal rejected** in the window **Materials** instead of **Not assigned by the agent**
+  ([A3.5.14](#A3.5.14)), right after the proposal closes. **Go through by hand** does not take such files.
+- **A file that is in the tree too:** accepting the proposal of a tree's file that the research has too writes the
+  title, kind, date and people to the tree and to the research through the bridge, as ⋯ **Assign to a person…**
+  does. The window **Materials** then shows the people at the file at once and after reloading, and the file is not
+  **No person**. The same holds for **Link to…** ([A3.5.4](#A3.5.4)). The people at whom the file is in the tree
+  count as the file's people in the window.
+- **A tree followed live** from the research is read-only: accepting for a file the research has too writes only the
+  research's part through the bridge; the tree does not change and the proposal is not reported as "not written".
+- **The same file and a similar picture:** the research does not store a file with the same content twice
+  ([R11.1](R11-material-from-the-user.md#R11.1)); a copy with the same content that is already in the research
+  carries **Same content**, and sorting sends only the older file ([A3.5.14](#A3.5.14)). The same picture in another
+  resolution, or another scan of the same photo, has a different content: Strom does not recognise it as the same
+  file; both files stay and each is sorted on its own.
+- **Limits:**
+  - the research 1.38.0 and newer keeps the decision for good and on every device: the app sends it through the
+    bridge ([R11.5.4](R11-material-from-the-user.md#R11.5.4)). With an older research, or when the bridge is not
+    running at that moment, the decision holds only in this browser;
+  - a later sorting that proposes something for the file replaces the earlier decision;
+  - **Undo** in the notice after **Link to…** takes back only the tree; the people written to the research stay.
+- **Controls:** the window **Materials** → **The agent's proposal** (**Accept**, **Edit**, **Reject**, **Undo**);
+  the file viewer → **Link to…**.
+- **Since:** app 3.33.0, research 1.38.0
+
+<!-- zdroj: app:223a4272 src/material-sort.ts sortLeftIds (decided → why accepted | refused), sortLeftDecided, sortWrite researchId (soubor stromu s file, ne tree; osoby osoby a události), sortLeftMap (material.left, jinak paměť prohlížeče sortLeft) · src/ui/material-sort-ui.ts tell (POST …/decided jen s caps.decided a bridgeUp; Odmítnout refused, Vrátit open, přijetí accepted), bridgeWrite (/material/edit, /material/assign; researchPersonsOf), bridged (sledovaný strom: jen most, ne refused → notWritten), leftItems bez rozhodnutých · src/materials-overview.ts overviewItems (treePersons z rec.persons) · src/materials.ts MATERIAL_DECIDED_FEATURE material.decided, decideMaterialSort, LEFT_WHYS accepted, refused · src/ui/materials-window.ts sortDecided, drawnLeft (štítek hned po zavření návrhu) · strings.ts materials.agentSort.tagAccepted, tagRefused, notWritten · e2e/material-sort-147.spec.ts · research:c673ac14 src/core/material.ts leftBySorts, takenOver; src/core/live-sort.ts decided · research:src/commands/intake.ts (sha256 known), src/core/material.ts sameAs (SHA-256) · dirigent:spec/147 K1–K6 (K7 jen návrh), prace/1127-app-147-materialy, prace/1127-vyzkum-147-prijate -->
 
 <a id="A3.6"></a>
 ## A3.6 Sources of a person

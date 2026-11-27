@@ -304,6 +304,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A3.5.16 | A3-evidence-in-the-app.md | aplikace 3.30.0, výzkum 1.35.0 | platí | Smazat natrvalo | Delete permanently | Endgültig löschen | Usuń trwale |
 | A3.5.17 | A3-evidence-in-the-app.md | aplikace 3.31.0, výzkum 1.36.0 | platí | Soubor rodokmenu v Materiálech | A family tree file in Materials | Stammbaumdatei in den Materialien | Plik drzewa genealogicznego w Materiałach |
 | A3.5.18 | A3-evidence-in-the-app.md | aplikace 3.32.0, výzkum 1.37.0 | platí | Materiál k seznamu osob | Material for a list of people | Material zu einer Personenliste | Materiał do listy osób |
+| A3.5.19 | A3-evidence-in-the-app.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Přijatý a odmítnutý návrh | An accepted and a rejected proposal | Angenommener und abgelehnter Vorschlag | Propozycja przyjęta i odrzucona |
 | A3.6 | A3-evidence-in-the-app.md | aplikace 3.3.0 | platí | Prameny osoby | Sources of a person | Quellen einer Person | Źródła osoby |
 | A3.7 | A3-evidence-in-the-app.md | aplikace 3.4.0 | platí | Kde chybí doklady | Where evidence is missing | Wo Belege fehlen | Gdzie brakuje dowodów |
 | A3.8 | A3-evidence-in-the-app.md | aplikace 3.14.0 | platí | Obraz jen ve výzkumu | Image only in the research | Bild nur in der Forschung | Obraz tylko w badaniu |
@@ -644,6 +645,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S10.3 | S10-houses.md | aplikace 3.33.0 | platí | Stránka domu | The house page | Die Hausseite | Strona domu |
 | S10.3.1 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Mapa a poloha domu | Map and location of the house | Karte und Lage des Hauses | Mapa i położenie domu |
 | S10.3.2 | S10-houses.md | aplikace 3.33.0 | platí | Uložená stránka domu a ochrana lidí | The saved house page and protecting people | Die gespeicherte Hausseite und der Schutz von Personen | Zapisana strona domu i ochrona osób |
+| S10.3.3 | S10-houses.md | aplikace 3.33.0 | platí | Časová osa ze zápisů stromu | The timeline from the tree's records | Die Zeitleiste aus den Einträgen des Stammbaums | Oś czasu z zapisów drzewa |
 | S10.4 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Vyžádat historii domu | Requesting a house's history | Die Geschichte eines Hauses anfordern | Zamówić historię domu |
 | S10.4.1 | S10-houses.md | výzkum 1.38.0 | platí | Vyžádání v terminálu a z odkazu | Requesting in the terminal and from a link | Anfordern im Terminal und über einen Link | Zamówienie w terminalu i z linku |
 | S10.5 | S10-houses.md | výzkum 1.38.0 | platí | Historie domů: domy samy | House history: houses on their own | Hausgeschichte: Häuser von selbst | Historia domów: domy same |

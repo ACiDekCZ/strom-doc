@@ -129,6 +129,7 @@ Strona domu ma postać strony osoby: **‹ Domy**, **Zapisz HTML**, ⋯ i zamkni
   (z **Odpowiedz**) · **Co przeszukano** (z **Tylko w czytelni**) · **Źródła i materiały**.
 - **Oś czasu** ma przy wierszu pochodzenie: **z badań**, **z własnej kwerendy**, **przypuszczenie**,
   **prawdopodobne**.
+  Wiersze z zapisów drzewa opisuje [S10.3.3](#S10.3.3).
 - **Właściciele i mieszkańcy** są rozdzieleni: „Mieszkaniec to nie to samo co właściciel.” Luki pokazują
   „nieustalone · zob. Czego nie wiemy”, osoby spoza drzewa mają „spoza drzewa”.
 - **Stan zbadano:** ✓ i dzień („gotowe 12.03.2026”) w nagłówku, w oknie **Domy** i w dymku na mapie.
@@ -193,6 +194,27 @@ tylko linkiem. Zapisana strona domu, księga i strony rodu chronią osoby z mnie
 - **Obowiązuje od:** aplikacja 3.33.0
 
 <!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 -->
+
+<a id="S10.3.3"></a>
+### S10.3.3 Oś czasu z zapisów drzewa
+
+Wiersze **Osi czasu** z zapisów drzewa idą według lat, jeden na zapis; wspólny zapis pary to jeden wiersz. Co mówi
+już jeden wiersz, się nie powtarza.
+
+- **Urodzenie i chrzest** tej samej osoby w tym samym roku to jeden wiersz „urodzony” / „urodzona”. Chrzest bez
+  urodzenia ma wiersz „ochrzczony” / „ochrzczona”.
+- **Zamieszkanie:** kilka zamieszkań tej samej osoby w tym samym roku to jeden wiersz „zamieszkanie”. Zamieszkania
+  partnerów w tym samym roku to także jeden wiersz, z oboma imionami, jak ślub.
+- Zgony, śluby, spisy ludności i zapisy badania zostają wierszem na zapis.
+- **Granice:**
+  - zamieszkania bez roku się nie łączą;
+  - ani drzewo, ani badanie się nie zmienia: łączą się tylko wiersze, które pokazuje oś czasu;
+  - tak samo powstają wiersze na stronie domu, w zapisanej stronie ([S10.3.2](#S10.3.2)) i w książce domów
+    ([S10.10](#S10.10)).
+- **Obsługa:** aplikacja: strona domu → **Oś czasu**.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:3dc5647c src/house-page.ts houseTreeRows → joinRepeatedRows (narození jedné osoby a roku jednou, narození před křtem; bydliště s rokem a sdílenou osobou nebo partnery partnersIn), factLabel isBaptism (událost baptism → baptizedM/F) · src/book-houses.ts houseTreeRows · strings.ts houses.ev.bornM, bornF, baptizedM, baptizedF, residence · src/__tests__/house-page.test.ts · dirigent:prace/1127-app-147-materialy (Přibaleno, schválená tabulka) -->
 
 <a id="S10.4"></a>
 ## S10.4 Zamówić historię domu

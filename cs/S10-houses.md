@@ -124,7 +124,8 @@ Stránka domu má tvar stránky osoby: **‹ Domy**, **Uložit HTML**, ⋯ a zav
   generace, osoby; „Výzkum“: stav) · **V kostce** · **Čísla v čase** · **Časová osa** · **Držitelé a obyvatelé** ·
   **Podoba domu** ([S10.7](#S10.7)) · **Mapa** ([S10.3.1](#S10.3.1)) · **Co nevíme** (s **Odpovědět**) · **Co se
   prošlo** (s **Jen v badatelně**) · **Prameny a materiály**.
-- **Časová osa** má u řádku původ: **z výzkumu**, **z vlastní rešerše**, **domněnka**, **pravděpodobné**.
+- **Časová osa** má u řádku původ: **z výzkumu**, **z vlastní rešerše**, **domněnka**, **pravděpodobné**. Řádky
+  ze zápisů stromu popisuje [S10.3.3](#S10.3.3).
 - **Držitelé a obyvatelé** jsou oddělení: „Obyvatel není totéž co majitel.“ Mezery ukazují „nezjištěno · viz Co
   nevíme“, lidé mimo strom mají „mimo strom“.
 - **Stav prozkoumáno:** ✓ a den („hotovo 12. 3. 2026“) v hlavičce, v okně **Domy** i v bublině na mapě.
@@ -188,6 +189,27 @@ obrázky jsou jen odkazem. Uložená stránka domu, kniha a stránky rodu chrán
 - **Platí od:** aplikace 3.33.0
 
 <!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 -->
+
+<a id="S10.3.3"></a>
+### S10.3.3 Časová osa ze zápisů stromu
+
+Řádky **Časové osy** ze zápisů stromu jdou po rocích, jeden na zápis; společný zápis dvojice je jeden řádek. Co už
+říká jeden řádek, se neopakuje.
+
+- **Narození a křest** téže osoby ve stejném roce jsou jeden řádek „narozen“ / „narozena“. Křest bez narození má
+  řádek „pokřtěn“ / „pokřtěna“.
+- **Bydliště:** víc bydlišť téže osoby ve stejném roce je jeden řádek „bydliště“. Bydliště partnerů ve stejném roce
+  je taky jeden řádek s oběma jmény, jako sňatek.
+- Úmrtí, sňatky, sčítání a zápisy výzkumu zůstávají řádek za zápisem.
+- **Hranice:**
+  - bydliště bez roku se nespojují;
+  - strom ani výzkum se nemění: spojí se jen řádky, které časová osa ukáže;
+  - stejně se řádky skládají ve stránce domu, v uložené stránce ([S10.3.2](#S10.3.2)) a v knize domů
+    ([S10.10](#S10.10)).
+- **Ovládání:** aplikace: stránka domu → **Časová osa**.
+- **Platí od:** aplikace 3.33.0
+
+<!-- zdroj: app:3dc5647c src/house-page.ts houseTreeRows → joinRepeatedRows (narození jedné osoby a roku jednou, narození před křtem; bydliště s rokem a sdílenou osobou nebo partnery partnersIn), factLabel isBaptism (událost baptism → baptizedM/F) · src/book-houses.ts houseTreeRows · strings.ts houses.ev.bornM, bornF, baptizedM, baptizedF, residence · src/__tests__/house-page.test.ts · dirigent:prace/1127-app-147-materialy (Přibaleno, schválená tabulka) -->
 
 <a id="S10.4"></a>
 ## S10.4 Vyžádat historii domu

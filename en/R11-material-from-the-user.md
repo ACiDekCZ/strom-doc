@@ -295,8 +295,18 @@ written to the research.
     app on this computer after a confirmation in its dialog; the bridge's log says so in one line. Anyone can set it
     back to `ask` or cancel it, the Strom app too ([S4.4.13](S4-research-from-the-app.md#S4.4.13));
   - with `--for-tree` it applies to this research, otherwise to this computer. The limits of sorting do not change.
+- **From research 1.38.0 (a proposal taken over):** a file is sorted once.
+  - **Enforced by the code:** a file that has everything the last finished sorting proposed for it (title, kind and
+    date the same as proposed, all the proposed people) is handled (`left` with the reason `accepted`) and is not
+    sent next time, even when the proposal had no person. A proposal of only a union, an event, a source or a back
+    never counts as taken over by itself; a proposal "not about the family" is taken over when the file is hidden;
+  - it is counted on reading from the sortings' records; nothing is written, and it holds for files accepted earlier
+    too. An acceptance with a change (another title) is not recognised by itself; the app says it;
+  - what a person decided of a proposal in the Strom app (accepted, rejected, taken back) the research keeps with
+    the sorting's record (`decided`), nothing in the research. Such a file is handled (`accepted`, `refused`) until a
+    later sorting proposes something for it ([A3.5.19](A3-evidence-in-the-app.md#A3.5.19)).
 
-<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:0cc2cfca src/core/sort.ts SORT_LINK_TYPES back, portrait · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort · research:ae866bb7 src/core/sort.ts SORT_TEXT_FILE_MAX=20_000, SORT_TEXT_TYPES, isTextFile, textOfFile (UTF-8 / UTF-16 BOM, jinak windows-1252; cut), řádek „read as text (only its first … characters: the file is … KB)“, unproposedOf (nothing-said, nothing-new, dropped, left-out, reader-failed + outcome; said) · src/commands/material.ts filesDone (+ group.length po čtenáři), show „N of M files done“, „no proposal: why (outcome)“ · research:f36b3941 (ve vydání 1.35.0) src/core/sort.ts pokyn čtenáři „unrelated: yes“ (jen soubor zjevně mimo rodinu, nikdy jen nezařazený), YES, keptProposals (unrelated: jen why a sure, ostatní dropped „unrelated“) · src/commands/material.ts show „· unrelated (not of the family)“ · src/core/live.ts GET /material/sort/<id> unrelated?: true („the person hides it, never strom“) · CHANGELOG.md 1.35.0 · 1.37.0: research:5520e0ac src/core/config.ts sort.confirm (ask | no, --for-tree), requireHumanYes, assets/lang/cs.json ui.consent.sort.confirm, src/commands/material.ts (no: třídí hned, confirm no v --json; STROM_NONINTERACTIVE se ptá), src/core/live.ts /status sort, POST /settings/sort (403 sort.raise) · CHANGELOG.cs.md 1.37.0 · dirigent:spec/102 U8 -->
+<!-- zdroj: research:acb5d1ce src/core/sort.ts SORT_MOST_FILES=50, SORT_TEXT_MAX=2000, SORT_QUEUE_MAX=3, SORT_PDF_PAGES=10, SORT_FILES_PER_READING=10, typy vazeb person/family/event/source · research:0cc2cfca src/core/sort.ts SORT_LINK_TYPES back, portrait · research:d667304d (souhlas člověka, exit 4) · research:2978645b, 19e525e5, 5b76fb43 (podpis mostu APP_SORT_FROM, platí jednou) · src/commands/material.ts · help material sort · research:ae866bb7 src/core/sort.ts SORT_TEXT_FILE_MAX=20_000, SORT_TEXT_TYPES, isTextFile, textOfFile (UTF-8 / UTF-16 BOM, jinak windows-1252; cut), řádek „read as text (only its first … characters: the file is … KB)“, unproposedOf (nothing-said, nothing-new, dropped, left-out, reader-failed + outcome; said) · src/commands/material.ts filesDone (+ group.length po čtenáři), show „N of M files done“, „no proposal: why (outcome)“ · research:f36b3941 (ve vydání 1.35.0) src/core/sort.ts pokyn čtenáři „unrelated: yes“ (jen soubor zjevně mimo rodinu, nikdy jen nezařazený), YES, keptProposals (unrelated: jen why a sure, ostatní dropped „unrelated“) · src/commands/material.ts show „· unrelated (not of the family)“ · src/core/live.ts GET /material/sort/<id> unrelated?: true („the person hides it, never strom“) · CHANGELOG.md 1.35.0 · 1.37.0: research:5520e0ac src/core/config.ts sort.confirm (ask | no, --for-tree), requireHumanYes, assets/lang/cs.json ui.consent.sort.confirm, src/commands/material.ts (no: třídí hned, confirm no v --json; STROM_NONINTERACTIVE se ptá), src/core/live.ts /status sort, POST /settings/sort (403 sort.raise) · CHANGELOG.cs.md 1.37.0 · dirigent:spec/102 U8 · 1.38.0: research:c673ac14 src/core/material.ts LEFT_WHY (accepted, refused), leftBySorts (decided, unproposed, takenOver; pozdější návrh sundá), takenOver (title, kind, date, osoby; bez osoby taky; unrelated → skipped; jen svazek, událost, pramen, rub ne) · src/core/sort.ts decided · test/cli/material-accepted.test.ts · CHANGELOG.cs.md 1.38.0 (deba1692) · dirigent:spec/147 K1, K2 -->
 
 <a id="R11.5.4"></a>
 ### R11.5.4 Material through the bridge
@@ -313,6 +323,7 @@ command as in the terminal, with the same limits.
 | `POST /material/edit` | title, kind and date, 1–500 files | `strom input edit` |
 | `POST /material/sort` | sorting 1–50 files; progress `GET /material/sort/<id>`, cancelling `…/cancel` | `strom material sort` |
 | `POST /material/sort` (51–1,500) | a run in batches ([R11.5.5](#R11.5.5)); progress `GET /material/sort/<run-…>`, cancelling `…/<run-…>/cancel` | |
+| `POST /material/sort/<id>/decided` | what a person decided of the proposals of a finished sorting or run: `accepted`, `refused`, `open` (taken back); only from the Strom app | |
 | `POST /material/delete` | delete 1–500 files permanently: first `dryRun` (the list and a confirmation), then with the confirmation | `strom input delete` |
 
 - The research announces what it can in `/status.features`: `media.app`, `material.links`, `material.edit`,
@@ -321,12 +332,17 @@ command as in the terminal, with the same limits.
 - **From research 1.35.0:** also `material.sourceOf`, `material.left`, `material.sameAs`, `material.sortRun` and
   `material.delete`. Deleting refuses a changed list (`material.delete-changed` with the new list), a missing or old
   confirmation (`material.body`) and a writing that did not come from the app.
+- **From research 1.38.0:** also `material.accepted` and `material.decided` (only where there is an agent).
+  `GET /material` then returns `left` for a handled file with the reason `accepted` or `refused` too, and
+  `GET /material/sort/<id>` the decisions (`decided`). A decision is refused for an unknown sorting (`sort.none`), a
+  sorting not finished yet (`sort.state`), a file not of the sorting or another state (`material.body`) and a write
+  that did not come from the app (`app.only`).
 - **Enforced by the code:** an edit is whole or none; a busy research answers that it changed nothing. Sorting is
   refused without an agent, with the reading limit used up, with a full queue and when the agent cannot work now.
 - **Controls:** app: the window **Materials**, with the bridge running ([S1.1](S1-connecting-app-and-research.md#S1.1)).
 - **Since:** research 1.35.0
 
-<!-- zdroj: research:0cc2cfca src/core/live.ts (GET /material uses.of, left {at, sort, why, said}, sameAs; POST /material/sort run 51–1500, GET/POST /material/sort/<run-…>[/cancel]; POST /material/delete dryRun → impacts + confirm, chyby material.delete-changed, material.body, material.file, material.readonly, material.busy, app.only; BRIDGE_FEATURES material.sourceOf, left, sameAs, sortRun, delete) · research:src/core/live.ts:134-160 (GET /material, /material/<I…>/uses, POST /material/assign|hide|edit|sort, chyby material.body|date|file|readonly|busy) · src/core/live-sort.ts (sort.none, sort.limit, sort.queue, sort.not-ready) · research:a7df632d, 87376d11, 7754968e -->
+<!-- zdroj: research:0cc2cfca src/core/live.ts (GET /material uses.of, left {at, sort, why, said}, sameAs; POST /material/sort run 51–1500, GET/POST /material/sort/<run-…>[/cancel]; POST /material/delete dryRun → impacts + confirm, chyby material.delete-changed, material.body, material.file, material.readonly, material.busy, app.only; BRIDGE_FEATURES material.sourceOf, left, sameAs, sortRun, delete) · research:src/core/live.ts:134-160 (GET /material, /material/<I…>/uses, POST /material/assign|hide|edit|sort, chyby material.body|date|file|readonly|busy) · src/core/live-sort.ts (sort.none, sort.limit, sort.queue, sort.not-ready) · research:a7df632d, 87376d11, 7754968e · 1.38.0: research:c673ac14 src/core/live-sort.ts decided (403 app.only, 404 sort.none, 400 material.body, 409 sort.state), src/core/live.ts BRIDGE_FEATURES material.accepted, material.decided, AGENT_FEATURES material.decided, doc GET /material left why accepted|refused · dirigent:spec/147 K2 -->
 
 <a id="R11.5.5"></a>
 ### R11.5.5 A sorting run from the app

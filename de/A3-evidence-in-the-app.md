@@ -543,8 +543,14 @@ einem Schritt **Rückgängig**.
   Stammbaum wird live verfolgt und ist schreibgeschützt. Verknüpfen geht nach dem Beenden der Verfolgung; die Auswahl
   bleibt.“ und bietet **Verfolgung beenden** an; bis dahin lässt sich nicht verknüpfen. Eine gesperrte Person hat die
   Aktion weiterhin nicht.
+- **Ab App 3.33.0:** bei einer Datei, die auch die Forschung hat, schreibt **Verknüpfen mit…** die gewählten
+  Personen (auch die Person einer Angabe oder eines Ereignisses) über die Brücke auch in die Forschung, wie ⋯
+  **Einer Person zuordnen…**. Das Fenster **Materialien** zeigt sie dann bei der Datei sofort, und das nächste
+  Sortieren bietet die Datei nicht an ([A3.5.19](#A3.5.19)). Nimmt die Forschung das Schreiben nicht an, bietet die
+  Fehlermeldung einen neuen Versuch an. **Rückgängig** nimmt nur den Stammbaum zurück; die in die Forschung
+  geschriebenen Personen bleiben. Nur bei laufender Brücke.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B · 3.33.0: app:223a4272 src/ui/material-attach-ui.ts attachResearchAssign (REFN osob míst, soubory s file a ne tree, bez osob výzkumu researchPersonsOf), writeAssign s caps.assign a bridgeUp, materialErrorToast s opakováním · dirigent:spec/147 K3, prace/1127-app-147-materialy (Omezení: Zpět jen strom) -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Quelle aus einer Datei und Beleg einer Quelle
@@ -747,8 +753,17 @@ Forschung, auch wenn ein Filter nur einen Teil zeigt; unter den Stapeln gibt es 
 - **Bedienung:** Fenster **Materialien** → das Band des Sortierens; ⋯ eines Stapels → **Mit dem Agenten
   sortieren…**; Fenster **Vorschlag des Agenten**.
 - **Gilt seit:** App 3.30.0, Forschung 1.35.0
+- **Ab App 3.33.0:**
+  - Dateien, die der Agent ausgelassen oder nicht lesen konnte, gehen beim nächsten Mal wieder an ihn, und das Ende
+    des Vorschlags sagt es: „Der Agent hat sie ausgelassen oder nicht lesen können: Beim nächsten Mal gehen sie
+    wieder an ihn.“, bei einem Teil von ihnen „N Dateien hat der Agent ausgelassen oder nicht lesen können; sie gehen
+    beim nächsten Mal wieder an ihn. Die übrigen …“. Nur die übrigen tragen das Etikett **Vom Agenten nicht
+    zugeordnet** und gehen nicht noch einmal an den Agenten;
+  - eine Datei, deren Vorschlag angenommen oder abgelehnt wurde, ist erledigt, und das Band zählt sie nicht zu den
+    nicht eingeordneten Dateien ([A3.5.19](#A3.5.19));
+  - endet ein Sortieren oder ein Lauf, liest das Fenster **Materialien** die Liste neu von der Forschung.
 
-<!-- zdroj: app:9752aead src/material-sort.ts sortStripState (A–F nad celým archivem i s filtrem; × jen v A a E), src/ui/material-sort-ui.ts materialSortStripView, konec návrhu (endTitle, endRun, restLine, restNote, leftLine, leftNote, nothingLeft, endFoot, closeAsk, closeText), materialSortCloseAsk · src/ui/materials-window.ts mwSortWholeClose (sortClosedState do změny stavu), ⋯ dávky (sort) · app:17585b94 materialsBatchAdded (stripAdded) · app:0b0c9d4f (telefon, strom jen ke čtení, výzkum neběží, starší výzkum bez běhů: olderNext, olderRun) · strings.ts materials.agentSort.stripWhole, reviewHand, handle, pending, doneLine, sortNextN, allSorted, closeProposal, readOnlyNote, phoneShort, hideCopies, copiesLine -->
+<!-- zdroj: app:9752aead src/material-sort.ts sortStripState (A–F nad celým archivem i s filtrem; × jen v A a E), src/ui/material-sort-ui.ts materialSortStripView, konec návrhu (endTitle, endRun, restLine, restNote, leftLine, leftNote, nothingLeft, endFoot, closeAsk, closeText), materialSortCloseAsk · src/ui/materials-window.ts mwSortWholeClose (sortClosedState do změny stavu), ⋯ dávky (sort) · app:17585b94 materialsBatchAdded (stripAdded) · app:0b0c9d4f (telefon, strom jen ke čtení, výzkum neběží, starší výzkum bez běhů: olderNext, olderRun) · strings.ts materials.agentSort.stripWhole, reviewHand, handle, pending, doneLine, sortNextN, allSorted, closeProposal, readOnlyNote, phoneShort, hideCopies, copiesLine · 3.33.0: app:223a4272 src/ui/material-sort-ui.ts konec návrhu (again = left-out | reader-failed → leftNoteAgain, leftNoteSome), mwLoad po konci třídění i běhu, src/material-sort.ts sortLeftIds (left-out a reader-failed se neukládají), sortStripState next = sortNext bez left · strings.ts materials.agentSort.leftNote, leftNoteSome, leftNoteAgain · dirigent:spec/147 K5, K6 -->
 
 <a id="A3.5.11"></a>
 ### A3.5.11 Was sortieren: Stapel und was nicht gesendet wird
@@ -859,8 +874,13 @@ eingeordnet blieb oder dass sie über eine Quelle eingeordnet ist.
   meldet ([R11.5.4](R11-material-from-the-user.md#R11.5.4)); ohne sie zeigen sich die Dateien wie bisher.
 - **Bedienung:** Fenster **Materialien** (Kacheln, **Liste**, **Filter**); Dateibetrachter.
 - **Gilt seit:** App 3.30.0, Forschung 1.35.0
+- **Ab App 3.33.0:** eine Datei, deren Vorschlag angenommen oder abgelehnt wurde, trägt **Vorschlag angenommen**
+  oder **Vorschlag abgelehnt**, nie **Vom Agenten nicht zugeordnet**, und ist nicht im Filter **Vom Agenten nicht
+  zugeordnet** ([A3.5.19](#A3.5.19)). Bei einer Datei, die die Familie nicht betrifft, nennt der Dateibetrachter unter
+  „Warum nicht“ **Betrifft nicht die Familie**; ohne gespeicherten Grund „Der Leser sagte nichts zur Datei“, nie
+  „Der Agent hat die Datei ausgelassen“.
 
-<!-- zdroj: app:2fbab382 src/ui/materials-window.ts (agentLeft, copyOf jen u souboru bez titulku nebo osoby, ne skrytý ani zdroj pramene), mwSortTagHtml, filtr left (fLeft), src/ui/material-viewer-ui.ts (unassignedWhy + said nebo unproposed[why]) · app:4bf66048 src/materials-overview.ts, src/ui/materials-window.ts mwSourceOfTag, src/ui/material-uses-ui.ts (zdroj pramene: přiřazený, bez Bez osoby a Bez pramene) · strings.ts materials.agentSort.fLeft, tagLeft, tagCopy, tagSourceOf, sourceOfN, usesSourceOf, viaInput, viaMedia, viaExcerpt, citedBy, keptViaSource · research:0cc2cfca src/core/live.ts GET /material (uses.of, left, sameAs) -->
+<!-- zdroj: app:2fbab382 src/ui/materials-window.ts (agentLeft, copyOf jen u souboru bez titulku nebo osoby, ne skrytý ani zdroj pramene), mwSortTagHtml, filtr left (fLeft), src/ui/material-viewer-ui.ts (unassignedWhy + said nebo unproposed[why]) · app:4bf66048 src/materials-overview.ts, src/ui/materials-window.ts mwSourceOfTag, src/ui/material-uses-ui.ts (zdroj pramene: přiřazený, bez Bez osoby a Bez pramene) · strings.ts materials.agentSort.fLeft, tagLeft, tagCopy, tagSourceOf, sourceOfN, usesSourceOf, viaInput, viaMedia, viaExcerpt, citedBy, keptViaSource · research:0cc2cfca src/core/live.ts GET /material (uses.of, left, sameAs) · 3.33.0: app:223a4272 src/ui/materials-window.ts mwSortMarks (sortLeftDecided → sortDecided, ne agentLeft), mwSortTag (tagAccepted, tagRefused), src/ui/material-viewer-ui.ts (unrelated → reason.unrelated, jinak unproposed nothing-said) · strings.ts materials.agentSort.tagAccepted, tagRefused · dirigent:spec/147 K6 -->
 
 <a id="A3.5.15"></a>
 ### A3.5.15 Materialien hinzufügen… im Fenster
@@ -1003,6 +1023,50 @@ Quelle **Nur die Quelle**, und unter **Personenliste** die Listen des Stammbaums
 - **Gilt seit:** App 3.32.0 mit Forschung 1.37.0
 
 <!-- zdroj: app:cd621161 src/material-list.ts (MATERIAL_LIST_PEOPLE 50, PUT lists/<listRef> name/kind/rule/persons/missing/at, materialListRef, snímek s osobou dialogu první, X-Strom-Person všichni známí do 50 jinak jen osoba dialogu, '' u pramene, bez známých osob materiál jako dřív), src/ui/material-concern-ui.ts (Týká se: Osoba / Pramen / Jen pramen, Seznam osob, FIND_FROM 9, prázdný disabled, listUnknown, popover a list na telefonu, klávesy, volba jen v otevřeném dialogu), src/ui/material-ui.ts (brány media.list a media.list.source, 404 media.no-list → seznam znovu, listFailed dialog otevřený, cantWait pole skryté) · 27452fd4 e2e/material-list.spec.ts · f5315651, 53752e6a · strings.ts material.concern, concernPerson, concernSource, concernLists, sourceOnly, listEmpty, listFind, listUnknown, whereList, whereListBig, whereSourceList, bigRule, bigPersons, missingNote, alsoAttachListHint, listFailed, sentToastList, sentWaitToastList, savedArchiveToastList · dirigent:spec/137 K2, prace/1123-app-137-linie-material (B1–B3) · research:de5f709d, 778846e6 (media.list, media.list.source) -->
+
+<a id="A3.5.19"></a>
+### A3.5.19 Angenommener und abgelehnter Vorschlag
+
+Eine Datei, über deren Vorschlag aus dem Sortieren ([A3.5.8](#A3.5.8)) ein Mensch entschieden hat, ist erledigt,
+angenommen wie abgelehnt. Das nächste Sortieren bietet sie nicht an, und das Band des Sortierens
+([A3.5.10](#A3.5.10)) zählt sie weder zu den nicht eingeordneten Dateien noch zu **Weitere sortieren (N)…**.
+
+- **Angenommener Vorschlag:** eine Datei, die alles hat, was ihr das letzte fertige Sortieren vorgeschlagen hat
+  (Titel, Art und Datum wie vorgeschlagen, alle vorgeschlagenen Personen), ist erledigt, auch wenn der Vorschlag
+  keine Person hatte. Das gilt auch für früher angenommene Dateien; dafür wird nichts geschrieben
+  ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
+- **Abgelehnter Vorschlag:** nach **Ablehnen** bleibt die Datei ohne Titel und Person, ist aber erledigt.
+  **Rückgängig** in **Erledigt** nimmt die Entscheidung zurück, und die Datei wird beim nächsten Mal wieder
+  angeboten.
+- **Etikett:** eine Datei, die nach der Entscheidung weiter keinen Titel oder keine Person hat, trägt im Fenster
+  **Materialien** das Etikett **Vorschlag angenommen** oder **Vorschlag abgelehnt** statt **Vom Agenten nicht
+  zugeordnet** ([A3.5.14](#A3.5.14)), gleich nach dem Schließen des Vorschlags. **Von Hand durchgehen** nimmt solche
+  Dateien nicht.
+- **Eine Datei, die auch im Stammbaum ist:** das Annehmen des Vorschlags bei einer Datei des Stammbaums, die auch die
+  Forschung hat, schreibt Titel, Art, Datum und Personen in den Stammbaum und über die Brücke in die Forschung, wie ⋯
+  **Einer Person zuordnen…**. Das Fenster **Materialien** zeigt die Personen bei der Datei dann sofort und auch nach
+  neuem Laden, und die Datei ist nicht **Ohne Person**. Dasselbe gilt für **Verknüpfen mit…** ([A3.5.4](#A3.5.4)).
+  Die Personen, bei denen die Datei im Stammbaum ist, zählt das Fenster zu den Personen der Datei.
+- **Ein live aus der Forschung verfolgter Stammbaum** ist schreibgeschützt: das Annehmen bei einer Datei, die auch
+  die Forschung hat, schreibt nur den Teil der Forschung über die Brücke; der Stammbaum ändert sich nicht, und der
+  Vorschlag wird nicht als „Nicht geschrieben“ gemeldet.
+- **Dieselbe Datei und ein ähnliches Bild:** eine Datei mit gleichem Inhalt speichert die Forschung kein zweites Mal
+  ([R11.1](R11-material-from-the-user.md#R11.1)); eine Kopie mit gleichem Inhalt, die schon in der Forschung ist,
+  trägt **Gleicher Inhalt**, und das Sortieren sendet nur die ältere Datei ([A3.5.14](#A3.5.14)). Dasselbe Bild in
+  einer anderen Auflösung oder ein anderer Scan desselben Fotos hat einen anderen Inhalt: Strom erkennt es nicht als
+  dieselbe Datei; beide Dateien bleiben und jede wird für sich sortiert.
+- **Grenzen:**
+  - dauerhaft und auf allen Geräten behält die Entscheidung die Forschung 1.38.0 und neuer: die App sendet sie über
+    die Brücke ([R11.5.4](R11-material-from-the-user.md#R11.5.4)). Bei einer älteren Forschung, oder wenn die Brücke
+    in dem Moment nicht läuft, gilt die Entscheidung nur in diesem Browser;
+  - ein späteres Sortieren, das zur Datei etwas vorschlägt, ersetzt die frühere Entscheidung;
+  - **Rückgängig** in der Meldung nach **Verknüpfen mit…** nimmt nur den Stammbaum zurück; die in die Forschung
+    geschriebenen Personen bleiben.
+- **Bedienung:** Fenster **Materialien** → **Vorschlag des Agenten** (**Annehmen**, **Bearbeiten**, **Ablehnen**,
+  **Rückgängig**); Dateibetrachter → **Verknüpfen mit…**.
+- **Gilt seit:** App 3.33.0, Forschung 1.38.0
+
+<!-- zdroj: app:223a4272 src/material-sort.ts sortLeftIds (decided → why accepted | refused), sortLeftDecided, sortWrite researchId (soubor stromu s file, ne tree; osoby osoby a události), sortLeftMap (material.left, jinak paměť prohlížeče sortLeft) · src/ui/material-sort-ui.ts tell (POST …/decided jen s caps.decided a bridgeUp; Odmítnout refused, Vrátit open, přijetí accepted), bridgeWrite (/material/edit, /material/assign; researchPersonsOf), bridged (sledovaný strom: jen most, ne refused → notWritten), leftItems bez rozhodnutých · src/materials-overview.ts overviewItems (treePersons z rec.persons) · src/materials.ts MATERIAL_DECIDED_FEATURE material.decided, decideMaterialSort, LEFT_WHYS accepted, refused · src/ui/materials-window.ts sortDecided, drawnLeft (štítek hned po zavření návrhu) · strings.ts materials.agentSort.tagAccepted, tagRefused, notWritten · e2e/material-sort-147.spec.ts · research:c673ac14 src/core/material.ts leftBySorts, takenOver; src/core/live-sort.ts decided · research:src/commands/intake.ts (sha256 known), src/core/material.ts sameAs (SHA-256) · dirigent:spec/147 K1–K6 (K7 jen návrh), prace/1127-app-147-materialy, prace/1127-vyzkum-147-prijate -->
 
 <a id="A3.6"></a>
 ## A3.6 Quellen einer Person

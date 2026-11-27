@@ -467,8 +467,12 @@ Každý soubor ukazuje, kde je použit: osoby, portrét, svazek, události, pram
   osoby, řádky příloh, prohlížeč souboru). Dialog řekne „Strom se sleduje živě a je jen pro čtení. Připojit jde po
   ukončení sledování, volba zůstane.“ a nabídne **Ukončit sledování**; do té doby připojit nejde. Zamčená osoba akci
   dál nemá.
+- **Od aplikace 3.33.0:** u souboru, který má i výzkum, zapíše **Připojit k…** zvolené osoby (i osobu údaje nebo
+  události) také do výzkumu přes most, jako ⋯ **Přiřadit k osobě…**. Okno **Materiály** je pak u souboru ukáže hned
+  a další třídění soubor nenabídne ([A3.5.19](#A3.5.19)). Když výzkum zápis nepřijme, oznámení chyby nabídne zkusit
+  znovu. **Zpět** vrací jen strom; osoby zapsané do výzkumu zůstanou. Jen s běžícím mostem.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B · 3.33.0: app:223a4272 src/ui/material-attach-ui.ts attachResearchAssign (REFN osob míst, soubory s file a ne tree, bez osob výzkumu researchPersonsOf), writeAssign s caps.assign a bridgeUp, materialErrorToast s opakováním · dirigent:spec/147 K3, prace/1127-app-147-materialy (Omezení: Zpět jen strom) -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Pramen ze souboru a doklad pramene
@@ -644,8 +648,15 @@ ukazuje jen část; pod dávkami pruhy nejsou.
     třídí novější verze výzkumu.“
 - **Ovládání:** okno **Materiály** → pruh třídění; ⋯ dávky → **Roztřídit agentem…**; okno **Návrh agenta**.
 - **Platí od:** aplikace 3.30.0, výzkum 1.35.0
+- **Od aplikace 3.33.0:**
+  - soubory, které agent vynechal nebo nepřečetl, se příště pošlou znovu a konec návrhu to řekne: „Agent je vynechal
+    nebo nepřečetl: příště se mu pošlou znovu.“, u části z nich „N souborů agent vynechal nebo nepřečetl: příště se
+    mu pošlou znovu. Ostatní …“. Jen ostatní mají štítek **Agent nezařadil** a znovu se neposílají;
+  - soubor s přijatým nebo odmítnutým návrhem je vyřízený a pruh ho do počtů nezařazených nepočítá
+    ([A3.5.19](#A3.5.19));
+  - když třídění nebo běh skončí, okno **Materiály** načte seznam od výzkumu znovu.
 
-<!-- zdroj: app:9752aead src/material-sort.ts sortStripState (A–F nad celým archivem i s filtrem; × jen v A a E), src/ui/material-sort-ui.ts materialSortStripView, konec návrhu (endTitle, endRun, restLine, restNote, leftLine, leftNote, nothingLeft, endFoot, closeAsk, closeText), materialSortCloseAsk · src/ui/materials-window.ts mwSortWholeClose (sortClosedState do změny stavu), ⋯ dávky (sort) · app:17585b94 materialsBatchAdded (stripAdded) · app:0b0c9d4f (telefon, strom jen ke čtení, výzkum neběží, starší výzkum bez běhů: olderNext, olderRun) · strings.ts materials.agentSort.stripWhole, reviewHand, handle, pending, doneLine, sortNextN, allSorted, closeProposal, readOnlyNote, phoneShort, hideCopies, copiesLine -->
+<!-- zdroj: app:9752aead src/material-sort.ts sortStripState (A–F nad celým archivem i s filtrem; × jen v A a E), src/ui/material-sort-ui.ts materialSortStripView, konec návrhu (endTitle, endRun, restLine, restNote, leftLine, leftNote, nothingLeft, endFoot, closeAsk, closeText), materialSortCloseAsk · src/ui/materials-window.ts mwSortWholeClose (sortClosedState do změny stavu), ⋯ dávky (sort) · app:17585b94 materialsBatchAdded (stripAdded) · app:0b0c9d4f (telefon, strom jen ke čtení, výzkum neběží, starší výzkum bez běhů: olderNext, olderRun) · strings.ts materials.agentSort.stripWhole, reviewHand, handle, pending, doneLine, sortNextN, allSorted, closeProposal, readOnlyNote, phoneShort, hideCopies, copiesLine · 3.33.0: app:223a4272 src/ui/material-sort-ui.ts konec návrhu (again = left-out | reader-failed → leftNoteAgain, leftNoteSome), mwLoad po konci třídění i běhu, src/material-sort.ts sortLeftIds (left-out a reader-failed se neukládají), sortStripState next = sortNext bez left · strings.ts materials.agentSort.leftNote, leftNoteSome, leftNoteAgain · dirigent:spec/147 K5, K6 -->
 
 <a id="A3.5.11"></a>
 ### A3.5.11 Co roztřídit: dávky a co se nepošle
@@ -744,8 +755,12 @@ je zařazený přes pramen.
   bez něj se soubory ukazují jako dřív.
 - **Ovládání:** okno **Materiály** (dlaždice, **Seznam**, **Filtry**); prohlížeč souboru.
 - **Platí od:** aplikace 3.30.0, výzkum 1.35.0
+- **Od aplikace 3.33.0:** soubor s přijatým nebo odmítnutým návrhem nese **Návrh přijat** nebo **Návrh odmítnut**,
+  nikdy **Agent nezařadil**, a není ve filtru **Agent nezařadil** ([A3.5.19](#A3.5.19)). Prohlížeč souboru u
+  souboru, který se rodiny netýká, uvede v „Proč ne“ **Netýká se rodiny**; bez uloženého důvodu „Čtenář k souboru nic
+  neřekl“, nikdy „Agent soubor vynechal“.
 
-<!-- zdroj: app:2fbab382 src/ui/materials-window.ts (agentLeft, copyOf jen u souboru bez titulku nebo osoby, ne skrytý ani zdroj pramene), mwSortTagHtml, filtr left (fLeft), src/ui/material-viewer-ui.ts (unassignedWhy + said nebo unproposed[why]) · app:4bf66048 src/materials-overview.ts, src/ui/materials-window.ts mwSourceOfTag, src/ui/material-uses-ui.ts (zdroj pramene: přiřazený, bez Bez osoby a Bez pramene) · strings.ts materials.agentSort.fLeft, tagLeft, tagCopy, tagSourceOf, sourceOfN, usesSourceOf, viaInput, viaMedia, viaExcerpt, citedBy, keptViaSource · research:0cc2cfca src/core/live.ts GET /material (uses.of, left, sameAs) -->
+<!-- zdroj: app:2fbab382 src/ui/materials-window.ts (agentLeft, copyOf jen u souboru bez titulku nebo osoby, ne skrytý ani zdroj pramene), mwSortTagHtml, filtr left (fLeft), src/ui/material-viewer-ui.ts (unassignedWhy + said nebo unproposed[why]) · app:4bf66048 src/materials-overview.ts, src/ui/materials-window.ts mwSourceOfTag, src/ui/material-uses-ui.ts (zdroj pramene: přiřazený, bez Bez osoby a Bez pramene) · strings.ts materials.agentSort.fLeft, tagLeft, tagCopy, tagSourceOf, sourceOfN, usesSourceOf, viaInput, viaMedia, viaExcerpt, citedBy, keptViaSource · research:0cc2cfca src/core/live.ts GET /material (uses.of, left, sameAs) · 3.33.0: app:223a4272 src/ui/materials-window.ts mwSortMarks (sortLeftDecided → sortDecided, ne agentLeft), mwSortTag (tagAccepted, tagRefused), src/ui/material-viewer-ui.ts (unrelated → reason.unrelated, jinak unproposed nothing-said) · strings.ts materials.agentSort.tagAccepted, tagRefused · dirigent:spec/147 K6 -->
 
 <a id="A3.5.15"></a>
 ### A3.5.15 Přidat materiály… v okně
@@ -868,6 +883,43 @@ dialog otevřel), u pramene **Jen pramen**, a pod **Seznam osob** seznamy stromu
 - **Platí od:** aplikace 3.32.0 s výzkumem 1.37.0
 
 <!-- zdroj: app:cd621161 src/material-list.ts (MATERIAL_LIST_PEOPLE 50, PUT lists/<listRef> name/kind/rule/persons/missing/at, materialListRef, snímek s osobou dialogu první, X-Strom-Person všichni známí do 50 jinak jen osoba dialogu, '' u pramene, bez známých osob materiál jako dřív), src/ui/material-concern-ui.ts (Týká se: Osoba / Pramen / Jen pramen, Seznam osob, FIND_FROM 9, prázdný disabled, listUnknown, popover a list na telefonu, klávesy, volba jen v otevřeném dialogu), src/ui/material-ui.ts (brány media.list a media.list.source, 404 media.no-list → seznam znovu, listFailed dialog otevřený, cantWait pole skryté) · 27452fd4 e2e/material-list.spec.ts · f5315651, 53752e6a · strings.ts material.concern, concernPerson, concernSource, concernLists, sourceOnly, listEmpty, listFind, listUnknown, whereList, whereListBig, whereSourceList, bigRule, bigPersons, missingNote, alsoAttachListHint, listFailed, sentToastList, sentWaitToastList, savedArchiveToastList · dirigent:spec/137 K2, prace/1123-app-137-linie-material (B1–B3) · research:de5f709d, 778846e6 (media.list, media.list.source) -->
+
+<a id="A3.5.19"></a>
+### A3.5.19 Přijatý a odmítnutý návrh
+
+Soubor, o jehož návrhu z třídění ([A3.5.8](#A3.5.8)) člověk rozhodl, je vyřízený, přijatý i odmítnutý. Další
+třídění ho nenabídne a pruh třídění ([A3.5.10](#A3.5.10)) ho do počtů nezařazených ani do **Roztřídit další (N)…**
+nepočítá.
+
+- **Přijatý návrh:** soubor, který má všechno, co mu navrhlo poslední hotové třídění (titulek, druh a datum shodné
+  s návrhem, všechny navržené osoby), je vyřízený, i když návrh žádnou osobu neměl. Platí i pro soubory přijaté
+  dřív; nic se kvůli tomu nezapisuje ([R11.5.3](R11-material-from-the-user.md#R11.5.3)).
+- **Odmítnutý návrh:** po **Odmítnout** zůstane soubor bez titulku a osoby, ale je vyřízený. **Vrátit**
+  v **Vyřízeno** rozhodnutí vezme zpět a soubor se příště nabídne znovu.
+- **Štítek:** soubor, který po rozhodnutí dál nemá titulek nebo osobu, nese v okně **Materiály** štítek **Návrh
+  přijat** nebo **Návrh odmítnut** místo **Agent nezařadil** ([A3.5.14](#A3.5.14)), hned po zavření návrhu. **Projít ručně**
+  takové soubory nebere.
+- **Soubor, který je i ve stromu:** přijetí návrhu u souboru stromu, který má i výzkum, zapíše titulek, druh, datum
+  a osoby do stromu i do výzkumu přes most, jako ⋯ **Přiřadit k osobě…**. Okno **Materiály** pak u souboru ukáže
+  osoby hned i po novém načtení a soubor není **Bez osoby**. Totéž platí pro **Připojit k…** ([A3.5.4](#A3.5.4)).
+  Osoby, u kterých je soubor ve stromu, okno počítá za osoby souboru.
+- **Strom sledovaný živě** z výzkumu je jen ke čtení: přijetí u souboru, který má i výzkum, zapíše jen část výzkumu
+  přes most, strom se nezmění a návrh se nehlásí jako „Nezapsáno“.
+- **Stejný soubor a podobný snímek:** soubor se stejným obsahem výzkum podruhé neuloží
+  ([R11.1](R11-material-from-the-user.md#R11.1)); kopie se stejným obsahem, která už ve výzkumu je, nese **Stejný
+  obsah** a třídění pošle jen starší soubor ([A3.5.14](#A3.5.14)). Týž snímek v jiném rozlišení nebo jiný sken téže
+  fotky má jiný obsah: Strom ho za týž soubor nepozná, oba soubory zůstanou a každý se třídí zvlášť.
+- **Hranice:**
+  - trvale a na všech zařízeních si rozhodnutí pamatuje výzkum 1.38.0 a novější: aplikace mu ho pošle přes most
+    ([R11.5.4](R11-material-from-the-user.md#R11.5.4)). Se starším výzkumem, nebo když most v tu chvíli neběží,
+    platí rozhodnutí jen v tomto prohlížeči;
+  - pozdější třídění, které k souboru něco navrhne, předchozí rozhodnutí nahradí;
+  - **Zpět** v oznámení po **Připojit k…** vrací jen strom; osoby zapsané do výzkumu zůstanou.
+- **Ovládání:** okno **Materiály** → **Návrh agenta** (**Přijmout**, **Upravit**, **Odmítnout**, **Vrátit**);
+  prohlížeč souboru → **Připojit k…**.
+- **Platí od:** aplikace 3.33.0, výzkum 1.38.0
+
+<!-- zdroj: app:223a4272 src/material-sort.ts sortLeftIds (decided → why accepted | refused), sortLeftDecided, sortWrite researchId (soubor stromu s file, ne tree; osoby osoby a události), sortLeftMap (material.left, jinak paměť prohlížeče sortLeft) · src/ui/material-sort-ui.ts tell (POST …/decided jen s caps.decided a bridgeUp; Odmítnout refused, Vrátit open, přijetí accepted), bridgeWrite (/material/edit, /material/assign; researchPersonsOf), bridged (sledovaný strom: jen most, ne refused → notWritten), leftItems bez rozhodnutých · src/materials-overview.ts overviewItems (treePersons z rec.persons) · src/materials.ts MATERIAL_DECIDED_FEATURE material.decided, decideMaterialSort, LEFT_WHYS accepted, refused · src/ui/materials-window.ts sortDecided, drawnLeft (štítek hned po zavření návrhu) · strings.ts materials.agentSort.tagAccepted, tagRefused, notWritten · e2e/material-sort-147.spec.ts · research:c673ac14 src/core/material.ts leftBySorts, takenOver; src/core/live-sort.ts decided · research:src/commands/intake.ts (sha256 known), src/core/material.ts sameAs (SHA-256) · dirigent:spec/147 K1–K6 (K7 jen návrh), prace/1127-app-147-materialy, prace/1127-vyzkum-147-prijate -->
 
 <a id="A3.6"></a>
 ## A3.6 Prameny osoby

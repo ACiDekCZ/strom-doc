@@ -135,6 +135,7 @@ has a table of contents.
   residents** · **The building** ([S10.7](#S10.7)) · **Map** ([S10.3.1](#S10.3.1)) · **What is not known** (with
   **Answer**) · **What was searched** (with **Only in the reading room**) · **Sources and materials**.
 - The **Timeline** has an origin at each row: **from research**, **from own research**, **conjecture**, **probable**.
+  [S10.3.3](#S10.3.3) describes the rows from the tree's records.
 - **Holders and residents** are kept apart: “A resident is not the same as an owner.” Gaps show “not known · see What is
   not known”; people outside the tree have “outside the tree”.
 - **Researched state:** ✓ and the day (“done 12 Mar 2026”) in the header, in the **Houses** window and in the bubble on
@@ -203,6 +204,27 @@ pictures are only a link. The saved house page, the book and the family pages pr
 - **Since:** app 3.33.0
 
 <!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 -->
+
+<a id="S10.3.3"></a>
+### S10.3.3 The timeline from the tree's records
+
+The rows of the **Timeline** from the tree's records go by year, one per record; a couple's shared record is one row.
+What one row already says is not repeated.
+
+- **Birth and baptism** of the same person in the same year are one row "born". A baptism without a birth has the
+  row "baptized".
+- **Residence:** several residences of the same person in the same year are one row "residence". The residences of
+  partners in the same year are one row too, with both names, as a marriage is.
+- Deaths, marriages, censuses and the research's records stay one row per record.
+- **Limits:**
+  - residences without a year are not joined;
+  - neither the tree nor the research changes: only the rows the timeline shows are joined;
+  - the rows are made the same way on the house page, in the saved page ([S10.3.2](#S10.3.2)) and in the book of
+    houses ([S10.10](#S10.10)).
+- **Controls:** app: the house page → **Timeline**.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:3dc5647c src/house-page.ts houseTreeRows → joinRepeatedRows (narození jedné osoby a roku jednou, narození před křtem; bydliště s rokem a sdílenou osobou nebo partnery partnersIn), factLabel isBaptism (událost baptism → baptizedM/F) · src/book-houses.ts houseTreeRows · strings.ts houses.ev.bornM, bornF, baptizedM, baptizedF, residence · src/__tests__/house-page.test.ts · dirigent:prace/1127-app-147-materialy (Přibaleno, schválená tabulka) -->
 
 <a id="S10.4"></a>
 ## S10.4 Requesting a house's history

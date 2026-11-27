@@ -144,6 +144,7 @@ hat sie ein Inhaltsverzeichnis.
   Materialien**.
 - Die **Zeitleiste** hat bei jeder Zeile die Herkunft: **aus der Forschung**, **aus eigener Recherche**, **Vermutung**,
   **wahrscheinlich**.
+  Die Zeilen aus den Einträgen des Stammbaums beschreibt [S10.3.3](#S10.3.3).
 - **Besitzer und Bewohner** sind getrennt: „Bewohner ist nicht dasselbe wie Besitzer.“ Lücken zeigen „nicht ermittelt ·
   siehe Was nicht bekannt ist“, Personen außerhalb des Stammbaums haben „außerhalb des Stammbaums“.
 - **Stand erforscht:** ✓ und der Tag („fertig 12.3.2026“) im Kopf, im Fenster **Häuser** und in der Sprechblase auf
@@ -213,6 +214,28 @@ letzten rund 100 Jahre.
 - **Gilt seit:** App 3.33.0
 
 <!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 -->
+
+<a id="S10.3.3"></a>
+### S10.3.3 Die Zeitleiste aus den Einträgen des Stammbaums
+
+Die Zeilen der **Zeitleiste** aus den Einträgen des Stammbaums gehen nach Jahren, eine je Eintrag; ein gemeinsamer
+Eintrag eines Paares ist eine Zeile. Was eine Zeile schon sagt, wird nicht wiederholt.
+
+- **Geburt und Taufe** derselben Person im selben Jahr sind eine Zeile „geboren“. Eine Taufe ohne Geburt hat die
+  Zeile „getauft“.
+- **Wohnort:** mehrere Wohnorte derselben Person im selben Jahr sind eine Zeile „Wohnort“. Die Wohnorte von Partnern
+  im selben Jahr sind ebenfalls eine Zeile, mit beiden Namen, wie eine Heirat.
+- Tode, Heiraten, Volkszählungen und Einträge der Forschung bleiben eine Zeile je Eintrag.
+- **Grenzen:**
+  - Wohnorte ohne Jahr werden nicht zusammengefasst;
+  - weder der Stammbaum noch die Forschung ändern sich: zusammengefasst werden nur die Zeilen, die die Zeitleiste
+    zeigt;
+  - genauso entstehen die Zeilen auf der Hausseite, in der gespeicherten Seite ([S10.3.2](#S10.3.2)) und im Buch der
+    Häuser ([S10.10](#S10.10)).
+- **Bedienung:** App: Hausseite → **Zeitleiste**.
+- **Gilt seit:** App 3.33.0
+
+<!-- zdroj: app:3dc5647c src/house-page.ts houseTreeRows → joinRepeatedRows (narození jedné osoby a roku jednou, narození před křtem; bydliště s rokem a sdílenou osobou nebo partnery partnersIn), factLabel isBaptism (událost baptism → baptizedM/F) · src/book-houses.ts houseTreeRows · strings.ts houses.ev.bornM, bornF, baptizedM, baptizedF, residence · src/__tests__/house-page.test.ts · dirigent:prace/1127-app-147-materialy (Přibaleno, schválená tabulka) -->
 
 <a id="S10.4"></a>
 ## S10.4 Die Geschichte eines Hauses anfordern
