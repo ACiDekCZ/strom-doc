@@ -126,8 +126,12 @@ Besides people and relationships, the lists that belong to the whole tree are me
   - the card **What next** shows only after a merge that creates a new tree; after a merge into an existing tree the
     data check is in the step **What happened** (**Check the tree**, [A8.11](#A8.11));
   - the tree keeps a record of its merges (data version 26); older app versions open such a tree read-only.
+- **From app 3.33.0:** an app tree merged in is an import: it gets its own import record (the program **Strom**, the
+  name of the tree or file, the day of the merge) and its values carry the mark **From family tree**, not ✓. Values
+  from the merged tree's own import keep their record; changed and confirmed values and the target tree's values get
+  no mark. **Undo** takes back the record and the marks too ([S6.10](S6-tree-from-another-program.md#S6.10)).
 
-<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations · 3.28.0: app:80c2ffb9 src/merge/* (shareId, Census ↔ census), strings.ts merge.sharedJoined -->
+<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations · 3.28.0: app:80c2ffb9 src/merge/* (shareId, Census ↔ census), strings.ts merge.sharedJoined · 3.33.0: app:46973902 src/merge/merged-import.ts, src/import-origin.ts · research:f19661bb (origin.import) -->
 
 <a id="A8.5"></a>
 ## A8.5 The Merge trees guide
@@ -518,5 +522,8 @@ decides about sending in step 6.
     in the target's research;
   - when the same people are also in another tree linked to a research, the guide points this out.
 - **Since:** app 3.32.0
+- **From app 3.33.0 with research 1.38.0:** "From family tree" also holds for a tree that had no import record of
+  its own (an older tree, a tree written by hand, a Strom file): the merge creates one for it. The research holds such
+  values as from a family tree, not as confirmed by a person ([S6.10](S6-tree-from-another-program.md#S6.10)).
 
-<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) -->
+<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) · 3.33.0: app:46973902 src/merge/merged-import.ts, src/import-origin.ts · research:f19661bb (origin.import) -->

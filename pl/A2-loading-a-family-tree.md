@@ -153,8 +153,12 @@ Zasady są takie same jak w badaniu.
   **Zastępcze**). Grupy wariantów nazwiska i rody omawia [A4](A4-surnames-and-families.md).
 - **Obsługa:** Brak; wynik poprawia się w karcie osoby.
 - **Obowiązuje od:** aplikacja 3.10.0 (tytuły), 3.13.0 (nazwisko po ślubie), 3.18.0 (`_STROM_PRIMARY`).
+- **Od aplikacji 3.33.0:** opis w nawiasie to tylko imię, które w całości jest jedną grupą w nawiasie („(dziecko)”,
+  „[syn]”, „(martwo urodzony)”). Nawiasy między słowami są częścią imienia: „(Jan) Josef (Karel) /Horák/” zostaje tak,
+  jak jest zapisane, bez notatki, a eksport oddaje je tak samo. Tak samo czyta to badanie
+  ([R10.5](R10-people-and-hypotheses.md#R10.5)).
 
-<!-- zdroj: app:src/gedcom-names.ts:197 readGedcomName, :114 splitNameLine, :85 noName, :96 notAName, :260 stripTitles · app:src/ged-parser.ts:1404 readMarriedSurname, :2250 varianty, :2955 prohození TYPE -->
+<!-- zdroj: app:src/gedcom-names.ts:197 readGedcomName, :114 splitNameLine, :85 noName, :96 notAName, :260 stripTitles · app:src/ged-parser.ts:1404 readMarriedSurname, :2250 varianty, :2955 prohození TYPE · 3.33.0: app:810bc323 src/gedcom-names.ts noName /^[(\[{][^()\[\]{}]*[)\]}]$/u (K055) -->
 
 <a id="A2.4"></a>
 ## A2.4 Daty i ich formy

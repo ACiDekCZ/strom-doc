@@ -327,8 +327,12 @@ hat seinen eigenen Datensatz. Namen werden so erfasst, wie sie im Eintrag stehen
   [A4.5](A4-surnames-and-families.md#A4.5), [A4.6](A4-surnames-and-families.md#A4.6).
 - **Gilt seit:** Forschung 1.0.0; Präfix und Suffix 1.13.0; der Name, mit dem eine Person gezeigt wird, 1.27.0; ein
   nicht benanntes Kind 1.27.0; der aktuelle Name nach der Heirat 1.36.0
+- **Ab Forschung 1.38.0:** als Beschreibung an Stelle des Namens gilt nur ein Name, der ganz eine einzige Gruppe in
+  Klammern ist („(dítě)“, „[syn]“). Klammern zwischen Wörtern gehören zum Namen: „(Jan) Josef (Karel) Horák“ bleibt,
+  wie er geschrieben ist, bei der Übernahme eines Stammbaums, bei `strom person add`, `strom name add` und bei der
+  Synchronisierung aus der App; genauso wie in der App ([A2.3](A2-loading-a-family-tree.md#A2.3)).
 
-<!-- zdroj: research:src/core/model.ts NAME_KINDS · research:src/commands/people.ts name add (description), name primary (od v1.27.0), TITLE_OPTIONS (od v1.13.0) · research:assets/method/recording.md "The names a record gives", "A child the record does not name" (od v1.27.0), "People named wrongly by the weaker record" · research:assets/method/intake.md krok 4 · aktuální jméno po sňatku: research:5476514e src/core/married.ts marriedInOrder, src/gedcom/export.ts, src/core/sync.ts name.now (spec 010 K4.1, K4.2) -->
+<!-- zdroj: research:src/core/model.ts NAME_KINDS · research:src/commands/people.ts name add (description), name primary (od v1.27.0), TITLE_OPTIONS (od v1.13.0) · research:assets/method/recording.md "The names a record gives", "A child the record does not name" (od v1.27.0), "People named wrongly by the weaker record" · research:assets/method/intake.md krok 4 · aktuální jméno po sňatku: research:5476514e src/core/married.ts marriedInOrder, src/gedcom/export.ts, src/core/sync.ts name.now (spec 010 K4.1, K4.2) · 1.38.0: research:fb240b4d src/core/people.ts notAName (jedna skupina v závorce; K055) -->
 
 <a id="R10.5.1"></a>
 ### R10.5.1 Ein falscher Name und eine Notiz werden zurückgezogen

@@ -158,7 +158,8 @@ Quellen.
   Ereignisse des Paares; ein Stammbaum, dessen einzige Bilder Paarfotos sind, bietet diesen Teil an
   ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
 - **Ab App 3.33.0:** die Auswahl **Haus** (ein Buch über ein Haus), der Teil **Häuser** und das **Häuserverzeichnis**
-  ([S10.10](S10-houses.md#S10.10)).
+  ([S10.10](S10-houses.md#S10.10)); im Teil **Häuser** die freigegebene Erzählung über das Haus und mit der Option
+  **Lage der Häuser** ein Kartenausschnitt ([S10.14.2](S10-houses.md#S10.14.2), [S10.3.4](S10-houses.md#S10.3.4)).
 
 <!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 -->
 
@@ -195,7 +196,8 @@ Registern der Personen, Familien, Nachnamen und Orte.
 - Schutz lebender Personen und Quellen nach [A7.2](#A7.2); Standard Initialen + Geburtsjahr.
 - **Gilt seit:** Familienseiten App 3.20.0; Seiten des Stammbaums App 3.21.0
 - **Ab App 3.33.0:** die Option **Häuser**: Häuser mit Geschichte, das Häuserverzeichnis und eine Seite für jedes Haus
-  ([S10.10](S10-houses.md#S10.10)).
+  ([S10.10](S10-houses.md#S10.10)), beim Haus auch die freigegebene Erzählung und ein Kartenausschnitt mit der Lage
+  ([S10.14.2](S10-houses.md#S10.14.2), [S10.3.4](S10-houses.md#S10.3.4)).
 
 <!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 -->
 

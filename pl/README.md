@@ -50,10 +50,10 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [S3 Co wie badanie](S3-what-the-research-knows.md): sprzeczności, hipotezy, przeszukano i Nad osobą w aplikacji
 - [S4 Badanie sterowane z aplikacji](S4-research-from-the-app.md): panel i przegląd badania, kolejka, linie, akcje do terminala
 - [S5 Telefon](S5-phone.md): strona badania w telefonie, parowanie, zdjęcia partiami
-- [S6 Drzewo z innego programu](S6-tree-from-another-program.md): drzewo z MyHeritage, Gramps, FamilySearch i programów dla Windows: co się wczytuje, znaczniki wiarygodności, dane z drzewa jako wskazówki, karta Co dalej, kopie zapasowe, eksport z powrotem, ponowny import, e-mail osoby jako kontakt
+- [S6 Drzewo z innego programu](S6-tree-from-another-program.md): drzewo z MyHeritage, Gramps, FamilySearch i programów dla Windows: co się wczytuje, znaczniki wiarygodności, dane z drzewa jako wskazówki, karta Co dalej, kopie zapasowe, eksport z powrotem, ponowny import, e-mail osoby jako kontakt, dane z drzewa ○○ także w badaniu i pytanie „Czy to pochodzi z drzewa genealogicznego?”
 - [S7 Wiarygodność danych i weryfikacja według oryginałów](S7-reliability-and-verification.md): znaczniki przy danych i na karcie, Zweryfikuj przy danej, przy osobie i w drzewie, weryfikacja w kolejce badania, Potwierdź według skanu, co działa z mostem, a co bez niego
 - [S8 Gdzie są dane](S8-where-the-data-are.md): co jest tylko w przeglądarce, co jest w badaniu i w Archiwum Strom, zdjęcia i załączniki drzewa w badaniu, wskaźnik Tylko w przeglądarce, zdjęcia, których nie udało się wczytać, paczka i usunięcie drzewa
 - [S9 Wypróbuj na przykładzie](S9-trying-the-sample.md): przykład ze strony i z pliku bez instalacji, etykieta Przykład, nowszy przykład, mały przykład bez sieci, przykładowe badanie `strom demo` i jego usunięcie
-- [S10 Domy](S10-houses.md): dom według miejscowości i numeru, numery w czasie, okno Domy i strona domu, mapa i położenie, zamówienie historii domu, ustawienie Historia domów, jak agent bada dom, wygląd domu, własna kwerenda, rozmowa o domu, domy w księdze i na stronach, polecenia `strom house`
+- [S10 Domy](S10-houses.md): dom według miejscowości i numeru, numery w czasie, okno Domy i strona domu, mapa i położenie, zamówienie historii domu, ustawienie Historia domów, jak agent bada dom, wygląd domu, własna kwerenda, rozmowa o domu, domy w księdze i na stronach, położenie domu w wynikach, opowieść o domu, polecenia `strom house`
 
 Licencja: [CC BY 4.0](../LICENSE). Teksty można udostępniać i przerabiać z podaniem źródła.

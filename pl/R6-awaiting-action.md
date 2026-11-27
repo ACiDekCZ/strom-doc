@@ -140,8 +140,12 @@ transkrypcje**, zob. [R3.4.1](R3-verification-and-citation.md#R3.4.1)). Decyzje 
 - **Obowiązuje od:** badanie 1.14.0
 - **Od badania 1.26.0:** decyduje tylko człowiek; agentowi badanie `strom story approve|discard` odrzuca
   ([R6.6](#R6.6)).
+- **Od badania 1.38.0:** tak samo nowa wersja opowieści o domu: „Nowa wersja opowieści o domu <dom> – do czasu decyzji
+  obowiązuje wersja zatwierdzona”, w aplikacji 3.33.0 „Opowieść o domu <numer> czeka na zatwierdzenie” z linkiem do
+  strony domu ([S10.14](S10-houses.md#S10.14)). Pierwszego szkicu opowieści o domu na liście nie ma; zatwierdza się go
+  na stronie domu.
 
-<!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts -->
+<!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts · 1.38.0: research:100aee43 src/core/waiting.ts (story s house, skupina stories, jen nová verze; APP_SHOWS_HOUSE_STORY), assets/lang/cs.json ui.waiting.story.house · app:3473602e strings.ts houses.storyWaiting -->
 
 <a id="R6.3.3"></a>
 ### R6.3.3 Gałęzie poza liniami
@@ -182,6 +186,21 @@ transkrypcje**, zob. [R3.4.1](R3-verification-and-citation.md#R3.4.1)). Decyzje 
   rozstrzygnięcie** i wybór **Kto rozstrzyga hipotezy**.
 
 <!-- zdroj: research:src/core/waiting.ts (kind hypothesis, section decide, DECIDE_RANK 0, open: priority -1 a hypothesesOpen jen při person, leftOpen, TERMINAL_ONLY hypotheses, actsAsArchive) · src/cli/menu-waiting.ts decideHypothesis (proposed / open / decided) · src/cli/menu-research.ts:532 · assets/lang/cs.json wait.group.hypotheses, ui.wait.hypothesis.proposed/accept/other/keep/decide/keepOpen/change/byAgent · CHANGELOG.cs.md 1.29.0 · src/cli/wizard.ts 5c (doporučení) · app:src/ui/person-research-ui.ts HYPOTHESES_OFFER_MIN -->
+
+<a id="R6.3.5"></a>
+### R6.3.5 Czy to pochodzi z drzewa genealogicznego?
+
+- Wysyłka z aplikacji Strom, która dodała wiele osób zapisanych jako zmiany człowieka, czeka w grupie **Aplikacja
+  Strom** z pytaniem, czy pochodzi z drzewa genealogicznego (import, scalenie). Wybór: **Tak, z drzewa
+  genealogicznego** (dane przechodzą z ✓ na ○○, wartości zostają), **Nie, wpisane ręcznie** (nic się nie zmienia,
+  pytanie już nie wróci). Kiedy pyta i co dokładnie się zmieni, opisuje
+  [S6.10.1](S6-tree-from-another-program.md#S6.10.1).
+- **Granice:** odpowiada tylko człowiek ([R6.6](#R6.6)); pyta także badanie, które służy jako archiwum.
+- **Obsługa:** aplikacja: **Czeka na załatwienie**; terminal: **Co czeka** → pozycja, `strom sync as-import I… --apply |
+  --own`.
+- **Obowiązuje od:** badanie 1.38.0
+
+<!-- zdroj: research:dec54543 src/core/waiting.ts (kind import, group app, section decide), src/cli/menu-waiting.ts (sync as-import --apply|--own) · assets/lang/cs.json ui.waiting.import, ui.wait.kind.import · app:strings.ts live.importAsk -->
 
 <a id="R6.4"></a>
 ## R6.4 Grupy i kolejność
@@ -299,8 +318,11 @@ człowieka w oknie systemowym albo odrzuca polecenie.
 - **Od badania 1.37.0:** tylko człowiek także zwraca czekające zadanie agentowi (`strom task wake --retry`,
   [R6.7.3](#R6.7.3)): w menu **Co czeka** albo w aplikacji Strom przez most. Agentowi i poleceniu strom w sesji
   agenta badanie polecenie odrzuci.
+- **Od badania 1.38.0:** tylko człowiek także odpowiada, czy wysyłka z aplikacji pochodzi z drzewa genealogicznego
+  (`strom sync as-import`, [S6.10.2](S6-tree-from-another-program.md#S6.10.2)), i zamawia opowieść o domu
+  (`strom house story`, [S10.14.1](S10-houses.md#S10.14.1)).
 
-<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) · 1.28.0: analysis.ts hypothesis decide (person), batch.ts def.person (commit 9b12256a) · 1.29.0: setup.ts syncDecisions hypotheses.decide (requireHuman), config.ts hypothesesDecide výchozí agent; strom help source reading („The person's alone … an agent never decides it“), strom help source proposal („Only the person decides it“) · 1.35.0: research:fb94435f src/commands/sync.ts sync note (person, agentMay s odpovědí), src/core/shorternote.ts decideShorterNote (shorter.person) -->
+<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) · 1.28.0: analysis.ts hypothesis decide (person), batch.ts def.person (commit 9b12256a) · 1.29.0: setup.ts syncDecisions hypotheses.decide (requireHuman), config.ts hypothesesDecide výchozí agent; strom help source reading („The person's alone … an agent never decides it“), strom help source proposal („Only the person decides it“) · 1.35.0: research:fb94435f src/commands/sync.ts sync note (person, agentMay s odpovědí), src/core/shorternote.ts decideShorterNote (shorter.person) · 1.38.0: research:src/cli/help.ts HUMAN_COMMANDS „sync as-import“, src/commands/sync.ts sync as-import person („never an agent“), src/commands/house.ts house story person, src/cli/main.ts:310 requireHuman -->
 
 <a id="R6.7"></a>
 ## R6.7 Wysłano, odpowiedź i powrót do kolejki

@@ -4,8 +4,9 @@
 A family tree from another program (MyHeritage, Gramps, FamilySearch, Windows programs and others) comes into the app
 and into the research as a GEDCOM file. The chapter follows the whole path: what loads and what is lost, how it shows
 where a fact comes from, why the family tree's facts are only leads, how to go back to a fact from the family tree,
-what the card **What next** offers, how to go back in time, how to send the tree back and what a family tree loaded
-again does. Describes the Strom app 3.26.0 and the research 1.30.0. The details of reading the file are in
+what the card **What next** offers, how to go back in time, how to send the tree back, what a family tree loaded
+again does and how the family tree's facts stay ○○ after a send to the research too ([S6.10](#S6.10)). Describes the
+Strom app 3.26.0 and the research 1.30.0, with additions of later versions. The details of reading the file are in
 [A2](A2-loading-a-family-tree.md), the export in [A7](A7-book-pages-and-export.md), merging in
 [A8](A8-merging-trees.md) and the research taking over a family tree in [R11.3](R11-material-from-the-user.md#R11.3).
 
@@ -87,6 +88,9 @@ mark on the card in the tree and verifying facts against the originals are descr
   the scan ([S7.10](S7-reliability-and-verification.md#S7.10), [R10.5.2](R10-people-and-hypotheses.md#R10.5.2)).
   When no fact of the person is from the family tree alone any more, the line at the person says “This person's
   facts came from {program} (file {date}, loaded {date}); none is from the family tree alone any more.”
+- **From app 3.33.0 with research 1.38.0:** a fact from the family tree stays **From family tree** after a send to
+  the research and after a merge of trees too; it does not get ✓. Facts an older app sent as a person's edits can be
+  turned from ✓ to ○○ by one decision ([S6.10](#S6.10)).
 - **Since:** app 3.26.0, research 1.30.0
 
 <!-- zdroj: app:7b0471f8 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; readers z _STROM_CHECKED, noSource nekrmeno) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON) · src/ui/card-signals-ui.ts (signál status, výchozí zapnuto) · index.html settings-group-card · strings.ts reliability.settingCard, cardDensity.cardStatus, settings.groupCard · app:669c08f0 src/reliability.ts userTreeOrigin (_STROM_ORIGIN tree) -->
@@ -370,3 +374,102 @@ directly at the person. The app and the research make a contact of the person fr
 - **Since:** app 3.32.0, research 1.37.0
 
 <!-- zdroj: app:972e73d7 src/person-contact.ts (hlavička: pravidlo RESI jen s kontaktem, 1 EMAIL; cleanEmail EMAIL_MAX 254, bez mezer; sameEmail bez velikosti písmen; isContactResidence, isEmptyResidence, moveContactsIntoPeople při každém načtení), src/ged-exporter.ts contacts (výchozí ano, do výzkumu jen s person.contact; 1 RESI / 2 EMAIL; Zpět do: 1 EMAIL jak byl), src/privacy.ts (žijící bez emails) · app:0603165b index.html #emails-group v Fotografie a poznámky, src/ui/person-modal.ts applyAdvancedFieldVisibility emails-group, emailsFromInput (čárky, středníky, mezery), src/person-page.ts jen c.app, mailto, src/ui/person-events.ts shownEvents (prázdné bydliště skryté) · src/version.ts STROM_DATA_VERSION 26 · strings.ts labels.emails, placeholders.emails, personModal.sectionPhotoNotes · research:ce89202a src/core/live.ts person.contact (1 RESI / 2 EMAIL, nejvýš tři na RESI), src/commands/fixchecks.ts CONTACT_RESIDENCES, src/commands/fixes.ts contact-residences · cs.json ui.fixes.contact-residences.* · CHANGELOG.cs.md 1.37.0 „E-maily osoby jsou kontakt“, app CHANGELOG.cs.md 3.32.0 Data · dirigent:spec/134 K0.10, U11 -->
+
+<a id="S6.10"></a>
+## S6.10 Values from a family tree stay ○○ in the research too
+
+The mark ✓ **Confirmed by a person** means that a person entered, edited or confirmed the fact. A fact taken over from
+a family tree (an import of a file, a merge of trees) has been verified by nobody, and so it is to have ○○ **From
+family tree**, even when the app sent it to the research. An older app sent everything in the tree as a person's
+edits; the research held such a fact as written by a person, and the app then showed it with ✓. The Strom app 3.33.0
+and the research 1.38.0 settle this in three steps:
+
+1. **The app says with every send what is from the family tree.** A fact that still has the value from the file goes
+   to the research with the import mark, at the first send and at every later one, and also after the research's
+   version is loaded. A fact a person changed or confirmed has no mark and goes as a person's edit.
+2. **A merge of a tree is an import.** An app tree merged into another tree (from **Manage trees**, from a JSON or
+   HTML file, from a shared tree, from a GEDCOM written by Strom), into a research tree or elsewhere, gets its own
+   import record: the program **Strom**, the name of the merged tree or file and the day of the merge. The mark's
+   label then says “taken from Strom “Horákovi”, file …”. No mark goes to what the merged tree had from its own import
+   (it keeps its record), to what a person changed or confirmed in it, or to the target tree's facts. **Undo** after
+   the merge takes back the record and the marks too.
+3. **The research corrects it by itself in a sync.** A fact with the import mark that the research has as written by
+   a person from an earlier send is rewritten as a fact from the family tree: the value and the degree of certainty
+   stay, only the origin changes, and the import's source is cited first. The sync plan says so with the line
+   “{who}: {fact} — of the family tree, not a person's edit”.
+
+People an older app has already sent stay in the research with ✓: the app no longer has the imported file and does
+not mark them afterwards. The research asks about them ([S6.10.1](#S6.10.1)).
+
+- **Enforced by the code:**
+  - the research rewrites the origin only of a fact that is the same as in the file, has the origin exactly “person”
+    without an earlier value (no accepted proposal or undo), cites the app's send (“Edits in the Strom app (day)”)
+    and is not confirmed;
+  - it rewrites only what a person wrote (from the app or from the terminal), never an agent's sync;
+  - the value, the degree of certainty and the citation of the send do not change.
+- **Limits:** a confirmed fact always stays ✓. A fact a person changed after the import is a person's edit.
+- **Controls:** nothing to set. Terminal: the plan of `strom sync`, taking back with `strom sync undo I…`.
+- **Why:** ✓ is to mean only what a person really confirmed; a fact from someone else's family tree is a lead
+  ([S6.3](#S6.3)).
+- **Since:** app 3.33.0, research 1.38.0
+
+<!-- zdroj: app:35a7d513 (keepImports: značky _STROM_IMPORT po každém odeslání i po načtení verze výzkumu) · app:46973902 src/merge/merged-import.ts (záznam importu sloučeného stromu: 2 SOUR Strom, _AT den sloučení, FILE název; neznačí vlastní import, změněné, potvrzené, cílové; Zpět bere záznam i značky), src/import-origin.ts · app:3d070997 strings.ts reliability.titleImport (název stromu) · research:f19661bb (feature origin.import: user → import při shodě se souborem, origin user bez was, citace odeslání, nepotvrzeno, zápis člověka; citace importu první) · assets/lang/cs.json ui.sync.origin.import, ui.sync.do.origin.import · zadání aplikace ↔ výzkum ZADANI_VYZKUM_fajfka-import.md · dirigent:analyza/2026-11-27-fajfka-z-importu/README.md -->
+
+<a id="S6.10.1"></a>
+### S6.10.1 The question “Did this come from a family tree?”
+
+When one send from the app added many people to the research and the research holds their facts as written by
+a person, it was most likely a family tree (an import or a merge), not entries by hand. So the research asks once in
+**Awaiting action**.
+
+- **When it asks:** a send from the app that was not taken back added at least **20 new people**
+  (`strom config set sync.importAsk <n>`, 0 = never), at least one of them still has the name written by a person in
+  this send, and nobody has answered for the send yet. A research that serves as an archive asks too; neither the
+  agent nor the network is needed.
+- **App:** **Research overview → Awaiting action**: “Did this come from a family tree (import, merge)?” and below it
+  the day of the send, the number of people and three names (“11/25/2026 · 142 people: …”). The opened item works out
+  what would change: “N facts go from ✓ to ○○ (M people).” and “K facts stay ✓: a edited since the send, b confirmed,
+  c an earlier value (an accepted proposal, an undo), d of another origin.”, with the explanation “✓ confirmed by
+  a person – ○○ from a family tree, not verified against a record.” The buttons **Yes, from a family tree** and **No,
+  written by hand**.
+- **Terminal:** **What waits**, the group **The Strom app**, the kind “family tree?”: “A send from the Strom app on
+  <day> added N people – did they come from a family tree (an import, a merge)?”, why (“Now all of it counts as
+  written by a person (✓ confirmed by a person). From a family tree it is marked ○○ …”), examples of names, what
+  changes and the same two choices.
+- **Yes, from a family tree:** the research is backed up first; then the facts of that send that are still as they
+  came and that nobody confirmed are marked as from the family tree ([S6.10.2](#S6.10.2)). The result: “N facts are
+  now ○○ from a family tree (M people).”
+- **No, written by hand:** nothing changes; “Kept as written by hand. The question does not come again.”
+- **Limits:**
+  - neither the values nor their certainty change; only the mark ✓ changes to ○○;
+  - the answer **Yes** can be taken back only in the terminal (`strom sync as-import I… --undo`), not by taking back
+    the send from the app;
+  - when it was answered elsewhere meanwhile: “The question was answered elsewhere or no longer waits.”; a busy
+    research: “The research is busy; it can be tried again in N s.”
+- **Controls:** app: **Awaiting action** → **Yes, from a family tree** / **No, written by hand**; terminal: **What
+  waits**, `strom sync as-import`, `strom config set sync.importAsk <n>`.
+- **Since:** research 1.38.0, app 3.33.0
+
+<!-- zdroj: research:dec54543 src/core/waiting.ts (kind import, feature waiting.import; nevrácené odeslání, aspoň sync.importAsk nových lidí, jméno s původem user citující odeslání, bez odpovědi; i v archivu), src/core/config.ts IMPORT_ASK 20, sync.importAsk (0 nikdy), src/cli/menu-waiting.ts · assets/lang/cs.json ui.waiting.import, ui.wait.kind.import, ui.wait.import.why, samples, change, cmd, yes, no · src/core/live.ts GET/POST <token>/waiting/W-S-I… (do: import|own) · app:7ad968e4 src/ui/research-overview-ui.ts importAskRowWho, src/research-import-ask.ts importAskWho (3 jména) · strings.ts live.importAsk (question, change, stay, stayPart, meaning, yes, no, doneImport, doneOwn, gone, busy) -->
+
+<a id="S6.10.2"></a>
+### S6.10.2 The `strom sync as-import` command
+
+The same decision in the terminal, for one send from the app (`I…`, `strom input list`). Only a person may use it; the
+research refuses the command to an agent ([R6.6](R6-awaiting-action.md#R6.6)).
+
+| Command | What it does |
+|---|---|
+| `strom sync as-import I…` | only shows what changes: “Send I… of <day>: N people added.”, which values are marked as of the family tree and which are left as they are (changed since the send, confirmed, with an earlier value, of another origin) |
+| `--apply` | backs up the research first, then marks the values as of the family tree: the send gets one source “Family tree taken over in the Strom app (sent <day>)”, cited first at the value; the citation of the send stays; one entry in the research's history |
+| `--undo` | takes back the values that are still as `--apply` marked them; the others: “Changed since, left as they are: N values.” |
+| `--own` | the answer “written by hand”: nothing changes and the question is not offered again |
+
+- **Enforced by the code:** only a value that this very send wrote, is the same today, has the origin exactly
+  “person” without an earlier value, and is neither confirmed nor withdrawn is marked. The answer is kept by the
+  research; the question and the command both recognize it (“Answered already: a family tree taken over.”).
+- **Controls:** terminal: `strom sync as-import I…`, `--apply`, `--undo`, `--own`; app: the buttons in **Awaiting
+  action** ([S6.10.1](#S6.10.1)).
+- **Since:** research 1.38.0
+
+<!-- zdroj: research:dec54543 src/commands/sync.ts sync as-import (náhled; --apply záloha, pramen kind family-tree, citace první, jeden commit; --undo; --own), src/core/sendimport.ts (hodnoty podle historie git: zapsané tímto odesláním, stejné, origin user bez was, nepotvrzené, neodvolané; quality/send-imports.json), src/cli/help.ts HUMAN_COMMANDS, sync.ts person („never an agent“) · assets/lang/cs.json ui.sync.asimport.*, ui.help.cmd.sync.as-import, ui.backup.readme.asimport -->

@@ -148,8 +148,12 @@ zu entscheiden**, siehe [R3.4.1](R3-verification-and-citation.md#R3.4.1)). Entsc
 - **Gilt seit:** Forschung 1.14.0
 - **Ab Forschung 1.26.0:** es entscheidet nur der Mensch; dem Agenten lehnt die Forschung `strom story
   approve|discard` ab ([R6.6](#R6.6)).
+- **Ab Forschung 1.38.0:** genauso auch eine neue Fassung der Erzählung über das Haus: „Eine neue Fassung der
+  Erzählung über das Haus <Haus> – die freigegebene bleibt bis zur Entscheidung“, in der App 3.33.0 „Die Erzählung über
+  Haus <Nummer> wartet auf Freigabe“ mit einem Link auf die Hausseite ([S10.14](S10-houses.md#S10.14)). Der erste
+  Entwurf der Erzählung über das Haus steht nicht in der Liste; er wird auf der Hausseite freigegeben.
 
-<!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts -->
+<!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts · 1.38.0: research:100aee43 src/core/waiting.ts (story s house, skupina stories, jen nová verze; APP_SHOWS_HOUSE_STORY), assets/lang/cs.json ui.waiting.story.house · app:3473602e strings.ts houses.storyWaiting -->
 
 <a id="R6.3.3"></a>
 ### R6.3.3 Zweige außerhalb der Linien
@@ -192,6 +196,21 @@ zu entscheiden**, siehe [R3.4.1](R3-verification-and-citation.md#R3.4.1)). Entsc
   ändern** und die Wahl **Wer die Hypothesen entscheidet**.
 
 <!-- zdroj: research:src/core/waiting.ts (kind hypothesis, section decide, DECIDE_RANK 0, open: priority -1 a hypothesesOpen jen při person, leftOpen, TERMINAL_ONLY hypotheses, actsAsArchive) · src/cli/menu-waiting.ts decideHypothesis (proposed / open / decided) · src/cli/menu-research.ts:532 · assets/lang/cs.json wait.group.hypotheses, ui.wait.hypothesis.proposed/accept/other/keep/decide/keepOpen/change/byAgent · CHANGELOG.cs.md 1.29.0 · src/cli/wizard.ts 5c (doporučení) · app:src/ui/person-research-ui.ts HYPOTHESES_OFFER_MIN -->
+
+<a id="R6.3.5"></a>
+### R6.3.5 Stammt das aus einem Stammbaum?
+
+- Eine Sendung aus der Strom-App, die viele Personen als Änderungen eines Menschen hinzugefügt hat, wartet in der
+  Gruppe **Die Strom-App** mit der Frage, ob sie aus einem Stammbaum stammt (Import, Zusammenführung). Wahl: **Ja, aus
+  einem Stammbaum** (die Angaben wechseln von ✓ zu ○○, die Werte bleiben), **Nein, von Hand eingetragen** (nichts
+  ändert sich, die Frage kommt nicht wieder). Wann sie gestellt wird und was sich genau ändert, steht in
+  [S6.10.1](S6-tree-from-another-program.md#S6.10.1).
+- **Grenzen:** es antwortet nur der Mensch ([R6.6](#R6.6)); es fragt auch eine Forschung, die als Archiv dient.
+- **Bedienung:** App: **Wartet auf Bearbeitung**; Terminal: **Was wartet** → Eintrag, `strom sync as-import I… --apply |
+  --own`.
+- **Gilt seit:** Forschung 1.38.0
+
+<!-- zdroj: research:dec54543 src/core/waiting.ts (kind import, group app, section decide), src/cli/menu-waiting.ts (sync as-import --apply|--own) · assets/lang/cs.json ui.waiting.import, ui.wait.kind.import · app:strings.ts live.importAsk -->
 
 <a id="R6.4"></a>
 ## R6.4 Gruppen und Reihenfolge
@@ -317,8 +336,11 @@ startet, fragt die Forschung den Menschen in einem Systemfenster, oder sie lehnt
 - **Ab Forschung 1.37.0:** nur der Mensch gibt auch eine wartende Aufgabe an den Agenten zurück (`strom task wake
   --retry`, [R6.7.3](#R6.7.3)): im Menü **Was wartet** oder in der Strom-App über die Brücke. Einem Agenten und einem
   strom in der Sitzung eines Agenten verweigert die Forschung den Befehl.
+- **Ab Forschung 1.38.0:** nur der Mensch antwortet auch, ob eine Sendung aus der App aus einem Stammbaum stammt
+  (`strom sync as-import`, [S6.10.2](S6-tree-from-another-program.md#S6.10.2)), und fordert die Erzählung über das Haus
+  an (`strom house story`, [S10.14.1](S10-houses.md#S10.14.1)).
 
-<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) · 1.28.0: analysis.ts hypothesis decide (person), batch.ts def.person (commit 9b12256a) · 1.29.0: setup.ts syncDecisions hypotheses.decide (requireHuman), config.ts hypothesesDecide výchozí agent; strom help source reading („The person's alone … an agent never decides it“), strom help source proposal („Only the person decides it“) · 1.35.0: research:fb94435f src/commands/sync.ts sync note (person, agentMay s odpovědí), src/core/shorternote.ts decideShorterNote (shorter.person) -->
+<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) · 1.28.0: analysis.ts hypothesis decide (person), batch.ts def.person (commit 9b12256a) · 1.29.0: setup.ts syncDecisions hypotheses.decide (requireHuman), config.ts hypothesesDecide výchozí agent; strom help source reading („The person's alone … an agent never decides it“), strom help source proposal („Only the person decides it“) · 1.35.0: research:fb94435f src/commands/sync.ts sync note (person, agentMay s odpovědí), src/core/shorternote.ts decideShorterNote (shorter.person) · 1.38.0: research:src/cli/help.ts HUMAN_COMMANDS „sync as-import“, src/commands/sync.ts sync as-import person („never an agent“), src/commands/house.ts house story person, src/cli/main.ts:310 requireHuman -->
 
 <a id="R6.7"></a>
 ## R6.7 Gesendet, Antwort und Rückkehr in die Warteschlange

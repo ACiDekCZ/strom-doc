@@ -147,8 +147,13 @@ Außer Personen und Beziehungen werden auch die Listen zusammengeführt, die dem
     prüfen**, [A8.11](#A8.11));
   - der Stammbaum bewahrt einen Eintrag seiner Zusammenführungen (Datenversion 26); ältere App-Versionen öffnen einen
     solchen Stammbaum nur schreibgeschützt.
+- **Ab App 3.33.0:** ein zusammengeführter Stammbaum der App ist ein Import: er bekommt einen eigenen Vermerk über den
+  Import (Programm **Strom**, Name des Stammbaums oder der Datei, Tag der Zusammenführung), und seine Angaben haben die
+  Marke **Aus dem Stammbaum**, nicht ✓. Angaben aus dem eigenen Import des zusammengeführten Stammbaums behalten ihren
+  Vermerk; geänderte und bestätigte Angaben und die Angaben des Zielstammbaums bekommen die Marke nicht.
+  **Rückgängig** nimmt den Vermerk und die Marken zurück ([S6.10](S6-tree-from-another-program.md#S6.10)).
 
-<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations · 3.28.0: app:80c2ffb9 src/merge/* (shareId, Census ↔ census), strings.ts merge.sharedJoined -->
+<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations · 3.28.0: app:80c2ffb9 src/merge/* (shareId, Census ↔ census), strings.ts merge.sharedJoined · 3.33.0: app:46973902 src/merge/merged-import.ts, src/import-origin.ts · research:f19661bb (origin.import) -->
 
 <a id="A8.5"></a>
 ## A8.5 Der Assistent Stammbäume zusammenführen
@@ -580,5 +585,9 @@ Forschung geht nichts von selbst. Über das Senden entscheidet der Mensch in Sch
   - sind dieselben Personen auch in einem anderen mit einer Forschung verbundenen Stammbaum, weist der Assistent
     darauf hin.
 - **Gilt seit:** App 3.32.0
+- **Ab App 3.33.0 mit Forschung 1.38.0:** „Aus dem Stammbaum“ gilt auch für einen Stammbaum, der selbst keinen Vermerk
+  über den Import hatte (ein älterer Stammbaum, ein von Hand geschriebener Stammbaum, eine Datei von Strom): das
+  Zusammenführen legt ihn an. Die Forschung hält solche Angaben als aus dem Stammbaum, nicht als von einem Menschen
+  bestätigt ([S6.10](S6-tree-from-another-program.md#S6.10)).
 
-<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) -->
+<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) · 3.33.0: app:46973902 src/merge/merged-import.ts, src/import-origin.ts · research:f19661bb (origin.import) -->

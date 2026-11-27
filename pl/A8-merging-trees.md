@@ -131,8 +131,12 @@ Poza osobami i relacjami scala się też listy, które należą do całego drzew
     sprawdzanie danych jest w kroku **Co się stało** (**Sprawdź drzewo**, [A8.11](#A8.11));
   - drzewo pamięta zapis swoich scaleń (wersja danych 26); starsze wersje aplikacji otwierają takie drzewo tylko do
     odczytu.
+- **Od aplikacji 3.33.0:** scalone drzewo aplikacji to import: dostaje własny zapis o imporcie (program **Strom**,
+  nazwa drzewa lub pliku, dzień scalenia), a jego dane mają znacznik **Z drzewa**, nie ✓. Dane z własnego importu
+  scalonego drzewa zachowują swój zapis; zmienione i potwierdzone dane ani dane drzewa docelowego znacznika nie
+  dostają. **Cofnij** cofa zapis i znaczniki ([S6.10](S6-tree-from-another-program.md#S6.10)).
 
-<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations · 3.28.0: app:80c2ffb9 src/merge/* (shareId, Census ↔ census), strings.ts merge.sharedJoined -->
+<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations · 3.28.0: app:80c2ffb9 src/merge/* (shareId, Census ↔ census), strings.ts merge.sharedJoined · 3.33.0: app:46973902 src/merge/merged-import.ts, src/import-origin.ts · research:f19661bb (origin.import) -->
 
 <a id="A8.5"></a>
 ## A8.5 Kreator Scalanie drzew
@@ -520,5 +524,8 @@ rozstrzyga człowiek w kroku 6.
   - gdy połączone są oba drzewa, powiązanie ani numery źródła nie przechodzą, a osoby źródła są w badaniu celu nowe;
   - gdy te same osoby są też w innym drzewie połączonym z badaniem, kreator na to zwraca uwagę.
 - **Obowiązuje od:** aplikacja 3.32.0
+- **Od aplikacji 3.33.0 z badaniem 1.38.0:** „Z drzewa” dotyczy także drzewa, które samo nie miało zapisu o imporcie
+  (starsze drzewo, drzewo wpisane ręcznie, plik Stromu): scalenie mu go zakłada. Badanie trzyma takie dane jako
+  z drzewa, nie jako potwierdzone przez człowieka ([S6.10](S6-tree-from-another-program.md#S6.10)).
 
-<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) -->
+<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) · 3.33.0: app:46973902 src/merge/merged-import.ts, src/import-origin.ts · research:f19661bb (origin.import) -->

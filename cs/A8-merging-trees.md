@@ -125,8 +125,12 @@ Kromě osob a vztahů se sloučí i seznamy, které patří celému stromu.
     kontrola dat v kroku **Co se stalo** (**Zkontrolovat strom**, [A8.11](#A8.11));
   - strom si pamatuje záznam svých sloučení (datová verze 26); starší verze aplikace takový strom otevřou jen ke
     čtení.
+- **Od aplikace 3.33.0:** sloučený strom aplikace je import: dostane vlastní záznam o importu (program **Strom**,
+  název stromu nebo souboru, den sloučení) a jeho údaje mají značku **Z rodokmenu**, ne ✓. Údaje z vlastního importu
+  sloučeného stromu si nechají svůj záznam; změněné a potvrzené údaje ani údaje cílového stromu značku nedostanou.
+  **Zpět** vezme záznam i značky zpět ([S6.10](S6-tree-from-another-program.md#S6.10)).
 
-<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations · 3.28.0: app:80c2ffb9 src/merge/* (shareId, Census ↔ census), strings.ts merge.sharedJoined -->
+<!-- zdroj: app:src/merge/executor.ts:211 executeMerge (mergeSourceCatalogs, places, mergePlaceRecords, mergePlaceAliases, addSurnameGroup, delete defaultPersonId/defaultView) · src/merge/ui.ts countNewMergeIssues · strings.ts merge.preValidationWarning, merge.newIssues · git v1.19.0 (00e5d38) · 3.27.0: app:dde0151a src/merge/executor.ts sourceKey bez quality, takeCitationQuality, remapCitations; app:5721b016 unionCitations · 3.28.0: app:80c2ffb9 src/merge/* (shareId, Census ↔ census), strings.ts merge.sharedJoined · 3.33.0: app:46973902 src/merge/merged-import.ts, src/import-origin.ts · research:f19661bb (origin.import) -->
 
 <a id="A8.5"></a>
 ## A8.5 Průvodce Sloučení stromů
@@ -488,5 +492,8 @@ v kroku 6.
   - když jsou napojené oba stromy, vazba ani čísla zdroje se nepřenesou a osoby zdroje jsou ve výzkumu cíle nové;
   - když jsou stejní lidé i v jiném stromu napojeném na výzkum, průvodce na to upozorní.
 - **Platí od:** aplikace 3.32.0
+- **Od aplikace 3.33.0 s výzkumem 1.38.0:** „Z rodokmenu“ platí i pro strom, který sám záznam o importu neměl
+  (starší strom, strom psaný ručně, soubor Stromu): sloučení mu ho založí. Výzkum takové údaje drží jako
+  z rodokmenu, ne jako potvrzené člověkem ([S6.10](S6-tree-from-another-program.md#S6.10)).
 
-<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) -->
+<!-- zdroj: app:debf50cc src/merge/ui.ts step6Research (mergeHold, unsentMerges), src/merge/research-hold.ts, research-marks.ts, same-people.ts · strings.ts mergeWizard.researchKept, resStep5, resPending, sendRes, keepLocal, notSent, resSendLead, resSendNote, resSent, resUndoStep, resUndoHelp, resUndoHelpLink, resComesBack, copy, resAgent, resOld, resNewTree, resSwap, resSwapBtn, resTwo, resSamePeople, modeNewDesc · src/help/topics.ts:38 HELP_LINKS.mergeUndoResearch = 'S2.6' · undoResearchStep (jen záznam I\d+) · research:src/commands/sync.ts:627 sync undo · spec 134 K9.1–K9.6 · app:7a317a1e resSendLeadList (134 V-N5) · 20fb4782 (134 V-N3: číslo výzkumu není úprava, resSent, resUndoStep) · fd794063, 023879dd src/ui/research-undo-step.ts (Kopírovat, undoStepInput, undoStepRun, hlášení odvolání) · f3c66503 (zápis do nového stromu = kopie bez výzkumu) · 3.33.0: app:46973902 src/merge/merged-import.ts, src/import-origin.ts · research:f19661bb (origin.import) -->

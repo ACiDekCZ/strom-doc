@@ -5,8 +5,9 @@ Ein Stammbaum aus einem anderen Programm (MyHeritage, Gramps, FamilySearch, Wind
 App und in die Forschung als GEDCOM-Datei. Das Kapitel führt durch den ganzen Weg: was eingelesen wird und was verloren
 geht, wie zu sehen ist, woher eine Angabe stammt, warum Angaben aus dem Stammbaum nur Hinweise sind, wie sich eine
 Angabe aus dem Stammbaum zurückholen lässt, was die Karte **Wie weiter** anbietet, wie sich in der Zeit zurückgehen
-lässt, wie der Stammbaum zurückgeschickt wird und was ein erneut eingelesener Stammbaum bewirkt. Beschrieben werden die Strom-App
-3.26.0 und die Forschung 1.30.0. Einzelheiten zum Lesen der Datei stehen in [A2](A2-loading-a-family-tree.md), der
+lässt, wie der Stammbaum zurückgeschickt wird, was ein erneut eingelesener Stammbaum bewirkt und wie Angaben aus dem
+Stammbaum auch nach dem Senden in die Forschung ○○ bleiben ([S6.10](#S6.10)). Beschrieben werden die Strom-App 3.26.0
+und die Forschung 1.30.0, mit Ergänzungen neuerer Versionen. Einzelheiten zum Lesen der Datei stehen in [A2](A2-loading-a-family-tree.md), der
 Export in [A7](A7-book-pages-and-export.md), das Zusammenführen in [A8](A8-merging-trees.md) und die Übernahme eines
 Stammbaums durch die Forschung in [R11.3](R11-material-from-the-user.md#R11.3).
 
@@ -92,6 +93,10 @@ Marken, die Marke auf dem Kärtchen im Stammbaum und die Prüfung der Angaben an
   [R10.5.2](R10-people-and-hypotheses.md#R10.5.2)). Ist keine Angabe der Person mehr nur aus dem Stammbaum, sagt die
   Zeile bei der Person „Die Angaben der Person stammen aus {program} (Datei vom {datum}, geladen am {datum}); keine
   ist mehr nur aus dem Stammbaum.“
+- **Ab App 3.33.0 mit Forschung 1.38.0:** eine Angabe aus dem Stammbaum bleibt **Aus dem Stammbaum** auch nach dem
+  Senden in die Forschung und auch nach dem Zusammenführen von Stammbäumen; ✓ bekommt sie nicht. Angaben, die eine
+  ältere App als Änderungen eines Menschen gesendet hat, lassen sich mit einer Entscheidung von ✓ zu ○○ ändern
+  ([S6.10](#S6.10)).
 - **Gilt seit:** App 3.26.0, Forschung 1.30.0
 
 <!-- zdroj: app:7b0471f8 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; readers z _STROM_CHECKED, noSource nekrmeno) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON) · src/ui/card-signals-ui.ts (signál status, výchozí zapnuto) · index.html settings-group-card · strings.ts reliability.settingCard, cardDensity.cardStatus, settings.groupCard · app:669c08f0 src/reliability.ts userTreeOrigin (_STROM_ORIGIN tree) -->
@@ -399,3 +404,111 @@ Programme als `1 EMAIL` direkt bei der Person. Die App und die Forschung machen 
 - **Gilt seit:** App 3.32.0, Forschung 1.37.0
 
 <!-- zdroj: app:972e73d7 src/person-contact.ts (hlavička: pravidlo RESI jen s kontaktem, 1 EMAIL; cleanEmail EMAIL_MAX 254, bez mezer; sameEmail bez velikosti písmen; isContactResidence, isEmptyResidence, moveContactsIntoPeople při každém načtení), src/ged-exporter.ts contacts (výchozí ano, do výzkumu jen s person.contact; 1 RESI / 2 EMAIL; Zpět do: 1 EMAIL jak byl), src/privacy.ts (žijící bez emails) · app:0603165b index.html #emails-group v Fotografie a poznámky, src/ui/person-modal.ts applyAdvancedFieldVisibility emails-group, emailsFromInput (čárky, středníky, mezery), src/person-page.ts jen c.app, mailto, src/ui/person-events.ts shownEvents (prázdné bydliště skryté) · src/version.ts STROM_DATA_VERSION 26 · strings.ts labels.emails, placeholders.emails, personModal.sectionPhotoNotes · research:ce89202a src/core/live.ts person.contact (1 RESI / 2 EMAIL, nejvýš tři na RESI), src/commands/fixchecks.ts CONTACT_RESIDENCES, src/commands/fixes.ts contact-residences · cs.json ui.fixes.contact-residences.* · CHANGELOG.cs.md 1.37.0 „E-maily osoby jsou kontakt“, app CHANGELOG.cs.md 3.32.0 Data · dirigent:spec/134 K0.10, U11 -->
+
+<a id="S6.10"></a>
+## S6.10 Angaben aus dem Stammbaum bleiben auch in der Forschung ○○
+
+Die Marke ✓ **Von einem Menschen bestätigt** bedeutet, dass ein Mensch die Angabe eingetragen, geändert oder bestätigt
+hat. Eine aus einem Stammbaum übernommene Angabe (Import einer Datei, Zusammenführen von Stammbäumen) hat niemand
+geprüft, und deshalb soll sie ○○ **Aus dem Stammbaum** haben, auch wenn die App sie in die Forschung gesendet hat. Eine
+ältere App sendete alles, was im Stammbaum war, als Änderungen eines Menschen; die Forschung hielt eine solche Angabe
+als von einem Menschen eingetragen, und die App zeigte sie dann mit ✓. Die Strom-App 3.33.0 und die Forschung 1.38.0
+lösen das in drei Schritten:
+
+1. **Die App sagt bei jedem Senden, was aus dem Stammbaum ist.** Eine Angabe, die noch den Wert aus der Datei hat,
+   geht mit der Marke des Imports in die Forschung, beim ersten Senden, bei jedem weiteren und auch nach dem Laden
+   einer Version aus der Forschung. Eine Angabe, die ein Mensch geändert oder bestätigt hat, hat die Marke nicht und
+   geht als Änderung eines Menschen.
+2. **Das Zusammenführen eines Stammbaums ist ein Import.** Ein Stammbaum der App, der in einen anderen Stammbaum
+   zusammengeführt wird (aus **Stammbäume verwalten**, aus einer JSON- oder HTML-Datei, aus einem geteilten Stammbaum,
+   aus einem GEDCOM, das Strom geschrieben hat), in den Stammbaum der Forschung oder anderswohin, bekommt einen eigenen
+   Vermerk über den Import: Programm **Strom**, Name des zusammengeführten Stammbaums oder der Datei und Tag der
+   Zusammenführung. Die Beschriftung der Marke sagt dann „übernommen aus Strom „Horákovi“, Datei vom …“. Die Marke
+   bekommt nicht, was der zusammengeführte Stammbaum aus seinem eigenen Import hatte (er behält seinen Vermerk), was
+   ein Mensch darin geändert oder bestätigt hat, und auch nicht die Angaben des Zielstammbaums. **Rückgängig** nach dem
+   Zusammenführen nimmt den Vermerk und die Marken zurück.
+3. **Die Forschung korrigiert das beim Synchronisieren selbst.** Eine Angabe mit der Marke des Imports, die die
+   Forschung aus einem früheren Senden als von einem Menschen eingetragen hat, schreibt sie auf eine Angabe aus dem
+   Stammbaum um: Wert und Stand der Sicherheit bleiben, nur die Herkunft ändert sich, und die Quelle des Imports wird
+   zuerst zitiert. Der Plan der Synchronisierung sagt es mit der Zeile „{wer}: {Angabe} — aus dem Stammbaum, keine
+   Änderung eines Menschen“.
+
+Personen, die eine ältere App schon gesendet hat, bleiben in der Forschung mit ✓: die App hat die importierte Datei
+nicht und markiert sie nicht nachträglich. Nach ihnen fragt die Forschung ([S6.10.1](#S6.10.1)).
+
+- **Prüft der Code:**
+  - die Forschung schreibt die Herkunft nur bei einer Angabe um, die gleich ist wie in der Datei, die Herkunft genau
+    „Mensch“ ohne früheren Wert hat (kein übernommener Vorschlag und kein Zurücksetzen), das Senden der App zitiert
+    („Änderungen in der Strom-App (Tag)“) und nicht bestätigt ist;
+  - sie schreibt nur den Eintrag eines Menschen um (aus der App oder aus dem Terminal), nie eine Synchronisierung des
+    Agenten;
+  - Wert, Stand der Sicherheit und Zitation des Sendens ändern sich nicht.
+- **Grenzen:** eine bestätigte Angabe bleibt immer ✓. Eine Angabe, die ein Mensch nach dem Import geändert hat, ist
+  eine Änderung eines Menschen.
+- **Bedienung:** nichts wird eingestellt. Terminal: Plan `strom sync`, Zurücknehmen `strom sync undo I…`.
+- **Warum:** ✓ soll nur bedeuten, was ein Mensch wirklich bestätigt hat; eine Angabe aus einem fremden Stammbaum ist ein
+  Hinweis ([S6.3](#S6.3)).
+- **Gilt seit:** App 3.33.0, Forschung 1.38.0
+
+<!-- zdroj: app:35a7d513 (keepImports: značky _STROM_IMPORT po každém odeslání i po načtení verze výzkumu) · app:46973902 src/merge/merged-import.ts (záznam importu sloučeného stromu: 2 SOUR Strom, _AT den sloučení, FILE název; neznačí vlastní import, změněné, potvrzené, cílové; Zpět bere záznam i značky), src/import-origin.ts · app:3d070997 strings.ts reliability.titleImport (název stromu) · research:f19661bb (feature origin.import: user → import při shodě se souborem, origin user bez was, citace odeslání, nepotvrzeno, zápis člověka; citace importu první) · assets/lang/cs.json ui.sync.origin.import, ui.sync.do.origin.import · zadání aplikace ↔ výzkum ZADANI_VYZKUM_fajfka-import.md · dirigent:analyza/2026-11-27-fajfka-z-importu/README.md -->
+
+<a id="S6.10.1"></a>
+### S6.10.1 Die Frage „Stammt das aus einem Stammbaum?“
+
+Wenn eine Sendung aus der App der Forschung viele Personen hinzugefügt hat und die Forschung ihre Angaben als von
+einem Menschen eingetragen hält, war es wohl ein Stammbaum (Import oder Zusammenführung), kein Eintrag von Hand. Die
+Forschung fragt deshalb einmal in **Wartet auf Bearbeitung**.
+
+- **Wann sie fragt:** eine Sendung aus der App, die nicht zurückgenommen wurde, hat mindestens **20 neue Personen**
+  hinzugefügt (`strom config set sync.importAsk <n>`, 0 = nie), mindestens eine davon hat noch einen Namen, den ein
+  Mensch mit dieser Sendung eingetragen hat, und auf die Sendung hat noch niemand geantwortet. Sie fragt auch in einer
+  Forschung, die als Archiv dient; weder Agent noch Netz sind nötig.
+- **App:** **Forschungsübersicht → Wartet auf Bearbeitung**: „Stammt das aus einem Stammbaum (Import,
+  Zusammenführung)?“ und darunter der Tag der Sendung, die Zahl der Personen und drei Namen („25.11.2026 · 142
+  Personen: …“). Der geöffnete Eintrag rechnet aus, was sich ändert: „N Angaben wechseln von ✓ zu ○○ (M Personen).“
+  und „K Angaben bleiben ✓: a seit dem Senden geändert, b bestätigt, c ein früherer Wert (übernommener Vorschlag,
+  Rückgängig), d andere Herkunft.“, mit der Erklärung „✓ von einem Menschen bestätigt – ○○ aus dem Stammbaum, nicht
+  anhand eines Eintrags geprüft.“ Schaltflächen **Ja, aus dem Stammbaum** und **Nein, von Hand eingetragen**.
+- **Terminal:** **Was wartet**, Gruppe **Die Strom-App**, Art „Stammbaum?“: „Eine Sendung aus der Strom-App vom <Tag>
+  hat N Personen hinzugefügt – stammen sie aus einem Stammbaum (Import, Zusammenführung)?“, warum („Jetzt gilt alles
+  als von einem Menschen eingetragen (✓ von einem Menschen bestätigt). Aus einem Stammbaum wird es mit ○○
+  gekennzeichnet …“), Beispiele von Namen, was sich ändert, und dieselben zwei Wahlmöglichkeiten.
+- **Ja, aus dem Stammbaum:** die Forschung wird zuerst gesichert; dann werden die Angaben dieser Sendung, die noch so
+  sind, wie sie kamen, und die niemand bestätigt hat, als aus dem Stammbaum gekennzeichnet ([S6.10.2](#S6.10.2)).
+  Ergebnis: „N Angaben sind jetzt ○○ aus dem Stammbaum (M Personen).“
+- **Nein, von Hand eingetragen:** nichts ändert sich; „Als von Hand eingetragen belassen. Die Frage kommt nicht
+  wieder.“
+- **Grenzen:**
+  - weder die Werte noch ihre Sicherheit ändern sich; es ändert sich nur die Marke ✓ zu ○○;
+  - die Antwort **Ja** lässt sich nur im Terminal zurücknehmen (`strom sync as-import I… --undo`), nicht durch
+    Zurücknehmen der Sendung aus der App;
+  - wenn inzwischen anderswo geantwortet wurde: „Die Frage wurde anderswo beantwortet oder wartet nicht mehr.“; eine
+    beschäftigte Forschung: „Die Forschung ist beschäftigt; erneut möglich in N s.“
+- **Bedienung:** App: **Wartet auf Bearbeitung** → **Ja, aus dem Stammbaum** / **Nein, von Hand eingetragen**;
+  Terminal: **Was wartet**, `strom sync as-import`, `strom config set sync.importAsk <n>`.
+- **Gilt seit:** Forschung 1.38.0, App 3.33.0
+
+<!-- zdroj: research:dec54543 src/core/waiting.ts (kind import, feature waiting.import; nevrácené odeslání, aspoň sync.importAsk nových lidí, jméno s původem user citující odeslání, bez odpovědi; i v archivu), src/core/config.ts IMPORT_ASK 20, sync.importAsk (0 nikdy), src/cli/menu-waiting.ts · assets/lang/cs.json ui.waiting.import, ui.wait.kind.import, ui.wait.import.why, samples, change, cmd, yes, no · src/core/live.ts GET/POST <token>/waiting/W-S-I… (do: import|own) · app:7ad968e4 src/ui/research-overview-ui.ts importAskRowWho, src/research-import-ask.ts importAskWho (3 jména) · strings.ts live.importAsk (question, change, stay, stayPart, meaning, yes, no, doneImport, doneOwn, gone, busy) -->
+
+<a id="S6.10.2"></a>
+### S6.10.2 Der Befehl `strom sync as-import`
+
+Dieselbe Entscheidung im Terminal, für eine Sendung aus der App (`I…`, `strom input list`). Nur ein Mensch darf sie
+treffen; dem Agenten lehnt die Forschung den Befehl ab ([R6.6](R6-awaiting-action.md#R6.6)).
+
+| Befehl | Was er tut |
+|---|---|
+| `strom sync as-import I…` | zeigt nur, was sich ändert: „Sendung I… vom <Tag>: N Personen hinzugefügt.“, welche Angaben als aus dem Stammbaum gekennzeichnet werden und welche bleiben, wie sie sind (seit der Sendung geändert, bestätigt, mit früherem Wert, anderer Herkunft) |
+| `--apply` | sichert zuerst die Forschung, dann kennzeichnet es die Angaben als aus dem Stammbaum: die Sendung bekommt eine Quelle „In der Strom-App übernommener Stammbaum (gesendet am <Tag>)“, die bei der Angabe zuerst zitiert wird; die Zitation der Sendung bleibt; ein Eintrag im Verlauf der Forschung |
+| `--undo` | nimmt die Angaben zurück, die noch so sind, wie `--apply` sie gekennzeichnet hat; die übrigen: „Seitdem geändert, belassen, wie es ist: N Angaben.“ |
+| `--own` | die Antwort „von Hand eingetragen“: nichts ändert sich, und die Frage wird nicht erneut angeboten |
+
+- **Prüft der Code:** gekennzeichnet wird nur eine Angabe, die genau diese Sendung eingetragen hat, heute gleich ist,
+  die Herkunft genau „Mensch“ ohne früheren Wert hat und weder bestätigt noch zurückgezogen ist. Die Antwort wird bei
+  der Forschung gespeichert; die Frage und der Befehl erkennen sie („Schon beantwortet: ein übernommener
+  Stammbaum.“).
+- **Bedienung:** Terminal: `strom sync as-import I…`, `--apply`, `--undo`, `--own`; App: Schaltflächen in **Wartet
+  auf Bearbeitung** ([S6.10.1](#S6.10.1)).
+- **Gilt seit:** Forschung 1.38.0
+
+<!-- zdroj: research:dec54543 src/commands/sync.ts sync as-import (náhled; --apply záloha, pramen kind family-tree, citace první, jeden commit; --undo; --own), src/core/sendimport.ts (hodnoty podle historie git: zapsané tímto odesláním, stejné, origin user bez was, nepotvrzené, neodvolané; quality/send-imports.json), src/cli/help.ts HUMAN_COMMANDS, sync.ts person („never an agent“) · assets/lang/cs.json ui.sync.asimport.*, ui.help.cmd.sync.as-import, ui.backup.readme.asimport -->

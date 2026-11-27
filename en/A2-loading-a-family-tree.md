@@ -154,8 +154,12 @@ not guessed. The rules are the same as in the research.
   [A4](A4-surnames-and-families.md).
 - **Controls:** none; the result is edited in the person's card.
 - **Since:** app 3.10.0 (titles), 3.13.0 (married surname), 3.18.0 (`_STROM_PRIMARY`).
+- **From app 3.33.0:** a description in brackets is only a name that is wholly one group in brackets ("(dítě)",
+  "[syn]", "(mrtvě narozený)"). Brackets between words are part of the name: "(Jan) Josef (Karel) /Horák/" stays as
+  written, without a note, and the export gives it back the same. The research reads it the same way
+  ([R10.5](R10-people-and-hypotheses.md#R10.5)).
 
-<!-- zdroj: app:src/gedcom-names.ts:197 readGedcomName, :114 splitNameLine, :85 noName, :96 notAName, :260 stripTitles · app:src/ged-parser.ts:1404 readMarriedSurname, :2250 varianty, :2955 prohození TYPE -->
+<!-- zdroj: app:src/gedcom-names.ts:197 readGedcomName, :114 splitNameLine, :85 noName, :96 notAName, :260 stripTitles · app:src/ged-parser.ts:1404 readMarriedSurname, :2250 varianty, :2955 prohození TYPE · 3.33.0: app:810bc323 src/gedcom-names.ts noName /^[(\[{][^()\[\]{}]*[)\]}]$/u (K055) -->
 
 <a id="A2.4"></a>
 ## A2.4 Dates and their forms

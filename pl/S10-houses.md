@@ -14,6 +14,7 @@ jest w aplikacji w oknie **Domy** i na stronie domu, w księdze i na stronach ro
 | domy same | **Badanie dla drzewa › Historia domów** ([S10.5.1](#S10.5.1)) | **Ustawienia › Historia domów w tym badaniu** |
 | własna kwerenda domu | **Przejmij kwerendę z pliku…** ([S10.8](#S10.8)) | `strom house import` |
 | rozmowa o domu | **Omów z agentem** ([S10.9](#S10.9)) | `strom chat --house` |
+| opowieść o domu | ⋯ **Napisz opowieść o domu** ([S10.14](#S10.14)) | `strom house story` |
 | księga i strony | wybór **Dom**, rozdział **Domy** ([S10.10](#S10.10)) | – |
 
 <!-- zdroj: dirigent:spec/030-historie-domu, spec/145-rozsireni-domu (T1, T2, T5, T6, T7) · app:src/houses.ts, src/ui/houses-ui.ts, src/house-page.ts · research:src/core/houses.ts, src/core/houseauto.ts, src/commands/house.ts, assets/method/house.md · CHANGELOG.cs.md aplikace 3.33.0, výzkum 1.38.0 „Historie domů“, „Výzkum domu“ -->
@@ -124,7 +125,7 @@ domów w przeszłości się zmieniały; zapisy sprzed potwierdzonej zmiany numer
 Strona domu ma postać strony osoby: **‹ Domy**, **Zapisz HTML**, ⋯ i zamknij. Od trzech sekcji ma spis treści.
 
 - **Sekcje w kolejności:** nagłówek (miejscowość i numer, nazwa domu, miejscowość z powiatem, parafia, „W drzewie”:
-  lata, pokolenia, osoby; „Badania”: stan) · **W skrócie** · **Numery w czasie** · **Oś czasu** · **Właściciele
+  lata, pokolenia, osoby; „Badania”: stan) · **W skrócie** · **Opowieść** ([S10.14](#S10.14)) · **Numery w czasie** · **Oś czasu** · **Właściciele
   i mieszkańcy** · **Wygląd domu** ([S10.7](#S10.7)) · **Mapa** ([S10.3.1](#S10.3.1)) · **Czego nie wiemy**
   (z **Odpowiedz**) · **Co przeszukano** (z **Tylko w czytelni**) · **Źródła i materiały**.
 - **Oś czasu** ma przy wierszu pochodzenie: **z badań**, **z własnej kwerendy**, **przypuszczenie**,
@@ -136,7 +137,8 @@ Strona domu ma postać strony osoby: **‹ Domy**, **Zapisz HTML**, ⋯ i zamkni
 - **Bez wyniku badania** strona ma nagłówek, **W skrócie**, **Numery w czasie**, **Oś czasu**, **Mieszkańców
   z drzewa**, **Mapę** i zdanie, skąd jest („Strona jest zbudowana z zapisów w drzewie.” albo że dom jest w kolejce).
 - **⋯ strony:** **Zapisz HTML** ([S10.3.2](#S10.3.2)) · **Otwórz w książce…** ([S10.10](#S10.10)) · **Na mapie** ·
-  **Nazwa domu…** · działania badania ([S10.4](#S10.4)) · **Omów z agentem** ([S10.9](#S10.9)) · **Dołącz
+  **Nazwa domu…** · działania badania ([S10.4](#S10.4)) · **Napisz opowieść o domu** ([S10.14](#S10.14)) ·
+  **Omów z agentem** ([S10.9](#S10.9)) · **Dołącz
   materiał…** · **Przejmij kwerendę z pliku…** ([S10.8](#S10.8)) · **Połącz…** · **To inny dom…**
 - **Obsługa:** aplikacja: **Strona domu ›** w oknie **Domy**, w dymku domu na mapie i przy linku do domu na stronie
   osoby ([S10.11](#S10.11)).
@@ -169,9 +171,10 @@ Zdanie pod mapą mówi, skąd jest położenie.
 - **Granice:**
   - położenia, które potwierdził człowiek, badanie nie nadpisuje;
   - **Otwórz gdzie indziej** jest tylko przy domu z własnym punktem;
-  - księga nigdy nie podaje położenia domu; zapisana strona domu tylko przy domu bez osób z mniej więcej ostatnich
-    100 lat ([S10.3.2](#S10.3.2)).
-- **Obsługa:** aplikacja: strona domu → **Mapa** → **Warstwa mapy**, **Potwierdź położenie**, **Przesuń punkt**;
+  - księga, zapisana strona domu i strony rodu pokazują położenie tylko przy domu bez osób z mniej więcej ostatnich
+    100 lat, jako wycinek mapy ([S10.3.4](#S10.3.4)).
+- **Obsługa:** aplikacja: strona domu → **Mapa** → **Warstwa mapy**, **Potwierdź położenie**, **Przesuń punkt**,
+  **Ukryj położenie w wynikach** ([S10.3.4](#S10.3.4));
   terminal `strom house confirm <dom> location`.
 - **Obowiązuje od:** aplikacja 3.33.0, badanie 1.38.0
 
@@ -180,20 +183,23 @@ Zdanie pod mapą mówi, skąd jest położenie.
 <a id="S10.3.2"></a>
 ### S10.3.2 Zapisana strona domu i ochrona osób
 
-**Zapisz HTML** zapisuje stronę domu jako jeden plik (np. `belokamen-cp-16.html`) bez kafelków mapy z sieci; obrazy są
-tylko linkiem. Zapisana strona domu, księga i strony rodu chronią osoby z mniej więcej ostatnich 100 lat.
+**Zapisz HTML** zapisuje stronę domu jako jeden plik (np. `belokamen-cp-16.html`) bez kafelków mapy z sieci; obrazy
+domu są tylko linkiem, położenie jest wycinkiem mapy wprost w pliku ([S10.3.4](#S10.3.4)). Zapisana strona domu, księga i strony rodu chronią osoby z mniej więcej ostatnich 100 lat.
 
 - **Nigdy:** dzisiejsi właściciele; imiona i nazwiska żyjących; nazwisko świadka.
 - **Osoby z mniej więcej ostatnich 100 lat** tylko z imienia, nazwiska i roli, bez lat.
 - **Wydarzenia badania z mniej więcej ostatnich 100 lat i wydarzenia wrażliwe** (konfiskata, wysiedlenie) są
   pomijane, dopóki człowiek ich nie odkryje (**Pokaż w wynikach**).
-- **Położenie** tylko przy domu bez osób z mniej więcej ostatnich 100 lat; nazwy domu przy takim domu też nie.
-- Strona domu mówi, czego brakuje w wynikach: „W wynikach (HTML, książka) N wydarzeń i położenie domu nie są
-  pokazywane.”
+- **Położenie** tylko przy domu bez osób z mniej więcej ostatnich 100 lat i tylko bez ręcznego ukrycia
+  ([S10.3.4](#S10.3.4)); nazwy domu przy domu z takimi osobami też nie.
+- **Opowieść o domu** tylko zatwierdzona i tylko w całości: opowieść, która wymienia chronioną osobę, jest pomijana
+  w całości ([S10.14.2](#S10.14.2)).
+- Strona domu mówi, czego brakuje w wynikach i dlaczego: „W wynikach (HTML, książka) N wydarzeń i położenie domu nie są
+  pokazywane (ludzie ostatnich ~100 lat).”, „… N wydarzeń nie jest pokazywanych; położenie domu jest ukryte ręcznie.”
 - **Obsługa:** aplikacja: strona domu → **Zapisz HTML**; przy wydarzeniu **Pokaż w wynikach**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 Oś czasu z zapisów drzewa
@@ -215,6 +221,46 @@ już jeden wiersz, się nie powtarza.
 - **Obowiązuje od:** aplikacja 3.33.0
 
 <!-- zdroj: app:3dc5647c src/house-page.ts houseTreeRows → joinRepeatedRows (narození jedné osoby a roku jednou, narození před křtem; bydliště s rokem a sdílenou osobou nebo partnery partnersIn), factLabel isBaptism (událost baptism → baptizedM/F) · src/book-houses.ts houseTreeRows · strings.ts houses.ev.bornM, bornF, baptizedM, baptizedF, residence · src/__tests__/house-page.test.ts · dirigent:prace/1127-app-147-materialy (Přibaleno, schválená tabulka) -->
+
+<a id="S10.3.4"></a>
+### S10.3.4 Położenie domu w wynikach
+
+Księga rodu, zapisana strona domu i strony rodu pokazują położenie domu jako obraz: wycinek dzisiejszej mapy z punktem
+i numerem domu. Pod nim są współrzędne, jak pewna jest zgodność numeru, i atrybucja mapy. Wynik pokazuje więc położenie
+także bez sieci.
+
+- **Kiedy położenie się pokazuje:** tylko przy domu z punktem (ustawionym ręcznie lub przez badanie) i tylko gdy
+  zachodzi jedno i drugie:
+  - w domu nie ma osób z mniej więcej ostatnich 100 lat: żyjących, osób drzewa z tych lat, zapisów domu z tych lat ani
+    właścicieli i mieszkańców z latami w tym czasie (także osób, których drzewo nie zna);
+  - człowiek nie ukrył położenia (**Ukryj położenie w wynikach**).
+- **Pewność:** „Dzisiejsze położenie · zgodność numeru potwierdzona”, gdy punkt ustawił lub potwierdził człowiek
+  (w aplikacji lub w badaniu); w przeciwnym razie „Dzisiejsze położenie · zgodność numeru zakładana”.
+- **Obraz:** dzisiejsza mapa OpenStreetMap z atrybucją „© współtwórcy OpenStreetMap, licencja ODbL”. HTML (zapisana
+  strona domu, strony rodu, także w ZIP-ie i w prezencie) dodaje jako kolejny obraz warstwę historyczną, którą badanie
+  dostarczyło dla miejsca domu ([S10.3.1](#S10.3.1)); księga daje tylko dzisiejszą mapę i nie dzieli wycinka między
+  strony.
+- **Bez sieci:** wycinek powstaje raz i aplikacja zachowuje go w tej przeglądarce; kolejna księga, PDF czy prezent
+  bierze zachowany. Bez sieci i bez zachowanego wycinka albo dopóki mapa nie jest dozwolona (**Pokaż mapę**), wynik
+  daje tylko współrzędne i pewność, bez błędu. Na jeden obraz czeka się najwyżej 10 s.
+- **Strona domu**, sekcja **Mapa:** przy domu, którego położenie wyniki by pokazały, wiersz „Wyniki (HTML, książka)
+  pokazują położenie domu.” i **Ukryj położenie w wynikach**. Po ukryciu „W wynikach (HTML, książka) położenie domu
+  jest ukryte ręcznie.” i **Pokaż położenie w wynikach**. Jedno i drugie to jeden krok **Cofnij**.
+- **Księga:** opcja **Położenie domów** (domyślnie włączona, zapamiętywana): „Wycinek dzisiejszej mapy z punktem domu
+  bez ludzi ostatnich ~100 lat; wyłączone: tylko miejscowość.” Jest tylko z częścią **Domy** i tylko gdy księga ma
+  dom, którego położenie można pokazać. Przypis rozdziału brzmi wtedy „Wydarzenia po <rok> r. i położenie domu
+  z ludźmi tych lat nie są podawane w książce.”
+- **Granice:**
+  - osoby z mniej więcej ostatnich 100 lat mają pierwszeństwo: ręczne **Pokaż położenie w wynikach** ich nie
+    przebija, a przy takim domu nie ma wiersza ani przycisku; dlaczego położenia brakuje, mówi strona
+    ([S10.3.2](#S10.3.2));
+  - ręczne ukrycie jest tylko w drzewie aplikacji (plik JSON), nie trafia do badania ani do GEDCOM;
+  - drzewo tylko do odczytu pokazuje tylko stan, bez przycisku.
+- **Obsługa:** aplikacja: strona domu → **Mapa** → **Ukryj położenie w wynikach** / **Pokaż położenie w wynikach**;
+  eksport **Księga rodu** → **Położenie domów**.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (location jen bez recentPeople a bez hideLocation; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek -->
 
 <a id="S10.4"></a>
 ## S10.4 Zamówić historię domu
@@ -528,25 +574,26 @@ o nie poprosi.
   z mniej więcej ostatnich 100 lat tylko z imienia, nazwiska i roli, bez dat. Ze strony domu **Otwórz w książce…**
   otwiera księgę na tym domu.
 - **Rozdział Domy** w księdze: domy osób księgi z historią ([S10.1](#S10.1)) lub z gotową historią z badania; przy
-  domu nazwa, wygląd, numery w czasie, oś czasu, właściciele, mieszkańcy, osobliwości i źródła jako numerowane
-  przypisy. Domyślnie włączony, tylko gdy drzewo ma co najmniej jeden dom z gotową historią. **Indeks domów** tylko
+  domu zatwierdzona opowieść ([S10.14.2](#S10.14.2)), nazwa, wygląd, numery w czasie, oś czasu, właściciele,
+  mieszkańcy, osobliwości, położenie ([S10.3.4](#S10.3.4)) i źródła jako numerowane przypisy. Domyślnie włączony, tylko gdy drzewo ma co najmniej jeden dom z gotową historią. **Indeks domów** tylko
   z rozdziałem Domy.
 - **Strony rodu i Strony drzewa** ([A7.5](A7-book-pages-and-export.md#A7.5)): opcja **Domy**: **W stronach
   rodzinnych, powiązane z osobami** (domyślnie; domy z historią z okresem i pokoleniami, **Indeks domów** za
   miejscowościami i strona każdego domu), **Tylko wzmianka o domu, bez jego stron**, **Bez domów**. Jest proponowana,
   gdy osoby wyboru mieszkały w domu z historią. Oś czasu rodu ma chip **Domy ⌂** ([S10.11](#S10.11)).
 - **Granice:**
-  - księga nigdy nie podaje położenia domu: „Wydarzenia po <rok> r. i położenie domu nie są podawane w książce.”;
-    wydarzenia wrażliwe i wydarzenia badania z mniej więcej ostatnich 100 lat pomija ([S10.3.2](#S10.3.2));
+  - księga podaje położenie tylko z opcją **Położenie domów** i tylko przy domu bez osób z mniej więcej ostatnich
+    100 lat ([S10.3.4](#S10.3.4)); w przeciwnym razie „Wydarzenia po <rok> r. i położenie domu nie są podawane
+    w książce.”; wydarzenia wrażliwe i wydarzenia badania z mniej więcej ostatnich 100 lat pomija ([S10.3.2](#S10.3.2));
   - strony nie podają o domach niczego z mniej więcej ostatnich 100 lat;
   - strony biorą domy z historią według progu ([S10.1](#S10.1)), księga także domy z gotową historią z badania;
   - wybór **Dom** tylko w drzewie z domem z numerem i tylko dla księgi; prezent
     ([A7.9](A7-book-pages-and-export.md#A7.9)) i obraz domów nie mają.
-- **Obsługa:** aplikacja: eksport **Księga rodu** → **Dom**, część **Domy**, **Indeks domów**; Strony rodu i Strony
-  drzewa → **Domy**.
+- **Obsługa:** aplikacja: eksport **Księga rodu** → **Dom**, część **Domy**, **Indeks domów**, **Położenie domów**;
+  Strony rodu i Strony drzewa → **Domy**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · nálezy N9 (T3 poloha v knize neimplementována), N10 (výstupy podle prahu × kniha i s hotovou historií) -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
 
 <a id="S10.11"></a>
 ## S10.11 Domy w innych miejscach aplikacji
@@ -562,8 +609,9 @@ o nie poprosi.
 | listy osób | reguła **Mieszkał(a) w domu** (także w latach), według urodzenia, ślubu, spisu, miejsca zamieszkania i zgonu ([A11](A11-lists-of-people.md)) |
 | Statystyki | temat **Domy**; najdłużej jedna rodzina, wżenienie ([A13](A13-tree-statistics.md)) |
 | wyszukiwanie | grupa **Domy** nad osobami (najwyżej 5); przy osobie znalezionej po numerze domu **Dom ›** |
-| kolejka i **Czeka na załatwienie** | zadania **Historia domu <numer>, <miejscowość>**, **Przejmij kwerendę domu <numer>**, **Szkielet miejscowości <miejscowość> dla domów**; **Strona domu ›**; pytanie domu z „Dom <numer> ›” |
-| GEDCOM | zapis `_HOUSE` tylko dla domu z nazwą lub połączonego (miejscowość, numery z datą, nazwa, „ten sam dom”); rozdzielenie, położenie i odkryte wydarzenia tylko w JSON |
+| kolejka i **Czeka na załatwienie** | zadania **Historia domu <numer>, <miejscowość>**, **Przejmij kwerendę domu <numer>**, **Szkielet miejscowości <miejscowość> dla domów**; **Strona domu ›**; pytanie domu z „Dom <numer> ›”; nowa wersja opowieści „Opowieść o domu <numer> czeka na zatwierdzenie” ([S10.14](#S10.14)) |
+| opowieść osoby | link **Dom <numer> ›** do domu z zatwierdzoną opowieścią ([S10.14](#S10.14)) |
+| GEDCOM | zapis `_HOUSE` tylko dla domu z nazwą lub połączonego (miejscowość, numery z datą, nazwa, „ten sam dom”); rozdzielenie, położenie, ręczne ukrycie położenia i odkryte wydarzenia tylko w JSON; opowieści o domu GEDCOM nie przenosi |
 
 - **Badanie i `_HOUSE`:** `strom sync` czyta domy z GEDCOM aplikacji jako słowo człowieka: nazwę, brakujący numer
   i „ten sam dom”. Niczego nie usuwa; miejscowość, która nie jest miejscem badania, tylko zgłasza. Badanie nie zapisuje
@@ -585,6 +633,7 @@ o nie poprosi.
 | `strom house confirm <dom> renumber\|location\|not-same` | słowo człowieka ([S10.1.2](#S10.1.2)) |
 | `strom house import` | własna kwerenda ([S10.8](#S10.8)) |
 | `strom house request` | zamówienie domu ([S10.4.1](#S10.4.1)) |
+| `strom house story <dom>` | zamówienie opowieści o domu ([S10.14.1](#S10.14.1)) |
 | `strom fixes house-numbers` | domy zapisane na dwa sposoby |
 
 - **Odwołanie do domu:** `A0001`, klucz (`lhota|16`), `L12 16` lub `Lhota 16`. Niejednoznaczne odwołanie badanie
@@ -599,7 +648,7 @@ o nie poprosi.
   w czytelni, mapa, podsumowanie, obraz, nazwa terenowa; podsumowanie, obraz i nazwa terenowa tylko przy miejscowości.
 - **Obowiązuje od:** badanie 1.38.0
 
-<!-- zdroj: research:src/commands/house.ts list 152, show 181, sources 203, add 280/367, confirm 868, import 927, request 232 (hidden) · src/core/houses.ts findHouse 359 (house.unknown, house.ambiguous) · src/core/housenumberfix.ts, src/commands/fixes.ts 1106–1111, ui.fixes.house-numbers.name · cs.json ui.house.head · strom help house (přes guard) · commity 3c69f16c, bd81894a -->
+<!-- zdroj: research:100aee43 src/commands/house.ts house story · research:src/commands/house.ts list 152, show 181, sources 203, add 280/367, confirm 868, import 927, request 232 (hidden) · src/core/houses.ts findHouse 359 (house.unknown, house.ambiguous) · src/core/housenumberfix.ts, src/commands/fixes.ts 1106–1111, ui.fixes.house-numbers.name · cs.json ui.house.head · strom help house (přes guard) · commity 3c69f16c, bd81894a -->
 
 <a id="S10.13"></a>
 ## S10.13 Drzewo tylko do odczytu i przykład
@@ -611,7 +660,92 @@ o nie poprosi.
   z agentem**, **Dołącz materiał…**) zostają takie, jakie proponuje badanie.
 - **Przykład ze strony** ([S9.1.3](S9-trying-the-sample.md#S9.1.3)): działania domów są ukryte.
 - **Przykładowe badanie `strom demo`** ([S9.4](S9-trying-the-sample.md#S9.4)): bez zamówienia domu, przejęcia
-  kwerendy i rozmowy o domu; domy, strony domów i ustawienia można przeglądać.
+  kwerendy, rozmowy o domu i opowieści o domu; domy, strony domów i ustawienia można przeglądać.
 - **Obowiązuje od:** aplikacja 3.33.0, badanie 1.38.0
 
-<!-- zdroj: app:src/data.ts 2549 housesReadOnly (isReadOnly || isTreeLocked) · src/ui/tree-actions.ts housesRows (read-only: jediný řádek skupiny, 1127) · src/research-link.ts SHOWCASE_ALLOWS house: 'hide' · research:src/core/live.ts forDemo (bez house.request, house.import, house.chat; house, house.material, house.confirm, house.auto, house.look zůstávají) · nálezy N5 (Probrat s agentem ve stromu jen ke čtení), N6 (řádek Historie domů se nejspíš nabídne i u strom demo, neověřeno) -->
+<!-- zdroj: app:src/data.ts 2549 housesReadOnly (isReadOnly || isTreeLocked) · src/ui/tree-actions.ts housesRows (read-only: jediný řádek skupiny, 1127) · src/research-link.ts SHOWCASE_ALLOWS house: 'hide' · research:src/core/live.ts forDemo (bez house.request, house.import, house.chat, house.story – AGENT_FEATURES; house, house.material, house.confirm, house.auto, house.look zůstávají) · nálezy N5 (Probrat s agentem ve stromu jen ke čtení), N6 (řádek Historie domů se nejspíš nabídne i u strom demo, neověřeno) -->
+
+<a id="S10.14"></a>
+## S10.14 Opowieść o domu
+
+Opowieść o domu to ciągły tekst dla rodziny: właściciele i rodziny w domu przez pokolenia, co działo się z domem,
+numery w czasie i gdzie dom stał, jego wygląd i z czego żyła miejscowość. Pisze ją agent badania tylko z tego, co
+badanie ustaliło o domu i jego miejscowości; niczego nie szuka od nowa. Tak jak opowieść osoby
+([A7.8](A7-book-pages-and-export.md#A7.8)) nie jest źródłem: tylko opowiada to, co udokumentowało badanie.
+
+- **Pilnuje kod:**
+  - opowieść zachowuje, na czym się opiera: pozycje domu (numery, wydarzenia, właściciele, mieszkańcy) i dane osób
+    drzewa w domu;
+  - jest szkicem, dopóki nie zatwierdzi jej człowiek; zatwierdzona opowieść jest zablokowana i nigdy nie zostaje
+    nadpisana. Nowa wersja powstaje obok niej, a zatwierdzony tekst obowiązuje, dopóki człowiek nie zdecyduje
+    ([R6.3.2](R6-awaiting-action.md#R6.3.2));
+  - zatwierdzić albo odrzucić nową wersję może tylko człowiek ([R6.6](R6-awaiting-action.md#R6.6)).
+- **Tylko metodyka:**
+  - to, co badanie zna tylko ze średnią pewnością, jako przypuszczenie lub wskazówkę, tekst podaje jako niepewne
+    („najpewniej”, „według rejestru jeszcze niesprawdzonego”); numer, który nie jest tym samym domem, pomija; czego
+    nie znaleziono, mówi;
+  - osoby z ostatnich stu lat tylko z imienia i roli w domu (bez choroby, sądu, rozwodu). O tym, co z żyjących pokazać
+    lub udostępnić, decyduje aplikacja ([S10.14.2](#S10.14.2));
+  - życie osoby należy do jej opowieści; w opowieści o domu osoba ma jedno zdanie z latami w domu.
+- **Strona domu**, sekcja **Opowieść** zaraz za **W skrócie**:
+  - zatwierdzony tekst z nagłówkiem i źródłami;
+  - szkic z etykietą „szkic, czeka na zatwierdzenie” i przyciskiem **Zatwierdź w badaniu** (link do terminala);
+  - nowa wersja obok zatwierdzonej: „Nowa wersja opowieści (dzień) czeka na zatwierdzenie; strona pokazuje
+    zatwierdzony tekst.” z **Porównaj**;
+  - dopóki się pisze, stan zadania: „Opowieść o domu czeka w kolejce badań.”, „Opowieść o domu jest właśnie
+    pisana.”, „Zadanie opowieści jest w badaniach odłożone.”, „Zadanie opowieści czeka w badaniach na odpowiedź.”
+- **Czeka na załatwienie:** tylko nowa wersja obok zatwierdzonej: w aplikacji „Opowieść o domu <numer> czeka na
+  zatwierdzenie” z linkiem **Dom <numer> ›** do sekcji **Opowieść**, w terminalu „Nowa wersja opowieści o domu <dom> –
+  do czasu decyzji obowiązuje wersja zatwierdzona”. Pierwszego szkicu tam nie ma: zatwierdza się go na stronie domu
+  albo `strom story approve A…`.
+- **Opowieść osoby**, która w domu mieszkała, ma pod tekstem link **Dom <numer> ›** do opowieści domu, tylko gdy dom ma
+  zatwierdzoną opowieść; tekst domu się nie powtarza.
+- **Granice:** aplikacja bierze opowieść o domu tylko z mostu badania (GEDCOM jej nie przenosi); bez połączenia
+  z badaniem nie ma sekcji ani linku.
+- **Obsługa:** aplikacja: strona domu → **Opowieść**, **Zatwierdź w badaniu**, **Porównaj**; terminal:
+  `strom story show A…`, `strom story approve A…`, `strom story discard A…`, menu **Co czeka**.
+- **Obowiązuje od:** aplikacja 3.33.0, badanie 1.38.0
+
+<!-- zdroj: research:100aee43 src/core/housestory.ts (House.story jako Story osoby; facts n…, e…, h…, r…, E…; draft vedle final), src/core/storykeep.ts, src/commands/story.ts (approve|discard A…, person only), src/core/waiting.ts (kind story s house jen pro novou verzi; APP_SHOWS_HOUSE_STORY), assets/method/narrate.md „for house-story“ · cs.json ui.waiting.story.house · app:3473602e src/house-page.ts storyHtml (sec.story za sum; storyDraft, storyNew, storyTask), src/ui/house-page-ui.ts (research.approveStory, story.compare, story?house=&do=final|keep), src/ui/research-overview-ui.ts houses.storyWaiting · app:3080a121 src/person-page.ts storyHousesHtml (houseLink) · zadání aplikace ↔ výzkum ZADANI_VYZKUM_145-domy.md „T4 vyprávění o domě“, „Odpověď stromu k T4“ (první koncept bez položky Co čeká – záměr) -->
+
+<a id="S10.14.1"></a>
+### S10.14.1 Kiedy powstaje opowieść: sama i na żądanie
+
+- **Sama:** przy włączonych opowieściach (ustawienie `stories`, domyślnie włączone), po ostatnim kroku badania domu
+  (badanie domu, ewentualnie jego wygląd, [S10.7](#S10.7)), gdy dom mówi dość: **2 pokolenia drzewa** w domu (rodzic
+  i dziecko) albo **3 właścicieli i mieszkańców ze źródłami**. Kolejna wersja tylko wtedy, gdy dom od ostatniej wersji
+  przyniósł co najmniej **2 nowe dane**.
+- **Na żądanie:** ⋯ na stronie domu lub w oknie **Domy** → **Napisz opowieść o domu** (gdy opowieść już jest,
+  **Napisz nową wersję opowieści**); w terminalu `strom house story <dom>` (zapyta, `--yes` bez pytania). Zadanie
+  trafia na początek kolejki badań i weźmie je najbliższa sesja `strom run`; agent się przez to nie uruchamia. Działa
+  niezależnie od progu i od ustawienia `stories`. Zadanie, które już jest, tylko się przesuwa: „Zadanie już istniało;
+  przesunęło się na początek kolejki badań.”
+- **Granice:**
+  - tylko dom, o którym badanie już coś zapisało; w przeciwnym razie „W badaniach nie ma jeszcze nic o tym domu;
+    opowieść powstaje z jego badań.” (najpierw historia domu, [S10.4](#S10.4));
+  - tylko badanie z własnym agentem: w Archiwum Strom, w badaniu, które czeka na agenta, i w `strom demo`
+    ([S10.13](#S10.13)) nie jest proponowana;
+  - zadanie opowieści idzie kolejką jak inne opowieści ([R2.2.2](R2-lines-and-queue.md#R2.2.2)); nie zmienia stanu
+    domu, a wyłączona Historia domów ([S10.5.1](#S10.5.1)) go nie odkłada;
+  - zadanie, które człowiek porzucił, samo nie powstaje ponownie (aż do nowej wersji nie).
+- **Obsługa:** aplikacja: ⋯ strony domu lub okna **Domy**; terminal: `strom house story <dom>`,
+  `strom config set stories no` (wyłącza opowieści same z siebie).
+- **Obowiązuje od:** badanie 1.38.0, aplikacja 3.33.0
+
+<!-- zdroj: research:100aee43 src/core/housestory.ts HOUSE_STORY_GENERATIONS 2, HOUSE_STORY_PEOPLE 3, houseStoryReach, houseStoryDue (STORY_NEW_FACTS 2 ze src/core/stories.ts; dropped od posledního textu → nic), raiseHouseStories (stories on, ne actsAsArchive, row.state done), askHouseStory (queueAt next, parked → open, house.story.none, house.archive), createStoryTask level narrate · src/commands/house.ts house story (--yes, NeedsInputError) · src/core/live.ts AGENT_FEATURES house.story, POST /houses/story · src/core/config.ts stories (yes výchozí) · strom help house story · app:3473602e strings.ts houses.writeStory, writeStoryAgain, storyAsked, storyMoved, errStoryNone -->
+
+<a id="S10.14.2"></a>
+### S10.14.2 Opowieść w wynikach i ochrona osób
+
+- Księga rodu (część **Domy**), zapisana strona domu i strony rodu pokazują tylko zatwierdzony tekst; szkic nigdy,
+  przy nowej wersji obok zatwierdzonej nadal zatwierdzony. W księdze opowieść stoi przed sekcjami domu, a jej źródła
+  są wśród numerowanych przypisów rozdziału.
+- Wynik pomija opowieść **w całości** (tekst nie jest przerabiany), gdy wymienia żyjącego, osobę z mniej więcej
+  ostatnich 100 lat albo osobę badania bez zapisu o zgonie, której drzewo nie zna, albo gdy opiera się na pozycji domu,
+  którą wynik ukrywa ([S10.3.2](#S10.3.2)).
+- Link z opowieści osoby do domu jest w księdze i na stronach rodu tylko wtedy, gdy wynik pokazuje opowieść domu.
+- **Obsługa:** aplikacja: eksport **Księga rodu** → część **Domy**; strona domu → **Zapisz HTML**; strony rodu →
+  **Domy**.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} -->

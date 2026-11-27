@@ -15,6 +15,7 @@ die Forschung 1.38.0.
 | Häuser von selbst | **Forschung für diesen Stammbaum › Hausgeschichte** ([S10.5.1](#S10.5.1)) | **Einstellungen › Geschichte der Häuser in dieser Forschung** |
 | eigene Recherche zu einem Haus | **Recherche aus Datei übernehmen…** ([S10.8](#S10.8)) | `strom house import` |
 | Gespräch über ein Haus | **Mit Agent besprechen** ([S10.9](#S10.9)) | `strom chat --house` |
+| Erzählung über das Haus | ⋯ **Erzählung über das Haus schreiben** ([S10.14](#S10.14)) | `strom house story` |
 | Buch und Seiten | Auswahl **Haus**, Kapitel **Häuser** ([S10.10](#S10.10)) | – |
 
 <!-- zdroj: dirigent:spec/030-historie-domu, spec/145-rozsireni-domu (T1, T2, T5, T6, T7) · app:src/houses.ts, src/ui/houses-ui.ts, src/house-page.ts · research:src/core/houses.ts, src/core/houseauto.ts, src/commands/house.ts, assets/method/house.md · CHANGELOG.cs.md aplikace 3.33.0, výzkum 1.38.0 „Historie domů“, „Výzkum domu“ -->
@@ -138,7 +139,7 @@ Die Hausseite hat die Form der Personenseite: **‹ Häuser**, **HTML speichern*
 hat sie ein Inhaltsverzeichnis.
 
 - **Abschnitte der Reihe nach:** Kopf (Ort und Nummer, Hausname, Ort mit Bezirk, Pfarrei, „Im Stammbaum“: Jahre,
-  Generationen, Personen; „Forschung“: Stand) · **Auf einen Blick** · **Nummern im Lauf der Zeit** · **Zeitleiste** ·
+  Generationen, Personen; „Forschung“: Stand) · **Auf einen Blick** · **Erzählung** ([S10.14](#S10.14)) · **Nummern im Lauf der Zeit** · **Zeitleiste** ·
   **Besitzer und Bewohner** · **Das Gebäude** ([S10.7](#S10.7)) · **Karte** ([S10.3.1](#S10.3.1)) · **Was nicht
   bekannt ist** (mit **Antworten**) · **Was durchsucht wurde** (mit **Nur im Lesesaal**) · **Quellen und
   Materialien**.
@@ -153,8 +154,8 @@ hat sie ein Inhaltsverzeichnis.
   **Zeitleiste**, **Bewohner aus dem Stammbaum**, **Karte** und einen Satz, woher sie stammt („Die Seite ist aus den
   Einträgen im Stammbaum zusammengestellt.“, oder dass das Haus in der Warteschlange ist).
 - **⋯ der Seite:** **HTML speichern** ([S10.3.2](#S10.3.2)) · **Im Buch öffnen…** ([S10.10](#S10.10)) · **Auf der
-  Karte** · **Hausname…** · Aktionen der Forschung ([S10.4](#S10.4)) · **Mit Agent besprechen** ([S10.9](#S10.9)) ·
-  **Material anhängen…** · **Recherche aus Datei übernehmen…** ([S10.8](#S10.8)) · **Mit anderem Haus
+  Karte** · **Hausname…** · Aktionen der Forschung ([S10.4](#S10.4)) · **Erzählung über das Haus schreiben**
+  ([S10.14](#S10.14)) · **Mit Agent besprechen** ([S10.9](#S10.9)) · **Material anhängen…** · **Recherche aus Datei übernehmen…** ([S10.8](#S10.8)) · **Mit anderem Haus
   zusammenführen…** · **Es ist ein anderes Haus…**
 - **Bedienung:** App: **Hausseite ›** im Fenster **Häuser**, in der Sprechblase eines Hauses auf der Karte und beim
   Link auf ein Haus in der Personenseite ([S10.11](#S10.11)).
@@ -188,9 +189,10 @@ Ein Satz unter der Karte sagt, woher die Lage stammt.
 - **Grenzen:**
   - eine Lage, die ein Mensch bestätigt hat, überschreibt die Forschung nicht;
   - **Anderswo öffnen** gibt es nur bei einem Haus mit eigenem Punkt;
-  - das Buch nennt die Lage eines Hauses nie; die gespeicherte Hausseite nur bei einem Haus ohne Personen der letzten
-    rund 100 Jahre ([S10.3.2](#S10.3.2)).
-- **Bedienung:** App: Hausseite → **Karte** → **Kartenebene**, **Lage bestätigen**, **Punkt verschieben**; Terminal
+  - das Buch, die gespeicherte Hausseite und die Familienseiten zeigen die Lage nur bei einem Haus ohne Personen der
+    letzten rund 100 Jahre, und zwar als Kartenausschnitt ([S10.3.4](#S10.3.4)).
+- **Bedienung:** App: Hausseite → **Karte** → **Kartenebene**, **Lage bestätigen**, **Punkt verschieben**, **Lage in
+  Ausgaben ausblenden** ([S10.3.4](#S10.3.4)); Terminal
   `strom house confirm <Haus> location`.
 - **Gilt seit:** App 3.33.0, Forschung 1.38.0
 
@@ -200,20 +202,24 @@ Ein Satz unter der Karte sagt, woher die Lage stammt.
 ### S10.3.2 Die gespeicherte Hausseite und der Schutz von Personen
 
 **HTML speichern** speichert die Hausseite als eine Datei (z. B. `belokamen-cp-16.html`) ohne Kartenkacheln aus dem
-Netz; Bilder sind nur verlinkt. Die gespeicherte Hausseite, das Buch und die Familienseiten schützen die Personen der
-letzten rund 100 Jahre.
+Netz; Bilder des Hauses sind nur verlinkt, die Lage ist ein Kartenausschnitt direkt in der Datei ([S10.3.4](#S10.3.4)).
+Die gespeicherte Hausseite, das Buch und die Familienseiten schützen die Personen der letzten rund 100 Jahre.
 
 - **Nie:** heutige Eigentümer; Namen Lebender; der Name eines Zeitzeugen.
 - **Personen der letzten rund 100 Jahre** nur mit Namen und Rolle, ohne Jahre.
 - **Ereignisse der Forschung aus den letzten rund 100 Jahren und heikle Ereignisse** (Enteignung, Vertreibung)
   werden ausgelassen, bis ein Mensch sie freigibt (**In Ausgaben zeigen**).
-- **Lage** nur bei einem Haus ohne Personen der letzten rund 100 Jahre; bei einem solchen Haus auch kein Hausname.
-- Die Hausseite sagt, was in den Ausgaben fehlt: „In Ausgaben (HTML, Buch) werden N Ereignisse und die Lage des
-  Hauses nicht gezeigt.“
+- **Lage** nur bei einem Haus ohne Personen der letzten rund 100 Jahre und nur, wenn sie nicht von Hand ausgeblendet
+  ist ([S10.3.4](#S10.3.4)); bei einem Haus mit solchen Personen auch kein Hausname.
+- **Erzählung über das Haus** nur freigegeben und nur ganz: eine Erzählung, die eine geschützte Person nennt, wird ganz
+  ausgelassen ([S10.14.2](#S10.14.2)).
+- Die Hausseite sagt, was in den Ausgaben fehlt und warum: „In Ausgaben (HTML, Buch) werden N Ereignisse und die Lage
+  des Hauses nicht gezeigt (Menschen der letzten ~100 Jahre).“, „… werden N Ereignisse nicht gezeigt; die Lage des
+  Hauses ist von Hand ausgeblendet.“
 - **Bedienung:** App: Hausseite → **HTML speichern**; bei einem Ereignis **In Ausgaben zeigen**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 Die Zeitleiste aus den Einträgen des Stammbaums
@@ -236,6 +242,50 @@ Eintrag eines Paares ist eine Zeile. Was eine Zeile schon sagt, wird nicht wiede
 - **Gilt seit:** App 3.33.0
 
 <!-- zdroj: app:3dc5647c src/house-page.ts houseTreeRows → joinRepeatedRows (narození jedné osoby a roku jednou, narození před křtem; bydliště s rokem a sdílenou osobou nebo partnery partnersIn), factLabel isBaptism (událost baptism → baptizedM/F) · src/book-houses.ts houseTreeRows · strings.ts houses.ev.bornM, bornF, baptizedM, baptizedF, residence · src/__tests__/house-page.test.ts · dirigent:prace/1127-app-147-materialy (Přibaleno, schválená tabulka) -->
+
+<a id="S10.3.4"></a>
+### S10.3.4 Die Lage des Hauses in Ausgaben
+
+Das Familienbuch, die gespeicherte Hausseite und die Familienseiten zeigen die Lage des Hauses als Bild: einen
+Ausschnitt der heutigen Karte mit dem Punkt und der Nummer des Hauses. Darunter stehen die Koordinaten, wie sicher die
+Übereinstimmung der Nummer ist, und die Attribution der Karte. So zeigt die Ausgabe die Lage auch ohne Netz.
+
+- **Wann die Lage gezeigt wird:** nur bei einem Haus mit Punkt (von Hand gesetzt oder von der Forschung) und nur, wenn
+  beides gilt:
+  - im Haus sind keine Personen der letzten rund 100 Jahre: Lebende, Personen des Stammbaums aus diesen Jahren,
+    Einträge des Hauses aus diesen Jahren und Besitzer und Bewohner mit Jahren in dieser Zeit (auch Personen, die der
+    Stammbaum nicht kennt);
+  - ein Mensch hat die Lage nicht ausgeblendet (**Lage in Ausgaben ausblenden**).
+- **Sicherheit:** „Heutige Lage · Übereinstimmung der Nummer bestätigt“, wenn ein Mensch den Punkt gesetzt oder
+  bestätigt hat (in der App oder in der Forschung); sonst „Heutige Lage · Übereinstimmung der Nummer angenommen“.
+- **Bild:** die heutige Karte von OpenStreetMap mit der Attribution „© OpenStreetMap-Mitwirkende, Lizenz ODbL“. HTML
+  (gespeicherte Hausseite, Familienseiten, auch im ZIP und im Geschenk) fügt als weiteres Bild die historische Ebene
+  hinzu, die die Forschung für den Ort des Hauses geliefert hat ([S10.3.1](#S10.3.1)); das Buch gibt nur die heutige
+  Karte und teilt den Ausschnitt nicht auf zwei Seiten.
+- **Ohne Netz:** der Ausschnitt entsteht einmal, und die App speichert ihn in diesem Browser; das nächste Buch, PDF oder
+  Geschenk nimmt den gespeicherten. Ohne Netz und ohne gespeicherten Ausschnitt, oder solange die Karte nicht erlaubt
+  ist (**Karte anzeigen**), gibt die Ausgabe nur Koordinaten und Sicherheit, ohne Fehler. Auf ein Bild wird höchstens
+  10 s gewartet.
+- **Hausseite**, Abschnitt **Karte:** bei einem Haus, dessen Lage die Ausgaben zeigen würden, die Zeile „Ausgaben
+  (HTML, Buch) zeigen die Lage des Hauses.“ und **Lage in Ausgaben ausblenden**. Nach dem Ausblenden „In Ausgaben
+  (HTML, Buch) ist die Lage des Hauses von Hand ausgeblendet.“ und **Lage in Ausgaben zeigen**. Beides ist ein Schritt
+  **Rückgängig**.
+- **Buch:** die Option **Lage der Häuser** (standardmäßig an, wird gemerkt): „Ein Ausschnitt der heutigen Karte mit dem
+  Punkt eines Hauses ohne Menschen der letzten ~100 Jahre; aus: nur der Ort.“ Es gibt sie nur mit dem Teil **Häuser**
+  und nur, wenn das Buch ein Haus hat, dessen Lage sich zeigen lässt. Die Anmerkung des Kapitels lautet dann
+  „Ereignisse nach <Jahr> und die Lage eines Hauses mit Menschen dieser Jahre werden im Buch nicht angegeben.“
+- **Grenzen:**
+  - die Personen der letzten rund 100 Jahre haben Vorrang: ein von Hand gewähltes **Lage in Ausgaben zeigen** hebt
+    diesen Vorrang nicht auf, und bei einem solchen Haus gibt es weder die Zeile noch die Schaltfläche; warum die Lage fehlt, sagt die Seite
+    ([S10.3.2](#S10.3.2));
+  - das Ausblenden von Hand gibt es nur im Stammbaum der App (Datei JSON), es geht weder in die Forschung noch in
+    GEDCOM;
+  - ein schreibgeschützter Stammbaum zeigt nur den Stand, ohne Schaltfläche.
+- **Bedienung:** App: Hausseite → **Karte** → **Lage in Ausgaben ausblenden** / **Lage in Ausgaben zeigen**; Export
+  **Familienbuch** → **Lage der Häuser**.
+- **Gilt seit:** App 3.33.0
+
+<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (location jen bez recentPeople a bez hideLocation; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek -->
 
 <a id="S10.4"></a>
 ## S10.4 Die Geschichte eines Hauses anfordern
@@ -569,8 +619,9 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
   letzten rund 100 Jahre nur mit Namen und Rolle, ohne Daten. Von der Hausseite öffnet **Im Buch öffnen…** das Buch bei
   diesem Haus.
 - **Kapitel Häuser** im Buch: Häuser der Personen des Buches mit Geschichte ([S10.1](#S10.1)) oder mit fertiger
-  Geschichte aus der Forschung; beim Haus Name, Aussehen, Nummern im Lauf der Zeit, Zeitleiste, Besitzer, Bewohner,
-  Bemerkenswertes und Quellen als nummerierte Anmerkungen. Standardmäßig an, nur wenn der Stammbaum mindestens ein Haus
+  Geschichte aus der Forschung; beim Haus die freigegebene Erzählung ([S10.14.2](#S10.14.2)), Name, Aussehen, Nummern
+  im Lauf der Zeit, Zeitleiste, Besitzer, Bewohner, Bemerkenswertes, Lage ([S10.3.4](#S10.3.4)) und Quellen als
+  nummerierte Anmerkungen. Standardmäßig an, nur wenn der Stammbaum mindestens ein Haus
   mit fertiger Geschichte hat. **Häuserverzeichnis** nur mit dem Kapitel Häuser.
 - **Familienseiten und Seiten des Stammbaums** ([A7.5](A7-book-pages-and-export.md#A7.5)): Option **Häuser**: **In den
   Familienseiten, mit den Personen verknüpft** (Voreinstellung; Häuser mit Geschichte mit Zeitraum und Generationen,
@@ -578,7 +629,8 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
   Seiten**, **Ohne Häuser**. Angeboten, wenn Personen der Auswahl in einem Haus mit Geschichte lebten. Die Zeitleiste
   der Stammlinie hat den Chip **Häuser ⌂** ([S10.11](#S10.11)).
 - **Grenzen:**
-  - das Buch nennt die Lage eines Hauses nie: „Ereignisse nach <Jahr> und die Lage des Hauses werden im Buch nicht
+  - das Buch nennt die Lage nur mit der Option **Lage der Häuser** und nur bei einem Haus ohne Personen der letzten
+    rund 100 Jahre ([S10.3.4](#S10.3.4)); sonst „Ereignisse nach <Jahr> und die Lage des Hauses werden im Buch nicht
     angegeben.“; heikle Ereignisse und Ereignisse der Forschung der letzten rund 100 Jahre lässt es aus
     ([S10.3.2](#S10.3.2));
   - die Seiten geben über Häuser nichts aus den letzten rund 100 Jahren;
@@ -586,10 +638,10 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
     Geschichte aus der Forschung;
   - die Auswahl **Haus** nur in einem Stammbaum mit einem Haus mit Nummer und nur für das Buch; das Geschenk
     ([A7.9](A7-book-pages-and-export.md#A7.9)) und das Bild haben keine Häuser.
-- **Bedienung:** App: Export **Familienbuch** → **Haus**, Teil **Häuser**, **Häuserverzeichnis**; Familienseiten und Seiten des Stammbaums → **Häuser**.
+- **Bedienung:** App: Export **Familienbuch** → **Haus**, Teil **Häuser**, **Häuserverzeichnis**, **Lage der Häuser**; Familienseiten und Seiten des Stammbaums → **Häuser**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · nálezy N9 (T3 poloha v knize neimplementována), N10 (výstupy podle prahu × kniha i s hotovou historií) -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
 
 <a id="S10.11"></a>
 ## S10.11 Häuser an anderen Stellen der App
@@ -605,8 +657,9 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
 | Personenlisten | Regel **Wohnte im Haus** (auch in den Jahren), nach Geburt, Heirat, Volkszählung, Wohnort und Tod ([A11](A11-lists-of-people.md)) |
 | Statistik | Thema **Häuser**; am längsten eine Familie, Einheirat ([A13](A13-tree-statistics.md)) |
 | Suche | Gruppe **Häuser** über den Personen (höchstens 5); bei einer über die Hausnummer gefundenen Person **Haus ›** |
-| Warteschlange und **Wartet auf Bearbeitung** | Aufgaben **Hausgeschichte <Nummer>, <Ort>**, **Recherche für Haus <Nummer> übernehmen**, **Ortsgerüst <Ort> für Häuser**; **Hausseite ›**; eine Frage zum Haus mit „Haus <Nummer> ›“ |
-| GEDCOM | Datensatz `_HOUSE` nur für ein Haus mit Namen oder ein zusammengeführtes (Ort, Nummern mit Datum, Name, „dasselbe Haus“); Trennung, Lage und freigegebene Ereignisse nur in JSON |
+| Warteschlange und **Wartet auf Bearbeitung** | Aufgaben **Hausgeschichte <Nummer>, <Ort>**, **Recherche für Haus <Nummer> übernehmen**, **Ortsgerüst <Ort> für Häuser**; **Hausseite ›**; eine Frage zum Haus mit „Haus <Nummer> ›“; eine neue Fassung der Erzählung „Die Erzählung über Haus <Nummer> wartet auf Freigabe“ ([S10.14](#S10.14)) |
+| Erzählung einer Person | Link **Haus <Nummer> ›** auf ein Haus mit freigegebener Erzählung ([S10.14](#S10.14)) |
+| GEDCOM | Datensatz `_HOUSE` nur für ein Haus mit Namen oder ein zusammengeführtes (Ort, Nummern mit Datum, Name, „dasselbe Haus“); Trennung, Lage, Ausblenden der Lage von Hand und freigegebene Ereignisse nur in JSON; die Erzählung über das Haus trägt GEDCOM nicht |
 
 - **Die Forschung und `_HOUSE`:** `strom sync` liest Häuser aus dem GEDCOM der App als Wort eines Menschen: Name,
   fehlende Nummer und „dasselbe Haus“. Es nimmt nichts weg; einen Ort, der kein Ort der Forschung ist, meldet es nur.
@@ -628,6 +681,7 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
 | `strom house confirm <Haus> renumber\|location\|not-same` | Wort eines Menschen ([S10.1.2](#S10.1.2)) |
 | `strom house import` | eigene Recherche ([S10.8](#S10.8)) |
 | `strom house request` | Anfordern eines Hauses ([S10.4.1](#S10.4.1)) |
+| `strom house story <Haus>` | Anfordern der Erzählung über das Haus ([S10.14.1](#S10.14.1)) |
 | `strom fixes house-numbers` | auf zwei Arten geschriebene Häuser |
 
 - **Verweis auf ein Haus:** `A0001`, der Schlüssel (`lhota|16`), `L12 16` oder `Lhota 16`. Einen mehrdeutigen Verweis
@@ -644,7 +698,7 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
   Zusammenfassung, Bild, Flurname; Zusammenfassung, Bild und Flurname nur beim Ort.
 - **Gilt seit:** Forschung 1.38.0
 
-<!-- zdroj: research:src/commands/house.ts list 152, show 181, sources 203, add 280/367, confirm 868, import 927, request 232 (hidden) · src/core/houses.ts findHouse 359 (house.unknown, house.ambiguous) · src/core/housenumberfix.ts, src/commands/fixes.ts 1106–1111, ui.fixes.house-numbers.name · cs.json ui.house.head · strom help house (přes guard) · commity 3c69f16c, bd81894a -->
+<!-- zdroj: research:100aee43 src/commands/house.ts house story · research:src/commands/house.ts list 152, show 181, sources 203, add 280/367, confirm 868, import 927, request 232 (hidden) · src/core/houses.ts findHouse 359 (house.unknown, house.ambiguous) · src/core/housenumberfix.ts, src/commands/fixes.ts 1106–1111, ui.fixes.house-numbers.name · cs.json ui.house.head · strom help house (přes guard) · commity 3c69f16c, bd81894a -->
 
 <a id="S10.13"></a>
 ## S10.13 Schreibgeschützter Stammbaum und Beispiel
@@ -657,7 +711,99 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
   besprechen**, **Material anhängen…**) bleiben, wie die Forschung sie anbietet.
 - **Beispiel aus dem Web** ([S9.1.3](S9-trying-the-sample.md#S9.1.3)): Aktionen zu Häusern sind ausgeblendet.
 - **Beispielforschung `strom demo`** ([S9.4](S9-trying-the-sample.md#S9.4)): ohne Anfordern eines Hauses, Übernahme
-  einer Recherche und Gespräch über ein Haus; Häuser, Hausseiten und Einstellungen lassen sich ansehen.
+  einer Recherche, Gespräch über ein Haus und Erzählung über das Haus; Häuser, Hausseiten und Einstellungen lassen sich ansehen.
 - **Gilt seit:** App 3.33.0, Forschung 1.38.0
 
-<!-- zdroj: app:src/data.ts 2549 housesReadOnly (isReadOnly || isTreeLocked) · src/ui/tree-actions.ts housesRows (read-only: jediný řádek skupiny, 1127) · src/research-link.ts SHOWCASE_ALLOWS house: 'hide' · research:src/core/live.ts forDemo (bez house.request, house.import, house.chat; house, house.material, house.confirm, house.auto, house.look zůstávají) · nálezy N5 (Probrat s agentem ve stromu jen ke čtení), N6 (řádek Historie domů se nejspíš nabídne i u strom demo, neověřeno) -->
+<!-- zdroj: app:src/data.ts 2549 housesReadOnly (isReadOnly || isTreeLocked) · src/ui/tree-actions.ts housesRows (read-only: jediný řádek skupiny, 1127) · src/research-link.ts SHOWCASE_ALLOWS house: 'hide' · research:src/core/live.ts forDemo (bez house.request, house.import, house.chat, house.story – AGENT_FEATURES; house, house.material, house.confirm, house.auto, house.look zůstávají) · nálezy N5 (Probrat s agentem ve stromu jen ke čtení), N6 (řádek Historie domů se nejspíš nabídne i u strom demo, neověřeno) -->
+
+<a id="S10.14"></a>
+## S10.14 Die Erzählung über das Haus
+
+Die Erzählung über das Haus ist ein zusammenhängender Text für die Familie: Besitzer und Familien im Haus über
+Generationen, was mit dem Haus geschah, die Nummern im Lauf der Zeit und wo das Haus stand, sein Aussehen und wovon der
+Ort lebte. Der Agent der Forschung schreibt sie nur aus dem, was die Forschung über das Haus und seinen Ort
+herausgefunden hat; er sucht nichts neu. Wie die Erzählung einer Person ([A7.8](A7-book-pages-and-export.md#A7.8)) ist
+sie keine Quelle: sie erzählt nur nach, was die Forschung belegt hat.
+
+- **Prüft der Code:**
+  - die Erzählung hält fest, worauf sie sich stützt: Einträge des Hauses (Nummern, Ereignisse, Besitzer, Bewohner) und
+    Angaben der Personen des Stammbaums im Haus;
+  - sie ist ein Entwurf, bis ein Mensch sie freigibt; eine freigegebene Erzählung ist gesperrt und wird nie
+    überschrieben. Eine neue Fassung entsteht daneben, und der freigegebene Text gilt, bis ein Mensch entscheidet
+    ([R6.3.2](R6-awaiting-action.md#R6.3.2));
+  - freigeben oder eine neue Fassung verwerfen darf nur ein Mensch ([R6.6](R6-awaiting-action.md#R6.6)).
+- **Nur Methodik:**
+  - was die Forschung nur mit mittlerer Sicherheit, als Vermutung oder als Anhaltspunkt kennt, sagt der Text als
+    unsicher („wohl“, „nach einem noch nicht geprüften Register“); eine Nummer, die nicht dasselbe Haus ist, lässt er
+    aus; was nicht gefunden wurde, sagt er;
+  - Personen der letzten hundert Jahre nur mit Namen und Rolle im Haus (ohne Krankheit, Gericht, Scheidung). Was von
+    Lebenden gezeigt oder geteilt wird, entscheidet die App ([S10.14.2](#S10.14.2));
+  - das Leben einer Person gehört in ihre Erzählung; in der Erzählung über das Haus hat eine Person einen Satz mit den
+    Jahren im Haus.
+- **Hausseite**, Abschnitt **Erzählung** gleich nach **Auf einen Blick**:
+  - der freigegebene Text mit Überschrift und Quellen;
+  - ein Entwurf mit dem Etikett „Entwurf, wartet auf Freigabe“ und der Schaltfläche **In der Forschung freigeben**
+    (Link ins Terminal);
+  - eine neue Fassung neben der freigegebenen: „Eine neue Fassung der Erzählung (Tag) wartet auf Freigabe; die Seite
+    zeigt den freigegebenen Text.“ mit **Vergleichen**;
+  - solange sie geschrieben wird, der Stand der Aufgabe: „Die Erzählung über das Haus steht in der Warteschlange der
+    Forschung.“, „Die Erzählung über das Haus wird gerade geschrieben.“, „Die Aufgabe der Erzählung ist in der Forschung
+    zurückgestellt.“, „Die Aufgabe der Erzählung wartet in der Forschung auf eine Antwort.“
+- **Wartet auf Bearbeitung:** nur eine neue Fassung neben der freigegebenen: in der App „Die Erzählung über Haus
+  <Nummer> wartet auf Freigabe“ mit dem Link **Haus <Nummer> ›** auf den Abschnitt **Erzählung**, im Terminal „Eine
+  neue Fassung der Erzählung über das Haus <Haus> – die freigegebene bleibt bis zur Entscheidung“. Der erste Entwurf
+  steht dort nicht: er wird auf der Hausseite freigegeben, oder mit `strom story approve A…`.
+- Die **Erzählung einer Person**, die im Haus lebte, hat unter dem Text den Link **Haus <Nummer> ›** auf die Erzählung
+  des Hauses, nur wenn das Haus eine freigegebene Erzählung hat; der Text des Hauses wird nicht wiederholt.
+- **Grenzen:** die App nimmt die Erzählung über das Haus nur über die Brücke der Forschung (GEDCOM trägt sie nicht);
+  ohne Verbindung zur Forschung gibt es weder den Abschnitt noch den Link.
+- **Bedienung:** App: Hausseite → **Erzählung**, **In der Forschung freigeben**, **Vergleichen**; Terminal:
+  `strom story show A…`, `strom story approve A…`, `strom story discard A…`, Menü **Was wartet**.
+- **Gilt seit:** App 3.33.0, Forschung 1.38.0
+
+<!-- zdroj: research:100aee43 src/core/housestory.ts (House.story jako Story osoby; facts n…, e…, h…, r…, E…; draft vedle final), src/core/storykeep.ts, src/commands/story.ts (approve|discard A…, person only), src/core/waiting.ts (kind story s house jen pro novou verzi; APP_SHOWS_HOUSE_STORY), assets/method/narrate.md „for house-story“ · cs.json ui.waiting.story.house · app:3473602e src/house-page.ts storyHtml (sec.story za sum; storyDraft, storyNew, storyTask), src/ui/house-page-ui.ts (research.approveStory, story.compare, story?house=&do=final|keep), src/ui/research-overview-ui.ts houses.storyWaiting · app:3080a121 src/person-page.ts storyHousesHtml (houseLink) · zadání aplikace ↔ výzkum ZADANI_VYZKUM_145-domy.md „T4 vyprávění o domě“, „Odpověď stromu k T4“ (první koncept bez položky Co čeká – záměr) -->
+
+<a id="S10.14.1"></a>
+### S10.14.1 Wann die Erzählung entsteht: von selbst und auf Anfrage
+
+- **Von selbst:** bei eingeschalteten Erzählungen (Einstellung `stories`, standardmäßig an), nach dem letzten Schritt
+  der Forschung zum Haus (Forschung zum Haus, gegebenenfalls sein Aussehen, [S10.7](#S10.7)), wenn das Haus genug sagt:
+  **2 Generationen des Stammbaums** im Haus (Elternteil und Kind) oder **3 Besitzer und Bewohner mit Quellen**. Eine
+  weitere Fassung nur dann, wenn das Haus seit der letzten Fassung mindestens **2 neue Angaben** gebracht hat.
+- **Auf Anfrage:** ⋯ auf der Hausseite oder im Fenster **Häuser** → **Erzählung über das Haus schreiben** (wenn es
+  schon eine Erzählung gibt, **Neue Fassung der Erzählung schreiben**); im Terminal `strom house story <Haus>` (fragt,
+  `--yes` ohne Frage). Die Aufgabe kommt an die Spitze der Warteschlange der Forschung, und die nächste Sitzung
+  `strom run` nimmt sie; der Agent wird dadurch nicht gestartet. Das gilt unabhängig von der Schwelle und von der
+  Einstellung `stories`. Eine schon vorhandene Aufgabe wird nur verschoben: „Die Aufgabe gab es schon; sie steht jetzt
+  oben in der Warteschlange der Forschung.“
+- **Grenzen:**
+  - nur ein Haus, zu dem die Forschung schon etwas eingetragen hat; sonst „In der Forschung steht noch nichts über
+    dieses Haus; die Erzählung entsteht aus seiner Erforschung.“ (zuerst die Geschichte des Hauses, [S10.4](#S10.4));
+  - nur eine Forschung mit eigenem Agenten: im Strom-Archiv, in einer Forschung, die auf einen Agenten wartet, und in
+    `strom demo` ([S10.13](#S10.13)) wird sie nicht angeboten;
+  - die Aufgabe der Erzählung geht wie die übrigen Erzählungen durch die Warteschlange
+    ([R2.2.2](R2-lines-and-queue.md#R2.2.2)); sie ändert den Stand des Hauses nicht, und eine ausgeschaltete
+    Hausgeschichte ([S10.5.1](#S10.5.1)) stellt sie nicht zurück;
+  - eine Aufgabe, die ein Mensch verworfen hat, entsteht nicht von selbst wieder (auch nicht für eine neue Fassung).
+- **Bedienung:** App: ⋯ der Hausseite oder des Fensters **Häuser**; Terminal: `strom house story <Haus>`,
+  `strom config set stories no` (schaltet die Erzählung von selbst aus).
+- **Gilt seit:** Forschung 1.38.0, App 3.33.0
+
+<!-- zdroj: research:100aee43 src/core/housestory.ts HOUSE_STORY_GENERATIONS 2, HOUSE_STORY_PEOPLE 3, houseStoryReach, houseStoryDue (STORY_NEW_FACTS 2 ze src/core/stories.ts; dropped od posledního textu → nic), raiseHouseStories (stories on, ne actsAsArchive, row.state done), askHouseStory (queueAt next, parked → open, house.story.none, house.archive), createStoryTask level narrate · src/commands/house.ts house story (--yes, NeedsInputError) · src/core/live.ts AGENT_FEATURES house.story, POST /houses/story · src/core/config.ts stories (yes výchozí) · strom help house story · app:3473602e strings.ts houses.writeStory, writeStoryAgain, storyAsked, storyMoved, errStoryNone -->
+
+<a id="S10.14.2"></a>
+### S10.14.2 Die Erzählung in Ausgaben und der Schutz von Personen
+
+- Das Familienbuch (Teil **Häuser**), die gespeicherte Hausseite und die Familienseiten zeigen nur den freigegebenen
+  Text; einen Entwurf nie, bei einer neuen Fassung neben der freigegebenen weiter die freigegebene. Im Buch steht die
+  Erzählung vor den Abschnitten des Hauses, und ihre Quellen sind unter den nummerierten Anmerkungen des Kapitels.
+- Die Ausgabe lässt die Erzählung **ganz** aus (der Text wird nicht umgeschrieben), wenn sie einen Lebenden, eine
+  Person der letzten rund 100 Jahre oder eine Person der Forschung ohne Eintrag über den Tod nennt, die der Stammbaum
+  nicht kennt, oder wenn sie auf einem Eintrag des Hauses beruht, den die Ausgabe ausblendet ([S10.3.2](#S10.3.2)).
+- Der Link von der Erzählung einer Person auf das Haus steht im Buch und in den Familienseiten nur, wenn die Ausgabe
+  die Erzählung des Hauses zeigt.
+- **Bedienung:** App: Export **Familienbuch** → Teil **Häuser**; Hausseite → **HTML speichern**; Familienseiten →
+  **Häuser**.
+- **Gilt seit:** App 3.33.0
+
+<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} -->

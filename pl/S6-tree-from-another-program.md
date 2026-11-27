@@ -4,8 +4,9 @@
 Drzewo genealogiczne z innego programu (MyHeritage, Gramps, FamilySearch, programy dla Windows i inne) trafia do
 aplikacji i do badania jako plik GEDCOM. Rozdział prowadzi przez całą drogę: co się wczytuje, a co ginie, jak widać,
 skąd pochodzi dana, dlaczego dane z drzewa są tylko wskazówkami, jak wrócić do danej z drzewa, co proponuje karta
-**Co dalej**, jak cofnąć się w czasie, jak wysłać drzewo z powrotem i co zrobi drzewo wczytane ponownie. Opisuje
-aplikację Strom 3.26.0 i badanie 1.30.0. Szczegóły czytania pliku są w [A2](A2-loading-a-family-tree.md), eksport
+**Co dalej**, jak cofnąć się w czasie, jak wysłać drzewo z powrotem, co zrobi drzewo wczytane ponownie i jak dane
+z drzewa pozostają ○○ także po wysłaniu do badania ([S6.10](#S6.10)). Opisuje aplikację Strom 3.26.0 i badanie 1.30.0,
+z uzupełnieniami nowszych wersji. Szczegóły czytania pliku są w [A2](A2-loading-a-family-tree.md), eksport
 w [A7](A7-book-pages-and-export.md), scalanie w [A8](A8-merging-trees.md), a przejęcie drzewa przez badanie
 w [R11.3](R11-material-from-the-user.md#R11.3).
 
@@ -86,6 +87,9 @@ znacznik na karcie w drzewie i weryfikację danych według oryginałów opisuje 
   ([S7.10](S7-reliability-and-verification.md#S7.10), [R10.5.2](R10-people-and-hypotheses.md#R10.5.2)). Gdy żadna
   dana osoby nie jest już tylko z drzewa, wiersz przy osobie mówi „Dane osoby pochodzą z {program} (plik {data},
   wczytano {data}); żadna nie jest już tylko z drzewa.”
+- **Od aplikacji 3.33.0 z badaniem 1.38.0:** dana z drzewa pozostaje **Z drzewa** także po wysłaniu do badania i po
+  scaleniu drzew; ✓ nie dostaje. Dane, które starsza aplikacja wysłała jako zmiany człowieka, można jedną decyzją
+  przenieść z ✓ na ○○ ([S6.10](#S6.10)).
 - **Obowiązuje od:** aplikacja 3.26.0, badanie 1.30.0
 
 <!-- zdroj: app:7b0471f8 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; readers z _STROM_CHECKED, noSource nekrmeno) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON) · src/ui/card-signals-ui.ts (signál status, výchozí zapnuto) · index.html settings-group-card · strings.ts reliability.settingCard, cardDensity.cardStatus, settings.groupCard · app:669c08f0 src/reliability.ts userTreeOrigin (_STROM_ORIGIN tree) -->
@@ -366,3 +370,102 @@ jako `1 EMAIL` bezpośrednio przy osobie. Aplikacja i badanie robią z tego kont
 - **Obowiązuje od:** aplikacja 3.32.0, badanie 1.37.0
 
 <!-- zdroj: app:972e73d7 src/person-contact.ts (hlavička: pravidlo RESI jen s kontaktem, 1 EMAIL; cleanEmail EMAIL_MAX 254, bez mezer; sameEmail bez velikosti písmen; isContactResidence, isEmptyResidence, moveContactsIntoPeople při každém načtení), src/ged-exporter.ts contacts (výchozí ano, do výzkumu jen s person.contact; 1 RESI / 2 EMAIL; Zpět do: 1 EMAIL jak byl), src/privacy.ts (žijící bez emails) · app:0603165b index.html #emails-group v Fotografie a poznámky, src/ui/person-modal.ts applyAdvancedFieldVisibility emails-group, emailsFromInput (čárky, středníky, mezery), src/person-page.ts jen c.app, mailto, src/ui/person-events.ts shownEvents (prázdné bydliště skryté) · src/version.ts STROM_DATA_VERSION 26 · strings.ts labels.emails, placeholders.emails, personModal.sectionPhotoNotes · research:ce89202a src/core/live.ts person.contact (1 RESI / 2 EMAIL, nejvýš tři na RESI), src/commands/fixchecks.ts CONTACT_RESIDENCES, src/commands/fixes.ts contact-residences · cs.json ui.fixes.contact-residences.* · CHANGELOG.cs.md 1.37.0 „E-maily osoby jsou kontakt“, app CHANGELOG.cs.md 3.32.0 Data · dirigent:spec/134 K0.10, U11 -->
+
+<a id="S6.10"></a>
+## S6.10 Dane z drzewa pozostają ○○ także w badaniu
+
+Znacznik ✓ **Potwierdzone przez człowieka** oznacza, że daną wpisał, zmienił lub potwierdził człowiek. Danej przejętej
+z drzewa (import pliku, scalenie drzew) nikt nie sprawdził, dlatego ma mieć ○○ **Z drzewa**, także gdy do badania
+wysłała ją aplikacja. Starsza aplikacja wysyłała wszystko, co było w drzewie, jako zmiany człowieka; badanie trzymało
+taką daną jako wpisaną przez człowieka, a aplikacja pokazywała ją potem z ✓. Aplikacja Strom 3.33.0 i badanie 1.38.0
+rozwiązują to w trzech krokach:
+
+1. **Aplikacja przy każdej wysyłce mówi, co jest z drzewa.** Dana, która ma nadal wartość z pliku, trafia do badania
+   ze znacznikiem importu, przy pierwszej wysyłce i przy każdej następnej, także po wczytaniu wersji z badania. Dana,
+   którą człowiek zmienił lub potwierdził, znacznika nie ma i idzie jako zmiana człowieka.
+2. **Scalenie drzewa to import.** Drzewo aplikacji scalone z innym drzewem (z **Zarządzania drzewami**, z pliku JSON
+   lub HTML, z udostępnionego drzewa, z GEDCOM zapisanego przez Strom), z drzewem badania i gdzie indziej, dostaje
+   własny zapis o imporcie: program **Strom**, nazwa scalonego drzewa lub pliku i dzień scalenia. Opis znacznika mówi
+   wtedy „przejęte z Strom „Horákovi”, plik …”. Znacznika nie dostaje to, co scalone drzewo miało z własnego importu
+   (zostaje mu jego zapis), co człowiek w nim zmienił lub potwierdził, ani dane drzewa docelowego. **Cofnij** po
+   scaleniu cofa zapis i znaczniki.
+3. **Badanie samo poprawia to przy synchronizacji.** Daną ze znacznikiem importu, którą badanie ma jako wpisaną przez
+   człowieka z wcześniejszej wysyłki, przepisuje na daną z drzewa: wartość i stan pewności zostają, zmienia się tylko
+   pochodzenie, a źródło importu jest cytowane jako pierwsze. Plan synchronizacji mówi to wierszem „{kto}: {dana} —
+   z drzewa genealogicznego, nie zmiana człowieka”.
+
+Osoby, które starsza aplikacja już wysłała, pozostają w badaniu z ✓: aplikacja nie ma importowanego pliku i wstecz ich
+nie oznaczy. O nie badanie zapyta ([S6.10.1](#S6.10.1)).
+
+- **Pilnuje kod:**
+  - badanie przepisuje pochodzenie tylko przy danej, która jest taka sama jak w pliku, ma pochodzenie dokładnie
+    „człowiek” bez wcześniejszej wartości (bez przyjętej propozycji ani cofnięcia), cytuje wysyłkę aplikacji („Zmiany
+    w aplikacji Strom (dzień)”) i nie jest potwierdzona;
+  - przepisuje tylko zapis człowieka (z aplikacji lub z terminala), nigdy synchronizację agenta;
+  - wartość, stan pewności ani cytat wysyłki się nie zmieniają.
+- **Granice:** potwierdzona dana zostaje ✓ zawsze. Dana, którą człowiek po imporcie zmienił, jest zmianą człowieka.
+- **Obsługa:** niczego się nie ustawia. Terminal: plan `strom sync`, cofnięcie `strom sync undo I…`.
+- **Dlaczego:** ✓ ma oznaczać tylko to, co człowiek naprawdę potwierdził; dana z cudzego drzewa jest wskazówką
+  ([S6.3](#S6.3)).
+- **Obowiązuje od:** aplikacja 3.33.0, badanie 1.38.0
+
+<!-- zdroj: app:35a7d513 (keepImports: značky _STROM_IMPORT po každém odeslání i po načtení verze výzkumu) · app:46973902 src/merge/merged-import.ts (záznam importu sloučeného stromu: 2 SOUR Strom, _AT den sloučení, FILE název; neznačí vlastní import, změněné, potvrzené, cílové; Zpět bere záznam i značky), src/import-origin.ts · app:3d070997 strings.ts reliability.titleImport (název stromu) · research:f19661bb (feature origin.import: user → import při shodě se souborem, origin user bez was, citace odeslání, nepotvrzeno, zápis člověka; citace importu první) · assets/lang/cs.json ui.sync.origin.import, ui.sync.do.origin.import · zadání aplikace ↔ výzkum ZADANI_VYZKUM_fajfka-import.md · dirigent:analyza/2026-11-27-fajfka-z-importu/README.md -->
+
+<a id="S6.10.1"></a>
+### S6.10.1 Pytanie „Czy to pochodzi z drzewa genealogicznego?”
+
+Gdy jedna wysyłka z aplikacji dodała do badania wiele osób, a ich dane badanie trzyma jako wpisane przez człowieka,
+najpewniej było to drzewo (import lub scalenie), nie ręczny zapis. Badanie dlatego raz zapyta w **Czeka na
+załatwienie**.
+
+- **Kiedy pyta:** wysyłka z aplikacji, która nie została cofnięta, dodała co najmniej **20 nowych osób**
+  (`strom config set sync.importAsk <n>`, 0 = nigdy), co najmniej jedna z nich ma nadal imię wpisane przez człowieka
+  z tej wysyłki, a na wysyłkę jeszcze nikt nie odpowiedział. Pyta także w badaniu, które służy jako archiwum; agent
+  ani sieć nie są potrzebne.
+- **Aplikacja:** **Przegląd badania → Czeka na załatwienie**: „Czy to pochodzi z drzewa genealogicznego (import,
+  scalenie)?”, a pod tym dzień wysyłki, liczba osób i trzy imiona („25. 11. 2026 · 142 osoby: …”). Otwarta pozycja
+  liczy, co się zmieni: „N informacji przejdzie z ✓ na ○○ (M osób).” i „K informacji zostanie ✓: zmienione od
+  wysłania a, potwierdzone b, wcześniejsza wartość c (przyjęta propozycja, cofnięcie), inne pochodzenie d.”,
+  z wyjaśnieniem „✓ potwierdzone przez człowieka – ○○ z drzewa genealogicznego, niezweryfikowane w zapisie.” Przyciski
+  **Tak, z drzewa genealogicznego** i **Nie, wpisane ręcznie**.
+- **Terminal:** **Co czeka**, grupa **Aplikacja Strom**, rodzaj „drzewo?”: „Wysyłka z aplikacji z <dzień> dodała
+  N osób – czy pochodzą z drzewa genealogicznego (import, scalenie)?”, dlaczego („Teraz wszystko liczy się jako
+  wpisane przez człowieka (✓ potwierdzone przez człowieka). Z drzewa genealogicznego zostanie oznaczone ○○ …”),
+  przykładowe imiona, co się zmieni i te same dwa wybory.
+- **Tak, z drzewa genealogicznego:** badanie najpierw robi kopię zapasową; potem dane tej wysyłki, które są nadal
+  takie, jak przyszły, i nikt ich nie potwierdził, zostają oznaczone jako z drzewa ([S6.10.2](#S6.10.2)). Wynik:
+  „N informacji jest teraz ○○ z drzewa genealogicznego (M osób).”
+- **Nie, wpisane ręcznie:** nic się nie zmienia; „Pozostawiono jako wpisane ręcznie. Pytanie już nie wróci.”
+- **Granice:**
+  - wartości ani ich pewność się nie zmieniają; zmienia się tylko znacznik ✓ na ○○;
+  - odpowiedź **Tak** można cofnąć tylko w terminalu (`strom sync as-import I… --undo`), nie cofnięciem wysyłki
+    z aplikacji;
+  - gdy w międzyczasie odpowiedziano gdzie indziej: „Na pytanie odpowiedziano gdzie indziej albo już nie czeka.”;
+    zajęte badanie: „Badanie jest zajęte; ponownie będzie można za N s.”
+- **Obsługa:** aplikacja: **Czeka na załatwienie** → **Tak, z drzewa genealogicznego** / **Nie, wpisane ręcznie**;
+  terminal: **Co czeka**, `strom sync as-import`, `strom config set sync.importAsk <n>`.
+- **Obowiązuje od:** badanie 1.38.0, aplikacja 3.33.0
+
+<!-- zdroj: research:dec54543 src/core/waiting.ts (kind import, feature waiting.import; nevrácené odeslání, aspoň sync.importAsk nových lidí, jméno s původem user citující odeslání, bez odpovědi; i v archivu), src/core/config.ts IMPORT_ASK 20, sync.importAsk (0 nikdy), src/cli/menu-waiting.ts · assets/lang/cs.json ui.waiting.import, ui.wait.kind.import, ui.wait.import.why, samples, change, cmd, yes, no · src/core/live.ts GET/POST <token>/waiting/W-S-I… (do: import|own) · app:7ad968e4 src/ui/research-overview-ui.ts importAskRowWho, src/research-import-ask.ts importAskWho (3 jména) · strings.ts live.importAsk (question, change, stay, stayPart, meaning, yes, no, doneImport, doneOwn, gone, busy) -->
+
+<a id="S6.10.2"></a>
+### S6.10.2 Polecenie `strom sync as-import`
+
+Ta sama decyzja w terminalu, dla jednej wysyłki z aplikacji (`I…`, `strom input list`). Może je wydać tylko człowiek;
+agentowi badanie polecenie odrzuci ([R6.6](R6-awaiting-action.md#R6.6)).
+
+| Polecenie | Co robi |
+|---|---|
+| `strom sync as-import I…` | tylko pokazuje, co się zmieni: „Wysyłka I… z <dzień>: dodano N osób.”, które dane zostaną oznaczone jako z drzewa, a które zostaną bez zmian (zmienione od wysłania, potwierdzone, z wcześniejszą wartością, innego pochodzenia) |
+| `--apply` | najpierw robi kopię zapasową badania, potem oznacza dane jako z drzewa: wysyłka dostaje jedno źródło „Drzewo genealogiczne przejęte w aplikacji Strom (wysłane <dzień>)”, cytowane przy danej jako pierwsze; cytat wysyłki zostaje; jeden zapis w historii badania |
+| `--undo` | przywraca dane, które są nadal takie, jak je oznaczyło `--apply`; pozostałe: „Zmienione w międzyczasie, pozostawione bez zmian: N danych.” |
+| `--own` | odpowiedź „wpisane ręcznie”: nic się nie zmienia, a pytanie nie wróci |
+
+- **Pilnuje kod:** oznacza się tylko dana, którą zapisała właśnie ta wysyłka, jest dziś taka sama, ma pochodzenie
+  dokładnie „człowiek” bez wcześniejszej wartości, nie jest potwierdzona ani wycofana. Odpowiedź jest zapamiętana
+  przy badaniu; pytanie i polecenie ją rozpoznają („Już odpowiedziano: przejęte drzewo genealogiczne.”).
+- **Obsługa:** terminal: `strom sync as-import I…`, `--apply`, `--undo`, `--own`; aplikacja: przyciski w **Czeka na
+  załatwienie** ([S6.10.1](#S6.10.1)).
+- **Obowiązuje od:** badanie 1.38.0
+
+<!-- zdroj: research:dec54543 src/commands/sync.ts sync as-import (náhled; --apply záloha, pramen kind family-tree, citace první, jeden commit; --undo; --own), src/core/sendimport.ts (hodnoty podle historie git: zapsané tímto odesláním, stejné, origin user bez was, nepotvrzené, neodvolané; quality/send-imports.json), src/cli/help.ts HUMAN_COMMANDS, sync.ts person („never an agent“) · assets/lang/cs.json ui.sync.asimport.*, ui.help.cmd.sync.as-import, ui.backup.readme.asimport -->

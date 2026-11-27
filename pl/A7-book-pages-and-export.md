@@ -149,7 +149,8 @@ Księga rodu to księga do czytania od początku: drzewo genealogiczne, rodziny 
   wydarzeniami pary; drzewo, którego jedynymi obrazami są zdjęcia par, tę część proponuje
   ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
 - **Od aplikacji 3.33.0:** wybór **Dom** (księga o jednym domu), część **Domy** i **Indeks domów**
-  ([S10.10](S10-houses.md#S10.10)).
+  ([S10.10](S10-houses.md#S10.10)); w części **Domy** zatwierdzona opowieść o domu, a z opcją **Położenie domów**
+  wycinek mapy ([S10.14.2](S10-houses.md#S10.14.2), [S10.3.4](S10-houses.md#S10.3.4)).
 
 <!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 -->
 
@@ -186,7 +187,8 @@ nazwisk i miejscowości.
 - Ochrona osób żyjących i źródła według [A7.2](#A7.2); domyślnie Inicjały + rok urodzenia.
 - **Obowiązuje od:** Strony rodu aplikacja 3.20.0; Strony drzewa aplikacja 3.21.0
 - **Od aplikacji 3.33.0:** opcja **Domy**: domy z historią, indeks domów i strona każdego domu
-  ([S10.10](S10-houses.md#S10.10)).
+  ([S10.10](S10-houses.md#S10.10)), przy domu także zatwierdzona opowieść i wycinek mapy z położeniem
+  ([S10.14.2](S10-houses.md#S10.14.2), [S10.3.4](S10-houses.md#S10.3.4)).
 
 <!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 -->
 

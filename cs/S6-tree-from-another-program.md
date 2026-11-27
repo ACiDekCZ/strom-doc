@@ -4,7 +4,8 @@
 Rodokmen z jiného programu (MyHeritage, Gramps, FamilySearch, programy pro Windows a další) přijde do aplikace
 i do výzkumu jako soubor GEDCOM. Kapitola vede celou cestou: co se načte a co se ztratí, jak je vidět, odkud údaj je,
 proč jsou údaje z rodokmenu jen vodítka, jak se k údaji z rodokmenu vrátit, co nabídne karta **Co teď**, jak se vrátit
-v čase, jak strom poslat zpět a co udělá rodokmen načtený znovu. Popisuje aplikaci Strom 3.26.0 a výzkum 1.30.0.
+v čase, jak strom poslat zpět, co udělá rodokmen načtený znovu a jak údaje z rodokmenu zůstanou ○○ i po odeslání
+do výzkumu ([S6.10](#S6.10)). Popisuje aplikaci Strom 3.26.0 a výzkum 1.30.0, s doplňky novějších verzí.
 Podrobnosti čtení souboru jsou v [A2](A2-loading-a-family-tree.md), export v [A7](A7-book-pages-and-export.md),
 slučování v [A8](A8-merging-trees.md) a převzetí rodokmenu výzkumem v [R11.3](R11-material-from-the-user.md#R11.3).
 
@@ -80,6 +81,9 @@ na kartičce ve stromu a ověření údajů podle originálů popisuje [S7](S7-r
   ([S7.10](S7-reliability-and-verification.md#S7.10), [R10.5.2](R10-people-and-hypotheses.md#R10.5.2)). Když už
   žádný údaj osoby není jen z rodokmenu, řádek u osoby říká „Údaje osoby přišly z {program} (soubor {datum}, načteno
   {datum}); žádný už není jen z rodokmenu.“
+- **Od aplikace 3.33.0 s výzkumem 1.38.0:** údaj z rodokmenu zůstane **Z rodokmenu** i po odeslání do výzkumu
+  a i po sloučení stromů; ✓ nedostane. Údaje, které starší aplikace poslala jako úpravy člověka, jde jedním
+  rozhodnutím převést z ✓ na ○○ ([S6.10](#S6.10)).
 - **Platí od:** aplikace 3.26.0, výzkum 1.30.0
 
 <!-- zdroj: app:7b0471f8 src/reliability.ts (pořadí human, proven, probable, possible, import, lead, none; tečky, ✓ a rámeček, ne barva; feature origin; bez záznamu o importu žádné Z rodokmenu; readers z _STROM_CHECKED, noSource nekrmeno) · src/ui/fact-status.ts · src/ui/person-reliability-ui.ts · src/settings.ts display.reliabilityCard (ON) · src/ui/card-signals-ui.ts (signál status, výchozí zapnuto) · index.html settings-group-card · strings.ts reliability.settingCard, cardDensity.cardStatus, settings.groupCard · app:669c08f0 src/reliability.ts userTreeOrigin (_STROM_ORIGIN tree) -->
@@ -346,3 +350,94 @@ u osoby. Aplikace i výzkum z toho dělají kontakt osoby.
 - **Platí od:** aplikace 3.32.0, výzkum 1.37.0
 
 <!-- zdroj: app:972e73d7 src/person-contact.ts (hlavička: pravidlo RESI jen s kontaktem, 1 EMAIL; cleanEmail EMAIL_MAX 254, bez mezer; sameEmail bez velikosti písmen; isContactResidence, isEmptyResidence, moveContactsIntoPeople při každém načtení), src/ged-exporter.ts contacts (výchozí ano, do výzkumu jen s person.contact; 1 RESI / 2 EMAIL; Zpět do: 1 EMAIL jak byl), src/privacy.ts (žijící bez emails) · app:0603165b index.html #emails-group v Fotografie a poznámky, src/ui/person-modal.ts applyAdvancedFieldVisibility emails-group, emailsFromInput (čárky, středníky, mezery), src/person-page.ts jen c.app, mailto, src/ui/person-events.ts shownEvents (prázdné bydliště skryté) · src/version.ts STROM_DATA_VERSION 26 · strings.ts labels.emails, placeholders.emails, personModal.sectionPhotoNotes · research:ce89202a src/core/live.ts person.contact (1 RESI / 2 EMAIL, nejvýš tři na RESI), src/commands/fixchecks.ts CONTACT_RESIDENCES, src/commands/fixes.ts contact-residences · cs.json ui.fixes.contact-residences.* · CHANGELOG.cs.md 1.37.0 „E-maily osoby jsou kontakt“, app CHANGELOG.cs.md 3.32.0 Data · dirigent:spec/134 K0.10, U11 -->
+
+<a id="S6.10"></a>
+## S6.10 Údaje z rodokmenu zůstanou ○○ i ve výzkumu
+
+Značka ✓ **Potvrdil člověk** znamená, že údaj zapsal, upravil nebo potvrdil člověk. Údaj převzatý z rodokmenu
+(import souboru, sloučení stromů) nikdo neověřil, a proto má mít ○○ **Z rodokmenu**, i když ho do výzkumu poslala
+aplikace. Starší aplikace posílala všechno, co ve stromu bylo, jako úpravy člověka; výzkum takový údaj držel jako
+zapsaný člověkem a aplikace ho pak ukazovala s ✓. Aplikace Strom 3.33.0 a výzkum 1.38.0 to řeší ve třech krocích:
+
+1. **Aplikace u každého odeslání řekne, co je z rodokmenu.** Údaj, který má pořád hodnotu ze souboru, jde do výzkumu
+   se značkou importu, při prvním odeslání i při každém dalším a i po načtení verze z výzkumu. Údaj, který člověk
+   změnil nebo potvrdil, značku nemá a jde jako úprava člověka.
+2. **Sloučení stromu je import.** Strom aplikace sloučený do jiného stromu (ze **Správy stromů**, ze souboru JSON
+   nebo HTML, ze sdíleného stromu, z GEDCOM, který napsal Strom), do stromu výzkumu i jinam, dostane vlastní záznam
+   o importu: program **Strom**, název sloučeného stromu nebo souboru a den sloučení. Popisek značky pak říká
+   „převzato z rodokmenu Strom „Horákovi“, soubor …“. Značku nedostane, co sloučený strom měl z vlastního importu
+   (zůstane mu jeho záznam), co v něm člověk změnil nebo potvrdil, ani údaje cílového stromu. **Zpět** po sloučení
+   vezme záznam i značky zpět.
+3. **Výzkum si to při synchronizaci opraví sám.** Údaj se značkou importu, který výzkum má jako zapsaný člověkem
+   z dřívějšího odeslání, přepíše na údaj z rodokmenu: hodnota i stav jistoty zůstanou, jen původ se změní a pramen
+   importu se cituje první. Plán synchronizace to řekne řádkem „{kdo}: {údaj} — z rodokmenu, ne úprava člověka“.
+
+Lidé, které starší aplikace už poslala, zůstávají ve výzkumu s ✓: aplikace importovaný soubor nemá a zpětně je
+neoznačí. Na ně se výzkum zeptá ([S6.10.1](#S6.10.1)).
+
+- **Hlídá kód:**
+  - výzkum přepíše původ jen u údaje, který je stejný jako v souboru, má původ přesně „člověk“ bez dřívější hodnoty
+    (žádný přijatý návrh ani vrácení), cituje odeslání aplikace („Úpravy v aplikaci Strom (den)“) a není potvrzený;
+  - přepisuje jen zápis člověka (z aplikace nebo z terminálu), nikdy synchronizace agenta;
+  - hodnota, stav jistoty ani citace odeslání se nemění.
+- **Hranice:** potvrzený údaj zůstane ✓ vždy. Údaj, který člověk po importu změnil, je úprava člověka.
+- **Ovládání:** nic se nenastavuje. Terminál: plán `strom sync`, vrácení `strom sync undo I…`.
+- **Proč:** ✓ má znamenat jen to, co člověk opravdu potvrdil; údaj z cizího rodokmenu je vodítko ([S6.3](#S6.3)).
+- **Platí od:** aplikace 3.33.0, výzkum 1.38.0
+
+<!-- zdroj: app:35a7d513 (keepImports: značky _STROM_IMPORT po každém odeslání i po načtení verze výzkumu) · app:46973902 src/merge/merged-import.ts (záznam importu sloučeného stromu: 2 SOUR Strom, _AT den sloučení, FILE název; neznačí vlastní import, změněné, potvrzené, cílové; Zpět bere záznam i značky), src/import-origin.ts · app:3d070997 strings.ts reliability.titleImport (název stromu) · research:f19661bb (feature origin.import: user → import při shodě se souborem, origin user bez was, citace odeslání, nepotvrzeno, zápis člověka; citace importu první) · assets/lang/cs.json ui.sync.origin.import, ui.sync.do.origin.import · zadání aplikace ↔ výzkum ZADANI_VYZKUM_fajfka-import.md · dirigent:analyza/2026-11-27-fajfka-z-importu/README.md -->
+
+<a id="S6.10.1"></a>
+### S6.10.1 Otázka „Přišlo to z rodokmenu?“
+
+Když jedno odeslání z aplikace přidalo do výzkumu hodně lidí a jejich údaje výzkum drží jako zapsané člověkem, nejspíš
+to byl rodokmen (import nebo sloučení), ne ruční zápis. Výzkum se proto jednou zeptá v **Čeká na vyřízení**.
+
+- **Kdy se zeptá:** odeslání z aplikace, které nebylo vráceno, přidalo aspoň **20 nových lidí**
+  (`strom config set sync.importAsk <n>`, 0 = nikdy), aspoň jeden z nich má pořád jméno zapsané člověkem z tohoto
+  odeslání a na odeslání ještě nikdo neodpověděl. Ptá se i ve výzkumu, který slouží jako archiv; agent ani síť
+  nejsou potřeba.
+- **Aplikace:** **Přehled výzkumu → Čeká na vyřízení**: „Přišlo to z rodokmenu (import, sloučení)?“ a pod tím den
+  odeslání, počet lidí a tři jména („25. 11. 2026 · 142 lidí: …“). Otevřená položka spočítá, co se změní: „N údajů u M lidí
+  přejde z ✓ na ○○.“ a „K údajů zůstane ✓: upraveno od odeslání a, potvrzeno b, dřívější hodnota c (přijatý návrh,
+  vrácení), jiný původ d.“, s vysvětlením „✓ potvrdil člověk – ○○ z rodokmenu, neověřeno podle záznamu.“ Tlačítka
+  **Ano, z rodokmenu** a **Ne, zapsáno ručně**.
+- **Terminál:** **Co čeká**, skupina **Aplikace Strom**, druh „rodokmen?“: „Odeslání z aplikace <den> přidalo N lidí –
+  přišli z rodokmenu (import, sloučení)?“, proč („Teď se to všechno počítá jako zapsané člověkem (✓ potvrdil
+  člověk). Z rodokmenu se to označí ○○ …“), příklady jmen, co se změní a stejné dvě volby.
+- **Ano, z rodokmenu:** výzkum se nejdřív zálohuje; pak se údaje toho odeslání, které jsou pořád takové, jak přišly,
+  a nikdo je nepotvrdil, označí jako z rodokmenu ([S6.10.2](#S6.10.2)). Výsledek: „N údajů je teď ○○ z rodokmenu
+  (M lidí).“
+- **Ne, zapsáno ručně:** nic se nemění; „Ponecháno jako zapsané ručně. Otázka už nepřijde.“
+- **Hranice:**
+  - hodnoty ani jejich jistota se nemění; mění se jen značka ✓ na ○○;
+  - odpověď **Ano** jde vrátit jen v terminálu (`strom sync as-import I… --undo`), ne vrácením odeslání z aplikace;
+  - když se mezitím odpovědělo jinde: „Na otázku se už odpovědělo jinde, nebo už nečeká.“; zaneprázdněný výzkum:
+    „Výzkum je zaneprázdněný, znovu to půjde za N s.“
+- **Ovládání:** aplikace: **Čeká na vyřízení** → **Ano, z rodokmenu** / **Ne, zapsáno ručně**; terminál: **Co čeká**,
+  `strom sync as-import`, `strom config set sync.importAsk <n>`.
+- **Platí od:** výzkum 1.38.0, aplikace 3.33.0
+
+<!-- zdroj: research:dec54543 src/core/waiting.ts (kind import, feature waiting.import; nevrácené odeslání, aspoň sync.importAsk nových lidí, jméno s původem user citující odeslání, bez odpovědi; i v archivu), src/core/config.ts IMPORT_ASK 20, sync.importAsk (0 nikdy), src/cli/menu-waiting.ts · assets/lang/cs.json ui.waiting.import, ui.wait.kind.import, ui.wait.import.why, samples, change, cmd, yes, no · src/core/live.ts GET/POST <token>/waiting/W-S-I… (do: import|own) · app:7ad968e4 src/ui/research-overview-ui.ts importAskRowWho, src/research-import-ask.ts importAskWho (3 jména) · strings.ts live.importAsk (question, change, stay, stayPart, meaning, yes, no, doneImport, doneOwn, gone, busy) -->
+
+<a id="S6.10.2"></a>
+### S6.10.2 Příkaz `strom sync as-import`
+
+Totéž rozhodnutí v terminálu, pro jedno odeslání z aplikace (`I…`, `strom input list`). Smí ho jen člověk; agentovi
+výzkum příkaz odmítne ([R6.6](R6-awaiting-action.md#R6.6)).
+
+| Příkaz | Co udělá |
+|---|---|
+| `strom sync as-import I…` | jen ukáže, co se změní: „Odeslání I… z <den>: přidáno N lidí.“, které údaje se označí jako z rodokmenu a které zůstanou, jak jsou (upraveno od odeslání, potvrzeno, s dřívější hodnotou, jiného původu) |
+| `--apply` | nejdřív výzkum zálohuje, pak údaje označí jako z rodokmenu: odeslání dostane jeden pramen „Rodokmen převzatý v aplikaci Strom (posláno <den>)“, který se u údaje cituje první; citace odeslání zůstane; jeden zápis do historie výzkumu |
+| `--undo` | vrátí údaje, které jsou pořád tak, jak je `--apply` označil; ostatní: „Upraveno mezitím, ponecháno, jak je: N údajů.“ |
+| `--own` | odpověď „zapsáno ručně“: nic se nemění a otázka se znovu nenabídne |
+
+- **Hlídá kód:** označí se jen údaj, který zapsalo právě toto odeslání, je dnes stejný, má původ přesně „člověk“ bez
+  dřívější hodnoty, není potvrzený ani odvolaný. Odpověď se pamatuje u výzkumu; otázka i příkaz ji poznají („Už
+  zodpovězeno: převzatý rodokmen.“).
+- **Ovládání:** terminál: `strom sync as-import I…`, `--apply`, `--undo`, `--own`; aplikace: tlačítka v **Čeká na
+  vyřízení** ([S6.10.1](#S6.10.1)).
+- **Platí od:** výzkum 1.38.0
+
+<!-- zdroj: research:dec54543 src/commands/sync.ts sync as-import (náhled; --apply záloha, pramen kind family-tree, citace první, jeden commit; --undo; --own), src/core/sendimport.ts (hodnoty podle historie git: zapsané tímto odesláním, stejné, origin user bez was, nepotvrzené, neodvolané; quality/send-imports.json), src/cli/help.ts HUMAN_COMMANDS, sync.ts person („never an agent“) · assets/lang/cs.json ui.sync.asimport.*, ui.help.cmd.sync.as-import, ui.backup.readme.asimport -->

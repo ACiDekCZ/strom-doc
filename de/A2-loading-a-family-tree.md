@@ -165,8 +165,12 @@ kein Titel erraten. Die Regeln sind dieselben wie in der Forschung.
   **Platzhalter**). Gruppen von Varianten des Nachnamens und Stammlinien behandelt [A4](A4-surnames-and-families.md).
 - **Bedienung:** Keine; das Ergebnis wird in der Personenkarte bearbeitet.
 - **Gilt seit:** App 3.10.0 (Titel), 3.13.0 (Ehename), 3.18.0 (`_STROM_PRIMARY`).
+- **Ab App 3.33.0:** eine Beschreibung in Klammern ist nur ein Name, der ganz eine einzige Gruppe in Klammern ist
+  („(dítě)“, „[syn]“, „(mrtvě narozený)“). Klammern zwischen Wörtern gehören zum Namen: „(Jan) Josef (Karel) /Horák/“
+  bleibt, wie er geschrieben ist, ohne Notiz, und der Export gibt ihn genauso zurück. Genauso liest ihn die Forschung
+  ([R10.5](R10-people-and-hypotheses.md#R10.5)).
 
-<!-- zdroj: app:src/gedcom-names.ts:197 readGedcomName, :114 splitNameLine, :85 noName, :96 notAName, :260 stripTitles · app:src/ged-parser.ts:1404 readMarriedSurname, :2250 varianty, :2955 prohození TYPE -->
+<!-- zdroj: app:src/gedcom-names.ts:197 readGedcomName, :114 splitNameLine, :85 noName, :96 notAName, :260 stripTitles · app:src/ged-parser.ts:1404 readMarriedSurname, :2250 varianty, :2955 prohození TYPE · 3.33.0: app:810bc323 src/gedcom-names.ts noName /^[(\[{][^()\[\]{}]*[)\]}]$/u (K055) -->
 
 <a id="A2.4"></a>
 ## A2.4 Daten und ihre Formen

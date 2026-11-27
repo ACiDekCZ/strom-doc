@@ -14,6 +14,7 @@ pages. The chapter describes the Strom app 3.33.0 and the research 1.38.0.
 | houses on their own | **Research for this tree › House history** ([S10.5.1](#S10.5.1)) | **Settings › History of the houses in this research** |
 | own research of a house | **Take over research from a file…** ([S10.8](#S10.8)) | `strom house import` |
 | a conversation about a house | **Discuss with the agent** ([S10.9](#S10.9)) | `strom chat --house` |
+| the story of a house | ⋯ **Write the story of the house** ([S10.14](#S10.14)) | `strom house story` |
 | book and pages | the choice **House**, the chapter **Houses** ([S10.10](#S10.10)) | – |
 
 <!-- zdroj: dirigent:spec/030-historie-domu, spec/145-rozsireni-domu (T1, T2, T5, T6, T7) · app:src/houses.ts, src/ui/houses-ui.ts, src/house-page.ts · research:src/core/houses.ts, src/core/houseauto.ts, src/commands/house.ts, assets/method/house.md · CHANGELOG.cs.md aplikace 3.33.0, výzkum 1.38.0 „Historie domů“, „Výzkum domu“ -->
@@ -131,7 +132,7 @@ The house page has the form of the person page: **‹ Houses**, **Save HTML**, �
 has a table of contents.
 
 - **Sections in order:** the header (town and number, house name, town with district, parish, “In the tree”: years,
-  generations, people; “Research”: state) · **In brief** · **Numbers over time** · **Timeline** · **Holders and
+  generations, people; “Research”: state) · **In brief** · **Story** ([S10.14](#S10.14)) · **Numbers over time** · **Timeline** · **Holders and
   residents** · **The building** ([S10.7](#S10.7)) · **Map** ([S10.3.1](#S10.3.1)) · **What is not known** (with
   **Answer**) · **What was searched** (with **Only in the reading room**) · **Sources and materials**.
 - The **Timeline** has an origin at each row: **from research**, **from own research**, **conjecture**, **probable**.
@@ -144,8 +145,8 @@ has a table of contents.
   **Residents from the tree**, **Map** and a sentence on where it comes from (“This page is built from the records in
   the tree.”, or that the house is in the queue).
 - **⋯ of the page:** **Save HTML** ([S10.3.2](#S10.3.2)) · **Open in the book…** ([S10.10](#S10.10)) · **On the
-  map** · **House name…** · research actions ([S10.4](#S10.4)) · **Discuss with the agent** ([S10.9](#S10.9)) ·
-  **Attach material…** · **Take over research from a file…** ([S10.8](#S10.8)) · **Merge with another house…** ·
+  map** · **House name…** · research actions ([S10.4](#S10.4)) · **Write the story of the house**
+  ([S10.14](#S10.14)) · **Discuss with the agent** ([S10.9](#S10.9)) · **Attach material…** · **Take over research from a file…** ([S10.8](#S10.8)) · **Merge with another house…** ·
   **It is a different house…**
 - **Controls:** app: **House page ›** in the **Houses** window, in a house's bubble on the map and at the link to a
   house on the person page ([S10.11](#S10.11)).
@@ -178,10 +179,10 @@ sentence under the map says where the location comes from.
 - **Limits:**
   - the research does not overwrite a location a person confirmed;
   - **Open elsewhere** is only at a house with a point of its own;
-  - the book never gives a house's location; the saved house page only for a house without people of the last
-    roughly 100 years ([S10.3.2](#S10.3.2)).
-- **Controls:** app: house page → **Map** → **Map layer**, **Confirm location**, **Move the point**; terminal
-  `strom house confirm <house> location`.
+  - the book, the saved house page and the family pages show the location only for a house without people of the
+    last roughly 100 years, and then as a cut of the map ([S10.3.4](#S10.3.4)).
+- **Controls:** app: house page → **Map** → **Map layer**, **Confirm location**, **Move the point**, **Hide location
+  in outputs** ([S10.3.4](#S10.3.4)); terminal `strom house confirm <house> location`.
 - **Since:** app 3.33.0, research 1.38.0
 
 <!-- zdroj: app:src/house-map.ts (zoom 17/14, min 12, max 18), src/ui/house-map-ui.ts (page.map.layers today, ortho, aerial, onlyToday; posManual, posConfirmed, posHigh, posSure, posUnsure, noPos; confirmPos, move, saveHousePoint s house.confirm; Otevřít jinde) · commity 90c54cc6, 307c3a8f, bc1833b9 · research:assets/maplayers.json cz-ortho, cz-ortho-1950 · src/core/houses.ts confirmHouse location (jistota high, původ user), house add location odmítnuto po potvrzení -->
@@ -190,20 +191,25 @@ sentence under the map says where the location comes from.
 ### S10.3.2 The saved house page and protecting people
 
 **Save HTML** saves the house page as one file (e.g. `belokamen-cp-16.html`) without map tiles from the network;
-pictures are only a link. The saved house page, the book and the family pages protect the people of the last roughly
+pictures of the house are only a link, the location is a cut of the map right in the file ([S10.3.4](#S10.3.4)). The
+saved house page, the book and the family pages protect the people of the last roughly
 100 years.
 
 - **Never:** today's owners; names of the living; the name of a witness.
 - **People of the last roughly 100 years** only by name and role, without years.
 - **Research events of the last roughly 100 years and sensitive events** (confiscation, expulsion) are left out until
   a person reveals them (**Show in outputs**).
-- **Location** only for a house without people of the last roughly 100 years; for such a house no house name either.
-- The house page says what is missing in the outputs: “In outputs (HTML, book) N events and the house location are not
-  shown.”
+- **Location** only for a house without people of the last roughly 100 years and only when not hidden by hand
+  ([S10.3.4](#S10.3.4)); for a house with such people no house name either.
+- **The story of the house** only approved and only whole: a story that names a protected person is left out whole
+  ([S10.14.2](#S10.14.2)).
+- The house page says what is missing in the outputs and why: “In outputs (HTML, book) N events and the house
+  location are not shown (people of the last ~100 years).”, “… N events are not shown; the house location is hidden
+  by hand.”
 - **Controls:** app: house page → **Save HTML**; at an event **Show in outputs**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 The timeline from the tree's records
@@ -225,6 +231,47 @@ What one row already says is not repeated.
 - **Since:** app 3.33.0
 
 <!-- zdroj: app:3dc5647c src/house-page.ts houseTreeRows → joinRepeatedRows (narození jedné osoby a roku jednou, narození před křtem; bydliště s rokem a sdílenou osobou nebo partnery partnersIn), factLabel isBaptism (událost baptism → baptizedM/F) · src/book-houses.ts houseTreeRows · strings.ts houses.ev.bornM, bornF, baptizedM, baptizedF, residence · src/__tests__/house-page.test.ts · dirigent:prace/1127-app-147-materialy (Přibaleno, schválená tabulka) -->
+
+<a id="S10.3.4"></a>
+### S10.3.4 The house location in outputs
+
+The family book, the saved house page and the family pages show the house's location as a picture: a cut of today's
+map with the point and the number of the house. Below it are the coordinates, how certain the number match is and the
+map's attribution. So the output shows the location even without the network.
+
+- **When the location shows:** only for a house with a point (set by hand or by the research) and only when both
+  hold:
+  - there are no people of the last roughly 100 years in the house: the living, people of the tree from those years,
+    house entries from those years, or holders and residents with years in that time (also people the tree does not
+    know);
+  - a person has not hidden the location (**Hide location in outputs**).
+- **Certainty:** “Today’s location · number match confirmed” when a person set or confirmed the point (in the app or
+  in the research); otherwise “Today’s location · number match assumed”.
+- **Picture:** today's OpenStreetMap map with the attribution “© OpenStreetMap contributors, licence ODbL”. HTML (the
+  saved house page, the family pages, also in the ZIP and in the gift) adds as a further picture the historical layer
+  the research supplied for the house's place ([S10.3.1](#S10.3.1)); the book gives only today's map and does not
+  split the cut across pages.
+- **Without the network:** the cut is made once and the app keeps it in this browser; the next book, PDF or gift
+  takes the kept one. Without the network and without a kept cut, or while the map is not allowed (**Show the map**),
+  the output gives only the coordinates and the certainty, without an error. At most 10 s are waited for one picture.
+- **House page**, the **Map** section: for a house whose location the outputs would show, the line “Outputs (HTML,
+  book) show the house location.” and **Hide location in outputs**. After hiding, “The house location is hidden by
+  hand in outputs (HTML, book).” and **Show location in outputs**. Each is one step of **Undo**.
+- **Book:** the option **House locations** (on by default, remembered): “A cut of today’s map with the point of
+  a house without people of the last ~100 years; off: the town only.” It is there only with the part **Houses** and
+  only when the book has a house whose location can be shown. The chapter's note then reads “Events after <year> and
+  the location of a house with people of these years are not given in the book.”
+- **Limits:**
+  - people of the last roughly 100 years come first: a manual **Show location in outputs** does not override them,
+    and for such a house there is neither the line nor the button; the page says why the location is missing
+    ([S10.3.2](#S10.3.2));
+  - hiding by hand is only in the app's tree (the JSON file); it goes neither to the research nor to GEDCOM;
+  - a read-only tree shows only the state, without the button.
+- **Controls:** app: house page → **Map** → **Hide location in outputs** / **Show location in outputs**; export
+  **Family book** → **House locations**.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (location jen bez recentPeople a bez hideLocation; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek -->
 
 <a id="S10.4"></a>
 ## S10.4 Requesting a house's history
@@ -545,8 +592,9 @@ follow-up task only when a person asks for one.
   option **Last 100 years by name only** (on by default): people of the last roughly 100 years only by name and role,
   without dates. From the house page **Open in the book…** opens the book at this house.
 - **The Houses chapter** in the book: houses of the book's people with history ([S10.1](#S10.1)) or with a finished
-  history from the research; for each house the name, the look, numbers over time, the timeline, holders, residents,
-  notable things and sources as numbered notes. On by default only when the tree has at least one house with a
+  history from the research; for each house the approved story ([S10.14.2](#S10.14.2)), the name, the look, numbers
+  over time, the timeline, holders, residents, notable things, the location ([S10.3.4](#S10.3.4)) and sources as
+  numbered notes. On by default only when the tree has at least one house with a
   finished history. **Index of houses** only with the Houses chapter.
 - **Family pages and tree pages** ([A7.5](A7-book-pages-and-export.md#A7.5)): the option **Houses**: **In the family
   pages, linked with the people** (default; houses with history with period and generations, **Index of houses** after
@@ -554,17 +602,19 @@ follow-up task only when a person asks for one.
   offered when people of the selection lived in a house with history. The timeline of a line has the chip **Houses ⌂**
   ([S10.11](#S10.11)).
 - **Limits:**
-  - the book never gives a house's location: “Events after <year> and the house location are not given in the book.”;
-    it leaves out sensitive events and research events of the last roughly 100 years ([S10.3.2](#S10.3.2));
+  - the book gives the location only with the option **House locations** and only for a house without people of the
+    last roughly 100 years ([S10.3.4](#S10.3.4)); otherwise “Events after <year> and the house location are not given
+    in the book.”; it leaves out sensitive events and research events of the last roughly 100 years ([S10.3.2](#S10.3.2));
   - the pages give nothing about houses from the last roughly 100 years;
   - the pages take houses with history by the threshold ([S10.1](#S10.1)), the book also houses with a finished
     history from the research;
   - the choice **House** only in a tree with a numbered house and only for the book; the gift
     ([A7.9](A7-book-pages-and-export.md#A7.9)) and the picture have no houses.
-- **Controls:** app: export **Family book** → **House**, the part **Houses**, **Index of houses**; family pages and tree pages → **Houses**.
+- **Controls:** app: export **Family book** → **House**, the part **Houses**, **Index of houses**, **House
+  locations**; family pages and tree pages → **Houses**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · nálezy N9 (T3 poloha v knize neimplementována), N10 (výstupy podle prahu × kniha i s hotovou historií) -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
 
 <a id="S10.11"></a>
 ## S10.11 Houses elsewhere in the app
@@ -580,8 +630,9 @@ follow-up task only when a person asks for one.
 | lists of people | the rule **Lived in the house** (also in the years), by birth, marriage, census, residence and death ([A11](A11-lists-of-people.md)) |
 | Statistics | the topic **Houses**; longest one family, marrying into the house ([A13](A13-tree-statistics.md)) |
 | search | the group **Houses** above the people (at most 5); for a person found by a house number **House ›** |
-| queue and **Awaiting action** | the tasks **House history <number>, <town>**, **Take over research for house <number>**, **Town skeleton <town> for houses**; **House page ›**; a house question with “House <number> ›” |
-| GEDCOM | the record `_HOUSE` only for a house with a name or merged (town, numbers with dates, name, “same house”); separation, location and revealed events only in JSON |
+| queue and **Awaiting action** | the tasks **House history <number>, <town>**, **Take over research for house <number>**, **Town skeleton <town> for houses**; **House page ›**; a house question with “House <number> ›”; a new version of the story “The story of house <number> waits for approval” ([S10.14](#S10.14)) |
+| a person's story | the link **House <number> ›** to a house with an approved story ([S10.14](#S10.14)) |
+| GEDCOM | the record `_HOUSE` only for a house with a name or merged (town, numbers with dates, name, “same house”); separation, location, hiding the location by hand and revealed events only in JSON; GEDCOM does not carry the story of a house |
 
 - **The research and `_HOUSE`:** `strom sync` reads houses from the app's GEDCOM as a person's word: the name, a
   missing number and “same house”. It removes nothing; a town that is not a place of the research it only reports. The
@@ -603,6 +654,7 @@ follow-up task only when a person asks for one.
 | `strom house confirm <house> renumber\|location\|not-same` | a person's word ([S10.1.2](#S10.1.2)) |
 | `strom house import` | own research ([S10.8](#S10.8)) |
 | `strom house request` | requesting a house ([S10.4.1](#S10.4.1)) |
+| `strom house story <house>` | requesting the story of a house ([S10.14.1](#S10.14.1)) |
 | `strom fixes house-numbers` | houses written in two ways |
 
 - **Reference to a house:** `A0001`, the key (`lhota|16`), `L12 16` or `Lhota 16`. The research refuses an ambiguous
@@ -618,7 +670,7 @@ follow-up task only when a person asks for one.
   map, summary, picture, field name; summary, picture and field name only for a town.
 - **Since:** research 1.38.0
 
-<!-- zdroj: research:src/commands/house.ts list 152, show 181, sources 203, add 280/367, confirm 868, import 927, request 232 (hidden) · src/core/houses.ts findHouse 359 (house.unknown, house.ambiguous) · src/core/housenumberfix.ts, src/commands/fixes.ts 1106–1111, ui.fixes.house-numbers.name · cs.json ui.house.head · strom help house (přes guard) · commity 3c69f16c, bd81894a -->
+<!-- zdroj: research:100aee43 src/commands/house.ts house story · research:src/commands/house.ts list 152, show 181, sources 203, add 280/367, confirm 868, import 927, request 232 (hidden) · src/core/houses.ts findHouse 359 (house.unknown, house.ambiguous) · src/core/housenumberfix.ts, src/commands/fixes.ts 1106–1111, ui.fixes.house-numbers.name · cs.json ui.house.head · strom help house (přes guard) · commity 3c69f16c, bd81894a -->
 
 <a id="S10.13"></a>
 ## S10.13 A read-only tree and the sample
@@ -630,7 +682,96 @@ follow-up task only when a person asks for one.
   **Discuss with the agent**, **Attach material…**) stay as the research offers them.
 - **The sample from the web** ([S9.1.3](S9-trying-the-sample.md#S9.1.3)): house actions are hidden.
 - **The sample research `strom demo`** ([S9.4](S9-trying-the-sample.md#S9.4)): without requesting a house, taking
-  over own research and the conversation about a house; houses, house pages and settings can be viewed.
+  over own research, the conversation about a house and the story of a house; houses, house pages and settings can be viewed.
 - **Since:** app 3.33.0, research 1.38.0
 
-<!-- zdroj: app:src/data.ts 2549 housesReadOnly (isReadOnly || isTreeLocked) · src/ui/tree-actions.ts housesRows (read-only: jediný řádek skupiny, 1127) · src/research-link.ts SHOWCASE_ALLOWS house: 'hide' · research:src/core/live.ts forDemo (bez house.request, house.import, house.chat; house, house.material, house.confirm, house.auto, house.look zůstávají) · nálezy N5 (Probrat s agentem ve stromu jen ke čtení), N6 (řádek Historie domů se nejspíš nabídne i u strom demo, neověřeno) -->
+<!-- zdroj: app:src/data.ts 2549 housesReadOnly (isReadOnly || isTreeLocked) · src/ui/tree-actions.ts housesRows (read-only: jediný řádek skupiny, 1127) · src/research-link.ts SHOWCASE_ALLOWS house: 'hide' · research:src/core/live.ts forDemo (bez house.request, house.import, house.chat, house.story – AGENT_FEATURES; house, house.material, house.confirm, house.auto, house.look zůstávají) · nálezy N5 (Probrat s agentem ve stromu jen ke čtení), N6 (řádek Historie domů se nejspíš nabídne i u strom demo, neověřeno) -->
+
+<a id="S10.14"></a>
+## S10.14 The story of a house
+
+The story of a house is a continuous text for the family: the holders and families in the house over generations,
+what happened to the house, the numbers over time and where the house stood, its look and what the town lived on. The
+research's agent writes it only from what the research found about the house and its town; it searches nothing
+again. Like a person's story ([A7.8](A7-book-pages-and-export.md#A7.8)) it is not a source: it only retells what the
+research documented.
+
+- **Enforced by the code:**
+  - the story keeps what it rests on: the house's items (numbers, events, holders, residents) and the facts of the
+    tree's people in the house;
+  - it is a draft until a person approves it; an approved story is locked and never rewritten. A new version is made
+    beside it and the approved text holds until a person decides ([R6.3.2](R6-awaiting-action.md#R6.3.2));
+  - only a person may approve it or discard a new version ([R6.6](R6-awaiting-action.md#R6.6)).
+- **Method only:**
+  - what the research knows only with medium certainty, as a conjecture or a lead, the text says as uncertain (“most
+    likely”, “by a register not verified yet”); a number that is not the same house it leaves out; what was not found
+    it says;
+  - people of the last hundred years only by name and role in the house (no illness, court, divorce). What of the
+    living it shows or shares is decided by the app ([S10.14.2](#S10.14.2));
+  - a person's life belongs in their own story; in the story of the house a person has one sentence with the years in
+    the house.
+- **House page**, the **Story** section right after **In brief**:
+  - the approved text with a heading and sources;
+  - a draft with the tag “draft, waiting for approval” and the button **Approve in the research** (a link to the
+    terminal);
+  - a new version beside the approved one: “A new version of the story (day) waits for approval; the page shows the
+    approved text.” with **Compare**;
+  - while it is being written, the task's state: “The story of the house is in the research queue.”, “The story of
+    the house is being written.”, “The task of the story is set aside in the research.”, “The task of the story waits
+    for an answer in the research.”
+- **Awaiting action:** only a new version beside the approved one: in the app “The story of house <number> waits for
+  approval” with the link **House <number> ›** to the **Story** section, in the terminal “A new version of the story
+  of the house <house> — the approved one stays until a decision”. The first draft is not there: it is approved on the
+  house page, or with `strom story approve A…`.
+- **A person's story**, of someone who lived in the house, has under the text the link **House <number> ›** to the
+  house's story, only when the house has an approved story; the house's text is not repeated.
+- **Limits:** the app takes the story of a house only through the research's bridge (GEDCOM does not carry it);
+  without a connection to the research there is neither the section nor the link.
+- **Controls:** app: house page → **Story**, **Approve in the research**, **Compare**; terminal:
+  `strom story show A…`, `strom story approve A…`, `strom story discard A…`, the menu **What waits**.
+- **Since:** app 3.33.0, research 1.38.0
+
+<!-- zdroj: research:100aee43 src/core/housestory.ts (House.story jako Story osoby; facts n…, e…, h…, r…, E…; draft vedle final), src/core/storykeep.ts, src/commands/story.ts (approve|discard A…, person only), src/core/waiting.ts (kind story s house jen pro novou verzi; APP_SHOWS_HOUSE_STORY), assets/method/narrate.md „for house-story“ · cs.json ui.waiting.story.house · app:3473602e src/house-page.ts storyHtml (sec.story za sum; storyDraft, storyNew, storyTask), src/ui/house-page-ui.ts (research.approveStory, story.compare, story?house=&do=final|keep), src/ui/research-overview-ui.ts houses.storyWaiting · app:3080a121 src/person-page.ts storyHousesHtml (houseLink) · zadání aplikace ↔ výzkum ZADANI_VYZKUM_145-domy.md „T4 vyprávění o domě“, „Odpověď stromu k T4“ (první koncept bez položky Co čeká – záměr) -->
+
+<a id="S10.14.1"></a>
+### S10.14.1 When the story is written: by itself and on request
+
+- **By itself:** with stories turned on (the setting `stories`, on by default), after the last step of the house's
+  research (the house's research, possibly its look, [S10.7](#S10.7)), when the house tells enough: **2 generations of
+  the tree** in the house (a parent and a child), or **3 holders and residents with sources**. A further version only
+  when the house has brought at least **2 new facts** since the last version.
+- **On request:** ⋯ on the house page or in the **Houses** window → **Write the story of the house** (when a story
+  already exists, **Write a new version of the story**); in the terminal `strom house story <house>` (it asks; `--yes`
+  without asking). The task goes to the top of the research queue and the nearest `strom run` session takes it; the
+  agent is not started by this. It holds regardless of the threshold and of the setting `stories`. A task that already
+  exists only moves: “The task already existed; it moved to the top of the research queue.”
+- **Limits:**
+  - only a house about which the research has already written something; otherwise “Nothing of this house is in the
+    research yet; its story is written from its research.” (first the house's history, [S10.4](#S10.4));
+  - only a research with its own agent: in a Strom archive, in a research waiting for an agent and in `strom demo`
+    ([S10.13](#S10.13)) it is not offered;
+  - the story's task goes through the queue like other stories ([R2.2.2](R2-lines-and-queue.md#R2.2.2)); it does not
+    change the house's state, and House history turned off ([S10.5.1](#S10.5.1)) does not set it aside;
+  - a task a person cancelled is not created again by itself (not for a new version either).
+- **Controls:** app: ⋯ of the house page or of the **Houses** window; terminal: `strom house story <house>`,
+  `strom config set stories no` (turns off the story by itself).
+- **Since:** research 1.38.0, app 3.33.0
+
+<!-- zdroj: research:100aee43 src/core/housestory.ts HOUSE_STORY_GENERATIONS 2, HOUSE_STORY_PEOPLE 3, houseStoryReach, houseStoryDue (STORY_NEW_FACTS 2 ze src/core/stories.ts; dropped od posledního textu → nic), raiseHouseStories (stories on, ne actsAsArchive, row.state done), askHouseStory (queueAt next, parked → open, house.story.none, house.archive), createStoryTask level narrate · src/commands/house.ts house story (--yes, NeedsInputError) · src/core/live.ts AGENT_FEATURES house.story, POST /houses/story · src/core/config.ts stories (yes výchozí) · strom help house story · app:3473602e strings.ts houses.writeStory, writeStoryAgain, storyAsked, storyMoved, errStoryNone -->
+
+<a id="S10.14.2"></a>
+### S10.14.2 The story in outputs and protecting people
+
+- The family book (the part **Houses**), the saved house page and the family pages show only the approved text; a
+  draft never, and with a new version beside the approved one still the approved one. In the book the story stands
+  before the house's sections and its sources are among the chapter's numbered notes.
+- The output leaves the story out **whole** (the text is not rewritten) when it names a living person, a person of the
+  last roughly 100 years or a person of the research without a record of death whom the tree does not know, or when
+  it rests on an item of the house the output hides ([S10.3.2](#S10.3.2)).
+- The link from a person's story to the house is in the book and in the family pages only when the output shows the
+  house's story.
+- **Controls:** app: export **Family book** → the part **Houses**; house page → **Save HTML**; family pages →
+  **Houses**.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} -->

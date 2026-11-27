@@ -304,8 +304,12 @@ own record. Names are recorded as they stand in the entry; only dates are standa
   [A4.6](A4-surnames-and-families.md#A4.6).
 - **Since:** research 1.0.0; prefix and suffix 1.13.0; the name a person is shown by 1.27.0; an unnamed child 1.27.0;
   the current married name 1.36.0
+- **From research 1.38.0:** only a name that is wholly one group in brackets (“(dítě)”, “[syn]”) is taken as
+  a description in place of a name. Brackets between words are part of the name: “(Jan) Josef (Karel) Horák” stays
+  as written when a family tree is taken over, with `strom person add`, `strom name add` and in a sync from the app;
+  the same as in the app ([A2.3](A2-loading-a-family-tree.md#A2.3)).
 
-<!-- zdroj: research:src/core/model.ts NAME_KINDS · research:src/commands/people.ts name add (description), name primary (od v1.27.0), TITLE_OPTIONS (od v1.13.0) · research:assets/method/recording.md "The names a record gives", "A child the record does not name" (od v1.27.0), "People named wrongly by the weaker record" · research:assets/method/intake.md krok 4 · aktuální jméno po sňatku: research:5476514e src/core/married.ts marriedInOrder, src/gedcom/export.ts, src/core/sync.ts name.now (spec 010 K4.1, K4.2) -->
+<!-- zdroj: research:src/core/model.ts NAME_KINDS · research:src/commands/people.ts name add (description), name primary (od v1.27.0), TITLE_OPTIONS (od v1.13.0) · research:assets/method/recording.md "The names a record gives", "A child the record does not name" (od v1.27.0), "People named wrongly by the weaker record" · research:assets/method/intake.md krok 4 · aktuální jméno po sňatku: research:5476514e src/core/married.ts marriedInOrder, src/gedcom/export.ts, src/core/sync.ts name.now (spec 010 K4.1, K4.2) · 1.38.0: research:fb240b4d src/core/people.ts notAName (jedna skupina v závorce; K055) -->
 
 <a id="R10.5.1"></a>
 ### R10.5.1 A wrong name and a note are retracted

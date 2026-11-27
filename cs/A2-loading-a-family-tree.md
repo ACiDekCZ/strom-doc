@@ -140,8 +140,11 @@ drží zvlášť a z řádku se odstraní; bez těchto značek se titul nehádá
   [A4](A4-surnames-and-families.md).
 - **Ovládání:** Žádné; výsledek se upraví v kartě osoby.
 - **Platí od:** aplikace 3.10.0 (tituly), 3.13.0 (příjmení po sňatku), 3.18.0 (`_STROM_PRIMARY`).
+- **Od aplikace 3.33.0:** popis v závorce je jen jméno, které je celé jednou skupinou v závorce („(dítě)“, „[syn]“,
+  „(mrtvě narozený)“). Závorky mezi slovy jsou součást jména: „(Jan) Josef (Karel) /Horák/“ zůstane, jak je zapsané,
+  bez poznámky, a export ho vrátí stejně. Stejně to čte výzkum ([R10.5](R10-people-and-hypotheses.md#R10.5)).
 
-<!-- zdroj: app:src/gedcom-names.ts:197 readGedcomName, :114 splitNameLine, :85 noName, :96 notAName, :260 stripTitles · app:src/ged-parser.ts:1404 readMarriedSurname, :2250 varianty, :2955 prohození TYPE -->
+<!-- zdroj: app:src/gedcom-names.ts:197 readGedcomName, :114 splitNameLine, :85 noName, :96 notAName, :260 stripTitles · app:src/ged-parser.ts:1404 readMarriedSurname, :2250 varianty, :2955 prohození TYPE · 3.33.0: app:810bc323 src/gedcom-names.ts noName /^[(\[{][^()\[\]{}]*[)\]}]$/u (K055) -->
 
 <a id="A2.4"></a>
 ## A2.4 Data a jejich tvary

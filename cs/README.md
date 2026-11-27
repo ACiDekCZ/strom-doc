@@ -50,10 +50,10 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [S3 Co ví výzkum](S3-what-the-research-knows.md): rozpory, hypotézy, prohledáno a Nad osobou v aplikaci
 - [S4 Výzkum řízený z aplikace](S4-research-from-the-app.md): panel a přehled výzkumu, fronta, linie, akce do terminálu
 - [S5 Telefon](S5-phone.md): stránka výzkumu v telefonu, párování, fotky po dávkách
-- [S6 Strom z jiného programu](S6-tree-from-another-program.md): rodokmen z MyHeritage, Gramps, FamilySearch a programů pro Windows: co se načte, značky spolehlivosti, údaje z rodokmenu jako vodítka, karta Co teď, zálohy, export zpět, opakovaný import, e-mail osoby jako kontakt
+- [S6 Strom z jiného programu](S6-tree-from-another-program.md): rodokmen z MyHeritage, Gramps, FamilySearch a programů pro Windows: co se načte, značky spolehlivosti, údaje z rodokmenu jako vodítka, karta Co teď, zálohy, export zpět, opakovaný import, e-mail osoby jako kontakt, údaje z rodokmenu ○○ i ve výzkumu a otázka „Přišlo to z rodokmenu?“
 - [S7 Spolehlivost údajů a ověření podle originálů](S7-reliability-and-verification.md): značky u údajů a na kartičce, Ověřit u údaje, u osoby a ve stromu, ověřování ve frontě výzkumu, Potvrdit podle skenu, co jde s mostem a bez něj
 - [S8 Kde jsou data](S8-where-the-data-are.md): co je jen v prohlížeči, co je ve výzkumu a v Archivu Stromu, fotky a přílohy stromu ve výzkumu, ukazatel Jen v prohlížeči, fotky, které se nepodařilo načíst, balík a odebrání stromu
 - [S9 Vyzkoušet na ukázce](S9-trying-the-sample.md): ukázka z webu a ze souboru bez instalace, štítek Ukázka, novější ukázka, malá ukázka bez sítě, ukázkový výzkum `strom demo` a jeho smazání
-- [S10 Domy](S10-houses.md): dům podle obce a čísla, čísla v čase, okno Domy a stránka domu, mapa a poloha, vyžádání historie domu, nastavení Historie domů, jak agent zkoumá dům, podoba domu, vlastní rešerše, rozhovor o domě, domy v knize a ve stránkách, příkazy `strom house`
+- [S10 Domy](S10-houses.md): dům podle obce a čísla, čísla v čase, okno Domy a stránka domu, mapa a poloha, vyžádání historie domu, nastavení Historie domů, jak agent zkoumá dům, podoba domu, vlastní rešerše, rozhovor o domě, domy v knize a ve stránkách, poloha domu ve výstupech, vyprávění o domě, příkazy `strom house`
 
 Licence: [CC BY 4.0](../LICENSE). Texty je možné sdílet a upravovat s uvedením zdroje.

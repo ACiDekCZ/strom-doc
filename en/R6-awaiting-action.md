@@ -142,8 +142,12 @@ decide**, see [R3.4.1](R3-verification-and-citation.md#R3.4.1)). Decisions come 
 - **Since:** research 1.14.0
 - **From research 1.26.0:** only a person decides; the research refuses the agent `strom story approve|discard`
   ([R6.6](#R6.6)).
+- **From research 1.38.0:** the same for a new version of the story of a house: “A new version of the story of the
+  house <house> — the approved one stays until a decision”, in the app 3.33.0 “The story of house <number> waits for
+  approval” with a link to the house page ([S10.14](S10-houses.md#S10.14)). The first draft of the story of a house is
+  not in the list; it is approved on the house page.
 
-<!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts -->
+<!-- zdroj: research:src/core/stories.ts:169 storiesToApprove · src/core/waiting.ts:369-390 · src/cli/menu-waiting.ts:686 decideStory · src/commands/story.ts:102-134 · app:src/ui/story-compare-ui.ts · 1.38.0: research:100aee43 src/core/waiting.ts (story s house, skupina stories, jen nová verze; APP_SHOWS_HOUSE_STORY), assets/lang/cs.json ui.waiting.story.house · app:3473602e strings.ts houses.storyWaiting -->
 
 <a id="R6.3.3"></a>
 ### R6.3.3 Branches off the lines
@@ -185,6 +189,21 @@ decide**, see [R3.4.1](R3-verification-and-citation.md#R3.4.1)). Decisions come 
   decision** and the choice **Who decides the hypotheses**.
 
 <!-- zdroj: research:src/core/waiting.ts (kind hypothesis, section decide, DECIDE_RANK 0, open: priority -1 a hypothesesOpen jen při person, leftOpen, TERMINAL_ONLY hypotheses, actsAsArchive) · src/cli/menu-waiting.ts decideHypothesis (proposed / open / decided) · src/cli/menu-research.ts:532 · assets/lang/cs.json wait.group.hypotheses, ui.wait.hypothesis.proposed/accept/other/keep/decide/keepOpen/change/byAgent · CHANGELOG.cs.md 1.29.0 · src/cli/wizard.ts 5c (doporučení) · app:src/ui/person-research-ui.ts HYPOTHESES_OFFER_MIN -->
+
+<a id="R6.3.5"></a>
+### R6.3.5 Did this come from a family tree?
+
+- A send from the Strom app that added many people written as a person's edits waits in the group **The Strom app**
+  with the question whether it came from a family tree (an import, a merge). The choice: **Yes, from a family tree**
+  (the facts go from ✓ to ○○, their values stay), **No, written by hand** (nothing changes, the question
+  does not come again). When it asks and what exactly changes is in
+  [S6.10.1](S6-tree-from-another-program.md#S6.10.1).
+- **Limits:** only a person answers ([R6.6](#R6.6)); a research that serves as an archive asks too.
+- **Controls:** app: **Awaiting action**; terminal: **What waits** → the item, `strom sync as-import I… --apply |
+  --own`.
+- **Since:** research 1.38.0
+
+<!-- zdroj: research:dec54543 src/core/waiting.ts (kind import, group app, section decide), src/cli/menu-waiting.ts (sync as-import --apply|--own) · assets/lang/cs.json ui.waiting.import, ui.wait.kind.import · app:strings.ts live.importAsk -->
 
 <a id="R6.4"></a>
 ## R6.4 Groups and order
@@ -304,8 +323,11 @@ asks the person in a system window, or refuses the command.
 - **From research 1.37.0:** only a person also returns a waiting task to the agent (`strom task wake --retry`,
   [R6.7.3](#R6.7.3)): in the menu **What waits** or in the Strom app through the bridge. The research refuses the
   command to an agent and to a strom inside an agent's session.
+- **From research 1.38.0:** only a person also answers whether a send from the app came from a family tree
+  (`strom sync as-import`, [S6.10.2](S6-tree-from-another-program.md#S6.10.2)) and requests the story of a house
+  (`strom house story`, [S10.14.1](S10-houses.md#S10.14.1)).
 
-<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) · 1.28.0: analysis.ts hypothesis decide (person), batch.ts def.person (commit 9b12256a) · 1.29.0: setup.ts syncDecisions hypotheses.decide (requireHuman), config.ts hypothesesDecide výchozí agent; strom help source reading („The person's alone … an agent never decides it“), strom help source proposal („Only the person decides it“) · 1.35.0: research:fb94435f src/commands/sync.ts sync note (person, agentMay s odpovědí), src/core/shorternote.ts decideShorterNote (shorter.person) -->
+<!-- zdroj: research:src/commands/tasks.ts:897-970 (requireHuman :941, task.check-person :932) · src/commands/archives.ts:586-645 · src/commands/calibrate.ts:320 · src/commands/placeid.ts:343 person · assets/method/waiting.md, narrate.md:26-31 · src/cli/menu-waiting.ts:45 ANSWER_MAX · 1.26.0: userOnly u story approve/discard, offline answer, conflict leave, sync undo/discard (commity 4683a22d, 1189532f, 942c56f9), fixes.ts edit-decisions/woken-waits (person at the terminal) · 1.28.0: analysis.ts hypothesis decide (person), batch.ts def.person (commit 9b12256a) · 1.29.0: setup.ts syncDecisions hypotheses.decide (requireHuman), config.ts hypothesesDecide výchozí agent; strom help source reading („The person's alone … an agent never decides it“), strom help source proposal („Only the person decides it“) · 1.35.0: research:fb94435f src/commands/sync.ts sync note (person, agentMay s odpovědí), src/core/shorternote.ts decideShorterNote (shorter.person) · 1.38.0: research:src/cli/help.ts HUMAN_COMMANDS „sync as-import“, src/commands/sync.ts sync as-import person („never an agent“), src/commands/house.ts house story person, src/cli/main.ts:310 requireHuman -->
 
 <a id="R6.7"></a>
 ## R6.7 Sent, the answer and the return to the queue

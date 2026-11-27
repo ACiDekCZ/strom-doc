@@ -101,6 +101,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R6.3.2 | R6-awaiting-action.md | výzkum 1.14.0 | platí | Vyprávění ke schválení | A story to approve | Erzählung zur Freigabe | Opowieść do zatwierdzenia |
 | R6.3.3 | R6-awaiting-action.md | výzkum 1.26.0 | platí | Větve mimo linie | Branches off the lines | Zweige außerhalb der Linien | Gałęzie poza liniami |
 | R6.3.4 | R6-awaiting-action.md | výzkum 1.28.0 | platí | Hypotézy k rozhodnutí | Hypotheses to decide | Hypothesen zu entscheiden | Hipotezy do rozstrzygnięcia |
+| R6.3.5 | R6-awaiting-action.md | výzkum 1.38.0 | platí | Přišlo to z rodokmenu? | Did this come from a family tree? | Stammt das aus einem Stammbaum? | Czy to pochodzi z drzewa genealogicznego? |
 | R6.4 | R6-awaiting-action.md | výzkum 1.14.0 | platí | Skupiny a pořadí | Groups and order | Gruppen und Reihenfolge | Grupy i kolejność |
 | R6.4.1 | R6-awaiting-action.md | výzkum 1.37.0 | platí | Co nejvíc pomůže | What helps most | Was am meisten hilft | Co najbardziej pomoże |
 | R6.5 | R6-awaiting-action.md | výzkum 1.14.0 | platí | Co jde vyřídit kde | What can be dealt with where | Was sich wo erledigen lässt | Co można załatwić gdzie |
@@ -607,6 +608,9 @@ nenapsáno) · `neplatí od <verze>`.
 | S6.7 | S6-tree-from-another-program.md | aplikace 3.26.0 | koncept | Rodokmen načtený znovu a sloučení | A family tree loaded again and merging | Ein erneut geladener Stammbaum und Zusammenführen | Drzewo wczytane ponownie i scalanie |
 | S6.8 | S6-tree-from-another-program.md | výzkum 1.30.0 | koncept | Rodokmen ve výzkumu | A family tree in the research | Ein Stammbaum in der Forschung | Drzewo w badaniu |
 | S6.9 | S6-tree-from-another-program.md | aplikace 3.32.0, výzkum 1.37.0 | platí | E-mail osoby: kontakt, ne bydliště | A person's e-mail: a contact, not a residence | Die E-Mail einer Person: ein Kontakt, kein Wohnort | E-mail osoby: kontakt, nie miejsce zamieszkania |
+| S6.10 | S6-tree-from-another-program.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Údaje z rodokmenu zůstanou ○○ i ve výzkumu | Values from a family tree stay ○○ in the research too | Angaben aus dem Stammbaum bleiben auch in der Forschung ○○ | Dane z drzewa pozostają ○○ także w badaniu |
+| S6.10.1 | S6-tree-from-another-program.md | výzkum 1.38.0, aplikace 3.33.0 | platí | Otázka „Přišlo to z rodokmenu?“ | The question “Did this come from a family tree?” | Die Frage „Stammt das aus einem Stammbaum?“ | Pytanie „Czy to pochodzi z drzewa genealogicznego?” |
+| S6.10.2 | S6-tree-from-another-program.md | výzkum 1.38.0 | platí | Příkaz `strom sync as-import` | The `strom sync as-import` command | Der Befehl `strom sync as-import` | Polecenie `strom sync as-import` |
 | S7 | S7-reliability-and-verification.md | výzkum 1.30.0, aplikace 3.26.0 | koncept | Spolehlivost údajů a ověření podle originálů | Reliability of facts and verification against the originals | Zuverlässigkeit von Angaben und Prüfung an den Originalen | Wiarygodność danych i weryfikacja według oryginałów |
 | S7.1 | S7-reliability-and-verification.md | aplikace 3.26.0 | koncept | Značka u údaje v kartě osoby | The mark at a fact in the person card | Die Marke an einer Angabe in der Personenkarte | Znacznik przy danej w karcie osoby |
 | S7.2 | S7-reliability-and-verification.md | aplikace 3.26.0 | koncept | Jedna značka na kartičce ve stromu | One mark on the card in the tree | Eine Marke auf der Karte im Baum | Jeden znacznik na karcie w drzewie |
@@ -646,6 +650,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S10.3.1 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Mapa a poloha domu | Map and location of the house | Karte und Lage des Hauses | Mapa i położenie domu |
 | S10.3.2 | S10-houses.md | aplikace 3.33.0 | platí | Uložená stránka domu a ochrana lidí | The saved house page and protecting people | Die gespeicherte Hausseite und der Schutz von Personen | Zapisana strona domu i ochrona osób |
 | S10.3.3 | S10-houses.md | aplikace 3.33.0 | platí | Časová osa ze zápisů stromu | The timeline from the tree's records | Die Zeitleiste aus den Einträgen des Stammbaums | Oś czasu z zapisów drzewa |
+| S10.3.4 | S10-houses.md | aplikace 3.33.0 | platí | Poloha domu ve výstupech | The house location in outputs | Die Lage des Hauses in Ausgaben | Położenie domu w wynikach |
 | S10.4 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Vyžádat historii domu | Requesting a house's history | Die Geschichte eines Hauses anfordern | Zamówić historię domu |
 | S10.4.1 | S10-houses.md | výzkum 1.38.0 | platí | Vyžádání v terminálu a z odkazu | Requesting in the terminal and from a link | Anfordern im Terminal und über einen Link | Zamówienie w terminalu i z linku |
 | S10.5 | S10-houses.md | výzkum 1.38.0 | platí | Historie domů: domy samy | House history: houses on their own | Hausgeschichte: Häuser von selbst | Historia domów: domy same |
@@ -660,3 +665,6 @@ nenapsáno) · `neplatí od <verze>`.
 | S10.11 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Domy jinde v aplikaci | Houses elsewhere in the app | Häuser an anderen Stellen der App | Domy w innych miejscach aplikacji |
 | S10.12 | S10-houses.md | výzkum 1.38.0 | platí | Příkazy `strom house` | The `strom house` commands | Die Befehle `strom house` | Polecenia `strom house` |
 | S10.13 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Strom jen ke čtení a ukázka | A read-only tree and the sample | Schreibgeschützter Stammbaum und Beispiel | Drzewo tylko do odczytu i przykład |
+| S10.14 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Vyprávění o domě | The story of a house | Die Erzählung über das Haus | Opowieść o domu |
+| S10.14.1 | S10-houses.md | výzkum 1.38.0, aplikace 3.33.0 | platí | Kdy vyprávění vznikne: samo a na požádání | When the story is written: by itself and on request | Wann die Erzählung entsteht: von selbst und auf Anfrage | Kiedy powstaje opowieść: sama i na żądanie |
+| S10.14.2 | S10-houses.md | aplikace 3.33.0 | platí | Vyprávění ve výstupech a ochrana lidí | The story in outputs and protecting people | Die Erzählung in Ausgaben und der Schutz von Personen | Opowieść w wynikach i ochrona osób |

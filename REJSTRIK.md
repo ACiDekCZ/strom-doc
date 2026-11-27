@@ -1477,6 +1477,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A2.1.1](cs/A2-loading-a-family-tree.md#A2.1.1)
 
+<a id="came-from-family-tree"></a>
+### Přišlo to z rodokmenu?
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Přišlo to z rodokmenu (import, sloučení)? · rodokmen? (terminál) · Ano, z rodokmenu · Ne, zapsáno ručně | Otázka v Čeká na vyřízení k odeslání z aplikace, které přidalo do výzkumu hodně lidí zapsaných jako úpravy člověka. Ano převede jejich nezměněné a nepotvrzené údaje z ✓ na ○○ Z rodokmenu; hodnoty zůstanou. |
+| en | Did this come from a family tree (import, merge)? · family tree? (terminal) · Yes, from a family tree · No, written by hand | A question in Awaiting action about a send from the app that added many people to the research written as a person's edits. Yes turns their unchanged, unconfirmed values from ✓ to ○○ From family tree; the values stay. |
+| de | Stammt das aus einem Stammbaum (Import, Zusammenführung)? · Stammbaum? (terminal) · Ja, aus einem Stammbaum · Nein, von Hand eingetragen | Eine Frage in Wartet auf Bearbeitung zu einer Sendung aus der App, die der Forschung viele Personen als Änderungen eines Menschen hinzugefügt hat. Ja macht ihre unveränderten, unbestätigten Angaben von ✓ zu ○○ Aus dem Stammbaum; die Werte bleiben. |
+| pl | Czy to pochodzi z drzewa genealogicznego (import, scalenie)? · drzewo? (terminal) · Tak, z drzewa genealogicznego · Nie, wpisane ręcznie | Pytanie w Czeka na załatwienie o wysyłkę z aplikacji, która dodała do badania wiele osób zapisanych jako zmiany człowieka. Tak zmienia ich niezmienione, niepotwierdzone dane z ✓ na ○○ Z drzewa; wartości zostają. |
+
+- **Čísla:** [S6.10.1](cs/S6-tree-from-another-program.md#S6.10.1), S6.10, S6.10.2, R6.3.5
+
 <a id="married-surname"></a>
 ### Příjmení po sňatku
 
@@ -1994,6 +2006,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A6.6](cs/A6-views.md#A6.6), A6.6.1, A6.6.2, A6.6.3, A6.6.4, A6.5.7, A6.5.8, A6.7.19
 
+<a id="house-story"></a>
+### Vyprávění o domě
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | vyprávění o domě · Napsat vyprávění o domě · oddíl Vyprávění | Souvislý text agenta o domě pro rodinu: držitelé a rodiny přes generace, co se s domem dělo, čísla v čase, poloha a podoba. Jen z toho, co výzkum o domě zjistil; koncept, dokud ho neschválí člověk. Výstupy ukazují jen schválené vyprávění, které nejmenuje chráněné lidi. |
+| en | story of the house · Write the story of the house · Story section | The agent's continuous text about a house for the family: holders and families over generations, what happened to the house, numbers over time, location and look. Only from what the research found about the house; a draft until a person approves it. Outputs show only an approved story that names no protected people. |
+| de | Erzählung über das Haus · Erzählung über das Haus schreiben · Abschnitt Erzählung | Der zusammenhängende Text des Agenten über ein Haus für die Familie: Besitzer und Familien über Generationen, was mit dem Haus geschah, Nummern im Lauf der Zeit, Lage und Aussehen. Nur aus dem, was die Forschung über das Haus herausgefunden hat; ein Entwurf, bis ein Mensch ihn freigibt. Ausgaben zeigen nur eine freigegebene Erzählung, die keine geschützten Personen nennt. |
+| pl | opowieść o domu · Napisz opowieść o domu · sekcja Opowieść | Ciągły tekst agenta o domu dla rodziny: właściciele i rodziny przez pokolenia, co działo się z domem, numery w czasie, położenie i wygląd. Tylko z tego, co badanie ustaliło o domu; szkic, dopóki człowiek go nie zatwierdzi. Eksporty pokazują tylko zatwierdzoną opowieść, która nie wymienia chronionych osób. |
+
+- **Čísla:** [S10.14](cs/S10-houses.md#S10.14), S10.14.1, S10.14.2, R6.3.2
+
 <a id="record-excerpt"></a>
 ### Výřez zápisu
 
@@ -2076,7 +2100,7 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | de | Aus dem Stammbaum | Die Zuverlässigkeitsmarke einer Angabe aus dem Stammbaum eines anderen Programms, die niemand geprüft oder geändert hat; sie gilt, solange die Angabe den Wert aus der Datei hat. In einem Forschungsbaum trägt sie auch eine Angabe ohne Sicherheitsgrad aus einem Stammbaum aus der App Strom, den die Forschung übernommen hat und die niemand geändert hat. |
 | pl | Z drzewa | Znacznik wiarygodności danej przejętej z drzewa innego programu, której nikt nie sprawdził ani nie zmienił; obowiązuje, dopóki dana ma wartość z pliku. W drzewie badania ma go też dana bez stopnia pewności z drzewa z aplikacji Strom, które badanie przejęło, jeśli nikt jej nie zmienił. |
 
-- **Čísla:** [S6.2](cs/S6-tree-from-another-program.md#S6.2), S6.3, S7.1, S7.2
+- **Čísla:** [S6.2](cs/S6-tree-from-another-program.md#S6.2), S6.3, S6.10, S7.1, S7.2
 
 <a id="placeholder-person"></a>
 ### Zástupná osoba
