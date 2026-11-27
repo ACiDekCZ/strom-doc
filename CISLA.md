@@ -24,6 +24,7 @@ nenapsáno) · `neplatí od <verze>`.
 | R1.9 | R1-research-in-brief.md | výzkum 1.32.0 | platí | Otázky nad daty stromu: `strom query` | Questions over the tree's data: `strom query` | Fragen an die Daten des Baums: `strom query` | Pytania o dane drzewa: `strom query` |
 | R1.9.1 | R1-research-in-brief.md | výzkum 1.32.0 | platí | Vyprávění: `strom query --story` | Stories: `strom query --story` | Erzählungen: `strom query --story` | Opowieści: `strom query --story` |
 | R1.9.2 | R1-research-in-brief.md | výzkum 1.32.0 | platí | Vlastní tvary povolání: `strom occupation` | The research's own forms of occupations: `strom occupation` | Eigene Formen von Berufen: `strom occupation` | Własne formy zawodów: `strom occupation` |
+| R1.10 | R1-research-in-brief.md | výzkum 1.38.0 | platí | Menu výzkumu v terminálu | The research's menu in the terminal | Das Menü der Forschung im Terminal | Menu badania w terminalu |
 | R2 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Linie a fronta | Lines and the queue | Linien und Warteschlange | Linie i kolejka |
 | R2.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Linie určuje, co výzkum zkoumá | A line sets what the research investigates | Die Linie bestimmt, was die Forschung untersucht | Linia wyznacza, co badanie bada |
 | R2.1.1 | R2-lines-and-queue.md | výzkum 1.0.0 | platí | Druhy linií a meze | Kinds of lines and their limits | Arten von Linien und Grenzen | Rodzaje linii i ograniczenia |
@@ -630,7 +631,30 @@ nenapsáno) · `neplatí od <verze>`.
 | S9.1 | S9-trying-the-sample.md | aplikace 3.33.0 | platí | Ukázka z webu | The sample from the web | Das Beispiel aus dem Web | Przykład z sieci |
 | S9.1.1 | S9-trying-the-sample.md | aplikace 3.33.0 | platí | Druhé otevření a novější ukázka | Opening it again and a newer sample | Erneutes Öffnen und ein neueres Beispiel | Ponowne otwarcie i nowszy przykład |
 | S9.1.2 | S9-trying-the-sample.md | aplikace 3.33.0 | platí | Štítek Ukázka a smazání ukázky | The Sample tag and deleting the sample | Das Etikett Beispiel und das Löschen des Beispiels | Etykieta Przykład i usunięcie przykładu |
+| S9.1.3 | S9-trying-the-sample.md | aplikace 3.33.0 | platí | Výzkum ukázky jen k prohlížení | The sample's research, view only | Die Forschung des Beispiels nur zum Ansehen | Badanie przykładu tylko do przeglądania |
 | S9.2 | S9-trying-the-sample.md | aplikace 3.33.0 | platí | Soubor ukázky a samostatný soubor HTML | The sample file and the standalone HTML file | Die Beispieldatei und die eigenständige HTML-Datei | Plik przykładu i samodzielny plik HTML |
 | S9.3 | S9-trying-the-sample.md | aplikace 3.33.0 | platí | Když se ukázka nestáhne: malá ukázka | When the sample does not download: the small sample | Wenn das Beispiel nicht herunterlädt: das kleine Beispiel | Gdy przykład się nie pobierze: mały przykład |
 | S9.4 | S9-trying-the-sample.md | výzkum 1.38.0 | platí | Ukázkový výzkum: `strom demo` | The sample research: `strom demo` | Die Beispielforschung: `strom demo` | Przykładowe badanie: `strom demo` |
 | S9.4.1 | S9-trying-the-sample.md | výzkum 1.38.0 | platí | Smazání: `strom demo --remove` | Deleting it: `strom demo --remove` | Löschen: `strom demo --remove` | Usunięcie: `strom demo --remove` |
+| S10 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Domy | Houses | Häuser | Domy |
+| S10.1 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Dům: obec a číslo | A house: town and number | Ein Haus: Ort und Nummer | Dom: miejscowość i numer |
+| S10.1.1 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Jak se čte číslo domu | How a house number is read | Wie eine Hausnummer gelesen wird | Jak odczytuje się numer domu |
+| S10.1.2 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Čísla v čase, spojení a jméno po chalupě | Numbers over time, merging and the house name | Nummern im Lauf der Zeit, Zusammenführen und Hausname | Numery w czasie, połączenie i nazwa domu |
+| S10.2 | S10-houses.md | aplikace 3.33.0 | platí | Okno Domy | The Houses window | Das Fenster Häuser | Okno Domy |
+| S10.3 | S10-houses.md | aplikace 3.33.0 | platí | Stránka domu | The house page | Die Hausseite | Strona domu |
+| S10.3.1 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Mapa a poloha domu | Map and location of the house | Karte und Lage des Hauses | Mapa i położenie domu |
+| S10.3.2 | S10-houses.md | aplikace 3.33.0 | platí | Uložená stránka domu a ochrana lidí | The saved house page and protecting people | Die gespeicherte Hausseite und der Schutz von Personen | Zapisana strona domu i ochrona osób |
+| S10.4 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Vyžádat historii domu | Requesting a house's history | Die Geschichte eines Hauses anfordern | Zamówić historię domu |
+| S10.4.1 | S10-houses.md | výzkum 1.38.0 | platí | Vyžádání v terminálu a z odkazu | Requesting in the terminal and from a link | Anfordern im Terminal und über einen Link | Zamówienie w terminalu i z linku |
+| S10.5 | S10-houses.md | výzkum 1.38.0 | platí | Historie domů: domy samy | House history: houses on their own | Hausgeschichte: Häuser von selbst | Historia domów: domy same |
+| S10.5.1 | S10-houses.md | výzkum 1.38.0, aplikace 3.33.0 | platí | Zapnout a vypnout Historii domů | Turning House history on and off | Hausgeschichte ein- und ausschalten | Włączanie i wyłączanie Historii domów |
+| S10.6 | S10-houses.md | výzkum 1.38.0 | platí | Jak agent zkoumá dům | How the agent researches a house | Wie der Agent ein Haus erforscht | Jak agent bada dom |
+| S10.6.1 | S10-houses.md | výzkum 1.38.0 | platí | Prameny domu a co nejde ven | A house's sources and what does not go out | Quellen eines Hauses und was nicht hinausgeht | Źródła domu i co nie wychodzi na zewnątrz |
+| S10.6.2 | S10-houses.md | výzkum 1.38.0 | platí | Převzaté údaje s pramenem na webu | Taken-over facts with a source on the web | Übernommene Angaben mit Quelle im Web | Przejęte dane ze źródłem w sieci |
+| S10.7 | S10-houses.md | výzkum 1.38.0, aplikace 3.33.0 | platí | Podoba domu | The look of the house | Das Aussehen des Hauses | Wygląd domu |
+| S10.8 | S10-houses.md | výzkum 1.38.0, aplikace 3.33.0 | platí | Vlastní rešerše a materiál k domu | Own research and material for a house | Eigene Recherche und Material zum Haus | Własna kwerenda i materiał do domu |
+| S10.9 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Probrat dům s agentem | Discussing a house with the agent | Ein Haus mit dem Agenten besprechen | Omówić dom z agentem |
+| S10.10 | S10-houses.md | aplikace 3.33.0 | platí | Domy v knize a ve stránkách | Houses in the book and the pages | Häuser im Buch und in den Seiten | Domy w księdze i na stronach |
+| S10.11 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Domy jinde v aplikaci | Houses elsewhere in the app | Häuser an anderen Stellen der App | Domy w innych miejscach aplikacji |
+| S10.12 | S10-houses.md | výzkum 1.38.0 | platí | Příkazy `strom house` | The `strom house` commands | Die Befehle `strom house` | Polecenia `strom house` |
+| S10.13 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Strom jen ke čtení a ukázka | A read-only tree and the sample | Schreibgeschützter Stammbaum und Beispiel | Drzewo tylko do odczytu i przykład |

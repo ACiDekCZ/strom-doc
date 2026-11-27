@@ -151,6 +151,8 @@ The family book is a book to read from the start: a family tree, families by gen
 - **From app 3.30.0:** the part **Record clippings and photos** also puts the couple's photo into the family's chapter,
   above the couple's events; a tree whose only pictures are couples' photos offers that part
   ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
+- **From app 3.33.0:** the choice **House** (a book about one house), the part **Houses** and the **Index of houses**
+  ([S10.10](S10-houses.md#S10.10)).
 
 <!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 -->
 
@@ -186,6 +188,8 @@ of people, families, surnames and towns.
   ancestors of a person with a chosen number of generations.
 - Privacy of living people and sources as in [A7.2](#A7.2); default Initials + birth year.
 - **Since:** Family pages app 3.20.0; Tree pages app 3.21.0
+- **From app 3.33.0:** the option **Houses**: houses with history, the index of houses and a page for each house
+  ([S10.10](S10-houses.md#S10.10)).
 
 <!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 -->
 

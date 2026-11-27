@@ -229,3 +229,33 @@ o własne formy badania: inny język, dawną pisownię lub zawód, którego list
 - **Obowiązuje od:** badanie 1.32.0
 
 <!-- zdroj: research:src/commands/occupation.ts (add: aspoň dva tvary, --source ověřený pramen, by human | agent podle tree.personWrites; list: bez slova skupiny s by/at/sources, se slovem tvary s * u vlastních, --all; remove: agent jen své, persons, builtin, unknown) · src/core/occupations.ts (OCCUPATIONS_FILE quality/occupations.json, parseForm kód jazyka, addOccupation: nic se nezapíše, když už jedno povolání; mergeOccupations, ownOrRefuse: nečitelný soubor → UsageError strom repair; writeOwn putFile zapečetěná operace) · src/commands/query.ts:254–265 (ui.query.occupation.unknown, ui.occupation.unreadable) · assets/terms/occupations.json (83 skupin) · src/agents/files.ts AGENTS.md „An occupation strom query says is in no list“ · cs.json ui.occupation.*, ui.query.occupation.unknown · commity 84e7fc0e, 0abe8793 · CHANGELOG.cs.md 1.32.0 -->
+
+<a id="R1.10"></a>
+## R1.10 Menu badania w terminalu
+
+Polecenie `strom` bez niczego więcej otwiera menu badania. Każdy ekran menu ma ten sam kształt, aby było widać, co jest
+wyborem, co tekstem, a co poleceniem do przepisania. Znaczenie niesie kształt, nie kolor.
+
+- **Kształt ekranu:**
+  - na górze droga do ekranu: **Strom › Ustawienia › Konserwacja**; długa nazwa jest w niej skrócona „…”;
+  - pod nią krótkie podsumowanie i sekcje z nagłówkiem;
+  - wybory jako `[1]  Etykieta   wartość  dodatek`: klawisz w nawiasach kwadratowych, etykieta, w kolumnie stan lub
+    liczba (**wyłączone**, **60 min**, **4**) i bladym drukiem, co wybór zawiera. Długa etykieta zawija się pod siebie,
+    wartość zostaje w kolumnie. Przełącznik mówi, jak jest teraz, i za strzałką, na co przełączy (**wyłączone  →
+    włączyć**);
+  - **[0]** jest zawsze ostatni, po pustym wierszu: **Wstecz**, w menu głównym **Koniec**;
+  - zachęta mówi, co zrobi Enter: **Wybór (Enter = 0 Wstecz):**. W menu głównym Enter to pierwszy wybór
+    (**Wybór (Enter = 1 Kontynuuj):**);
+  - polecenie do przepisania stoi we własnym wierszu: `$ strom …`, nigdy w środku zdania;
+  - dłuższe wyjaśnienie jest za **[?]  Szczegóły**.
+- **Granice:**
+  - ekran jest tak szeroki jak terminal, co najmniej 60 i najwyżej 100 znaków; poza terminalem nic się nie zawija;
+  - kolory tylko uzupełniają kształt: klawisze i nagłówki pogrubione, droga i dodatki blade, polecenie cyjanowe,
+    ✓ zielony, ✗ czerwony. Są tylko w terminalu człowieka: nigdy ze zmienną `NO_COLOR`, z `FORCE_COLOR=0`,
+    z `TERM=dumb`, dla agenta ani poza terminalem;
+  - w starym oknie konsoli Windows (nie Windows Terminal) bez bladego druku i ze znakami `+` i `x` zamiast ✓ i ✗;
+  - wyjścia dla agenta i skryptów (`--json`, `strom fixes list`, pomoc) mają kształt jak dotąd.
+- **Obsługa:** terminal: `strom`; wyłączenie kolorów: zmienna `NO_COLOR`.
+- **Obowiązuje od:** badanie 1.38.0
+
+<!-- zdroj: research:0a1e3780, a9b88a54, ccb2942f, 99d46a56 src/cli/screen.ts (Role, SGR key 1, crumb 2, crumbLast 1, heading 1, dim 2, command 36, ok 32, err 31; MAX_WIDTH 100, MIN_WIDTH 60, widthOf; oldConsole, asciiMarks ✓→+ ✗→x; terminalStyle: tty, NO_COLOR, FORCE_COLOR 0/false, TERM dumb, agent; commandLine „$ “; optionLines LABEL_MAX 40; crumbLine CRUMB_MAX 32) · src/cli/context.ts choose (ui.choose.enter, details → [?] ui.details) · cs.json ui.choose.enter, ui.details · test/fixtures/screens/menu-cs-80.txt, waiting-cs-80.txt · CHANGELOG.cs.md 1.38.0 „Přehlednější menu v terminálu“ · dirigent:spec/144 K1–K4, K7 -->

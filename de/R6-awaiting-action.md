@@ -220,8 +220,15 @@ Nachricht erledigen lassen.
   mit den meisten Aufgaben ([R6.8](#R6.8)).
 - **Ab Forschung 1.37.0:** bei einem Eintrag, hinter dem Aufgaben stehen, sendet sie auch, wie viel seine Erledigung
   hilft ([R6.4.1](#R6.4.1)).
+- **Ab Forschung 1.38.0:** **Was wartet** im Terminal hat die Form der übrigen Bildschirme des Menüs
+  ([R1.10](R1-research-in-brief.md#R1.10)): oben **Strom › Was wartet** und Anzahlen („zu erledigen 3 · wartet auf
+  Antwort 1“), darunter die Zeile **Art:** mit den Tasten der Abschnitte und Anzahlen (`[m] Archive und Ämter 2
+  [f] Familie 1`), die Gruppen als Auswahlen mit der Anzahl in einer Spalte, **[?]  wartet auf Antwort N** (oder
+  **[?]  zu erledigen N**) und **[k]  Bücher mit den meisten Aufgaben N** in eigenen Zeilen und **[0]  Zurück**
+  zuletzt; mit Filter **[0]  Filter aufheben**. Eine Gruppe zeigt den Weg zu sich (**Strom › Was wartet › Matriční
+  úřad …**, ein langer Name mit „…“ gekürzt) auch nach jeder Aktion. Inhalt und Reihenfolge sind unverändert.
 
-<!-- zdroj: research:src/core/waiting.ts:73 SECTION_RANK, :75 DECIDE_RANK, :468 together, :478-492 ordered · src/core/waitkind.ts:238 waitGroupOf · assets/lang/cs.json:2313-2320 wait.group.* (:2359) · src/cli/menu-waiting.ts:205-232 · app:strings.ts:11958 waitingFilterLabel -->
+<!-- zdroj: research:src/core/waiting.ts:73 SECTION_RANK, :75 DECIDE_RANK, :468 together, :478-492 ordered · src/core/waitkind.ts:238 waitGroupOf · assets/lang/cs.json:2313-2320 wait.group.* (:2359) · src/cli/menu-waiting.ts:205-232 · app:strings.ts:11958 waitingFilterLabel · 1.38.0: research:0a1e3780, ccb2942f, 99d46a56 src/cli/menu-waiting.ts, src/cli/screen.ts listLines, crumbLine · cs.json ui.wait.kinds, ui.wait.f.sent, ui.wait.f.todo, ui.wait.f.back, ui.wait.f.unfilter, ui.wait.c.books, ui.wait.prompt · test/fixtures/screens/waiting-cs-80.txt · dirigent:spec/144 K5 -->
 
 <a id="R6.4.1"></a>
 ### R6.4.1 Was am meisten hilft

@@ -213,8 +213,15 @@ message.
   ([R6.8](#R6.8)).
 - **From research 1.37.0:** at an item with tasks behind it, it also sends how much dealing with it helps
   ([R6.4.1](#R6.4.1)).
+- **From research 1.38.0:** **What waits** in the terminal has the shape of the other screens of the menu
+  ([R1.10](R1-research-in-brief.md#R1.10)): at the top **Strom › What waits** and counts (“to do 3 · waiting for a
+  reply 1”), under them the line **Kind:** with the keys of the sections and counts (`[o] archives and offices 2
+  [f] family 1`), the groups as choices with the count in a column, **[?]  waiting for a reply N** (or **[?]  to do
+  N**) and **[b]  books with the most tasks N** on lines of their own and **[0]  Back** last; with a filter
+  **[0]  Without the filter**. A group shows the way to itself (**Strom › What waits › Matriční úřad …**, a long name
+  cut short with “…”) also after every action. The content and the order have not changed.
 
-<!-- zdroj: research:src/core/waiting.ts:73 SECTION_RANK, :75 DECIDE_RANK, :468 together, :478-492 ordered · src/core/waitkind.ts:238 waitGroupOf · assets/lang/cs.json:2313-2320 wait.group.* (:2359) · src/cli/menu-waiting.ts:205-232 · app:strings.ts:11958 waitingFilterLabel -->
+<!-- zdroj: research:src/core/waiting.ts:73 SECTION_RANK, :75 DECIDE_RANK, :468 together, :478-492 ordered · src/core/waitkind.ts:238 waitGroupOf · assets/lang/cs.json:2313-2320 wait.group.* (:2359) · src/cli/menu-waiting.ts:205-232 · app:strings.ts:11958 waitingFilterLabel · 1.38.0: research:0a1e3780, ccb2942f, 99d46a56 src/cli/menu-waiting.ts, src/cli/screen.ts listLines, crumbLine · cs.json ui.wait.kinds, ui.wait.f.sent, ui.wait.f.todo, ui.wait.f.back, ui.wait.f.unfilter, ui.wait.c.books, ui.wait.prompt · test/fixtures/screens/waiting-cs-80.txt · dirigent:spec/144 K5 -->
 
 <a id="R6.4.1"></a>
 ### R6.4.1 What helps most

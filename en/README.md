@@ -54,5 +54,6 @@ Parts R (the research), A (the app) and S (the app and the research together) ar
 - [S7 Reliability of facts and verification against the originals](S7-reliability-and-verification.md): marks at facts and on the card, Verify at a fact, at a person and in the tree, verifying in the research's queue, Confirm against the scan, what works with the bridge and without it
 - [S8 Where the data are](S8-where-the-data-are.md): what is only in the browser, what is in the research and in the Strom archive, the tree's photos and attachments in the research, the indicator Only in browser, photos that could not be loaded, the pack and removing a tree
 - [S9 Trying the sample](S9-trying-the-sample.md): the sample from the web and from a file without installing, the tag Sample, a newer sample, the small sample without a network, the sample research `strom demo` and deleting it
+- [S10 Houses](S10-houses.md): a house by its town and number, numbers over time, the Houses window and the house page, map and location, requesting a house's history, the setting House history, how the agent researches a house, the look of a house, own research, a chat about a house, houses in the book and in the pages, the commands `strom house`
 
 License: [CC BY 4.0](../LICENSE). The texts may be shared and adapted with attribution.

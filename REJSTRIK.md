@@ -781,6 +781,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A8.10](cs/A8-merging-trees.md#A8.10), A8.11
 
+<a id="house"></a>
+### Dům
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | dům · dům s historií · okno Domy · stránka domu | Obec a číslo domu, složené ze zápisů stromu (narození, sňatek, sčítání, bydliště, úmrtí). Dům s historií má aspoň 2 generace nebo zápisy přes 30 let. Okno **Domy** ukazuje domy po obcích, stránka domu jeden dům s časovou osou, držiteli, obyvateli, podobou a mapou. |
+| en | house · house with history · Houses window · house page | A town and a house number, put together from the tree's records (birth, marriage, census, residence, death). A house with history has at least 2 generations or records over 30 years. The **Houses** window shows the houses by town, the house page one house with its timeline, holders, residents, look and map. |
+| de | Haus · Haus mit Geschichte · Fenster Häuser · Hausseite | Ort und Hausnummer, zusammengesetzt aus den Einträgen des Stammbaums (Geburt, Heirat, Volkszählung, Wohnort, Tod). Ein Haus mit Geschichte hat mindestens 2 Generationen oder Einträge über 30 Jahre. Das Fenster **Häuser** zeigt die Häuser nach Orten, die Hausseite ein Haus mit Zeitleiste, Besitzern, Bewohnern, Aussehen und Karte. |
+| pl | dom · dom z historią · okno Domy · strona domu | Miejscowość i numer domu, złożone z zapisów drzewa (urodzenie, ślub, spis, miejsce zamieszkania, zgon). Dom z historią ma co najmniej 2 pokolenia lub zapisy z ponad 30 lat. Okno **Domy** pokazuje domy według miejscowości, strona domu jeden dom z osią czasu, właścicielami, mieszkańcami, wyglądem i mapą. |
+
+- **Čísla:** [S10.1](cs/S10-houses.md#S10.1), S10, S10.1.1, S10.1.2, S10.2, S10.3
+
 <a id="person-email"></a>
 ### E-mail osoby
 
@@ -804,6 +816,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Zdjęcie pary | Jedno zdjęcie pary (ślubne lub wspólne) zapisane przy związku, nie przy osobie. Widać je w relacjach, w tabeli związków, na stronach osób i w księdze rodu; można z niego wykadrować portrety obojga partnerów. W GEDCOM to obraz rodziny (`OBJE` przy `FAM`). |
 
 - **Čísla:** [A12.4](cs/A12-portrait-and-couple-photo.md#A12.4), A12.5, A12.6, A12.7
+
+<a id="house-history"></a>
+### Historie domů
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Historie domů (nastavení) · Zjistit historii domu… · Historie domu (úkol) | Úkol výzkumu, který k domu zjistí čísla v čase, polohu, co se s domem dělo, držitele a obyvatele, s pramenem a jistotou. Jeden dům jde vyžádat vždy; se zapnutou Historií domů zakládá výzkum úkoly domů přímých předků sám. Výchozí je vypnutá, zapnout ji smí jen člověk. |
+| en | House history (setting) · Find the house history… · House history (task) | The research task that finds a house's numbers over time, its location, what happened to the house, its holders and residents, with source and certainty. A single house can always be requested; with House history on, the research raises the tasks of the direct ancestors' houses itself. It is off by default; only a person may switch it on. |
+| de | Hausgeschichte (Einstellung) · Hausgeschichte ermitteln… · Hausgeschichte (Aufgabe) | Die Aufgabe der Forschung, die zu einem Haus die Nummern im Lauf der Zeit, die Lage, was mit dem Haus geschah, Besitzer und Bewohner ermittelt, mit Quelle und Sicherheit. Ein einzelnes Haus lässt sich immer anfordern; mit eingeschalteter Hausgeschichte legt die Forschung die Aufgaben der Häuser der direkten Vorfahren selbst an. Standardmäßig ist sie aus; einschalten darf sie nur ein Mensch. |
+| pl | Historia domów (ustawienie) · Ustal historię domu… · Historia domu (zadanie) | Zadanie badania, które ustala dla domu numery w czasie, położenie, co się z domem działo, właścicieli i mieszkańców, ze źródłem i pewnością. Pojedynczy dom można zamówić zawsze; z włączoną Historią domów badanie samo zakłada zadania domów bezpośrednich przodków. Domyślnie jest wyłączona, włączyć ją może tylko człowiek. |
+
+- **Čísla:** [S10.4](cs/S10-houses.md#S10.4), S10.4.1, S10.5, S10.5.1, S10.6
 
 <a id="main-citation"></a>
 ### Hlavní citace
@@ -864,6 +888,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Tylko porównaj (app) | Tryb kreatora scalania, który tylko pokazuje, co zrobiłoby scalenie. Nie zapisuje nic do drzewa, kopii zapasowych ani plików; zestawienie można zapisać (**Zapisz zestawienie…**). |
 
 - **Čísla:** [A8.6](cs/A8-merging-trees.md#A8.6), A8.10
+
+<a id="farm-name"></a>
+### Jméno po chalupě
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | jméno po chalupě | Jméno domu, které dal člověk (nejvýš 80 znaků). Výzkum ho nepřepíše; do GEDCOM jde v záznamu `_HOUSE`. |
+| en | House name | The name of a house given by a person (at most 80 characters). The research does not overwrite it; it goes to GEDCOM in the record `_HOUSE`. |
+| de | Hausname | Der Name eines Hauses, den ein Mensch gegeben hat (höchstens 80 Zeichen). Die Forschung überschreibt ihn nicht; in GEDCOM steht er im Datensatz `_HOUSE`. |
+| pl | nazwa domu | Nazwa domu nadana przez człowieka (najwyżej 80 znaków). Badanie jej nie nadpisuje; do GEDCOM trafia w zapisie `_HOUSE`. |
+
+- **Čísla:** [S10.1.2](cs/S10-houses.md#S10.1.2), S10.11
 
 <a id="to-check"></a>
 ### K ověření
@@ -1008,6 +1044,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Kopia bez badania · Badanie dla kopii drzewa | Drzewo powstałe z innego drzewa (kopia, starsze drzewo po Otwórz jako kopię, kolejne wczytanie), które nic nie zapisuje do badania drzewa pierwotnego. Własne badanie dostaje tylko przez okno Badanie dla kopii drzewa: założyć nowe albo przejąć badanie. |
 
 - **Čísla:** [S1.10](cs/S1-connecting-app-and-research.md#S1.10), S1.10.1, S1.10.2, A14.3
+
+<a id="town-skeleton"></a>
+### Kostra obce
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | kostra obce · Kostra obce … pro domy (úkol) | Jednou na obec, před jejími domy: panství, farnost, katastrální území, staré názvy, kde jsou pozemkové knihy a sčítací archy, obrázky obce a pomístní jména. Domy obce na ni čekají. |
+| en | the municipality's skeleton (terminal) · Town skeleton … for houses (task, app) | Once per town, before its houses: the estate, the parish, the cadastral area, old names, where the land registers and census sheets are, pictures of the town and field names. The town's houses wait for it. |
+| de | das Gerüst der Gemeinde (terminal) · Ortsgerüst … für Häuser (Aufgabe, app) | Einmal je Ort, vor seinen Häusern: Herrschaft, Pfarrei, Katastralgemeinde, alte Namen, wo die Grundbücher und Zählbögen liegen, Bilder des Ortes und Flurnamen. Die Häuser des Ortes warten darauf. |
+| pl | szkielet miejscowości · Szkielet miejscowości … dla domów (zadanie) | Raz na miejscowość, przed jej domami: dobra, parafia, obręb katastralny, dawne nazwy, gdzie są księgi gruntowe i arkusze spisowe, obrazy miejscowości i nazwy terenowe. Domy miejscowości na niego czekają. |
+
+- **Čísla:** [S10.5](cs/S10-houses.md#S10.5), S10.4, S10.7
 
 <a id="research-edge"></a>
 ### Kraj výzkumu
@@ -1236,6 +1284,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Pamięci może nie wystarczyć | Powiadomienie i pytanie, gdy otwarte drzewo albo wynik z obrazami zbliża się do granicy pamięci, którą przeglądarka daje aplikacji. Obrazów nie ma w pamięci drzewa: wczytują się, gdy są widoczne, i są zapisane raz, wspólne dla kopii drzewa i kopii zapasowych. |
 
 - **Čísla:** [S8.7](cs/S8-where-the-data-are.md#S8.7)
+
+<a id="house-look"></a>
+### Podoba domu
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | podoba domu · krátká podoba · I podoba domů · Podoba domu (úkol) | Jak dům vypadal: popis s jistotou a pramenem, obrázky s volnou licencí, obrázky obce a pomístní jména. Krátkou podobu zapíše každý úkol domu; úkol podoby následuje, jen když je co dohledat a nastavení I podoba domů je zapnuté. |
+| en | look of the house · short look · Also the look of the houses · Look of the house (task) | What the house looked like: a description with certainty and source, pictures with a free licence, pictures of the town and field names. Every house task writes the short look; the look task follows only when there is something to find and the setting Also the look of the houses is on. |
+| de | Aussehen des Hauses · kurzes Aussehen · Auch das Aussehen der Häuser · Aussehen des Hauses (Aufgabe) | Wie das Haus aussah: eine Beschreibung mit Sicherheit und Quelle, Bilder mit freier Lizenz, Bilder des Ortes und Flurnamen. Das kurze Aussehen schreibt jede Aufgabe eines Hauses; die Aufgabe des Aussehens folgt nur, wenn es etwas nachzuschlagen gibt und die Einstellung Auch das Aussehen der Häuser eingeschaltet ist. |
+| pl | wygląd domu · krótki wygląd · Także wygląd domów · Wygląd domu (zadanie) | Jak dom wyglądał: opis z pewnością i źródłem, obrazy z wolną licencją, obrazy miejscowości i nazwy terenowe. Krótki wygląd zapisuje każde zadanie domu; zadanie wyglądu następuje tylko wtedy, gdy jest co znaleźć, a ustawienie Także wygląd domów jest włączone. |
+
+- **Čísla:** [S10.7](cs/S10-houses.md#S10.7), S10.5.1
 
 <a id="portrait"></a>
 ### Portrét · výřez portrétu

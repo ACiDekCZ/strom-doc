@@ -84,6 +84,35 @@ deleted in Manage trees."
 
 <!-- zdroj: app:src/ui/sample-tag.ts sampleTagHtml · src/tree-manager.ts sampleKindOf, markSampleTree · src/tree-row.ts treeSampleKind (showcase i demo) · src/ui/tree-management.ts tree-badge--sample, sample.asOf · strings.ts sample.tag, tagTitle, asOf · app 9ea6ca78, 3505db77, bc1c497d -->
 
+<a id="S9.1.3"></a>
+### S9.1.3 The sample's research, view only
+
+The sample tree from the web or from the sample file brings along a snapshot of its research. The research overview,
+what the research knows and the materials can be looked through right in the app, without installing the research and
+without an AI subscription. Nothing is written into the snapshot, and nothing is sent from it anywhere.
+
+- After the sample opens, the notice **The sample is open.**: "Its research can be browsed; changes are not sent to any
+  research." In **Manage trees** the sample tree has the line "sample research · view only".
+- The research overview has under its header "Sample as of <date>" and "View only in the sample – full research:" with
+  the command `strom demo` ([S9.4](#S9.4)), the button **Copy** and the link **How to ↗** to the research's install
+  page.
+- The research's **main actions** stay visible, greyed out, with a mark: agent work, sending edits, a conflict, a
+  conflict to the agent, a hypothesis, an answer, the queue order, processing at once, a new direction and a chat with
+  the agent. A bubble (hover, focus or tap; Escape closes it) explains: **View only in the sample**, "In full research:
+  <action> · <mark>" (**AI + terminal** or **terminal**, [S4.5.1](S4-research-from-the-app.md#S4.5.1)) and "Full
+  research with the agent:" `strom demo` with **Copy** and **How to ↗**.
+- The footer of the **Research** menu shows **View only in the sample**, and the menu "Changes are not sent to the
+  research". **Send** is greyed out with an explanation on the sync bar and in **What will be sent** as well. On a
+  phone, **Continue with the agent** and **Send** are greyed out in the **More** sheet; a tap says why.
+- **Limits:**
+  - other writes to the research and the house actions are not shown at all ([S10.13](S10-houses.md#S10.13));
+  - edits of the sample tree stay in the app and do not go to the research;
+  - no agent starts from the sample.
+- **Controls:** app: the **Research** menu, the research overview, the bubble at a greyed-out action
+- **Since:** app 3.33.0
+
+<!-- zdroj: dirigent:spec/143-ukazkova-data K4, K4.1, úkol A2 · app:src/showcase-bridge.ts (most ze snímku, každý zápis 403 showcase.read-only) · src/research-link.ts SHOWCASE_ALLOWS (10 hlavních akcí zašedlé, house: 'hide') · src/ui/sample-why.ts sampleNoteEl, showcaseWhyContent · src/tree-row.ts treeOriginLine · src/ui/showcase-open-ui.ts · strings.ts sample.originLine, openedTitle, opened, asOfLine, readOnly, whyTitle, whyFull, whyWhat, copy, howTo, sync.sendOffLine, mobileMenu.more · app 73628eda, 617b893e, 0754e561, bdb0b181, 635112ff, c8de3d8c, 67351f80, 89f6c9a5 · nález N7: K4.1 „neaktivní s vysvětlením“ × kód ostatní zápisy skryje -->
+
 <a id="S9.2"></a>
 ## S9.2 The sample file and the standalone HTML file
 
@@ -154,6 +183,8 @@ person.
   agent: it names no agent and no runs, waiting tasks have no chat with the agent and no return to the agent, and it
   offers no reading of a document at once and no bulk verification. `strom demo` does not ask at the first opening
   whether the app may start the research.
+- **From app 3.33.0:** the tree of the sample research has the tag **Sample** in the app ([S9.1.2](#S9.1.2)), and the
+  app offers nothing of an agent for it.
 - Without a language `strom demo` takes the language `strom` speaks in the terminal; when that is not one of the four
   languages, it takes `en`.
 - **Limits:**
@@ -171,7 +202,7 @@ person.
 - **Why:** the sample is to be looked through without an AI subscription; an agent may work on it, but the research
   neither offers nor recommends one (decision of 25 Nov 2026).
 
-<!-- zdroj: research:src/commands/demo.ts (demoBase, run: demoLang(ctx.uiLang()) ?? "en", had → jen otevřít, own Settings, c.demo = true, app.run, rm při chybě) · src/core/demo.ts DEMO_LANGS, DEMO_FOLDER, demoPaths, demoEnv, downloadDemo (SHA-256, demo.download, demo.damaged), unpackDemo (demo.lang, demo.code), DEMO_MAX_BYTES · src/core/paths.ts configDir · src/core/live.ts forDemo, DEMO_HIDDEN, tree.demo, agent/runs undefined, accepts (bez read) · src/core/waiting.ts demo (bez chat a retry) · src/commands/start.ts offerLinks (ne u ukázky) · assets/lang/cs.json ui.demo.*, ui.error.demo.* · dirigent:spec/143-ukazkova-data Rozhodnutí 25. 11., K2.1, K2.2 · web:js/i18n.js demo_cmd_title · research afed49d3, 97fc3a23, 8500b369, 3348ed20 -->
+<!-- zdroj: research:src/commands/demo.ts (demoBase, run: demoLang(ctx.uiLang()) ?? "en", had → jen otevřít, own Settings, c.demo = true, app.run, rm při chybě) · src/core/demo.ts DEMO_LANGS, DEMO_FOLDER, demoPaths, demoEnv, downloadDemo (SHA-256, demo.download, demo.damaged), unpackDemo (demo.lang, demo.code), DEMO_MAX_BYTES · src/core/paths.ts configDir · src/core/live.ts forDemo, DEMO_HIDDEN, tree.demo, agent/runs undefined, accepts (bez read) · src/core/waiting.ts demo (bez chat a retry) · src/commands/start.ts offerLinks (ne u ukázky) · assets/lang/cs.json ui.demo.*, ui.error.demo.* · dirigent:spec/143-ukazkova-data Rozhodnutí 25. 11., K2.1, K2.2 · web:js/i18n.js demo_cmd_title · research afed49d3, 97fc3a23, 8500b369, 3348ed20 · app:src/ui/sample-tag.ts researchDemoTree, src/research-device.ts storedResearchDemo, src/ui/research-sync-ui.ts activeResearchNoAgent · app a0c2a8bb, 8f6731a0 -->
 
 <a id="S9.4.1"></a>
 ### S9.4.1 Deleting it: `strom demo --remove`

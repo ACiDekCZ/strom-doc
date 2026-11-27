@@ -215,3 +215,32 @@ o vlastní tvary výzkumu: jiný jazyk, starý pravopis nebo povolání, které 
 - **Platí od:** výzkum 1.32.0
 
 <!-- zdroj: research:src/commands/occupation.ts (add: aspoň dva tvary, --source ověřený pramen, by human | agent podle tree.personWrites; list: bez slova skupiny s by/at/sources, se slovem tvary s * u vlastních, --all; remove: agent jen své, persons, builtin, unknown) · src/core/occupations.ts (OCCUPATIONS_FILE quality/occupations.json, parseForm kód jazyka, addOccupation: nic se nezapíše, když už jedno povolání; mergeOccupations, ownOrRefuse: nečitelný soubor → UsageError strom repair; writeOwn putFile zapečetěná operace) · src/commands/query.ts:254–265 (ui.query.occupation.unknown, ui.occupation.unreadable) · assets/terms/occupations.json (83 skupin) · src/agents/files.ts AGENTS.md „An occupation strom query says is in no list“ · cs.json ui.occupation.*, ui.query.occupation.unknown · commity 84e7fc0e, 0abe8793 · CHANGELOG.cs.md 1.32.0 -->
+
+<a id="R1.10"></a>
+## R1.10 Menu výzkumu v terminálu
+
+Příkaz `strom` bez dalšího otevře menu výzkumu. Každá obrazovka menu má stejný tvar, aby bylo vidět, co je volba,
+co je text a co je příkaz k opsání. Smysl nese tvar, ne barva.
+
+- **Tvar obrazovky:**
+  - nahoře cesta k obrazovce: **Strom › Nastavení › Údržba**; dlouhý název se v cestě zkrátí „…“;
+  - pod ní krátké shrnutí a oddíly s nadpisem;
+  - volby jako `[1]  Popisek   hodnota  doplněk`: klávesa v hranatých závorkách, popisek, ve sloupci stav nebo počet
+    (**vypnuto**, **60 min**, **4**) a tlumeně, co volba obsahuje. Dlouhý popisek se zalomí pod sebe, hodnota zůstane
+    ve sloupci. Přepínač říká, jak je teď, a za šipkou, na co přepne (**vypnuto  → zapnout**);
+  - **[0]** je vždy poslední, za prázdným řádkem: **Zpět**, v hlavním menu **Konec**;
+  - výzva říká, co udělá Enter: **Volba (Enter = 0 Zpět):**. V hlavním menu je Enter první volba
+    (**Volba (Enter = 1 Pokračovat):**);
+  - příkaz k opsání stojí na vlastním řádku: `$ strom …`, nikdy uprostřed věty;
+  - kde je vysvětlení delší, schová se za **[?]  Podrobnosti**.
+- **Hranice:**
+  - šířka obrazovky je šířka terminálu, nejméně 60 a nejvýš 100 znaků; mimo terminál se nic nezalamuje;
+  - barvy jen doplňují tvar: klávesy a nadpisy tučně, cesta a doplňky tlumeně, příkaz azurově, ✓ zeleně, ✗ červeně.
+    Jsou jen v terminálu člověka: nikdy s proměnnou `NO_COLOR`, s `FORCE_COLOR=0`, s `TERM=dumb`, pro agenta ani
+    mimo terminál;
+  - ve starém okně konzole Windows (ne Windows Terminal) bez tlumeného písma a se značkami `+` a `x` místo ✓ a ✗;
+  - výstupy pro agenta a skripty (`--json`, `strom fixes list`, nápověda) mají tvar jako dřív.
+- **Ovládání:** terminál: `strom`; vypnout barvy: proměnná `NO_COLOR`.
+- **Platí od:** výzkum 1.38.0
+
+<!-- zdroj: research:0a1e3780, a9b88a54, ccb2942f, 99d46a56 src/cli/screen.ts (Role, SGR key 1, crumb 2, crumbLast 1, heading 1, dim 2, command 36, ok 32, err 31; MAX_WIDTH 100, MIN_WIDTH 60, widthOf; oldConsole, asciiMarks ✓→+ ✗→x; terminalStyle: tty, NO_COLOR, FORCE_COLOR 0/false, TERM dumb, agent; commandLine „$ “; optionLines LABEL_MAX 40; crumbLine CRUMB_MAX 32) · src/cli/context.ts choose (ui.choose.enter, details → [?] ui.details) · cs.json ui.choose.enter, ui.details · test/fixtures/screens/menu-cs-80.txt, waiting-cs-80.txt · CHANGELOG.cs.md 1.38.0 „Přehlednější menu v terminálu“ · dirigent:spec/144 K1–K4, K7 -->

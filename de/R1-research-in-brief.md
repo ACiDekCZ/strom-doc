@@ -247,3 +247,35 @@ die Liste nicht kennt. `strom query --occupation` ([R1.9](#R1.9)) findet dann al
 - **Gilt seit:** Forschung 1.32.0
 
 <!-- zdroj: research:src/commands/occupation.ts (add: aspoň dva tvary, --source ověřený pramen, by human | agent podle tree.personWrites; list: bez slova skupiny s by/at/sources, se slovem tvary s * u vlastních, --all; remove: agent jen své, persons, builtin, unknown) · src/core/occupations.ts (OCCUPATIONS_FILE quality/occupations.json, parseForm kód jazyka, addOccupation: nic se nezapíše, když už jedno povolání; mergeOccupations, ownOrRefuse: nečitelný soubor → UsageError strom repair; writeOwn putFile zapečetěná operace) · src/commands/query.ts:254–265 (ui.query.occupation.unknown, ui.occupation.unreadable) · assets/terms/occupations.json (83 skupin) · src/agents/files.ts AGENTS.md „An occupation strom query says is in no list“ · cs.json ui.occupation.*, ui.query.occupation.unknown · commity 84e7fc0e, 0abe8793 · CHANGELOG.cs.md 1.32.0 -->
+
+<a id="R1.10"></a>
+## R1.10 Das Menü der Forschung im Terminal
+
+Der Befehl `strom` allein öffnet das Menü der Forschung. Jeder Bildschirm des Menüs hat dieselbe Form, damit zu sehen
+ist, was eine Auswahl ist, was Text und was ein Befehl zum Abschreiben. Die Bedeutung trägt die Form, nicht die Farbe.
+
+- **Form eines Bildschirms:**
+  - oben der Weg zum Bildschirm: **Strom › Einstellungen › Wartung**; ein langer Name wird darin mit „…“ gekürzt;
+  - darunter eine kurze Zusammenfassung und Abschnitte mit Überschrift;
+  - Auswahlen als `[1]  Bezeichnung   Wert  Zusatz`: die Taste in eckigen Klammern, die Bezeichnung, in einer Spalte
+    Zustand oder Anzahl (**aus**, **60 min**, **4**) und blass, was die Auswahl enthält. Eine lange Bezeichnung bricht
+    unter sich um, der Wert bleibt in seiner Spalte. Ein Schalter sagt, wie er jetzt steht, und hinter einem Pfeil,
+    worauf er umschaltet (**aus  → einschalten**);
+  - **[0]** steht immer zuletzt, nach einer Leerzeile: **Zurück**, im Hauptmenü **Beenden**;
+  - die Eingabeaufforderung sagt, was Enter tut: **Auswahl (Enter = 0 Zurück):**. Im Hauptmenü ist Enter die erste
+    Auswahl (**Auswahl (Enter = 1 Die Forschung):**);
+  - ein Befehl zum Abschreiben steht in einer eigenen Zeile: `$ strom …`, nie mitten im Satz;
+  - eine längere Erklärung steht hinter **[?]  Details**.
+- **Grenzen:**
+  - der Bildschirm ist so breit wie das Terminal, mindestens 60 und höchstens 100 Zeichen; außerhalb eines Terminals
+    wird nichts umgebrochen;
+  - Farben ergänzen die Form nur: Tasten und Überschriften fett, Weg und Zusätze blass, ein Befehl cyan, ✓ grün,
+    ✗ rot. Es gibt sie nur im Terminal eines Menschen: nie mit der Variable `NO_COLOR`, mit `FORCE_COLOR=0`, mit
+    `TERM=dumb`, für einen Agenten oder außerhalb eines Terminals;
+  - im alten Konsolenfenster von Windows (nicht Windows Terminal) ohne blasse Schrift und mit den Zeichen `+` und `x`
+    statt ✓ und ✗;
+  - Ausgaben für einen Agenten und für Skripte (`--json`, `strom fixes list`, Hilfe) behalten ihre bisherige Form.
+- **Bedienung:** Terminal: `strom`; Farben ausschalten: Variable `NO_COLOR`.
+- **Gilt seit:** Forschung 1.38.0
+
+<!-- zdroj: research:0a1e3780, a9b88a54, ccb2942f, 99d46a56 src/cli/screen.ts (Role, SGR key 1, crumb 2, crumbLast 1, heading 1, dim 2, command 36, ok 32, err 31; MAX_WIDTH 100, MIN_WIDTH 60, widthOf; oldConsole, asciiMarks ✓→+ ✗→x; terminalStyle: tty, NO_COLOR, FORCE_COLOR 0/false, TERM dumb, agent; commandLine „$ “; optionLines LABEL_MAX 40; crumbLine CRUMB_MAX 32) · src/cli/context.ts choose (ui.choose.enter, details → [?] ui.details) · cs.json ui.choose.enter, ui.details · test/fixtures/screens/menu-cs-80.txt, waiting-cs-80.txt · CHANGELOG.cs.md 1.38.0 „Přehlednější menu v terminálu“ · dirigent:spec/144 K1–K4, K7 -->

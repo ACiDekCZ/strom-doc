@@ -482,12 +482,19 @@ jeder an anderen Aufgaben.
 - **In der App:** **Agent auf diese Richtung ansetzen** ([S4.3.3](S4-research-from-the-app.md#S4.3.3)); Läufe im
   Bereich **Jetzt** ([S4.1.8](S4-research-from-the-app.md#S4.1.8)).
 - **Bedienung:** Terminal: Menü **Den Agenten allein arbeiten lassen**; bei zwei und mehr aktiven Linien fragt es
-  **Woran arbeiten?**: **die ganze Warteschlange (Linien mit eigenem Lauf ausgenommen)** oder eine Linie („– in einem
-  eigenen Fenster“; eine Linie mit Lauf „– hat schon einen Lauf“ und startet nicht). Befehl `strom run --research G…`
-  (mit den übrigen Optionen aus [R7.1](#R7.1)); die Nummern der Linien zeigt `strom research list`.
+  **Woran soll der Agent arbeiten?**: die erste Auswahl ist die Aufgabenwarteschlange, die zweite **Nur eine Linie der
+  Forschung (in einem eigenen Fenster) ›** und darunter **Welche Linie?** („– in einem eigenen Fenster“; eine Linie mit
+  Lauf „– hat schon einen Lauf“ und startet nicht). Befehl `strom run --research G…` (mit den übrigen Optionen aus
+  [R7.1](#R7.1)); die Nummern der Linien zeigt `strom research list`.
 - **Gilt seit:** Forschung 1.36.0
+- **Ab Forschung 1.38.0:** die Aufgabenwarteschlange steht in der Frage zuerst und sagt, was in ihr als Nächstes
+  kommt: **Die Aufgabenwarteschlange – als Nächstes: {Aufgabe} (und N weitere)**; mit einer Linie, die einen eigenen
+  Lauf hat, zusätzlich „ · die Linie {Name} hat einen eigenen Lauf“ (bei mehreren Linien „ · N Linien haben einen
+  eigenen Lauf“). Eine leere Warteschlange ist nur **Die Aufgabenwarteschlange**. Die Linien sind einen Schritt
+  weiter, in einem Untermenü. Früher war die erste Auswahl **die ganze Warteschlange (Linien mit eigenem Lauf
+  ausgenommen)** und die Linien gleich darunter.
 
-<!-- zdroj: research:089875ec src/core/linerun.ts (lineHolds .strom/lines/<G>.json zámek s procesem, run.line.held, run.line.older pro strom před 1.25, lineRunFilter: obecný běh vynechá úkol s linií drženou jiným během; běh linie bere hlavní linii G nebo úkoly v G, jejichž hlavní linii nedrží jiný běh; linie úkolu = vlastní + hlavní (placer core/offline.ts) + linie jeho lidí; mimo linie, dějiny, místa žádnou; rememberLineAgent) · src/cli/menu.ts runMenu (ui.run.where, ui.run.whole, ui.run.line.item/busy/held, openInNewTerminal title Strom · strom · linie (G…), key linie, ui.run.window, ui.run.window.recent; dějiny jen celá fronta) · src/commands/session.ts:1107 enterRun (research, agent) · cs.json ui.run.line, ui.run.line.older, ui.run.beside, ui.run.others · help run (Runs of lines) · CHANGELOG.cs.md 1.36.0 · dirigent:spec/126 U11, prace/1121-research-126-linie-b1 -->
+<!-- zdroj: research:089875ec src/core/linerun.ts (lineHolds .strom/lines/<G>.json zámek s procesem, run.line.held, run.line.older pro strom před 1.25, lineRunFilter: obecný běh vynechá úkol s linií drženou jiným během; běh linie bere hlavní linii G nebo úkoly v G, jejichž hlavní linii nedrží jiný běh; linie úkolu = vlastní + hlavní (placer core/offline.ts) + linie jeho lidí; mimo linie, dějiny, místa žádnou; rememberLineAgent) · src/cli/menu.ts runMenu (ui.run.where, ui.run.whole, ui.run.line.item/busy/held, openInNewTerminal title Strom · strom · linie (G…), key linie, ui.run.window, ui.run.window.recent; dějiny jen celá fronta) · src/commands/session.ts:1107 enterRun (research, agent) · cs.json ui.run.line, ui.run.line.older, ui.run.beside, ui.run.others · help run (Runs of lines) · CHANGELOG.cs.md 1.36.0 · dirigent:spec/126 U11, prace/1121-research-126-linie-b1 · 1.38.0: research:6e4f24c6 src/cli/menu.ts runMenu (lines ≥ 2: choose ui.run.where [ui.run.whole | ui.run.whole.more | ui.run.whole.empty + ui.run.whole.held | ui.run.whole.held.more, ui.run.oneline] → ui.run.line.pick; úkol zkrácen na 70 znaků) · cs.json ui.run.* · CHANGELOG.cs.md 1.38.0 -->
 
 <a id="R7.10.1"></a>
 ### R7.10.1 Höchstens so viele Läufe gleichzeitig: `run.parallel`

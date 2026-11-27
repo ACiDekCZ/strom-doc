@@ -194,8 +194,14 @@ skupiny drží pohromadě na místě své první položky, aby šly vyřídit je
 - **Od výzkumu 1.35.0:** výzkum u položky posílá i její knihu. Aplikace 3.30.0 umí položky seskupit podle knihy
   ([S4.4.4](S4-research-from-the-app.md#S4.4.4)); v **Co čeká** je přehled knih s nejvíc úkoly ([R6.8](#R6.8)).
 - **Od výzkumu 1.37.0:** u položky, za kterou stojí úkoly, posílá i to, kolik její vyřízení pomůže ([R6.4.1](#R6.4.1)).
+- **Od výzkumu 1.38.0:** **Co čeká** v terminálu má tvar ostatních obrazovek menu ([R1.10](R1-research-in-brief.md#R1.10)):
+  nahoře **Strom › Co čeká** a počty („k vyřízení 3 · čeká na odpověď 1“), pod nimi řádek **Druh:** s klávesami
+  oddílů a počty (`[a] archivy a úřady 2  [o] rodina 1`), skupiny jako volby s počtem ve sloupci, **[?]  čeká na
+  odpověď N** (nebo **[?]  k vyřízení N**) a **[k]  knihy s nejvíc úkoly N** na vlastních řádcích a **[0]  Zpět**
+  poslední; s filtrem **[0]  Zrušit filtr**. Skupina ukáže cestu k sobě (**Strom › Co čeká › Matriční úřad …**,
+  dlouhý název zkrácený „…“) i po každé akci. Obsah a pořadí se nezměnily.
 
-<!-- zdroj: research:src/core/waiting.ts:73 SECTION_RANK, :75 DECIDE_RANK, :468 together, :478-492 ordered · src/core/waitkind.ts:238 waitGroupOf · assets/lang/cs.json:2313-2320 wait.group.* (:2359) · src/cli/menu-waiting.ts:205-232 · app:strings.ts:11958 waitingFilterLabel -->
+<!-- zdroj: research:src/core/waiting.ts:73 SECTION_RANK, :75 DECIDE_RANK, :468 together, :478-492 ordered · src/core/waitkind.ts:238 waitGroupOf · assets/lang/cs.json:2313-2320 wait.group.* (:2359) · src/cli/menu-waiting.ts:205-232 · app:strings.ts:11958 waitingFilterLabel · 1.38.0: research:0a1e3780, ccb2942f, 99d46a56 src/cli/menu-waiting.ts, src/cli/screen.ts listLines, crumbLine · cs.json ui.wait.kinds, ui.wait.f.sent, ui.wait.f.todo, ui.wait.f.back, ui.wait.f.unfilter, ui.wait.c.books, ui.wait.prompt · test/fixtures/screens/waiting-cs-80.txt · dirigent:spec/144 K5 -->
 
 <a id="R6.4.1"></a>
 ### R6.4.1 Co nejvíc pomůže

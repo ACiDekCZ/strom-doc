@@ -448,13 +448,19 @@ The runs of different lines and the run of the whole queue work side by side, ea
   - the warning at a run beside another run says that the subscription use adds up.
 - **In the app:** **Put an agent on this direction** ([S4.3.3](S4-research-from-the-app.md#S4.3.3)); runs in the
   section **Now** ([S4.1.8](S4-research-from-the-app.md#S4.1.8)).
-- **Controls:** terminal: the menu **Let the agent work on its own**; with two or more active lines it asks **Work on
-  what?**: **the whole queue (the lines with a run of their own aside)**, or a line (“— in a window of its own”; a
-  line with a run “— has a run already” and does not start). The command `strom run --research G…` (with the further
-  options of [R7.1](#R7.1)); `strom research list` shows the numbers of the lines.
+- **Controls:** terminal: the menu **Let the agent work on its own**; with two or more active lines it asks **What is
+  the agent to work on?**: the first choice is the task queue, the second **Only one line of the research (in a window
+  of its own) ›** and under it **Which line?** (“— in a window of its own”; a line with a run “— has a run already”
+  and does not start). The command `strom run --research G…` (with the further options of [R7.1](#R7.1));
+  `strom research list` shows the numbers of the lines.
 - **Since:** research 1.36.0
+- **From research 1.38.0:** the task queue stands first in the question and says what is next in it: **The task queue
+  — next: {task} (and N more)**; with a line that has a run of its own also “ · the line {name} has a run of its own”
+  (with more lines “ · N lines have a run of their own”). An empty queue is just **The task queue**. The lines are one
+  step further, in a submenu. Before, the first choice was **the whole queue (the lines with a run of their own
+  aside)** and the lines right under it.
 
-<!-- zdroj: research:089875ec src/core/linerun.ts (lineHolds .strom/lines/<G>.json zámek s procesem, run.line.held, run.line.older pro strom před 1.25, lineRunFilter: obecný běh vynechá úkol s linií drženou jiným během; běh linie bere hlavní linii G nebo úkoly v G, jejichž hlavní linii nedrží jiný běh; linie úkolu = vlastní + hlavní (placer core/offline.ts) + linie jeho lidí; mimo linie, dějiny, místa žádnou; rememberLineAgent) · src/cli/menu.ts runMenu (ui.run.where, ui.run.whole, ui.run.line.item/busy/held, openInNewTerminal title Strom · strom · linie (G…), key linie, ui.run.window, ui.run.window.recent; dějiny jen celá fronta) · src/commands/session.ts:1107 enterRun (research, agent) · cs.json ui.run.line, ui.run.line.older, ui.run.beside, ui.run.others · help run (Runs of lines) · CHANGELOG.cs.md 1.36.0 · dirigent:spec/126 U11, prace/1121-research-126-linie-b1 -->
+<!-- zdroj: research:089875ec src/core/linerun.ts (lineHolds .strom/lines/<G>.json zámek s procesem, run.line.held, run.line.older pro strom před 1.25, lineRunFilter: obecný běh vynechá úkol s linií drženou jiným během; běh linie bere hlavní linii G nebo úkoly v G, jejichž hlavní linii nedrží jiný běh; linie úkolu = vlastní + hlavní (placer core/offline.ts) + linie jeho lidí; mimo linie, dějiny, místa žádnou; rememberLineAgent) · src/cli/menu.ts runMenu (ui.run.where, ui.run.whole, ui.run.line.item/busy/held, openInNewTerminal title Strom · strom · linie (G…), key linie, ui.run.window, ui.run.window.recent; dějiny jen celá fronta) · src/commands/session.ts:1107 enterRun (research, agent) · cs.json ui.run.line, ui.run.line.older, ui.run.beside, ui.run.others · help run (Runs of lines) · CHANGELOG.cs.md 1.36.0 · dirigent:spec/126 U11, prace/1121-research-126-linie-b1 · 1.38.0: research:6e4f24c6 src/cli/menu.ts runMenu (lines ≥ 2: choose ui.run.where [ui.run.whole | ui.run.whole.more | ui.run.whole.empty + ui.run.whole.held | ui.run.whole.held.more, ui.run.oneline] → ui.run.line.pick; úkol zkrácen na 70 znaků) · cs.json ui.run.* · CHANGELOG.cs.md 1.38.0 -->
 
 <a id="R7.10.1"></a>
 ### R7.10.1 Runs at once, at most: `run.parallel`

@@ -94,6 +94,41 @@ Ausprobieren. Andere Stammbäume bleiben unverändert; das Beispiel lässt sich 
 
 <!-- zdroj: app:src/ui/sample-tag.ts sampleTagHtml · src/tree-manager.ts sampleKindOf, markSampleTree · src/tree-row.ts treeSampleKind (showcase i demo) · src/ui/tree-management.ts tree-badge--sample, sample.asOf · strings.ts sample.tag, tagTitle, asOf · app 9ea6ca78, 3505db77, bc1c497d -->
 
+<a id="S9.1.3"></a>
+### S9.1.3 Die Forschung des Beispiels nur zum Ansehen
+
+Der Stammbaum des Beispiels aus dem Web oder aus der Beispieldatei bringt auch eine Momentaufnahme seiner Forschung
+mit. Die Forschungsübersicht, was die Forschung weiß, und die Materialien lassen sich direkt in der App durchsehen,
+ohne Installation der Forschung und ohne KI-Abonnement. In die Momentaufnahme wird nichts geschrieben, und aus ihr wird
+nichts irgendwohin gesendet.
+
+- Nach dem Öffnen des Beispiels die Meldung **Das Beispiel ist geöffnet.**: „Seine Forschung lässt sich durchsehen;
+  Änderungen gehen an keine Forschung.“ In **Stammbäume verwalten** hat der Stammbaum des Beispiels die Zeile
+  „Forschung des Beispiels · nur zum Ansehen“.
+- Die Forschungsübersicht hat unter der Kopfzeile „Stand des Beispiels: <Datum>“ und „Im Beispiel nur zum Ansehen –
+  volle Forschung:“ mit dem Befehl `strom demo` ([S9.4](#S9.4)), der Schaltfläche **Kopieren** und dem Link
+  **Anleitung ↗** zur Installationsseite der Forschung.
+- Die **Hauptaktionen** der Forschung bleiben sichtbar, ausgegraut, mit Kennzeichen: Arbeit des Agenten, Senden von
+  Änderungen, ein Widerspruch, ein Widerspruch an den Agenten, eine Hypothese, eine Antwort, die Reihenfolge der
+  Warteschlange, sofortige Verarbeitung, eine neue Richtung und ein Gespräch mit dem Agenten. Eine Sprechblase
+  (Darüberfahren, Fokus oder Tippen; Escape schließt sie) erklärt: **Im Beispiel nur zum Ansehen**, „In der vollen
+  Forschung: <Aktion> · <Kennzeichen>“ (**KI + Terminal** oder **Terminal**,
+  [S4.5.1](S4-research-from-the-app.md#S4.5.1)) und „Volle Forschung mit dem Agenten:“ `strom demo` mit **Kopieren**
+  und **Anleitung ↗**.
+- Die Fußzeile des Menüs **Forschung** zeigt **Im Beispiel nur zum Ansehen** und das Menü „Änderungen werden nicht an
+  die Forschung gesendet“. **Senden** ist ausgegraut, mit Erklärung auch in der Synchronisationsleiste und in **Was
+  gesendet wird**. Auf dem Telefon sind im Blatt **Mehr** **Mit dem Agenten weitermachen** und **Senden** ausgegraut;
+  Tippen sagt, warum.
+- **Grenzen:**
+  - andere Schreibvorgänge in die Forschung und die Aktionen der Häuser sind gar nicht zu sehen
+    ([S10.13](S10-houses.md#S10.13));
+  - Änderungen am Stammbaum des Beispiels bleiben in der App und gehen nicht an die Forschung;
+  - aus dem Beispiel startet kein Agent.
+- **Bedienung:** App: Menü **Forschung**, die Forschungsübersicht, die Sprechblase an einer ausgegrauten Aktion
+- **Gilt seit:** App 3.33.0
+
+<!-- zdroj: dirigent:spec/143-ukazkova-data K4, K4.1, úkol A2 · app:src/showcase-bridge.ts (most ze snímku, každý zápis 403 showcase.read-only) · src/research-link.ts SHOWCASE_ALLOWS (10 hlavních akcí zašedlé, house: 'hide') · src/ui/sample-why.ts sampleNoteEl, showcaseWhyContent · src/tree-row.ts treeOriginLine · src/ui/showcase-open-ui.ts · strings.ts sample.originLine, openedTitle, opened, asOfLine, readOnly, whyTitle, whyFull, whyWhat, copy, howTo, sync.sendOffLine, mobileMenu.more · app 73628eda, 617b893e, 0754e561, bdb0b181, 635112ff, c8de3d8c, 67351f80, 89f6c9a5 · nález N7: K4.1 „neaktivní s vysvětlením“ × kód ostatní zápisy skryje -->
+
 <a id="S9.2"></a>
 ## S9.2 Die Beispieldatei und die eigenständige HTML-Datei
 
@@ -171,6 +206,8 @@ Menschen warten.
   nichts von einem Agenten an: sie nennt keinen Agenten und keine Läufe, wartende Aufgaben haben kein Gespräch mit dem
   Agenten und keine Rückgabe an den Agenten, und sie bietet kein sofortiges Lesen eines Dokuments und keine
   Sammelprüfung an. `strom demo` fragt beim ersten Öffnen nicht, ob die App die Forschung starten darf.
+- **Ab App 3.33.0:** der Stammbaum der Beispielforschung hat in der App das Etikett **Beispiel** ([S9.1.2](#S9.1.2)),
+  und die App bietet bei ihm nichts von einem Agenten an.
 - Ohne Sprache nimmt `strom demo` die Sprache, in der `strom` im Terminal spricht; ist das keine der vier Sprachen,
   nimmt es `en`.
 - **Grenzen:**
@@ -189,7 +226,7 @@ Menschen warten.
 - **Warum:** das Beispiel soll sich ohne KI-Abonnement ansehen lassen; ein Agent darf daran arbeiten, aber die
   Forschung bietet keinen an und empfiehlt keinen (Entscheidung vom 25. 11. 2026).
 
-<!-- zdroj: research:src/commands/demo.ts (demoBase, run: demoLang(ctx.uiLang()) ?? "en", had → jen otevřít, own Settings, c.demo = true, app.run, rm při chybě) · src/core/demo.ts DEMO_LANGS, DEMO_FOLDER, demoPaths, demoEnv, downloadDemo (SHA-256, demo.download, demo.damaged), unpackDemo (demo.lang, demo.code), DEMO_MAX_BYTES · src/core/paths.ts configDir · src/core/live.ts forDemo, DEMO_HIDDEN, tree.demo, agent/runs undefined, accepts (bez read) · src/core/waiting.ts demo (bez chat a retry) · src/commands/start.ts offerLinks (ne u ukázky) · assets/lang/cs.json ui.demo.*, ui.error.demo.* · dirigent:spec/143-ukazkova-data Rozhodnutí 25. 11., K2.1, K2.2 · web:js/i18n.js demo_cmd_title · research afed49d3, 97fc3a23, 8500b369, 3348ed20 -->
+<!-- zdroj: research:src/commands/demo.ts (demoBase, run: demoLang(ctx.uiLang()) ?? "en", had → jen otevřít, own Settings, c.demo = true, app.run, rm při chybě) · src/core/demo.ts DEMO_LANGS, DEMO_FOLDER, demoPaths, demoEnv, downloadDemo (SHA-256, demo.download, demo.damaged), unpackDemo (demo.lang, demo.code), DEMO_MAX_BYTES · src/core/paths.ts configDir · src/core/live.ts forDemo, DEMO_HIDDEN, tree.demo, agent/runs undefined, accepts (bez read) · src/core/waiting.ts demo (bez chat a retry) · src/commands/start.ts offerLinks (ne u ukázky) · assets/lang/cs.json ui.demo.*, ui.error.demo.* · dirigent:spec/143-ukazkova-data Rozhodnutí 25. 11., K2.1, K2.2 · web:js/i18n.js demo_cmd_title · research afed49d3, 97fc3a23, 8500b369, 3348ed20 · app:src/ui/sample-tag.ts researchDemoTree, src/research-device.ts storedResearchDemo, src/ui/research-sync-ui.ts activeResearchNoAgent · app a0c2a8bb, 8f6731a0 -->
 
 <a id="S9.4.1"></a>
 ### S9.4.1 Löschen: `strom demo --remove`

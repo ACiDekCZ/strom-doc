@@ -455,12 +455,18 @@ zadaniami.
 - **W aplikacji:** **Uruchom agenta na tej linii** ([S4.3.3](S4-research-from-the-app.md#S4.3.3)); przebiegi
   w sekcji **Teraz** ([S4.1.8](S4-research-from-the-app.md#S4.1.8)).
 - **Obsługa:** terminal: menu **Pozwól agentowi pracować samodzielnie**; przy dwóch i więcej aktywnych liniach pyta
-  **Nad czym pracować?**: **cała kolejka (linie z własnym przebiegiem na bok)** albo linia („– we własnym oknie”;
-  linia z przebiegiem „– ma już przebieg” i się nie uruchomi). Polecenie `strom run --research G…` (z pozostałymi
-  opcjami z [R7.1](#R7.1)); numery linii pokazuje `strom research list`.
+  **Nad czym ma pracować agent?**: pierwszy wybór to kolejka zadań, drugi **Tylko jedna linia badań (we własnym
+  oknie) ›** i pod nim **Która linia?** („– we własnym oknie”; linia z przebiegiem „– ma już przebieg” i się nie
+  uruchomi). Polecenie `strom run --research G…` (z pozostałymi opcjami z [R7.1](#R7.1)); numery linii pokazuje
+  `strom research list`.
 - **Obowiązuje od:** badanie 1.36.0
+- **Od badania 1.38.0:** kolejka zadań stoi w pytaniu pierwsza i mówi, co jest w niej następne: **Kolejka zadań –
+  następne: {zadanie} (i N kolejnych)**; z linią, która ma własny przebieg, dodatkowo „ · linia {nazwa} ma własny
+  przebieg” (przy kilku liniach „ · N linie mają własny przebieg”). Pusta kolejka to tylko **Kolejka zadań**. Linie
+  są krok dalej, w podmenu. Wcześniej pierwszym wyborem była **cała kolejka (linie z własnym przebiegiem na bok)**,
+  a linie zaraz pod nią.
 
-<!-- zdroj: research:089875ec src/core/linerun.ts (lineHolds .strom/lines/<G>.json zámek s procesem, run.line.held, run.line.older pro strom před 1.25, lineRunFilter: obecný běh vynechá úkol s linií drženou jiným během; běh linie bere hlavní linii G nebo úkoly v G, jejichž hlavní linii nedrží jiný běh; linie úkolu = vlastní + hlavní (placer core/offline.ts) + linie jeho lidí; mimo linie, dějiny, místa žádnou; rememberLineAgent) · src/cli/menu.ts runMenu (ui.run.where, ui.run.whole, ui.run.line.item/busy/held, openInNewTerminal title Strom · strom · linie (G…), key linie, ui.run.window, ui.run.window.recent; dějiny jen celá fronta) · src/commands/session.ts:1107 enterRun (research, agent) · cs.json ui.run.line, ui.run.line.older, ui.run.beside, ui.run.others · help run (Runs of lines) · CHANGELOG.cs.md 1.36.0 · dirigent:spec/126 U11, prace/1121-research-126-linie-b1 -->
+<!-- zdroj: research:089875ec src/core/linerun.ts (lineHolds .strom/lines/<G>.json zámek s procesem, run.line.held, run.line.older pro strom před 1.25, lineRunFilter: obecný běh vynechá úkol s linií drženou jiným během; běh linie bere hlavní linii G nebo úkoly v G, jejichž hlavní linii nedrží jiný běh; linie úkolu = vlastní + hlavní (placer core/offline.ts) + linie jeho lidí; mimo linie, dějiny, místa žádnou; rememberLineAgent) · src/cli/menu.ts runMenu (ui.run.where, ui.run.whole, ui.run.line.item/busy/held, openInNewTerminal title Strom · strom · linie (G…), key linie, ui.run.window, ui.run.window.recent; dějiny jen celá fronta) · src/commands/session.ts:1107 enterRun (research, agent) · cs.json ui.run.line, ui.run.line.older, ui.run.beside, ui.run.others · help run (Runs of lines) · CHANGELOG.cs.md 1.36.0 · dirigent:spec/126 U11, prace/1121-research-126-linie-b1 · 1.38.0: research:6e4f24c6 src/cli/menu.ts runMenu (lines ≥ 2: choose ui.run.where [ui.run.whole | ui.run.whole.more | ui.run.whole.empty + ui.run.whole.held | ui.run.whole.held.more, ui.run.oneline] → ui.run.line.pick; úkol zkrácen na 70 znaků) · cs.json ui.run.* · CHANGELOG.cs.md 1.38.0 -->
 
 <a id="R7.10.1"></a>
 ### R7.10.1 Najwyżej przebiegów naraz: `run.parallel`

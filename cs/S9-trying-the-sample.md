@@ -83,6 +83,34 @@ stromů.“
 
 <!-- zdroj: app:src/ui/sample-tag.ts sampleTagHtml · src/tree-manager.ts sampleKindOf, markSampleTree · src/tree-row.ts treeSampleKind (showcase i demo) · src/ui/tree-management.ts tree-badge--sample, sample.asOf · strings.ts sample.tag, tagTitle, asOf · app 9ea6ca78, 3505db77, bc1c497d -->
 
+<a id="S9.1.3"></a>
+### S9.1.3 Výzkum ukázky jen k prohlížení
+
+Strom ukázky z webu nebo ze souboru ukázky má s sebou i snímek svého výzkumu. Přehled výzkumu, co výzkum ví
+a materiály jdou procházet přímo v aplikaci, bez instalace výzkumu a bez předplatného AI. Do snímku se nic nezapisuje
+a nic se z něj nikam neposílá.
+
+- Po otevření ukázky oznámení **Ukázka je otevřená.**: „Výzkum v ní jde procházet; změny se do výzkumu neposílají.“
+  Ve **Správě stromů** má strom ukázky řádek „výzkum ukázky · jen k prohlížení“.
+- Přehled výzkumu má pod hlavičkou „Stav ukázky k <datum>“ a „V ukázce jen k prohlížení – plný výzkum:“ s příkazem
+  `strom demo` ([S9.4](#S9.4)), tlačítkem **Kopírovat** a odkazem **Jak na to ↗** na stránku instalace výzkumu.
+- **Hlavní akce** výzkumu zůstávají vidět, zašedlé, se značkou: práce agenta, odeslání úprav, rozpor, rozpor
+  agentovi, hypotéza, odpověď, pořadí fronty, zpracování hned, nová linie a rozhovor s agentem. Bublina (najetí,
+  fokus nebo klepnutí; Escape ji zavře) vysvětlí: **V ukázce jen k prohlížení**, „V plném výzkumu: <akce> ·
+  <značka>“ (**AI + terminál** nebo **terminál**, [S4.5.1](S4-research-from-the-app.md#S4.5.1)) a „Plný výzkum
+  s agentem:“ `strom demo` s **Kopírovat** a **Jak na to ↗**.
+- Patička nabídky **Výzkum** ukazuje **V ukázce jen k prohlížení** a nabídka „Úpravy se do výzkumu neposílají“.
+  **Odeslat** je zašedlé s vysvětlením i na liště synchronizace a v **Co se odešle**. Na telefonu jsou v listu
+  **Více** zašedlé **Pokračovat s agentem** a **Odeslat**; klepnutí řekne proč.
+- **Hranice:**
+  - ostatní zápisy do výzkumu a akce domů nejsou vidět vůbec ([S10.13](S10-houses.md#S10.13));
+  - úpravy stromu ukázky zůstanou v aplikaci, do výzkumu nejdou;
+  - agent se z ukázky nespustí.
+- **Ovládání:** aplikace: nabídka **Výzkum**, přehled výzkumu, bublina u zašedlé akce
+- **Platí od:** aplikace 3.33.0
+
+<!-- zdroj: dirigent:spec/143-ukazkova-data K4, K4.1, úkol A2 · app:src/showcase-bridge.ts (most ze snímku, každý zápis 403 showcase.read-only) · src/research-link.ts SHOWCASE_ALLOWS (10 hlavních akcí zašedlé, house: 'hide') · src/ui/sample-why.ts sampleNoteEl, showcaseWhyContent · src/tree-row.ts treeOriginLine · src/ui/showcase-open-ui.ts · strings.ts sample.originLine, openedTitle, opened, asOfLine, readOnly, whyTitle, whyFull, whyWhat, copy, howTo, sync.sendOffLine, mobileMenu.more · app 73628eda, 617b893e, 0754e561, bdb0b181, 635112ff, c8de3d8c, 67351f80, 89f6c9a5 · nález N7: K4.1 „neaktivní s vysvětlením“ × kód ostatní zápisy skryje -->
+
 <a id="S9.2"></a>
 ## S9.2 Soubor ukázky a samostatný soubor HTML
 
@@ -151,6 +179,8 @@ fronta, prameny, materiály a úkoly, které čekají na člověka.
 - Výzkum u ukázky agenta sám nespouští a most ukázky aplikaci nic s agentem nenabízí: nejmenuje žádného agenta ani
   běhy, čekající úkoly nemají rozhovor s agentem ani vrácení agentovi, nenabízí okamžité čtení dokumentu ani hromadné
   ověření. `strom demo` se při prvním otevření neptá, jestli smí aplikace spouštět výzkum.
+- **Od aplikace 3.33.0:** strom ukázkového výzkumu má v aplikaci štítek **Ukázka** ([S9.1.2](#S9.1.2)) a aplikace
+  u něj nenabízí nic s agentem.
 - Bez jazyka vezme `strom demo` jazyk, kterým `strom` v terminálu mluví; když to není jeden ze čtyř jazyků, vezme `en`.
 - **Hranice:**
   - druhé spuštění pro stejný jazyk nic nestahuje a otevře ukázku, která už na počítači je („Ukázkový výzkum „…“ už
@@ -165,7 +195,7 @@ fronta, prameny, materiály a úkoly, které čekají na člověka.
 - **Proč:** ukázka má jít prohlížet bez předplatného AI; agent na ní pracovat smí, ale výzkum ho nenabízí ani
   nedoporučuje (rozhodnutí 25. 11. 2026).
 
-<!-- zdroj: research:src/commands/demo.ts (demoBase, run: demoLang(ctx.uiLang()) ?? "en", had → jen otevřít, own Settings, c.demo = true, app.run, rm při chybě) · src/core/demo.ts DEMO_LANGS, DEMO_FOLDER, demoPaths, demoEnv, downloadDemo (SHA-256, demo.download, demo.damaged), unpackDemo (demo.lang, demo.code), DEMO_MAX_BYTES · src/core/paths.ts configDir · src/core/live.ts forDemo, DEMO_HIDDEN, tree.demo, agent/runs undefined, accepts (bez read) · src/core/waiting.ts demo (bez chat a retry) · src/commands/start.ts offerLinks (ne u ukázky) · assets/lang/cs.json ui.demo.*, ui.error.demo.* · dirigent:spec/143-ukazkova-data Rozhodnutí 25. 11., K2.1, K2.2 · web:js/i18n.js demo_cmd_title · research afed49d3, 97fc3a23, 8500b369, 3348ed20 -->
+<!-- zdroj: research:src/commands/demo.ts (demoBase, run: demoLang(ctx.uiLang()) ?? "en", had → jen otevřít, own Settings, c.demo = true, app.run, rm při chybě) · src/core/demo.ts DEMO_LANGS, DEMO_FOLDER, demoPaths, demoEnv, downloadDemo (SHA-256, demo.download, demo.damaged), unpackDemo (demo.lang, demo.code), DEMO_MAX_BYTES · src/core/paths.ts configDir · src/core/live.ts forDemo, DEMO_HIDDEN, tree.demo, agent/runs undefined, accepts (bez read) · src/core/waiting.ts demo (bez chat a retry) · src/commands/start.ts offerLinks (ne u ukázky) · assets/lang/cs.json ui.demo.*, ui.error.demo.* · dirigent:spec/143-ukazkova-data Rozhodnutí 25. 11., K2.1, K2.2 · web:js/i18n.js demo_cmd_title · research afed49d3, 97fc3a23, 8500b369, 3348ed20 · app:src/ui/sample-tag.ts researchDemoTree, src/research-device.ts storedResearchDemo, src/ui/research-sync-ui.ts activeResearchNoAgent · app a0c2a8bb, 8f6731a0 -->
 
 <a id="S9.4.1"></a>
 ### S9.4.1 Smazání: `strom demo --remove`

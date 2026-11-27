@@ -55,5 +55,6 @@ dauerhaft.
 - [S7 Zuverlässigkeit von Angaben und Prüfung an den Originalen](S7-reliability-and-verification.md): Marken an Angaben und auf dem Kärtchen, Prüfen an einer Angabe, bei einer Person und im Baum, Prüfung in der Warteschlange der Forschung, Anhand des Scans bestätigen, was mit der Brücke geht und was ohne sie
 - [S8 Wo die Daten liegen](S8-where-the-data-are.md): was nur im Browser liegt, was in der Forschung und im Strom-Archiv liegt, Fotos und Anhänge des Stammbaums in der Forschung, die Anzeige Nur im Browser, Fotos, die nicht geladen werden konnten, Paket und Entfernen eines Stammbaums
 - [S9 Am Beispiel ausprobieren](S9-trying-the-sample.md): das Beispiel aus dem Web und aus einer Datei ohne Installation, das Etikett Beispiel, ein neueres Beispiel, das kleine Beispiel ohne Netz, die Beispielforschung `strom demo` und ihr Löschen
+- [S10 Häuser](S10-houses.md): das Haus nach Ort und Nummer, Nummern im Lauf der Zeit, das Fenster Häuser und die Hausseite, Karte und Lage, die Geschichte eines Hauses anfordern, die Einstellung Hausgeschichte, wie der Agent ein Haus erforscht, das Aussehen des Hauses, eigene Recherche, das Gespräch über ein Haus, Häuser im Buch und in den Seiten, die Befehle `strom house`
 
 Lizenz: [CC BY 4.0](../LICENSE). Die Texte dürfen mit Quellenangabe geteilt und bearbeitet werden.

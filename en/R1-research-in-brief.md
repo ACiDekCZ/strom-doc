@@ -232,3 +232,33 @@ and `--story` ([R1.9.1](#R1.9.1)).
 - **Since:** research 1.32.0
 
 <!-- zdroj: research:src/commands/occupation.ts (add: aspoň dva tvary, --source ověřený pramen, by human | agent podle tree.personWrites; list: bez slova skupiny s by/at/sources, se slovem tvary s * u vlastních, --all; remove: agent jen své, persons, builtin, unknown) · src/core/occupations.ts (OCCUPATIONS_FILE quality/occupations.json, parseForm kód jazyka, addOccupation: nic se nezapíše, když už jedno povolání; mergeOccupations, ownOrRefuse: nečitelný soubor → UsageError strom repair; writeOwn putFile zapečetěná operace) · src/commands/query.ts:254–265 (ui.query.occupation.unknown, ui.occupation.unreadable) · assets/terms/occupations.json (83 skupin) · src/agents/files.ts AGENTS.md „An occupation strom query says is in no list“ · cs.json ui.occupation.*, ui.query.occupation.unknown · commity 84e7fc0e, 0abe8793 · CHANGELOG.cs.md 1.32.0 -->
+
+<a id="R1.10"></a>
+## R1.10 The research's menu in the terminal
+
+The command `strom` on its own opens the research's menu. Every screen of the menu has the same shape, so that it is
+clear what is a choice, what is text and what is a command to copy. The shape carries the meaning, not the colour.
+
+- **The shape of a screen:**
+  - at the top the way to the screen: **Strom › Settings › Maintenance**; a long name is cut short with "…" in it;
+  - under it a short summary and sections with a heading;
+  - choices as `[1]  Label   value  extra`: the key in square brackets, the label, in a column the state or count
+    (**off**, **60 min**, **4**) and, faint, what the choice holds. A long label wraps under itself, the value stays
+    in its column. A switch says how it is now and, after an arrow, what it switches to (**off  → turn on**);
+  - **[0]** is always last, after a blank line: **Back**, in the main menu **Quit**;
+  - the prompt says what Enter does: **Choice (Enter = 0 Back):**. In the main menu Enter is the first choice
+    (**Choice (Enter = 1 Continue):**);
+  - a command to copy stands on a line of its own: `$ strom …`, never in the middle of a sentence;
+  - where an explanation is longer, it is behind **[?]  Details**.
+- **Limits:**
+  - the screen is as wide as the terminal, at least 60 and at most 100 characters; off a terminal nothing wraps;
+  - colours only add to the shape: keys and headings bold, the way and the extras faint, a command cyan, ✓ green,
+    ✗ red. They are only on a person's terminal: never with the variable `NO_COLOR`, with `FORCE_COLOR=0`, with
+    `TERM=dumb`, for an agent or off a terminal;
+  - in the old Windows console window (not Windows Terminal) without faint text and with the marks `+` and `x`
+    instead of ✓ and ✗;
+  - outputs for an agent and for scripts (`--json`, `strom fixes list`, help) keep their earlier shape.
+- **Controls:** terminal: `strom`; to turn colours off: the variable `NO_COLOR`.
+- **Since:** research 1.38.0
+
+<!-- zdroj: research:0a1e3780, a9b88a54, ccb2942f, 99d46a56 src/cli/screen.ts (Role, SGR key 1, crumb 2, crumbLast 1, heading 1, dim 2, command 36, ok 32, err 31; MAX_WIDTH 100, MIN_WIDTH 60, widthOf; oldConsole, asciiMarks ✓→+ ✗→x; terminalStyle: tty, NO_COLOR, FORCE_COLOR 0/false, TERM dumb, agent; commandLine „$ “; optionLines LABEL_MAX 40; crumbLine CRUMB_MAX 32) · src/cli/context.ts choose (ui.choose.enter, details → [?] ui.details) · cs.json ui.choose.enter, ui.details · test/fixtures/screens/menu-cs-80.txt, waiting-cs-80.txt · CHANGELOG.cs.md 1.38.0 „Přehlednější menu v terminálu“ · dirigent:spec/144 K1–K4, K7 -->

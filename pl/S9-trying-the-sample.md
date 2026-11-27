@@ -87,6 +87,36 @@ można usunąć w Zarządzaniu drzewami.”
 
 <!-- zdroj: app:src/ui/sample-tag.ts sampleTagHtml · src/tree-manager.ts sampleKindOf, markSampleTree · src/tree-row.ts treeSampleKind (showcase i demo) · src/ui/tree-management.ts tree-badge--sample, sample.asOf · strings.ts sample.tag, tagTitle, asOf · app 9ea6ca78, 3505db77, bc1c497d -->
 
+<a id="S9.1.3"></a>
+### S9.1.3 Badanie przykładu tylko do przeglądania
+
+Drzewo przykładu ze strony lub z pliku przykładu ma ze sobą także migawkę swojego badania. Przegląd badania, to, co
+badanie wie, i materiały można przeglądać wprost w aplikacji, bez instalacji badań i bez subskrypcji AI. Do migawki
+nic nie jest zapisywane i nic nie jest z niej nigdzie wysyłane.
+
+- Po otwarciu przykładu komunikat **Przykład jest otwarty.**: „Jego badania można przeglądać; zmiany nie trafiają do
+  żadnych badań.” W **Zarządzaniu drzewami** drzewo przykładu ma wiersz „badania przykładu · tylko do przeglądania”.
+- Przegląd badania ma pod nagłówkiem „Stan przykładu na <data>” i „W przykładzie tylko do przeglądania – pełne
+  badania:” z poleceniem `strom demo` ([S9.4](#S9.4)), przyciskiem **Kopiuj** i linkiem **Jak to zrobić ↗** do strony
+  instalacji badań.
+- **Główne działania** badania pozostają widoczne, wyszarzone, z oznaczeniem: praca agenta, wysłanie zmian,
+  sprzeczność, sprzeczność do agenta, hipoteza, odpowiedź, kolejność w kolejce, przetworzenie od razu, nowa linia
+  i rozmowa z agentem. Dymek (najechanie, fokus lub dotknięcie; Escape go zamyka) wyjaśnia: **W przykładzie tylko do
+  przeglądania**, „W pełnych badaniach: <działanie> · <oznaczenie>” (**AI + terminal** lub **terminal**,
+  [S4.5.1](S4-research-from-the-app.md#S4.5.1)) i „Pełne badania z agentem:” `strom demo` z **Kopiuj** i **Jak to
+  zrobić ↗**.
+- Stopka menu **Badanie** pokazuje **W przykładzie tylko do przeglądania**, a menu „Zmiany nie są wysyłane do
+  badania”. **Wyślij** jest wyszarzone z wyjaśnieniem także na pasku synchronizacji i w **Co zostanie wysłane**. Na
+  telefonie w arkuszu **Więcej** są wyszarzone **Kontynuuj z agentem** i **Wyślij**; dotknięcie mówi dlaczego.
+- **Granice:**
+  - pozostałe zapisy do badania i działania domów nie są widoczne wcale ([S10.13](S10-houses.md#S10.13));
+  - zmiany drzewa przykładu zostają w aplikacji, do badania nie trafiają;
+  - z przykładu nie uruchamia się żaden agent.
+- **Obsługa:** aplikacja: menu **Badanie**, Przegląd badania, dymek przy wyszarzonym działaniu
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: dirigent:spec/143-ukazkova-data K4, K4.1, úkol A2 · app:src/showcase-bridge.ts (most ze snímku, každý zápis 403 showcase.read-only) · src/research-link.ts SHOWCASE_ALLOWS (10 hlavních akcí zašedlé, house: 'hide') · src/ui/sample-why.ts sampleNoteEl, showcaseWhyContent · src/tree-row.ts treeOriginLine · src/ui/showcase-open-ui.ts · strings.ts sample.originLine, openedTitle, opened, asOfLine, readOnly, whyTitle, whyFull, whyWhat, copy, howTo, sync.sendOffLine, mobileMenu.more · app 73628eda, 617b893e, 0754e561, bdb0b181, 635112ff, c8de3d8c, 67351f80, 89f6c9a5 · nález N7: K4.1 „neaktivní s vysvětlením“ × kód ostatní zápisy skryje -->
+
 <a id="S9.2"></a>
 ## S9.2 Plik przykładu i samodzielny plik HTML
 
@@ -158,6 +188,8 @@ badania, linie, kolejkę, źródła, materiały i zadania czekające na człowie
   podaje agenta ani przebiegów, zadania czekające nie mają rozmowy z agentem ani zwrotu do agenta, i nie proponuje
   natychmiastowego odczytu dokumentu ani zbiorczej weryfikacji. `strom demo` przy pierwszym otwarciu nie pyta, czy
   aplikacja może uruchamiać badania.
+- **Od aplikacji 3.33.0:** drzewo przykładowego badania ma w aplikacji etykietę **Przykład** ([S9.1.2](#S9.1.2)),
+  a aplikacja nie proponuje przy nim niczego z agentem.
 - Bez języka `strom demo` bierze język, w którym `strom` mówi w terminalu; gdy to nie jest żaden z czterech języków,
   bierze `en`.
 - **Granice:**
@@ -175,7 +207,7 @@ badania, linie, kolejkę, źródła, materiały i zadania czekające na człowie
 - **Dlaczego:** przykład ma dać się przejrzeć bez subskrypcji AI; agent może nad nim pracować, ale badania żadnego
   nie proponują ani nie polecają (decyzja z 25. 11. 2026).
 
-<!-- zdroj: research:src/commands/demo.ts (demoBase, run: demoLang(ctx.uiLang()) ?? "en", had → jen otevřít, own Settings, c.demo = true, app.run, rm při chybě) · src/core/demo.ts DEMO_LANGS, DEMO_FOLDER, demoPaths, demoEnv, downloadDemo (SHA-256, demo.download, demo.damaged), unpackDemo (demo.lang, demo.code), DEMO_MAX_BYTES · src/core/paths.ts configDir · src/core/live.ts forDemo, DEMO_HIDDEN, tree.demo, agent/runs undefined, accepts (bez read) · src/core/waiting.ts demo (bez chat a retry) · src/commands/start.ts offerLinks (ne u ukázky) · assets/lang/cs.json ui.demo.*, ui.error.demo.* · dirigent:spec/143-ukazkova-data Rozhodnutí 25. 11., K2.1, K2.2 · web:js/i18n.js demo_cmd_title · research afed49d3, 97fc3a23, 8500b369, 3348ed20 -->
+<!-- zdroj: research:src/commands/demo.ts (demoBase, run: demoLang(ctx.uiLang()) ?? "en", had → jen otevřít, own Settings, c.demo = true, app.run, rm při chybě) · src/core/demo.ts DEMO_LANGS, DEMO_FOLDER, demoPaths, demoEnv, downloadDemo (SHA-256, demo.download, demo.damaged), unpackDemo (demo.lang, demo.code), DEMO_MAX_BYTES · src/core/paths.ts configDir · src/core/live.ts forDemo, DEMO_HIDDEN, tree.demo, agent/runs undefined, accepts (bez read) · src/core/waiting.ts demo (bez chat a retry) · src/commands/start.ts offerLinks (ne u ukázky) · assets/lang/cs.json ui.demo.*, ui.error.demo.* · dirigent:spec/143-ukazkova-data Rozhodnutí 25. 11., K2.1, K2.2 · web:js/i18n.js demo_cmd_title · research afed49d3, 97fc3a23, 8500b369, 3348ed20 · app:src/ui/sample-tag.ts researchDemoTree, src/research-device.ts storedResearchDemo, src/ui/research-sync-ui.ts activeResearchNoAgent · app a0c2a8bb, 8f6731a0 -->
 
 <a id="S9.4.1"></a>
 ### S9.4.1 Usunięcie: `strom demo --remove`
