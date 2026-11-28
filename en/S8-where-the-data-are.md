@@ -28,7 +28,8 @@ storage; the backups in the app lie in the same storage and disappear with it.
   to a file and how to keep the storage (installing as an app, persistent storage in Firefox, the Dock or the home
   screen in Safari).
 - **Save to file** saves the whole tree with all data and images to a JSON file that can be opened again in Strom. An
-  encrypted tree can be saved encrypted.
+  encrypted tree can be saved encrypted. It is an output for oneself: full details, the living too, without a
+  protection choice ([S11.5](S11-protecting-living-people.md#S11.5)).
 - A private browser window deletes the trees when it is closed.
 - **Limits:**
   - each browser and each device has its own storage: a tree opened in Chrome is neither in Edge nor on the phone;
@@ -40,7 +41,7 @@ storage; the backups in the app lie in the same storage and disappear with it.
   save to a file**.
 - **Since:** app 3.0.0
 
-<!-- zdroj: app:src/storage.ts strom-db · src/ui/file-copy-ui.ts · strings.ts fileCopy.title, intro, statePersistent, stateNotPersistent, statePrivate, backupsNote, save, quickHint, saveEncryptedBtn, details, settingLabel · materials.whereApp · S1.8 -->
+<!-- zdroj: app:src/storage.ts strom-db · src/ui/file-copy-ui.ts · strings.ts fileCopy.title, intro, statePersistent, stateNotPersistent, statePrivate, backupsNote, save, quickHint, saveEncryptedBtn, details, settingLabel · materials.whereApp · S1.8 · 3.33.0: app:src/ui/encryption-ui.ts:1357 (exportQuick: záloha bez bloku ochrany) · dirigent:spec/151 K3.1 -->
 
 <a id="S8.2"></a>
 ## S8.2 What is in the research and in the Strom archive

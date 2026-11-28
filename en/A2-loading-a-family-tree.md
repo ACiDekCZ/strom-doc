@@ -92,6 +92,11 @@ offered for linking.
   becomes the couple's photo ([A12.7](A12-portrait-and-couple-photo.md#A12.7)), only a picture and only for a union
   that has no photo yet. The result of the linking counts it: “Attached 3 of 3 referenced files: 1 portrait,
   1 attachment, 1 couple photo.”
+- **From app 3.33.0:** a file with living people protected has under the tiles the line “The file is protected
+  ({mode}): the details of N living people are missing from it.” The import guide starts with the choice **New
+  tree** and the tree is named “{file} (protected copy)” ([S11.6](S11-protecting-living-people.md#S11.6)).
+
+<!-- zdroj 3.33.0: app:47500acc src/ui/import-export.ts:977 gedcom-protected, :818 openGedcomGuide protectedImport, :1500 protectedCopyName, :1930 import-tree-protected · src/ui/privacy-block.ts protectedImportLineHtml · strings.ts privacy.importProtected, protectedCopyName -->
 
 <!-- zdroj: app:src/ui/import-export.ts:374 handleGedcomFile, :410 showGedcomResultDialog · app:src/ged-parser.ts:3880 statistiky convertToStrom, :3186 pohlaví · strings.ts gedcom.*, importImages.* · 3.28.0: app:80c2ffb9 strings.ts gedcom.sharedConverted · 3.30.0: app:68c232ad ExternalMediaRef.partnershipId, src/ged-media-attach.ts attachGedcomMediaFile, strings.ts gedcom.externalMediaSplit, mediaAttachedParts -->
 

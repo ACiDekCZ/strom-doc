@@ -179,8 +179,8 @@ sentence under the map says where the location comes from.
 - **Limits:**
   - the research does not overwrite a location a person confirmed;
   - **Open elsewhere** is only at a house with a point of its own;
-  - the book, the saved house page and the family pages show the location only for a house without people of the
-    last roughly 100 years, and then as a cut of the map ([S10.3.4](#S10.3.4)).
+  - the saved house page, the book, the family pages, the gift and the HTML export show the location as a cut of the
+    map or as coordinates, until a person hides it at the house or in the output ([S10.3.4](#S10.3.4)).
 - **Controls:** app: house page → **Map** → **Map layer**, **Confirm location**, **Move the point**, **Hide location
   in outputs** ([S10.3.4](#S10.3.4)); terminal `strom house confirm <house> location`.
 - **Since:** app 3.33.0, research 1.38.0
@@ -190,26 +190,43 @@ sentence under the map says where the location comes from.
 <a id="S10.3.2"></a>
 ### S10.3.2 The saved house page and protecting people
 
-**Save HTML** saves the house page as one file (e.g. `belokamen-cp-16.html`) without map tiles from the network;
-the location is a cut of the map right in the file ([S10.3.4](#S10.3.4)), the pictures of the house and the town load
-from the web or are only a link ([S10.7.1](#S10.7.1)). The saved house page, the book and the family pages protect the
-people of the last roughly 100 years.
+**Save HTML** on the house page opens the dialog **Save house page**. **Save** saves the page as one file (e.g.
+`belokamen-cp-16.html`) without map tiles from the network; the location is a cut of the map right in the file
+([S10.3.4](#S10.3.4)), the pictures of the house and the town load from the web or are only a link
+([S10.7.1](#S10.7.1)). The saved house page, the book and the family pages protect the living and the people of the
+last roughly 100 years.
 
-- **Never:** today's owners; names of the living; the name of a witness.
+- **The dialog Save house page:**
+  - the block **Protecting living people** with the mode from Settings (“default from Settings”,
+    [S11.3](S11-protecting-living-people.md#S11.3); modes [S11.2](S11-protecting-living-people.md#S11.2)). When the
+    house has living people or people of the last roughly 100 years, below it stands “Applies to the names of living
+    people and of people from the last ~100 years; their other details stay as today (name only). The house’s story
+    is not rewritten.”;
+  - the switch **Photos of houses from the web**: “They load when the file is opened; without internet the caption
+    with its link stays.”;
+  - the switch **House location and map**, only for a house with a location: “Cuts of the map layers as pictures in
+    the file, the point, the coordinates and links to other maps; off: the town only.” For a location hidden by hand,
+    instead of it “The house location is hidden by hand; the file gives the town only.”;
+  - each opening starts from Settings; the choice holds only for this file and does not change Settings.
+- **Names** by the protection mode: the living as in the mode ([S11.2](S11-protecting-living-people.md#S11.2));
+  deceased people of the last roughly 100 years the same, only without the birth year and as “Person” instead of
+  “Living person”. With **Full details** all names are whole. Who is a living person:
+  [S11.1](S11-protecting-living-people.md#S11.1).
+- **Never:** today's owners and residents (a holder or resident with years in the last roughly 100 years whom the
+  tree does not know is left out); the name of a witness.
 - **People of the last roughly 100 years** only by name and role, without years.
 - **Research events of the last roughly 100 years and sensitive events** (confiscation, expulsion) are left out until
   a person reveals them (**Show in outputs**).
-- **Location** only for a house without people of the last roughly 100 years and only when not hidden by hand
-  ([S10.3.4](#S10.3.4)); for a house with such people no house name either.
+- **Location** only when not hidden by hand and with **House location and map** on ([S10.3.4](#S10.3.4)). The house
+  name of a house with people of the last roughly 100 years is left out.
 - **The story of the house** always whole, approved or a draft, without the draft tag. People of the last roughly
   100 years and items the page hides do not leave it out ([S10.14.2](#S10.14.2)).
-- The house page says what is missing in the outputs and why: “In outputs (HTML, book) N events and the house
-  location are not shown (people of the last ~100 years).”, “… N events are not shown; the house location is hidden
-  by hand.”
-- **Controls:** app: house page → **Save HTML**; at an event **Show in outputs**.
+- The house page says what is missing in the outputs: “In outputs (HTML, book) 3 events are not shown.”, “…; the
+  house location is hidden by hand.”, or “In outputs (HTML, book) the house location is hidden by hand.”
+- **Controls:** app: house page → **Save HTML** → **Save house page**; at an event **Show in outputs**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) · T10: app:51223455 src/ui/house-page-ui.ts showHouseSaveDialog (privacyBlockHtml mode SettingsManager.getOutputPrivacy origin settings, living named.size, strings.privacy.houseLine; outputSwitchHtml house-photos outputWebPhotos.bookSwitch/fileHint, house-location outputHouseLocation.switch/switchHint jen hasLocation, byHand → handHidden; HouseSaveChoice), src/house-page.ts houseFileNames (applyLivingPrivacy podle režimu, recent → privacy.namedAsLiving bez birthDate, label privacy.recentPerson, full beze změny), shownHouseName (recentHouse), src/house-privacy.ts houseOutputFilter (holderOf: neznámý z posledních ~100 let → null; locationBy manual|output), strings.ts houses.page.saveTitle, houses.hiddenSummary · app:4c403da2 · CHANGELOG.cs.md 3.33.0 -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 The timeline from the tree's records
@@ -235,43 +252,62 @@ What one row already says is not repeated.
 <a id="S10.3.4"></a>
 ### S10.3.4 The house location in outputs
 
-The family book, the saved house page and the family pages show the house's location as a picture: a cut of today's
-map with the point and the number of the house. Below it are the coordinates, how certain the number match is and the
-map's attribution. So the output shows the location even without the network.
+The saved house page, the family book, the family pages, the gift and the HTML export show where the house stands.
+In the book it is a cut of today's map with the point and the number of the house, below it the coordinates, how
+certain the number match is, and the map's attribution. The house location is not personal data: it shows whoever
+lived in the house, people of the last roughly 100 years too, until a person hides it at the house or in the output.
+The outputs still protect those people's names, years and events ([S10.3.2](#S10.3.2)).
 
 - **When the location shows:** only for a house with a point (set by hand or by the research) and only when both
   hold:
-  - there are no people of the last roughly 100 years in the house: the living, people of the tree from those years,
-    house entries from those years, or holders and residents with years in that time (also people the tree does not
-    know);
-  - a person has not hidden the location (**Hide location in outputs**).
+  - a person has not hidden the location at the house (**Hide location in outputs**);
+  - the output has its location switch on (**House location and map**, **House locations and maps**).
+- **Setting:** **Settings → Data and privacy → House location in outputs**: **Show** (default) or **Hide**. “The
+  saved house page, the family book, the family pages, the gift and the HTML export show where houses stand: cuts of
+  the map, the coordinates and links to other maps. Each of them can change it. A house whose location is hidden by
+  hand stays without it.”
+- **Switches in the outputs** (filled in from Settings; off: the town only):
+
+  | Output | Switch | When it is shown | Where it starts from |
+  |---|---|---|---|
+  | Save house page | **House location and map** | the house has a location; for one hidden by hand, instead of it “The house location is hidden by hand; the file gives the town only.” | always from Settings ([S10.3.2](#S10.3.2)) |
+  | Family book | **House locations and maps** | the part **Houses** and a house in the chapter with a location not hidden by hand | last time for this tree, otherwise from Settings |
+  | Family pages | **House locations and maps** | houses as pages and a house page with a location not hidden by hand | last time for this tree, otherwise from Settings |
+  | Give a family tree | **House locations and maps** | the tree has a house with a location not hidden by hand | last time for these recipients, otherwise from Settings; **Start over with defaults** from Settings |
+  | HTML export | **House locations and maps** | the HTML format, not a quick save; for the active tree only with a house with a location not hidden by hand | always from Settings |
+
+  The switch in the book: “A cut of today’s map with the point of each house, its coordinates and how sure the
+  number’s match is; off: the town only. A house hidden by hand stays without it.” In the gift and the HTML export:
+  “The coordinates of houses go in the file; off: the town only. A house hidden by hand stays without them.” A choice
+  in an output does not change Settings.
 - **Certainty:** “Today’s location · number match confirmed” when a person set or confirmed the point (in the app or
   in the research); otherwise “Today’s location · number match assumed”.
-- **Picture:** today's OpenStreetMap map with the attribution “© OpenStreetMap contributors, licence ODbL”. HTML (the
-  saved house page, the family pages, also in the ZIP and in the gift) adds as a further picture the historical layer
-  the research supplied for the house's place ([S10.3.1](#S10.3.1)); the book gives only today's map and does not
-  split the cut across pages.
+- **Picture:** today's OpenStreetMap map with the attribution “© OpenStreetMap contributors, licence ODbL”.
+  - HTML (the saved house page, the family pages also as a ZIP, the pages in the gift) adds further pictures: the
+    historical layers the research supplied for the house's place ([S10.3.1](#S10.3.1)), at most 8 pictures with
+    a layer switch without a script. A browser without this support and print show all pictures one below another.
+  - The book (also the book in the gift) gives only today's map and does not split the cut across pages. The links
+    **Open elsewhere** are only on screen, not in print.
+  - The gift makes the cuts from the package's data. In the tree only a house whose point a person set or confirmed
+    has a location; a location only from the research goes neither into the gift nor into the HTML export.
 - **Without the network:** the cut is made once and the app keeps it in this browser; the next book, PDF or gift
   takes the kept one. Without the network and without a kept cut, or while the map is not allowed (**Show the map**),
   the output gives only the coordinates and the certainty, without an error. At most 10 s are waited for one picture.
-- **House page**, the **Map** section: for a house whose location the outputs would show, the line “Outputs (HTML,
-  book) show the house location.” and **Hide location in outputs**. After hiding, “The house location is hidden by
-  hand in outputs (HTML, book).” and **Show location in outputs**. Each is one step of **Undo**.
-- **Book:** the option **House locations** (on by default, remembered): “A cut of today’s map with the point of
-  a house without people of the last ~100 years; off: the town only.” It is there only with the part **Houses** and
-  only when the book has a house whose location can be shown. The chapter's note then reads “Events after <year> and
-  the location of a house with people of these years are not given in the book.”
+- **House page**, the **Map** section: for a house with a location the line “Outputs (HTML, book) show the house
+  location.” and **Hide location in outputs**. After hiding, “The house location is hidden by hand in outputs (HTML,
+  book).” and **Show location in outputs**. Each is one step of **Undo**.
 - **Limits:**
-  - people of the last roughly 100 years come first: a manual **Show location in outputs** does not override them,
-    and for such a house there is neither the line nor the button; the page says why the location is missing
-    ([S10.3.2](#S10.3.2));
+  - hiding by hand at the house always wins, even when the output's switch is on;
+  - **Share** has no switch and does not read Settings; the JSON file and the backup carry the tree's data as they
+    are;
   - hiding by hand is only in the app's tree (the JSON file); it goes neither to the research nor to GEDCOM;
   - a read-only tree shows only the state, without the button.
-- **Controls:** app: house page → **Map** → **Hide location in outputs** / **Show location in outputs**; export
-  **Family book** → **House locations**.
+- **Controls:** app: **Settings → Data and privacy → House location in outputs**; house page → **Map** → **Hide
+  location in outputs** / **Show location in outputs**; **Save house page** → **House location and map**; **Book and
+  pages**, **Give a family tree** and the HTML export → **House locations and maps**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (location jen bez recentPeople a bez hideLocation; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek -->
+<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (do 3.33.0 před T10 location jen bez recentPeople; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek · T10: app:51223455 src/house-privacy.ts houseOutputFilter (locationBy manual|output, HouseOutputChoice.location; „Not personal data“), src/settings.ts isOutputHouseLocation/setOutputHouseLocation (výchozí !== false), index.html output-house-location-setting, src/ui/book-ui.ts sw houseMaps outputHouseLocation.housesSwitch/housesSwitchHint (bookHouseMapsState shown; stránky: housesWithLocation u domů jako stránky; opts.houseMaps z book-memory, jinak isOutputHouseLocation), src/ui/gift-tree-ui.ts gift-house-location (jen dům s location a bez hideLocation, dataSwitchHint, giftRestart → Nastavení), src/gift-memory.ts houseLocations, src/ui/encryption-ui.ts setupExportHouseLocation (jen html, ne rychlý export; vždy z Nastavení), src/ui/house-page-ui.ts showHouseSaveDialog house-location · app:6ec8204e src/gift-package.ts houseShots (stránky a kniha daru, ne při houseLocations false; kniha houseMaps podle přepínače balíčku), src/ui/gift-tree-ui.ts giftHouseShots (vrstvy z houseStatus), src/book-css.ts (Otevřít jinde jen na obrazovce) · app:4c403da2 · src/house-map.ts HOUSE_SHOT_SWITCH_MAX 8, src/house-page-css.ts .hmap-sw (:has, bez skriptu) · strings.ts outputHouseLocation.*, houses.page.map.outShown, houses.hiddenSummary, book.houseChapterProtected · CHANGELOG.cs.md 3.33.0 -->
 
 <a id="S10.4"></a>
 ## S10.4 Requesting a house's history
@@ -541,16 +577,18 @@ The saved house page ([S10.3.2](#S10.3.2)), the **Houses** chapter in the book a
 Each picture has a caption: what it shows (for a picture of the town), the author, the licence and a link to its
 address on the web.
 
-- **The setting Web photos in outputs** applies to all three outputs and this browser remembers it:
+- **The setting Web photos in outputs** applies to all three outputs as the default and this browser remembers it:
   - **Load from web** (default): when the file is opened, it loads the picture from its address on the web, above the
     caption with the link;
   - **Link only**: only the caption and the link.
 - **The Book and pages dialog** has the switch **Photos of houses from the web** (on = **Load from web**). It is the
   same setting: switching it in the dialog changes Settings too. It shows only when a house of the selection has a
   picture:
-  - book: in **Parts of the book** under **House locations**, only with the part **Houses**;
+  - book: in **Parts of the book** under **House locations and maps**, only with the part **Houses**;
   - family pages: at the option **Houses**, only with **In the family pages, linked with the people**.
-- **Save HTML** on the house page has no switch; it follows the setting.
+- **The dialog Save house page** always has the switch **Photos of houses from the web**: “They load when the file is
+  opened; without internet the caption with its link stays.” Each opening starts from Settings; the choice holds only
+  for this file and does not change Settings ([S10.3.2](#S10.3.2)).
 - **Without the network** the picture takes no room in the file and the caption with the link stays.
 - **Limits:**
   - a picture of the house only with a licence; pictures of the house and the town only with an `http` or `https`
@@ -560,10 +598,11 @@ address on the web.
   - the file loads no scripts, fonts or frames from outside; a picture loads without saying where it is opened from;
   - in the app window the pictures always load; the setting applies to files only.
 - **Controls:** app: **Settings → Data and privacy → Web photos in outputs** (**Load from web** / **Link only**);
-  dialog **Book and pages** → **Photos of houses from the web**.
+  dialog **Book and pages** → **Photos of houses from the web**; **Save house page** → **Photos of houses from the
+  web**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · src/ui/house-page-ui.ts webPhotos z nastavení · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
+<!-- zdroj: app:51223455 src/ui/house-page-ui.ts showHouseSaveDialog house-photos (outputWebPhotos.bookSwitch, fileHint, z isOutputWebPhotos, HouseSaveChoice.webPhotos) · app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
 
 <a id="S10.8"></a>
 ## S10.8 Own research and material for a house
@@ -645,22 +684,28 @@ follow-up task only when a person asks for one.
   offered when people of the selection lived in a house with history. The timeline of a line has the chip **Houses ⌂**
   ([S10.11](#S10.11)).
 - **Limits:**
-  - the book gives the location only with the option **House locations** and only for a house without people of the
-    last roughly 100 years ([S10.3.4](#S10.3.4)); otherwise “Events after <year> and the house location are not given
-    in the book.”; it leaves out sensitive events and research events of the last roughly 100 years ([S10.3.2](#S10.3.2));
-  - the pages give nothing about houses from the last roughly 100 years, except the story of a house;
+  - the book and the pages give the location with the switch **House locations and maps** for every house whose
+    location is not hidden by hand ([S10.3.4](#S10.3.4)); they leave out sensitive events and research events of the
+    last roughly 100 years ([S10.3.2](#S10.3.2)), and the book then writes at the house “Events after <year> are not
+    given in the book.”;
+  - the pages give nothing about houses from the last roughly 100 years, except the story of a house and the
+    location;
   - the book and the pages leave out a story with a living person only with **Stories of houses with living people**
     off ([S10.14.2](#S10.14.2));
   - the pages take houses with history by the threshold ([S10.1](#S10.1)), the book also houses with a finished
     history from the research;
   - the choice **House** only in a tree with a numbered house and only for the book; the gift
-    ([A7.9](A7-book-pages-and-export.md#A7.9)) and the picture have no houses.
-- **Controls:** app: export **Family book** → **House**, the part **Houses**, **Index of houses**, **House
-  locations**, **Photos of houses from the web**, **Stories of houses with living people**; family pages and tree
-  pages → **Houses**, **Photos of houses from the web**, **Stories of houses with living people**.
+    ([A7.9](A7-book-pages-and-export.md#A7.9)) and the picture do not have it;
+  - the pages and the book in the gift take houses by the remembered choice of the book and pages, without the
+    research's results of the houses; they give the location and map of houses by the gift's switch **House locations
+    and maps**, not by the book's choice ([S10.3.4](#S10.3.4)).
+- **Controls:** app: export **Family book** → **House**, the part **Houses**, **Index of houses**, **House locations
+  and maps**, **Photos of houses from the web**, **Stories of houses with living people**; family pages and tree pages
+  → **Houses**, **House locations and maps**, **Photos of houses from the web**, **Stories of houses with living
+  people**; **Give a family tree** → **House locations and maps**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories · T10: app:51223455 src/ui/book-ui.ts book-house-maps (outputHouseLocation.housesSwitch; kniha bookHouseMapsState, stránky housesWithLocation), src/house-privacy.ts houseOutputFilter (locationBy manual|output), book.houseChapterProtected · app:6ec8204e src/gift-package.ts (env.pages, env.book z paměti knihy, houseMaps: settings.houseLocations), src/ui/gift-tree-ui.ts giftHouseShots (houseResearch () => null) -->
 
 <a id="S10.11"></a>
 ## S10.11 Houses elsewhere in the app
@@ -824,10 +869,12 @@ research documented.
 - **The family book and the family pages** have the switch **Stories of houses with living people** (on by default,
   remembered with the dialog's other options): “On: every story of a house goes in. Off: a story in which a living
   person appears is left out.”
-  - a living person is a person of the tree the app takes as living ([A7.1](A7-book-pages-and-export.md#A7.1)); a
+  - a living person is a person of the tree the app takes as living
+    ([S11.1](S11-protecting-living-people.md#S11.1)); a
     person of the research whom the tree does not know does not count as living;
   - the switch holds whatever the protection of the living is set to, and leaves out only such a story, nothing else;
-  - book: in **Parts of the book** under **House locations** and **Photos of houses from the web**, only with the part
+  - book: in **Parts of the book** under **House locations and maps** and **Photos of houses from the web**, only with
+    the part
     **Houses**; family pages: at the option **Houses**, only with **In the family pages, linked with the people**;
   - it is offered only when a house of the selection has a story in which a living person appears. The dialog reads
     the research's results of the houses as soon as it opens.
@@ -836,7 +883,7 @@ research documented.
 - The link **House <number> ›** from a person's story to the house is in the book and in the family pages only when
   the output shows the house's story, even when it is a draft.
 - **Controls:** app: export **Family book** → the part **Houses**, **Stories of houses with living people**; house
-  page → **Save HTML**; family pages → **Houses**, **Stories of houses with living people**.
+  page → **Save HTML** → **Save house page**; family pages → **Houses**, **Stories of houses with living people**.
 - **Since:** app 3.33.0
 
 <!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (nová verze vedle final → final) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez recent, osob bez úmrtí a skrytých položek; leaveOutLiving), houseStoryNamesLiving (personOfRef a ctx.living, osoba mimo strom ne), src/book-houses.ts (bez book-house-story-tag), src/house-page.ts storyHtml (štítek a Schválit jen c.app), shownStory (storyLiving), src/book.ts (opts.houseStoriesLiving), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving (výchozí zapnuto), src/book-memory.ts houseStoriesLiving (kniha i PagesChoices), src/ui/book-ui.ts book-house-stories (kniha: parts.houses a chapterHouses; stránky: houses pages), readDialogHouses, src/family-pages-html.ts setStoryHouses (houseStoriesLiving) · strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint · src/gift-package.ts (bez houseResearch) · dirigent:prace/1128-app-dum-vypraveni-ochrana Výsledek (dárek vyprávění domů nenese; osoba mimo strom bez úmrtí není žijící) -->

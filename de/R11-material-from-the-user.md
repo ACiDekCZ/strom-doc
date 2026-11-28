@@ -148,7 +148,7 @@ Stapel an. Der Agent sortiert ihn dann nach Aufgaben.
     Personen der Forschung gehört;
   - über eine lebende Person wurde bis Forschung 1.36.0 nichts erfasst, die Datei wurde nur eingeordnet. Ab 1.37.0
     wird das Material einer lebenden Person eingeordnet und erfasst wie bei jeder anderen; der Schutz lebender
-    Personen gehört zum Export ([A7.2](A7-book-pages-and-export.md#A7.2));
+    Personen gehört zum Export ([S11.4](S11-protecting-living-people.md#S11.4));
   - die Scans eines Buches (viele nummerierte Bilder) werden nicht Datei für Datei gelesen: sie werden als Buch
     erfasst, und die Einträge werden daraus gelesen wie aus jedem Buch ([R8](R8-reading-scans.md));
   - die Aufgabe wird geschlossen, wenn jede ihrer Dateien eingeordnet ist; ein weiterer Teil des Stapels ist eine

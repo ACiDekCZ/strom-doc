@@ -853,6 +853,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [R10.3](cs/R10-people-and-hypotheses.md#R10.3), R10.3.1, R10.3.3, R6.3.4, S3.5, S3.5.1, S3.5.2
 
+<a id="protected-file"></a>
+### Chráněný soubor · chráněná kopie
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | chráněný soubor · {soubor} (chráněná kopie) | Soubor s ochranou žijících a značkou režimu a počtu žijících (`_STROM_PRIVACY`, `privacy`). Nikdy není zdrojem změn stromu; import z něj založí nový strom „{soubor} (chráněná kopie)“. |
+| en | protected file · {file} (protected copy) | A file with the living protected and the mark of the mode and the number of living people. Never a source of changes to a tree; an import of it creates a new tree “{file} (protected copy)”. |
+| de | geschützte Datei · {Datei} (geschützte Kopie) | Eine Datei mit geschützten Lebenden und der Markierung von Stufe und Zahl der Lebenden. Nie eine Quelle von Änderungen eines Stammbaums; ihr Import legt einen neuen Stammbaum „{Datei} (geschützte Kopie)“ an. |
+| pl | chroniony plik · {plik} (kopia chroniona) | Plik z ochroną osób żyjących i oznaczeniem trybu oraz liczby osób żyjących. Nigdy źródło zmian drzewa; import z niego zakłada nowe drzewo „{plik} (kopia chroniona)”. |
+
+- **Čísla:** [S11.6](cs/S11-protecting-living-people.md#S11.6), S11.7, A2.1.1, A8.6
+
 <a id="pedigree-collapse"></a>
 ### Implex
 
@@ -954,12 +966,12 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Ke sdílení s ostatními | Účel exportu GEDCOM: chrání žijící osoby (výchozí **Iniciály + rok narození**); zemřelým prameny zůstanou. |
-| en | To share with others | A purpose of the GEDCOM export: protects living people (by default Initials + birth year); the deceased keep their sources. |
-| de | Zum Teilen mit anderen | Ein Zweck des GEDCOM-Exports: schützt lebende Personen (standardmäßig Initialen + Geburtsjahr); Verstorbene behalten ihre Quellen. |
-| pl | Do udostępnienia innym | Cel eksportu GEDCOM: chroni osoby żyjące (domyślnie Inicjały + rok urodzenia); zmarłym źródła zostają. |
+| cs | Ke sdílení s ostatními | Účel exportu GEDCOM: chrání žijící osoby (výchozí režim z Nastavení); zemřelým prameny zůstanou. Chráněný soubor nese značku. |
+| en | To share with others | A purpose of the GEDCOM export: protects living people (the default mode from Settings); the deceased keep their sources. A protected file carries the mark. |
+| de | Zum Teilen mit anderen | Ein Zweck des GEDCOM-Exports: schützt lebende Personen (die Standardstufe aus den Einstellungen); Verstorbene behalten ihre Quellen. Eine geschützte Datei trägt die Markierung. |
+| pl | Do udostępnienia innym | Cel eksportu GEDCOM: chroni osoby żyjące (domyślny tryb z Ustawień); zmarłym źródła zostają. Chroniony plik nosi oznaczenie. |
 
-- **Čísla:** [S6.6](cs/S6-tree-from-another-program.md#S6.6), A7.2, A7.2.1
+- **Čísla:** [S6.6](cs/S6-tree-from-another-program.md#S6.6), S11.4, S11.6
 
 <a id="recurring-godparent"></a>
 ### Kmotr, který se opakuje
@@ -1014,12 +1026,12 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Validace stromu (dialog) · Kontrola dat (po importu) · Detaily validace (tlačítko) | Kontrola celého stromu v aplikaci: vazby, data, věk, prameny a stopy. Strom nemění; opravu dělá člověk. |
-| en | Tree validation (dialog) · Data check (after import) · Validation details (button) | A check of the whole tree in the app: links, dates, age, sources and leads. It does not change the tree; a person makes the fix. |
-| de | Stammbaum-Prüfung (Dialog) · Datenprüfung (nach dem Import) · Validierungsdetails (Schaltfläche) | Eine Prüfung des ganzen Stammbaums in der App: Verbindungen, Daten, Alter, Quellen und Hinweise. Sie ändert den Stammbaum nicht; die Korrektur macht ein Mensch. |
-| pl | Walidacja drzewa (dialog) · Kontrola danych (po imporcie) · Szczegóły walidacji (przycisk) | Kontrola całego drzewa w aplikacji: powiązania, daty, wiek, źródła i wskazówki. Drzewa nie zmienia; poprawkę robi człowiek. |
+| cs | Kontrola stromu · Zkontrolovat strom… · Chyby v datech | Zpráva o celém stromu, linii nebo osobě: souhrn, co brzdí růst stromu, doporučené kroky a chyby v datech (vazby, data, věk, prameny a stopy), s výzkumem i jeho řádky. Strom nemění; opravu dělá člověk. |
+| en | Tree check · Check the tree… · Data issues | A report on the whole tree, a line or a person: a summary, what holds the tree back, suggested steps and the data issues (links, dates, age, sources and leads), with the research also its rows. It does not change the tree; a person makes the fix. |
+| de | Stammbaum-Prüfung · Stammbaum prüfen… · Fehler in den Daten | Ein Bericht über den ganzen Stammbaum, eine Linie oder eine Person: Übersicht, was das Wachstum bremst, empfohlene Schritte und die Fehler in den Daten (Verbindungen, Daten, Alter, Quellen und Hinweise), mit der Forschung auch ihre Zeilen. Sie ändert den Stammbaum nicht; die Korrektur macht ein Mensch. |
+| pl | Kontrola drzewa · Sprawdź drzewo… · Błędy w danych | Raport o całym drzewie, linii lub osobie: podsumowanie, co hamuje rozwój drzewa, zalecane kroki i błędy w danych (powiązania, daty, wiek, źródła i wskazówki), z badaniem także jego wiersze. Drzewa nie zmienia; poprawkę robi człowiek. |
 
-- **Čísla:** [A5.1](cs/A5-tree-check.md#A5.1), A5.1.1, A5.8
+- **Čísla:** [A5.1](cs/A5-tree-check.md#A5.1), A5.1.1, A5.1.2, A5.1.3, A5.1.4, A5.1.5, A5.8, A5.9
 
 <a id="gedcom-conversion"></a>
 ### Konverze GEDCOM
@@ -1230,12 +1242,12 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Soukromí žijících osob (export) · Ochrana žijících (kniha rodu) | Volba výstupu, jak ukázat žijící osoby: Plná data, Iniciály + rok narození, Skrýt jména, Ponechat jen příjmení. Struktura stromu zůstává. |
-| en | Privacy of living people (export, family book) | An output option for how to show living people: Full data, Initials + birth year, Hide names, Keep surname only. The structure of the tree stays. |
-| de | Privatsphäre lebender Personen (Export) · Schutz lebender Personen (Familienbuch) | Eine Option der Ausgabe, wie lebende Personen gezeigt werden: Vollständige Daten, Initialen + Geburtsjahr, Namen verbergen, Nur Nachname behalten. Die Struktur des Stammbaums bleibt. |
-| pl | Prywatność osób żyjących (eksport) · Ochrona osób żyjących (księga rodu) | Opcja wyniku, jak pokazać osoby żyjące: Pełne dane, Inicjały + rok urodzenia, Ukryj imiona i nazwiska, Zostaw tylko nazwisko. Struktura drzewa zostaje. |
+| cs | Ochrana žijících osob (blok výstupu) · Nastavení › Data a soukromí › Ochrana žijících ve výstupech | Ochrana, kterou projde každý výstup ven: režim Plná data, Iniciály + rok narození, Jen příjmení nebo Skrýt jména, výchozí z Nastavení. Zemřelí zůstanou celí i s prameny; struktura stromu zůstává. |
+| en | Protecting living people (output block) · Settings › Data and privacy › Protecting living people in outputs | The protection every output going out passes through: the mode Full details, Initials + birth year, Surname only or Hide names, by default from Settings. The deceased stay complete, sources included; the structure of the tree stays. |
+| de | Schutz lebender Personen (Block der Ausgabe) · Einstellungen › Daten und Datenschutz › Schutz lebender Personen in Ausgaben | Der Schutz, durch den jede Ausgabe nach außen geht: die Stufe Alle Angaben, Initialen + Geburtsjahr, Nur Nachname oder Namen ausblenden, standardmäßig aus den Einstellungen. Verstorbene bleiben vollständig, auch mit Quellen; die Struktur des Stammbaums bleibt. |
+| pl | Ochrona osób żyjących (blok wyniku) · Ustawienia › Dane i prywatność › Ochrona osób żyjących w eksportach | Ochrona, przez którą przechodzi każdy wynik na zewnątrz: tryb Pełne dane, Inicjały + rok urodzenia, Tylko nazwisko lub Ukryj imiona i nazwiska, domyślnie z Ustawień. Zmarli zostają w całości, także ze źródłami; struktura drzewa zostaje. |
 
-- **Čísla:** [A7.2](cs/A7-book-pages-and-export.md#A7.2), A7.1, A7.2.1
+- **Čísla:** [S11.2](cs/S11-protecting-living-people.md#S11.2), S11.3, S11.4, S11.7
 
 <a id="checked-against-scan"></a>
 ### Potvrdit podle skenu
@@ -2006,6 +2018,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 - **Čísla:** [A6.6](cs/A6-views.md#A6.6), A6.6.1, A6.6.2, A6.6.3, A6.6.4, A6.5.7, A6.5.8, A6.7.19
 
+<a id="house-location-in-outputs"></a>
+### Poloha domů ve výstupech
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | Poloha domů ve výstupech (Nastavení) · Poloha a mapa domů (přepínač výstupu) | Zda výstupy (kniha, stránky, dárek, HTML, uložená stránka domu) ukážou u domu výřez mapy, souřadnice a jistotu. Výchozí z Nastavení; ručně skrytá poloha domu vyhraje vždy. |
+| en | House location in outputs (Settings) · House locations and maps (output switch) | Whether outputs (book, pages, gift, HTML, the saved house page) show a cut of the map, the coordinates and the certainty for a house. By default from Settings; a location hidden by hand always wins. |
+| de | Lage der Häuser in Ausgaben (Einstellungen) · Lage und Karte der Häuser (Schalter der Ausgabe) | Ob Ausgaben (Buch, Seiten, Geschenk, HTML, die gespeicherte Hausseite) bei einem Haus einen Kartenausschnitt, die Koordinaten und die Sicherheit zeigen. Standardmäßig aus den Einstellungen; eine von Hand verborgene Lage gewinnt immer. |
+| pl | Położenie domów w wynikach (Ustawienia) · Położenie i mapa domów (przełącznik wyniku) | Czy wyniki (księga, strony, prezent, HTML, zapisana strona domu) pokażą przy domu wycinek mapy, współrzędne i pewność. Domyślnie z Ustawień; ręcznie ukryte położenie wygrywa zawsze. |
+
+- **Čísla:** [S10.3.4](cs/S10-houses.md#S10.3.4), S10.3.2
+
 <a id="house-story"></a>
 ### Vyprávění o domě
 
@@ -2029,6 +2053,18 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 | pl | Wycinek zapisu (app) | Obraz tylko tego zapisu, nie całej strony. W aplikacji najwyżej dwa przy źródle, JPEG do 1200 px; badanie zapisuje do trzech. |
 
 - **Čísla:** [A3.3](cs/A3-evidence-in-the-app.md#A3.3), [R3.4](cs/R3-verification-and-citation.md#R3.4), R8.6
+
+<a id="output-for-oneself"></a>
+### Výstup pro sebe
+
+| Jazyk | Termín | Definice |
+|---|---|---|
+| cs | výstup pro sebe | Záloha, přenos nebo soubor pro vlastní program (záloha JSON, Zálohy, GEDCOM Zpět do, `output/tree.ged`, `strom pack`): nese plná data i žijících a řekne to větou „Obsahuje všechny údaje žijících osob – pro vlastní zálohu nebo přenos, ne ke sdílení.“ |
+| en | output for oneself | A backup, a transfer or a file for one’s own genealogy program (also `output/tree.ged` and `strom pack` of the research): carries full details, of the living too, and says so: “Contains all details of living people – for an own backup or transfer, not for sharing.” |
+| de | Ausgabe für sich selbst | Eine Sicherung, eine Übertragung oder eine Datei für das eigene Genealogieprogramm (auch `output/tree.ged` und `strom pack` der Forschung): trägt alle Angaben, auch der Lebenden, und sagt es: „Enthält alle Angaben zu lebenden Personen – für die eigene Sicherung oder Übertragung, nicht zum Weitergeben.“ |
+| pl | wynik dla siebie | Kopia zapasowa, przeniesienie lub plik do własnego programu genealogicznego (także `output/tree.ged` i `strom pack` badania): zawiera pełne dane, także osób żyjących, i mówi to jednym zdaniem. |
+
+- **Čísla:** [S11.5](cs/S11-protecting-living-people.md#S11.5)
 
 <a id="research-not-running"></a>
 ### Výzkum neběží
@@ -2179,9 +2215,9 @@ Pojmy aplikace a jejího spojení s výzkumem, v abecedním pořadí.
 
 | Jazyk | Termín | Definice |
 |---|---|---|
-| cs | Žijící osoba | Osoba, kterou aplikace pro ochranu žijících považuje za žijící: bez úmrtí a s nejpozdějším možným narozením před méně než 110 lety, nebo bez roku narození. |
-| en | Living person | A person the app treats as living for the privacy of living people: without a death and with the latest possible birth less than 110 years ago, or without a year of birth. |
-| de | Lebende Person | Eine Person, die die App für den Schutz lebender Personen als lebend ansieht: ohne Tod und mit der spätestmöglichen Geburt vor weniger als 110 Jahren oder ohne Geburtsjahr. |
-| pl | Osoba żyjąca | Osoba, którą aplikacja na potrzeby ochrony osób żyjących uważa za żyjącą: bez zgonu i z najpóźniejszym możliwym urodzeniem mniej niż 110 lat temu albo bez roku urodzenia. |
+| cs | Žijící osoba | Osoba, kterou aplikace i výzkum pro ochranu ve výstupech považují za žijící: bez ručního Zemřel/a a bez záznamu úmrtí, pohřbu či kremace, s nejpozdějším možným narozením před méně než 110 lety, nebo bez jakéhokoli vodítka k roku narození. |
+| en | Living person | A person the app and the research treat as living for the protection in outputs: without a manual Deceased and without a record of death, burial or cremation, with the latest possible birth less than 110 years ago, or without any clue to the year of birth. |
+| de | Lebende Person | Eine Person, die App und Forschung für den Schutz in Ausgaben als lebend ansehen: ohne manuelles Verstorben und ohne Eintrag zu Tod, Beerdigung oder Einäscherung, mit der spätestmöglichen Geburt vor weniger als 110 Jahren oder ohne jeden Anhaltspunkt zum Geburtsjahr. |
+| pl | Osoba żyjąca | Osoba, którą aplikacja i badanie na potrzeby ochrony w wynikach uważają za żyjącą: bez ręcznego Nie żyje i bez zapisu o śmierci, pogrzebie lub kremacji, z najpóźniejszym możliwym urodzeniem mniej niż 110 lat temu albo bez żadnej wskazówki co do roku urodzenia. |
 
-- **Čísla:** [A7.1](cs/A7-book-pages-and-export.md#A7.1)
+- **Čísla:** [S11.1](cs/S11-protecting-living-people.md#S11.1)

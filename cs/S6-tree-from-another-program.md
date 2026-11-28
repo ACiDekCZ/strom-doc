@@ -150,7 +150,7 @@ Ukáže se jednou po každém importu, ať se strom založil nový, vložil, neb
 - **Obsah:**
   - původ: „Strom z {program} (soubor {datum}) · N osob“ (u vložení a sloučení do kterého stromu a kolik osob);
   - řádek kontroly dat: „Našla N věcí k prohlédnutí. Nic se samo neopravuje.“ a **Prohlédnout**
-    ([A5](A5-tree-check.md)), nebo „Kontrola dat nenašla nic k opravě.“;
+    ([A5](A5-tree-check.md)), nebo „Kontrola stromu nenašla v importu nic k ověření.“;
   - když soubor obsahuje víc rodin, které nic nespojuje: **Oddělit nespojené části…**;
   - výzkum: bez výzkumu na tomto počítači **Výzkum předků s tímto stromem** a **Výzkum předků**; s výzkumem **Začít
     výzkum s tímto stromem**; strom napojený na výzkum **Výzkum s tímto stromem** (místa bez polohy a osoby s údaji
@@ -198,8 +198,11 @@ vrátit.
     ([S1.10.2](S1-connecting-app-and-research.md#S1.10.2));
   - jedno sloučení jde vzít zpět i bez obnovení celé zálohy: **Odvolat sloučení…**
     ([A8.12](A8-merging-trees.md#A8.12)). Záloha vrátí celý strom, i se vším, co se od sloučení stalo.
+- **Od aplikace 3.33.0:** zálohy jsou výstup pro sebe: plná data všech osob. Okno **Historie záloh** stromu
+  s žijícími to řekne: „Obsahuje všechny údaje žijících osob – pro vlastní zálohu nebo přenos, ne ke sdílení.“
+  ([S11.5](S11-protecting-living-people.md#S11.5)).
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie · 3.33.0: app:11d35186 index.html:40323 snapshots-self, src/ui/snapshots-ui.ts:76 (jen se žijícími), strings.ts privacy.selfOnly -->
 
 <a id="S6.6"></a>
 ## S6.6 Export zpět do programu, nebo ke sdílení
@@ -211,12 +214,11 @@ Export GEDCOM se nejdřív ptá, **K čemu soubor je**: **Zpět do {program}** (
   i žijících; prameny a citace. Osoby a rodiny z rodokmenu toho programu dostanou zpět své původní označení záznamu,
   kde je to bezpečné, a řádky svých ID (`_UID`, `RIN`, `EXID` …); označení, které použít nejde, jde jako `REFN`
   s `TYPE {program} xref`. Vlastní značky programu (`_XXX`) z importů téhož programu se vrátí.
-- **Ke sdílení s ostatními:** „Chrání žijící osoby, obsah jde upravit.“ (výchozí ochrana GEDCOM,
-  [A7.2.1](A7-book-pages-and-export.md#A7.2.1)). Zemřelým prameny zůstanou; u žijících osob se citace vynechají a okno
+- **Ke sdílení s ostatními:** „Chrání žijící osoby, obsah jde upravit.“ (výchozí ochrana z Nastavení,
+  [S11.3](S11-protecting-living-people.md#S11.3)). Zemřelým prameny zůstanou; u žijících osob se citace vynechají a okno
   to řekne („U N žijících osob se vynechá K citací. Zemřelým prameny zůstanou.“).
 - **Hlídá kód:**
-  - export GEDCOM drží prameny a citace zemřelých v každé volbě; export JSON, HTML a CSV se nemění
-    ([A7.2](A7-book-pages-and-export.md#A7.2));
+  - export GEDCOM drží prameny a citace zemřelých v každé volbě ([S11.2](S11-protecting-living-people.md#S11.2));
   - fotky a přílohy soubor nemá: cizí programy je ze souboru nečtou;
   - u **Zpět do {program}** počítá řádek souhrnu **Prameny a citace (N pramenů, M citací)** záznamy pramenů, které
     soubor zapíše. Prameny, které import udělal z jednoho záznamu pramene pro každou citovanou stranu
@@ -236,8 +238,15 @@ Export GEDCOM se nejdřív ptá, **K čemu soubor je**: **Zpět do {program}** (
   souboru se ve **Zpět do {program}** nevracejí: ten export fotky nemá. Ostatní obrázky rodiny se vrátí jako
   v 3.27.0. **Ke sdílení s ostatními** zapíše fotku svazku u rodiny jako `OBJE`, když obsah exportu fotky má
   ([A12.7](A12-portrait-and-couple-photo.md#A12.7)).
+- **Od aplikace 3.33.0:**
+  - **Ke sdílení s ostatními** je výstup ven: blok **Ochrana žijících osob** začne výchozím režimem z Nastavení
+    a chráněný soubor nese v hlavičce značku `_STROM_PRIVACY` ([S11.4](S11-protecting-living-people.md#S11.4),
+    [S11.6](S11-protecting-living-people.md#S11.6)). Prameny zemřelých drží i JSON, HTML a CSV;
+  - **Zpět do {program}** je výstup pro sebe: blok ochrany nemá, plná data zůstávají a okno to řekne větou
+    „Obsahuje všechny údaje žijících osob – pro vlastní zálohu nebo přenos, ne ke sdílení. Soubor obsahuje údaje
+    N žijících osob. Patří jen do vlastního programu.“ ([S11.5](S11-protecting-living-people.md#S11.5)).
 
-<!-- zdroj: app:7cf409bd src/ged-exporter.ts backSourceRecordCount (sourceGroups: jeden záznam za skupinu) · src/ui/export-gedcom-ui.ts backSources → exportGed.sumSources · e2e/export-gedcom-back.spec.ts · app:1c9b2392 src/ged-exporter.ts backToXrefs (původní xref, ID řádky úrovně 1, REFN + TYPE {prog} xref, _XXX téhož programu, jinak _STROM_IMPORT / _STROM_XID) · src/ui/import-export.ts:267 keepDeceasedSources: true (jen GEDCOM) · strings.ts exportGed.* -->
+<!-- zdroj: app:7cf409bd src/ged-exporter.ts backSourceRecordCount (sourceGroups: jeden záznam za skupinu) · src/ui/export-gedcom-ui.ts backSources → exportGed.sumSources · e2e/export-gedcom-back.spec.ts · app:1c9b2392 src/ged-exporter.ts backToXrefs (původní xref, ID řádky úrovně 1, REFN + TYPE {prog} xref, _XXX téhož programu, jinak _STROM_IMPORT / _STROM_XID) · src/ui/import-export.ts:267 keepDeceasedSources: true (jen GEDCOM) · strings.ts exportGed.* · 3.33.0: app:11d35186 src/ui/export-gedcom-ui.ts:196 export-back-living (privacy.selfOnly + exportGed.livingNote), fe52bfb2 src/privacy.ts applyOutputPrivacy, src/ui/encryption-ui.ts exportPresetPrivacy -->
 
 <a id="S6.7"></a>
 ## S6.7 Rodokmen načtený znovu a sloučení
@@ -329,7 +338,7 @@ u osoby. Aplikace i výzkum z toho dělají kontakt osoby.
   - každá adresa je v kontaktu jednou (bez ohledu na velká a malá písmena), nejvýš 254 znaků, bez mezer;
   - export GEDCOM zapíše každou adresu jako `1 RESI` / `2 EMAIL`; **Zpět do {program}** zapíše `1 EMAIL`, který
     soubor měl u osoby, stejně jako on ([S6.6](#S6.6));
-  - ochrana žijících ([A7.2](A7-book-pages-and-export.md#A7.2)): žijící osoba kontakt do exportu nedá;
+  - ochrana žijících ([S11.2](S11-protecting-living-people.md#S11.2)): žijící osoba kontakt do exportu nedá;
   - stránka osoby ukáže adresy jako odkaz na e-mail jen v okně aplikace; stránka uložená do souboru kontakt nemá;
   - do výzkumu jde kontakt jen s výzkumem, který kontakty drží; staršímu výzkumu, který by ho přečetl jako
     bydliště bez místa, se nepošle a aplikace si ho drží sama.

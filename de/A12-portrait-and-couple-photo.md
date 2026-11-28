@@ -305,7 +305,7 @@ weg.
     bleibt ohne Verknüpfung;
   - ohne **Anhänge, Dokumente & Quellenausschnitte**, aber mit Fotos, bleiben Porträts und Paarfotos; Porträts aus
     Anhängen verlieren die Verknüpfung zum Original.
-- **Schutz lebender Personen** ([A7.2](A7-book-pages-and-export.md#A7.2)): eine lebende Person verliert Porträt,
+- **Schutz lebender Personen** ([S11.2](S11-protecting-living-people.md#S11.2)): eine lebende Person verliert Porträt,
   Original und Anhänge; eine Partnerschaft, bei der mindestens ein Partner lebt, verliert das Foto. Ebenso auf den
   Seiten und im Familienbuch.
 - **Der GEDCOM-Export** schreibt das Paarfoto als gewöhnliches Bild der Familie (`1 OBJE` bei `FAM`), ohne eigenes

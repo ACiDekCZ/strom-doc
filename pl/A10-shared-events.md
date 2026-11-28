@@ -128,7 +128,7 @@ Ten sam spis lub to samo miejsce zamieszkania zapisane osobno u kilku osób (na 
 z innego programu) znajduje Jakość danych i proponuje je połączyć. Nic nie łączy się samo, także przy aktualizacji
 danych.
 
-- **Gdzie:** **Jakość danych**, sekcja **Wskazówki**:
+- **Gdzie:** raport kontroli drzewa, sekcja **Błędy w danych**, wybór **Tropy** ([A5.1](A5-tree-check.md#A5.1)):
   - jedna grupa: „{wydarzenie} {data}, {miejsce}, {dom} – zapisano osobno u N osób.” (dom tylko, gdy jest zapisany) z **Połącz w jedno wydarzenie**;
   - kilka grup: „N wydarzeń zapisano osobno u kilku osób.” z **Przejrzyj po kolei**. Okno **Wydarzenia zapisane
     osobno u kilku osób · N** proponuje grupy po kolei: **Połącz w jedno wydarzenie**, **Później** (grupa do
@@ -140,7 +140,7 @@ danych.
     proponuje się **Ujednolić kopie** ([A10.3](#A10.3));
   - grupa, w której jest już wspólne wydarzenie, do niego dołącza („Dołączy do wspólnego wydarzenia N osób.”);
   - połączenie to jeden krok **Cofnij** („{wydarzenie}: połączono w jedno wydarzenie u N osób.”).
-- **Obsługa:** **Przegląd drzewa → Jakość danych → Szybkie działania → Szczegóły walidacji**, sekcja **Wskazówki**.
+- **Obsługa:** **Przegląd drzewa → Jakość danych → Szybkie działania → Błędy w danych ›**, wybór **Tropy**.
 - **Obowiązuje od:** aplikacja 3.28.0
 
 <!-- zdroj: app:80c2ffb9 src/ui/same-event-join-ui.ts · src/shared-events.ts sameEventKey (domy dělí skupiny) · src/validation.ts (stopa info) · strings.ts validation.sameJoinLead, sameJoinSummary, sameJoinReview, sameJoin, sameJoinTitle, sameJoinHint, sameJoinToShare, sameJoinDone, later, nameLinkBack · spec 085 K1.6 b · dirigent:prace/1113-app-085-nalezy Výsledek -->

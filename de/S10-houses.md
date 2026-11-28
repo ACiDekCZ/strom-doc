@@ -189,8 +189,9 @@ Ein Satz unter der Karte sagt, woher die Lage stammt.
 - **Grenzen:**
   - eine Lage, die ein Mensch bestätigt hat, überschreibt die Forschung nicht;
   - **Anderswo öffnen** gibt es nur bei einem Haus mit eigenem Punkt;
-  - das Buch, die gespeicherte Hausseite und die Familienseiten zeigen die Lage nur bei einem Haus ohne Personen der
-    letzten rund 100 Jahre, und zwar als Kartenausschnitt ([S10.3.4](#S10.3.4)).
+  - die gespeicherte Hausseite, das Buch, die Familienseiten, das Geschenk und der HTML-Export zeigen die Lage als
+    Kartenausschnitt oder als Koordinaten, bis ein Mensch sie beim Haus oder in der Ausgabe ausblendet
+    ([S10.3.4](#S10.3.4)).
 - **Bedienung:** App: Hausseite → **Karte** → **Kartenebene**, **Lage bestätigen**, **Punkt verschieben**, **Lage in
   Ausgaben ausblenden** ([S10.3.4](#S10.3.4)); Terminal
   `strom house confirm <Haus> location`.
@@ -201,26 +202,46 @@ Ein Satz unter der Karte sagt, woher die Lage stammt.
 <a id="S10.3.2"></a>
 ### S10.3.2 Die gespeicherte Hausseite und der Schutz von Personen
 
-**HTML speichern** speichert die Hausseite als eine Datei (z. B. `belokamen-cp-16.html`) ohne Kartenkacheln aus dem
-Netz; die Lage ist ein Kartenausschnitt direkt in der Datei ([S10.3.4](#S10.3.4)), die Bilder des Hauses und des Ortes
-werden aus dem Web geladen oder sind nur verlinkt ([S10.7.1](#S10.7.1)). Die gespeicherte Hausseite, das Buch und die
-Familienseiten schützen die Personen der letzten rund 100 Jahre.
+**HTML speichern** auf der Hausseite öffnet den Dialog **Hausseite speichern**. **Speichern** speichert die Seite als
+eine Datei (z. B. `belokamen-cp-16.html`) ohne Kartenkacheln aus dem Netz; die Lage ist ein Kartenausschnitt direkt in
+der Datei ([S10.3.4](#S10.3.4)), die Bilder des Hauses und des Ortes werden aus dem Web geladen oder sind nur verlinkt
+([S10.7.1](#S10.7.1)). Die gespeicherte Hausseite, das Buch und die Familienseiten schützen Lebende und die Personen
+der letzten rund 100 Jahre.
 
-- **Nie:** heutige Eigentümer; Namen Lebender; der Name eines Zeitzeugen.
+- **Der Dialog Hausseite speichern:**
+  - der Block **Schutz lebender Personen** mit dem Modus aus den Einstellungen („Standard aus den Einstellungen“,
+    [S11.3](S11-protecting-living-people.md#S11.3); Modi [S11.2](S11-protecting-living-people.md#S11.2)). Hat das
+    Haus Lebende oder Personen der letzten rund 100 Jahre, steht darunter „Gilt für die Namen Lebender und der
+    Menschen der letzten ~100 Jahre; ihre übrigen Angaben bleiben wie bisher (nur der Name). Die Geschichte des
+    Hauses wird nicht umgeschrieben.“;
+  - der Schalter **Fotos der Häuser aus dem Web**: „Die Fotos werden beim Öffnen der Datei geladen; ohne Internet
+    bleibt die Bildunterschrift mit dem Link.“;
+  - der Schalter **Lage und Karte des Hauses**, nur bei einem Haus mit Lage: „Ausschnitte der Kartenebenen als Bilder
+    in der Datei, der Punkt, die Koordinaten und Links zu anderen Karten; aus: nur der Ort.“ Bei einer von Hand
+    ausgeblendeten Lage steht statt seiner „Die Lage des Hauses ist von Hand ausgeblendet; die Datei nennt nur den
+    Ort.“;
+  - jedes Öffnen beginnt mit den Einstellungen; die Wahl gilt nur für diese Datei und ändert die Einstellungen nicht.
+- **Namen** nach dem Schutzmodus: Lebende wie im Modus ([S11.2](S11-protecting-living-people.md#S11.2)); verstorbene
+  Personen der letzten rund 100 Jahre ebenso, nur ohne Geburtsjahr und als „Person“ statt „Lebende Person“. Mit
+  **Alle Angaben** sind alle Namen vollständig. Wer eine lebende Person ist:
+  [S11.1](S11-protecting-living-people.md#S11.1).
+- **Nie:** heutige Eigentümer und Bewohner (ein Besitzer oder Bewohner mit Jahren in den letzten rund 100 Jahren, den
+  der Stammbaum nicht kennt, wird ausgelassen); der Name eines Zeitzeugen.
 - **Personen der letzten rund 100 Jahre** nur mit Namen und Rolle, ohne Jahre.
 - **Ereignisse der Forschung aus den letzten rund 100 Jahren und heikle Ereignisse** (Enteignung, Vertreibung)
   werden ausgelassen, bis ein Mensch sie freigibt (**In Ausgaben zeigen**).
-- **Lage** nur bei einem Haus ohne Personen der letzten rund 100 Jahre und nur, wenn sie nicht von Hand ausgeblendet
-  ist ([S10.3.4](#S10.3.4)); bei einem Haus mit solchen Personen auch kein Hausname.
+- **Lage** nur ohne Ausblenden von Hand und mit eingeschaltetem **Lage und Karte des Hauses** ([S10.3.4](#S10.3.4)).
+  Der Hausname eines Hauses mit Personen der letzten rund 100 Jahre wird ausgelassen.
 - **Erzählung über das Haus** immer ganz, freigegeben oder als Entwurf, ohne das Etikett des Entwurfs. Personen der
   letzten rund 100 Jahre und Einträge, die die Seite ausblendet, lassen sie nicht weg ([S10.14.2](#S10.14.2)).
-- Die Hausseite sagt, was in den Ausgaben fehlt und warum: „In Ausgaben (HTML, Buch) werden N Ereignisse und die Lage
-  des Hauses nicht gezeigt (Menschen der letzten ~100 Jahre).“, „… werden N Ereignisse nicht gezeigt; die Lage des
-  Hauses ist von Hand ausgeblendet.“
-- **Bedienung:** App: Hausseite → **HTML speichern**; bei einem Ereignis **In Ausgaben zeigen**.
+- Die Hausseite sagt, was in den Ausgaben fehlt: „In Ausgaben (HTML, Buch) werden 3 Ereignisse nicht gezeigt.“, „…;
+  die Lage des Hauses ist von Hand ausgeblendet.“ oder „In Ausgaben (HTML, Buch) ist die Lage des Hauses von Hand
+  ausgeblendet.“
+- **Bedienung:** App: Hausseite → **HTML speichern** → **Hausseite speichern**; bei einem Ereignis **In Ausgaben
+  zeigen**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) · T10: app:51223455 src/ui/house-page-ui.ts showHouseSaveDialog (privacyBlockHtml mode SettingsManager.getOutputPrivacy origin settings, living named.size, strings.privacy.houseLine; outputSwitchHtml house-photos outputWebPhotos.bookSwitch/fileHint, house-location outputHouseLocation.switch/switchHint jen hasLocation, byHand → handHidden; HouseSaveChoice), src/house-page.ts houseFileNames (applyLivingPrivacy podle režimu, recent → privacy.namedAsLiving bez birthDate, label privacy.recentPerson, full beze změny), shownHouseName (recentHouse), src/house-privacy.ts houseOutputFilter (holderOf: neznámý z posledních ~100 let → null; locationBy manual|output), strings.ts houses.page.saveTitle, houses.hiddenSummary · app:4c403da2 · CHANGELOG.cs.md 3.33.0 -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 Die Zeitleiste aus den Einträgen des Stammbaums
@@ -247,46 +268,68 @@ Eintrag eines Paares ist eine Zeile. Was eine Zeile schon sagt, wird nicht wiede
 <a id="S10.3.4"></a>
 ### S10.3.4 Die Lage des Hauses in Ausgaben
 
-Das Familienbuch, die gespeicherte Hausseite und die Familienseiten zeigen die Lage des Hauses als Bild: einen
-Ausschnitt der heutigen Karte mit dem Punkt und der Nummer des Hauses. Darunter stehen die Koordinaten, wie sicher die
-Übereinstimmung der Nummer ist, und die Attribution der Karte. So zeigt die Ausgabe die Lage auch ohne Netz.
+Die gespeicherte Hausseite, das Familienbuch, die Familienseiten, das Geschenk und der HTML-Export zeigen, wo das Haus
+steht. Im Buch ist es ein Ausschnitt der heutigen Karte mit dem Punkt und der Nummer des Hauses, darunter die
+Koordinaten, wie sicher die Übereinstimmung der Nummer ist, und die Attribution der Karte. Die Lage des Hauses ist
+keine personenbezogene Angabe: sie wird gezeigt, wer auch immer im Haus lebte, auch Personen der letzten rund 100
+Jahre, bis ein Mensch sie beim Haus oder in der Ausgabe ausblendet. Namen, Jahre und Ereignisse dieser Personen
+schützen die Ausgaben weiterhin ([S10.3.2](#S10.3.2)).
 
 - **Wann die Lage gezeigt wird:** nur bei einem Haus mit Punkt (von Hand gesetzt oder von der Forschung) und nur, wenn
   beides gilt:
-  - im Haus sind keine Personen der letzten rund 100 Jahre: Lebende, Personen des Stammbaums aus diesen Jahren,
-    Einträge des Hauses aus diesen Jahren und Besitzer und Bewohner mit Jahren in dieser Zeit (auch Personen, die der
-    Stammbaum nicht kennt);
-  - ein Mensch hat die Lage nicht ausgeblendet (**Lage in Ausgaben ausblenden**).
+  - ein Mensch hat die Lage beim Haus nicht ausgeblendet (**Lage in Ausgaben ausblenden**);
+  - die Ausgabe hat den Schalter der Lage eingeschaltet (**Lage und Karte des Hauses**, **Lage und Karte der
+    Häuser**).
+- **Einstellung:** **Einstellungen → Daten und Datenschutz → Lage der Häuser in Ausgaben**: **Zeigen** (Voreinstellung)
+  oder **Ausblenden**. „Die gespeicherte Hausseite, das Familienbuch, die Familienseiten, das Geschenk und der
+  HTML-Export zeigen, wo Häuser stehen: Kartenausschnitte, die Koordinaten und Links zu anderen Karten. Jede dieser
+  Ausgaben kann das ändern. Ein Haus mit von Hand ausgeblendeter Lage bleibt ohne sie.“
+- **Schalter in den Ausgaben** (vorbelegt aus den Einstellungen; aus: nur der Ort):
+
+  | Ausgabe | Schalter | Wann er erscheint | Womit er beginnt |
+  |---|---|---|---|
+  | Hausseite speichern | **Lage und Karte des Hauses** | das Haus hat eine Lage; bei einer von Hand ausgeblendeten statt seiner „Die Lage des Hauses ist von Hand ausgeblendet; die Datei nennt nur den Ort.“ | immer mit den Einstellungen ([S10.3.2](#S10.3.2)) |
+  | Familienbuch | **Lage und Karte der Häuser** | der Teil **Häuser** und im Kapitel ein Haus mit einer Lage, die nicht von Hand ausgeblendet ist | mit der letzten Wahl für diesen Stammbaum, sonst mit den Einstellungen |
+  | Familienseiten | **Lage und Karte der Häuser** | Häuser als Seiten und eine Hausseite mit einer Lage, die nicht von Hand ausgeblendet ist | mit der letzten Wahl für diesen Stammbaum, sonst mit den Einstellungen |
+  | Stammbaum verschenken | **Lage und Karte der Häuser** | der Stammbaum hat ein Haus mit einer Lage, die nicht von Hand ausgeblendet ist | mit der letzten Wahl für diese Beschenkten, sonst mit den Einstellungen; **Mit Standard neu beginnen** mit den Einstellungen |
+  | HTML-Export | **Lage und Karte der Häuser** | das Format HTML, nicht das schnelle Speichern; beim aktiven Stammbaum nur mit einem Haus mit einer Lage, die nicht von Hand ausgeblendet ist | immer mit den Einstellungen |
+
+  Der Schalter im Buch: „Ein Ausschnitt der heutigen Karte mit dem Punkt jedes Hauses, die Koordinaten und wie sicher
+  die Nummer zugeordnet ist; aus: nur der Ort. Ein Haus mit von Hand ausgeblendeter Lage bleibt ohne sie.“ Im Geschenk
+  und im HTML-Export: „Die Koordinaten der Häuser kommen in die Datei; aus: nur der Ort. Ein Haus mit von Hand
+  ausgeblendeter Lage bleibt ohne sie.“ Eine Wahl in der Ausgabe ändert die Einstellungen nicht.
 - **Sicherheit:** „Heutige Lage · Übereinstimmung der Nummer bestätigt“, wenn ein Mensch den Punkt gesetzt oder
   bestätigt hat (in der App oder in der Forschung); sonst „Heutige Lage · Übereinstimmung der Nummer angenommen“.
-- **Bild:** die heutige Karte von OpenStreetMap mit der Attribution „© OpenStreetMap-Mitwirkende, Lizenz ODbL“. HTML
-  (gespeicherte Hausseite, Familienseiten, auch im ZIP und im Geschenk) fügt als weiteres Bild die historische Ebene
-  hinzu, die die Forschung für den Ort des Hauses geliefert hat ([S10.3.1](#S10.3.1)); das Buch gibt nur die heutige
-  Karte und teilt den Ausschnitt nicht auf zwei Seiten.
+- **Bild:** die heutige Karte von OpenStreetMap mit der Attribution „© OpenStreetMap-Mitwirkende, Lizenz ODbL“.
+  - HTML (gespeicherte Hausseite, Familienseiten auch als ZIP, die Seiten im Geschenk) fügt weitere Bilder hinzu: die
+    historischen Ebenen, die die Forschung für den Ort des Hauses geliefert hat ([S10.3.1](#S10.3.1)), höchstens 8
+    Bilder mit einem Ebenenschalter ohne Skript. Ein Browser ohne diese Unterstützung und der Druck zeigen alle Bilder
+    untereinander.
+  - Das Buch (auch das Buch im Geschenk) gibt nur die heutige Karte und teilt den Ausschnitt nicht auf zwei Seiten.
+    Die Links **Anderswo öffnen** gibt es nur auf dem Bildschirm, nicht im Druck.
+  - Das Geschenk macht die Ausschnitte aus den Daten des Pakets. Im Stammbaum hat nur ein Haus eine Lage, dessen Punkt
+    ein Mensch gesetzt oder bestätigt hat; eine Lage nur von der Forschung geht weder ins Geschenk noch in den
+    HTML-Export.
 - **Ohne Netz:** der Ausschnitt entsteht einmal, und die App speichert ihn in diesem Browser; das nächste Buch, PDF oder
   Geschenk nimmt den gespeicherten. Ohne Netz und ohne gespeicherten Ausschnitt, oder solange die Karte nicht erlaubt
   ist (**Karte anzeigen**), gibt die Ausgabe nur Koordinaten und Sicherheit, ohne Fehler. Auf ein Bild wird höchstens
   10 s gewartet.
-- **Hausseite**, Abschnitt **Karte:** bei einem Haus, dessen Lage die Ausgaben zeigen würden, die Zeile „Ausgaben
-  (HTML, Buch) zeigen die Lage des Hauses.“ und **Lage in Ausgaben ausblenden**. Nach dem Ausblenden „In Ausgaben
-  (HTML, Buch) ist die Lage des Hauses von Hand ausgeblendet.“ und **Lage in Ausgaben zeigen**. Beides ist ein Schritt
-  **Rückgängig**.
-- **Buch:** die Option **Lage der Häuser** (standardmäßig an, wird gemerkt): „Ein Ausschnitt der heutigen Karte mit dem
-  Punkt eines Hauses ohne Menschen der letzten ~100 Jahre; aus: nur der Ort.“ Es gibt sie nur mit dem Teil **Häuser**
-  und nur, wenn das Buch ein Haus hat, dessen Lage sich zeigen lässt. Die Anmerkung des Kapitels lautet dann
-  „Ereignisse nach <Jahr> und die Lage eines Hauses mit Menschen dieser Jahre werden im Buch nicht angegeben.“
+- **Hausseite**, Abschnitt **Karte:** bei einem Haus mit Lage die Zeile „Ausgaben (HTML, Buch) zeigen die Lage des
+  Hauses.“ und **Lage in Ausgaben ausblenden**. Nach dem Ausblenden „In Ausgaben (HTML, Buch) ist die Lage des Hauses
+  von Hand ausgeblendet.“ und **Lage in Ausgaben zeigen**. Beides ist ein Schritt **Rückgängig**.
 - **Grenzen:**
-  - die Personen der letzten rund 100 Jahre haben Vorrang: ein von Hand gewähltes **Lage in Ausgaben zeigen** hebt
-    diesen Vorrang nicht auf, und bei einem solchen Haus gibt es weder die Zeile noch die Schaltfläche; warum die Lage fehlt, sagt die Seite
-    ([S10.3.2](#S10.3.2));
+  - das Ausblenden von Hand beim Haus gewinnt immer, auch wenn der Schalter der Ausgabe eingeschaltet ist;
+  - **Teilen** hat keinen Schalter und liest die Einstellungen nicht; die Datei JSON und die Sicherung tragen die
+    Daten des Stammbaums, wie sie sind;
   - das Ausblenden von Hand gibt es nur im Stammbaum der App (Datei JSON), es geht weder in die Forschung noch in
     GEDCOM;
   - ein schreibgeschützter Stammbaum zeigt nur den Stand, ohne Schaltfläche.
-- **Bedienung:** App: Hausseite → **Karte** → **Lage in Ausgaben ausblenden** / **Lage in Ausgaben zeigen**; Export
-  **Familienbuch** → **Lage der Häuser**.
+- **Bedienung:** App: **Einstellungen → Daten und Datenschutz → Lage der Häuser in Ausgaben**; Hausseite → **Karte** →
+  **Lage in Ausgaben ausblenden** / **Lage in Ausgaben zeigen**; **Hausseite speichern** → **Lage und Karte des
+  Hauses**; **Buch und Seiten**, **Stammbaum verschenken** und der HTML-Export → **Lage und Karte der Häuser**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (location jen bez recentPeople a bez hideLocation; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek -->
+<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (do 3.33.0 před T10 location jen bez recentPeople; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek · T10: app:51223455 src/house-privacy.ts houseOutputFilter (locationBy manual|output, HouseOutputChoice.location; „Not personal data“), src/settings.ts isOutputHouseLocation/setOutputHouseLocation (výchozí !== false), index.html output-house-location-setting, src/ui/book-ui.ts sw houseMaps outputHouseLocation.housesSwitch/housesSwitchHint (bookHouseMapsState shown; stránky: housesWithLocation u domů jako stránky; opts.houseMaps z book-memory, jinak isOutputHouseLocation), src/ui/gift-tree-ui.ts gift-house-location (jen dům s location a bez hideLocation, dataSwitchHint, giftRestart → Nastavení), src/gift-memory.ts houseLocations, src/ui/encryption-ui.ts setupExportHouseLocation (jen html, ne rychlý export; vždy z Nastavení), src/ui/house-page-ui.ts showHouseSaveDialog house-location · app:6ec8204e src/gift-package.ts houseShots (stránky a kniha daru, ne při houseLocations false; kniha houseMaps podle přepínače balíčku), src/ui/gift-tree-ui.ts giftHouseShots (vrstvy z houseStatus), src/book-css.ts (Otevřít jinde jen na obrazovce) · app:4c403da2 · src/house-map.ts HOUSE_SHOT_SWITCH_MAX 8, src/house-page-css.ts .hmap-sw (:has, bez skriptu) · strings.ts outputHouseLocation.*, houses.page.map.outShown, houses.hiddenSummary, book.houseChapterProtected · CHANGELOG.cs.md 3.33.0 -->
 
 <a id="S10.4"></a>
 ## S10.4 Die Geschichte eines Hauses anfordern
@@ -566,16 +609,19 @@ Familienseiten ([S10.10](#S10.10)) zeigen die Bilder des Hauses unter freier Liz
 ([S10.7](#S10.7)). Jedes Bild hat eine Bildunterschrift: was es zeigt (bei einem Bild des Ortes), Autor, Lizenz und
 einen Link auf seine Adresse im Web.
 
-- **Die Einstellung Fotos aus dem Web in Ausgaben** gilt für alle drei Ausgaben, und dieser Browser merkt sie sich:
+- **Die Einstellung Fotos aus dem Web in Ausgaben** gilt für alle drei Ausgaben als Voreinstellung, und dieser Browser
+  merkt sie sich:
   - **Aus dem Web laden** (Voreinstellung): die Datei lädt das Bild beim Öffnen von seiner Adresse im Web, über der
     Bildunterschrift mit dem Link;
   - **Nur Link**: nur Bildunterschrift und Link.
 - **Der Dialog Buch und Seiten** hat den Schalter **Fotos der Häuser aus dem Web** (ein = **Aus dem Web laden**). Es ist
   dieselbe Einstellung: ein Umschalten im Dialog ändert auch die Einstellungen. Er erscheint nur, wenn ein Haus der
   Auswahl ein Bild hat:
-  - Buch: in **Teile des Buchs** unter **Lage der Häuser**, nur mit dem Teil **Häuser**;
+  - Buch: in **Teile des Buchs** unter **Lage und Karte der Häuser**, nur mit dem Teil **Häuser**;
   - Familienseiten: bei der Option **Häuser**, nur mit **In den Familienseiten, mit den Personen verknüpft**.
-- **HTML speichern** auf der Hausseite hat keinen Schalter und folgt der Einstellung.
+- **Der Dialog Hausseite speichern** hat den Schalter **Fotos der Häuser aus dem Web** immer: „Die Fotos werden beim
+  Öffnen der Datei geladen; ohne Internet bleibt die Bildunterschrift mit dem Link.“ Jedes Öffnen beginnt mit den
+  Einstellungen; die Wahl gilt nur für diese Datei und ändert die Einstellungen nicht ([S10.3.2](#S10.3.2)).
 - **Ohne Netz** nimmt das Bild in der Datei keinen Platz ein, und die Bildunterschrift mit dem Link bleibt.
 - **Grenzen:**
   - ein Bild des Hauses nur mit Lizenz; Bilder des Hauses und des Ortes nur mit einer Adresse `http` oder `https`;
@@ -585,10 +631,11 @@ einen Link auf seine Adresse im Web.
     geöffnet wird;
   - im Fenster der App werden die Bilder immer geladen; die Einstellung gilt nur für Dateien.
 - **Bedienung:** App: **Einstellungen → Daten und Datenschutz → Fotos aus dem Web in Ausgaben** (**Aus dem Web laden** /
-  **Nur Link**); Dialog **Buch und Seiten** → **Fotos der Häuser aus dem Web**.
+  **Nur Link**); Dialog **Buch und Seiten** → **Fotos der Häuser aus dem Web**; **Hausseite speichern** → **Fotos der
+  Häuser aus dem Web**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · src/ui/house-page-ui.ts webPhotos z nastavení · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
+<!-- zdroj: app:51223455 src/ui/house-page-ui.ts showHouseSaveDialog house-photos (outputWebPhotos.bookSwitch, fileHint, z isOutputWebPhotos, HouseSaveChoice.webPhotos) · app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
 
 <a id="S10.8"></a>
 ## S10.8 Eigene Recherche und Material zum Haus
@@ -674,23 +721,28 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
   Seiten**, **Ohne Häuser**. Angeboten, wenn Personen der Auswahl in einem Haus mit Geschichte lebten. Die Zeitleiste
   der Stammlinie hat den Chip **Häuser ⌂** ([S10.11](#S10.11)).
 - **Grenzen:**
-  - das Buch nennt die Lage nur mit der Option **Lage der Häuser** und nur bei einem Haus ohne Personen der letzten
-    rund 100 Jahre ([S10.3.4](#S10.3.4)); sonst „Ereignisse nach <Jahr> und die Lage des Hauses werden im Buch nicht
-    angegeben.“; heikle Ereignisse und Ereignisse der Forschung der letzten rund 100 Jahre lässt es aus
-    ([S10.3.2](#S10.3.2));
-  - die Seiten geben über Häuser nichts aus den letzten rund 100 Jahren, außer der Erzählung über das Haus;
+  - Buch und Seiten nennen die Lage mit dem Schalter **Lage und Karte der Häuser** bei jedem Haus, dessen Lage nicht
+    von Hand ausgeblendet ist ([S10.3.4](#S10.3.4)); heikle Ereignisse und Ereignisse der Forschung der letzten rund
+    100 Jahre lassen sie aus ([S10.3.2](#S10.3.2)), und das Buch schreibt dann beim Haus „Ereignisse nach <Jahr>
+    werden im Buch nicht angegeben.“;
+  - die Seiten geben über Häuser nichts aus den letzten rund 100 Jahren, außer der Erzählung über das Haus und der
+    Lage;
   - eine Erzählung mit einer lebenden Person lassen Buch und Seiten nur bei ausgeschaltetem **Erzählungen über Häuser
     mit lebenden Personen** weg ([S10.14.2](#S10.14.2));
   - die Seiten nehmen Häuser mit Geschichte nach der Schwelle ([S10.1](#S10.1)), das Buch auch Häuser mit fertiger
     Geschichte aus der Forschung;
   - die Auswahl **Haus** nur in einem Stammbaum mit einem Haus mit Nummer und nur für das Buch; das Geschenk
-    ([A7.9](A7-book-pages-and-export.md#A7.9)) und das Bild haben keine Häuser.
-- **Bedienung:** App: Export **Familienbuch** → **Haus**, Teil **Häuser**, **Häuserverzeichnis**, **Lage der Häuser**,
-  **Fotos der Häuser aus dem Web**, **Erzählungen über Häuser mit lebenden Personen**; Familienseiten und Seiten des
-  Stammbaums → **Häuser**, **Fotos der Häuser aus dem Web**, **Erzählungen über Häuser mit lebenden Personen**.
+    ([A7.9](A7-book-pages-and-export.md#A7.9)) und das Bild haben sie nicht;
+  - die Seiten und das Buch im Geschenk nehmen Häuser nach der gemerkten Wahl von Buch und Seiten, ohne die Ergebnisse
+    der Häuser aus der Forschung; Lage und Karte der Häuser geben sie nach dem Schalter des Geschenks **Lage und Karte
+    der Häuser**, nicht nach der Wahl des Buchs ([S10.3.4](#S10.3.4)).
+- **Bedienung:** App: Export **Familienbuch** → **Haus**, Teil **Häuser**, **Häuserverzeichnis**, **Lage und Karte der
+  Häuser**, **Fotos der Häuser aus dem Web**, **Erzählungen über Häuser mit lebenden Personen**; Familienseiten und
+  Seiten des Stammbaums → **Häuser**, **Lage und Karte der Häuser**, **Fotos der Häuser aus dem Web**, **Erzählungen
+  über Häuser mit lebenden Personen**; **Stammbaum verschenken** → **Lage und Karte der Häuser**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories · T10: app:51223455 src/ui/book-ui.ts book-house-maps (outputHouseLocation.housesSwitch; kniha bookHouseMapsState, stránky housesWithLocation), src/house-privacy.ts houseOutputFilter (locationBy manual|output), book.houseChapterProtected · app:6ec8204e src/gift-package.ts (env.pages, env.book z paměti knihy, houseMaps: settings.houseLocations), src/ui/gift-tree-ui.ts giftHouseShots (houseResearch () => null) -->
 
 <a id="S10.11"></a>
 ## S10.11 Häuser an anderen Stellen der App
@@ -860,11 +912,12 @@ sie keine Quelle: sie erzählt nur nach, was die Forschung belegt hat.
   (standardmäßig an, gemerkt mit den übrigen Optionen des Dialogs): „Ein: Jede Erzählung über ein Haus kommt hinein.
   Aus: Eine Erzählung, in der eine lebende Person vorkommt, wird weggelassen.“
   - eine lebende Person ist eine Person des Stammbaums, die die App für lebend hält
-    ([A7.1](A7-book-pages-and-export.md#A7.1)); eine Person der Forschung, die der Stammbaum nicht kennt, zählt nicht
+    ([S11.1](S11-protecting-living-people.md#S11.1)); eine Person der Forschung, die der Stammbaum nicht kennt, zählt nicht
     als lebend;
   - der Schalter gilt unabhängig von der Einstellung zum Schutz Lebender und lässt nur eine solche Erzählung weg,
     sonst nichts;
-  - Buch: in **Teile des Buchs** unter **Lage der Häuser** und **Fotos der Häuser aus dem Web**, nur mit dem Teil
+  - Buch: in **Teile des Buchs** unter **Lage und Karte der Häuser** und **Fotos der Häuser aus dem Web**, nur mit dem
+    Teil
     **Häuser**; Familienseiten: bei der Option **Häuser**, nur mit **In den Familienseiten, mit den Personen
     verknüpft**;
   - angeboten nur, wenn ein Haus der Auswahl eine Erzählung hat, in der eine lebende Person vorkommt. Die Ergebnisse
@@ -874,7 +927,8 @@ sie keine Quelle: sie erzählt nur nach, was die Forschung belegt hat.
 - Der Link **Haus <Nummer> ›** von der Erzählung einer Person auf das Haus steht im Buch und in den Familienseiten nur,
   wenn die Ausgabe die Erzählung des Hauses zeigt, auch wenn es ein Entwurf ist.
 - **Bedienung:** App: Export **Familienbuch** → Teil **Häuser**, **Erzählungen über Häuser mit lebenden Personen**;
-  Hausseite → **HTML speichern**; Familienseiten → **Häuser**, **Erzählungen über Häuser mit lebenden Personen**.
+  Hausseite → **HTML speichern** → **Hausseite speichern**; Familienseiten → **Häuser**, **Erzählungen über Häuser mit
+  lebenden Personen**.
 - **Gilt seit:** App 3.33.0
 
 <!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (nová verze vedle final → final) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez recent, osob bez úmrtí a skrytých položek; leaveOutLiving), houseStoryNamesLiving (personOfRef a ctx.living, osoba mimo strom ne), src/book-houses.ts (bez book-house-story-tag), src/house-page.ts storyHtml (štítek a Schválit jen c.app), shownStory (storyLiving), src/book.ts (opts.houseStoriesLiving), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving (výchozí zapnuto), src/book-memory.ts houseStoriesLiving (kniha i PagesChoices), src/ui/book-ui.ts book-house-stories (kniha: parts.houses a chapterHouses; stránky: houses pages), readDialogHouses, src/family-pages-html.ts setStoryHouses (houseStoriesLiving) · strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint · src/gift-package.ts (bez houseResearch) · dirigent:prace/1128-app-dum-vypraveni-ochrana Výsledek (dárek vyprávění domů nenese; osoba mimo strom bez úmrtí není žijící) -->

@@ -34,7 +34,7 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [A4 Rody a příjmení](A4-surnames-and-families.md): rod a zakladatel, přivdaní, ženské tvary příjmení, hledání jmen
 - [A5 Kontrola stromu](A5-tree-check.md): co aplikace ve stromu hlídá, s jakými prahy, a Není chyba
 - [A6 Pohledy a výběr osob](A6-views.md): Rodina, Potomci, Časová osa, Vějíř, Mapa, rod v pohledu, Tabulka a pohled v samostatném okně
-- [A7 Kniha, stránky a export](A7-book-pages-and-export.md): kdo je žijící, ochrana žijících, kniha rodu, stránky, uložené HTML, darovat rodokmen osoby, rozsah exportu Rodokmen osoby
+- [A7 Kniha, stránky a export](A7-book-pages-and-export.md): kniha rodu, stránky, uložené HTML, darovat rodokmen osoby, rozsah exportu Rodokmen osoby
 - [A8 Sloučení stromů](A8-merging-trees.md): průvodce sloučením souboru, stromu nebo výběru do stromu, párování osob, historie a odvolání sloučení
 - [A9 Ovládání aplikace](A9-using-the-app.md): kde co je, čitelné názvy prvků, úpravy při sledování výzkumu, agent v aplikaci, dolní lišta na telefonu a tabletu
 - [A10 Jedna událost u více osob](A10-shared-events.md): společná událost domácnosti (Spolu s), Sjednotit, Spojit do jedné události, kmotři a svědci v životě osoby, sloučení a starší stromy
@@ -55,5 +55,6 @@ jde odkazovat (např. R2.3). Pojmy vysvětluje [rejstřík pojmů](../REJSTRIK.m
 - [S8 Kde jsou data](S8-where-the-data-are.md): co je jen v prohlížeči, co je ve výzkumu a v Archivu Stromu, fotky a přílohy stromu ve výzkumu, ukazatel Jen v prohlížeči, fotky, které se nepodařilo načíst, balík a odebrání stromu
 - [S9 Vyzkoušet na ukázce](S9-trying-the-sample.md): ukázka z webu a ze souboru bez instalace, štítek Ukázka, novější ukázka, malá ukázka bez sítě, ukázkový výzkum `strom demo` a jeho smazání
 - [S10 Domy](S10-houses.md): dům podle obce a čísla, čísla v čase, okno Domy a stránka domu, mapa a poloha, vyžádání historie domu, nastavení Historie domů, jak agent zkoumá dům, podoba domu a fotky ve výstupech, vlastní rešerše, rozhovor o domě, domy v knize a ve stránkách, poloha domu ve výstupech, vyprávění o domě, příkazy `strom house`
+- [S11 Ochrana žijících osob](S11-protecting-living-people.md): kdo je žijící, režimy ochrany, výchozí ochrana z Nastavení, výstupy ven a pro sebe, chráněný soubor a jeho import, `strom export gedcom --living`
 
 Licence: [CC BY 4.0](../LICENSE). Texty je možné sdílet a upravovat s uvedením zdroje.

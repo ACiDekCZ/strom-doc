@@ -286,7 +286,7 @@ them.
     without a link;
   - without **Attachments, documents & source excerpts**, but with photos, the portraits and the couples' photos
     stay; portraits from attachments lose the link to the original.
-- **Privacy of living people** ([A7.2](A7-book-pages-and-export.md#A7.2)): a living person loses the portrait, the
+- **Privacy of living people** ([S11.2](S11-protecting-living-people.md#S11.2)): a living person loses the portrait, the
   original and the attachments; a union with at least one living partner loses the photo. The same on the pages and
   in the family book.
 - **The GEDCOM export** writes the couple's photo as an ordinary picture of the family (`1 OBJE` at `FAM`), without a

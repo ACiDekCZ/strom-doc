@@ -167,8 +167,8 @@ Oddíl **Mapa** ukáže dům (přiblížení 17), nebo obec, když poloha domu n
 - **Hranice:**
   - polohu, kterou potvrdil člověk, výzkum nepřepíše;
   - **Otevřít jinde** je jen u domu s vlastním bodem;
-  - kniha, uložená stránka domu a stránky rodu ukážou polohu jen u domu bez lidí posledních zhruba 100 let, a to jako
-    výřez mapy ([S10.3.4](#S10.3.4)).
+  - uložená stránka domu, kniha, stránky rodu, dar a export HTML ukážou polohu jako výřez mapy nebo souřadnice,
+    dokud ji člověk neskryje u domu nebo ve výstupu ([S10.3.4](#S10.3.4)).
 - **Ovládání:** aplikace: stránka domu → **Mapa** → **Vrstva mapy**, **Potvrdit polohu**, **Posunout bod**, **Skrýt
   polohu ve výstupech** ([S10.3.4](#S10.3.4)); terminál
   `strom house confirm <dům> location`.
@@ -179,24 +179,40 @@ Oddíl **Mapa** ukáže dům (přiblížení 17), nebo obec, když poloha domu n
 <a id="S10.3.2"></a>
 ### S10.3.2 Uložená stránka domu a ochrana lidí
 
-**Uložit HTML** uloží stránku domu jako jeden soubor (např. `belokamen-cp-16.html`) bez mapových dlaždic ze sítě;
-poloha je výřez mapy přímo v souboru ([S10.3.4](#S10.3.4)), fotky domu a obce se načtou z webu, nebo jsou jen
-odkazem ([S10.7.1](#S10.7.1)). Uložená stránka domu, kniha a stránky rodu chrání lidi posledních zhruba 100 let.
+**Uložit HTML** na stránce domu otevře dialog **Uložit stránku domu**. **Uložit** uloží stránku jako jeden soubor
+(např. `belokamen-cp-16.html`) bez mapových dlaždic ze sítě; poloha je výřez mapy přímo v souboru
+([S10.3.4](#S10.3.4)), fotky domu a obce se načtou z webu, nebo jsou jen odkazem ([S10.7.1](#S10.7.1)). Uložená
+stránka domu, kniha a stránky rodu chrání žijící a lidi posledních zhruba 100 let.
 
-- **Nikdy:** dnešní vlastníci; jména žijících; jméno pamětníka.
+- **Dialog Uložit stránku domu:**
+  - blok **Ochrana žijících osob** s režimem z Nastavení („výchozí z Nastavení“,
+    [S11.3](S11-protecting-living-people.md#S11.3); režimy [S11.2](S11-protecting-living-people.md#S11.2)). Má-li dům
+    žijící nebo lidi posledních zhruba 100 let, stojí pod ním „Platí pro jména žijících a lidí posledních ~100 let;
+    jejich ostatní údaje se ukazují jako dnes (jen jméno). Vyprávění domu se nepřepisuje.“;
+  - přepínač **Fotky domů z webu**: „Načtou se při otevření souboru; bez internetu zůstane popisek s odkazem.“;
+  - přepínač **Poloha a mapa domu**, jen u domu s polohou: „Výřezy vrstev mapy jako obrázky v souboru, bod,
+    souřadnice a odkazy na jiné mapy; vypnuto: jen obec.“ U ručně skryté polohy místo něj „Poloha domu je skrytá
+    ručně; soubor uvede jen obec.“;
+  - každé otevření začne z Nastavení; volba platí jen pro tento soubor a Nastavení nemění.
+- **Jména** podle režimu ochrany: žijící jako v režimu ([S11.2](S11-protecting-living-people.md#S11.2)); zemřelí
+  lidé posledních zhruba 100 let stejně, jen bez roku narození a jako „Osoba“ místo „Žijící osoba“. S **Plná data**
+  jsou všechna jména celá. Kdo je žijící osoba: [S11.1](S11-protecting-living-people.md#S11.1).
+- **Nikdy:** dnešní vlastníci a obyvatelé (držitel nebo obyvatel s roky v posledních zhruba 100 letech, kterého strom
+  nezná, se vynechá); jméno pamětníka.
 - **Lidé posledních zhruba 100 let** jen jménem a rolí, bez let.
 - **Události výzkumu z posledních zhruba 100 let a citlivé události** (konfiskace, odsun) se vynechají, dokud je
   člověk neodkryje (**Ukázat ve výstupech**).
-- **Poloha** jen u domu bez lidí posledních zhruba 100 let a jen bez ručního skrytí ([S10.3.4](#S10.3.4)); jméno
-  po chalupě u domu s takovými lidmi taky ne.
+- **Poloha** jen bez ručního skrytí a se zapnutým **Poloha a mapa domu** ([S10.3.4](#S10.3.4)). Jméno po chalupě
+  u domu s lidmi posledních zhruba 100 let se vynechá.
 - **Vyprávění o domě** vždy celé, schválené i koncept, bez štítku konceptu. Lidé posledních zhruba 100 let ani
   položky, které stránka skrývá, ho nevynechají ([S10.14.2](#S10.14.2)).
-- Stránka domu řekne, co ve výstupech chybí a proč: „Ve výstupech (HTML, kniha) se N událostí a poloha domu neukazují
-  (lidé posledních ~100 let).“, „… N událostí neukazuje; poloha domu je skrytá ručně.“
-- **Ovládání:** aplikace: stránka domu → **Uložit HTML**; u události **Ukázat ve výstupech**.
+- Stránka domu řekne, co ve výstupech chybí: „Ve výstupech (HTML, kniha) se 3 události neukazují.“, „… ; poloha domu
+  je skrytá ručně.“, nebo „Ve výstupech (HTML, kniha) je poloha domu skrytá ručně.“
+- **Ovládání:** aplikace: stránka domu → **Uložit HTML** → **Uložit stránku domu**; u události **Ukázat ve
+  výstupech**.
 - **Platí od:** aplikace 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) · T10: app:51223455 src/ui/house-page-ui.ts showHouseSaveDialog (privacyBlockHtml mode SettingsManager.getOutputPrivacy origin settings, living named.size, strings.privacy.houseLine; outputSwitchHtml house-photos outputWebPhotos.bookSwitch/fileHint, house-location outputHouseLocation.switch/switchHint jen hasLocation, byHand → handHidden; HouseSaveChoice), src/house-page.ts houseFileNames (applyLivingPrivacy podle režimu, recent → privacy.namedAsLiving bez birthDate, label privacy.recentPerson, full beze změny), shownHouseName (recentHouse), src/house-privacy.ts houseOutputFilter (holderOf: neznámý z posledních ~100 let → null; locationBy manual|output), strings.ts houses.page.saveTitle, houses.hiddenSummary · app:4c403da2 · CHANGELOG.cs.md 3.33.0 -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 Časová osa ze zápisů stromu
@@ -222,37 +238,57 @@ odkazem ([S10.7.1](#S10.7.1)). Uložená stránka domu, kniha a stránky rodu ch
 <a id="S10.3.4"></a>
 ### S10.3.4 Poloha domu ve výstupech
 
-Kniha rodu, uložená stránka domu a stránky rodu ukážou polohu domu jako obrázek: výřez dnešní mapy s bodem a číslem
-domu. Pod ním jsou souřadnice, jak jistá je shoda čísla a atribuce mapy. Výstup tak polohu ukáže i bez sítě.
+Uložená stránka domu, kniha rodu, stránky rodu, dar a export HTML ukazují, kde dům stojí. V knize je to výřez dnešní
+mapy s bodem a číslem domu, pod ním souřadnice, jak jistá je shoda čísla, a atribuce mapy. Poloha domu není osobní
+údaj: ukáže se, ať v domě žil kdokoli, i lidé posledních zhruba 100 let, dokud ji člověk neskryje u domu nebo ve
+výstupu. Jména, roky a události těch lidí chrání výstupy dál ([S10.3.2](#S10.3.2)).
 
 - **Kdy se poloha ukáže:** jen u domu s bodem (zadaným ručně nebo od výzkumu) a jen když platí obojí:
-  - v domě nejsou lidé posledních zhruba 100 let: žijící, osoby stromu z těch let, zápisy domu z těch let ani
-    držitelé a obyvatelé s roky v té době (i lidé, které strom nezná);
-  - člověk polohu neskryl (**Skrýt polohu ve výstupech**).
+  - člověk polohu u domu neskryl (**Skrýt polohu ve výstupech**);
+  - výstup má zapnutý přepínač polohy (**Poloha a mapa domu**, **Poloha a mapa domů**).
+- **Nastavení:** **Nastavení → Data a soukromí → Poloha domů ve výstupech**: **Ukázat** (výchozí) nebo **Skrýt**.
+  „Uložená stránka domu, kniha rodu, propojené stránky, dárek a export HTML ukazují, kde domy stojí: výřezy mapy,
+  souřadnice a odkazy na jiné mapy. Každý z nich to může změnit. Dům s ručně skrytou polohou zůstává bez ní.“
+- **Přepínače ve výstupech** (předvyplněné z Nastavení; vypnuto: jen obec):
+
+  | Výstup | Přepínač | Kdy je vidět | Odkud začíná |
+  |---|---|---|---|
+  | Uložit stránku domu | **Poloha a mapa domu** | dům má polohu; u ručně skryté místo něj „Poloha domu je skrytá ručně; soubor uvede jen obec.“ | vždy z Nastavení ([S10.3.2](#S10.3.2)) |
+  | Kniha rodu | **Poloha a mapa domů** | část **Domy** a v kapitole dům s polohou, která není skrytá ručně | naposledy pro tento strom, jinak z Nastavení |
+  | Stránky rodu | **Poloha a mapa domů** | domy jako stránky a stránka domu s polohou, která není skrytá ručně | naposledy pro tento strom, jinak z Nastavení |
+  | Darovat rodokmen | **Poloha a mapa domů** | strom má dům s polohou, která není skrytá ručně | naposledy pro tyto příjemce, jinak z Nastavení; **Začít znovu s výchozím** z Nastavení |
+  | Export HTML | **Poloha a mapa domů** | formát HTML, ne rychlé uložení; u aktivního stromu jen s domem s polohou, která není skrytá ručně | vždy z Nastavení |
+
+  Přepínač v knize: „Výřez dnešní mapy s bodem každého domu, souřadnice a jistota shody čísla; vypnuto: jen obec. Dům
+  s ručně skrytou polohou zůstává bez ní.“ V daru a exportu HTML: „Souřadnice domů jdou do souboru; vypnuto: jen
+  obec. Dům s ručně skrytou polohou zůstává bez nich.“ Volba ve výstupu Nastavení nemění.
 - **Jistota:** „Dnešní poloha · shoda čísla ověřená“, když bod zadal nebo potvrdil člověk (v aplikaci nebo ve
   výzkumu); jinak „Dnešní poloha · shoda čísla předpokládaná“.
-- **Obrázek:** dnešní mapa OpenStreetMap s atribucí „© přispěvatelé OpenStreetMap, licence ODbL“. HTML (uložená
-  stránka domu, stránky rodu, i v ZIPu a v daru) přidá jako další obrázek historickou vrstvu, kterou výzkum pro
-  místo domu dodal ([S10.3.1](#S10.3.1)); kniha dává jen dnešní mapu a výřez nerozdělí mezi stránky.
+- **Obrázek:** dnešní mapa OpenStreetMap s atribucí „© přispěvatelé OpenStreetMap, licence ODbL“.
+  - HTML (uložená stránka domu, stránky rodu i jako ZIP, stránky v daru) přidá další obrázky: historické vrstvy, které
+    výzkum pro místo domu dodal ([S10.3.1](#S10.3.1)), nejvýš 8 obrázků s přepínačem vrstev bez skriptu. Prohlížeč
+    bez této podpory a tisk ukážou všechny obrázky pod sebou.
+  - Kniha (i kniha v daru) dává jen dnešní mapu a výřez nerozdělí mezi stránky. Odkazy **Otevřít jinde** jsou jen
+    na obrazovce, v tisku ne.
+  - Dar dělá výřezy z dat balíčku. Ve stromu má polohu jen dům, jehož bod zadal nebo potvrdil člověk; poloha jen od
+    výzkumu do daru ani do exportu HTML nejde.
 - **Bez sítě:** výřez se udělá jednou a aplikace si ho uloží v tomto prohlížeči; další kniha, PDF nebo dar vezme
   uložený. Bez sítě a bez uloženého výřezu, nebo dokud mapa není povolená (**Zobrazit mapu**), dá výstup jen
   souřadnice a jistotu, bez chyby. Na jeden obrázek se čeká nejvýš 10 s.
-- **Stránka domu**, oddíl **Mapa:** u domu, jehož polohu by výstupy ukázaly, řádek „Ve výstupech (HTML, kniha) se
-  ukazuje poloha domu.“ a **Skrýt polohu ve výstupech**. Po skrytí „Ve výstupech (HTML, kniha) je poloha domu skrytá
-  ručně.“ a **Ukázat polohu ve výstupech**. Obojí je jeden krok **Zpět**.
-- **Kniha:** volba **Poloha domů** (výchozí zapnutá, pamatuje se): „Výřez dnešní mapy s bodem domu bez lidí
-  posledních ~100 let; vypnuto: jen obec.“ Je jen s částí **Domy** a jen když kniha má dům, jehož polohu lze ukázat.
-  Poznámka kapitoly pak zní „Události po roce <rok> a poloha domu s lidmi těchto let se v knize neuvádějí.“
+- **Stránka domu**, oddíl **Mapa:** u domu s polohou řádek „Ve výstupech (HTML, kniha) se ukazuje poloha domu.“
+  a **Skrýt polohu ve výstupech**. Po skrytí „Ve výstupech (HTML, kniha) je poloha domu skrytá ručně.“ a **Ukázat
+  polohu ve výstupech**. Obojí je jeden krok **Zpět**.
 - **Hranice:**
-  - lidé posledních zhruba 100 let mají přednost: ruční **Ukázat polohu ve výstupech** je nepřebije a u takového
-    domu řádek ani tlačítko není; proč poloha chybí, řekne stránka ([S10.3.2](#S10.3.2));
+  - ruční skrytí u domu vyhraje vždy, i když je přepínač výstupu zapnutý;
+  - **Sdílet** přepínač nemá a Nastavení nečte; soubor JSON a záloha nesou data stromu, jak jsou;
   - ruční skrytí je jen ve stromu aplikace (soubor JSON), do výzkumu ani do GEDCOM nejde;
   - strom jen ke čtení ukáže jen stav, bez tlačítka.
-- **Ovládání:** aplikace: stránka domu → **Mapa** → **Skrýt polohu ve výstupech** / **Ukázat polohu ve výstupech**;
-  export **Kniha rodu** → **Poloha domů**.
+- **Ovládání:** aplikace: **Nastavení → Data a soukromí → Poloha domů ve výstupech**; stránka domu → **Mapa** →
+  **Skrýt polohu ve výstupech** / **Ukázat polohu ve výstupech**; **Uložit stránku domu** → **Poloha a mapa domu**;
+  **Kniha a stránky**, **Darovat rodokmen** a export HTML → **Poloha a mapa domů**.
 - **Platí od:** aplikace 3.33.0
 
-<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (location jen bez recentPeople a bez hideLocation; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek -->
+<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (do 3.33.0 před T10 location jen bez recentPeople; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek · T10: app:51223455 src/house-privacy.ts houseOutputFilter (locationBy manual|output, HouseOutputChoice.location; „Not personal data“), src/settings.ts isOutputHouseLocation/setOutputHouseLocation (výchozí !== false), index.html output-house-location-setting, src/ui/book-ui.ts sw houseMaps outputHouseLocation.housesSwitch/housesSwitchHint (bookHouseMapsState shown; stránky: housesWithLocation u domů jako stránky; opts.houseMaps z book-memory, jinak isOutputHouseLocation), src/ui/gift-tree-ui.ts gift-house-location (jen dům s location a bez hideLocation, dataSwitchHint, giftRestart → Nastavení), src/gift-memory.ts houseLocations, src/ui/encryption-ui.ts setupExportHouseLocation (jen html, ne rychlý export; vždy z Nastavení), src/ui/house-page-ui.ts showHouseSaveDialog house-location · app:6ec8204e src/gift-package.ts houseShots (stránky a kniha daru, ne při houseLocations false; kniha houseMaps podle přepínače balíčku), src/ui/gift-tree-ui.ts giftHouseShots (vrstvy z houseStatus), src/book-css.ts (Otevřít jinde jen na obrazovce) · app:4c403da2 · src/house-map.ts HOUSE_SHOT_SWITCH_MAX 8, src/house-page-css.ts .hmap-sw (:has, bez skriptu) · strings.ts outputHouseLocation.*, houses.page.map.outShown, houses.hiddenSummary, book.houseChapterProtected · CHANGELOG.cs.md 3.33.0 -->
 
 <a id="S10.4"></a>
 ## S10.4 Vyžádat historii domu
@@ -497,14 +533,16 @@ Uložená stránka domu ([S10.3.2](#S10.3.2)), kapitola **Domy** v knize a strá
 ([S10.10](#S10.10)) ukážou obrázky domu s volnou licencí a **Obrázky obce** ([S10.7](#S10.7)). Každý obrázek má
 popisek: co ukazuje (u obrázku obce), autor, licence a odkaz na jeho adresu na webu.
 
-- **Nastavení Fotky z webu ve výstupech** platí pro všechny tři výstupy a pamatuje si ho tento prohlížeč:
+- **Nastavení Fotky z webu ve výstupech** platí pro všechny tři výstupy jako výchozí a pamatuje si ho tento prohlížeč:
   - **Načíst z webu** (výchozí): soubor obrázek při otevření načte z jeho adresy na webu, nad popiskem s odkazem;
   - **Jen odkaz**: jen popisek a odkaz.
 - **Dialog Kniha a stránky** má přepínač **Fotky domů z webu** (zapnuto = **Načíst z webu**). Je to totéž
   nastavení: přepnutí v dialogu změní i Nastavení. Ukáže se jen, když dům výběru má obrázek:
-  - kniha: v **Části knihy** pod **Poloha domů**, jen s částí **Domy**;
+  - kniha: v **Části knihy** pod **Poloha a mapa domů**, jen s částí **Domy**;
   - stránky rodu: u volby **Domy**, jen s **V rodinných stránkách, propojené s osobami**.
-- **Uložit HTML** na stránce domu přepínač nemá, řídí se nastavením.
+- **Dialog Uložit stránku domu** má přepínač **Fotky domů z webu** vždy: „Načtou se při otevření souboru; bez
+  internetu zůstane popisek s odkazem.“ Každé otevření začne z Nastavení; volba platí jen pro tento soubor
+  a Nastavení nemění ([S10.3.2](#S10.3.2)).
 - **Bez sítě** obrázek v souboru nezabere místo a zůstane popisek s odkazem.
 - **Hranice:**
   - obrázek domu jen s licencí; obrázek domu i obce jen s adresou `http` nebo `https`;
@@ -512,10 +550,10 @@ popisek: co ukazuje (u obrázku obce), autor, licence a odkaz na jeho adresu na 
   - soubor nenačítá skripty, písma ani rámce zvenku; obrázek se načítá bez údaje, odkud se otevírá;
   - v okně aplikace se obrázky načítají vždy, nastavení platí jen pro soubory.
 - **Ovládání:** aplikace: **Nastavení → Data a soukromí → Fotky z webu ve výstupech** (**Načíst z webu** / **Jen
-  odkaz**); dialog **Kniha a stránky** → **Fotky domů z webu**.
+  odkaz**); dialog **Kniha a stránky** → **Fotky domů z webu**; **Uložit stránku domu** → **Fotky domů z webu**.
 - **Platí od:** aplikace 3.33.0
 
-<!-- zdroj: app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · src/ui/house-page-ui.ts webPhotos z nastavení · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
+<!-- zdroj: app:51223455 src/ui/house-page-ui.ts showHouseSaveDialog house-photos (outputWebPhotos.bookSwitch, fileHint, z isOutputWebPhotos, HouseSaveChoice.webPhotos) · app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
 
 <a id="S10.8"></a>
 ## S10.8 Vlastní rešerše a materiál k domu
@@ -590,21 +628,24 @@ domu a seznam pramenů; zapisuje jen to, co zjistí, s pramenem, a navazující 
   a stránka každého domu), **Jen zmínka o domě bez jeho stránek**, **Bez domů**. Nabídne se, když lidé výběru žili
   v domě s historií. Časová osa rodu má čip **Domy ⌂** ([S10.11](#S10.11)).
 - **Hranice:**
-  - kniha uvede polohu jen s volbou **Poloha domů** a jen u domu bez lidí posledních zhruba 100 let
-    ([S10.3.4](#S10.3.4)); jinak „Události po roce <rok> a poloha domu se v knize neuvádějí.“; citlivé události
-    a události výzkumu posledních zhruba 100 let vynechá ([S10.3.2](#S10.3.2));
-  - stránky nedávají o domech nic z posledních zhruba 100 let, kromě vyprávění o domě;
+  - kniha i stránky uvedou polohu s přepínačem **Poloha a mapa domů** u každého domu, jehož poloha není skrytá ručně
+    ([S10.3.4](#S10.3.4)); citlivé události a události výzkumu posledních zhruba 100 let vynechají
+    ([S10.3.2](#S10.3.2)), kniha pak u domu napíše „Události po roce <rok> se v knize neuvádějí.“;
+  - stránky nedávají o domech nic z posledních zhruba 100 let, kromě vyprávění o domě a polohy;
   - vyprávění se žijící osobou kniha i stránky vynechají jen s vypnutým **Vyprávění o domech se žijícími osobami**
     ([S10.14.2](#S10.14.2));
   - stránky berou domy s historií podle prahu ([S10.1](#S10.1)), kniha i domy s hotovou historií z výzkumu;
   - výběr **Dům** jen ve stromu s domem s číslem a jen pro knihu; dar ([A7.9](A7-book-pages-and-export.md#A7.9))
-    a obrázek domy nemají.
-- **Ovládání:** aplikace: export **Kniha rodu** → **Dům**, část **Domy**, **Rejstřík domů**, **Poloha domů**,
-  **Fotky domů z webu**, **Vyprávění o domech se žijícími osobami**; stránky rodu a stránky stromu → **Domy**,
-  **Fotky domů z webu**, **Vyprávění o domech se žijícími osobami**.
+    ani obrázek ho nemají;
+  - stránky a kniha v daru berou domy podle zapamatované volby knihy a stránek, bez výsledků výzkumu domů; polohu
+    a mapu domů dají podle přepínače daru **Poloha a mapa domů**, ne podle volby knihy ([S10.3.4](#S10.3.4)).
+- **Ovládání:** aplikace: export **Kniha rodu** → **Dům**, část **Domy**, **Rejstřík domů**, **Poloha a mapa
+  domů**, **Fotky domů z webu**, **Vyprávění o domech se žijícími osobami**; stránky rodu a stránky stromu →
+  **Domy**, **Poloha a mapa domů**, **Fotky domů z webu**, **Vyprávění o domech se žijícími osobami**;
+  **Darovat rodokmen** → **Poloha a mapa domů**.
 - **Platí od:** aplikace 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories · T10: app:51223455 src/ui/book-ui.ts book-house-maps (outputHouseLocation.housesSwitch; kniha bookHouseMapsState, stránky housesWithLocation), src/house-privacy.ts houseOutputFilter (locationBy manual|output), book.houseChapterProtected · app:6ec8204e src/gift-package.ts (env.pages, env.book z paměti knihy, houseMaps: settings.houseLocations), src/ui/gift-tree-ui.ts giftHouseShots (houseResearch () => null) -->
 
 <a id="S10.11"></a>
 ## S10.11 Domy jinde v aplikaci
@@ -757,10 +798,11 @@ převypráví, co doložil výzkum.
 - **Kniha rodu a stránky rodu** mají přepínač **Vyprávění o domech se žijícími osobami** (výchozí zapnutý, pamatuje
   se s ostatními volbami dialogu): „Zapnuto: vloží se každé vyprávění o domě. Vypnuto: vyprávění, ve kterém
   vystupuje žijící osoba, se vynechá.“
-  - žijící osoba je osoba stromu, kterou aplikace považuje za žijící ([A7.1](A7-book-pages-and-export.md#A7.1));
+  - žijící osoba je osoba stromu, kterou aplikace považuje za žijící
+    ([S11.1](S11-protecting-living-people.md#S11.1));
     osoba výzkumu, kterou strom nezná, se za žijící nepočítá;
   - přepínač platí bez ohledu na volbu ochrany žijících a vynechá jen takové vyprávění, ne ostatní;
-  - kniha: v **Části knihy** pod **Poloha domů** a **Fotky domů z webu**, jen s částí **Domy**; stránky rodu: u volby
+  - kniha: v **Části knihy** pod **Poloha a mapa domů** a **Fotky domů z webu**, jen s částí **Domy**; stránky rodu: u volby
     **Domy**, jen s **V rodinných stránkách, propojené s osobami**;
   - nabídne se, jen když dům výběru má vyprávění, ve kterém vystupuje žijící osoba. Výsledky domů od výzkumu si
     dialog načte hned při otevření.
@@ -768,7 +810,8 @@ převypráví, co doložil výzkum.
 - Odkaz **Dům <číslo> ›** z vyprávění osoby na dům je v knize a ve stránkách rodu jen tehdy, když výstup vyprávění
   domu ukazuje, i když je to koncept.
 - **Ovládání:** aplikace: export **Kniha rodu** → část **Domy**, **Vyprávění o domech se žijícími osobami**; stránka
-  domu → **Uložit HTML**; stránky rodu → **Domy**, **Vyprávění o domech se žijícími osobami**.
+  domu → **Uložit HTML** → **Uložit stránku domu**; stránky rodu → **Domy**, **Vyprávění o domech se žijícími
+  osobami**.
 - **Platí od:** aplikace 3.33.0
 
 <!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (nová verze vedle final → final) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez recent, osob bez úmrtí a skrytých položek; leaveOutLiving), houseStoryNamesLiving (personOfRef a ctx.living, osoba mimo strom ne), src/book-houses.ts (bez book-house-story-tag), src/house-page.ts storyHtml (štítek a Schválit jen c.app), shownStory (storyLiving), src/book.ts (opts.houseStoriesLiving), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving (výchozí zapnuto), src/book-memory.ts houseStoriesLiving (kniha i PagesChoices), src/ui/book-ui.ts book-house-stories (kniha: parts.houses a chapterHouses; stránky: houses pages), readDialogHouses, src/family-pages-html.ts setStoryHouses (houseStoriesLiving) · strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint · src/gift-package.ts (bez houseResearch) · dirigent:prace/1128-app-dum-vypraveni-ochrana Výsledek (dárek vyprávění domů nenese; osoba mimo strom bez úmrtí není žijící) -->

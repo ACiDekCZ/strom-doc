@@ -85,6 +85,11 @@ napojení.
   odkazuje na 3 externí soubory médií: 2 u osob, 1 u svazků …“). Napojený obrázek rodiny se stane fotkou svazku
   ([A12.7](A12-portrait-and-couple-photo.md#A12.7)), jen obrázek a jen u svazku, který fotku ještě nemá. Výsledek
   napojení to spočítá: „Napojeno 3 z 3 odkazovaných souborů: 1 portrét, 1 příloha, 1 fotka svazku.“
+- **Od aplikace 3.33.0:** soubor s ochranou žijících má pod dlaždicemi řádek „Soubor je chráněný ({režim}): údaje
+  N žijících osob v něm chybí.“ Průvodce importu začne volbou **Nový strom** a strom se jmenuje „{soubor}
+  (chráněná kopie)“ ([S11.6](S11-protecting-living-people.md#S11.6)).
+
+<!-- zdroj 3.33.0: app:47500acc src/ui/import-export.ts:977 gedcom-protected, :818 openGedcomGuide protectedImport, :1500 protectedCopyName, :1930 import-tree-protected · src/ui/privacy-block.ts protectedImportLineHtml · strings.ts privacy.importProtected, protectedCopyName -->
 
 <!-- zdroj: app:src/ui/import-export.ts:374 handleGedcomFile, :410 showGedcomResultDialog · app:src/ged-parser.ts:3880 statistiky convertToStrom, :3186 pohlaví · strings.ts gedcom.*, importImages.* · 3.28.0: app:80c2ffb9 strings.ts gedcom.sharedConverted · 3.30.0: app:68c232ad ExternalMediaRef.partnershipId, src/ged-media-attach.ts attachGedcomMediaFile, strings.ts gedcom.externalMediaSplit, mediaAttachedParts -->
 

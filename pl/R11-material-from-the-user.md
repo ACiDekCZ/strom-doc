@@ -133,7 +133,7 @@ na zadania.
     (źródło), dokument, zdjęcie, niezwiązany, i do kogo należy. Dokładnie czyta tylko to, co dotyczy ludzi badania;
   - o żyjącej osobie do badania 1.36.0 nic się nie zapisywało, plik tylko się klasyfikowało. Od 1.37.0 materiał
     osoby żyjącej klasyfikuje się i zapisuje jak u każdego innego; ochrona osób żyjących należy do eksportu
-    ([A7.2](A7-book-pages-and-export.md#A7.2));
+    ([S11.4](S11-protecting-living-people.md#S11.4));
   - skanów jednej księgi (wiele numerowanych skanów) nie czyta się plik po pliku: zapisuje się je jako księgę i czyta
     się z niej wpisy jak z każdej księgi ([R8](R8-reading-scans.md));
   - zadanie zamyka się, gdy każdy jego plik jest sklasyfikowany; kolejna część partii to osobne zadanie.

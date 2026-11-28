@@ -593,10 +593,18 @@ Der Dialog **Als Poster exportieren** (Menü **Poster exportieren**: SVG, PNG, D
 - **Ab App 3.32.0:** mit eingeschalteten **Porträts** zeichnen Plakat und Druck des Fächers (auch Strg+P aus der
   Ansicht auf ein A4-Blatt quer) ein Porträt dort, wo es auf dem Papier einen Durchmesser von mindestens 7 mm hat;
   sonst gilt dasselbe wie auf dem Bildschirm ([A6.4.2](#A6.4.2)).
-- **Ab App 3.33.0:** mit eingeschaltetem **Andere ausblenden** (nur bei der Auswahl **Vorfahren: {Person}**,
-  [A6.6.2](#A6.6.2)) zeichnet das Plakat die Sektoren der Personen außerhalb der Auswahl als leere Umrisse an ihren
-  Plätzen. Titel, Untertitel und Legende (Großeltern, Familienlinien und ihre Zahlen) nennen und zählen nur die
-  gezeichneten Personen. Ohne **Andere ausblenden** ist das Plakat wie bisher.
+- **Ab App 3.33.0:**
+  - mit eingeschaltetem **Andere ausblenden** (nur bei der Auswahl **Vorfahren: {Person}**, [A6.6.2](#A6.6.2))
+    zeichnet das Plakat die Sektoren der Personen außerhalb der Auswahl als leere Umrisse an ihren Plätzen. Titel,
+    Untertitel und Legende (Großeltern, Familienlinien und ihre Zahlen) nennen und zählen nur die gezeichneten
+    Personen. Ohne **Andere ausblenden** ist das Plakat wie bisher;
+  - der Dialog **Als Poster exportieren** (jede Ansicht, nicht nur der Fächer) hat den Block **Schutz lebender
+    Personen**. Er beginnt mit der Standardstufe aus den Einstellungen und hält die letzte Wahl, solange die Seite
+    offen ist ([S11.3](S11-protecting-living-people.md#S11.3)). Karten, Fußzeile, das Zeichen † und die Zeichen des
+    Stands kommen aus den geschützten Daten; die Vorschau des Fächers wird nach einer Änderung der Stufe neu
+    gezeichnet ([S11.4](S11-protecting-living-people.md#S11.4)). Vorher nannte das Plakat Lebende vollständig.
+
+<!-- zdroj 3.33.0 ochrana: app:bda4fd2c src/ui/export-image-ui.ts posterPrivacyMode, renderPosterPrivacyBlock (origin settings), posterData applyLivingPrivacy keepDeceasedSources, posterFooterMeta, markIds (jen zemřelí podle pravidla), updatePosterSheets schedulePreview · index.html poster-privacy-section -->
 
 <!-- zdroj 3.33.0: app:d27235e5 src/fan-chart.ts keptFanModel, keptRodAssignment, renderFanPoster keepOnly · src/ui/export-image-ui.ts buildCurrentPoster (TreeRenderer.getFanKeepOnly) · src/renderer.ts getFanKeepOnly · e2e/selection-fan.spec.ts · tisk Ctrl+P z pohledu neověřen -->
 
@@ -1115,7 +1123,7 @@ Tabelle von Ondřej Chrpa.
   alle ihre Nachkommen. Partner, die durch Heirat in die Familie kamen, gehören nicht dazu.
 - **Generation** 1 ist die älteste Generation des Stammbaums; ein Partner hat die Generation seines Partners.
 - **Lebend** (Spalte, Wert „lebend“) wird wie beim Schutz lebender Personen berechnet
-  ([A7.1](A7-book-pages-and-export.md#A7.1)).
+  ([S11.1](S11-protecting-living-people.md#S11.1)).
 - Über der Tabelle stehen die Anzahl („42 von 120 Personen“) und die Sortierung („Sortierung: …“). Das Feld **Person
   suchen...** in der Leiste wählt in der Tabelle die Zeile der Person aus und rollt zu ihr; die zentrale Person ändert
   sich nicht.
@@ -1517,6 +1525,14 @@ Der Export speichert die Tabelle, wie sie zu sehen ist, in eine Datei für Tabel
 - **Grenzen:** der Export aus dem Menü des Stammbaums (**Personentabelle (CSV)**, [A7](A7-book-pages-and-export.md))
   ist eine andere Datei mit festen Spalten.
 - **Gilt seit:** App 3.27.0
+- **Ab App 3.33.0:** das Panel **Export ▾** hat den Block **Schutz lebender Personen** mit der Standardstufe aus den
+  Einstellungen ([S11.3](S11-protecting-living-people.md#S11.3)). Unter Schutz bleibt die Zeile einer lebenden Person
+  mit dem Namen nach der Stufe, dem Geburtsjahr nur bei Initialen und den Spalten **#** und **Erledigt**; die übrigen
+  Spalten sind leer („Lebende Personen: Name wie geschützt, übrige Spalten leer.“). Verbindungen und Ereignisse kommen
+  aus den geschützten Daten. Ein geschütztes XLSX hat keine Farben und Kommentare von Befunden. Ohne Lebende ändert
+  sich nichts ([S11.4](S11-protecting-living-people.md#S11.4)).
+
+<!-- zdroj 3.33.0: app:bda4fd2c, fbc447a0 src/ui/table-view/table-privacy.ts protectTableExport (LIVING_KEPT, checks null, blank), src/ui/table-view/table-ui.ts showTableExport (Nastavení, origin settings), table-viewbar.ts exportForm · strings.ts table.exportPrivacyWhat -->
 
 <!-- zdroj: app:src/ui/table-view/table-export.ts tableCsvField (neutralizace vzorců), buildExportTable, buildTableCsv (BOM, ;, CRLF, pokračovací řádky, sloupec Svazek), fileNamePart, tableCsvFileName (csv | xlsx) · table-xlsx.ts buildTableXlsx (řádky 1–3, merges, outline sloupců za ukotvenou částí, pokračovací řádky outline 1, freeze, errorFill/warningFill + findingsComment jen chyba a k ověření, href), xlsxNumber (COUNT_COLUMNS, věk ^\d+$, procento) · src/xlsx.ts (ignoredErrors numberStoredAsText, styl @ pro text) · table-viewbar.ts exportForm (Formát, Řádky: Zobrazené / Všechny bez filtru jen s filtrem nebo hledáním) · table-ui.ts tableExportNow (unfiltered: všechny řádky typu v řazení, stale ven) · strings.ts table.export, exportFormat, exportRows, exportCsv, exportXlsx, exportAll, exportShown, exportFilterNote, exportUnfiltered.*, exportWhat.*, exportWhatAll.*, exportFile, exportDownload, exportDownloadXlsx, csvUnionCol, csvUnionOf, exportedToast · commity 2368683b, 5a67797b, 4308633b, e0ce4ec2, ebc1542f, e5b97725 · dirigent:prace/1110-app-tabulka-p2, 1110-app-tabulka-opravy -->
 

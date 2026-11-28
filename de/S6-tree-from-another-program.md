@@ -176,7 +176,7 @@ angelegt, eingefügt oder zusammengeführt wurde.
   - Herkunft: „Stammbaum aus {program} (Datei vom {datum}) · N Personen“ (beim Einfügen und Zusammenführen, in welchen
     Stammbaum und wie viele Personen);
   - die Zeile der Datenprüfung: „N Dinge zum Ansehen gefunden. Nichts wird von selbst korrigiert.“ und **Ansehen**
-    ([A5](A5-tree-check.md)), oder „Die Datenprüfung hat nichts zu korrigieren gefunden.“;
+    ([A5](A5-tree-check.md)), oder „Die Stammbaum-Prüfung fand im Import nichts zu prüfen.“;
   - wenn die Datei mehrere Familien ohne Verbindung enthält: **Nicht verbundene Teile trennen…**;
   - Forschung: ohne Forschung auf diesem Computer **Ahnenforschung mit diesem Stammbaum** und **Ahnenforschung**; mit
     Forschung **Forschung mit diesem Stammbaum starten**; ein an die Forschung gebundener Stammbaum **Forschung mit
@@ -232,8 +232,11 @@ Zustand vor dem Import lässt sich so zurückkehren.
   - eine einzelne Zusammenführung lässt sich auch ohne Wiederherstellen der ganzen Sicherung zurücknehmen:
     **Zusammenführung zurücknehmen…** ([A8.12](A8-merging-trees.md#A8.12)). Eine Sicherung bringt den ganzen
     Stammbaum zurück, samt allem, was seit der Zusammenführung geschehen ist.
+- **Ab App 3.33.0:** Sicherungen sind eine Ausgabe für sich selbst: alle Angaben aller Personen. Das Fenster
+  **Sicherungsverlauf** eines Stammbaums mit Lebenden sagt das: „Enthält alle Angaben zu lebenden Personen – für die
+  eigene Sicherung oder Übertragung, nicht zum Weitergeben.“ ([S11.5](S11-protecting-living-people.md#S11.5)).
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie · 3.33.0: app:11d35186 index.html:40323 snapshots-self, src/ui/snapshots-ui.ts:76 (jen se žijícími), strings.ts privacy.selfOnly -->
 
 <a id="S6.6"></a>
 ## S6.6 Export zurück ins Programm oder zum Teilen
@@ -246,13 +249,13 @@ Programm**) oder **Zum Teilen mit anderen**. Danach schützt er lebende Personen
   Programms bekommen ihre ursprüngliche Datensatzkennung zurück, wo das sicher ist, und die Zeilen ihrer IDs (`_UID`,
   `RIN`, `EXID` …); eine Kennung, die sich nicht verwenden lässt, geht als `REFN` mit `TYPE {program} xref`. Eigene
   Tags des Programms (`_XXX`) aus Importen desselben Programms kommen zurück.
-- **Zum Teilen mit anderen:** „Schützt lebende Personen, der Inhalt lässt sich anpassen.“ (der Standardschutz von
-  GEDCOM, [A7.2.1](A7-book-pages-and-export.md#A7.2.1)). Verstorbene behalten ihre Quellen; bei lebenden Personen
-  entfallen die Zitate, und das Fenster sagt es („Bei N lebenden Personen entfallen K Zitate. Verstorbene behalten
-  ihre Quellen.“).
+- **Zum Teilen mit anderen:** „Schützt lebende Personen, der Inhalt lässt sich anpassen.“ (der Standardschutz aus den
+  Einstellungen, [S11.3](S11-protecting-living-people.md#S11.3)). Verstorbene behalten ihre Quellen; bei lebenden
+  Personen entfallen die Zitate, und das Fenster sagt es („Bei N lebenden Personen entfallen K Zitate. Verstorbene
+  behalten ihre Quellen.“).
 - **Prüft der Code:**
-  - der GEDCOM-Export behält Quellen und Zitate Verstorbener bei jeder Auswahl; der Export JSON, HTML und CSV ändert
-    sich nicht ([A7.2](A7-book-pages-and-export.md#A7.2));
+  - der GEDCOM-Export behält Quellen und Zitate Verstorbener bei jeder Auswahl
+    ([S11.2](S11-protecting-living-people.md#S11.2));
   - Fotos und Anhänge hat die Datei nicht: andere Programme lesen sie aus der Datei nicht;
   - bei **Zurück zu {program}** zählt die Zeile der Zusammenfassung **Quellen und Zitate (N Quellen, M Zitate)** die
     Quelleneinträge, die die Datei schreibt. Die Quellen, die der Import aus einem Quelleneintrag für jede zitierte
@@ -273,8 +276,17 @@ Programm**) oder **Zum Teilen mit anderen**. Danach schützt er lebende Personen
   Foto der Familie gehen bei **Zurück zu {program}** nicht zurück: dieser Export hat keine Fotos. Die anderen Bilder
   der Familie gehen wie in 3.27.0 zurück. **Zum Teilen mit anderen** schreibt das Paarfoto bei der Familie als `OBJE`,
   wenn der Inhalt des Exports Fotos hat ([A12.7](A12-portrait-and-couple-photo.md#A12.7)).
+- **Ab App 3.33.0:**
+  - **Zum Teilen mit anderen** ist eine Ausgabe nach außen: der Block **Schutz lebender Personen** beginnt mit der
+    Standardstufe aus den Einstellungen, und eine geschützte Datei trägt im Kopf die Markierung `_STROM_PRIVACY`
+    ([S11.4](S11-protecting-living-people.md#S11.4), [S11.6](S11-protecting-living-people.md#S11.6)). Auch JSON, HTML
+    und CSV behalten die Quellen Verstorbener;
+  - **Zurück zu {program}** ist eine Ausgabe für sich selbst: ohne Schutzblock, alle Angaben bleiben, und das
+    Fenster sagt das im Satz „Enthält alle Angaben zu lebenden Personen – für die eigene Sicherung oder Übertragung,
+    nicht zum Weitergeben. Die Datei enthält Angaben zu N lebenden Personen und gehört nur ins eigene Programm.“
+    ([S11.5](S11-protecting-living-people.md#S11.5)).
 
-<!-- zdroj: app:7cf409bd src/ged-exporter.ts backSourceRecordCount (sourceGroups: jeden záznam za skupinu) · src/ui/export-gedcom-ui.ts backSources → exportGed.sumSources · e2e/export-gedcom-back.spec.ts · app:1c9b2392 src/ged-exporter.ts backToXrefs (původní xref, ID řádky úrovně 1, REFN + TYPE {prog} xref, _XXX téhož programu, jinak _STROM_IMPORT / _STROM_XID) · src/ui/import-export.ts:267 keepDeceasedSources: true (jen GEDCOM) · strings.ts exportGed.* -->
+<!-- zdroj: app:7cf409bd src/ged-exporter.ts backSourceRecordCount (sourceGroups: jeden záznam za skupinu) · src/ui/export-gedcom-ui.ts backSources → exportGed.sumSources · e2e/export-gedcom-back.spec.ts · app:1c9b2392 src/ged-exporter.ts backToXrefs (původní xref, ID řádky úrovně 1, REFN + TYPE {prog} xref, _XXX téhož programu, jinak _STROM_IMPORT / _STROM_XID) · src/ui/import-export.ts:267 keepDeceasedSources: true (jen GEDCOM) · strings.ts exportGed.* · 3.33.0: app:11d35186 src/ui/export-gedcom-ui.ts:196 export-back-living (privacy.selfOnly + exportGed.livingNote), fe52bfb2 src/privacy.ts applyOutputPrivacy, src/ui/encryption-ui.ts exportPresetPrivacy -->
 
 <a id="S6.7"></a>
 ## S6.7 Ein erneut geladener Stammbaum und Zusammenführen
@@ -377,8 +389,8 @@ Programme als `1 EMAIL` direkt bei der Person. Die App und die Forschung machen 
     Leerzeichen;
   - der GEDCOM-Export schreibt jede Adresse als `1 RESI` / `2 EMAIL`; **Zurück zu {program}** schreibt ein
     `1 EMAIL`, das die Datei bei der Person hatte, genauso wie sie ([S6.6](#S6.6));
-  - Schutz lebender Personen ([A7.2](A7-book-pages-and-export.md#A7.2)): eine lebende Person gibt ihren Kontakt nicht
-    in den Export;
+  - Schutz lebender Personen ([S11.2](S11-protecting-living-people.md#S11.2)): eine lebende Person gibt ihren Kontakt
+    nicht in den Export;
   - die Personenseite zeigt die Adressen als E-Mail-Link nur im Fenster der App; eine in eine Datei gespeicherte Seite
     hat keinen Kontakt;
   - in die Forschung geht der Kontakt nur mit einer Forschung,

@@ -511,9 +511,16 @@ plakátu** se stejnými volbami jako panel **Vzhled** ([A6.4.2](#A6.4.2)) a s **
 - **Platí od:** aplikace 3.31.0
 - **Od aplikace 3.32.0:** se zapnutými **Portréty** plakát i tisk vějíře (i Ctrl+P z pohledu na list A4 na šířku)
   kreslí portrét tam, kde má na papíře průměr aspoň 7 mm; jinak platí totéž co na obrazovce ([A6.4.2](#A6.4.2)).
-- **Od aplikace 3.33.0:** se zapnutým **Skrýt ostatní** (jen u výběru **Předci: {osoba}**, [A6.6.2](#A6.6.2)) kreslí
-  plakát výseče osob mimo výběr jako prázdné obrysy na jejich místech. Titulek, podtitul a legenda (prarodiče, rody
-  a jejich počty) jmenují a počítají jen nakreslené osoby. Bez **Skrýt ostatní** je plakát jako dosud.
+- **Od aplikace 3.33.0:**
+  - se zapnutým **Skrýt ostatní** (jen u výběru **Předci: {osoba}**, [A6.6.2](#A6.6.2)) kreslí plakát výseče osob
+    mimo výběr jako prázdné obrysy na jejich místech. Titulek, podtitul a legenda (prarodiče, rody a jejich počty)
+    jmenují a počítají jen nakreslené osoby. Bez **Skrýt ostatní** je plakát jako dosud;
+  - dialog **Export jako plakát** (každý pohled, ne jen vějíř) má blok **Ochrana žijících osob**. Začne výchozím režimem
+    z Nastavení a drží poslední volbu, dokud je stránka otevřená ([S11.3](S11-protecting-living-people.md#S11.3)).
+    Karty, patička, značka † a značky stavu jdou z chráněných dat; náhled vějíře se po změně režimu překreslí
+    ([S11.4](S11-protecting-living-people.md#S11.4)). Dřív plakát jmenoval žijící celými jmény.
+
+<!-- zdroj 3.33.0 ochrana: app:bda4fd2c src/ui/export-image-ui.ts posterPrivacyMode, renderPosterPrivacyBlock (origin settings), posterData applyLivingPrivacy keepDeceasedSources, posterFooterMeta, markIds (jen zemřelí podle pravidla), updatePosterSheets schedulePreview · index.html poster-privacy-section -->
 
 <!-- zdroj 3.33.0: app:d27235e5 src/fan-chart.ts keptFanModel, keptRodAssignment, renderFanPoster keepOnly · src/ui/export-image-ui.ts buildCurrentPoster (TreeRenderer.getFanKeepOnly) · src/renderer.ts getFanKeepOnly · e2e/selection-fan.spec.ts · tisk Ctrl+P z pohledu neověřen -->
 
@@ -952,7 +959,7 @@ Pohled Tabulka vychází z tabulky od Ondřeje Chrpy.
   a čip **Pokrevní příbuzní**: předci hlavní osoby (i ona sama) a všichni jejich potomci. Partneři, kteří do rodiny
   přišli sňatkem, mezi ně nepatří.
 - **Generace** 1 je nejstarší generace stromu; partner má generaci svého partnera.
-- **Žijící** (sloupec, hodnota „žijící“) počítá jako ochrana žijících ([A7.1](A7-book-pages-and-export.md#A7.1)).
+- **Žijící** (sloupec, hodnota „žijící“) počítá jako ochrana žijících ([S11.1](S11-protecting-living-people.md#S11.1)).
 - Nad tabulkou je počet („42 z 120 osob“) a řazení („Řazení: …“). Pole **Hledat osobu...** v liště v tabulce
   řádek osoby vybere a posune na něj; ústřední osoba se nemění.
 - **Ústřední osoba mezi pohledy:** po přepnutí do Tabulky je aktivní řádek ústřední osoby a tabulka se na něj posune
@@ -1298,6 +1305,13 @@ Export uloží tabulku, jak je vidět, do souboru pro tabulkové programy: **CSV
 - **Hranice:** export z menu stromu (**Tabulka osob (CSV)**, [A7](A7-book-pages-and-export.md)) je jiný soubor
   s pevnými sloupci.
 - **Platí od:** aplikace 3.27.0
+- **Od aplikace 3.33.0:** panel **Export ▾** má blok **Ochrana žijících osob** s výchozím režimem z Nastavení
+  ([S11.3](S11-protecting-living-people.md#S11.3)). Pod ochranou zůstane řádek žijící osoby se jménem podle režimu,
+  rokem narození jen u Iniciál a sloupci **#** a **Hotovo**; ostatní sloupce jsou prázdné („Žijící: jméno podle
+  ochrany, ostatní sloupce prázdné.“). Svazky a události jdou z chráněných dat. Chráněné XLSX nemá barvy ani
+  komentáře nálezů. Bez žijících se nic nemění ([S11.4](S11-protecting-living-people.md#S11.4)).
+
+<!-- zdroj 3.33.0: app:bda4fd2c, fbc447a0 src/ui/table-view/table-privacy.ts protectTableExport (LIVING_KEPT, checks null, blank), src/ui/table-view/table-ui.ts showTableExport (Nastavení, origin settings), table-viewbar.ts exportForm · strings.ts table.exportPrivacyWhat -->
 
 <!-- zdroj: app:src/ui/table-view/table-export.ts tableCsvField (neutralizace vzorců), buildExportTable, buildTableCsv (BOM, ;, CRLF, pokračovací řádky, sloupec Svazek), fileNamePart, tableCsvFileName (csv | xlsx) · table-xlsx.ts buildTableXlsx (řádky 1–3, merges, outline sloupců za ukotvenou částí, pokračovací řádky outline 1, freeze, errorFill/warningFill + findingsComment jen chyba a k ověření, href), xlsxNumber (COUNT_COLUMNS, věk ^\d+$, procento) · src/xlsx.ts (ignoredErrors numberStoredAsText, styl @ pro text) · table-viewbar.ts exportForm (Formát, Řádky: Zobrazené / Všechny bez filtru jen s filtrem nebo hledáním) · table-ui.ts tableExportNow (unfiltered: všechny řádky typu v řazení, stale ven) · strings.ts table.export, exportFormat, exportRows, exportCsv, exportXlsx, exportAll, exportShown, exportFilterNote, exportUnfiltered.*, exportWhat.*, exportWhatAll.*, exportFile, exportDownload, exportDownloadXlsx, csvUnionCol, csvUnionOf, exportedToast · commity 2368683b, 5a67797b, 4308633b, e0ce4ec2, ebc1542f, e5b97725 · dirigent:prace/1110-app-tabulka-p2, 1110-app-tabulka-opravy -->
 

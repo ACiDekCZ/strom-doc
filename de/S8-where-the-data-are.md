@@ -28,7 +28,9 @@ kann den Speicher löschen; die Sicherungen in der App liegen im selben Speicher
   eine Datei gespeichert wurde und wie sich der Speicher halten lässt (Installation als App, dauerhafter Speicher in
   Firefox, Dock oder Home-Bildschirm in Safari).
 - **In Datei speichern** speichert den ganzen Stammbaum mit allen Angaben und Bildern in eine Datei JSON, die sich in
-  Strom wieder öffnen lässt. Ein verschlüsselter Stammbaum lässt sich verschlüsselt speichern.
+  Strom wieder öffnen lässt. Ein verschlüsselter Stammbaum lässt sich verschlüsselt speichern. Es ist eine Ausgabe
+  für sich selbst: alle Angaben, auch der Lebenden, ohne Wahl des Schutzes
+  ([S11.5](S11-protecting-living-people.md#S11.5)).
 - Ein privates Browserfenster löscht die Stammbäume beim Schließen.
 - **Grenzen:**
   - jeder Browser und jedes Gerät hat einen eigenen Speicher: ein in Chrome geöffneter Stammbaum ist weder in Edge
@@ -41,7 +43,7 @@ kann den Speicher löschen; die Sicherungen in der App liegen im selben Speicher
   das Speichern in eine Datei erinnern**.
 - **Gilt seit:** App 3.0.0
 
-<!-- zdroj: app:src/storage.ts strom-db · src/ui/file-copy-ui.ts · strings.ts fileCopy.title, intro, statePersistent, stateNotPersistent, statePrivate, backupsNote, save, quickHint, saveEncryptedBtn, details, settingLabel · materials.whereApp · S1.8 -->
+<!-- zdroj: app:src/storage.ts strom-db · src/ui/file-copy-ui.ts · strings.ts fileCopy.title, intro, statePersistent, stateNotPersistent, statePrivate, backupsNote, save, quickHint, saveEncryptedBtn, details, settingLabel · materials.whereApp · S1.8 · 3.33.0: app:src/ui/encryption-ui.ts:1357 (exportQuick: záloha bez bloku ochrany) · dirigent:spec/151 K3.1 -->
 
 <a id="S8.2"></a>
 ## S8.2 Was in der Forschung und im Strom-Archiv liegt

@@ -35,7 +35,7 @@ dauerhaft.
 - [A4 Stammlinien und Nachnamen](A4-surnames-and-families.md): Stammlinie und Stammvater, Eingeheiratete, weibliche Formen von Nachnamen, Namenssuche
 - [A5 Prüfung des Stammbaums](A5-tree-check.md): was die App im Stammbaum überwacht, mit welchen Schwellen, und Kein Fehler
 - [A6 Ansichten und Auswahl der Personen](A6-views.md): Familie, Nachkommen, Zeitleiste, Fächer, Karte, die Stammlinie in der Ansicht, Tabelle und eine Ansicht in einem eigenen Fenster
-- [A7 Buch, Seiten und Export](A7-book-pages-and-export.md): wer lebend ist, Schutz lebender Personen, Familienbuch, Seiten, gespeichertes HTML, Stammbaum einer Person verschenken, Exportumfang Stammbaum einer Person
+- [A7 Buch, Seiten und Export](A7-book-pages-and-export.md): Familienbuch, Seiten, gespeichertes HTML, Stammbaum einer Person verschenken, Exportumfang Stammbaum einer Person
 - [A8 Zusammenführen von Stammbäumen](A8-merging-trees.md): der Assistent zum Zusammenführen einer Datei, eines Stammbaums oder einer Auswahl in einen Stammbaum, Abgleich der Personen, Verlauf und Rückgängigmachen einer Zusammenführung
 - [A9 Bedienung der App](A9-using-the-app.md): wo was ist, lesbare Namen der Bedienelemente, Bearbeiten beim Verfolgen der Forschung, der Agent in der App, die untere Leiste auf Telefon und Tablet
 - [A10 Ein Ereignis mehrerer Personen](A10-shared-events.md): das gemeinsame Ereignis eines Haushalts (Gemeinsam mit), Angleichen, Zu einem Ereignis verbinden, Paten und Zeugen im Leben einer Person, Zusammenführen und ältere Stammbäume
@@ -56,5 +56,6 @@ dauerhaft.
 - [S8 Wo die Daten liegen](S8-where-the-data-are.md): was nur im Browser liegt, was in der Forschung und im Strom-Archiv liegt, Fotos und Anhänge des Stammbaums in der Forschung, die Anzeige Nur im Browser, Fotos, die nicht geladen werden konnten, Paket und Entfernen eines Stammbaums
 - [S9 Am Beispiel ausprobieren](S9-trying-the-sample.md): das Beispiel aus dem Web und aus einer Datei ohne Installation, das Etikett Beispiel, ein neueres Beispiel, das kleine Beispiel ohne Netz, die Beispielforschung `strom demo` und ihr Löschen
 - [S10 Häuser](S10-houses.md): das Haus nach Ort und Nummer, Nummern im Lauf der Zeit, das Fenster Häuser und die Hausseite, Karte und Lage, die Geschichte eines Hauses anfordern, die Einstellung Hausgeschichte, wie der Agent ein Haus erforscht, das Aussehen des Hauses und seine Bilder in Ausgaben, eigene Recherche, das Gespräch über ein Haus, Häuser im Buch und in den Seiten, die Lage des Hauses in Ausgaben, die Erzählung über das Haus, die Befehle `strom house`
+- [S11 Schutz lebender Personen](S11-protecting-living-people.md): wer lebend ist, die Schutzstufen, der Standardschutz aus den Einstellungen, Ausgaben nach außen und für sich selbst, eine geschützte Datei und ihr Import, `strom export gedcom --living`
 
 Lizenz: [CC BY 4.0](../LICENSE). Die Texte dürfen mit Quellenangabe geteilt und bearbeitet werden.

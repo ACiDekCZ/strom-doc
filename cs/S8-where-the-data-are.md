@@ -26,7 +26,8 @@ smazat; zálohy v aplikaci leží ve stejném úložišti a zmizí s ním.
 - Okno **Kde jsou data** řekne, jestli prohlížeč úložiště drží trvale, kdy byl strom naposledy uložený do souboru
   a jak úložiště udržet (instalace jako aplikace, trvalé úložiště ve Firefoxu, Dock nebo plocha v Safari).
 - **Uložit do souboru** uloží celý strom se všemi údaji a obrázky do souboru JSON, který jde znovu otevřít ve
-  Stromu. Šifrovaný strom jde uložit šifrovaně.
+  Stromu. Šifrovaný strom jde uložit šifrovaně. Je to výstup pro sebe: plná data i žijících, bez volby ochrany
+  ([S11.5](S11-protecting-living-people.md#S11.5)).
 - Soukromé okno prohlížeče stromy po zavření smaže.
 - **Hranice:**
   - každý prohlížeč a každé zařízení má vlastní úložiště: strom otevřený v Chrome v Edgi ani v telefonu není;
@@ -37,7 +38,7 @@ smazat; zálohy v aplikaci leží ve stejném úložišti a zmizí s ním.
   Připomínat uložení do souboru**.
 - **Platí od:** aplikace 3.0.0
 
-<!-- zdroj: app:src/storage.ts strom-db · src/ui/file-copy-ui.ts · strings.ts fileCopy.title, intro, statePersistent, stateNotPersistent, statePrivate, backupsNote, save, quickHint, saveEncryptedBtn, details, settingLabel · materials.whereApp · S1.8 -->
+<!-- zdroj: app:src/storage.ts strom-db · src/ui/file-copy-ui.ts · strings.ts fileCopy.title, intro, statePersistent, stateNotPersistent, statePrivate, backupsNote, save, quickHint, saveEncryptedBtn, details, settingLabel · materials.whereApp · S1.8 · 3.33.0: app:src/ui/encryption-ui.ts:1357 (exportQuick: záloha bez bloku ochrany) · dirigent:spec/151 K3.1 -->
 
 <a id="S8.2"></a>
 ## S8.2 Co je ve výzkumu a v Archivu Stromu

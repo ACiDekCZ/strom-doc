@@ -34,7 +34,7 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [A4 Rody i nazwiska](A4-surnames-and-families.md): ród i założyciel, osoby wżenione, żeńskie formy nazwisk, wyszukiwanie imion
 - [A5 Kontrola drzewa](A5-tree-check.md): czego aplikacja pilnuje w drzewie, z jakimi progami, oraz To nie błąd
 - [A6 Widoki i wybór osób](A6-views.md): Rodzina, Potomkowie, Oś czasu, Wachlarz, Mapa, ród w widoku, Tabela i widok w osobnym oknie
-- [A7 Księga, strony i eksport](A7-book-pages-and-export.md): kto jest żyjący, ochrona żyjących, księga rodu, strony, zapisany HTML, podarować rodowód osoby, zakres eksportu Rodowód osoby
+- [A7 Księga, strony i eksport](A7-book-pages-and-export.md): księga rodu, strony, zapisany HTML, podarować rodowód osoby, zakres eksportu Rodowód osoby
 - [A8 Scalanie drzew](A8-merging-trees.md): kreator scalania pliku, drzewa lub wyboru z drzewem, parowanie osób, historia i cofanie scalenia
 - [A9 Obsługa aplikacji](A9-using-the-app.md): gdzie co jest, czytelne nazwy elementów, edycja podczas śledzenia badania, agent w aplikacji, dolny pasek na telefonie i tablecie
 - [A10 Jedno wydarzenie wielu osób](A10-shared-events.md): wspólne wydarzenie gospodarstwa (Razem z), Ujednolić, Połącz w jedno wydarzenie, chrzestni i świadkowie w życiu osoby, scalanie i starsze drzewa
@@ -55,5 +55,6 @@ Części R (badanie), A (aplikacja) i S (aplikacja i badanie razem) są zatwierd
 - [S8 Gdzie są dane](S8-where-the-data-are.md): co jest tylko w przeglądarce, co jest w badaniu i w Archiwum Strom, zdjęcia i załączniki drzewa w badaniu, wskaźnik Tylko w przeglądarce, zdjęcia, których nie udało się wczytać, paczka i usunięcie drzewa
 - [S9 Wypróbuj na przykładzie](S9-trying-the-sample.md): przykład ze strony i z pliku bez instalacji, etykieta Przykład, nowszy przykład, mały przykład bez sieci, przykładowe badanie `strom demo` i jego usunięcie
 - [S10 Domy](S10-houses.md): dom według miejscowości i numeru, numery w czasie, okno Domy i strona domu, mapa i położenie, zamówienie historii domu, ustawienie Historia domów, jak agent bada dom, wygląd domu i zdjęcia w wynikach, własna kwerenda, rozmowa o domu, domy w księdze i na stronach, położenie domu w wynikach, opowieść o domu, polecenia `strom house`
+- [S11 Ochrona osób żyjących](S11-protecting-living-people.md): kto jest żyjący, tryby ochrony, domyślna ochrona z Ustawień, wyniki na zewnątrz i dla siebie, chroniony plik i jego import, `strom export gedcom --living`
 
 Licencja: [CC BY 4.0](../LICENSE). Teksty można udostępniać i przerabiać z podaniem źródła.

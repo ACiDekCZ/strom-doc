@@ -26,7 +26,8 @@ pamięć skasować; kopie zapasowe w aplikacji leżą w tej samej pamięci i zni
 - Okno **Gdzie są dane** mówi, czy przeglądarka trzyma pamięć trwale, kiedy drzewo ostatnio zapisano do pliku i jak
   pamięć utrzymać (instalacja jako aplikacja, trwała pamięć w Firefoksie, Dock lub ekran początkowy w Safari).
 - **Zapisz do pliku** zapisuje całe drzewo ze wszystkimi danymi i obrazami do pliku JSON, który można znowu otworzyć
-  w Stromie. Zaszyfrowane drzewo można zapisać zaszyfrowane.
+  w Stromie. Zaszyfrowane drzewo można zapisać zaszyfrowane. To wynik dla siebie: pełne dane, także osób żyjących,
+  bez wyboru ochrony ([S11.5](S11-protecting-living-people.md#S11.5)).
 - Prywatne okno przeglądarki po zamknięciu kasuje drzewa.
 - **Granice:**
   - każda przeglądarka i każde urządzenie ma własną pamięć: drzewa otwartego w Chrome nie ma ani w Edge, ani
@@ -39,7 +40,7 @@ pamięć skasować; kopie zapasowe w aplikacji leżą w tej samej pamięci i zni
   Przypomnienie o zapisie do pliku**.
 - **Obowiązuje od:** aplikacja 3.0.0
 
-<!-- zdroj: app:src/storage.ts strom-db · src/ui/file-copy-ui.ts · strings.ts fileCopy.title, intro, statePersistent, stateNotPersistent, statePrivate, backupsNote, save, quickHint, saveEncryptedBtn, details, settingLabel · materials.whereApp · S1.8 -->
+<!-- zdroj: app:src/storage.ts strom-db · src/ui/file-copy-ui.ts · strings.ts fileCopy.title, intro, statePersistent, stateNotPersistent, statePrivate, backupsNote, save, quickHint, saveEncryptedBtn, details, settingLabel · materials.whereApp · S1.8 · 3.33.0: app:src/ui/encryption-ui.ts:1357 (exportQuick: záloha bez bloku ochrany) · dirigent:spec/151 K3.1 -->
 
 <a id="S8.2"></a>
 ## S8.2 Co jest w badaniu i w Archiwum Strom

@@ -103,6 +103,11 @@ angeboten.
   angebundenes Bild einer Familie wird zum Paarfoto ([A12.7](A12-portrait-and-couple-photo.md#A12.7)), nur ein Bild
   und nur bei einer Verbindung, die noch kein Foto hat. Das Ergebnis des Anbindens zählt es: „3 von 3 referenzierten
   Dateien angehängt: 1 Porträt, 1 Anhang, 1 Paarfoto.“
+- **Ab App 3.33.0:** eine Datei mit geschützten Lebenden hat unter den Kacheln die Zeile „Die Datei ist geschützt
+  ({Stufe}): die Angaben zu N lebenden Personen fehlen darin.“ Der Assistent des Imports beginnt mit der Wahl **Neuer
+  Stammbaum**, und der Stammbaum heißt „{Datei} (geschützte Kopie)“ ([S11.6](S11-protecting-living-people.md#S11.6)).
+
+<!-- zdroj 3.33.0: app:47500acc src/ui/import-export.ts:977 gedcom-protected, :818 openGedcomGuide protectedImport, :1500 protectedCopyName, :1930 import-tree-protected · src/ui/privacy-block.ts protectedImportLineHtml · strings.ts privacy.importProtected, protectedCopyName -->
 
 <!-- zdroj: app:src/ui/import-export.ts:374 handleGedcomFile, :410 showGedcomResultDialog · app:src/ged-parser.ts:3880 statistiky convertToStrom, :3186 pohlaví · strings.ts gedcom.*, importImages.* · 3.28.0: app:80c2ffb9 strings.ts gedcom.sharedConverted · 3.30.0: app:68c232ad ExternalMediaRef.partnershipId, src/ged-media-attach.ts attachGedcomMediaFile, strings.ts gedcom.externalMediaSplit, mediaAttachedParts -->
 

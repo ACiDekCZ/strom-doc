@@ -274,7 +274,7 @@ Oryginał portretu i zdjęcie pary to zdjęcia: idą do eksportu ze zdjęciami i
     gdy załączniki się eksportuje) i zdjęcia par; wycinek zapisu z takiego oryginału zostaje bez powiązania;
   - bez **Załączniki, dokumenty i wycinki źródeł**, ale ze zdjęciami, portrety i zdjęcia par zostają; portrety
     z załączników tracą powiązanie z oryginałem.
-- **Ochrona osób żyjących** ([A7.2](A7-book-pages-and-export.md#A7.2)): osoba żyjąca traci portret, oryginał
+- **Ochrona osób żyjących** ([S11.2](S11-protecting-living-people.md#S11.2)): osoba żyjąca traci portret, oryginał
   i załączniki; związek, w którym żyje co najmniej jeden z partnerów, traci zdjęcie. Tak samo na stronach i w księdze
   rodu.
 - **Eksport GEDCOM** zapisuje zdjęcie pary jako zwykły obraz rodziny (`1 OBJE` przy `FAM`), bez własnego znacznika

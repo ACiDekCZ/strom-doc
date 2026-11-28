@@ -162,7 +162,7 @@ what can be done with it next. It shows once after each import, whether the tree
   - the origin: “Tree from {program} (file {date}) · N people” (for inserting and merging, into which tree and how many
     people);
   - the data check line: “Found N things worth a look. Nothing is corrected automatically.” and **Review**
-    ([A5](A5-tree-check.md)), or “The data check found nothing to fix.”;
+    ([A5](A5-tree-check.md)), or “The tree check found nothing to review in the import.”;
   - when the file holds several families with nothing connecting them: **Separate disconnected parts…**;
   - the research: without research on this computer **Ancestor research with this tree** and **Ancestor research**;
     with research **Start research with this tree**; a tree linked to the research **Research with this tree**
@@ -214,8 +214,11 @@ thus be restored.
   - a single merge can be taken back without restoring the whole backup: **Undo the merge…**
     ([A8.12](A8-merging-trees.md#A8.12)). A backup brings back the whole tree, including everything that has happened
     since the merge.
+- **From app 3.33.0:** backups are an output for oneself: full details of all people. The window **Backup history**
+  of a tree with living people says so: "Contains all details of living people – for an own backup or transfer, not
+  for sharing." ([S11.5](S11-protecting-living-people.md#S11.5)).
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie · 3.33.0: app:11d35186 index.html:40323 snapshots-self, src/ui/snapshots-ui.ts:76 (jen se žijícími), strings.ts privacy.selfOnly -->
 
 <a id="S6.6"></a>
 ## S6.6 Export back to the program, or to share
@@ -228,13 +231,13 @@ share with others**. By that it protects living people and returns program IDs.
   back their original record identifier where that is safe, and the lines of their IDs (`_UID`, `RIN`, `EXID` …); an
   identifier that cannot be used goes as `REFN` with `TYPE {program} xref`. The program's own tags (`_XXX`) from
   imports of the same program come back.
-- **To share with others:** “Protects living people; the content can be adjusted.” (the default GEDCOM protection,
-  [A7.2.1](A7-book-pages-and-export.md#A7.2.1)). The deceased keep their sources; for living people the citations are
-  left out and the window says so (“For N living people, K citations are left out. The deceased keep their
+- **To share with others:** “Protects living people; the content can be adjusted.” (the default protection from
+  Settings, [S11.3](S11-protecting-living-people.md#S11.3)). The deceased keep their sources; for living people the
+  citations are left out and the window says so (“For N living people, K citations are left out. The deceased keep their
   sources.”).
 - **Enforced by the code:**
-  - the GEDCOM export keeps the sources and citations of deceased people in every option; the JSON, HTML and CSV
-    exports do not change ([A7.2](A7-book-pages-and-export.md#A7.2));
+  - the GEDCOM export keeps the sources and citations of deceased people in every option
+    ([S11.2](S11-protecting-living-people.md#S11.2));
   - the file has no photos and attachments: other programs do not read them from the file;
   - at **Back to {program}** the summary's row **Sources and citations (N sources, M citations)** counts the source
     records the file writes. The sources the import made from one source record for each page cited
@@ -254,8 +257,17 @@ share with others**. By that it protects living people and returns program IDs.
   from a file do not come back in **Back to {program}**: that export has no photos. The other pictures of the family
   come back as in 3.27.0. **To share with others** writes the couple's photo at the family as `OBJE` when the content
   of the export has photos ([A12.7](A12-portrait-and-couple-photo.md#A12.7)).
+- **From app 3.33.0:**
+  - **To share with others** is an output going out: the block **Protecting living people** starts with the default
+    mode from Settings and a protected file carries the mark `_STROM_PRIVACY` in the header
+    ([S11.4](S11-protecting-living-people.md#S11.4), [S11.6](S11-protecting-living-people.md#S11.6)). JSON, HTML and
+    CSV keep the sources of the deceased too;
+  - **Back to {program}** is an output for oneself: it has no protection block, full details stay and the window says
+    so in the sentence "Contains all details of living people – for an own backup or transfer, not for sharing. The
+    file contains data of N living people. It belongs only in one's own program."
+    ([S11.5](S11-protecting-living-people.md#S11.5)).
 
-<!-- zdroj: app:7cf409bd src/ged-exporter.ts backSourceRecordCount (sourceGroups: jeden záznam za skupinu) · src/ui/export-gedcom-ui.ts backSources → exportGed.sumSources · e2e/export-gedcom-back.spec.ts · app:1c9b2392 src/ged-exporter.ts backToXrefs (původní xref, ID řádky úrovně 1, REFN + TYPE {prog} xref, _XXX téhož programu, jinak _STROM_IMPORT / _STROM_XID) · src/ui/import-export.ts:267 keepDeceasedSources: true (jen GEDCOM) · strings.ts exportGed.* -->
+<!-- zdroj: app:7cf409bd src/ged-exporter.ts backSourceRecordCount (sourceGroups: jeden záznam za skupinu) · src/ui/export-gedcom-ui.ts backSources → exportGed.sumSources · e2e/export-gedcom-back.spec.ts · app:1c9b2392 src/ged-exporter.ts backToXrefs (původní xref, ID řádky úrovně 1, REFN + TYPE {prog} xref, _XXX téhož programu, jinak _STROM_IMPORT / _STROM_XID) · src/ui/import-export.ts:267 keepDeceasedSources: true (jen GEDCOM) · strings.ts exportGed.* · 3.33.0: app:11d35186 src/ui/export-gedcom-ui.ts:196 export-back-living (privacy.selfOnly + exportGed.livingNote), fe52bfb2 src/privacy.ts applyOutputPrivacy, src/ui/encryption-ui.ts exportPresetPrivacy -->
 
 <a id="S6.7"></a>
 ## S6.7 A family tree loaded again and merging
@@ -350,7 +362,7 @@ directly at the person. The app and the research make a contact of the person fr
   - each address is in the contact once (regardless of upper and lower case), at most 254 characters, without spaces;
   - the GEDCOM export writes each address as `1 RESI` / `2 EMAIL`; **Back to {program}** writes a `1 EMAIL` that the
     file had at the person the same way as the file did ([S6.6](#S6.6));
-  - the privacy of living people ([A7.2](A7-book-pages-and-export.md#A7.2)): a living person's contact does not go
+  - the privacy of living people ([S11.2](S11-protecting-living-people.md#S11.2)): a living person's contact does not go
     into an export;
   - the person page shows the addresses as an e-mail link only in the app's window; a page saved to a file has no
     contact;

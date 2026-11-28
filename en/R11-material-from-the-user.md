@@ -134,7 +134,7 @@ sorts it by tasks.
     research's people;
   - up to research 1.36.0 nothing was recorded about a living person, the file was only sorted. From 1.37.0 the
     material of a living person is sorted and recorded as anyone else's; the privacy of living people belongs to the
-    export ([A7.2](A7-book-pages-and-export.md#A7.2));
+    export ([S11.4](S11-protecting-living-people.md#S11.4));
   - the scans of one book (many numbered images) are not read file by file: they are recorded as a book, and entries
     are read from it as from any book ([R8](R8-reading-scans.md));
   - the task is closed once each of its files is sorted; a further part of the batch is a task of its own.

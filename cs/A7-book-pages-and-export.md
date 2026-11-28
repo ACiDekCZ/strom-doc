@@ -1,8 +1,9 @@
 <a id="A7"></a>
 # A7 Kniha, stránky a export
 
-Co aplikace Strom dává ze stromu ven (kniha rodu, stránky, soubory pro rodinu i pro jiné programy) a jak přitom
-chrání žijící osoby. Popisuje aplikaci 3.21.2; změny z novější verze mají u sebe její číslo.
+Co aplikace Strom dává ze stromu ven (kniha rodu, stránky, soubory pro rodinu i pro jiné programy). Ochranu
+žijících osob ve všech výstupech popisuje [S11](S11-protecting-living-people.md). Popisuje aplikaci 3.21.2; změny
+z novější verze mají u sebe její číslo.
 
 | Výstup | Co to je |
 |---|---|
@@ -10,10 +11,10 @@ chrání žijící osoby. Popisuje aplikaci 3.21.2; změny z novější verze ma
 | **Stránky rodu**, **Stránky stromu** | propojený soubor stránek rodů, rodin a osob ([A7.5](#A7.5)) |
 | **Stránka osoby** | celý život jedné osoby, k prohlížení, tisku a uložení jako HTML ([A7.6](#A7.6)) |
 | **Aplikace i s daty (HTML)** | samostatný soubor s aplikací a stromem ([A7.7](#A7.7)) |
-| **Poslat rodině** | jeden soubor e-mailem k otevření, doplnění a poslání zpět |
-| **Plakát** | aktuální pohled jako SVG, PNG nebo vícestránkové PDF |
+| **Poslat rodině** | jeden soubor e-mailem k otevření, doplnění a poslání zpět ([S11.4](S11-protecting-living-people.md#S11.4)) |
+| **Plakát** | aktuální pohled jako SVG, PNG nebo vícestránkové PDF ([S11.4](S11-protecting-living-people.md#S11.4)) |
 | **Darovat rodokmen** | balíček ZIP s rodokmenem jedné osoby nebo páru: průvodní list, aplikace, stránky, kniha, vějíř, GEDCOM ([A7.9](#A7.9)) |
-| **Záloha dat (JSON)**, **GEDCOM**, **Tabulka osob (CSV)** | data pro obnovení a pro jiné programy ([A2](A2-loading-a-family-tree.md)); vlastní sloupce, filtr a řazení: export z pohledu Tabulka ([A6.7.9](A6-views.md#A6.7.9)) |
+| **Záloha dat (JSON)**, **GEDCOM**, **Tabulka osob (CSV)** | data pro obnovení a pro jiné programy ([A2](A2-loading-a-family-tree.md)); záloha je výstup pro sebe ([S11.5](S11-protecting-living-people.md#S11.5)); vlastní sloupce, filtr a řazení: export z pohledu Tabulka ([A6.7.9](A6-views.md#A6.7.9)) |
 
 - Zálohu a aplikaci s daty jde zašifrovat heslem (**Zašifrovat heslem**); GEDCOM ne. Šifrování funguje jen na zabezpečené
   adrese: přes https, na `localhost` nebo `127.0.0.1` a v souboru otevřeném z disku; na adrese `http://` v síti ne a dialog
@@ -24,76 +25,26 @@ chrání žijící osoby. Popisuje aplikaci 3.21.2; změny z novější verze ma
 <a id="A7.1"></a>
 ## A7.1 Kdo je žijící osoba
 
-Ochrana žijících ([A7.2](#A7.2)) se týká jen osob, které aplikace považuje za žijící.
+Neplatí od aplikace 3.33.0, nahrazuje ho [S11.1](S11-protecting-living-people.md#S11.1): jedno pravidlo pro všechny
+výstupy aplikace i výzkumu.
 
-1. Osoba označená jako zemřelá (**Zemřel/a**) je zemřelá; osoba, která má v datech výslovně „žije“, je žijící.
-2. Osoba s datem úmrtí je zemřelá.
-3. Jinak je žijící, když od jejího nejpozdějšího možného roku narození uplynulo méně než 110 let.
-4. Osoba bez roku narození a bez jiného vodítka je žijící (bezpečná volba).
-
-- Nejpozdější možný rok narození se bere z vlastních dat a událostí osoby, ze sňatku (nejméně 14 let před ním)
-  a z dětí (rodič je nejméně o 12 let starší než dítě, přes další generace).
-- **Hranice:** značka † u osoby ve stromu je jiné pravidlo (domněle zemřelá po 120 letech) a ochranu neřídí.
-  Úmrtí potomka samo předka za zemřelého neoznačí.
-- **Ovládání:** zaškrtávátko **Zemřel/a** v úpravě osoby; při přidání příbuzného se zaškrtne samo, když se vyplní
-  datum nebo místo úmrtí.
-- **Platí od:** aplikace 1.2.0; samočinné zaškrtnutí Zemřel/a aplikace 3.21.2
-
-<!-- zdroj: app:src/privacy.ts:215 ASSUMED_MAX_AGE, :217 MIN_PARENT_AGE, :219 MIN_MARRIAGE_AGE, :229 isLivingPerson, inferBirthUpperBounds · presumedDeceasedSet · strings.ts person.deceased · CHANGELOG.cs.md 3.21.2 -->
+<!-- zdroj: app:61f9b492 src/privacy.ts isLivingPerson · dirigent:spec/151 K1.1 -->
 
 <a id="A7.2"></a>
 ## A7.2 Ochrana žijících
 
-Před výstupem ze stromu se volí, jak ukázat žijící osoby. V exportu se volba jmenuje **Soukromí žijících osob**,
-v knize rodu **Ochrana žijících**.
+Neplatí od aplikace 3.33.0, nahrazuje ho [S11.2](S11-protecting-living-people.md#S11.2) (režimy ochrany)
+a [S11.4](S11-protecting-living-people.md#S11.4) (výstupy ven).
 
-| Volba | Jméno žijící osoby |
-|---|---|
-| **Plná data** | beze změny, nic se neskrývá |
-| **Iniciály + rok narození** | iniciály jména a příjmení, rok narození zůstává; příjmení po sňatku jen iniciála |
-| **Skrýt jména** | „Žijící osoba“, bez příjmení |
-| **Ponechat jen příjmení** | „Žijící osoba“ a příjmení |
-
-- Každá volba kromě Plná data žijícím odebere všechna data a místa, poznámky, vyprávění, fotku, události,
-  citace, přílohy, varianty jména, tituly, příjmení po sňatku, otevřenou otázku, REFN a údaje výzkumu.
-  U Iniciál zůstává rok narození.
-- Údaje páru (data, místo, poznámka, svědci, vyprávění, události) zmizí, když je žijící aspoň jeden z partnerů.
-  Iniciály ponechají rok začátku svazku.
-- **Hranice:** struktura zůstává vždy: osoby, vztahy a pohlaví. Zemřelé osoby se nemění.
-- **Prameny:** v exportu (Aplikace i s daty, JSON, GEDCOM) každá volba kromě Plná data vynechá katalog pramenů,
-  citace a přílohy **u všech osob, i zemřelých** (aplikace to u volby napíše). Kniha rodu, stránky a stránka osoby
-  berou prameny jen žijícím; pramen citovaný jen u žijících vypadne.
-- **Platí od:** aplikace 1.2.0; prameny zemřelých v knize a na stránkách aplikace 3.18.0
-- **Od aplikace 3.30.0:** žijící osoba ztratí s fotkou i originál portrétu; svazek se žijícím partnerem ztratí fotku
-  svazku ([A12.7](A12-portrait-and-couple-photo.md#A12.7)).
-- **Od aplikace 3.26.0:** export GEDCOM drží prameny a citace zemřelých v každé volbě; vynechá jen citace žijících
-  osob a řekne to („U N žijících osob se vynechá K citací. Zemřelým prameny zůstanou.“, volba **Ponechat prameny**).
-  Export Aplikace i s daty a JSON se nemění. Export GEDCOM se nejdřív ptá, **K čemu soubor je**: **Zpět do
-  {program}** (plná data, prameny a ID programu), nebo **Ke sdílení s ostatními**
-  ([S6.6](S6-tree-from-another-program.md#S6.6)).
-
-<!-- zdroj: app:src/privacy.ts applyPrivacy (keepDeceasedSources) · strings.ts privacy.label, privacy.modeFull, privacy.modeInitials, privacy.modeAnonymous, privacy.modeMinimal, privacy.livingPerson, privacy.dropsSources · book.dlg.privacy · CHANGELOG.cs.md 3.18.0 -->
+<!-- zdroj: app:61f9b492, fe52bfb2 src/privacy.ts PRIVACY_ORDER, applyOutputPrivacy · dirigent:spec/151 K1.2, K1.4 -->
 
 <a id="A7.2.1"></a>
 ### A7.2.1 Výchozí ochrana podle výstupu
 
-| Výstup | Výchozí volba |
-|---|---|
-| Aplikace i s daty (HTML) | Iniciály + rok narození |
-| GEDCOM | Iniciály + rok narození |
-| Poslat rodině | Iniciály + rok narození |
-| Kniha rodu | Iniciály + rok narození |
-| Stránka osoby | Plná data, když na stránce není žádná žijící osoba; jinak naposledy zvolená, jinak Iniciály |
-| Tabulka osob (CSV), Exportovat všechny stromy | Plná data |
+Neplatí od aplikace 3.33.0, nahrazuje ho [S11.3](S11-protecting-living-people.md#S11.3): jeden výchozí režim
+z Nastavení pro všechny výstupy ven.
 
-- **Hranice:** Stránky rodu a Stránky stromu s chráněnou osobou nedělají vlastní stránku ani odkaz; v rejstříku je
-  pod chráněným jménem. Když výběr obsahuje žijící osoby a ochrana je vypnutá, dialog upozorní, že soubor ponese
-  jejich jména, data a místa.
-- **Platí od:** aplikace 1.2.0; stránka osoby aplikace 3.18.0; kniha rodu aplikace 3.19.0
-- **Od aplikace 3.26.0:** GEDCOM s volbou **Ke sdílení s ostatními** (výchozí) má Iniciály + rok narození, s volbou
-  **Zpět do {program}** Plná data ([S6.6](S6-tree-from-another-program.md#S6.6)).
-
-<!-- zdroj: app:src/ui/import-export.ts (výchozí privacy podle formátu) · src/book-options.ts:55 · src/person-page.ts:94, :104 personPageExportPrivacy · src/family-pages.ts:309 · src/ui/share-ui.ts · strings.ts familyPages.privacyWarn -->
+<!-- zdroj: app:61f9b492 src/settings.ts getOutputPrivacy · dirigent:spec/151 K1.3 -->
 
 <a id="A7.3"></a>
 ## A7.3 Obsah souboru
@@ -108,7 +59,7 @@ Při exportu se vedle ochrany volí **Obsah**: co se uloží do souboru.
 
 - **Hranice:** struktura stromu a jména zůstávají vždy. Pracovní dílna výzkumu (fronta, úkoly, koncepty
   vyprávění) se do exportu nedává nikdy. Volba ochrany může zdroje a přílohy vynechat i při Kompletním archivu
-  ([A7.2](#A7.2)).
+  ([S11.2](S11-protecting-living-people.md#S11.2)).
 - **Od aplikace 3.30.0:** volba **Co exportovat** má vedle **Celý strom** a **Jen aktuální pohled** i **Seznam osob**:
   záloha JSON a GEDCOM jen s osobami seznamu ([A11.9](A11-lists-of-people.md#A11.9)).
 - **Od aplikace 3.33.0:** **Co exportovat** má i **Rodokmen osoby…** ([A7.9.6](#A7.9.6)). **Jen aktuální pohled**
@@ -118,9 +69,13 @@ Při exportu se vedle ochrany volí **Obsah**: co se uloží do souboru.
 - **Od aplikace 3.30.0:** **Fotky** jsou i originály portrétů a fotky svazků. Bez fotek zmizí i ty, také když se
   přílohy exportují; bez příloh zůstanou portréty bez propojení na originál
   ([A12.7](A12-portrait-and-couple-photo.md#A12.7)).
+- **Od aplikace 3.33.0:** ochrana vynechá jen prameny citované jen žijícími a přílohy žijících a jejich svazků;
+  prameny, citace a přílohy zemřelých zůstávají ve všech formátech ([S11.2](S11-protecting-living-people.md#S11.2)).
+  Blok **Ochrana žijících osob** začíná výchozím režimem z Nastavení, záloha JSON Plnými daty
+  ([S11.3](S11-protecting-living-people.md#S11.3), [S11.5](S11-protecting-living-people.md#S11.5)).
 - **Platí od:** aplikace 2.4.0
 
-<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList · 3.33.0: app:index.html data-view-ok, data-person-ok (všechny volby kromě Propojit se souborem), src/ui/import-export.ts exportScoped (pohled: defaultPersonId = fokus), commit 6408f8f9, strings.ts exportMenu.scopePerson, familyPages.exportPages -->
+<!-- zdroj: app:src/privacy.ts CONTENT_PRESETS, stripResearchWork · strings.ts privacy.contentLabel, privacy.presetComplete, privacy.presetSmall, privacy.presetSkeleton, privacy.dropsSourcesContent · 3.33.0: app:fe52bfb2 src/privacy.ts applyOutputPrivacy (keepDeceasedSources), src/ui/encryption-ui.ts exportPresetPrivacy · 3.30.0: app:33fa6cd4 src/ui/import-export.ts scope 'list', strings.ts exportMenu.scopeLabel, scopeWhole, scopeView, scopeList · 3.33.0: app:index.html data-view-ok, data-person-ok (všechny volby kromě Propojit se souborem), src/ui/import-export.ts exportScoped (pohled: defaultPersonId = fokus), commit 6408f8f9, strings.ts exportMenu.scopePerson, familyPages.exportPages -->
 
 <a id="A7.4"></a>
 ## A7.4 Kniha rodu
@@ -147,13 +102,19 @@ Kniha rodu je kniha ke čtení od začátku: rodokmen, rodiny po generacích, vy
 - **Od aplikace 3.30.0:** část **Výřezy zápisů a fotky** dává do kapitoly rodiny i fotku svazku nad události páru;
   strom, jehož jediné obrázky jsou fotky svazků, tu část nabídne ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
 - **Od aplikace 3.33.0:** výběr **Dům** (kniha o jednom domě), část **Domy** a **Rejstřík domů**
-  ([S10.10](S10-houses.md#S10.10)); v části **Domy** vyprávění o domě (i koncept, bez štítku), fotky domu a obce
-  a s volbou **Poloha domů** výřez mapy ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
-  [S10.3.4](S10-houses.md#S10.3.4)). V **Části knihy** je u části **Domy** přepínač **Vyprávění o domech se
-  žijícími osobami** (výchozí zapnutý); vypnutý vynechá vyprávění, ve kterém vystupuje žijící osoba. Nabídne se, jen
-  když takové vyprávění v knize je.
+  ([S10.10](S10-houses.md#S10.10)); v části **Domy** vyprávění o domě (i koncept, bez štítku), fotky domu a obce a s
+  přepínačem **Poloha a mapa domů** výřez mapy ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
+  [S10.3.4](S10-houses.md#S10.3.4)). V **Části knihy** je u části **Domy** přepínač **Vyprávění o domech se žijícími
+  osobami** (výchozí zapnutý); vypnutý vynechá vyprávění, ve kterém vystupuje žijící osoba. Nabídne se, jen když takové
+  vyprávění v knize je.
+- **Od aplikace 3.33.0:** ochrana žijících je blok **Ochrana žijících osob**
+  ([S11.2](S11-protecting-living-people.md#S11.2)). Strom bez zapamatované volby začne výchozím režimem z Nastavení,
+  jinak „naposledy pro tento strom“; volbu sdílí kniha s propojenými stránkami
+  ([S11.3](S11-protecting-living-people.md#S11.3)). Žijící se počítají v celém stromu; obálka chráněné knihy řekne
+  „Údaje žijících osob jsou zkrácené.“ Přepínač **Poloha a mapa domů** předvyplní Nastavení
+  ([S10.3.4](S10-houses.md#S10.3.4)).
 
-<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 · 3.33.0 vyprávění o domě: app:28099151 src/book.ts houseStoryForOutput, src/book-houses.ts (bez štítku), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving, src/ui/book-ui.ts book-house-stories, strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint -->
+<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 · 3.33.0 vyprávění o domě: app:28099151 src/book.ts houseStoryForOutput, src/book-houses.ts (bez štítku), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving, src/ui/book-ui.ts book-house-stories, strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint · ochrana: app:355a550d src/ui/book-ui.ts:1262 (strom.book.{treeId}, jinak Nastavení), strings.ts book.coverProtected · přepínač: app:51223455 src/ui/book-ui.ts:485, :1264 houseMaps, strings.ts outputHouseLocation.housesSwitch -->
 
 <a id="A7.4.1"></a>
 ### A7.4.1 Výběr osob do knihy a stránek
@@ -184,7 +145,8 @@ příjmení a obcí.
 - **Stránky rodu:** jeden nebo víc rodů ([A4](A4-surnames-and-families.md)).
 - **Stránky stromu:** **Stránky celého stromu** (všechny rody a Další rodiny), **Vybrané osoby**, předci osoby
   se zvoleným počtem generací.
-- Ochrana žijících a prameny podle [A7.2](#A7.2); výchozí Iniciály + rok narození.
+- Ochrana žijících a prameny podle [S11.2](S11-protecting-living-people.md#S11.2); výchozí Iniciály + rok narození.
+- Chráněná žijící osoba nemá vlastní stránku ani odkaz; v rejstříku je pod chráněným jménem.
 - **Platí od:** Stránky rodu aplikace 3.20.0; Stránky stromu aplikace 3.21.0
 - **Od aplikace 3.33.0:** volba **Domy**: domy s historií, rejstřík domů a stránka každého domu
   ([S10.10](S10-houses.md#S10.10)), u domu i vyprávění (i koncept, bez štítku), fotky domu a obce a výřez mapy
@@ -192,8 +154,13 @@ příjmení a obcí.
   [S10.3.4](S10-houses.md#S10.3.4)). U volby **Domy** je přepínač **Vyprávění o domech se žijícími osobami** (výchozí
   zapnutý); vypnutý vynechá vyprávění, ve kterém vystupuje žijící osoba. Nabídne se, jen když stránky domů takové
   vyprávění mají. Koncept vyprávění osoby a páru je ve stránkách bez štítku **Návrh** ([A7.8](#A7.8)).
+- **Od aplikace 3.33.0:** ochrana žijících jako v knize ([A7.4](#A7.4)): blok **Ochrana žijících osob**, volba
+  společná s knihou, jinak výchozí z Nastavení; s Plnými daty dialog upozorní, že stránky ponesou údaje žijících.
+  Okno **Stránky rodu** v aplikaci má volbu v liště **Ochrana: {režim} ▾**; okno i jeho tisk se řídí jí a zpět se
+  nezapisuje ([S11.4](S11-protecting-living-people.md#S11.4)). Přepínač **Poloha a mapa domů** předvyplní
+  Nastavení ([S10.3.4](S10-houses.md#S10.3.4)).
 
-<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 · 3.33.0 vyprávění: app:28099151 src/family-pages.ts houseStoriesLiving, src/family-pages-html.ts setStoryHouses, coupleChapterHtml bez draftTag, src/house-page.ts storyLiving, src/ui/book-ui.ts syncPages book-house-stories, src/book-memory.ts PagesChoices.houseStoriesLiving -->
+<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 · 3.33.0 vyprávění: app:28099151 src/family-pages.ts houseStoriesLiving, src/family-pages-html.ts setStoryHouses, coupleChapterHtml bez draftTag, src/house-page.ts storyLiving, src/ui/book-ui.ts syncPages book-house-stories, src/book-memory.ts PagesChoices.houseStoriesLiving · chráněná osoba bez stránky: src/family-pages.ts isProtectedPerson · 3.33.0 ochrana: app:355a550d src/ui/book-ui.ts, src/ui/family-pages-ui.ts windowPagesPrivacyPreset, setWindowPagesMode, strings.ts familyPages.privacyWarn, privacy.compactPrefix · 0ad8f5e9 windowPrintFooterCss · přepínač: app:51223455 -->
 
 <a id="A7.5.1"></a>
 ### A7.5.1 Dějiny na časové ose rodu
@@ -221,7 +188,7 @@ příjmení a obcí.
 na mapě, osu života s dějinami, výřezy z matrik a prameny a oddíl **Pro badatele**.
 
 - **Uložit jako HTML** vytvoří jeden samonosný soubor, který se otevře offline v každém prohlížeči. Skupiny
-  obsahu a ochrana žijících jdou zvolit ([A7.2.1](#A7.2.1)); volba se pamatuje.
+  obsahu a ochrana žijících jdou zvolit ([S11.3](S11-protecting-living-people.md#S11.3)); volba se pamatuje.
 - **Od aplikace 3.28.0:** v okně aplikace vede **◎ Cesta předků na mapě ›** na cestu předků osoby v Migraci
   v čase ([A6.5.4](A6-views.md#A6.5.4)). Uložená stránka ho nemá. Stojí v oddílu **Místa života**; osoba s nejvýš
   jedním vlastním místem, která má předky na mapě, ho má na vlastním řádku tam, kde by oddíl byl.
@@ -232,10 +199,15 @@ na mapě, osu života s dějinami, výřezy z matrik a prameny a oddíl **Pro ba
 - **Od aplikace 3.33.0:** vyprávění od výzkumu, které ještě není schválené, má štítek **Návrh** jen ve stránce osoby
   v okně aplikace. Uložená stránka ho dá stejně jako schválené vyprávění, bez štítku; totéž vyprávění páru a jeho
   odkaz ([A7.8](#A7.8)).
+- **Od aplikace 3.33.0:** okno stránky osoby má v liště před **Tisk** volbu **Ochrana: {režim} ▾** (na telefonu
+  první položka **⋯**), jen když jsou na stránce žijící. Začne volbou uložení stránky osoby, jinak výchozím
+  z Nastavení; okno i tisk se řídí jí. Tisk chráněné stránky má v patičce „chráněno: {režim}“. **Uložit jako HTML**
+  má blok **Ochrana žijících osob** za názvem souboru a řádek „Týká se jen žijících: …“; bez žijících začne Plnými
+  daty ([S11.4](S11-protecting-living-people.md#S11.4)).
 - **Ovládání:** nabídka karty osoby, **Stránka osoby**; také z vějíře.
 - **Platí od:** aplikace 3.18.0
 
-<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged (c.app a links app), draftTag, coupleChapterHtml draftTag, coupleChapterLinkTip · app:43794e42 src/__tests__/couple-story-chapter.test.ts · app:d3e9cdfd e2e/person-page.spec.ts -->
+<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged (c.app a links app), draftTag, coupleChapterHtml draftTag, coupleChapterLinkTip · app:43794e42 src/__tests__/couple-story-chapter.test.ts · app:d3e9cdfd e2e/person-page.spec.ts · ochrana: app:355a550d src/ui/person-page-ui.ts:718 (getPersonPageExport, jinak Nastavení), pv-compact, src/person-page.ts personPageExportPrivacy, strings.ts privacy.windowLine, personPage.privacyWho · 0ad8f5e9 windowPrintFooterCss -->
 
 <a id="A7.7"></a>
 ## A7.7 Uložené HTML (samostatný soubor)
@@ -245,10 +217,13 @@ instalace. **Exportovat jako aplikaci** v **Exportovat všechny stromy** dá vš
 
 - Takový soubor má vlastní úložiště v prohlížeči. S aplikací na stromapp.info se **nesynchronizuje**; změny
   zachová **Uložit soubor** (stáhne kopii) a do webové aplikace se přenesou importem (**Ze Strom HTML**).
-- **Hranice:** soubor ve výchozím stavu chrání žijící (Iniciály, [A7.2.1](#A7.2.1)).
+- **Hranice:** soubor ve výchozím stavu chrání žijící (Iniciály, [S11.3](S11-protecting-living-people.md#S11.3)).
 - **Platí od:** aplikace 1.0.0
+- **Od aplikace 3.33.0:** výchozí režim je z Nastavení, i u **Exportovat jako aplikaci** pro všechny stromy (dřív
+  Plná data). Chráněný soubor nese značku ([S11.6](S11-protecting-living-people.md#S11.6)). Strom s domem s polohou má
+  přepínač **Poloha a mapa domů**, předvyplněný z Nastavení ([S10.3.4](S10-houses.md#S10.3.4)).
 
-<!-- zdroj: app:strings.ts importExport.app, importExport.appDesc, importExport.exportAllApp, importExport.fromHtml, embeddedMode.* · src/ui/import-export.ts -->
+<!-- zdroj: app:strings.ts importExport.app, importExport.appDesc, importExport.exportAllApp, importExport.fromHtml, embeddedMode.* · src/ui/import-export.ts · 3.33.0: app:11d35186 src/ui/encryption-ui.ts exportPresetPrivacy (html: Nastavení), src/export.ts exportAllAsApp · 47500acc privacy · 51223455 src/ui/encryption-ui.ts setupExportHouseLocation, index.html export-house-location -->
 
 <a id="A7.8"></a>
 ## A7.8 Vyprávění
@@ -309,9 +284,11 @@ předci, rodiny kolem nich a vlastní domácnost, ne celý strom vlastníka. Pr�
   „Jen pro jednu osobu, bez rozdělení stromu: **Darovat rodokmen…**“ ([A14.4](A14-trees-and-structure.md#A14.4));
   nabídka seznamu osob a výběru: **Darovat rodokmen každé osobě…**; Export, rozsah **Rodokmen osoby…**, odkaz
   **Celý dárkový balíček…** ([A7.9.6](#A7.9.6)). V režimu čtení se akce nenabízí.
+- Strom s domem s polohou má v kroku **Co v balíčku bude** přepínač **Poloha a mapa domů**, předvyplněný
+  z Nastavení ([S10.3.4](S10-houses.md#S10.3.4)).
 - **Platí od:** aplikace 3.33.0
 
-<!-- zdroj: app:src/ui/gift-tree-ui.ts (canGiftTree, giftMenuMeta, giftDownload jen na počítači, Sdílet/Uložit do Souborů na telefonu, confirmMemoryForOutput, GiftOutOfMemory → Zkusit bez fotek / Bez aplikace) · src/gift-guide.ts giftHasFamily, giftGuideStart, giftSuggestedPartner · src/gift-memory.ts (localStorage strom.gift.{treeId}, nikdy v datech) · src/gift-tree.ts giftCutData (defaultPersonId = obdarovaný) · src/ui/context-menu.ts gift-tree, src/ui/person-page-ui.ts, index.html Pro rodinu, src/ui/split-families-ui.ts splitfam-gift, src/ui/selection-picker-ui.ts, src/ui/person-list-hooks.ts · strings.ts giftTree.menu, title, stepNames, fast, menuList, splitLead, guide.mode, guide.lastH, restart, guide.cutChanged, make.share, make.saveFiles, make.downloadAgain, make.withoutApp, make.tryWithoutPhotos, review.local · dirigent:spec/093 K1.1, K2.4, K5.1, K5.4, K5.5 · dirigent:prace/1126-app-093-darovat-rodokmen (rozhodnutí B3) -->
+<!-- zdroj: app:src/ui/gift-tree-ui.ts (canGiftTree, giftMenuMeta, giftDownload jen na počítači, Sdílet/Uložit do Souborů na telefonu, confirmMemoryForOutput, GiftOutOfMemory → Zkusit bez fotek / Bez aplikace) · src/gift-guide.ts giftHasFamily, giftGuideStart, giftSuggestedPartner · src/gift-memory.ts (localStorage strom.gift.{treeId}, nikdy v datech) · src/gift-tree.ts giftCutData (defaultPersonId = obdarovaný) · src/ui/context-menu.ts gift-tree, src/ui/person-page-ui.ts, index.html Pro rodinu, src/ui/split-families-ui.ts splitfam-gift, src/ui/selection-picker-ui.ts, src/ui/person-list-hooks.ts · strings.ts giftTree.menu, title, stepNames, fast, menuList, splitLead, guide.mode, guide.lastH, restart, guide.cutChanged, make.share, make.saveFiles, make.downloadAgain, make.withoutApp, make.tryWithoutPhotos, review.local · dirigent:spec/093 K1.1, K2.4, K5.1, K5.4, K5.5 · dirigent:prace/1126-app-093-darovat-rodokmen (rozhodnutí B3) · přepínač: app:51223455, 6ec8204e src/ui/gift-tree-ui.ts:752, :1362 (outputHouseLocation.housesSwitch, dataSwitchHint) -->
 
 <a id="A7.9.1"></a>
 ### A7.9.1 Kdo v rodokmenu bude (výřez)
@@ -346,14 +323,15 @@ Výřez je kus stromu z pohledu obdarovaného.
 <a id="A7.9.2"></a>
 ### A7.9.2 Údaje žijících v daru
 
-Ochrana žijících ([A7.1](#A7.1), [A7.2](#A7.2)) se použije jednou nad výřezem a všechny části balíčku (aplikace,
-stránky, kniha, vějíř, GEDCOM i průvodní list) dostanou stejná chráněná data. Co je skryté v jedné části, není
-v žádné jiné.
+Ochrana žijících ([S11.1](S11-protecting-living-people.md#S11.1), [S11.2](S11-protecting-living-people.md#S11.2)) se
+použije jednou nad výřezem a všechny části balíčku (aplikace, stránky, kniha, vějíř, GEDCOM i průvodní list) dostanou
+stejná chráněná data. Co je skryté v jedné části, není v žádné jiné.
 
 - **Domácnost obdarovaného je vždy plně:** obdarovaný, jeho partneři kromě rozvedených a odloučených a jeho děti.
   U páru oba a děti každého z nich. Nevlastní děti jdou plně jen jako výjimka.
 - **Výjimky:** v seznamu **Žijící v rodokmenu** zaškrtnutá osoba je plně (zaškrtnuté = plně).
-- **Ostatní žijící:** volby ochrany z [A7.2](#A7.2), výchozí **Iniciály + rok narození**.
+- **Ostatní žijící:** režimy ochrany se stejnými názvy a v pořadí jako všude
+  ([S11.2](S11-protecting-living-people.md#S11.2)), výchozí **Iniciály + rok narození** (ne z Nastavení).
 - **U žijících ukázaných plně** jde vypnout po druzích:
 
 | Druh | Výchozí | Co vypnutí odebere |
@@ -376,7 +354,7 @@ v žádné jiné.
   plně**, **U zemřelých**.
 - **Platí od:** aplikace 3.33.0
 
-<!-- zdroj: app:src/gift-tree.ts defaultGiftPrivacy (others initials; sensitive contacts:false, notes:false, ostatní true; dead vše true), giftHouseholdIds (bez rozvedených a odloučených; pár jen oba; děti každého), giftProtectedData (jednou před výstupy, keepDeceasedSources, stripResearchWork, stripMedia bez fotek), giftShortensLiving · src/privacy.ts LivingSensitive (komentář druhů), maskSensitive, maskSensitiveCouple, maskEvent, keepsEvent RELIGION_EVENTS, RESIDENCE_EVENTS, BIRTH_DATE_EVENTS, maskDeceased · strings.ts giftTree.guide.livingH, checkedFull, othersH, sensitiveH, sensitive, deadH, dead, giftTree.cover.shortened · test/vysledek-1126-app-093.md (Soukromí K6.2, K6.4) · dirigent:spec/093 K6.1–K6.4 -->
+<!-- zdroj: app:src/gift-tree.ts defaultGiftPrivacy (others initials; sensitive contacts:false, notes:false, ostatní true; dead vše true), giftHouseholdIds (bez rozvedených a odloučených; pár jen oba; děti každého), giftProtectedData (jednou před výstupy, keepDeceasedSources, stripResearchWork, stripMedia bez fotek), giftShortensLiving · src/privacy.ts LivingSensitive (komentář druhů), maskSensitive, maskSensitiveCouple, maskEvent, keepsEvent RELIGION_EVENTS, RESIDENCE_EVENTS, BIRTH_DATE_EVENTS, maskDeceased · strings.ts giftTree.guide.livingH, checkedFull, othersH, sensitiveH, sensitive, deadH, dead, giftTree.cover.shortened · test/vysledek-1126-app-093.md (Soukromí K6.2, K6.4) · dirigent:spec/093 K6.1–K6.4 · 3.33.0 názvy a pořadí: app:bda4fd2c src/ui/gift-tree-ui.ts (PRIVACY_ORDER, privacyModeLabel, originTree) · dirigent:spec/151 Okrajové případy (dárek jen názvy a pořadí) -->
 
 <a id="A7.9.3"></a>
 ### A7.9.3 Co v balíčku bude
@@ -455,9 +433,9 @@ formátu, bez průvodce.
   počítá od ní.
 - Kniha a stránky dostanou výběr **Rodokmen osoby** ([A7.4.1](#A7.4.1)). Plakát přepne pohled na zvolenou osobu a
   vytvoří plakát pohledu.
-- Ochrana žijících je volba exportu ([A7.2.1](#A7.2.1)) a platí pro všechny žijící, i pro domácnost zvolené osoby.
-  Volby daru ([A7.9.2](#A7.9.2)) má jen **Celý dárkový balíček…**, který otevře průvodce se stejnou osobou a
-  hloubkou.
+- Ochrana žijících je volba exportu ([S11.3](S11-protecting-living-people.md#S11.3)) a platí pro všechny žijící, i pro
+  domácnost zvolené osoby. Volby daru ([A7.9.2](#A7.9.2)) má jen **Celý dárkový balíček…**, který otevře průvodce se
+  stejnou osobou a hloubkou.
 - **Hranice:** jen pro otevřený strom.
 - **Ovládání:** Export › **Co exportovat** › **Rodokmen osoby…**: **Rodokmen osoby** (výběr osoby), **Rodiny předků
   po**, **Celý dárkový balíček…**

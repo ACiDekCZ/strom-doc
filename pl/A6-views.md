@@ -547,10 +547,17 @@ plakatu** z tymi samymi opcjami co panel **Wygląd** ([A6.4.2](#A6.4.2)) i z **P
 - **Od aplikacji 3.32.0:** przy włączonej opcji **Portrety** plakat i druk wachlarza (także Ctrl+P z widoku na arkusz A4
   poziomo) rysują portret tam, gdzie ma na papierze średnicę co najmniej 7 mm; inaczej obowiązuje to samo co na
   ekranie ([A6.4.2](#A6.4.2)).
-- **Od aplikacji 3.33.0:** przy włączonym **Ukryj pozostałe** (tylko przy wyborze **Przodkowie: {osoba}**,
-  [A6.6.2](#A6.6.2)) plakat rysuje wycinki osób spoza wyboru jako puste obrysy na ich miejscach. Tytuł, podtytuł
-  i legenda (dziadkowie, rody i ich liczby) wymieniają i liczą tylko narysowane osoby. Bez **Ukryj pozostałe** plakat
-  jest jak dotąd.
+- **Od aplikacji 3.33.0:**
+  - przy włączonym **Ukryj pozostałe** (tylko przy wyborze **Przodkowie: {osoba}**, [A6.6.2](#A6.6.2)) plakat rysuje
+    wycinki osób spoza wyboru jako puste obrysy na ich miejscach. Tytuł, podtytuł i legenda (dziadkowie, rody i ich
+    liczby) wymieniają i liczą tylko narysowane osoby. Bez **Ukryj pozostałe** plakat jest jak dotąd;
+  - okno **Eksport jako plakat** (każdy widok, nie tylko wachlarz) ma blok **Ochrona osób żyjących**. Zaczyna od
+    trybu domyślnego z Ustawień i trzyma ostatni wybór, dopóki strona jest otwarta
+    ([S11.3](S11-protecting-living-people.md#S11.3)). Karty, stopka, znak † i znaki stanu pochodzą z chronionych
+    danych; podgląd wachlarza po zmianie trybu rysuje się na nowo ([S11.4](S11-protecting-living-people.md#S11.4)).
+    Wcześniej plakat podawał osoby żyjące pełnymi imionami i nazwiskami.
+
+<!-- zdroj 3.33.0 ochrana: app:bda4fd2c src/ui/export-image-ui.ts posterPrivacyMode, renderPosterPrivacyBlock (origin settings), posterData applyLivingPrivacy keepDeceasedSources, posterFooterMeta, markIds (jen zemřelí podle pravidla), updatePosterSheets schedulePreview · index.html poster-privacy-section -->
 
 <!-- zdroj 3.33.0: app:d27235e5 src/fan-chart.ts keptFanModel, keptRodAssignment, renderFanPoster keepOnly · src/ui/export-image-ui.ts buildCurrentPoster (TreeRenderer.getFanKeepOnly) · src/renderer.ts getFanKeepOnly · e2e/selection-fan.spec.ts · tisk Ctrl+P z pohledu neověřen -->
 
@@ -1019,7 +1026,7 @@ Widok Tabela opiera się na tabeli Ondřeja Chrpy.
   weszli do rodziny przez małżeństwo, do nich nie należą.
 - **Pokolenie** 1 to najstarsze pokolenie drzewa; partner ma pokolenie swojego partnera.
 - **Żyjący** (kolumna, wartość „żyjący”) liczy się jak ochrona osób żyjących
-  ([A7.1](A7-book-pages-and-export.md#A7.1)).
+  ([S11.1](S11-protecting-living-people.md#S11.1)).
 - Nad tabelą jest liczba („42 z 120 osób”) i sortowanie („Sortowanie: …”). Pole **Szukaj osoby...** na pasku
   narzędzi w tabeli wybiera wiersz osoby i przewija do niego; osoba w centrum się nie zmienia.
 - **Osoba w centrum między widokami:** po przełączeniu na Tabelę wiersz osoby w centrum jest aktywnym wierszem
@@ -1382,6 +1389,14 @@ Eksport zapisuje tabelę tak, jak jest widoczna, do pliku dla programów arkuszy
 - **Granice:** eksport z menu drzewa (**Tabela osób (CSV)**, [A7](A7-book-pages-and-export.md)) to inny plik
   ze stałymi kolumnami.
 - **Obowiązuje od:** aplikacja 3.27.0
+- **Od aplikacji 3.33.0:** panel **Eksport ▾** ma blok **Ochrona osób żyjących** z trybem domyślnym z Ustawień
+  ([S11.3](S11-protecting-living-people.md#S11.3)). Pod ochroną wiersz osoby żyjącej zostaje z imieniem i nazwiskiem
+  według trybu, rokiem urodzenia tylko przy Inicjałach i kolumnami **#** i **Gotowe**; pozostałe kolumny są puste
+  („Osoby żyjące: imię według ochrony, pozostałe kolumny puste.”). Związki i wydarzenia pochodzą z chronionych danych.
+  Chroniony XLSX nie ma kolorów ani komentarzy ustaleń. Bez osób żyjących nic się nie zmienia
+  ([S11.4](S11-protecting-living-people.md#S11.4)).
+
+<!-- zdroj 3.33.0: app:bda4fd2c, fbc447a0 src/ui/table-view/table-privacy.ts protectTableExport (LIVING_KEPT, checks null, blank), src/ui/table-view/table-ui.ts showTableExport (Nastavení, origin settings), table-viewbar.ts exportForm · strings.ts table.exportPrivacyWhat -->
 
 <!-- zdroj: app:src/ui/table-view/table-export.ts tableCsvField (neutralizace vzorců), buildExportTable, buildTableCsv (BOM, ;, CRLF, pokračovací řádky, sloupec Svazek), fileNamePart, tableCsvFileName (csv | xlsx) · table-xlsx.ts buildTableXlsx (řádky 1–3, merges, outline sloupců za ukotvenou částí, pokračovací řádky outline 1, freeze, errorFill/warningFill + findingsComment jen chyba a k ověření, href), xlsxNumber (COUNT_COLUMNS, věk ^\d+$, procento) · src/xlsx.ts (ignoredErrors numberStoredAsText, styl @ pro text) · table-viewbar.ts exportForm (Formát, Řádky: Zobrazené / Všechny bez filtru jen s filtrem nebo hledáním) · table-ui.ts tableExportNow (unfiltered: všechny řádky typu v řazení, stale ven) · strings.ts table.export, exportFormat, exportRows, exportCsv, exportXlsx, exportAll, exportShown, exportFilterNote, exportUnfiltered.*, exportWhat.*, exportWhatAll.*, exportFile, exportDownload, exportDownloadXlsx, csvUnionCol, csvUnionOf, exportedToast · commity 2368683b, 5a67797b, 4308633b, e0ce4ec2, ebc1542f, e5b97725 · dirigent:prace/1110-app-tabulka-p2, 1110-app-tabulka-opravy -->
 

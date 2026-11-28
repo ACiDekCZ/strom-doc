@@ -544,7 +544,7 @@ i karta osoby jej nie pokazuje; używa jej reguła **Dodane w okresie**, sortowa
   zmienić (**Edytuj regułę…**); nazwa zmienia się wtedy z okresem, dopóki nie zostanie zmieniona ręcznie. Usunięta już
   nie wraca. Pusta mówi „Na razie nic – data dodania jest zapisywana od wersji 3.30.”
 - **Granice:** GEDCOM tej danej nie niesie. Eksport z ochroną osób żyjących pomija ją przy żyjących
-  ([A7.2](A7-book-pages-and-export.md#A7.2)).
+  ([S11.2](S11-protecting-living-people.md#S11.2)).
 - **Obowiązuje od:** aplikacja 3.30.0
 
 <!-- zdroj: app:src/data.ts:2636 createPerson (addedAt, ne zástupná), :2847 zástupná osoba při první úpravě, :5435 mergePersons earlierAddedAt · src/ged-parser.ts:6594 stampAddedAt(origin.at) · src/merge/executor.ts:573 (mergedAt), :1962 · src/person-lists-data.ts builtinAdded30, personListsOf (i nový strom a import, personListsDropped), keepPersonListData, stampResearchTree (research.added nebo now) · src/person-lists.ts listDisplayName (jméno podle období do přejmenování) · src/ui/person-lists-ui.ts:41 ADDED_SINCE '3.30', :534 lists.earlier · src/ui/table-view/table-group.ts:238 · src/privacy.ts:373 (stripDetails žijících: delete addedAt) · strings.ts lists.builtin.added30, addedNone, earlier · ZADANI_DEV §8, Q3 · app:714a8ab2 · sloupec Přidáno app:0971647c (table.earlier) -->
@@ -577,13 +577,15 @@ Listę można wyeksportować dwiema drogami: jako część drzewa (GEDCOM, kopia
 - **Okno Eksport → Co eksportować → Lista osób:** opcja **Lista** oferuje listy otwartego drzewa, które mają osoby.
   **Eksport GEDCOM** niesie wtedy osoby listy i rodziny między nimi, **kopia zapasowa JSON** dane drzewa zawężone do
   osób listy. Ochrona osób żyjących i zawartość pliku obowiązują jak przy całym drzewie
-  ([A7.2](A7-book-pages-and-export.md#A7.2), [A7.3](A7-book-pages-and-export.md#A7.3)). Pozostałe formaty są
+  ([S11.2](S11-protecting-living-people.md#S11.2), [A7.3](A7-book-pages-and-export.md#A7.3)). Pozostałe formaty są
   niedostępne: „Ten format eksportuje całe drzewo”. Wybór się zapamiętuje; lista, która zniknęła, przywraca wybór do
   **Całe drzewo**.
 - **⋯ listy → Eksportuj ›:**
   - **GEDCOM…** otwiera okno Eksport na tej liście;
   - **CSV (kolejność listy)** od razu pobiera tabelę osób listy w jej kolejności: kolumny, jakie ma Tabela › Osoby,
-    przed nimi **#** (i **Gotowe** przy liście roboczej). Plik `{drzewo}_{lista}_{RRRR-MM-DD}.csv`.
+    przed nimi **#** (i **Gotowe** przy liście roboczej). Plik `{drzewo}_{lista}_{RRRR-MM-DD}.csv`. **Od aplikacji
+    3.33.0** nie pobiera od razu: otwiera panel **CSV listy** z blokiem **Ochrona osób żyjących** (domyślnie
+    z Ustawień) i **Pobierz CSV**; osoby żyjące są jak w eksporcie Tabeli ([A6.7.9](A6-views.md#A6.7.9)).
 - **Listy w eksporcie:** kopia zapasowa JSON całego drzewa niesie listy w całości. Eksport części drzewa (lista,
   **Tylko bieżący widok**) zostawia w listach stałych tylko osoby tej części; listę, na której nikt nie został, pomija.
   Listy automatyczne zostają całe, ich reguła liczy z tym, co część ma.
@@ -592,7 +594,7 @@ Listę można wyeksportować dwiema drogami: jako część drzewa (GEDCOM, kopia
   i otwiera w Tabeli.
 - **Obowiązuje od:** aplikacja 3.30.0
 
-<!-- zdroj: app:src/ui/import-export.ts exportableLists (jen s osobami, podle jména), scope 'list' (neplatný seznam → tree), exportScopeList, exportPersonListJSON (exportFocusedJSON), GEDCOM podstrom (:389), option.disabled scopeWholeOnly · src/subtree.ts:153 subsetForSubtree · src/person-lists-data.ts subsetForSubtree (pevný zúžit, prázdný ven, automatický celý) · src/ui/table-view/table-ui.ts:3215 exportPersonListCsv (leadColumnsOf: # a Hotovo, shownColumns persons, tableCsvFileName) · src/ui/person-list-hooks.ts exportRows (jen seznam s osobami) · strings.ts exportMenu.scopeLabel, scopeList, listPick, backupListDesc, gedcomListDesc, scopeWholeOnly, scopeView, lists.menu.export, export.ged, export.csv · app:33fa6cd4 · dirigent:MILAN.md 35 (4) jména seznamů v exportu zůstávají -->
+<!-- zdroj: app:src/ui/import-export.ts exportableLists (jen s osobami, podle jména), scope 'list' (neplatný seznam → tree), exportScopeList, exportPersonListJSON (exportFocusedJSON), GEDCOM podstrom (:389), option.disabled scopeWholeOnly · src/subtree.ts:153 subsetForSubtree · src/person-lists-data.ts subsetForSubtree (pevný zúžit, prázdný ven, automatický celý) · src/ui/table-view/table-ui.ts:3215 exportPersonListCsv (leadColumnsOf: # a Hotovo, shownColumns persons, tableCsvFileName) · src/ui/person-list-hooks.ts exportRows (jen seznam s osobami) · strings.ts exportMenu.scopeLabel, scopeList, listPick, backupListDesc, gedcomListDesc, scopeWholeOnly, scopeView, lists.menu.export, export.ged, export.csv · app:33fa6cd4 · dirigent:MILAN.md 35 (4) jména seznamů v exportu zůstávají · 3.33.0: app:bda4fd2c src/ui/table-view/table-ui.ts exportPersonListCsv (panel, Nastavení), strings.ts table.exportListTitle -->
 
 <a id="A11.10"></a>
 ## A11.10 Listy w danych drzewa

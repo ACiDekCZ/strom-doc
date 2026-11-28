@@ -328,6 +328,10 @@ nenapsáno) · `neplatí od <verze>`.
 | A5 | A5-tree-check.md | aplikace 1.0.0 | platí | Kontrola stromu | Tree check | Prüfung des Stammbaums | Kontrola drzewa |
 | A5.1 | A5-tree-check.md | aplikace 3.17.0 | platí | Kontrola a její nálezy | The check and its findings | Die Prüfung und ihre Befunde | Kontrola i jej wyniki |
 | A5.1.1 | A5-tree-check.md | aplikace 1.10.0 | platí | Oprava jedním klikem | One-click fix | Behebung mit einem Klick | Naprawa jednym kliknięciem |
+| A5.1.2 | A5-tree-check.md | aplikace 3.33.0 | platí | Rozsah a kde se kontrola spouští | Scope and where the check starts | Umfang und wo die Prüfung startet | Zakres i gdzie uruchamia się kontrolę |
+| A5.1.3 | A5-tree-check.md | aplikace 3.33.0 | platí | Zabudované kontroly a doporučené kroky | Built-in checks and suggested steps | Eingebaute Prüfungen und empfohlene Schritte | Wbudowane kontrole i zalecane kroki |
+| A5.1.4 | A5-tree-check.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Řádky a kroky výzkumu | The research's rows and steps | Zeilen und Schritte der Forschung | Wiersze i kroki badania |
+| A5.1.5 | A5-tree-check.md | aplikace 3.33.0 | platí | Starší zprávy, tisk a Uložit HTML | Older reports, print and Save HTML | Ältere Berichte, Drucken und HTML speichern | Starsze raporty, druk i Zapisz HTML |
 | A5.2 | A5-tree-check.md | aplikace 1.16.0 | platí | Vazby v rodině | Family links | Verbindungen in der Familie | Relacje w rodzinie |
 | A5.3 | A5-tree-check.md | aplikace 3.17.0 | platí | Data a věk | Dates and age | Daten und Alter | Daty i wiek |
 | A5.4 | A5-tree-check.md | aplikace 3.9.0 | platí | Prameny, přílohy a sloučení při importu | Sources, attachments and merges on import | Quellen, Anhänge und Verschmelzung beim Import | Źródła, załączniki i scalenie przy imporcie |
@@ -338,6 +342,7 @@ nenapsáno) · `neplatí od <verze>`.
 | A5.6.2 | A5-tree-check.md | aplikace 1.4.0 | platí | Upozornění při zadávání osoby | Warning when entering a person | Hinweis beim Erfassen einer Person | Podpowiedź przy wpisywaniu osoby |
 | A5.7 | A5-tree-check.md | aplikace 3.17.0 (výzkum 1.22.0) | platí | Není chyba | Not an error | Kein Fehler | To nie błąd |
 | A5.8 | A5-tree-check.md | aplikace 3.17.0 | platí | Přehled stromu → Kvalita dat | Tree overview → Data quality | Stammbaum-Überblick → Datenqualität | Przegląd drzewa → Jakość danych |
+| A5.9 | A5-tree-check.md | výzkum 1.38.0 | platí | `strom health` v terminálu | `strom health` in the terminal | `strom health` im Terminal | `strom health` w terminalu |
 | A6 | A6-views.md | aplikace 1.0.0 | platí | Pohledy a výběr osob | Views and the choice of people | Ansichten und Auswahl der Personen | Widoki i wybór osób |
 | A6.1 | A6-views.md | aplikace 1.0.0 | platí | Okolí ústřední osoby v pohledu Rodina | The surroundings of the central person in the Family view | Umfeld der zentralen Person in der Ansicht Familie | Otoczenie osoby w centrum w widoku Rodzina |
 | A6.1.1 | A6-views.md | aplikace 1.0.0 | platí | Výchozí osoba a pohled | Default person and view | Standardperson und -ansicht | Domyślna osoba i widok |
@@ -396,9 +401,9 @@ nenapsáno) · `neplatí od <verze>`.
 | A6.8.3 | A6-views.md | aplikace 3.28.0 | platí | Druhá karta aplikace | A second tab of the app | Ein zweiter Tab der App | Druga karta aplikacji |
 | A6.8.4 | A6-views.md | aplikace 3.30.0 | platí | Co výběr v dalším okně udělá v hlavním okně | What a choice in another window does in the main window | Was eine Wahl in einem weiteren Fenster im Hauptfenster bewirkt | Co wybór w kolejnym oknie zrobi w oknie głównym |
 | A7 | A7-book-pages-and-export.md | aplikace 1.0.0 | platí | Kniha, stránky a export | Book, pages and export | Buch, Seiten und Export | Księga, strony i eksport |
-| A7.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Kdo je žijící osoba | Who is a living person | Wer eine lebende Person ist | Kto jest osobą żyjącą |
-| A7.2 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Ochrana žijících | Privacy of living people | Schutz lebender Personen | Ochrona osób żyjących |
-| A7.2.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | platí | Výchozí ochrana podle výstupu | Default privacy by output | Standardschutz je nach Ausgabe | Domyślna ochrona według wyniku |
+| A7.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | neplatí od 3.33.0 | Kdo je žijící osoba | Who is a living person | Wer eine lebende Person ist | Kto jest osobą żyjącą |
+| A7.2 | A7-book-pages-and-export.md | aplikace 1.2.0 | neplatí od 3.33.0 | Ochrana žijících | Privacy of living people | Schutz lebender Personen | Ochrona osób żyjących |
+| A7.2.1 | A7-book-pages-and-export.md | aplikace 1.2.0 | neplatí od 3.33.0 | Výchozí ochrana podle výstupu | Default privacy by output | Standardschutz je nach Ausgabe | Domyślna ochrona według wyniku |
 | A7.3 | A7-book-pages-and-export.md | aplikace 2.4.0 | platí | Obsah souboru | Content of the file | Inhalt der Datei | Zawartość pliku |
 | A7.4 | A7-book-pages-and-export.md | aplikace 3.19.0 | platí | Kniha rodu | Family book | Familienbuch | Księga rodu |
 | A7.4.1 | A7-book-pages-and-export.md | aplikace 3.19.0 | platí | Výběr osob do knihy a stránek | Choice of people for the book and the pages | Auswahl der Personen für Buch und Seiten | Wybór osób do księgi i stron |
@@ -669,3 +674,11 @@ nenapsáno) · `neplatí od <verze>`.
 | S10.14 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Vyprávění o domě | The story of a house | Die Erzählung über das Haus | Opowieść o domu |
 | S10.14.1 | S10-houses.md | výzkum 1.38.0, aplikace 3.33.0 | platí | Kdy vyprávění vznikne: samo a na požádání | When the story is written: by itself and on request | Wann die Erzählung entsteht: von selbst und auf Anfrage | Kiedy powstaje opowieść: sama i na żądanie |
 | S10.14.2 | S10-houses.md | aplikace 3.33.0 | platí | Vyprávění ve výstupech a ochrana lidí | The story in outputs and protecting people | Die Erzählung in Ausgaben und der Schutz von Personen | Opowieść w wynikach i ochrona osób |
+| S11 | S11-protecting-living-people.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Ochrana žijících osob | Protecting living people | Schutz lebender Personen | Ochrona osób żyjących |
+| S11.1 | S11-protecting-living-people.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Kdo je žijící osoba | Who is a living person | Wer eine lebende Person ist | Kto jest osobą żyjącą |
+| S11.2 | S11-protecting-living-people.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Režimy ochrany | Protection modes | Schutzstufen | Tryby ochrony |
+| S11.3 | S11-protecting-living-people.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Výchozí ochrana z Nastavení | The default protection from Settings | Der Standardschutz aus den Einstellungen | Domyślna ochrona z Ustawień |
+| S11.4 | S11-protecting-living-people.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Výstupy ven | Outputs going out | Ausgaben nach außen | Wyniki na zewnątrz |
+| S11.5 | S11-protecting-living-people.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Výstupy pro sebe | Outputs for oneself | Ausgaben für sich selbst | Wyniki dla siebie |
+| S11.6 | S11-protecting-living-people.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Chráněný soubor a jeho import | A protected file and its import | Eine geschützte Datei und ihr Import | Chroniony plik i jego import |
+| S11.7 | S11-protecting-living-people.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Ochrana v souborech výzkumu | Protection in the research's files | Schutz in den Dateien der Forschung | Ochrona w plikach badania |

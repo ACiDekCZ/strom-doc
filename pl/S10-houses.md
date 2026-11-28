@@ -171,8 +171,8 @@ Zdanie pod mapą mówi, skąd jest położenie.
 - **Granice:**
   - położenia, które potwierdził człowiek, badanie nie nadpisuje;
   - **Otwórz gdzie indziej** jest tylko przy domu z własnym punktem;
-  - księga, zapisana strona domu i strony rodu pokazują położenie tylko przy domu bez osób z mniej więcej ostatnich
-    100 lat, jako wycinek mapy ([S10.3.4](#S10.3.4)).
+  - zapisana strona domu, księga, strony rodu, prezent i eksport HTML pokazują położenie jako wycinek mapy albo
+    współrzędne, dopóki człowiek go nie ukryje przy domu lub w wyniku ([S10.3.4](#S10.3.4)).
 - **Obsługa:** aplikacja: strona domu → **Mapa** → **Warstwa mapy**, **Potwierdź położenie**, **Przesuń punkt**,
   **Ukryj położenie w wynikach** ([S10.3.4](#S10.3.4));
   terminal `strom house confirm <dom> location`.
@@ -183,25 +183,41 @@ Zdanie pod mapą mówi, skąd jest położenie.
 <a id="S10.3.2"></a>
 ### S10.3.2 Zapisana strona domu i ochrona osób
 
-**Zapisz HTML** zapisuje stronę domu jako jeden plik (np. `belokamen-cp-16.html`) bez kafelków mapy z sieci; położenie
-jest wycinkiem mapy wprost w pliku ([S10.3.4](#S10.3.4)), zdjęcia domu i miejscowości wczytują się z internetu albo są
-tylko linkiem ([S10.7.1](#S10.7.1)). Zapisana strona domu, księga i strony rodu chronią osoby z mniej więcej ostatnich
-100 lat.
+**Zapisz HTML** na stronie domu otwiera okno **Zapisz stronę domu**. **Zapisz** zapisuje stronę jako jeden plik (np.
+`belokamen-cp-16.html`) bez kafelków mapy z sieci; położenie jest wycinkiem mapy wprost w pliku ([S10.3.4](#S10.3.4)),
+zdjęcia domu i miejscowości wczytują się z internetu albo są tylko linkiem ([S10.7.1](#S10.7.1)). Zapisana strona domu,
+księga i strony rodu chronią żyjących i osoby z mniej więcej ostatnich 100 lat.
 
-- **Nigdy:** dzisiejsi właściciele; imiona i nazwiska żyjących; nazwisko świadka.
+- **Okno Zapisz stronę domu:**
+  - blok **Ochrona osób żyjących** z trybem z Ustawień („domyślnie z Ustawień”,
+    [S11.3](S11-protecting-living-people.md#S11.3); tryby [S11.2](S11-protecting-living-people.md#S11.2)). Gdy dom ma
+    żyjących lub osoby z mniej więcej ostatnich 100 lat, pod nim stoi „Dotyczy imion osób żyjących i osób z ostatnich
+    ~100 lat; pozostałe ich dane jak dotąd (tylko imię). Historia domu nie jest przepisywana.”;
+  - przełącznik **Zdjęcia domów z internetu**: „Wczytują się przy otwarciu pliku; bez internetu zostaje podpis
+    z odnośnikiem.”;
+  - przełącznik **Położenie i mapa domu**, tylko przy domu z położeniem: „Wycinki warstw mapy jako obrazy w pliku,
+    punkt, współrzędne i odnośniki do innych map; wyłączone: tylko miejscowość.” Przy położeniu ukrytym ręcznie
+    zamiast niego „Położenie domu jest ukryte ręcznie; plik poda tylko miejscowość.”;
+  - każde otwarcie zaczyna od Ustawień; wybór dotyczy tylko tego pliku i Ustawień nie zmienia.
+- **Imiona** według trybu ochrony: żyjący jak w trybie ([S11.2](S11-protecting-living-people.md#S11.2)); zmarłe osoby
+  z mniej więcej ostatnich 100 lat tak samo, tylko bez roku urodzenia i jako „Osoba” zamiast „Osoba żyjąca”. Przy
+  **Pełne dane** wszystkie imiona są pełne. Kto jest żyjącą osobą: [S11.1](S11-protecting-living-people.md#S11.1).
+- **Nigdy:** dzisiejsi właściciele i mieszkańcy (właściciel lub mieszkaniec z latami w mniej więcej ostatnich 100
+  latach, którego drzewo nie zna, jest pomijany); nazwisko świadka.
 - **Osoby z mniej więcej ostatnich 100 lat** tylko z imienia, nazwiska i roli, bez lat.
 - **Wydarzenia badania z mniej więcej ostatnich 100 lat i wydarzenia wrażliwe** (konfiskata, wysiedlenie) są
   pomijane, dopóki człowiek ich nie odkryje (**Pokaż w wynikach**).
-- **Położenie** tylko przy domu bez osób z mniej więcej ostatnich 100 lat i tylko bez ręcznego ukrycia
-  ([S10.3.4](#S10.3.4)); nazwy domu przy domu z takimi osobami też nie.
+- **Położenie** tylko bez ręcznego ukrycia i z włączonym **Położenie i mapa domu** ([S10.3.4](#S10.3.4)). Nazwa domu
+  przy domu z osobami z mniej więcej ostatnich 100 lat jest pomijana.
 - **Opowieść o domu** zawsze w całości, zatwierdzona albo szkic, bez etykiety szkicu. Osoby z mniej więcej ostatnich
   100 lat ani pozycje, które strona ukrywa, jej nie pomijają ([S10.14.2](#S10.14.2)).
-- Strona domu mówi, czego brakuje w wynikach i dlaczego: „W wynikach (HTML, książka) N wydarzeń i położenie domu nie są
-  pokazywane (ludzie ostatnich ~100 lat).”, „… N wydarzeń nie jest pokazywanych; położenie domu jest ukryte ręcznie.”
-- **Obsługa:** aplikacja: strona domu → **Zapisz HTML**; przy wydarzeniu **Pokaż w wynikach**.
+- Strona domu mówi, czego brakuje w wynikach: „W wynikach (HTML, książka) 3 wydarzenia nie są pokazywane.”, „…;
+  położenie domu jest ukryte ręcznie.” albo „W wynikach (HTML, książka) położenie domu jest ukryte ręcznie.”
+- **Obsługa:** aplikacja: strona domu → **Zapisz HTML** → **Zapisz stronę domu**; przy wydarzeniu **Pokaż
+  w wynikach**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) · T10: app:51223455 src/ui/house-page-ui.ts showHouseSaveDialog (privacyBlockHtml mode SettingsManager.getOutputPrivacy origin settings, living named.size, strings.privacy.houseLine; outputSwitchHtml house-photos outputWebPhotos.bookSwitch/fileHint, house-location outputHouseLocation.switch/switchHint jen hasLocation, byHand → handHidden; HouseSaveChoice), src/house-page.ts houseFileNames (applyLivingPrivacy podle režimu, recent → privacy.namedAsLiving bez birthDate, label privacy.recentPerson, full beze změny), shownHouseName (recentHouse), src/house-privacy.ts houseOutputFilter (holderOf: neznámý z posledních ~100 let → null; locationBy manual|output), strings.ts houses.page.saveTitle, houses.hiddenSummary · app:4c403da2 · CHANGELOG.cs.md 3.33.0 -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 Oś czasu z zapisów drzewa
@@ -227,42 +243,63 @@ już jeden wiersz, się nie powtarza.
 <a id="S10.3.4"></a>
 ### S10.3.4 Położenie domu w wynikach
 
-Księga rodu, zapisana strona domu i strony rodu pokazują położenie domu jako obraz: wycinek dzisiejszej mapy z punktem
-i numerem domu. Pod nim są współrzędne, jak pewna jest zgodność numeru, i atrybucja mapy. Wynik pokazuje więc położenie
-także bez sieci.
+Zapisana strona domu, księga rodu, strony rodu, prezent i eksport HTML pokazują, gdzie stoi dom. W księdze jest to
+wycinek dzisiejszej mapy z punktem i numerem domu, pod nim współrzędne, jak pewna jest zgodność numeru, i atrybucja
+mapy. Położenie domu nie jest daną osobową: pokazuje się bez względu na to, kto w domu mieszkał, także osoby z mniej
+więcej ostatnich 100 lat, dopóki człowiek go nie ukryje przy domu lub w wyniku. Imiona, lata i wydarzenia tych osób
+wyniki chronią dalej ([S10.3.2](#S10.3.2)).
 
 - **Kiedy położenie się pokazuje:** tylko przy domu z punktem (ustawionym ręcznie lub przez badanie) i tylko gdy
   zachodzi jedno i drugie:
-  - w domu nie ma osób z mniej więcej ostatnich 100 lat: żyjących, osób drzewa z tych lat, zapisów domu z tych lat ani
-    właścicieli i mieszkańców z latami w tym czasie (także osób, których drzewo nie zna);
-  - człowiek nie ukrył położenia (**Ukryj położenie w wynikach**).
+  - człowiek nie ukrył położenia przy domu (**Ukryj położenie w wynikach**);
+  - wynik ma włączony przełącznik położenia (**Położenie i mapa domu**, **Położenie i mapa domów**).
+- **Ustawienie:** **Ustawienia → Dane i prywatność → Położenie domów w wynikach**: **Pokaż** (domyślnie) albo
+  **Ukryj**. „Zapisana strona domu, księga rodu, strony rodzinne, prezent i eksport HTML pokazują, gdzie stoją domy:
+  wycinki mapy, współrzędne i odnośniki do innych map. Każdy z nich może to zmienić. Dom z ręcznie ukrytym położeniem
+  pozostaje bez niego.”
+- **Przełączniki w wynikach** (wstępnie ustawione z Ustawień; wyłączone: tylko miejscowość):
+
+  | Wynik | Przełącznik | Kiedy jest widoczny | Od czego zaczyna |
+  |---|---|---|---|
+  | Zapisz stronę domu | **Położenie i mapa domu** | dom ma położenie; przy ukrytym ręcznie zamiast niego „Położenie domu jest ukryte ręcznie; plik poda tylko miejscowość.” | zawsze od Ustawień ([S10.3.2](#S10.3.2)) |
+  | Księga rodu | **Położenie i mapa domów** | część **Domy** i w rozdziale dom z położeniem, które nie jest ukryte ręcznie | od ostatniego wyboru dla tego drzewa, inaczej od Ustawień |
+  | Strony rodu | **Położenie i mapa domów** | domy jako strony i strona domu z położeniem, które nie jest ukryte ręcznie | od ostatniego wyboru dla tego drzewa, inaczej od Ustawień |
+  | Podarować rodowód | **Położenie i mapa domów** | drzewo ma dom z położeniem, które nie jest ukryte ręcznie | od ostatniego wyboru dla tych obdarowanych, inaczej od Ustawień; **Zacznij od nowa z domyślnymi** od Ustawień |
+  | Eksport HTML | **Położenie i mapa domów** | format HTML, nie szybki zapis; przy aktywnym drzewie tylko z domem z położeniem, które nie jest ukryte ręcznie | zawsze od Ustawień |
+
+  Przełącznik w księdze: „Wycinek dzisiejszej mapy z punktem każdego domu, współrzędne i pewność dopasowania numeru;
+  wyłączone: tylko miejscowość. Dom z ręcznie ukrytym położeniem pozostaje bez niego.” W prezencie i eksporcie HTML:
+  „Współrzędne domów trafiają do pliku; wyłączone: tylko miejscowość. Dom z ręcznie ukrytym położeniem pozostaje bez
+  nich.” Wybór w wyniku Ustawień nie zmienia.
 - **Pewność:** „Dzisiejsze położenie · zgodność numeru potwierdzona”, gdy punkt ustawił lub potwierdził człowiek
   (w aplikacji lub w badaniu); w przeciwnym razie „Dzisiejsze położenie · zgodność numeru zakładana”.
-- **Obraz:** dzisiejsza mapa OpenStreetMap z atrybucją „© współtwórcy OpenStreetMap, licencja ODbL”. HTML (zapisana
-  strona domu, strony rodu, także w ZIP-ie i w prezencie) dodaje jako kolejny obraz warstwę historyczną, którą badanie
-  dostarczyło dla miejsca domu ([S10.3.1](#S10.3.1)); księga daje tylko dzisiejszą mapę i nie dzieli wycinka między
-  strony.
+- **Obraz:** dzisiejsza mapa OpenStreetMap z atrybucją „© współtwórcy OpenStreetMap, licencja ODbL”.
+  - HTML (zapisana strona domu, strony rodu także jako ZIP, strony w prezencie) dodaje kolejne obrazy: warstwy
+    historyczne, które badanie dostarczyło dla miejsca domu ([S10.3.1](#S10.3.1)), najwyżej 8 obrazów
+    z przełącznikiem warstw bez skryptu. Przeglądarka bez tej obsługi i druk pokazują wszystkie obrazy jeden pod
+    drugim.
+  - Księga (także księga w prezencie) daje tylko dzisiejszą mapę i nie dzieli wycinka między strony. Odnośniki
+    **Otwórz gdzie indziej** są tylko na ekranie, w druku nie.
+  - Prezent robi wycinki z danych paczki. W drzewie położenie ma tylko dom, którego punkt ustawił lub potwierdził
+    człowiek; położenie tylko z badania nie trafia ani do prezentu, ani do eksportu HTML.
 - **Bez sieci:** wycinek powstaje raz i aplikacja zachowuje go w tej przeglądarce; kolejna księga, PDF czy prezent
   bierze zachowany. Bez sieci i bez zachowanego wycinka albo dopóki mapa nie jest dozwolona (**Pokaż mapę**), wynik
   daje tylko współrzędne i pewność, bez błędu. Na jeden obraz czeka się najwyżej 10 s.
-- **Strona domu**, sekcja **Mapa:** przy domu, którego położenie wyniki by pokazały, wiersz „Wyniki (HTML, książka)
-  pokazują położenie domu.” i **Ukryj położenie w wynikach**. Po ukryciu „W wynikach (HTML, książka) położenie domu
-  jest ukryte ręcznie.” i **Pokaż położenie w wynikach**. Jedno i drugie to jeden krok **Cofnij**.
-- **Księga:** opcja **Położenie domów** (domyślnie włączona, zapamiętywana): „Wycinek dzisiejszej mapy z punktem domu
-  bez ludzi ostatnich ~100 lat; wyłączone: tylko miejscowość.” Jest tylko z częścią **Domy** i tylko gdy księga ma
-  dom, którego położenie można pokazać. Przypis rozdziału brzmi wtedy „Wydarzenia po <rok> r. i położenie domu
-  z ludźmi tych lat nie są podawane w książce.”
+- **Strona domu**, sekcja **Mapa:** przy domu z położeniem wiersz „Wyniki (HTML, książka) pokazują położenie domu.”
+  i **Ukryj położenie w wynikach**. Po ukryciu „W wynikach (HTML, książka) położenie domu jest ukryte ręcznie.”
+  i **Pokaż położenie w wynikach**. Jedno i drugie to jeden krok **Cofnij**.
 - **Granice:**
-  - osoby z mniej więcej ostatnich 100 lat mają pierwszeństwo: ręczne **Pokaż położenie w wynikach** ich nie
-    przebija, a przy takim domu nie ma wiersza ani przycisku; dlaczego położenia brakuje, mówi strona
-    ([S10.3.2](#S10.3.2));
+  - ręczne ukrycie przy domu wygrywa zawsze, także gdy przełącznik wyniku jest włączony;
+  - **Udostępnij** nie ma przełącznika i nie czyta Ustawień; plik JSON i kopia zapasowa niosą dane drzewa takie, jakie
+    są;
   - ręczne ukrycie jest tylko w drzewie aplikacji (plik JSON), nie trafia do badania ani do GEDCOM;
   - drzewo tylko do odczytu pokazuje tylko stan, bez przycisku.
-- **Obsługa:** aplikacja: strona domu → **Mapa** → **Ukryj położenie w wynikach** / **Pokaż położenie w wynikach**;
-  eksport **Księga rodu** → **Położenie domów**.
+- **Obsługa:** aplikacja: **Ustawienia → Dane i prywatność → Położenie domów w wynikach**; strona domu → **Mapa** →
+  **Ukryj położenie w wynikach** / **Pokaż położenie w wynikach**; **Zapisz stronę domu** → **Położenie i mapa
+  domu**; **Księga i strony**, **Podarować rodowód** i eksport HTML → **Położenie i mapa domów**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
-<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (location jen bez recentPeople a bez hideLocation; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek -->
+<!-- zdroj: app:438de916 src/house-privacy.ts houseOutputFilter (do 3.33.0 před T10 location jen bez recentPeople; locationBy recent|manual; locationSure confirmed: user.location nebo research.location.confirmed), src/house-map-shot.ts (HOUSE_SHOT_TIMEOUT_MS 10 000, today = OSM dlaždice, vrstvy výzkumu jen HTML, ShotCache), src/ui/house-map-shots.ts (IndexedDB strom-map-shots, tilesAllowed: isMapTilesAcknowledged), src/book-houses.ts (figure, houseCoordsText, houseSureText), src/book-options.ts bookHouseMaps (výchozí zapnuto), src/book-memory.ts houseMaps, src/ui/book-ui.ts book-house-maps, src/types.ts HouseUserData.hideLocation (ne v ged-houses.ts) · strings.ts houses.page.map.outShown, outHidden, hideOut, showOut, sureConfirmed, sureAssumed, osmAttribution; book.dlg.houseMaps, houseMapsHint; book.houseChapterProtected; map.tilesNoticeOk · dirigent:spec/145 T3 · prace/1127-app-145-vypraveni-poloha Výsledek · T10: app:51223455 src/house-privacy.ts houseOutputFilter (locationBy manual|output, HouseOutputChoice.location; „Not personal data“), src/settings.ts isOutputHouseLocation/setOutputHouseLocation (výchozí !== false), index.html output-house-location-setting, src/ui/book-ui.ts sw houseMaps outputHouseLocation.housesSwitch/housesSwitchHint (bookHouseMapsState shown; stránky: housesWithLocation u domů jako stránky; opts.houseMaps z book-memory, jinak isOutputHouseLocation), src/ui/gift-tree-ui.ts gift-house-location (jen dům s location a bez hideLocation, dataSwitchHint, giftRestart → Nastavení), src/gift-memory.ts houseLocations, src/ui/encryption-ui.ts setupExportHouseLocation (jen html, ne rychlý export; vždy z Nastavení), src/ui/house-page-ui.ts showHouseSaveDialog house-location · app:6ec8204e src/gift-package.ts houseShots (stránky a kniha daru, ne při houseLocations false; kniha houseMaps podle přepínače balíčku), src/ui/gift-tree-ui.ts giftHouseShots (vrstvy z houseStatus), src/book-css.ts (Otevřít jinde jen na obrazovce) · app:4c403da2 · src/house-map.ts HOUSE_SHOT_SWITCH_MAX 8, src/house-page-css.ts .hmap-sw (:has, bez skriptu) · strings.ts outputHouseLocation.*, houses.page.map.outShown, houses.hiddenSummary, book.houseChapterProtected · CHANGELOG.cs.md 3.33.0 -->
 
 <a id="S10.4"></a>
 ## S10.4 Zamówić historię domu
@@ -524,15 +561,18 @@ Zapisana strona domu ([S10.3.2](#S10.3.2)), rozdział **Domy** w księdze i stro
 ([S10.10](#S10.10)) pokazują obrazy domu na wolnej licencji i **Obrazy miejscowości** ([S10.7](#S10.7)). Każdy obraz
 ma podpis: co przedstawia (przy obrazie miejscowości), autor, licencja i link do jego adresu w internecie.
 
-- **Ustawienie Zdjęcia z internetu w wynikach** dotyczy wszystkich trzech wyników i zapamiętuje je ta przeglądarka:
+- **Ustawienie Zdjęcia z internetu w wynikach** dotyczy wszystkich trzech wyników jako domyślne i zapamiętuje je ta
+  przeglądarka:
   - **Wczytaj z internetu** (domyślnie): plik po otwarciu wczytuje obraz z jego adresu w internecie, nad podpisem
     z linkiem;
   - **Tylko odnośnik**: tylko podpis i link.
 - **Okno Księga i strony** ma przełącznik **Zdjęcia domów z internetu** (włączony = **Wczytaj z internetu**). To samo
   ustawienie: przełączenie w oknie zmienia też Ustawienia. Pokazuje się tylko, gdy dom wyboru ma obraz:
-  - księga: w sekcji **Części księgi** pod **Położenie domów**, tylko z częścią **Domy**;
+  - księga: w sekcji **Części księgi** pod **Położenie i mapa domów**, tylko z częścią **Domy**;
   - strony rodu: przy opcji **Domy**, tylko z **W stronach rodzinnych, powiązane z osobami**.
-- **Zapisz HTML** na stronie domu nie ma przełącznika, działa według ustawienia.
+- **Okno Zapisz stronę domu** ma przełącznik **Zdjęcia domów z internetu** zawsze: „Wczytują się przy otwarciu pliku;
+  bez internetu zostaje podpis z odnośnikiem.” Każde otwarcie zaczyna od Ustawień; wybór dotyczy tylko tego pliku
+  i Ustawień nie zmienia ([S10.3.2](#S10.3.2)).
 - **Bez sieci** obraz w pliku nie zajmuje miejsca i zostaje podpis z linkiem.
 - **Granice:**
   - obraz domu tylko z licencją; obrazy domu i miejscowości tylko z adresem `http` lub `https`;
@@ -542,10 +582,11 @@ ma podpis: co przedstawia (przy obrazie miejscowości), autor, licencja i link d
     otwierany;
   - w oknie aplikacji obrazy wczytują się zawsze; ustawienie dotyczy tylko plików.
 - **Obsługa:** aplikacja: **Ustawienia → Dane i prywatność → Zdjęcia z internetu w wynikach** (**Wczytaj z internetu** /
-  **Tylko odnośnik**); okno **Księga i strony** → **Zdjęcia domów z internetu**.
+  **Tylko odnośnik**); okno **Księga i strony** → **Zdjęcia domów z internetu**; **Zapisz stronę domu** → **Zdjęcia
+  domów z internetu**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
-<!-- zdroj: app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · src/ui/house-page-ui.ts webPhotos z nastavení · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
+<!-- zdroj: app:51223455 src/ui/house-page-ui.ts showHouseSaveDialog house-photos (outputWebPhotos.bookSwitch, fileHint, z isOutputWebPhotos, HouseSaveChoice.webPhotos) · app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
 
 <a id="S10.8"></a>
 ## S10.8 Własna kwerenda i materiał do domu
@@ -624,21 +665,26 @@ o nie poprosi.
   miejscowościami i strona każdego domu), **Tylko wzmianka o domu, bez jego stron**, **Bez domów**. Jest proponowana,
   gdy osoby wyboru mieszkały w domu z historią. Oś czasu rodu ma chip **Domy ⌂** ([S10.11](#S10.11)).
 - **Granice:**
-  - księga podaje położenie tylko z opcją **Położenie domów** i tylko przy domu bez osób z mniej więcej ostatnich
-    100 lat ([S10.3.4](#S10.3.4)); w przeciwnym razie „Wydarzenia po <rok> r. i położenie domu nie są podawane
-    w książce.”; wydarzenia wrażliwe i wydarzenia badania z mniej więcej ostatnich 100 lat pomija ([S10.3.2](#S10.3.2));
-  - strony nie podają o domach niczego z mniej więcej ostatnich 100 lat, poza opowieścią o domu;
+  - księga i strony podają położenie z przełącznikiem **Położenie i mapa domów** przy każdym domu, którego położenie
+    nie jest ukryte ręcznie ([S10.3.4](#S10.3.4)); wydarzenia wrażliwe i wydarzenia badania z mniej więcej ostatnich
+    100 lat pomijają ([S10.3.2](#S10.3.2)), a księga pisze wtedy przy domu „Wydarzenia po <rok> r. nie są podawane
+    w książce.”;
+  - strony nie podają o domach niczego z mniej więcej ostatnich 100 lat, poza opowieścią o domu i położeniem;
   - opowieść z żyjącą osobą księga i strony pomijają tylko przy wyłączonym **Opowieści o domach z żyjącymi osobami**
     ([S10.14.2](#S10.14.2));
   - strony biorą domy z historią według progu ([S10.1](#S10.1)), księga także domy z gotową historią z badania;
   - wybór **Dom** tylko w drzewie z domem z numerem i tylko dla księgi; prezent
-    ([A7.9](A7-book-pages-and-export.md#A7.9)) i obraz domów nie mają.
-- **Obsługa:** aplikacja: eksport **Księga rodu** → **Dom**, część **Domy**, **Indeks domów**, **Położenie domów**,
-  **Zdjęcia domów z internetu**, **Opowieści o domach z żyjącymi osobami**; Strony rodu i Strony drzewa → **Domy**,
-  **Zdjęcia domów z internetu**, **Opowieści o domach z żyjącymi osobami**.
+    ([A7.9](A7-book-pages-and-export.md#A7.9)) ani obraz go nie mają;
+  - strony i księga w prezencie biorą domy według zapamiętanego wyboru księgi i stron, bez wyników badania domów;
+    położenie i mapę domów dają według przełącznika prezentu **Położenie i mapa domów**, nie według wyboru księgi
+    ([S10.3.4](#S10.3.4)).
+- **Obsługa:** aplikacja: eksport **Księga rodu** → **Dom**, część **Domy**, **Indeks domów**, **Położenie i mapa
+  domów**, **Zdjęcia domów z internetu**, **Opowieści o domach z żyjącymi osobami**; Strony rodu i Strony drzewa →
+  **Domy**, **Położenie i mapa domów**, **Zdjęcia domów z internetu**, **Opowieści o domach z żyjącymi osobami**;
+  **Podarować rodowód** → **Położenie i mapa domów**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories · T10: app:51223455 src/ui/book-ui.ts book-house-maps (outputHouseLocation.housesSwitch; kniha bookHouseMapsState, stránky housesWithLocation), src/house-privacy.ts houseOutputFilter (locationBy manual|output), book.houseChapterProtected · app:6ec8204e src/gift-package.ts (env.pages, env.book z paměti knihy, houseMaps: settings.houseLocations), src/ui/gift-tree-ui.ts giftHouseShots (houseResearch () => null) -->
 
 <a id="S10.11"></a>
 ## S10.11 Domy w innych miejscach aplikacji
@@ -797,10 +843,12 @@ badanie ustaliło o domu i jego miejscowości; niczego nie szuka od nowa. Tak ja
 - **Księga rodu i strony rodu** mają przełącznik **Opowieści o domach z żyjącymi osobami** (domyślnie włączony,
   zapamiętywany z pozostałymi opcjami okna): „Włączone: trafia każda opowieść o domu. Wyłączone: opowieść, w której
   występuje żyjąca osoba, zostaje pominięta.”
-  - żyjąca osoba to osoba drzewa, którą aplikacja uważa za żyjącą ([A7.1](A7-book-pages-and-export.md#A7.1)); osoba
+  - żyjąca osoba to osoba drzewa, którą aplikacja uważa za żyjącą
+    ([S11.1](S11-protecting-living-people.md#S11.1)); osoba
     badania, której drzewo nie zna, nie liczy się jako żyjąca;
   - przełącznik działa niezależnie od ustawienia ochrony żyjących i pomija tylko taką opowieść, nic więcej;
-  - księga: w sekcji **Części księgi** pod **Położenie domów** i **Zdjęcia domów z internetu**, tylko z częścią **Domy**;
+  - księga: w sekcji **Części księgi** pod **Położenie i mapa domów** i **Zdjęcia domów z internetu**, tylko z częścią
+    **Domy**;
     strony rodu: przy opcji **Domy**, tylko z **W stronach rodzinnych, powiązane z osobami**;
   - jest proponowany tylko wtedy, gdy dom wyboru ma opowieść, w której występuje żyjąca osoba. Wyniki domów z badania
     okno wczytuje zaraz po otwarciu.
@@ -809,7 +857,7 @@ badanie ustaliło o domu i jego miejscowości; niczego nie szuka od nowa. Tak ja
 - Link **Dom <numer> ›** z opowieści osoby do domu jest w księdze i na stronach rodu tylko wtedy, gdy wynik pokazuje
   opowieść domu, także gdy jest to szkic.
 - **Obsługa:** aplikacja: eksport **Księga rodu** → część **Domy**, **Opowieści o domach z żyjącymi osobami**; strona
-  domu → **Zapisz HTML**; strony rodu → **Domy**, **Opowieści o domach z żyjącymi osobami**.
+  domu → **Zapisz HTML** → **Zapisz stronę domu**; strony rodu → **Domy**, **Opowieści o domach z żyjącymi osobami**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
 <!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (nová verze vedle final → final) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez recent, osob bez úmrtí a skrytých položek; leaveOutLiving), houseStoryNamesLiving (personOfRef a ctx.living, osoba mimo strom ne), src/book-houses.ts (bez book-house-story-tag), src/house-page.ts storyHtml (štítek a Schválit jen c.app), shownStory (storyLiving), src/book.ts (opts.houseStoriesLiving), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving (výchozí zapnuto), src/book-memory.ts houseStoriesLiving (kniha i PagesChoices), src/ui/book-ui.ts book-house-stories (kniha: parts.houses a chapterHouses; stránky: houses pages), readDialogHouses, src/family-pages-html.ts setStoryHouses (houseStoriesLiving) · strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint · src/gift-package.ts (bez houseResearch) · dirigent:prace/1128-app-dum-vypraveni-ochrana Výsledek (dárek vyprávění domů nenese; osoba mimo strom bez úmrtí není žijící) -->

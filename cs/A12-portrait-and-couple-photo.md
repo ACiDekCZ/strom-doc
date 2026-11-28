@@ -260,8 +260,8 @@ Originál portrétu a fotka svazku jsou fotky: jdou do exportu s fotkami a vypad
     přílohy exportují) a fotky svazků; výřez zápisu z takového originálu zůstane bez propojení;
   - bez **Přílohy, dokumenty a výřezy pramenů**, ale s fotkami, zůstanou portréty a fotky svazků; portréty
     z příloh ztratí propojení na originál.
-- **Ochrana žijících** ([A7.2](A7-book-pages-and-export.md#A7.2)): žijící osoba ztratí portrét, originál i přílohy;
-  svazek, jehož aspoň jeden partner je žijící, ztratí fotku. Stejně na stránkách a v knize rodu.
+- **Ochrana žijících** ([S11.2](S11-protecting-living-people.md#S11.2)): žijící osoba ztratí portrét, originál i
+  přílohy; svazek, jehož aspoň jeden partner je žijící, ztratí fotku. Stejně na stránkách a v knize rodu.
 - **Export GEDCOM** zapíše fotku svazku jako obyčejný obrázek rodiny (`1 OBJE` u `FAM`), bez vlastní značky Stromu.
   Výřez a propojení portrétu s originálem se nezapíšou; originál jde jako obyčejná příloha osoby. Export **Zpět do
   {program}** fotky nemá ([S6.6](S6-tree-from-another-program.md#S6.6)).

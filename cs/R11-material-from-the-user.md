@@ -126,7 +126,7 @@ Složku, ZIP nebo krabici dokumentů poslanou z aplikace výzkum přijme jako je
   - agent si nejdřív levně prohlédne všechny soubory úkolu (náhledy v mřížce) a každý hned zařadí: záznam
     (pramen), dokument, fotka, nesouvisející, a čí je. Do hloubky čte jen to, co patří lidem výzkumu;
   - o žijící osobě se do výzkumu 1.36.0 nic nezapsalo, soubor se jen zařadil. Od 1.37.0 se materiál žijícího zařadí
-    a zapíše jako u kohokoli jiného; ochrana žijících patří k exportu ([A7.2](A7-book-pages-and-export.md#A7.2));
+    a zapíše jako u kohokoli jiného; ochrana žijících patří k exportu ([S11.4](S11-protecting-living-people.md#S11.4));
   - skeny jedné knihy (mnoho číslovaných snímků) se nečtou soubor po souboru: zapíšou se jako kniha a čtou se
     z ní zápisy jako z každé knihy ([R8](R8-reading-scans.md));
   - úkol se zavře, až je každý jeho soubor zařazený; další část dávky je vlastní úkol.

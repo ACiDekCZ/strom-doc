@@ -161,7 +161,7 @@ scalono.
   - pochodzenie: „Drzewo z {program} (plik {data}) · N osób” (przy wstawieniu i scaleniu do którego drzewa i ile
     osób);
   - wiersz kontroli danych: „Znalazła N rzeczy do przejrzenia. Nic nie poprawia się samo.” i **Przejrzyj**
-    ([A5](A5-tree-check.md)), albo „Kontrola danych nie znalazła nic do poprawy.”;
+    ([A5](A5-tree-check.md)), albo „Kontrola drzewa nie znalazła w imporcie nic do sprawdzenia.”;
   - gdy plik zawiera kilka rodzin, których nic nie łączy: **Wydziel niepołączone części…**;
   - badanie: bez badania na tym komputerze **Badanie przodków z tym drzewem** i **Badanie przodków**; z badaniem
     **Rozpocznij badanie z tym drzewem**; drzewo powiązane z badaniem **Badanie z tym drzewem** (miejsca bez położenia
@@ -211,8 +211,11 @@ można więc wrócić.
   - jedno scalenie można cofnąć także bez przywracania całej kopii zapasowej: **Cofnij scalenie…**
     ([A8.12](A8-merging-trees.md#A8.12)). Kopia zapasowa przywraca całe drzewo, razem ze wszystkim, co stało się od
     scalenia.
+- **Od aplikacji 3.33.0:** kopie zapasowe są wynikiem dla siebie: pełne dane wszystkich osób. Okno **Historia kopii
+  zapasowych** drzewa z osobami żyjącymi to mówi: „Zawiera wszystkie dane osób żyjących – do własnej kopii lub
+  przeniesienia, nie do udostępniania.” ([S11.5](S11-protecting-living-people.md#S11.5)).
 
-<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie -->
+<!-- zdroj: app:1c9b2392 src/snapshots.ts SnapshotReason pre-import, pre-merge · src/ui/import-export.ts:818, :940 snapshotNow('pre-import') · src/data.ts:892 · src/ui/merge-ui.ts:769 · src/ui/tree-actions.ts:196 · strings.ts snapshots.menu, title, autoLabel, autoHint, inBrowser, budgetNote, createNow, restore, download · 3.27.0: app:5721b016 src/snapshots.ts SnapshotReason pre-migration, src/tree-manager.ts joinQualityOnlySourcesOf, strings.ts pre-migration · 3.32.0: app:debf50cc src/data.ts:2047 backupBeforeMerge (bez ohledu na automatické zálohy, keepFor), snapshotNow pre-import/pre-merge vždy · src/snapshots.ts planRetention (keepFor se nesmaže), retention · src/merge/write.ts:231 · strings.ts snapshots.autoHint, mergeWizard.backupLine, retentionAsk, backupFailed, vsBackup · spec 134 K0.4 · app:e2a6d712 pre-merge-undo „Před odvoláním sloučení“ (134 N5) · e4e3eeea pre-migration před odpojením kopie · 3.33.0: app:11d35186 index.html:40323 snapshots-self, src/ui/snapshots-ui.ts:76 (jen se žijícími), strings.ts privacy.selfOnly -->
 
 <a id="S6.6"></a>
 ## S6.6 Eksport z powrotem do programu lub do udostępnienia
@@ -225,12 +228,12 @@ programu**) albo **Do udostępnienia innym**. Według tego chroni osoby żyjące
   pierwotne oznaczenie rekordu, gdzie jest to bezpieczne, i wiersze swoich identyfikatorów (`_UID`, `RIN`, `EXID` …);
   oznaczenie, którego nie można użyć, idzie jako `REFN` z `TYPE {program} xref`. Własne znaczniki programu (`_XXX`)
   z importów tego samego programu wracają.
-- **Do udostępnienia innym:** „Chroni osoby żyjące, zawartość można dostosować.” (domyślna ochrona GEDCOM,
-  [A7.2.1](A7-book-pages-and-export.md#A7.2.1)). Zmarłym źródła pozostają; u osób żyjących cytaty się pomija, a okno
+- **Do udostępnienia innym:** „Chroni osoby żyjące, zawartość można dostosować.” (domyślna ochrona z Ustawień,
+  [S11.3](S11-protecting-living-people.md#S11.3)). Zmarłym źródła pozostają; u osób żyjących cytaty się pomija, a okno
   to mówi („U N żyjących osób zostanie pominiętych K cytatów. Zmarłym źródła pozostaną.”).
 - **Pilnuje kod:**
-  - eksport GEDCOM zachowuje źródła i cytaty zmarłych w każdej opcji; eksport JSON, HTML i CSV się nie zmienia
-    ([A7.2](A7-book-pages-and-export.md#A7.2));
+  - eksport GEDCOM zachowuje źródła i cytaty zmarłych w każdej opcji
+    ([S11.2](S11-protecting-living-people.md#S11.2));
   - zdjęć i załączników plik nie ma: inne programy nie odczytują ich z pliku;
   - przy **Z powrotem do {program}** wiersz podsumowania **Źródła i cytaty (N źródeł, M cytatów)** liczy rekordy
     źródeł, które plik zapisze. Źródła, które import utworzył z jednego rekordu źródła dla każdej cytowanej strony
@@ -250,8 +253,16 @@ programu**) albo **Do udostępnienia innym**. Według tego chroni osoby żyjące
   z pliku nie wracają w **Z powrotem do {program}**: ten eksport nie ma zdjęć. Pozostałe obrazy rodziny wracają jak
   w 3.27.0. **Do udostępnienia innym** zapisuje zdjęcie pary przy rodzinie jako `OBJE`, gdy zawartość eksportu ma
   zdjęcia ([A12.7](A12-portrait-and-couple-photo.md#A12.7)).
+- **Od aplikacji 3.33.0:**
+  - **Do udostępnienia innym** jest wynikiem na zewnątrz: blok **Ochrona osób żyjących** zaczyna od trybu domyślnego
+    z Ustawień, a chroniony plik nosi w nagłówku oznaczenie `_STROM_PRIVACY`
+    ([S11.4](S11-protecting-living-people.md#S11.4), [S11.6](S11-protecting-living-people.md#S11.6)). Także JSON,
+    HTML i CSV zachowują źródła zmarłych;
+  - **Z powrotem do {program}** jest wynikiem dla siebie: nie ma bloku ochrony, pełne dane zostają, a okno mówi to
+    zdaniem „Zawiera wszystkie dane osób żyjących – do własnej kopii lub przeniesienia, nie do udostępniania. Plik
+    zawiera dane N żyjących osób. Należy tylko do własnego programu.” ([S11.5](S11-protecting-living-people.md#S11.5)).
 
-<!-- zdroj: app:7cf409bd src/ged-exporter.ts backSourceRecordCount (sourceGroups: jeden záznam za skupinu) · src/ui/export-gedcom-ui.ts backSources → exportGed.sumSources · e2e/export-gedcom-back.spec.ts · app:1c9b2392 src/ged-exporter.ts backToXrefs (původní xref, ID řádky úrovně 1, REFN + TYPE {prog} xref, _XXX téhož programu, jinak _STROM_IMPORT / _STROM_XID) · src/ui/import-export.ts:267 keepDeceasedSources: true (jen GEDCOM) · strings.ts exportGed.* -->
+<!-- zdroj: app:7cf409bd src/ged-exporter.ts backSourceRecordCount (sourceGroups: jeden záznam za skupinu) · src/ui/export-gedcom-ui.ts backSources → exportGed.sumSources · e2e/export-gedcom-back.spec.ts · app:1c9b2392 src/ged-exporter.ts backToXrefs (původní xref, ID řádky úrovně 1, REFN + TYPE {prog} xref, _XXX téhož programu, jinak _STROM_IMPORT / _STROM_XID) · src/ui/import-export.ts:267 keepDeceasedSources: true (jen GEDCOM) · strings.ts exportGed.* · 3.33.0: app:11d35186 src/ui/export-gedcom-ui.ts:196 export-back-living (privacy.selfOnly + exportGed.livingNote), fe52bfb2 src/privacy.ts applyOutputPrivacy, src/ui/encryption-ui.ts exportPresetPrivacy -->
 
 <a id="S6.7"></a>
 ## S6.7 Drzewo wczytane ponownie i scalanie
@@ -346,7 +357,8 @@ jako `1 EMAIL` bezpośrednio przy osobie. Aplikacja i badanie robią z tego kont
   - każdy adres jest w kontakcie raz (bez względu na wielkie i małe litery), najwyżej 254 znaki, bez spacji;
   - eksport GEDCOM zapisuje każdy adres jako `1 RESI` / `2 EMAIL`; **Z powrotem do {program}** zapisuje `1 EMAIL`,
     który plik miał przy osobie, tak samo jak on ([S6.6](#S6.6));
-  - ochrona osób żyjących ([A7.2](A7-book-pages-and-export.md#A7.2)): osoba żyjąca kontaktu do eksportu nie przekazuje;
+  - ochrona osób żyjących ([S11.2](S11-protecting-living-people.md#S11.2)): osoba żyjąca kontaktu do eksportu nie
+    przekazuje;
   - strona osoby pokazuje adresy jako odnośnik e-mail tylko w oknie aplikacji; strona zapisana do pliku kontaktu nie
     ma;
   - do badania kontakt idzie tylko z badaniem, które kontakty przechowuje; starszemu badaniu, które odczytałoby go
