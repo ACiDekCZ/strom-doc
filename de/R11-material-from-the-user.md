@@ -368,7 +368,11 @@ derselbe Befehl wie im Terminal, mit denselben Grenzen.
   `GET /material/sort/<id>` auch die Entscheidungen (`decided`). Eine Entscheidung wird abgelehnt bei unbekanntem
   Sortieren (`sort.none`), bei einem Sortieren, das noch nicht fertig ist (`sort.state`), bei einer Datei, die nicht
   zum Sortieren gehört, oder einem anderen Stand (`material.body`) und bei einem Schreiben, das nicht aus der App kam
-  (`app.only`).
+  (`app.only`). Auch `material.houses`: `GET /material` und `GET /material/<I…>/uses` geben bei einer Datei, die
+  Material eines Hauses ist, `houses` mit einer Liste der Häuser (`id` A… und `key`, dieselben wie in der Zeile des
+  Hauses in `GET /houses`). Ein zurückgenommenes Haus und der Eintrag eines Ortes stehen nicht in der Liste; eine
+  Datei ohne Haus hat kein Feld `houses`. Danach zeigt die App das Haus in **Wo verwendet**
+  ([A3.5.3](A3-evidence-in-the-app.md#A3.5.3)).
 - **Prüft der Code:** eine Änderung ist ganz oder gar nicht; eine beschäftigte Forschung antwortet, dass sie nichts
   geändert hat. Sortieren lehnt sie ab ohne Agent, mit aufgebrauchtem Leselimit, mit voller Warteschlange und wenn
   der Agent gerade nicht arbeiten kann.
@@ -376,7 +380,7 @@ derselbe Befehl wie im Terminal, mit denselben Grenzen.
   ([S1.1](S1-connecting-app-and-research.md#S1.1)).
 - **Gilt seit:** Forschung 1.35.0
 
-<!-- zdroj: research:0cc2cfca src/core/live.ts (GET /material uses.of, left {at, sort, why, said}, sameAs; POST /material/sort run 51–1500, GET/POST /material/sort/<run-…>[/cancel]; POST /material/delete dryRun → impacts + confirm, chyby material.delete-changed, material.body, material.file, material.readonly, material.busy, app.only; BRIDGE_FEATURES material.sourceOf, left, sameAs, sortRun, delete) · research:src/core/live.ts:134-160 (GET /material, /material/<I…>/uses, POST /material/assign|hide|edit|sort, chyby material.body|date|file|readonly|busy) · src/core/live-sort.ts (sort.none, sort.limit, sort.queue, sort.not-ready) · research:a7df632d, 87376d11, 7754968e · 1.38.0: research:c673ac14 src/core/live-sort.ts decided (403 app.only, 404 sort.none, 400 material.body, 409 sort.state), src/core/live.ts BRIDGE_FEATURES material.accepted, material.decided, AGENT_FEATURES material.decided, doc GET /material left why accepted|refused · dirigent:spec/147 K2 -->
+<!-- zdroj: research:0cc2cfca src/core/live.ts (GET /material uses.of, left {at, sort, why, said}, sameAs; POST /material/sort run 51–1500, GET/POST /material/sort/<run-…>[/cancel]; POST /material/delete dryRun → impacts + confirm, chyby material.delete-changed, material.body, material.file, material.readonly, material.busy, app.only; BRIDGE_FEATURES material.sourceOf, left, sameAs, sortRun, delete) · research:src/core/live.ts:134-160 (GET /material, /material/<I…>/uses, POST /material/assign|hide|edit|sort, chyby material.body|date|file|readonly|busy) · src/core/live-sort.ts (sort.none, sort.limit, sort.queue, sort.not-ready) · research:a7df632d, 87376d11, 7754968e · 1.38.0: research:c673ac14 src/core/live-sort.ts decided (403 app.only, 404 sort.none, 400 material.body, 409 sort.state), src/core/live.ts BRIDGE_FEATURES material.accepted, material.decided, AGENT_FEATURES material.decided, doc GET /material left why accepted|refused · dirigent:spec/147 K2 · research:c29010f7 src/core/houses.ts houseRefs (keyOfHouse, bez retracted a h.town), src/core/material.ts Input.houses, src/core/live.ts BRIDGE_FEATURES material.houses, test/cli/houses-bridge.test.ts · CHANGELOG.cs.md 1.38.0 -->
 
 <a id="R11.5.5"></a>
 ### R11.5.5 Ein Lauf des Sortierens aus der App

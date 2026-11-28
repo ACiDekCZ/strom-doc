@@ -278,7 +278,17 @@ to the image stops opening.
 - **From research 1.36.0:** an image number that only the registered scans give has the mark `2 _STROM_DERIVED Y`
   under `_STROM_IMAGE` in the file for the Strom app. The app then adds it to the location and cuts no other image's
   number out of it ([A2.6](A2-loading-a-family-tree.md#A2.6)).
+- **From research 1.38.0:**
+  - after `strom media renumber` ([R9.5.1](R9-archives.md#R9.5.1)) a source's image number that its images give
+    changes with them. The output says the old and the new number; the Strom app gets it with the next sync. A source
+    with its own image number (`--image`) keeps it, and the output offers `strom source edit S… --image <number>
+    --reason "…"`;
+  - an image put to a source by mistake is taken off by `strom source edit S… --media-remove M… --reason "…"`,
+    together with that image's clips on that source. The reason is required; `B…:<number>` and several images work
+    too. An image the source does not have the research refuses. The output says when the source then cites no
+    image, and for an image no source cites any more it offers `strom media retract`.
 
+<!-- zdroj: research:e8ab80d0 src/commands/media.ts media renumber (sourceImage před a po; derived → „(from its images; the Strom app gets it with the next sync)“, vlastní → „keeps its own image number … strom source edit S… --image“) · src/commands/sources.ts source edit --media-remove (mediaRefs, reason.missing, „not among the images“, kept clips bez snímku, „cites no image now“, „cited by no source now … strom media retract“) · 6978b6f9 (příklady v nápovědě) · strom help source edit · CHANGELOG.cs.md 1.38.0 (5651cc28) -->
 <!-- zdroj: research:4de28f00 src/core/model.ts Source.folio/image/callNumber, src/core/sourcefields.ts recognizeLocation, composedPage, sourceImage, sourceCallNumber, locatorOverlap · src/commands/sources.ts:117-145 (--reason jen při přepsání), :210 --call-number, :287 filtr list, :330-336 řádky find a „from its locator“, :374 locatorArg · src/gedcom/export.ts:239, :374-379, :723-728 PAGE/CALN/_STROM_* · a0751973 (N1: PAGE bez dvou čísel) · 320a7738 (--locator "") · assets/method/recording.md:25-31, reading.md:85-89 · CHANGELOG.cs.md 1.31.0 „Zápis se najde znovu“ · spec 075 P2 · 1.36.0: research:519951b3 src/gedcom/export.ts (image.derived → 2 _STROM_DERIVED Y), src/core/sourcefields.ts sourceImage derived, src/gedcom/validate.ts · app:2e68d373 src/source-location.ts composePage · CHANGELOG.cs.md 1.36.0 -->
 
 <a id="R3.4.4"></a>

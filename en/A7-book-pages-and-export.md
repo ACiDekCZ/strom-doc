@@ -152,11 +152,13 @@ The family book is a book to read from the start: a family tree, families by gen
   above the couple's events; a tree whose only pictures are couples' photos offers that part
   ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
 - **From app 3.33.0:** the choice **House** (a book about one house), the part **Houses** and the **Index of houses**
-  ([S10.10](S10-houses.md#S10.10)); in the part **Houses** the story of the house (a draft tagged), the pictures of
-  the house and the town and, with the option **House locations**, a cut of the map
-  ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1), [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)); in the part **Houses** the story of the house (a draft too, without the tag),
+  the pictures of the house and the town and, with the option **House locations**, a cut of the map
+  ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1), [S10.3.4](S10-houses.md#S10.3.4)). In
+  **Parts of the book** the part **Houses** has the switch **Stories of houses with living people** (on by default);
+  off, it leaves out a story in which a living person appears. It is offered only when the book has such a story.
 
-<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 -->
+<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 · 3.33.0 vyprávění o domě: app:28099151 src/book.ts houseStoryForOutput, src/book-houses.ts (bez štítku), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving, src/ui/book-ui.ts book-house-stories, strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint -->
 
 <a id="A7.4.1"></a>
 ### A7.4.1 Choice of people for the book and the pages
@@ -191,11 +193,14 @@ of people, families, surnames and towns.
 - Privacy of living people and sources as in [A7.2](#A7.2); default Initials + birth year.
 - **Since:** Family pages app 3.20.0; Tree pages app 3.21.0
 - **From app 3.33.0:** the option **Houses**: houses with history, the index of houses and a page for each house
-  ([S10.10](S10-houses.md#S10.10)), at a house also the story (a draft tagged), the pictures of the house and the town
-  and a cut of the map with its location ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
-  [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)), at a house also the story (a draft too, without the tag), the pictures of the
+  house and the town and a cut of the map with its location ([S10.14.2](S10-houses.md#S10.14.2),
+  [S10.7.1](S10-houses.md#S10.7.1), [S10.3.4](S10-houses.md#S10.3.4)). At the option **Houses** there is the switch
+  **Stories of houses with living people** (on by default); off, it leaves out a story in which a living person
+  appears. It is offered only when the house pages have such a story. A draft story of a person or a couple is in the
+  pages without the tag **Draft** ([A7.8](#A7.8)).
 
-<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 -->
+<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 · 3.33.0 vyprávění: app:28099151 src/family-pages.ts houseStoriesLiving, src/family-pages-html.ts setStoryHouses, coupleChapterHtml bez draftTag, src/house-page.ts storyLiving, src/ui/book-ui.ts syncPages book-house-stories, src/book-memory.ts PagesChoices.houseStoriesLiving -->
 
 <a id="A7.5.1"></a>
 ### A7.5.1 History on the timeline of a line
@@ -236,10 +241,13 @@ the places of the life on a map, a life axis with history, clippings from regist
   (“{A} and {B} · couple’s photo”). The enlarged portrait with an original has the switch **Portrait** | **Whole
   photo**, a saved page the link **Whole photo** when the file carries that photo. ⋯ **More actions** offers **Edit
   portrait crop** ([A12.3](A12-portrait-and-couple-photo.md#A12.3), [A12.6](A12-portrait-and-couple-photo.md#A12.6)).
+- **From app 3.33.0:** a story from the research not yet approved has the tag **Draft** only in the person page in the
+  app's window. A saved page gives it the same way as an approved story, without the tag; so too a couple's story and
+  its link ([A7.8](#A7.8)).
 - **Controls:** the menu of a person's card, **Person page**; also from the fan.
 - **Since:** app 3.18.0
 
-<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a -->
+<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged (c.app a links app), draftTag, coupleChapterHtml draftTag, coupleChapterLinkTip · app:43794e42 src/__tests__/couple-story-chapter.test.ts · app:d3e9cdfd e2e/person-page.spec.ts -->
 
 <a id="A7.7"></a>
 ## A7.7 Saved HTML (a standalone file)
@@ -281,8 +289,12 @@ sources document the facts, a story only retells them ([A3.6](A3-evidence-in-the
   - in a GEDCOM file a story is in its own tag `_STORY`, not in a note.
 - **Controls:** person card menu → **Story**; editing a person → section **Story**.
 - **Since:** app 2.8.0; couple's stories and the person page 3.18.0; in the family book 3.19.0
+- **From app 3.33.0:** the tag **Draft** is in the app only. The saved person page ([A7.6](#A7.6)) and the family
+  pages ([A7.5](#A7.5)) give a draft the same way as an approved story, without the tag. The book does not mark a
+  draft; **Approve in the research** is only in the book's window, not in the saved file. For the story of a house
+  see [S10.14.2](S10-houses.md#S10.14.2).
 
-<!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 -->
+<!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged, draftTag, coupleChapterHtml draftTag · src/book-blocks.ts storyBlock (bez štítku, approve z extras), src/book.ts extras („on the screen only, never in a saved file“) -->
 
 <a id="A7.9"></a>
 ## A7.9 Give a family tree

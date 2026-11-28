@@ -399,8 +399,14 @@ w archiwum**).
     przetworzenie**).
 
   Ze starszym badaniem obowiązują dotychczasowe teksty.
+- **Od aplikacji 3.33.0:** partia, w której nie ma nic nowego (badanie ma już wszystkie pliki, żadnego nie przyjęło
+  ani nie odrzuciło), kończy się przy archiwum „✓ Już w Materiałach”: „Ten plik jest już w Materiałach: „<tytuł>”.”,
+  przy większej liczbie plików „Te N pliki są już w Materiałach:” / „Tych N plików jest już w Materiałach:” z najwyżej
+  pięcioma tytułami i „… i N więcej”. **Otwórz w Materiałach** otwiera okno tylko z tymi plikami (chip **Pliki: N**,
+  niezapamiętywany), a nie pustą partię. Komunikat partii w tle to „Już w Materiałach”. Partia z domu dołącza takie
+  pliki do domu ([S10.8](S10-houses.md#S10.8)). Partia z nowymi plikami kończy się jak dotąd.
 
-<!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 -->
+<!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 · 3.33.0: app:fc290355 src/ui/batch-ui.ts noteHad (media/known, GET/PUT /media, zip known, batch/done files[].known), batchNothingNew (received 0, refused 0, had > 0, materialsListOn), batchHadHtml (5 titulků), openInMaterials s filtrem souborů · src/ui/materials-ui.ts filtr souborů (čip, nepamatuje se) · strings.ts batch.hadTitle, hadOne, hadMany, hadMore, materials.fFiles -->
 
 <a id="A3.5.1"></a>
 ### A3.5.1 Okno Materiały
@@ -470,8 +476,14 @@ Każdy wiersz to odnośnik do osoby lub źródła.
   i nowsze; gdy badanie nie działa, jest według stanu, który aplikacja ostatnio znała.
 - **Obsługa:** podgląd pliku (panel, na telefonie wysunięty arkusz); okno **Załącznik**.
 - **Obowiązuje od:** aplikacja 3.30.0
+- **Od aplikacji 3.33.0 z badaniem 1.38.0:** plik, który badanie prowadzi jako materiał domu, ma w części **W drzewie**
+  za swoimi miejscami wiersze **Dom** ([S10.8](S10-houses.md#S10.8)). Dom drzewa jest linkiem („Bělokamen čp. 16 ·
+  U Horáků”): zamyka podgląd i okno **Materiały** i otwiera stronę domu. Dom, który ma tylko badanie, jest zwykłym
+  tekstem (miejscowość, numer, nazwa domu). Wiersze domów liczą się do „N miejsc”, nie zwijają się i nie mają ×;
+  przy wierszu domu nie pokazuje się „W drzewie jeszcze nigdzie.”. Tylko przy archiwum, tylko przy badaniu, które
+  wiersze domów oferuje, i nie przy plikach z drzewa genealogicznego.
 
-<!-- zdroj: app:4bf66048 src/ui/material-uses-ui.ts (prameny první, usesSourceOf, keptViaSource) · app:1ccc666c src/media-uses.ts (pořadí person, portrait, couple, event, source, excerpt) · src/ui/material-uses-ui.ts COLLAPSE_OVER=5, COLLAPSED_ROWS=4 · app:55d66efd sourceCitedAt · strings.ts materials.used, usedInTree, usedInArchive, usedType, docCitedAt, moreN, unlink, usesArchive, usesOlder, usesStale · research:a7df632d GET /material/<I…>/uses -->
+<!-- zdroj: app:4bf66048 src/ui/material-uses-ui.ts (prameny první, usesSourceOf, keptViaSource) · app:1ccc666c src/media-uses.ts (pořadí person, portrait, couple, event, source, excerpt) · src/ui/material-uses-ui.ts COLLAPSE_OVER=5, COLLAPSED_ROWS=4 · app:55d66efd sourceCitedAt · strings.ts materials.used, usedInTree, usedInArchive, usedType, docCitedAt, moreN, unlink, usesArchive, usesOlder, usesStale · research:a7df632d GET /material/<I…>/uses · 3.33.0: app:f527db12 src/ui/material-uses-ui.ts materialHouseRow (caps.houses, ne item.tree, houseNamedTitle, zavře prohlížeč a okno, openHousePage; jen výzkum: obec číslo · název nebo klíč za „|“), počet míst s domy, bez sbalení a × · src/ui/materials-ui.ts caps.houses (feature material.houses) · strings.ts materials.usedType.house · research:c29010f7 houses na GET /material a GET /material/<I…>/uses -->
 
 <a id="A3.5.4"></a>
 ### A3.5.4 Połącz z…
@@ -502,8 +514,18 @@ Każdy wiersz to odnośnik do osoby lub źródła.
   przy pliku od razu, a następne porządkowanie pliku nie zaproponuje ([A3.5.19](#A3.5.19)). Gdy badanie zapisu nie
   przyjmie, powiadomienie o błędzie zaproponuje ponowną próbę. **Cofnij** cofa tylko drzewo; osoby zapisane do
   badania zostają. Tylko przy działającym moście.
+- **Od aplikacji 3.33.0:** karta **Dom** dołącza pliki badania do domu ([S10.8](S10-houses.md#S10.8)). Pole „Szukaj
+  domu – miejscowość, numer lub nazwa” szuka wśród domów drzewa: liczba według numeru domu, słowa według miejscowości
+  i nazwy; pokazuje najwyżej 60 domów („Brak pasującego domu.”). Pod nim: „Badanie prowadzi plik jako materiał domu;
+  drzewo pozostaje bez zmian.” Po dołączeniu „Dołączono do domu <dom>.” i dom ma plik w **Materiały domu**. Gdy
+  badanie zapisu nie przyjmie, błąd zaproponuje ponowną próbę (nie przy nieprawidłowym domu i miejscowości, której
+  badanie nie ma wśród miejsc).
+  - karta jest tylko w drzewie z badaniem, które przyjmuje materiał domów, i tylko gdy wszystkie wybrane pliki są
+    plikami badania;
+  - dołączyć można tylko przy działającym moście, nie w drzewie śledzonym na żywo;
+  - zapisuje tylko do badania, drzewo się nie zmienia.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B · 3.33.0: app:223a4272 src/ui/material-attach-ui.ts attachResearchAssign (REFN osob míst, soubory s file a ne tree, bez osob výzkumu researchPersonsOf), writeAssign s caps.assign a bridgeUp, materialErrorToast s opakováním · dirigent:spec/147 K3, prace/1127-app-147-materialy (Omezení: Zpět jen strom) -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B · 3.33.0: app:223a4272 src/ui/material-attach-ui.ts attachResearchAssign (REFN osob míst, soubory s file a ne tree, bez osob výzkumu researchPersonsOf), writeAssign s caps.assign a bridgeUp, materialErrorToast s opakováním · dirigent:spec/147 K3, prace/1127-app-147-materialy (Omezení: Zpět jen strom) · 3.33.0 Dům: app:7389ceb2 src/ui/material-attach-ui.ts (cíl house: houseResearchBridge, houseFeature house.material, soubory /^I\d{1,9}$/; collectHouses, houseMatches, MAX_SOURCES 60, houseNamedTitle; bridgeUp, ne sledovaný strom; POST /houses/material {house, files}; houseMaterialsChanged; houseMaterialError) · strings.ts materials.attachTarget.house, attachHousePh, attachNoHouses, houseAttachNote, attachedToast.house -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Źródło z pliku i dowód źródła

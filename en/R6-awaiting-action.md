@@ -290,8 +290,12 @@ the computer.
 - **From research 1.37.0 (app 3.32.0):** the app itself returns to the agent a task waiting for images the agent
   manages by itself (**Retry with the agent**, also for a whole archive's group; [R6.7.3](#R6.7.3),
   [S4.4.14](S4-research-from-the-app.md#S4.4.14)).
+- **From research 1.38.0 (app 3.33.0):** **Sent** asks for the day it went out, and the day of a sent item can be
+  put right: in the app **Change the day it was sent**, in the terminal **Put right the day it was sent**
+  ([R6.7](#R6.7)). In the app the list can be narrowed to one direction or one person
+  ([S4.4](S4-research-from-the-app.md#S4.4)).
 
-<!-- zdroj: research:src/core/live.ts:60-80 (POST /waiting, /group, PUT /media X-Strom-Task, POST /places/answer, /conflict 403), :2761 · src/core/waiting.ts:78-88 actionsOf · app:src/ui/research-overview-ui.ts · strings.ts:9972, :10078, :11953 -->
+<!-- zdroj: research:src/core/live.ts:60-80 (POST /waiting, /group, PUT /media X-Strom-Task, POST /places/answer, /conflict 403), :2761 · src/core/waiting.ts:78-88 actionsOf · app:src/ui/research-overview-ui.ts · strings.ts:9972, :10078, :11953 · 1.38.0: research:fdfc1f26 src/core/live.ts POST /waiting {"do":"sent","at"}, /group (waiting.sentDay), src/cli/menu-waiting.ts ui.wait.a.redate · 1bc0d87c src/core/waiting.ts personsOf (waiting.persons) · app:6112d1eb src/research-waiting-write.ts waitingWrites (sentDay) · e4360924 src/research-waiting.ts WaitingScope, scopedWaiting -->
 
 <a id="R6.6"></a>
 ## R6.6 What only a person may do
@@ -339,8 +343,39 @@ the task to the queue, and the agent deals with it in its next work.
   without an answer the terminal says **no reply for over 30 days**.
 - **Controls:** app: **Sent**, **Back to To do** · terminal: **Sent**, `strom task sent T…`, back `--undo`.
 - **Since:** research 1.14.0
+- **From research 1.38.0:** the day the request went out:
+  - `strom task sent T… --date 2026-11-24` records the day given. The day must be in the calendar and must not be
+    still to come; a day before the task began to wait is accepted. The research refuses `--date` together with
+    `--undo`;
+  - on a task sent already, `--date` puts the day right and the task still waits. The output says the day before and
+    the command back, e.g. “T0003 sent on 2026-11-24 (was 2026-11-28) — back: strom task sent T0003 --date
+    2026-11-28”. The same day again changes nothing;
+  - a day given is the same day on every clock. A sending recorded without a day given counts as the day by this
+    computer's calendar;
+  - how long a task waits is counted in days of this computer's calendar, not in 24 hours. **no reply for over 30
+    days** appears on the 31st day after the day it was sent;
+  - menu **What waits**: after **Sent** and the confirmation it asks “The day it went out (Enter: today; e.g. 24. 11.
+    2026 or 2026-11-24)”. It takes a day with dots (without a year it is this year) and the form 2026-11-24; 0 goes
+    back and records nothing. A day that is not in the calendar or is still to come the menu says, and asks again.
+    **Sent for the whole group** asks once and gives all items of the group the same day;
+  - a sent item has the menu choice **Put right the day it was sent** (“The day it really went out …”; Enter or 0
+    goes back);
+  - a link from the app to the terminal does not ask for the day and records today, as before.
+- **From app 3.33.0 with research 1.38.0:** **Sent** in the app opens a small box **Day it went out** under the
+  button, with today's day. A day in the future is not possible (“That day is still to come.”). **Record** (or
+  Enter) records; **Cancel**, Escape or a click outside the box closes it. For a group the box says how many items
+  the day is for (“One day for 3 items”). The notice says the day the research recorded (“Recorded as sent on
+  11/24”, with **Undo**):
+  - a sent item has, after **Back to To do**, the action **Change the day it was sent**: the same box with the day so
+    far. The notice “Day sent changed to 11/24” has **Undo**, which records the day before again;
+  - a day of this year is written without the year, a day of another year whole;
+  - a day the research does not take: “Not recorded: the research does not take that day (no such day in the
+    calendar, or it is still to come).”;
+  - on a phone the same;
+  - with a research that does not take the day, **Sent** records today as before and **Change the day it was sent**
+    is not there.
 
-<!-- zdroj: research:src/commands/tasks.ts:1053-1118 task sent (task.not-waiting, task.not-sendable) · src/core/waitkind.ts:23 SENDABLE · src/cli/menu-waiting.ts:49 NO_REPLY_DAYS, :126 -->
+<!-- zdroj: research:src/commands/tasks.ts:1053-1118 task sent (task.not-waiting, task.not-sendable) · src/core/waitkind.ts:23 SENDABLE · src/cli/menu-waiting.ts:49 NO_REPLY_DAYS, :126 · 1.38.0: research:fdfc1f26 src/core/waitkind.ts sentOn (poledne UTC), sentDay, localDay, daysFrom, givenSentDay · src/commands/tasks.ts task sent --date (--undo s --date odmítnuto; op task.sent.date, „(was …) — back: strom task sent T… --date …“, „already — nothing changed“) · src/cli/menu-links.ts typedDay, askSentDay (Enter dnes, 0 zpět, ui.wait.day.bad), waitingDo (odkaz bez dotazu) · src/cli/menu-waiting.ts sentWords (days > NO_REPLY_DAYS), skupina (ui.wait.group.sent.on.done), ui.wait.a.redate, ui.wait.redate.day, ui.wait.redate.done · assets/lang/cs.json ui.wait.sent.day, ui.wait.sent.on.done · 79b5e917 test/cli menu Co čeká na pevných hodinách · strom help task sent · app:6112d1eb, 0c9d69b8 src/research-waiting-write.ts waitingWrites (waiting.sent + waiting.sentDay), src/ui/waiting-sent-day.ts (dnešek, max dnes, Enter, Escape, klik mimo), src/ui/research-waiting-write-ui.ts askWaitingSentDay, markWaitingSent (sentToast, undo), changeWaitingSentDay (sentDayChangedToast, undo s předchozím dnem), markWaitingGroupSent (groupSentToast), waitingDayShown · src/ui/phone-research-ui.ts · strings.ts live.waitingWrite.sentDayTitle, sentDayGroup, sentDaySave, sentDayCancel, sentDayFuture, changeSentDay, sentDayChangedToast, sentToast, groupSentToast, badDate -->
 
 <a id="R6.7.1"></a>
 ### R6.7.1 An answer as a file or in words

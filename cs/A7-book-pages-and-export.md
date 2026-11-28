@@ -147,11 +147,13 @@ Kniha rodu je kniha ke čtení od začátku: rodokmen, rodiny po generacích, vy
 - **Od aplikace 3.30.0:** část **Výřezy zápisů a fotky** dává do kapitoly rodiny i fotku svazku nad události páru;
   strom, jehož jediné obrázky jsou fotky svazků, tu část nabídne ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
 - **Od aplikace 3.33.0:** výběr **Dům** (kniha o jednom domě), část **Domy** a **Rejstřík domů**
-  ([S10.10](S10-houses.md#S10.10)); v části **Domy** vyprávění o domě (koncept se štítkem), fotky domu a obce
+  ([S10.10](S10-houses.md#S10.10)); v části **Domy** vyprávění o domě (i koncept, bez štítku), fotky domu a obce
   a s volbou **Poloha domů** výřez mapy ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
-  [S10.3.4](S10-houses.md#S10.3.4)).
+  [S10.3.4](S10-houses.md#S10.3.4)). V **Části knihy** je u části **Domy** přepínač **Vyprávění o domech se
+  žijícími osobami** (výchozí zapnutý); vypnutý vynechá vyprávění, ve kterém vystupuje žijící osoba. Nabídne se, jen
+  když takové vyprávění v knize je.
 
-<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 -->
+<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 · 3.33.0 vyprávění o domě: app:28099151 src/book.ts houseStoryForOutput, src/book-houses.ts (bez štítku), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving, src/ui/book-ui.ts book-house-stories, strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint -->
 
 <a id="A7.4.1"></a>
 ### A7.4.1 Výběr osob do knihy a stránek
@@ -185,11 +187,13 @@ příjmení a obcí.
 - Ochrana žijících a prameny podle [A7.2](#A7.2); výchozí Iniciály + rok narození.
 - **Platí od:** Stránky rodu aplikace 3.20.0; Stránky stromu aplikace 3.21.0
 - **Od aplikace 3.33.0:** volba **Domy**: domy s historií, rejstřík domů a stránka každého domu
-  ([S10.10](S10-houses.md#S10.10)), u domu i vyprávění (koncept se štítkem), fotky domu a obce a výřez mapy
+  ([S10.10](S10-houses.md#S10.10)), u domu i vyprávění (i koncept, bez štítku), fotky domu a obce a výřez mapy
   s polohou ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
-  [S10.3.4](S10-houses.md#S10.3.4)).
+  [S10.3.4](S10-houses.md#S10.3.4)). U volby **Domy** je přepínač **Vyprávění o domech se žijícími osobami** (výchozí
+  zapnutý); vypnutý vynechá vyprávění, ve kterém vystupuje žijící osoba. Nabídne se, jen když stránky domů takové
+  vyprávění mají. Koncept vyprávění osoby a páru je ve stránkách bez štítku **Návrh** ([A7.8](#A7.8)).
 
-<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 -->
+<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 · 3.33.0 vyprávění: app:28099151 src/family-pages.ts houseStoriesLiving, src/family-pages-html.ts setStoryHouses, coupleChapterHtml bez draftTag, src/house-page.ts storyLiving, src/ui/book-ui.ts syncPages book-house-stories, src/book-memory.ts PagesChoices.houseStoriesLiving -->
 
 <a id="A7.5.1"></a>
 ### A7.5.1 Dějiny na časové ose rodu
@@ -225,10 +229,13 @@ na mapě, osu života s dějinami, výřezy z matrik a prameny a oddíl **Pro ba
   svazku“). Zvětšení portrétu s originálem má přepínač **Portrét** | **Celá fotka**, uložená stránka odkaz **Celá
   fotka**, když soubor tu fotku nese. ⋯ **Další akce** nabízí **Upravit výřez portrétu**
   ([A12.3](A12-portrait-and-couple-photo.md#A12.3), [A12.6](A12-portrait-and-couple-photo.md#A12.6)).
+- **Od aplikace 3.33.0:** vyprávění od výzkumu, které ještě není schválené, má štítek **Návrh** jen ve stránce osoby
+  v okně aplikace. Uložená stránka ho dá stejně jako schválené vyprávění, bez štítku; totéž vyprávění páru a jeho
+  odkaz ([A7.8](#A7.8)).
 - **Ovládání:** nabídka karty osoby, **Stránka osoby**; také z vějíře.
 - **Platí od:** aplikace 3.18.0
 
-<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a -->
+<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged (c.app a links app), draftTag, coupleChapterHtml draftTag, coupleChapterLinkTip · app:43794e42 src/__tests__/couple-story-chapter.test.ts · app:d3e9cdfd e2e/person-page.spec.ts -->
 
 <a id="A7.7"></a>
 ## A7.7 Uložené HTML (samostatný soubor)
@@ -267,8 +274,12 @@ prameny, vyprávění je jen převypráví ([A3.6](A3-evidence-in-the-app.md#A3.
   - v souboru GEDCOM je vyprávění ve vlastní značce `_STORY`, ne v poznámce.
 - **Ovládání:** nabídka karty osoby → **Vyprávění**; úprava osoby → oddíl **Vyprávění**.
 - **Platí od:** aplikace 2.8.0; vyprávění páru a stránka osoby 3.18.0; v knize rodu 3.19.0
+- **Od aplikace 3.33.0:** štítek **Návrh** je jen v aplikaci. Uložená stránka osoby ([A7.6](#A7.6)) a stránky rodu
+  ([A7.5](#A7.5)) dají koncept stejně jako schválené vyprávění, bez štítku. Kniha koncept neoznačuje; **Schválit ve
+  výzkumu** je jen v okně knihy, ne v uloženém souboru. Vyprávění o domě viz
+  [S10.14.2](S10-houses.md#S10.14.2).
 
-<!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 -->
+<!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged, draftTag, coupleChapterHtml draftTag · src/book-blocks.ts storyBlock (bez štítku, approve z extras), src/book.ts extras („on the screen only, never in a saved file“) -->
 
 <a id="A7.9"></a>
 ## A7.9 Darovat rodokmen

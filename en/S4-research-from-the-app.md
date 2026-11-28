@@ -714,7 +714,12 @@ got. In app 3.21.2 directions are only read; every change is confirmed in the re
   direction** ([S4.3.3](#S4.3.3)). The row of a direction with a run of its own says “Agent at work: Claude” with the
   link **In Now ›**, which unfolds **Now** and highlights the run's block ([S4.1.8](#S4.1.8)). The conversation
   **Work on this direction** has the hint “A conversation with the agent about the direction in the terminal”.
+- **From app 3.33.0 with research 1.38.0:** when the research says the direction of the waiting items, the count in
+  a direction's row is a link (“2 awaiting an answer ›”, also in a narrow window and on a phone). It opens
+  **Awaiting action** narrowed to that direction ([S4.4](#S4.4)). Without items of that direction, or with an older
+  research, the count is text as before.
 
+<!-- zdroj: app:e4360924 src/ui/research-directions-ui.ts directionWaitingEl (scopedWaiting kind line → odkaz dirWaitingOpen, jinak dirWaiting), openWaitingScope · src/research-waiting.ts WaitingScope, scopedWaiting (w.research) · strings.ts live.dirWaitingOpen, dirWaiting · research:1bc0d87c src/core/waiting.ts (research u položky) -->
 <!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume · 3.22.0: research-directions-ui.ts:703 dirEnded, :852 dirNow, :878 dirFoundIn, :720 sheet; strings.ts live.dirLimitGen, dirLimitBefore, dirFound* -->
 
 <a id="S4.3.1"></a>
@@ -754,8 +759,14 @@ nothing is paid.
   undoes only the move, the direction stays: “Move undone · 7 tasks back in the wider direction”; when the tasks have
   changed meanwhile, **Nothing to undo.** Without a move (the box unticked, nothing to move, an older research) the
   bubble is as before; on a phone without **Work on this direction**.
+- **From app 3.33.0:** in the **Person** picker (**Results**, **Focus**, **Recent**) a row without years, or with a
+  name another row has too, gets a grey line under the name saying who it is. Tried in order: the parents (“son of …”,
+  “daughter of …”), a partner (“⚭ …”), the birthplace, residence or occupation, and last the generation from the
+  focus (“generation −2”, “focus generation”). In a group of the same name it is the first detail no other row of the
+  group has; if there is none, the first known one, and with no details “no other details”. Only details the tree
+  already shows; a long line is cut short and shown whole in its tooltip.
 
-<!-- zdroj: app:HEAD src/ui/research-directions-ui.ts:372 DIRECTIONS_WRITE_SINCE, :628 · src/research-directions-write.ts createDirection, editDirection, setDirectionState, writeDirectionOrder · src/ui/research-actions-ui.ts:1015-1024, :1067 openDirectionForm · strings.ts live.dirNew, dirFormNew, dirFree, dirEditFree, dirLocked, dirOrderWeight, dirOrderStrict, dirArchive, dirPhoneOnly, dirBridgeDown, dirOldResearch, dirBusy, dirRetry, dirDupActive, dirShowIt, dirAnyway · research:src/core/live.ts /directions -->
+<!-- zdroj: app:HEAD src/ui/research-directions-ui.ts:372 DIRECTIONS_WRITE_SINCE, :628 · src/research-directions-write.ts createDirection, editDirection, setDirectionState, writeDirectionOrder · src/ui/research-actions-ui.ts:1015-1024, :1067 openDirectionForm · strings.ts live.dirNew, dirFormNew, dirFree, dirEditFree, dirLocked, dirOrderWeight, dirOrderStrict, dirArchive, dirPhoneOnly, dirBridgeDown, dirOldResearch, dirBusy, dirRetry, dirDupActive, dirShowIt, dirAnyway · research:src/core/live.ts /directions · 3.33.0: app:878ea5e8 src/person-disambiguation.ts personHints, hintLine, generationsFrom · src/ui/direction-form-ui.ts renderDirectionFormPicks · strings.ts personPicker.distJob, distGeneration, distChild, distNone -->
 
 <a id="S4.3.2"></a>
 ### S4.3.2 Work outside the directions by branches
@@ -838,7 +849,14 @@ and that starts the run ([R7.10.4](R7-when-the-agent-works.md#R7.10.4)). The age
 - **Controls:** app: **Research overview → Directions**, the direction detail or **⋯**. Terminal: `strom run
   --research G…`, the menu **Let the agent work on its own** ([R7.10](R7-when-the-agent-works.md#R7.10)).
 - **Since:** app 3.31.0 (research 1.36.0)
+- **From app 3.33.0 with research 1.38.0:** a direction with an empty queue whose tasks wait in **Awaiting action**
+  says why it stands instead of “Nothing in the direction's queue.”: “Direction stalled: 3 tasks await action ›”, or,
+  when all wait for images, “Direction stalled: 3 tasks wait for images ›”. In the direction's detail it is a link
+  into **Awaiting action** narrowed to that direction ([S4.4](#S4.4)); in the **⋯** menu it stands as the reason at
+  the unavailable item. In a narrow window and on a phone (the overview as a sheet) the detail does not have this
+  action.
 
+<!-- zdroj: app:e4360924 src/ui/research-directions-ui.ts lineRunOffer (block empty + scopedWaiting kind line → held s waiting; waitingForImages → lineRunStandsImages), lineRunControl (odkaz research-direction__run-waiting → openWaitingScope) · strings.ts live.lineRunStands, lineRunStandsImages · e2e/live-runs.spec.ts -->
 <!-- zdroj: app:4de0835a src/ui/research-directions-ui.ts (managedDirectionDetail blok běhu, openManagedDirectionMenu položka před dirWork, managedDirectionMeta lineRunWorkingMeta + lineRunInNow, lineRunWhy) · src/research-runs.ts lineRunBlock (ended, running, canStart/why z mostu, paused > empty > limit), atRunLimit · src/ui/queue-work-dialog.ts showLineRunDialog, syncLineRunDialog (lineRunKicker, lineRunAgent, lineRunAgentDefault, lineRunAgentKept, lineRunAutoHint, lineRunRest, runsAddUp, lineRunStart, lineRunConfirm) · beginRunWork (work?research=G&agent=), lineRunStarting, lineRunStartingSub, lineRunNotStarted · strings.ts live.lineRun*, runsLimitReached, runsSettingsLink, dirWorkHint · app:docs/ZADANI_DEV_beh-po-liniich.md §1, §2, Kolo 2 B · dirigent:spec/126 K2.1, K2.2, K2.4, K2.7, K2.8 · research: researches[].run/canStart/why/agent, agents[] -->
 
 <a id="S4.4"></a>
@@ -897,7 +915,24 @@ with in the app and what only in the research is said in [R6.5](R6-awaiting-acti
   a mark and, in the open item, a fix in one step ([S4.4.8](#S4.4.8), [S4.4.9](#S4.4.9)).
 - **From app 3.32.0 with research 1.37.0:** an item that can be returned to the agent has the line **Now** and the
   button **Retry with the agent**, an archive's band **Retry all with the agent** ([S4.4.14](#S4.4.14)).
+- **From app 3.33.0 with research 1.38.0:** **Sent** asks for the day, and a sent item has **Change the day it was
+  sent** ([R6.7](R6-awaiting-action.md#R6.7)).
+- **From app 3.33.0 with research 1.38.0:** what waits at a direction and at a person:
+  - **Awaiting action** can be narrowed to one direction or one person: from a direction's row and from “Direction
+    stalled: … ›” ([S4.3](#S4.3), [S4.3.3](#S4.3.3)), for a person with the button “Awaiting action · 2 ›” on the
+    person page in the section **For researchers**. Above the list stands the chip “Direction: Ancestors of Jan
+    Horák ✕” or “Person: Jan Horák ✕” (✕ = **Remove filter**);
+  - the narrowing applies before the choice of kind, phase, place and the search. It holds until ✕ or until the
+    overview closes; the overview's window ([S4.1.6](#S4.1.6)) takes it from the main window. When nothing waits in
+    the narrowing: “Nothing awaits here now.”;
+  - a task about several people counts at each of them: the mark **!** on the card, the count in **Answer · N
+    waiting** and the person's items. Before, only a task about one person. A person merged as a duplicate counts at
+    the one it went into; a retracted person does not;
+  - the button on the person page is only in the app and only while the research is followed live. It closes the
+    page and opens the overview with the person's items in both phases;
+  - with an older research (no direction and people at the items) all as before.
 
+<!-- zdroj: app:e4360924 src/research-waiting.ts WaitingScope (line/person), waitingInScope, scopedWaiting, waitingNames (person + personIds) · src/ui/research-overview-ui.ts štítek waitingScopeLine/waitingScopePerson, waitingScopeClear, waitingScopeNone (scope před druhy, fázemi, místy a hledáním) · src/ui/overview-window-ui.ts, overview-window-view.ts (okno se ptá hlavního) · src/ui/research-ui.ts researchCardInfo, todoWaiting (person a personIds jednou) · src/ui/person-page-ui.ts (research:waiting → closePersonPage, openWaitingScope kind person) · src/person-page.ts waitingOpen (jen groups.research, c.app) · src/research-link.ts persons · strings.ts live.waitingScope*, personPage waitingOpen · e2e/card-waiting-answer.spec.ts · research:1bc0d87c src/core/waiting.ts personsOf (subject, pořadí, bez duplicit; mergedInto, retracted vynechán; bez nich pole chybí), src/core/live.ts BRIDGE_FEATURES waiting.persons · app:6112d1eb (den odeslání) -->
 <!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->

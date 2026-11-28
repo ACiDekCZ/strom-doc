@@ -330,13 +330,16 @@ w terminalu, z tymi samymi granicami.
   zwraca wtedy przy załatwionym pliku `left` także z powodem `accepted` lub `refused`, a `GET /material/sort/<id>`
   także decyzje (`decided`). Decyzję badanie odrzuci przy nieznanym porządkowaniu (`sort.none`), porządkowaniu, które
   jeszcze się nie skończyło (`sort.state`), pliku spoza porządkowania lub innym stanie (`material.body`) i zapisie,
-  który nie przyszedł z aplikacji (`app.only`).
+  który nie przyszedł z aplikacji (`app.only`). Także `material.houses`: `GET /material` i `GET /material/<I…>/uses`
+  podają przy pliku, który jest materiałem domu, `houses` z listą domów (`id` A… i `key`, te same co w wierszu domu
+  w `GET /houses`). Domu wycofanego i zapisu miejscowości na liście nie ma; plik bez domu pola `houses` nie ma. Według
+  tego aplikacja pokazuje dom w **Gdzie użyto** ([A3.5.3](A3-evidence-in-the-app.md#A3.5.3)).
 - **Pilnuje kod:** zmiana jest cała albo żadna; zajęte badanie odpowie, że nic nie zmieniło. Porządkowanie odrzuci
   bez agenta, z wyczerpanym limitem czytania, z pełną kolejką i gdy agent teraz nie może pracować.
 - **Obsługa:** aplikacja: okno **Materiały**, z działającym mostem ([S1.1](S1-connecting-app-and-research.md#S1.1)).
 - **Obowiązuje od:** badanie 1.35.0
 
-<!-- zdroj: research:0cc2cfca src/core/live.ts (GET /material uses.of, left {at, sort, why, said}, sameAs; POST /material/sort run 51–1500, GET/POST /material/sort/<run-…>[/cancel]; POST /material/delete dryRun → impacts + confirm, chyby material.delete-changed, material.body, material.file, material.readonly, material.busy, app.only; BRIDGE_FEATURES material.sourceOf, left, sameAs, sortRun, delete) · research:src/core/live.ts:134-160 (GET /material, /material/<I…>/uses, POST /material/assign|hide|edit|sort, chyby material.body|date|file|readonly|busy) · src/core/live-sort.ts (sort.none, sort.limit, sort.queue, sort.not-ready) · research:a7df632d, 87376d11, 7754968e · 1.38.0: research:c673ac14 src/core/live-sort.ts decided (403 app.only, 404 sort.none, 400 material.body, 409 sort.state), src/core/live.ts BRIDGE_FEATURES material.accepted, material.decided, AGENT_FEATURES material.decided, doc GET /material left why accepted|refused · dirigent:spec/147 K2 -->
+<!-- zdroj: research:0cc2cfca src/core/live.ts (GET /material uses.of, left {at, sort, why, said}, sameAs; POST /material/sort run 51–1500, GET/POST /material/sort/<run-…>[/cancel]; POST /material/delete dryRun → impacts + confirm, chyby material.delete-changed, material.body, material.file, material.readonly, material.busy, app.only; BRIDGE_FEATURES material.sourceOf, left, sameAs, sortRun, delete) · research:src/core/live.ts:134-160 (GET /material, /material/<I…>/uses, POST /material/assign|hide|edit|sort, chyby material.body|date|file|readonly|busy) · src/core/live-sort.ts (sort.none, sort.limit, sort.queue, sort.not-ready) · research:a7df632d, 87376d11, 7754968e · 1.38.0: research:c673ac14 src/core/live-sort.ts decided (403 app.only, 404 sort.none, 400 material.body, 409 sort.state), src/core/live.ts BRIDGE_FEATURES material.accepted, material.decided, AGENT_FEATURES material.decided, doc GET /material left why accepted|refused · dirigent:spec/147 K2 · research:c29010f7 src/core/houses.ts houseRefs (keyOfHouse, bez retracted a h.town), src/core/material.ts Input.houses, src/core/live.ts BRIDGE_FEATURES material.houses, test/cli/houses-bridge.test.ts · CHANGELOG.cs.md 1.38.0 -->
 
 <a id="R11.5.5"></a>
 ### R11.5.5 Przebieg porządkowania z aplikacji

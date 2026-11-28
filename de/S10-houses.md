@@ -212,15 +212,15 @@ Familienseiten schützen die Personen der letzten rund 100 Jahre.
   werden ausgelassen, bis ein Mensch sie freigibt (**In Ausgaben zeigen**).
 - **Lage** nur bei einem Haus ohne Personen der letzten rund 100 Jahre und nur, wenn sie nicht von Hand ausgeblendet
   ist ([S10.3.4](#S10.3.4)); bei einem Haus mit solchen Personen auch kein Hausname.
-- **Erzählung über das Haus** freigegeben oder als Entwurf mit dem Etikett „Entwurf, wartet auf Freigabe“, und nur
-  ganz: eine Erzählung, die eine geschützte Person nennt, wird ganz ausgelassen ([S10.14.2](#S10.14.2)).
+- **Erzählung über das Haus** immer ganz, freigegeben oder als Entwurf, ohne das Etikett des Entwurfs. Personen der
+  letzten rund 100 Jahre und Einträge, die die Seite ausblendet, lassen sie nicht weg ([S10.14.2](#S10.14.2)).
 - Die Hausseite sagt, was in den Ausgaben fehlt und warum: „In Ausgaben (HTML, Buch) werden N Ereignisse und die Lage
   des Hauses nicht gezeigt (Menschen der letzten ~100 Jahre).“, „… werden N Ereignisse nicht gezeigt; die Lage des
   Hauses ist von Hand ausgeblendet.“
 - **Bedienung:** App: Hausseite → **HTML speichern**; bei einem Ereignis **In Ausgaben zeigen**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 Die Zeitleiste aus den Einträgen des Stammbaums
@@ -611,19 +611,28 @@ als Material „eigene Recherche“ gespeichert, und eine Übernahmeaufgabe trä
 - **Material zum Haus** (eine Datei oder eine Erinnerung): **Material anhängen…**. Ein Zeitzeuge mit Namen nur mit
   Einwilligung. Bei eingeschalteter Hausgeschichte legt es eine Aufgabe des Hauses an (bei einem fertigen Haus eine
   Aufgabe zum Aussehen, [S10.7](#S10.7)); bei ausgeschalteter wird es nur gespeichert.
+- **Eine Datei, die die Forschung schon hat:** ein Stapel aus einem Haus schickt sie nicht noch einmal in die
+  Forschung. Nach dem Abschluss des Stapels ordnet die App sie selbst dem Haus zu, höchstens 500 Dateien auf einmal.
+  Nimmt das Haus die Dateien nicht an, sagt es das Ende des Stapels: „Was die Forschung schon hatte, ist dem Haus
+  <Haus> nicht zugeordnet: <Grund>“. Ein Stapel, in dem nichts Neues ist, endet mit „Bereits in Materialien“ mit dem
+  Titel der Datei und „Dem Haus <Haus> zugeordnet.“ ([A3.5](A3-evidence-in-the-app.md#A3.5)).
+- **Eine Datei aus den Materialien:** eine Datei der Forschung lässt sich auch im Fenster **Materialien** einem Haus
+  zuordnen: **Verknüpfen mit…** → **Haus** ([A3.5.4](A3-evidence-in-the-app.md#A3.5.4)). Dann steht sie in
+  **Hausmaterialien** beim Haus im Fenster **Häuser** und in **Wo verwendet** bei der Datei
+  ([A3.5.3](A3-evidence-in-the-app.md#A3.5.3)).
 - **Grenzen:**
   - `.html`, `.htm` und Dateien in Unterordnern nimmt sie nicht, sie führt sie nur auf;
   - die Übernahmeaufgabe wird bei ausgeschalteter Hausgeschichte nicht zurückgestellt;
   - ein Agent ohne Terminal übernimmt eine unklare Datei nicht, er gibt die Befehle zum Ergänzen zurück;
   - Anhänge (Bilder, Kartendaten) nur mit freier Lizenz.
 - **Bedienung:** App: ⋯ beim Haus → **Recherche aus Datei übernehmen…** (öffnet das Terminal), **Material
-  anhängen…**; Terminal: `strom house import <Datei|Ordner> [--house <Datei>=<Haus>] [--skip <Datei>]`,
+  anhängen…**; Fenster **Materialien** → **Verknüpfen mit…** → **Haus**; Terminal: `strom house import <Datei|Ordner> [--house <Datei>=<Haus>] [--skip <Datei>]`,
   `strom house add material <Haus> --input I…` oder `--memory "<Text>"`.
 - **Gilt seit:** Forschung 1.38.0, App 3.33.0
 - **Prüft der Code:** Rückfrage bei Unklarem, Einwilligung des Zeitzeugen, Übernahmeaufgabe. **Nur Methodik:**
   Sicherheit aus dem Text, Lizenzen der Anhänge.
 
-<!-- zdroj: research:src/commands/house.ts import 927, material 809–830 · src/core/houseimport.ts · assets/terms/houses.json (ručně, badatelna) · cs.json ui.house.import.*, house.takeover(.why), ui.link.what.house.import · src/core/houseauto.ts houseTaskForMaterial (top false) · assets/method/house.md house-takeover · app:strings.ts houses.st.takeover, takeoverNote · commity 5703ae19, 4a6869fd, f766c63f · nálezy: materiál k domu nejde na vršek (komentář × kód), licence materiálu jen metodika -->
+<!-- zdroj: research:src/commands/house.ts import 927, material 809–830 · src/core/houseimport.ts · assets/terms/houses.json (ručně, badatelna) · cs.json ui.house.import.*, house.takeover(.why), ui.link.what.house.import · src/core/houseauto.ts houseTaskForMaterial (top false) · assets/method/house.md house-takeover · app:strings.ts houses.st.takeover, takeoverNote · commity 5703ae19, 4a6869fd, f766c63f · nálezy: materiál k domu nejde na vršek (komentář × kód), licence materiálu jen metodika · 1128: app:fc290355 src/ui/batch-ui.ts noteHad (media/known, PUT /media, batch/done known, zip known), batchHadToHouse (POST /houses/material po 500, house.material, hadHouseFailed), batchNothingNew, batchHadHtml · strings.ts batch.hadTitle, hadOne, hadHouse, hadHouseFailed · app:7389ceb2 src/ui/material-attach-ui.ts (záložka Dům) · src/ui/house-material-ui.ts renderHouseMaterialsHtml (houses.materials) · app:f527db12 src/ui/material-uses-ui.ts materialHouseRow -->
 
 <a id="S10.9"></a>
 ## S10.9 Ein Haus mit dem Agenten besprechen
@@ -669,17 +678,19 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
     rund 100 Jahre ([S10.3.4](#S10.3.4)); sonst „Ereignisse nach <Jahr> und die Lage des Hauses werden im Buch nicht
     angegeben.“; heikle Ereignisse und Ereignisse der Forschung der letzten rund 100 Jahre lässt es aus
     ([S10.3.2](#S10.3.2));
-  - die Seiten geben über Häuser nichts aus den letzten rund 100 Jahren;
+  - die Seiten geben über Häuser nichts aus den letzten rund 100 Jahren, außer der Erzählung über das Haus;
+  - eine Erzählung mit einer lebenden Person lassen Buch und Seiten nur bei ausgeschaltetem **Erzählungen über Häuser
+    mit lebenden Personen** weg ([S10.14.2](#S10.14.2));
   - die Seiten nehmen Häuser mit Geschichte nach der Schwelle ([S10.1](#S10.1)), das Buch auch Häuser mit fertiger
     Geschichte aus der Forschung;
   - die Auswahl **Haus** nur in einem Stammbaum mit einem Haus mit Nummer und nur für das Buch; das Geschenk
     ([A7.9](A7-book-pages-and-export.md#A7.9)) und das Bild haben keine Häuser.
 - **Bedienung:** App: Export **Familienbuch** → **Haus**, Teil **Häuser**, **Häuserverzeichnis**, **Lage der Häuser**,
-  **Fotos der Häuser aus dem Web**; Familienseiten und Seiten des Stammbaums → **Häuser**, **Fotos der Häuser aus dem
-  Web**.
+  **Fotos der Häuser aus dem Web**, **Erzählungen über Häuser mit lebenden Personen**; Familienseiten und Seiten des
+  Stammbaums → **Häuser**, **Fotos der Häuser aus dem Web**, **Erzählungen über Häuser mit lebenden Personen**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories -->
 
 <a id="S10.11"></a>
 ## S10.11 Häuser an anderen Stellen der App
@@ -696,7 +707,8 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
 | Statistik | Thema **Häuser**; am längsten eine Familie, Einheirat ([A13](A13-tree-statistics.md)) |
 | Suche | Gruppe **Häuser** über den Personen (höchstens 5); bei einer über die Hausnummer gefundenen Person **Haus ›** |
 | Warteschlange und **Wartet auf Bearbeitung** | Aufgaben **Hausgeschichte <Nummer>, <Ort>**, **Recherche für Haus <Nummer> übernehmen**, **Ortsgerüst <Ort> für Häuser**; **Hausseite ›**; eine Frage zum Haus mit „Haus <Nummer> ›“; eine neue Fassung der Erzählung „Die Erzählung über Haus <Nummer> wartet auf Freigabe“ ([S10.14](#S10.14)) |
-| Erzählung einer Person | Link **Haus <Nummer> ›** auf ein Haus mit freigegebener Erzählung ([S10.14](#S10.14)) |
+| Fenster **Materialien** | **Verknüpfen mit…** → **Haus** ordnet eine Datei der Forschung einem Haus zu ([A3.5.4](A3-evidence-in-the-app.md#A3.5.4)); **Wo verwendet** hat die Zeile **Haus** mit einem Link auf die Hausseite ([A3.5.3](A3-evidence-in-the-app.md#A3.5.3)) |
+| Erzählung einer Person | in der App Link **Haus <Nummer> ›** auf ein Haus mit freigegebener Erzählung ([S10.14](#S10.14)); im Buch und in den Familienseiten auch auf einen Entwurf ([S10.14.2](#S10.14.2)) |
 | GEDCOM | Datensatz `_HOUSE` nur für ein Haus mit Namen oder ein zusammengeführtes (Ort, Nummern mit Datum, Name, „dasselbe Haus“); Trennung, Lage, Ausblenden der Lage von Hand und freigegebene Ereignisse nur in JSON; die Erzählung über das Haus trägt GEDCOM nicht |
 
 - **Die Forschung und `_HOUSE`:** `strom sync` liest Häuser aus dem GEDCOM der App als Wort eines Menschen: Name,
@@ -704,7 +716,7 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
   Die Forschung schreibt `_HOUSE` nicht in die Datei.
 - **Gilt seit:** App 3.33.0, Forschung 1.38.0
 
-<!-- zdroj: app:src/person-page.ts, src/person-houses.ts (integration.ppHouses, 4bb8b52e) · src/rod-timeline.ts, src/house-events.ts (integration.chip, f5b46c5b) · src/map-houses.ts, src/ui/map-houses-ui.ts (houses.mapLayer, 30 px, mapMigOff; 20f6ef91, 31130150, cef1ed0f) · src/ui/house-request-ui.ts familyHouses.* (fa5df8fb) · Tabulka integration.tableCol (fc7aced0) · ruleLivedIn, ruleYears (9cfd8ef1) · src/ui/tree-stats-ui.ts statsHouses, statsLongest, statsMarriedIn (6acc0762) · src/house-search.ts searchGroup, searchHouse (dfe6c13d) · src/house-tasks.ts taskHouse, taskImport, taskSkeleton (4e322dec) · src/ged-houses.ts (d3fd1e86) · research:src/core/housesync.ts planHouses, applyHouseChange (3fbde6b7), ui.sync.house.* · nález: _HOUSE jen jedním směrem -->
+<!-- zdroj: app:src/person-page.ts, src/person-houses.ts (integration.ppHouses, 4bb8b52e) · src/rod-timeline.ts, src/house-events.ts (integration.chip, f5b46c5b) · src/map-houses.ts, src/ui/map-houses-ui.ts (houses.mapLayer, 30 px, mapMigOff; 20f6ef91, 31130150, cef1ed0f) · src/ui/house-request-ui.ts familyHouses.* (fa5df8fb) · Tabulka integration.tableCol (fc7aced0) · ruleLivedIn, ruleYears (9cfd8ef1) · src/ui/tree-stats-ui.ts statsHouses, statsLongest, statsMarriedIn (6acc0762) · src/house-search.ts searchGroup, searchHouse (dfe6c13d) · src/house-tasks.ts taskHouse, taskImport, taskSkeleton (4e322dec) · src/ged-houses.ts (d3fd1e86) · research:src/core/housesync.ts planHouses, applyHouseChange (3fbde6b7), ui.sync.house.* · nález: _HOUSE jen jedním směrem · 1128: app:7389ceb2 src/ui/material-attach-ui.ts (attachTarget.house), app:f527db12 src/ui/material-uses-ui.ts materialHouseRow, app:28099151 src/book.ts storyHouses, src/ui/house-page-ui.ts houseHasStory (status final) -->
 
 <a id="S10.12"></a>
 ## S10.12 Die Befehle `strom house`
@@ -781,7 +793,8 @@ sie keine Quelle: sie erzählt nur nach, was die Forschung belegt hat.
 - **Hausseite**, Abschnitt **Erzählung** gleich nach **Auf einen Blick**:
   - der freigegebene Text mit Überschrift und Quellen;
   - ein Entwurf mit dem Etikett „Entwurf, wartet auf Freigabe“ und der Schaltfläche **In der Forschung freigeben**
-    (Link ins Terminal);
+    (Link ins Terminal); Etikett und Schaltfläche gibt es nur in der App, Ausgaben geben den Entwurf ohne sie
+    ([S10.14.2](#S10.14.2));
   - eine neue Fassung neben der freigegebenen: „Eine neue Fassung der Erzählung (Tag) wartet auf Freigabe; die Seite
     zeigt den freigegebenen Text.“ mit **Vergleichen**;
   - solange sie geschrieben wird, der Stand der Aufgabe: „Die Erzählung über das Haus steht in der Warteschlange der
@@ -833,19 +846,35 @@ sie keine Quelle: sie erzählt nur nach, was die Forschung belegt hat.
 <a id="S10.14.2"></a>
 ### S10.14.2 Die Erzählung in Ausgaben und der Schutz von Personen
 
-- Das Familienbuch (Teil **Häuser**), die gespeicherte Hausseite und die Familienseiten zeigen den freigegebenen Text.
-  Solange die Erzählung nicht freigegeben ist, zeigen sie den Entwurf mit dem Etikett „Entwurf, wartet auf Freigabe“,
-  ohne Schaltflächen. Bei einer neuen Fassung neben der freigegebenen kommt der freigegebene Text in die Datei, die neue
-  Fassung nicht. Im Buch steht die
-  Erzählung vor den Abschnitten des Hauses, und ihre Quellen sind unter den nummerierten Anmerkungen des Kapitels.
-- Die Ausgabe lässt die Erzählung **ganz** aus (der Text wird nicht umgeschrieben, auch ein Entwurf), wenn sie einen
-  Lebenden, eine Person der letzten rund 100 Jahre oder eine Person der Forschung ohne Eintrag über den Tod nennt, die
-  der Stammbaum nicht kennt, oder wenn sie auf einem Eintrag des Hauses beruht, den die Ausgabe ausblendet
-  ([S10.3.2](#S10.3.2)).
+- Das Familienbuch (Teil **Häuser**), die gespeicherte Hausseite und die Familienseiten geben den freigegebenen Text.
+  Solange die Erzählung nicht freigegeben ist, geben sie den Entwurf genauso wie einen freigegebenen Text: ohne das
+  Etikett „Entwurf, wartet auf Freigabe“, ohne anderes Aussehen und ohne Schaltflächen. Das Etikett, **In der
+  Forschung freigeben** und **Vergleichen** gibt es nur in der App. Bei einer neuen Fassung neben der freigegebenen
+  kommt der freigegebene Text in die Datei, die neue Fassung nicht. Im Buch steht die Erzählung vor den Abschnitten
+  des Hauses, und ihre Quellen sind unter den nummerierten Anmerkungen des Kapitels.
+- Die Erzählung kommt ganz in die Ausgabe oder gar nicht; der Text wird nicht umgeschrieben. Personen der letzten rund
+  100 Jahre, Personen der Forschung, die der Stammbaum nicht kennt, und Einträge des Hauses, die die Ausgabe
+  ausblendet ([S10.3.2](#S10.3.2)), lassen sie nicht weg. Der übrige Schutz des Hauses gilt weiter.
+- **Die gespeicherte Hausseite** enthält die Erzählung immer.
+- **Das Familienbuch und die Familienseiten** haben den Schalter **Erzählungen über Häuser mit lebenden Personen**
+  (standardmäßig an, gemerkt mit den übrigen Optionen des Dialogs): „Ein: Jede Erzählung über ein Haus kommt hinein.
+  Aus: Eine Erzählung, in der eine lebende Person vorkommt, wird weggelassen.“
+  - eine lebende Person ist eine Person des Stammbaums, die die App für lebend hält
+    ([A7.1](A7-book-pages-and-export.md#A7.1)); eine Person der Forschung, die der Stammbaum nicht kennt, zählt nicht
+    als lebend;
+  - der Schalter gilt unabhängig von der Einstellung zum Schutz Lebender und lässt nur eine solche Erzählung weg,
+    sonst nichts;
+  - Buch: in **Teile des Buchs** unter **Lage der Häuser** und **Fotos der Häuser aus dem Web**, nur mit dem Teil
+    **Häuser**; Familienseiten: bei der Option **Häuser**, nur mit **In den Familienseiten, mit den Personen
+    verknüpft**;
+  - angeboten nur, wenn ein Haus der Auswahl eine Erzählung hat, in der eine lebende Person vorkommt. Die Ergebnisse
+    der Häuser aus der Forschung liest der Dialog gleich beim Öffnen.
+- **Das Geschenk** ([A7.9](A7-book-pages-and-export.md#A7.9)) enthält keine Erzählungen über Häuser: es liest die
+  Ergebnisse der Häuser aus der Forschung nicht.
 - Der Link **Haus <Nummer> ›** von der Erzählung einer Person auf das Haus steht im Buch und in den Familienseiten nur,
   wenn die Ausgabe die Erzählung des Hauses zeigt, auch wenn es ein Entwurf ist.
-- **Bedienung:** App: Export **Familienbuch** → Teil **Häuser**; Hausseite → **HTML speichern**; Familienseiten →
-  **Häuser**.
+- **Bedienung:** App: Export **Familienbuch** → Teil **Häuser**, **Erzählungen über Häuser mit lebenden Personen**;
+  Hausseite → **HTML speichern**; Familienseiten → **Häuser**, **Erzählungen über Häuser mit lebenden Personen**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (status draft → draft: true; nová verze vedle final → final), src/book-houses.ts book-house-story-tag P.storyDraft, src/family-pages-html.ts setStoryHouses (status draft i final), src/house-page.ts storyHtml (Schválit jen c.app) · strings.ts houses.page.storyDraft · test person-page-house-story „a draft the house's page shows tagged“ -->
+<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (nová verze vedle final → final) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez recent, osob bez úmrtí a skrytých položek; leaveOutLiving), houseStoryNamesLiving (personOfRef a ctx.living, osoba mimo strom ne), src/book-houses.ts (bez book-house-story-tag), src/house-page.ts storyHtml (štítek a Schválit jen c.app), shownStory (storyLiving), src/book.ts (opts.houseStoriesLiving), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving (výchozí zapnuto), src/book-memory.ts houseStoriesLiving (kniha i PagesChoices), src/ui/book-ui.ts book-house-stories (kniha: parts.houses a chapterHouses; stránky: houses pages), readDialogHouses, src/family-pages-html.ts setStoryHouses (houseStoriesLiving) · strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint · src/gift-package.ts (bez houseResearch) · dirigent:prace/1128-app-dum-vypraveni-ochrana Výsledek (dárek vyprávění domů nenese; osoba mimo strom bez úmrtí není žijící) -->

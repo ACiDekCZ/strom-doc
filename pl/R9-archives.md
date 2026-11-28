@@ -391,7 +391,27 @@ przeglądarką archiwum przybliżoną albo w pełnej rozdzielczości.
   ten sam skan tak samo obrócony i nie chodzi o zrzut ekranu obok skanu; inaczej zostaje na starej kopii, a wypis
   podaje polecenia do jego ponownego zaznaczenia. Wycinek całego skanu idzie zawsze. Nic nie przenosi się samo;
   `--dry-run` mówi, co by się stało.
+- **Od badania 1.38.0 (numer skanu):** zarejestrowany skan ze złym numerem poprawia `strom media renumber
+  M…=<numer> --reason "…"` (skan można też wskazać jako `B…:<numer>`, czyli skan, który ma ten numer teraz):
+  - zmienia się tylko numer (przy jednym skanie także `--url` i `--page`); ID, plik oraz cytowania i wycinki źródeł
+    zostają;
+  - kilka skanów w jednym poleceniu zapisuje się naraz i sprawdza tak, jak skończą: zamiana 9 i 10 to jedno
+    polecenie;
+  - badanie odmawia, gdy na nowym numerze byłby inny skan (ten, który tam jest, albo inny wskazany na ten sam numer),
+    chyba że strom rozpozna go jako ten sam skan; ten sam skan tam to kopia;
+  - ostrzejsza część skanu idzie z nim tylko wtedy, gdy jest wskazana. Części i kopie, które zostają na starym
+    numerze, wynik podaje wraz z tym, jak je wskazać;
+  - poprawka trafia do historii skanu; `strom media show` ją pokazuje (`renumbered: 9 → 10 (<dzień>: <powód>)`).
+    Cofa ją to samo polecenie odwrotnie; wynik je wypisuje;
+  - `--reason` jest wymagany, także z `--dry-run`, które tylko mówi, co by się stało;
+  - przy skanie pobranym przez program pobierający i przy punkcie kalibracji księgi na starym numerze wynik tylko
+    ostrzega i podaje polecenie; sam niczego więcej nie zmienia;
+  - numery skanów źródeł, które go cytują: [R3.4.3](R3-verification-and-citation.md#R3.4.3);
+  - `strom media retract` skanu, który cytuje źródło, badanie nadal odrzuca. Gdy obrazem skanu jest inna kopia,
+    radzi `strom media cites M… --move-to M…`, w przeciwnym razie `strom media renumber` (zły numer) i `strom source
+    edit S… --media-remove M…` (skan przy złym źródle).
 
+<!-- zdroj: research:e8ab80d0, 6978b6f9 src/commands/media.ts media renumber (renumbersOf: M…=n, B…:n=n, media.renumber.arg; renumberClash: scanLikeness same → kopie, media.renumber.other-scan; renumberLeft, renumberLeftLine; putMany op media.renumber; Media.renumbered from/to/at/reason; fetched, calibration jen ve výpisu; undo řádek; --reason povinný reason.missing; --url/--page jen s jedním), media show (řádek renumbered), media retract (popis a hint: cites --move-to, jinak renumber a --media-remove) · assets/lang/cs.json ui.help.cmd.media.renumber, log.media.renumber · strom help media renumber · CHANGELOG.cs.md 1.38.0 (5651cc28) -->
 <!-- zdroj: research:6651b60b src/commands/media.ts media save --again, againPending, settleAgain · src/core/media.ts findImage (nejvíc pixelů, ne část) · src/core/browser.ts SaveRecord.again · strom help media save (--again) · dirigent:prace/1114-vyzkum-z-hlidani-2/vysledek-sub1.md (A2, otevřené: výřez ne; citace na M… zůstávají) · CHANGELOG.cs.md 1.33.0 · 1.37.0: research:66ef4451 (--again převzato hned, bez media aside --take) · a2fe388d src/core/media.ts rankCopies (jméno snímku obrazovky, poměr stran > 15 %), src/commands/media.ts media cites --move-to (výřez jen u téhož skenu, jinak příkazy) · d93be067 (PNG vedle JPEG; savedProperly: stahovač nebo jméno strom-…) · 0c7ed4d3 · strom help media cites · CHANGELOG.cs.md 1.37.0 -->
 
 <a id="R9.5.2"></a>

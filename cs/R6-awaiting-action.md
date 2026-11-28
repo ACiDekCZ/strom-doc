@@ -262,8 +262,11 @@ souhlasy bere jen terminál; tlačítka, která je potřebují, otevřou termin�
 - **Od výzkumu 1.37.0 (aplikace 3.32.0):** aplikace sama vrátí agentovi úkol čekající na snímky, které agent
   zvládne sám (**Zkusit znovu přes agenta**, i za celou skupinu archivu; [R6.7.3](#R6.7.3),
   [S4.4.14](S4-research-from-the-app.md#S4.4.14)).
+- **Od výzkumu 1.38.0 (aplikace 3.33.0):** **Odesláno** se zeptá na den odeslání a u odeslané položky jde den
+  opravit: v aplikaci **Změnit datum odeslání**, v terminálu **Opravit datum odeslání** ([R6.7](#R6.7)). V aplikaci
+  jde seznam zúžit na jednu linii nebo jednu osobu ([S4.4](S4-research-from-the-app.md#S4.4)).
 
-<!-- zdroj: research:src/core/live.ts:60-80 (POST /waiting, /group, PUT /media X-Strom-Task, POST /places/answer, /conflict 403), :2761 · src/core/waiting.ts:78-88 actionsOf · app:src/ui/research-overview-ui.ts · strings.ts:9972, :10078, :11953 -->
+<!-- zdroj: research:src/core/live.ts:60-80 (POST /waiting, /group, PUT /media X-Strom-Task, POST /places/answer, /conflict 403), :2761 · src/core/waiting.ts:78-88 actionsOf · app:src/ui/research-overview-ui.ts · strings.ts:9972, :10078, :11953 · 1.38.0: research:fdfc1f26 src/core/live.ts POST /waiting {"do":"sent","at"}, /group (waiting.sentDay), src/cli/menu-waiting.ts ui.wait.a.redate · 1bc0d87c src/core/waiting.ts personsOf (waiting.persons) · app:6112d1eb src/research-waiting-write.ts waitingWrites (sentDay) · e4360924 src/research-waiting.ts WaitingScope, scopedWaiting -->
 
 <a id="R6.6"></a>
 ## R6.6 Co smí jen člověk
@@ -310,8 +313,35 @@ fronty a agent ji zpracuje při další práci.
 - **Ovládání:** aplikace: **Odesláno**, **Vrátit mezi k vyřízení** · terminál: **Odesláno**, `strom task sent T…`,
   zpět `--undo`.
 - **Platí od:** výzkum 1.14.0
+- **Od výzkumu 1.38.0:** den, kdy žádost odešla:
+  - `strom task sent T… --date 2026-11-24` zapíše zadaný den. Den musí být v kalendáři a nesmí teprve přijít; den
+    před začátkem čekání projde. `--date` spolu s `--undo` výzkum odmítne;
+  - u úkolu už odeslaného `--date` den opraví a úkol čeká dál. Výpis řekne den předtím a příkaz zpět, např.
+    „T0003 sent on 2026-11-24 (was 2026-11-28) — back: strom task sent T0003 --date 2026-11-28“. Tentýž den znovu
+    nic nezmění;
+  - zadaný den je na každých hodinách týž. Odeslání zapsané bez zadaného dne platí za den podle kalendáře tohoto
+    počítače;
+  - jak dlouho úkol čeká, se počítá po dnech kalendáře tohoto počítače, ne po 24 hodinách. **bez odpovědi přes 30
+    dní** přibude 31. den po dni odeslání;
+  - menu **Co čeká**: po **Odesláno** a potvrzení se zeptá „Den odeslání (Enter = dnes; např. 24. 11. 2026 nebo
+    2026-11-24)“. Bere den s tečkami (bez roku je to letošní rok) i tvar 2026-11-24; 0 vrátí zpět a nic nezapíše.
+    Den, který v kalendáři není nebo teprve přijde, menu řekne a zeptá se znovu. **Odesláno za celou skupinu** se
+    ptá jednou a dá všem položkám skupiny týž den;
+  - odeslaná položka má v menu volbu **Opravit datum odeslání** („Skutečný den odeslání …“; Enter nebo 0 vrátí
+    zpět);
+  - odkaz z aplikace do terminálu se na den neptá a zapíše dnešek jako dřív.
+- **Od aplikace 3.33.0 s výzkumem 1.38.0:** **Odesláno** v aplikaci otevře pod tlačítkem okénko **Den odeslání**
+  s dnešním dnem. Den v budoucnu nejde („Ten den teprve přijde.“). **Zapsat** (nebo Enter) zapíše; **Zrušit**,
+  Escape nebo klik mimo okénko ho zavřou. U skupiny okénko řekne, kolika položkám den platí („Jeden den pro
+  3 položky“). Bublina řekne den, který zapsal výzkum („Zapsáno jako odeslané 24. 11.“, s **Vrátit**):
+  - odeslaná položka má za **Vrátit mezi k vyřízení** akci **Změnit datum odeslání**: totéž okénko s dosavadním
+    dnem. Bublina „Datum odeslání změněno na 24. 11.“ má **Vrátit**, který zapíše zpět den předtím;
+  - den letošního roku se píše bez roku, den jiného roku celý;
+  - den, který výzkum nevezme: „Nezapsáno: takový den výzkum nebere (v kalendáři není, nebo teprve přijde).“;
+  - na telefonu stejně;
+  - s výzkumem, který den nebere, zapíše **Odesláno** dnešek jako dřív a **Změnit datum odeslání** není.
 
-<!-- zdroj: research:src/commands/tasks.ts:1053-1118 task sent (task.not-waiting, task.not-sendable) · src/core/waitkind.ts:23 SENDABLE · src/cli/menu-waiting.ts:49 NO_REPLY_DAYS, :126 -->
+<!-- zdroj: research:src/commands/tasks.ts:1053-1118 task sent (task.not-waiting, task.not-sendable) · src/core/waitkind.ts:23 SENDABLE · src/cli/menu-waiting.ts:49 NO_REPLY_DAYS, :126 · 1.38.0: research:fdfc1f26 src/core/waitkind.ts sentOn (poledne UTC), sentDay, localDay, daysFrom, givenSentDay · src/commands/tasks.ts task sent --date (--undo s --date odmítnuto; op task.sent.date, „(was …) — back: strom task sent T… --date …“, „already — nothing changed“) · src/cli/menu-links.ts typedDay, askSentDay (Enter dnes, 0 zpět, ui.wait.day.bad), waitingDo (odkaz bez dotazu) · src/cli/menu-waiting.ts sentWords (days > NO_REPLY_DAYS), skupina (ui.wait.group.sent.on.done), ui.wait.a.redate, ui.wait.redate.day, ui.wait.redate.done · assets/lang/cs.json ui.wait.sent.day, ui.wait.sent.on.done · 79b5e917 test/cli menu Co čeká na pevných hodinách · strom help task sent · app:6112d1eb, 0c9d69b8 src/research-waiting-write.ts waitingWrites (waiting.sent + waiting.sentDay), src/ui/waiting-sent-day.ts (dnešek, max dnes, Enter, Escape, klik mimo), src/ui/research-waiting-write-ui.ts askWaitingSentDay, markWaitingSent (sentToast, undo), changeWaitingSentDay (sentDayChangedToast, undo s předchozím dnem), markWaitingGroupSent (groupSentToast), waitingDayShown · src/ui/phone-research-ui.ts · strings.ts live.waitingWrite.sentDayTitle, sentDayGroup, sentDaySave, sentDayCancel, sentDayFuture, changeSentDay, sentDayChangedToast, sentToast, groupSentToast, badDate -->
 
 <a id="R6.7.1"></a>
 ### R6.7.1 Odpověď souborem nebo slovy

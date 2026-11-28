@@ -434,8 +434,15 @@ oder Strom-Archiv zeigt es auch Dateien der Forschung, die im Stammbaum nirgends
     (eingeschaltet: **wartet auf Verarbeitung**).
 
   Mit einer älteren Forschung gelten die bisherigen Texte.
+- **Ab App 3.33.0:** ein Stapel, in dem nichts Neues ist (die Forschung hat schon alle Dateien, sie hat keine
+  angenommen und keine abgelehnt), endet neben einem Archiv mit „✓ Bereits in Materialien“: „Diese Datei ist bereits
+  in Materialien: „<Titel>“.“, bei mehr Dateien „Diese N Dateien sind bereits in Materialien:“ mit höchstens fünf
+  Titeln und „… und N weitere“. **In Materialien öffnen** öffnet das Fenster nur mit diesen Dateien (Chip **Dateien:
+  N**, nicht gemerkt), nicht den leeren Stapel. Die Meldung eines Stapels im Hintergrund ist „Bereits in Materialien“.
+  Ein Stapel aus einem Haus ordnet solche Dateien dem Haus zu ([S10.8](S10-houses.md#S10.8)). Ein Stapel mit neuen
+  Dateien endet wie bisher.
 
-<!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 -->
+<!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 · 3.33.0: app:fc290355 src/ui/batch-ui.ts noteHad (media/known, GET/PUT /media, zip known, batch/done files[].known), batchNothingNew (received 0, refused 0, had > 0, materialsListOn), batchHadHtml (5 titulků), openInMaterials s filtrem souborů · src/ui/materials-ui.ts filtr souborů (čip, nepamatuje se) · strings.ts batch.hadTitle, hadOne, hadMany, hadMore, materials.fFiles -->
 
 <a id="A3.5.1"></a>
 ### A3.5.1 Das Fenster Materialien
@@ -513,8 +520,15 @@ dieser Reihenfolge. Jede Zeile ist ein Link auf die Person oder die Quelle.
   Forschung 1.35.0 und neuer; läuft die Forschung nicht, gilt der Stand, den die App zuletzt kannte.
 - **Bedienung:** Dateibetrachter (Seitenleiste, auf dem Telefon ein hochgezogenes Blatt); der Dialog **Anhang**.
 - **Gilt seit:** App 3.30.0
+- **Ab App 3.33.0 mit Forschung 1.38.0:** eine Datei, die die Forschung als Material eines Hauses führt, hat im Teil
+  **Im Stammbaum** nach ihren Stellen Zeilen **Haus** ([S10.8](S10-houses.md#S10.8)). Ein Haus des Stammbaums ist ein
+  Link („Bělokamen čp. 16 · U Horáků“): er schließt den Betrachter und das Fenster **Materialien** und öffnet die
+  Hausseite. Ein Haus, das nur die Forschung hat, ist einfacher Text (Ort, Nummer, Hausname). Die Zeilen der Häuser
+  zählen zu „N Stellen“, werden nicht zusammengeklappt und haben kein ×; mit einer Zeile eines Hauses steht „Im
+  Stammbaum noch nirgends.“ nicht da. Nur neben einem Archiv, nur bei einer Forschung, die Zeilen der Häuser anbietet,
+  und nicht bei Dateien aus einem Stammbaum.
 
-<!-- zdroj: app:4bf66048 src/ui/material-uses-ui.ts (prameny první, usesSourceOf, keptViaSource) · app:1ccc666c src/media-uses.ts (pořadí person, portrait, couple, event, source, excerpt) · src/ui/material-uses-ui.ts COLLAPSE_OVER=5, COLLAPSED_ROWS=4 · app:55d66efd sourceCitedAt · strings.ts materials.used, usedInTree, usedInArchive, usedType, docCitedAt, moreN, unlink, usesArchive, usesOlder, usesStale · research:a7df632d GET /material/<I…>/uses -->
+<!-- zdroj: app:4bf66048 src/ui/material-uses-ui.ts (prameny první, usesSourceOf, keptViaSource) · app:1ccc666c src/media-uses.ts (pořadí person, portrait, couple, event, source, excerpt) · src/ui/material-uses-ui.ts COLLAPSE_OVER=5, COLLAPSED_ROWS=4 · app:55d66efd sourceCitedAt · strings.ts materials.used, usedInTree, usedInArchive, usedType, docCitedAt, moreN, unlink, usesArchive, usesOlder, usesStale · research:a7df632d GET /material/<I…>/uses · 3.33.0: app:f527db12 src/ui/material-uses-ui.ts materialHouseRow (caps.houses, ne item.tree, houseNamedTitle, zavře prohlížeč a okno, openHousePage; jen výzkum: obec číslo · název nebo klíč za „|“), počet míst s domy, bez sbalení a × · src/ui/materials-ui.ts caps.houses (feature material.houses) · strings.ts materials.usedType.house · research:c29010f7 houses na GET /material a GET /material/<I…>/uses -->
 
 <a id="A3.5.4"></a>
 ### A3.5.4 Verknüpfen mit…
@@ -549,8 +563,19 @@ einem Schritt **Rückgängig**.
   Sortieren bietet die Datei nicht an ([A3.5.19](#A3.5.19)). Nimmt die Forschung das Schreiben nicht an, bietet die
   Fehlermeldung einen neuen Versuch an. **Rückgängig** nimmt nur den Stammbaum zurück; die in die Forschung
   geschriebenen Personen bleiben. Nur bei laufender Brücke.
+- **Ab App 3.33.0:** der Reiter **Haus** ordnet Dateien der Forschung einem Haus zu ([S10.8](S10-houses.md#S10.8)).
+  Das Feld „Haus suchen – Ort, Nummer oder Name“ sucht unter den Häusern des Stammbaums: eine Zahl nach der
+  Hausnummer, Wörter nach Ort und Name; es zeigt höchstens 60 Häuser („Kein passendes Haus.“). Darunter: „Die
+  Forschung führt die Datei als Material des Hauses; der Stammbaum bleibt unverändert.“ Nach dem Zuordnen „Dem Haus
+  <Haus> zugeordnet.“, und das Haus hat die Datei in **Hausmaterialien**. Nimmt die Forschung das Schreiben nicht an,
+  bietet der Fehler einen neuen Versuch (nicht bei einem ungültigen Haus und einem Ort, den die Forschung nicht unter
+  ihren Orten hat).
+  - den Reiter gibt es nur in einem Stammbaum mit einer Forschung, die Material von Häusern annimmt, und nur, wenn
+    alle gewählten Dateien Dateien der Forschung sind;
+  - zuordnen geht nur bei laufender Brücke, nicht in einem live verfolgten Stammbaum;
+  - es schreibt nur in die Forschung, der Stammbaum ändert sich nicht.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B · 3.33.0: app:223a4272 src/ui/material-attach-ui.ts attachResearchAssign (REFN osob míst, soubory s file a ne tree, bez osob výzkumu researchPersonsOf), writeAssign s caps.assign a bridgeUp, materialErrorToast s opakováním · dirigent:spec/147 K3, prace/1127-app-147-materialy (Omezení: Zpět jen strom) -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B · 3.33.0: app:223a4272 src/ui/material-attach-ui.ts attachResearchAssign (REFN osob míst, soubory s file a ne tree, bez osob výzkumu researchPersonsOf), writeAssign s caps.assign a bridgeUp, materialErrorToast s opakováním · dirigent:spec/147 K3, prace/1127-app-147-materialy (Omezení: Zpět jen strom) · 3.33.0 Dům: app:7389ceb2 src/ui/material-attach-ui.ts (cíl house: houseResearchBridge, houseFeature house.material, soubory /^I\d{1,9}$/; collectHouses, houseMatches, MAX_SOURCES 60, houseNamedTitle; bridgeUp, ne sledovaný strom; POST /houses/material {house, files}; houseMaterialsChanged; houseMaterialError) · strings.ts materials.attachTarget.house, attachHousePh, attachNoHouses, houseAttachNote, attachedToast.house -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Quelle aus einer Datei und Beleg einer Quelle

@@ -361,7 +361,25 @@ přiblíženým, nebo v plném rozlišení.
   kopie zůstane a nestáhne se). Výřez místa jde s nimi, jen když strom pozná oba soubory jako tentýž sken stejně
   otočený a nejde o snímek obrazovky vedle skenu; jinak zůstane na staré kopii a výpis řekne příkazy k jeho novému
   označení. Výřez celého snímku jde vždy. Nic se nepřevede samo; `--dry-run` řekne, co by se stalo.
+- **Od výzkumu 1.38.0 (číslo snímku):** zaregistrovaný snímek se špatným číslem opraví `strom media renumber
+  M…=<číslo> --reason "…"` (snímek jde jmenovat i jako `B…:<číslo>`, tj. snímek, který to číslo má teď):
+  - změní se jen číslo (u jednoho snímku i `--url` a `--page`); ID, soubor a citace i výřezy pramenů zůstanou;
+  - víc snímků v jednom příkazu se zapíše najednou a zkontroluje se, jak skončí: prohození 9 a 10 je jeden příkaz;
+  - výzkum odmítne, když by na novém čísle byl jiný sken (snímek, který tam je, nebo jiný jmenovaný na totéž
+    číslo), pokud ho strom nepozná jako tentýž sken; tentýž sken tam je kopie;
+  - ostřejší část snímku jde s ním, jen když je jmenovaná. Části a kopie, které na starém čísle zůstanou, výpis
+    řekne s tím, jak je jmenovat;
+  - oprava se zapíše do historie snímku; `strom media show` ji ukáže (`renumbered: 9 → 10 (<den>: <důvod>)`). Zpět
+    ji vrátí tentýž příkaz obráceně; výpis ho napíše;
+  - `--reason` je povinný, i s `--dry-run`, který jen řekne, co by se stalo;
+  - u snímku staženého stahovačem a u bodu kalibrace knihy se starým číslem výpis jen upozorní a řekne příkaz;
+    sám nic dalšího nezmění;
+  - čísla snímků pramenů, které ho citují: [R3.4.3](R3-verification-and-citation.md#R3.4.3);
+  - `strom media retract` snímku, který pramen cituje, dál odmítne. Je-li obrazem snímku jiná kopie, poradí
+    `strom media cites M… --move-to M…`, jinak `strom media renumber` (špatné číslo) a `strom source edit S…
+    --media-remove M…` (snímek u špatného pramene).
 
+<!-- zdroj: research:e8ab80d0, 6978b6f9 src/commands/media.ts media renumber (renumbersOf: M…=n, B…:n=n, media.renumber.arg; renumberClash: scanLikeness same → kopie, media.renumber.other-scan; renumberLeft, renumberLeftLine; putMany op media.renumber; Media.renumbered from/to/at/reason; fetched, calibration jen ve výpisu; undo řádek; --reason povinný reason.missing; --url/--page jen s jedním), media show (řádek renumbered), media retract (popis a hint: cites --move-to, jinak renumber a --media-remove) · assets/lang/cs.json ui.help.cmd.media.renumber, log.media.renumber · strom help media renumber · CHANGELOG.cs.md 1.38.0 (5651cc28) -->
 <!-- zdroj: research:6651b60b src/commands/media.ts media save --again, againPending, settleAgain · src/core/media.ts findImage (nejvíc pixelů, ne část) · src/core/browser.ts SaveRecord.again · strom help media save (--again) · dirigent:prace/1114-vyzkum-z-hlidani-2/vysledek-sub1.md (A2, otevřené: výřez ne; citace na M… zůstávají) · CHANGELOG.cs.md 1.33.0 · 1.37.0: research:66ef4451 (--again převzato hned, bez media aside --take) · a2fe388d src/core/media.ts rankCopies (jméno snímku obrazovky, poměr stran > 15 %), src/commands/media.ts media cites --move-to (výřez jen u téhož skenu, jinak příkazy) · d93be067 (PNG vedle JPEG; savedProperly: stahovač nebo jméno strom-…) · 0c7ed4d3 · strom help media cites · CHANGELOG.cs.md 1.37.0 -->
 
 <a id="R9.5.2"></a>

@@ -560,6 +560,12 @@ appearance** with the same options as the panel **Appearance** ([A6.4.2](#A6.4.2
 - **From app 3.32.0:** with **Portraits** switched on, the poster and the print of the fan (also Ctrl+P from the view
   on an A4 landscape sheet) draw a portrait where it has a diameter of at least 7 mm on paper; otherwise the same holds
   as on the screen ([A6.4.2](#A6.4.2)).
+- **From app 3.33.0:** with **Hide others** switched on (only with the selection **Ancestors: {person}**,
+  [A6.6.2](#A6.6.2)) the poster draws the sectors of the people outside the selection as empty outlines in their
+  places. The title, the subtitle and the legend (grandparents, family lines and their counts) name and count only the
+  people drawn. Without **Hide others** the poster is as before.
+
+<!-- zdroj 3.33.0: app:d27235e5 src/fan-chart.ts keptFanModel, keptRodAssignment, renderFanPoster keepOnly · src/ui/export-image-ui.ts buildCurrentPoster (TreeRenderer.getFanKeepOnly) · src/renderer.ts getFanKeepOnly · e2e/selection-fan.spec.ts · tisk Ctrl+P z pohledu neověřen -->
 
 <!-- zdroj 3.32.0: app:a938802d, bcdcab9e, f229be62 src/fan-chart.ts FAN_PORTRAIT_MIN_MM 7, renderFanPoster portraitMinPx = 7 mm / mmPerPx (0,26), fanPrintPortraitMinPx (A4 na šířku 277 × 0,85·190 mm, ne pod 32 px) · src/ui/fan-view.ts printing → fanPrintPortraitMinPx · dirigent:spec/118 K2.8 -->
 
@@ -984,12 +990,12 @@ and **Descendants** ([A6.1](#A6.1)). The selection **Ancestors: {person}** thus 
   keyboard; the selection's sectors and the centre stay where they were.
 - **Limits:** with any other selection the Fan does not have the choice (the selection is only highlighted); **Hide
   others** switched on in Family changes nothing there and stays on. Outputs (image, print, export) draw the whole
-  view.
+  view; from app 3.33.0 except the fan poster ([A6.4.3](#A6.4.3)).
 - **Controls:** app: the selection's label → **Hide others** (a checkbox); on a phone the label is one row and **Hide
   others** is only a checkbox without text.
 - **Since:** app 3.31.0
 
-<!-- zdroj: app:src/layout/pipeline/person-filter.ts (filtr při sběru osob: jen osoby celého pohledu a jejich generace a pořadí, ústřední vždy; restrictSelection: čáry jen mezi nakreslenými, rodina s jedním rodičem pod ním; nespojené osoby ve vlastních skupinách vedle sebe v pořadí celého pohledu) · src/layout/pipeline/index.ts drawnOrder · src/renderer.ts setPersonFilter (Rodina a Potomci; záložky a bulk-family jen osoby výběru tabInView; karta nejblíž středu zůstane, jinak ústřední; přiblížení beze změny; výstupy kreslí celý pohled) · src/ui/evidence-ui.ts (rod: faint partneři do filtru; ve vějíři jen předci: setPersonFilter fan = ref.kind ancestors, syncEvidencePillHide evidence-pill--no-hide) · src/fan-chart.ts buildFanSvg keepOnly (offSector: prázdný čárkovaný obrys, bez +, pointer-events none, aria-hidden; střed vždy) · src/ui/fan-view.ts svgExtras keepOnly (jen obrazovka; výstup fan-chart.ts:1249 bez keepOnly), klávesnice přeskočí · app:493f330c · src/ui/view-selection-ui.ts setHideOthers (pamatuje s výběrem, bez výběru vypnuto) · strings.ts selection.hideOthers, hideOthersTitle · app:39e84ca0, e5da4a61 · ZADANI_DEV_vyber-osob §8 · dirigent:prace/1121-app-098-vyber-p1 (telefon: štítek v jednom řádku, Skrýt ostatní čtvereček 44 px), test/vysledek-1121-app-098-vyber-p1.md -->
+<!-- zdroj: app:src/layout/pipeline/person-filter.ts (filtr při sběru osob: jen osoby celého pohledu a jejich generace a pořadí, ústřední vždy; restrictSelection: čáry jen mezi nakreslenými, rodina s jedním rodičem pod ním; nespojené osoby ve vlastních skupinách vedle sebe v pořadí celého pohledu) · src/layout/pipeline/index.ts drawnOrder · src/renderer.ts setPersonFilter (Rodina a Potomci; záložky a bulk-family jen osoby výběru tabInView; karta nejblíž středu zůstane, jinak ústřední; přiblížení beze změny; výstupy kreslí celý pohled) · src/ui/evidence-ui.ts (rod: faint partneři do filtru; ve vějíři jen předci: setPersonFilter fan = ref.kind ancestors, syncEvidencePillHide evidence-pill--no-hide) · src/fan-chart.ts buildFanSvg keepOnly (offSector: prázdný čárkovaný obrys, bez +, pointer-events none, aria-hidden; střed vždy) · src/ui/fan-view.ts svgExtras keepOnly (jen obrazovka; výstup fan-chart.ts:1249 bez keepOnly), klávesnice přeskočí · app:493f330c · src/ui/view-selection-ui.ts setHideOthers (pamatuje s výběrem, bez výběru vypnuto) · strings.ts selection.hideOthers, hideOthersTitle · app:39e84ca0, e5da4a61 · ZADANI_DEV_vyber-osob §8 · dirigent:prace/1121-app-098-vyber-p1 (telefon: štítek v jednom řádku, Skrýt ostatní čtvereček 44 px), test/vysledek-1121-app-098-vyber-p1.md · 3.33.0: app:d27235e5 src/ui/export-image-ui.ts buildCurrentPoster getFanKeepOnly (plakát vějíře) -->
 
 <a id="A6.6.3"></a>
 ### A6.6.3 The central person outside the selection

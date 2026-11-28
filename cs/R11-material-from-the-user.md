@@ -317,12 +317,16 @@ v terminálu, se stejnými mezemi.
   vyřízeného souboru vrací `left` i s důvodem `accepted` nebo `refused`, `GET /material/sort/<id>` i rozhodnutí
   (`decided`). Rozhodnutí odmítne neznámé třídění (`sort.none`), třídění, které ještě neskončilo (`sort.state`),
   soubor, který do třídění nepatří, nebo jiný stav (`material.body`) a zápis, který nepřišel z aplikace (`app.only`).
+  Také `material.houses`: `GET /material` i `GET /material/<I…>/uses` dají u souboru, který je materiálem domu,
+  `houses` se seznamem domů (`id` A… a `key`, stejné jako řádek domu v `GET /houses`). Dům vzatý zpět a záznam
+  obce v seznamu nejsou; soubor bez domu pole `houses` nemá. Aplikace podle toho ukáže dům v **Kde je použit**
+  ([A3.5.3](A3-evidence-in-the-app.md#A3.5.3)).
 - **Hlídá kód:** úprava je celá, nebo žádná; zaneprázdněný výzkum odpoví, že nic nezměnil. Třídění odmítne bez
   agenta, s vyčerpaným limitem čtení, s plnou frontou a když agent teď pracovat nemůže.
 - **Ovládání:** aplikace: okno **Materiály**, s běžícím mostem ([S1.1](S1-connecting-app-and-research.md#S1.1)).
 - **Platí od:** výzkum 1.35.0
 
-<!-- zdroj: research:0cc2cfca src/core/live.ts (GET /material uses.of, left {at, sort, why, said}, sameAs; POST /material/sort run 51–1500, GET/POST /material/sort/<run-…>[/cancel]; POST /material/delete dryRun → impacts + confirm, chyby material.delete-changed, material.body, material.file, material.readonly, material.busy, app.only; BRIDGE_FEATURES material.sourceOf, left, sameAs, sortRun, delete) · research:src/core/live.ts:134-160 (GET /material, /material/<I…>/uses, POST /material/assign|hide|edit|sort, chyby material.body|date|file|readonly|busy) · src/core/live-sort.ts (sort.none, sort.limit, sort.queue, sort.not-ready) · research:a7df632d, 87376d11, 7754968e · 1.38.0: research:c673ac14 src/core/live-sort.ts decided (403 app.only, 404 sort.none, 400 material.body, 409 sort.state), src/core/live.ts BRIDGE_FEATURES material.accepted, material.decided, AGENT_FEATURES material.decided, doc GET /material left why accepted|refused · dirigent:spec/147 K2 -->
+<!-- zdroj: research:0cc2cfca src/core/live.ts (GET /material uses.of, left {at, sort, why, said}, sameAs; POST /material/sort run 51–1500, GET/POST /material/sort/<run-…>[/cancel]; POST /material/delete dryRun → impacts + confirm, chyby material.delete-changed, material.body, material.file, material.readonly, material.busy, app.only; BRIDGE_FEATURES material.sourceOf, left, sameAs, sortRun, delete) · research:src/core/live.ts:134-160 (GET /material, /material/<I…>/uses, POST /material/assign|hide|edit|sort, chyby material.body|date|file|readonly|busy) · src/core/live-sort.ts (sort.none, sort.limit, sort.queue, sort.not-ready) · research:a7df632d, 87376d11, 7754968e · 1.38.0: research:c673ac14 src/core/live-sort.ts decided (403 app.only, 404 sort.none, 400 material.body, 409 sort.state), src/core/live.ts BRIDGE_FEATURES material.accepted, material.decided, AGENT_FEATURES material.decided, doc GET /material left why accepted|refused · dirigent:spec/147 K2 · research:c29010f7 src/core/houses.ts houseRefs (keyOfHouse, bez retracted a h.town), src/core/material.ts Input.houses, src/core/live.ts BRIDGE_FEATURES material.houses, test/cli/houses-bridge.test.ts · CHANGELOG.cs.md 1.38.0 -->
 
 <a id="R11.5.5"></a>
 ### R11.5.5 Běh třídění z aplikace

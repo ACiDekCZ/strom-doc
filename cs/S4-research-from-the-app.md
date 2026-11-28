@@ -650,7 +650,11 @@ se linie jen čtou; každá změna se potvrzuje v terminálu výzkumu.
   ([S4.3.3](#S4.3.3)). Řádek linie s vlastním během říká „Agent pracuje: Claude“ s odkazem **V Teď ›**, který
   rozbalí **Teď** a zvýrazní blok běhu ([S4.1.8](#S4.1.8)). Rozhovor **Pracovat na této linii** má nápovědu „Rozhovor
   s agentem o linii v terminálu“.
+- **Od aplikace 3.33.0 s výzkumem 1.38.0:** když výzkum u čekajících položek říká jejich linii, je počet v řádku
+  linie odkaz („2 čeká na vyřízení ›“, i v úzkém okně a na telefonu). Otevře **Čeká na vyřízení** zúžené na tu linii
+  ([S4.4](#S4.4)). Bez položek té linie, nebo se starším výzkumem, je počet text jako dřív.
 
+<!-- zdroj: app:e4360924 src/ui/research-directions-ui.ts directionWaitingEl (scopedWaiting kind line → odkaz dirWaitingOpen, jinak dirWaiting), openWaitingScope · src/research-waiting.ts WaitingScope, scopedWaiting (w.research) · strings.ts live.dirWaitingOpen, dirWaiting · research:1bc0d87c src/core/waiting.ts (research u položky) -->
 <!-- zdroj: app:v3.21.2 src/ui/research-directions-ui.ts:156 linesMulti, :350-353 appendOverviewDirections, :385 canDo, :528 dirWork · strings.ts live.dirTitle, live.dirOutside, live.dirInactive, live.dirWork · research:v1.25.2 assets/lang/cs.json ui.link.what.direction.pause/done/resume · 3.22.0: research-directions-ui.ts:703 dirEnded, :852 dirNow, :878 dirFoundIn, :720 sheet; strings.ts live.dirLimitGen, dirLimitBefore, dirFound* -->
 
 <a id="S4.3.1"></a>
@@ -682,8 +686,14 @@ S výzkumem, který to umí, zapisuje aplikace změny linií přímo přes most.
   zůstane: „Převod vrácen · 7 úkolů zpět v širší linii“; když se úkoly mezitím změnily, **Není co vrátit.** Bez
   převodu (pole odškrtnuté, nic k převodu, starší výzkum) je bublina jako dřív; na telefonu bez **Pracovat na této
   linii**.
+- **Od aplikace 3.33.0:** ve výběru **Osoba** (**Výsledky**, **Ohnisko**, **Nedávné**) dostane řádek bez let nebo se
+  jménem, které má i jiný řádek, šedý řádek pod jménem, kdo to je. Zkouší se popořadě: rodiče („syn: …“, „dcera: …“),
+  partner („⚭ …“), rodiště, bydliště nebo povolání a nakonec generace od zaměřené osoby („generace −2“, „zaměřená
+  generace“). Ve skupině stejného jména je to první údaj, který žádný jiný řádek skupiny nemá; když žádný takový není,
+  první známý, a bez údajů „bez dalších údajů“. Jen údaje, které strom už ukazuje; dlouhý řádek se zkrátí a celý je
+  v popisku.
 
-<!-- zdroj: app:HEAD src/ui/research-directions-ui.ts:372 DIRECTIONS_WRITE_SINCE, :628 · src/research-directions-write.ts createDirection, editDirection, setDirectionState, writeDirectionOrder · src/ui/research-actions-ui.ts:1015-1024, :1067 openDirectionForm · strings.ts live.dirNew, dirFormNew, dirFree, dirEditFree, dirLocked, dirOrderWeight, dirOrderStrict, dirArchive, dirPhoneOnly, dirBridgeDown, dirOldResearch, dirBusy, dirRetry, dirDupActive, dirShowIt, dirAnyway · research:src/core/live.ts /directions -->
+<!-- zdroj: app:HEAD src/ui/research-directions-ui.ts:372 DIRECTIONS_WRITE_SINCE, :628 · src/research-directions-write.ts createDirection, editDirection, setDirectionState, writeDirectionOrder · src/ui/research-actions-ui.ts:1015-1024, :1067 openDirectionForm · strings.ts live.dirNew, dirFormNew, dirFree, dirEditFree, dirLocked, dirOrderWeight, dirOrderStrict, dirArchive, dirPhoneOnly, dirBridgeDown, dirOldResearch, dirBusy, dirRetry, dirDupActive, dirShowIt, dirAnyway · research:src/core/live.ts /directions · 3.33.0: app:878ea5e8 src/person-disambiguation.ts personHints, hintLine, generationsFrom · src/ui/direction-form-ui.ts renderDirectionFormPicks · strings.ts personPicker.distJob, distGeneration, distChild, distNone -->
 
 <a id="S4.3.2"></a>
 ### S4.3.2 Práce mimo linie po větvích
@@ -756,7 +766,13 @@ spustí ([R7.10.4](R7-when-the-agent-works.md#R7.10.4)). Práce agenta čerpá p
 - **Ovládání:** aplikace: **Přehled výzkumu → Linie**, detail linie nebo **⋯**. Terminál: `strom run --research G…`,
   menu **Nechat agenta pracovat samotného** ([R7.10](R7-when-the-agent-works.md#R7.10)).
 - **Platí od:** aplikace 3.31.0 (výzkum 1.36.0)
+- **Od aplikace 3.33.0 s výzkumem 1.38.0:** linie s prázdnou frontou, jejíž úkoly čekají v **Čeká na vyřízení**,
+  místo „Ve frontě linie nic není.“ řekne, proč stojí: „Linie stojí: 3 úkoly čekají na vyřízení ›“, čekají-li
+  všechny na snímky „Linie stojí: 3 úkoly čekají na snímky ›“. V detailu linie je to odkaz do **Čeká na vyřízení**
+  zúženého na tu linii ([S4.4](#S4.4)); v nabídce **⋯** stojí jako důvod u nepřístupné položky. V úzkém okně a na
+  telefonu (přehled jako list) detail tuto akci nemá.
 
+<!-- zdroj: app:e4360924 src/ui/research-directions-ui.ts lineRunOffer (block empty + scopedWaiting kind line → held s waiting; waitingForImages → lineRunStandsImages), lineRunControl (odkaz research-direction__run-waiting → openWaitingScope) · strings.ts live.lineRunStands, lineRunStandsImages · e2e/live-runs.spec.ts -->
 <!-- zdroj: app:4de0835a src/ui/research-directions-ui.ts (managedDirectionDetail blok běhu, openManagedDirectionMenu položka před dirWork, managedDirectionMeta lineRunWorkingMeta + lineRunInNow, lineRunWhy) · src/research-runs.ts lineRunBlock (ended, running, canStart/why z mostu, paused > empty > limit), atRunLimit · src/ui/queue-work-dialog.ts showLineRunDialog, syncLineRunDialog (lineRunKicker, lineRunAgent, lineRunAgentDefault, lineRunAgentKept, lineRunAutoHint, lineRunRest, runsAddUp, lineRunStart, lineRunConfirm) · beginRunWork (work?research=G&agent=), lineRunStarting, lineRunStartingSub, lineRunNotStarted · strings.ts live.lineRun*, runsLimitReached, runsSettingsLink, dirWorkHint · app:docs/ZADANI_DEV_beh-po-liniich.md §1, §2, Kolo 2 B · dirigent:spec/126 K2.1, K2.2, K2.4, K2.7, K2.8 · research: researches[].run/canStart/why/agent, agents[] -->
 
 <a id="S4.4"></a>
@@ -811,7 +827,23 @@ a co jen ve výzkumu, říká [R6.5](R6-awaiting-action.md#R6.5).
   značku a v otevřené položce opravu v jednom kroku ([S4.4.8](#S4.4.8), [S4.4.9](#S4.4.9)).
 - **Od aplikace 3.32.0 s výzkumem 1.37.0:** položka, kterou jde vrátit agentovi, má řádek **Teď** a tlačítko
   **Zkusit znovu přes agenta**, pás archivu **Zkusit znovu vše přes agenta** ([S4.4.14](#S4.4.14)).
+- **Od aplikace 3.33.0 s výzkumem 1.38.0:** **Odesláno** se zeptá na den a odeslaná položka má **Změnit datum
+  odeslání** ([R6.7](R6-awaiting-action.md#R6.7)).
+- **Od aplikace 3.33.0 s výzkumem 1.38.0:** čekající u linie a u osoby:
+  - **Čeká na vyřízení** jde zúžit na jednu linii nebo jednu osobu: z řádku linie a z „Linie stojí: … ›“
+    ([S4.3](#S4.3), [S4.3.3](#S4.3.3)), u osoby tlačítkem „Čeká na vyřízení · 2 ›“ na stránce osoby v oddílu **Pro
+    badatele**. Nad seznamem stojí štítek „Linie: Předci Jana Horáka ✕“ nebo „Osoba: Jan Horák ✕“ (✕ = **Zrušit
+    filtr**);
+  - zúžení platí před výběrem druhu, fáze, místa a hledáním. Drží, dokud se nezruší ✕ nebo nezavře přehled; okno
+    Přehledu ([S4.1.6](#S4.1.6)) ho bere od hlavního okna. Když v zúžení nic nečeká: „Teď tu nic nečeká.“;
+  - úkol o několika lidech se počítá u každého z nich: značka **!** na kartičce, počet v **Odpovědět · N čeká**
+    a položky osoby. Dřív jen úkol o jedné osobě. Osoba sloučená jako duplicita se počítá u té, do které šla;
+    odvolaná osoba ne;
+  - tlačítko na stránce osoby je jen v aplikaci a jen při sledování výzkumu živě. Zavře stránku a otevře přehled
+    s položkami osoby v obou fázích;
+  - se starším výzkumem (bez linie a lidí u položek) vše jako dřív.
 
+<!-- zdroj: app:e4360924 src/research-waiting.ts WaitingScope (line/person), waitingInScope, scopedWaiting, waitingNames (person + personIds) · src/ui/research-overview-ui.ts štítek waitingScopeLine/waitingScopePerson, waitingScopeClear, waitingScopeNone (scope před druhy, fázemi, místy a hledáním) · src/ui/overview-window-ui.ts, overview-window-view.ts (okno se ptá hlavního) · src/ui/research-ui.ts researchCardInfo, todoWaiting (person a personIds jednou) · src/ui/person-page-ui.ts (research:waiting → closePersonPage, openWaitingScope kind person) · src/person-page.ts waitingOpen (jen groups.research, c.app) · src/research-link.ts persons · strings.ts live.waitingScope*, personPage waitingOpen · e2e/card-waiting-answer.spec.ts · research:1bc0d87c src/core/waiting.ts personsOf (subject, pořadí, bez duplicit; mergedInto, retracted vynechán; bez nich pole chybí), src/core/live.ts BRIDGE_FEATURES waiting.persons · app:6112d1eb (den odeslání) -->
 <!-- zdroj: app:7d7c0783 src/ui/research-overview-ui.ts overviewWaitingGroupHead, overviewWaitingBookHead (pás .research-overview__waiting-grouphead, akce skupiny v pásu, ul.is-grouped; bez skupin a Bez knihy bez linky), src/ui/waiting-order-ui.ts groupTitleMoreEl (strop GROUP_TITLE_LINES 3, telefon, panel a úzký sloupec 4; víc/méně stav title:<skupina>, stopPropagation), src/ui/research-ui.ts (panel: pás, víc, is-grouped), appendWaitingWebHost, strings.ts live.titleMore, titleLess, waitingWebHostAria · app:1176f465 overviewWaitingRow (text celý v řádku, detail ho neopakuje), overviewWaitingOnBox (waitsOnUser → bez bloku; appendLinkedText; waitingOnMoreEl 10 / na šířku 3 řádky; waitingToLabel Adresát), strings.ts live.waitingOnLabel, waitingToLabel · app:96b35bbd src/research-link.ts sanitizeWaiting MAX_WAITING_ON 1500, panel .live-waiting-on 2 řádky + title · CHANGELOG.cs.md 3.30.0 · dirigent:prace/1117-app-knihy-zahlavi, 1117-app-cekana-cely-text · app:docs/ZADANI_DEV_knihy-zahlavi.md §1–§3 -->
 
 <!-- zdroj: app:v3.21.2 src/ui/research-ui.ts renderLivePanel (waiting) · strings.ts research.answerWhere, research.answerHere, research.answerMixed · app:7cf409bd src/ui/card-signals-ui.ts answerPersonWaiting (vyprávění → porovnání; 1 položka → waitingAnswerAction; jinak showPersonWaiting, why jen když žádná nejde), personSignalsMenuHtml (dotyk: menuWaiting → signal-waiting-list) · src/ui/research-ui.ts showPersonWaiting (telefon, sbalený/skrytý oddíl, otevřený přehled → přehled), waitingWhyEl · src/research-waiting.ts personWaiting, panelWaiting (focus první) · src/ui/waiting-task-ui.ts waitingAnswerAction · src/card-signals.ts ACTION_GLYPH waiting '!' · strings.ts card.menuAnswer, card.menuWaiting, card.tipClickAnswer, live.waitingNoAnswerHere · e2e/card-waiting-answer.spec.ts · hypotézy: app:src/ui/hypothesis-waiting-ui.ts (commit 8d7f1597), research:src/core/waiting.ts hypothesesApp -->

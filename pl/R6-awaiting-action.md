@@ -285,8 +285,11 @@ Decyzje i zgody przyjmuje tylko terminal; przyciski, które ich wymagają, otwie
 - **Od badania 1.37.0 (aplikacja 3.32.0):** aplikacja sama zwraca agentowi zadanie czekające na skany, z którymi
   agent poradzi sobie sam (**Spróbuj ponownie przez agenta**, także za całą grupę archiwum; [R6.7.3](#R6.7.3),
   [S4.4.14](S4-research-from-the-app.md#S4.4.14)).
+- **Od badania 1.38.0 (aplikacja 3.33.0):** **Wysłano** pyta o dzień wysłania, a dzień wysłanej pozycji można
+  poprawić: w aplikacji **Zmień datę wysłania**, w terminalu **Poprawić datę wysłania** ([R6.7](#R6.7)). W aplikacji
+  listę można zawęzić do jednej linii lub jednej osoby ([S4.4](S4-research-from-the-app.md#S4.4)).
 
-<!-- zdroj: research:src/core/live.ts:60-80 (POST /waiting, /group, PUT /media X-Strom-Task, POST /places/answer, /conflict 403), :2761 · src/core/waiting.ts:78-88 actionsOf · app:src/ui/research-overview-ui.ts · strings.ts:9972, :10078, :11953 -->
+<!-- zdroj: research:src/core/live.ts:60-80 (POST /waiting, /group, PUT /media X-Strom-Task, POST /places/answer, /conflict 403), :2761 · src/core/waiting.ts:78-88 actionsOf · app:src/ui/research-overview-ui.ts · strings.ts:9972, :10078, :11953 · 1.38.0: research:fdfc1f26 src/core/live.ts POST /waiting {"do":"sent","at"}, /group (waiting.sentDay), src/cli/menu-waiting.ts ui.wait.a.redate · 1bc0d87c src/core/waiting.ts personsOf (waiting.persons) · app:6112d1eb src/research-waiting-write.ts waitingWrites (sentDay) · e4360924 src/research-waiting.ts WaitingScope, scopedWaiting -->
 
 <a id="R6.6"></a>
 ## R6.6 Co może tylko człowiek
@@ -335,8 +338,38 @@ zadanie do kolejki, a agent przetwarza ją przy następnej pracy.
 - **Obsługa:** aplikacja: **Wysłano**, **Przywróć do załatwienia** · terminal: **Wysłano**, `strom task sent T…`,
   cofnięcie `--undo`.
 - **Obowiązuje od:** badanie 1.14.0
+- **Od badania 1.38.0:** dzień, w którym zapytanie wyszło:
+  - `strom task sent T… --date 2026-11-24` zapisuje podany dzień. Dzień musi być w kalendarzu i nie może dopiero
+    nadejść; dzień sprzed początku czekania przechodzi. `--date` razem z `--undo` badanie odrzuca;
+  - przy zadaniu już wysłanym `--date` poprawia dzień, a zadanie czeka dalej. Wynik podaje dzień poprzedni i polecenie
+    cofnięcia, np. „T0003 sent on 2026-11-24 (was 2026-11-28) — back: strom task sent T0003 --date 2026-11-28”. Ten
+    sam dzień ponownie niczego nie zmienia;
+  - podany dzień jest tym samym dniem na każdym zegarze. Wysłanie zapisane bez podanego dnia liczy się jako dzień
+    według kalendarza tego komputera;
+  - jak długo zadanie czeka, liczy się w dniach kalendarza tego komputera, nie w 24 godzinach. **bez odpowiedzi
+    ponad 30 dni** pojawia się 31. dnia po dniu wysłania;
+  - menu **Co czeka**: po **Wysłano** i potwierdzeniu pyta „Dzień wysłania (Enter = dziś; np. 24. 11. 2026 lub
+    2026-11-24)”. Przyjmuje dzień z kropkami (bez roku to bieżący rok) i postać 2026-11-24; 0 wraca i niczego nie
+    zapisuje. Dzień, którego nie ma w kalendarzu albo który dopiero nadejdzie, menu podaje i pyta ponownie.
+    **Wysłano za całą grupę** pyta raz i daje wszystkim pozycjom grupy ten sam dzień;
+  - wysłana pozycja ma w menu wybór **Poprawić datę wysłania** („Rzeczywisty dzień wysłania …”; Enter lub 0 wraca);
+  - odnośnik z aplikacji do terminala nie pyta o dzień i zapisuje dzisiejszy, jak dotąd.
+- **Od aplikacji 3.33.0 z badaniem 1.38.0:** **Wysłano** w aplikacji otwiera pod przyciskiem małe okienko **Dzień
+  wysłania** z dzisiejszym dniem. Dnia w przyszłości wybrać nie można („Ten dzień dopiero nadejdzie.”). **Zapisz**
+  (lub Enter) zapisuje; **Anuluj**, Escape lub kliknięcie poza okienkiem je zamyka. Przy grupie okienko podaje, ilu
+  pozycjom dzień przypada („Jeden dzień dla 3 pozycji”). Powiadomienie podaje dzień, który zapisało badanie
+  („Zapisano jako wysłane 24.11”, z **Cofnij**):
+  - wysłana pozycja ma po **Przywróć do załatwienia** akcję **Zmień datę wysłania**: to samo okienko z dotychczasowym
+    dniem. Powiadomienie „Data wysłania zmieniona na 24.11” ma **Cofnij**, które zapisuje z powrotem dzień
+    poprzedni;
+  - dzień bieżącego roku jest bez roku, dzień innego roku w całości;
+  - dzień, którego badanie nie przyjmie: „Nie zapisano: badanie nie przyjmuje tego dnia (nie ma go w kalendarzu albo
+    dopiero nadejdzie).”;
+  - na telefonie tak samo;
+  - z badaniem, które dnia nie przyjmuje, **Wysłano** zapisuje dzisiejszy dzień jak dotąd, a **Zmień datę wysłania**
+    nie ma.
 
-<!-- zdroj: research:src/commands/tasks.ts:1053-1118 task sent (task.not-waiting, task.not-sendable) · src/core/waitkind.ts:23 SENDABLE · src/cli/menu-waiting.ts:49 NO_REPLY_DAYS, :126 -->
+<!-- zdroj: research:src/commands/tasks.ts:1053-1118 task sent (task.not-waiting, task.not-sendable) · src/core/waitkind.ts:23 SENDABLE · src/cli/menu-waiting.ts:49 NO_REPLY_DAYS, :126 · 1.38.0: research:fdfc1f26 src/core/waitkind.ts sentOn (poledne UTC), sentDay, localDay, daysFrom, givenSentDay · src/commands/tasks.ts task sent --date (--undo s --date odmítnuto; op task.sent.date, „(was …) — back: strom task sent T… --date …“, „already — nothing changed“) · src/cli/menu-links.ts typedDay, askSentDay (Enter dnes, 0 zpět, ui.wait.day.bad), waitingDo (odkaz bez dotazu) · src/cli/menu-waiting.ts sentWords (days > NO_REPLY_DAYS), skupina (ui.wait.group.sent.on.done), ui.wait.a.redate, ui.wait.redate.day, ui.wait.redate.done · assets/lang/cs.json ui.wait.sent.day, ui.wait.sent.on.done · 79b5e917 test/cli menu Co čeká na pevných hodinách · strom help task sent · app:6112d1eb, 0c9d69b8 src/research-waiting-write.ts waitingWrites (waiting.sent + waiting.sentDay), src/ui/waiting-sent-day.ts (dnešek, max dnes, Enter, Escape, klik mimo), src/ui/research-waiting-write-ui.ts askWaitingSentDay, markWaitingSent (sentToast, undo), changeWaitingSentDay (sentDayChangedToast, undo s předchozím dnem), markWaitingGroupSent (groupSentToast), waitingDayShown · src/ui/phone-research-ui.ts · strings.ts live.waitingWrite.sentDayTitle, sentDayGroup, sentDaySave, sentDayCancel, sentDayFuture, changeSentDay, sentDayChangedToast, sentToast, groupSentToast, badDate -->
 
 <a id="R6.7.1"></a>
 ### R6.7.1 Odpowiedź plikiem lub słowami

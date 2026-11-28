@@ -189,14 +189,14 @@ odkazem ([S10.7.1](#S10.7.1)). Uložená stránka domu, kniha a stránky rodu ch
   člověk neodkryje (**Ukázat ve výstupech**).
 - **Poloha** jen u domu bez lidí posledních zhruba 100 let a jen bez ručního skrytí ([S10.3.4](#S10.3.4)); jméno
   po chalupě u domu s takovými lidmi taky ne.
-- **Vyprávění o domě** schválené, nebo koncept se štítkem „koncept, čeká na schválení“, a jen celé: vyprávění,
-  které jmenuje chráněného člověka, se vynechá celé ([S10.14.2](#S10.14.2)).
+- **Vyprávění o domě** vždy celé, schválené i koncept, bez štítku konceptu. Lidé posledních zhruba 100 let ani
+  položky, které stránka skrývá, ho nevynechají ([S10.14.2](#S10.14.2)).
 - Stránka domu řekne, co ve výstupech chybí a proč: „Ve výstupech (HTML, kniha) se N událostí a poloha domu neukazují
   (lidé posledních ~100 let).“, „… N událostí neukazuje; poloha domu je skrytá ručně.“
 - **Ovládání:** aplikace: stránka domu → **Uložit HTML**; u události **Ukázat ve výstupech**.
 - **Platí od:** aplikace 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 Časová osa ze zápisů stromu
@@ -534,19 +534,26 @@ Vlastní rešerši domu (poznámky, výpisy, odkazy) jde dát výzkumu. Text se 
   ([S10.6.2](#S10.6.2)). Stav domu **rešerše čeká na převzetí**.
 - **Materiál k domu** (soubor nebo vzpomínka): **Přiložit materiál…**. Pamětník jménem jen se souhlasem. Se zapnutou
   Historií domů založí úkol domu (u hotového domu úkol podoby, [S10.7](#S10.7)); s vypnutou se jen uloží.
+- **Soubor, který výzkum už má:** dávka z domu ho do výzkumu znovu neposílá. Po uzavření dávky ho aplikace připojí
+  k domu sama, po nejvýš 500 souborech. Když dům soubory nepřijme, konec dávky to řekne: „Co už výzkum měl, není
+  připojeno k domu <dům>: <důvod>“. Dávka, ve které nic nového není, končí „Už v Materiálech“ s titulkem souboru
+  a „Připojen k domu <dům>.“ ([A3.5](A3-evidence-in-the-app.md#A3.5)).
+- **Soubor z Materiálů:** soubor výzkumu jde k domu připojit i v okně **Materiály**: **Připojit k…** → **Dům**
+  ([A3.5.4](A3-evidence-in-the-app.md#A3.5.4)). Pak je v **Materiály domu** u domu v okně **Domy** a v **Kde je
+  použit** u souboru ([A3.5.3](A3-evidence-in-the-app.md#A3.5.3)).
 - **Hranice:**
   - `.html`, `.htm` a soubory v podsložkách nebere, jen je vypíše;
   - úkol převzetí se při vypnuté Historii domů neodkládá;
   - agent bez terminálu nejasný soubor nepřevezme, vrátí příkazy k doplnění;
   - přílohy (obrázky, data map) jen s volnou licencí.
 - **Ovládání:** aplikace: ⋯ u domu → **Převzít rešerši ze souboru…** (otevře terminál), **Přiložit materiál…**;
-  terminál: `strom house import <soubor|složka> [--house <soubor>=<dům>] [--skip <soubor>]`,
+  okno **Materiály** → **Připojit k…** → **Dům**; terminál: `strom house import <soubor|složka> [--house <soubor>=<dům>] [--skip <soubor>]`,
   `strom house add material <dům> --input I…` nebo `--memory "<text>"`.
 - **Platí od:** výzkum 1.38.0, aplikace 3.33.0
 - **Hlídá kód:** dotaz na nejasné, souhlas pamětníka, úkol převzetí. **Jen metodika:** jistota z textu, licence
   příloh.
 
-<!-- zdroj: research:src/commands/house.ts import 927, material 809–830 · src/core/houseimport.ts · assets/terms/houses.json (ručně, badatelna) · cs.json ui.house.import.*, house.takeover(.why), ui.link.what.house.import · src/core/houseauto.ts houseTaskForMaterial (top false) · assets/method/house.md house-takeover · app:strings.ts houses.st.takeover, takeoverNote · commity 5703ae19, 4a6869fd, f766c63f · nálezy: materiál k domu nejde na vršek (komentář × kód), licence materiálu jen metodika -->
+<!-- zdroj: research:src/commands/house.ts import 927, material 809–830 · src/core/houseimport.ts · assets/terms/houses.json (ručně, badatelna) · cs.json ui.house.import.*, house.takeover(.why), ui.link.what.house.import · src/core/houseauto.ts houseTaskForMaterial (top false) · assets/method/house.md house-takeover · app:strings.ts houses.st.takeover, takeoverNote · commity 5703ae19, 4a6869fd, f766c63f · nálezy: materiál k domu nejde na vršek (komentář × kód), licence materiálu jen metodika · 1128: app:fc290355 src/ui/batch-ui.ts noteHad (media/known, PUT /media, batch/done known, zip known), batchHadToHouse (POST /houses/material po 500, house.material, hadHouseFailed), batchNothingNew, batchHadHtml · strings.ts batch.hadTitle, hadOne, hadHouse, hadHouseFailed · app:7389ceb2 src/ui/material-attach-ui.ts (záložka Dům) · src/ui/house-material-ui.ts renderHouseMaterialsHtml (houses.materials) · app:f527db12 src/ui/material-uses-ui.ts materialHouseRow -->
 
 <a id="S10.9"></a>
 ## S10.9 Probrat dům s agentem
@@ -586,15 +593,18 @@ domu a seznam pramenů; zapisuje jen to, co zjistí, s pramenem, a navazující 
   - kniha uvede polohu jen s volbou **Poloha domů** a jen u domu bez lidí posledních zhruba 100 let
     ([S10.3.4](#S10.3.4)); jinak „Události po roce <rok> a poloha domu se v knize neuvádějí.“; citlivé události
     a události výzkumu posledních zhruba 100 let vynechá ([S10.3.2](#S10.3.2));
-  - stránky nedávají o domech nic z posledních zhruba 100 let;
+  - stránky nedávají o domech nic z posledních zhruba 100 let, kromě vyprávění o domě;
+  - vyprávění se žijící osobou kniha i stránky vynechají jen s vypnutým **Vyprávění o domech se žijícími osobami**
+    ([S10.14.2](#S10.14.2));
   - stránky berou domy s historií podle prahu ([S10.1](#S10.1)), kniha i domy s hotovou historií z výzkumu;
   - výběr **Dům** jen ve stromu s domem s číslem a jen pro knihu; dar ([A7.9](A7-book-pages-and-export.md#A7.9))
     a obrázek domy nemají.
 - **Ovládání:** aplikace: export **Kniha rodu** → **Dům**, část **Domy**, **Rejstřík domů**, **Poloha domů**,
-  **Fotky domů z webu**; stránky rodu a stránky stromu → **Domy**, **Fotky domů z webu**.
+  **Fotky domů z webu**, **Vyprávění o domech se žijícími osobami**; stránky rodu a stránky stromu → **Domy**,
+  **Fotky domů z webu**, **Vyprávění o domech se žijícími osobami**.
 - **Platí od:** aplikace 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories -->
 
 <a id="S10.11"></a>
 ## S10.11 Domy jinde v aplikaci
@@ -611,14 +621,15 @@ domu a seznam pramenů; zapisuje jen to, co zjistí, s pramenem, a navazující 
 | Statistiky | téma **Domy**; nejdéle jedna rodina, přiženění a přivdání ([A13](A13-tree-statistics.md)) |
 | hledání | skupina **Domy** nad osobami (nejvýš 5); u osoby nalezené číslem domu **Dům ›** |
 | fronta a **Čeká na vyřízení** | úkoly **Historie domu <číslo>, <obec>**, **Převzít rešerši domu <číslo>**, **Kostra obce <obec> pro domy**; **Stránka domu ›**; otázka domu s „Dům <číslo> ›“; nová verze vyprávění „Vyprávění o domě <číslo> čeká na schválení“ ([S10.14](#S10.14)) |
-| vyprávění osoby | odkaz **Dům <číslo> ›** na dům se schváleným vyprávěním ([S10.14](#S10.14)) |
+| okno **Materiály** | **Připojit k…** → **Dům** připojí soubor výzkumu k domu ([A3.5.4](A3-evidence-in-the-app.md#A3.5.4)); **Kde je použit** má řádek **Dům** s odkazem na stránku domu ([A3.5.3](A3-evidence-in-the-app.md#A3.5.3)) |
+| vyprávění osoby | v aplikaci odkaz **Dům <číslo> ›** na dům se schváleným vyprávěním ([S10.14](#S10.14)); v knize a ve stránkách rodu i na koncept ([S10.14.2](#S10.14.2)) |
 | GEDCOM | záznam `_HOUSE` jen pro dům se jménem nebo spojený (obec, čísla s datem, jméno, „tentýž dům“); oddělení, poloha, ruční skrytí polohy a odkryté události jen v JSON; vyprávění o domě GEDCOM nenese |
 
 - **Výzkum a `_HOUSE`:** `strom sync` čte domy z GEDCOM aplikace jako slovo člověka: jméno, chybějící číslo
   a „tentýž dům“. Nic neubírá; obec, která není místem výzkumu, jen ohlásí. Výzkum `_HOUSE` do souboru nepíše.
 - **Platí od:** aplikace 3.33.0, výzkum 1.38.0
 
-<!-- zdroj: app:src/person-page.ts, src/person-houses.ts (integration.ppHouses, 4bb8b52e) · src/rod-timeline.ts, src/house-events.ts (integration.chip, f5b46c5b) · src/map-houses.ts, src/ui/map-houses-ui.ts (houses.mapLayer, 30 px, mapMigOff; 20f6ef91, 31130150, cef1ed0f) · src/ui/house-request-ui.ts familyHouses.* (fa5df8fb) · Tabulka integration.tableCol (fc7aced0) · ruleLivedIn, ruleYears (9cfd8ef1) · src/ui/tree-stats-ui.ts statsHouses, statsLongest, statsMarriedIn (6acc0762) · src/house-search.ts searchGroup, searchHouse (dfe6c13d) · src/house-tasks.ts taskHouse, taskImport, taskSkeleton (4e322dec) · src/ged-houses.ts (d3fd1e86) · research:src/core/housesync.ts planHouses, applyHouseChange (3fbde6b7), ui.sync.house.* · nález: _HOUSE jen jedním směrem -->
+<!-- zdroj: app:src/person-page.ts, src/person-houses.ts (integration.ppHouses, 4bb8b52e) · src/rod-timeline.ts, src/house-events.ts (integration.chip, f5b46c5b) · src/map-houses.ts, src/ui/map-houses-ui.ts (houses.mapLayer, 30 px, mapMigOff; 20f6ef91, 31130150, cef1ed0f) · src/ui/house-request-ui.ts familyHouses.* (fa5df8fb) · Tabulka integration.tableCol (fc7aced0) · ruleLivedIn, ruleYears (9cfd8ef1) · src/ui/tree-stats-ui.ts statsHouses, statsLongest, statsMarriedIn (6acc0762) · src/house-search.ts searchGroup, searchHouse (dfe6c13d) · src/house-tasks.ts taskHouse, taskImport, taskSkeleton (4e322dec) · src/ged-houses.ts (d3fd1e86) · research:src/core/housesync.ts planHouses, applyHouseChange (3fbde6b7), ui.sync.house.* · nález: _HOUSE jen jedním směrem · 1128: app:7389ceb2 src/ui/material-attach-ui.ts (attachTarget.house), app:f527db12 src/ui/material-uses-ui.ts materialHouseRow, app:28099151 src/book.ts storyHouses, src/ui/house-page-ui.ts houseHasStory (status final) -->
 
 <a id="S10.12"></a>
 ## S10.12 Příkazy `strom house`
@@ -686,7 +697,8 @@ převypráví, co doložil výzkum.
   - život osoby patří do jejího vyprávění; ve vyprávění o domě má osoba jednu větu s roky v domě.
 - **Stránka domu**, oddíl **Vyprávění** hned za **V kostce**:
   - schválený text s nadpisem a prameny;
-  - koncept se štítkem „koncept, čeká na schválení“ a tlačítkem **Schválit ve výzkumu** (odkaz do terminálu);
+  - koncept se štítkem „koncept, čeká na schválení“ a tlačítkem **Schválit ve výzkumu** (odkaz do terminálu); štítek
+    i tlačítko jsou jen v aplikaci, výstupy dají koncept bez nich ([S10.14.2](#S10.14.2));
   - nová verze vedle schválené: „Nová verze vyprávění (den) čeká na schválení; stránka ukazuje schválený text.“
     s **Porovnat**;
   - dokud se píše, stav úkolu: „Vyprávění o domě je ve frontě výzkumu.“, „Vyprávění o domě se právě píše.“, „Úkol
@@ -733,17 +745,30 @@ převypráví, co doložil výzkum.
 <a id="S10.14.2"></a>
 ### S10.14.2 Vyprávění ve výstupech a ochrana lidí
 
-- Kniha rodu (část **Domy**), uložená stránka domu a stránky rodu ukážou schválený text. Dokud vyprávění schválené
-  není, ukážou koncept se štítkem „koncept, čeká na schválení“, bez tlačítek. U nové verze vedle schválené jde do
+- Kniha rodu (část **Domy**), uložená stránka domu a stránky rodu dají schválený text. Dokud vyprávění schválené
+  není, dají koncept stejně jako schválený text: bez štítku „koncept, čeká na schválení“, bez jiného vzhledu a bez
+  tlačítek. Štítek, **Schválit ve výzkumu** a **Porovnat** jsou jen v aplikaci. U nové verze vedle schválené jde do
   souboru schválený text, nová verze ne. V knize stojí vyprávění před oddíly domu a jeho prameny jsou mezi
   číslovanými poznámkami kapitoly.
-- Výstup vyprávění vynechá **celé** (text se nepřepisuje, platí i pro koncept), když jmenuje žijícího, člověka
-  posledních zhruba 100 let nebo osobu výzkumu bez záznamu o úmrtí, kterou strom nezná, nebo když stojí na položce domu,
-  kterou výstup skrývá ([S10.3.2](#S10.3.2)).
+- Vyprávění jde do výstupu celé, nebo vůbec; text se nepřepisuje. Lidé posledních zhruba 100 let, osoby výzkumu,
+  které strom nezná, ani položky domu, které výstup skrývá ([S10.3.2](#S10.3.2)), ho nevynechají. Ostatní ochrana
+  domu platí dál.
+- **Uložená stránka domu** nese vyprávění vždy.
+- **Kniha rodu a stránky rodu** mají přepínač **Vyprávění o domech se žijícími osobami** (výchozí zapnutý, pamatuje
+  se s ostatními volbami dialogu): „Zapnuto: vloží se každé vyprávění o domě. Vypnuto: vyprávění, ve kterém
+  vystupuje žijící osoba, se vynechá.“
+  - žijící osoba je osoba stromu, kterou aplikace považuje za žijící ([A7.1](A7-book-pages-and-export.md#A7.1));
+    osoba výzkumu, kterou strom nezná, se za žijící nepočítá;
+  - přepínač platí bez ohledu na volbu ochrany žijících a vynechá jen takové vyprávění, ne ostatní;
+  - kniha: v **Části knihy** pod **Poloha domů** a **Fotky domů z webu**, jen s částí **Domy**; stránky rodu: u volby
+    **Domy**, jen s **V rodinných stránkách, propojené s osobami**;
+  - nabídne se, jen když dům výběru má vyprávění, ve kterém vystupuje žijící osoba. Výsledky domů od výzkumu si
+    dialog načte hned při otevření.
+- **Dar** ([A7.9](A7-book-pages-and-export.md#A7.9)) vyprávění o domech nenese: výsledky domů od výzkumu nečte.
 - Odkaz **Dům <číslo> ›** z vyprávění osoby na dům je v knize a ve stránkách rodu jen tehdy, když výstup vyprávění
   domu ukazuje, i když je to koncept.
-- **Ovládání:** aplikace: export **Kniha rodu** → část **Domy**; stránka domu → **Uložit HTML**; stránky rodu →
-  **Domy**.
+- **Ovládání:** aplikace: export **Kniha rodu** → část **Domy**, **Vyprávění o domech se žijícími osobami**; stránka
+  domu → **Uložit HTML**; stránky rodu → **Domy**, **Vyprávění o domech se žijícími osobami**.
 - **Platí od:** aplikace 3.33.0
 
-<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (status draft → draft: true; nová verze vedle final → final), src/book-houses.ts book-house-story-tag P.storyDraft, src/family-pages-html.ts setStoryHouses (status draft i final), src/house-page.ts storyHtml (Schválit jen c.app) · strings.ts houses.page.storyDraft · test person-page-house-story „a draft the house's page shows tagged“ -->
+<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (nová verze vedle final → final) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez recent, osob bez úmrtí a skrytých položek; leaveOutLiving), houseStoryNamesLiving (personOfRef a ctx.living, osoba mimo strom ne), src/book-houses.ts (bez book-house-story-tag), src/house-page.ts storyHtml (štítek a Schválit jen c.app), shownStory (storyLiving), src/book.ts (opts.houseStoriesLiving), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving (výchozí zapnuto), src/book-memory.ts houseStoriesLiving (kniha i PagesChoices), src/ui/book-ui.ts book-house-stories (kniha: parts.houses a chapterHouses; stránky: houses pages), readDialogHouses, src/family-pages-html.ts setStoryHouses (houseStoriesLiving) · strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint · src/gift-package.ts (bez houseResearch) · dirigent:prace/1128-app-dum-vypraveni-ochrana Výsledek (dárek vyprávění domů nenese; osoba mimo strom bez úmrtí není žijící) -->

@@ -149,11 +149,13 @@ Księga rodu to księga do czytania od początku: drzewo genealogiczne, rodziny 
   wydarzeniami pary; drzewo, którego jedynymi obrazami są zdjęcia par, tę część proponuje
   ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
 - **Od aplikacji 3.33.0:** wybór **Dom** (księga o jednym domu), część **Domy** i **Indeks domów**
-  ([S10.10](S10-houses.md#S10.10)); w części **Domy** opowieść o domu (szkic z etykietą), obrazy domu i miejscowości, a
-  z opcją **Położenie domów** wycinek mapy ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
-  [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)); w części **Domy** opowieść o domu (także szkic, bez etykiety), obrazy domu
+  i miejscowości, a z opcją **Położenie domów** wycinek mapy ([S10.14.2](S10-houses.md#S10.14.2),
+  [S10.7.1](S10-houses.md#S10.7.1), [S10.3.4](S10-houses.md#S10.3.4)). W sekcji **Części księgi** część **Domy** ma
+  przełącznik **Opowieści o domach z żyjącymi osobami** (domyślnie włączony); wyłączony pomija opowieść, w której
+  występuje żyjąca osoba. Jest proponowany tylko wtedy, gdy księga ma taką opowieść.
 
-<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 -->
+<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 · 3.33.0 vyprávění o domě: app:28099151 src/book.ts houseStoryForOutput, src/book-houses.ts (bez štítku), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving, src/ui/book-ui.ts book-house-stories, strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint -->
 
 <a id="A7.4.1"></a>
 ### A7.4.1 Wybór osób do księgi i stron
@@ -188,11 +190,14 @@ nazwisk i miejscowości.
 - Ochrona osób żyjących i źródła według [A7.2](#A7.2); domyślnie Inicjały + rok urodzenia.
 - **Obowiązuje od:** Strony rodu aplikacja 3.20.0; Strony drzewa aplikacja 3.21.0
 - **Od aplikacji 3.33.0:** opcja **Domy**: domy z historią, indeks domów i strona każdego domu
-  ([S10.10](S10-houses.md#S10.10)), przy domu także opowieść (szkic z etykietą), obrazy domu i miejscowości i wycinek
-  mapy z położeniem ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
-  [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)), przy domu także opowieść (także szkic, bez etykiety), obrazy domu i miejscowości
+  i wycinek mapy z położeniem ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
+  [S10.3.4](S10-houses.md#S10.3.4)). Przy opcji **Domy** jest przełącznik **Opowieści o domach z żyjącymi osobami**
+  (domyślnie włączony); wyłączony pomija opowieść, w której występuje żyjąca osoba. Jest proponowany tylko wtedy, gdy
+  strony domów mają taką opowieść. Szkic opowieści osoby lub pary jest na stronach bez etykiety **Szkic**
+  ([A7.8](#A7.8)).
 
-<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 -->
+<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 · 3.33.0 vyprávění: app:28099151 src/family-pages.ts houseStoriesLiving, src/family-pages-html.ts setStoryHouses, coupleChapterHtml bez draftTag, src/house-page.ts storyLiving, src/ui/book-ui.ts syncPages book-house-stories, src/book-memory.ts PagesChoices.houseStoriesLiving -->
 
 <a id="A7.5.1"></a>
 ### A7.5.1 Historia na osi czasu rodu
@@ -230,10 +235,13 @@ miejsca życia na mapie, oś życia z historią, wycinki z ksiąg metrykalnych i
   zdjęcie pary”). Powiększenie portretu z oryginałem ma przełącznik **Portret** | **Całe zdjęcie**, zapisana strona
   odnośnik **Całe zdjęcie**, gdy plik to zdjęcie zawiera. ⋯ **Więcej działań** oferuje **Edytuj kadr portretu**
   ([A12.3](A12-portrait-and-couple-photo.md#A12.3), [A12.6](A12-portrait-and-couple-photo.md#A12.6)).
+- **Od aplikacji 3.33.0:** opowieść z badania, jeszcze niezatwierdzona, ma etykietę **Szkic** tylko na stronie osoby
+  w oknie aplikacji. Zapisana strona podaje ją tak samo jak zatwierdzoną opowieść, bez etykiety; tak samo opowieść
+  pary i jej odnośnik ([A7.8](#A7.8)).
 - **Obsługa:** menu karty osoby, **Strona osoby**; także z wachlarza.
 - **Obowiązuje od:** aplikacja 3.18.0
 
-<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a -->
+<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged (c.app a links app), draftTag, coupleChapterHtml draftTag, coupleChapterLinkTip · app:43794e42 src/__tests__/couple-story-chapter.test.ts · app:d3e9cdfd e2e/person-page.spec.ts -->
 
 <a id="A7.7"></a>
 ## A7.7 Zapisany HTML (samodzielny plik)
@@ -274,8 +282,12 @@ dokumentują źródła, opowieść je tylko opowiada ([A3.6](A3-evidence-in-the-
   - w pliku GEDCOM opowieść jest we własnym znaczniku `_STORY`, nie w notatce.
 - **Obsługa:** menu karty osoby → **Opowieść**; edycja osoby → sekcja **Opowieść**.
 - **Obowiązuje od:** aplikacja 2.8.0; opowieści par i strona osoby 3.18.0; w Księdze rodu 3.19.0
+- **Od aplikacji 3.33.0:** etykieta **Szkic** jest tylko w aplikacji. Zapisana strona osoby ([A7.6](#A7.6)) i strony
+  rodu ([A7.5](#A7.5)) podają szkic tak samo jak zatwierdzoną opowieść, bez etykiety. Księga szkicu nie oznacza;
+  **Zatwierdź w badaniu** jest tylko w oknie księgi, nie w zapisanym pliku. Opowieść o domu zob.
+  [S10.14.2](S10-houses.md#S10.14.2).
 
-<!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 -->
+<!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged, draftTag, coupleChapterHtml draftTag · src/book-blocks.ts storyBlock (bez štítku, approve z extras), src/book.ts extras („on the screen only, never in a saved file“) -->
 
 <a id="A7.9"></a>
 ## A7.9 Podarować rodowód

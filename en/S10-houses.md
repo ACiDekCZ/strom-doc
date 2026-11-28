@@ -201,15 +201,15 @@ people of the last roughly 100 years.
   a person reveals them (**Show in outputs**).
 - **Location** only for a house without people of the last roughly 100 years and only when not hidden by hand
   ([S10.3.4](#S10.3.4)); for a house with such people no house name either.
-- **The story of the house** approved, or a draft tagged “draft, waiting for approval”, and only whole: a story that
-  names a protected person is left out whole ([S10.14.2](#S10.14.2)).
+- **The story of the house** always whole, approved or a draft, without the draft tag. People of the last roughly
+  100 years and items the page hides do not leave it out ([S10.14.2](#S10.14.2)).
 - The house page says what is missing in the outputs and why: “In outputs (HTML, book) N events and the house
   location are not shown (people of the last ~100 years).”, “… N events are not shown; the house location is hidden
   by hand.”
 - **Controls:** app: house page → **Save HTML**; at an event **Show in outputs**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez podmínky recent a skrytých položek), src/house-page.ts shownStory (storyLiving jen z hromadného výstupu), storyHtml (štítek jen c.app) -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 The timeline from the tree's records
@@ -584,19 +584,27 @@ Own research of a house (notes, extracts, links) can be given to the research. T
   **own research waiting to be taken over**.
 - **Material for a house** (a file or a memory): **Attach material…**. A witness by name only with consent. With House
   history on it creates a house task (for a finished house a look task, [S10.7](#S10.7)); with it off it is only saved.
+- **A file the research has already:** a batch from a house does not send it to the research again. After the batch
+  closes the app attaches it to the house itself, at most 500 files at a time. When the house does not take the files,
+  the end of the batch says so: “What the research had already is not attached to the house <house>: <reason>”. A
+  batch with nothing new in it ends with “Already in Materials” with the file's title and “Attached to the house
+  <house>.” ([A3.5](A3-evidence-in-the-app.md#A3.5)).
+- **A file from Materials:** a file of the research can also be attached to a house in the **Materials** window:
+  **Link to…** → **House** ([A3.5.4](A3-evidence-in-the-app.md#A3.5.4)). Then it is in **House materials** at the
+  house in the **Houses** window and in **Where used** at the file ([A3.5.3](A3-evidence-in-the-app.md#A3.5.3)).
 - **Limits:**
   - it does not take `.html`, `.htm` and files in subfolders, it only lists them;
   - the takeover task is not postponed with House history off;
   - an agent without a terminal does not take over an unclear file; it returns the commands to complete it;
   - attachments (pictures, map data) only with a free licence.
 - **Controls:** app: ⋯ at a house → **Take over research from a file…** (opens the terminal), **Attach material…**;
-  terminal: `strom house import <file|folder> [--house <file>=<house>] [--skip <file>]`,
+  the **Materials** window → **Link to…** → **House**; terminal: `strom house import <file|folder> [--house <file>=<house>] [--skip <file>]`,
   `strom house add material <house> --input I…` or `--memory "<text>"`.
 - **Since:** research 1.38.0, app 3.33.0
 - **Enforced by the code:** the question on unclear cases, the witness's consent, the takeover task. **Method only:**
   certainty from the text, licences of attachments.
 
-<!-- zdroj: research:src/commands/house.ts import 927, material 809–830 · src/core/houseimport.ts · assets/terms/houses.json (ručně, badatelna) · cs.json ui.house.import.*, house.takeover(.why), ui.link.what.house.import · src/core/houseauto.ts houseTaskForMaterial (top false) · assets/method/house.md house-takeover · app:strings.ts houses.st.takeover, takeoverNote · commity 5703ae19, 4a6869fd, f766c63f · nálezy: materiál k domu nejde na vršek (komentář × kód), licence materiálu jen metodika -->
+<!-- zdroj: research:src/commands/house.ts import 927, material 809–830 · src/core/houseimport.ts · assets/terms/houses.json (ručně, badatelna) · cs.json ui.house.import.*, house.takeover(.why), ui.link.what.house.import · src/core/houseauto.ts houseTaskForMaterial (top false) · assets/method/house.md house-takeover · app:strings.ts houses.st.takeover, takeoverNote · commity 5703ae19, 4a6869fd, f766c63f · nálezy: materiál k domu nejde na vršek (komentář × kód), licence materiálu jen metodika · 1128: app:fc290355 src/ui/batch-ui.ts noteHad (media/known, PUT /media, batch/done known, zip known), batchHadToHouse (POST /houses/material po 500, house.material, hadHouseFailed), batchNothingNew, batchHadHtml · strings.ts batch.hadTitle, hadOne, hadHouse, hadHouseFailed · app:7389ceb2 src/ui/material-attach-ui.ts (záložka Dům) · src/ui/house-material-ui.ts renderHouseMaterialsHtml (houses.materials) · app:f527db12 src/ui/material-uses-ui.ts materialHouseRow -->
 
 <a id="S10.9"></a>
 ## S10.9 Discussing a house with the agent
@@ -640,17 +648,19 @@ follow-up task only when a person asks for one.
   - the book gives the location only with the option **House locations** and only for a house without people of the
     last roughly 100 years ([S10.3.4](#S10.3.4)); otherwise “Events after <year> and the house location are not given
     in the book.”; it leaves out sensitive events and research events of the last roughly 100 years ([S10.3.2](#S10.3.2));
-  - the pages give nothing about houses from the last roughly 100 years;
+  - the pages give nothing about houses from the last roughly 100 years, except the story of a house;
+  - the book and the pages leave out a story with a living person only with **Stories of houses with living people**
+    off ([S10.14.2](#S10.14.2));
   - the pages take houses with history by the threshold ([S10.1](#S10.1)), the book also houses with a finished
     history from the research;
   - the choice **House** only in a tree with a numbered house and only for the book; the gift
     ([A7.9](A7-book-pages-and-export.md#A7.9)) and the picture have no houses.
 - **Controls:** app: export **Family book** → **House**, the part **Houses**, **Index of houses**, **House
-  locations**, **Photos of houses from the web**; family pages and tree pages → **Houses**, **Photos of houses from the
-  web**.
+  locations**, **Photos of houses from the web**, **Stories of houses with living people**; family pages and tree
+  pages → **Houses**, **Photos of houses from the web**, **Stories of houses with living people**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) · 1128: app:28099151 src/book.ts houseStoryForOutput (houseStoriesLiving), src/family-pages-html.ts setStoryHouses, src/ui/book-ui.ts book-house-stories -->
 
 <a id="S10.11"></a>
 ## S10.11 Houses elsewhere in the app
@@ -667,7 +677,8 @@ follow-up task only when a person asks for one.
 | Statistics | the topic **Houses**; longest one family, marrying into the house ([A13](A13-tree-statistics.md)) |
 | search | the group **Houses** above the people (at most 5); for a person found by a house number **House ›** |
 | queue and **Awaiting action** | the tasks **House history <number>, <town>**, **Take over research for house <number>**, **Town skeleton <town> for houses**; **House page ›**; a house question with “House <number> ›”; a new version of the story “The story of house <number> waits for approval” ([S10.14](#S10.14)) |
-| a person's story | the link **House <number> ›** to a house with an approved story ([S10.14](#S10.14)) |
+| the **Materials** window | **Link to…** → **House** attaches a file of the research to a house ([A3.5.4](A3-evidence-in-the-app.md#A3.5.4)); **Where used** has the row **House** with a link to the house page ([A3.5.3](A3-evidence-in-the-app.md#A3.5.3)) |
+| a person's story | in the app the link **House <number> ›** to a house with an approved story ([S10.14](#S10.14)); in the book and the family pages to a draft too ([S10.14.2](#S10.14.2)) |
 | GEDCOM | the record `_HOUSE` only for a house with a name or merged (town, numbers with dates, name, “same house”); separation, location, hiding the location by hand and revealed events only in JSON; GEDCOM does not carry the story of a house |
 
 - **The research and `_HOUSE`:** `strom sync` reads houses from the app's GEDCOM as a person's word: the name, a
@@ -675,7 +686,7 @@ follow-up task only when a person asks for one.
   research does not write `_HOUSE` into the file.
 - **Since:** app 3.33.0, research 1.38.0
 
-<!-- zdroj: app:src/person-page.ts, src/person-houses.ts (integration.ppHouses, 4bb8b52e) · src/rod-timeline.ts, src/house-events.ts (integration.chip, f5b46c5b) · src/map-houses.ts, src/ui/map-houses-ui.ts (houses.mapLayer, 30 px, mapMigOff; 20f6ef91, 31130150, cef1ed0f) · src/ui/house-request-ui.ts familyHouses.* (fa5df8fb) · Tabulka integration.tableCol (fc7aced0) · ruleLivedIn, ruleYears (9cfd8ef1) · src/ui/tree-stats-ui.ts statsHouses, statsLongest, statsMarriedIn (6acc0762) · src/house-search.ts searchGroup, searchHouse (dfe6c13d) · src/house-tasks.ts taskHouse, taskImport, taskSkeleton (4e322dec) · src/ged-houses.ts (d3fd1e86) · research:src/core/housesync.ts planHouses, applyHouseChange (3fbde6b7), ui.sync.house.* · nález: _HOUSE jen jedním směrem -->
+<!-- zdroj: app:src/person-page.ts, src/person-houses.ts (integration.ppHouses, 4bb8b52e) · src/rod-timeline.ts, src/house-events.ts (integration.chip, f5b46c5b) · src/map-houses.ts, src/ui/map-houses-ui.ts (houses.mapLayer, 30 px, mapMigOff; 20f6ef91, 31130150, cef1ed0f) · src/ui/house-request-ui.ts familyHouses.* (fa5df8fb) · Tabulka integration.tableCol (fc7aced0) · ruleLivedIn, ruleYears (9cfd8ef1) · src/ui/tree-stats-ui.ts statsHouses, statsLongest, statsMarriedIn (6acc0762) · src/house-search.ts searchGroup, searchHouse (dfe6c13d) · src/house-tasks.ts taskHouse, taskImport, taskSkeleton (4e322dec) · src/ged-houses.ts (d3fd1e86) · research:src/core/housesync.ts planHouses, applyHouseChange (3fbde6b7), ui.sync.house.* · nález: _HOUSE jen jedním směrem · 1128: app:7389ceb2 src/ui/material-attach-ui.ts (attachTarget.house), app:f527db12 src/ui/material-uses-ui.ts materialHouseRow, app:28099151 src/book.ts storyHouses, src/ui/house-page-ui.ts houseHasStory (status final) -->
 
 <a id="S10.12"></a>
 ## S10.12 The `strom house` commands
@@ -749,7 +760,8 @@ research documented.
 - **House page**, the **Story** section right after **In brief**:
   - the approved text with a heading and sources;
   - a draft with the tag “draft, waiting for approval” and the button **Approve in the research** (a link to the
-    terminal);
+    terminal); the tag and the button are in the app only, outputs give the draft without them
+    ([S10.14.2](#S10.14.2));
   - a new version beside the approved one: “A new version of the story (day) waits for approval; the page shows the
     approved text.” with **Compare**;
   - while it is being written, the task's state: “The story of the house is in the research queue.”, “The story of
@@ -799,17 +811,32 @@ research documented.
 <a id="S10.14.2"></a>
 ### S10.14.2 The story in outputs and protecting people
 
-- The family book (the part **Houses**), the saved house page and the family pages show the approved text. Until
-  the story is approved, they show the draft tagged “draft, waiting for approval”, without buttons. With a new version
-  beside the approved one the approved text goes into the file, the new version does not. In the book the story stands
-  before the house's sections and its sources are among the chapter's numbered notes.
-- The output leaves the story out **whole** (the text is not rewritten, a draft too) when it names a living person, a
-  person of the last roughly 100 years or a person of the research without a record of death whom the tree does not
-  know, or when it rests on an item of the house the output hides ([S10.3.2](#S10.3.2)).
+- The family book (the part **Houses**), the saved house page and the family pages give the approved text. Until the
+  story is approved they give the draft the same way as an approved text: without the tag “draft, waiting for
+  approval”, without another look and without buttons. The tag, **Approve in the research** and **Compare** are in
+  the app only. With a new version beside the approved one the approved text goes into the file, the new version does
+  not. In the book the story stands before the house's sections and its sources are among the chapter's numbered
+  notes.
+- The story goes into the output whole or not at all; the text is not rewritten. People of the last roughly 100 years,
+  people of the research whom the tree does not know and items of the house the output hides
+  ([S10.3.2](#S10.3.2)) do not leave it out. The house's other protection still holds.
+- **The saved house page** always carries the story.
+- **The family book and the family pages** have the switch **Stories of houses with living people** (on by default,
+  remembered with the dialog's other options): “On: every story of a house goes in. Off: a story in which a living
+  person appears is left out.”
+  - a living person is a person of the tree the app takes as living ([A7.1](A7-book-pages-and-export.md#A7.1)); a
+    person of the research whom the tree does not know does not count as living;
+  - the switch holds whatever the protection of the living is set to, and leaves out only such a story, nothing else;
+  - book: in **Parts of the book** under **House locations** and **Photos of houses from the web**, only with the part
+    **Houses**; family pages: at the option **Houses**, only with **In the family pages, linked with the people**;
+  - it is offered only when a house of the selection has a story in which a living person appears. The dialog reads
+    the research's results of the houses as soon as it opens.
+- **The gift** ([A7.9](A7-book-pages-and-export.md#A7.9)) carries no stories of houses: it does not read the
+  research's results of the houses.
 - The link **House <number> ›** from a person's story to the house is in the book and in the family pages only when
   the output shows the house's story, even when it is a draft.
-- **Controls:** app: export **Family book** → the part **Houses**; house page → **Save HTML**; family pages →
-  **Houses**.
+- **Controls:** app: export **Family book** → the part **Houses**, **Stories of houses with living people**; house
+  page → **Save HTML**; family pages → **Houses**, **Stories of houses with living people**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (status draft → draft: true; nová verze vedle final → final), src/book-houses.ts book-house-story-tag P.storyDraft, src/family-pages-html.ts setStoryHouses (status draft i final), src/house-page.ts storyHtml (Schválit jen c.app) · strings.ts houses.page.storyDraft · test person-page-house-story „a draft the house's page shows tagged“ -->
+<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (nová verze vedle final → final) · 1128: app:28099151 src/house-privacy.ts houseStoryForOutput (bez recent, osob bez úmrtí a skrytých položek; leaveOutLiving), houseStoryNamesLiving (personOfRef a ctx.living, osoba mimo strom ne), src/book-houses.ts (bez book-house-story-tag), src/house-page.ts storyHtml (štítek a Schválit jen c.app), shownStory (storyLiving), src/book.ts (opts.houseStoriesLiving), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving (výchozí zapnuto), src/book-memory.ts houseStoriesLiving (kniha i PagesChoices), src/ui/book-ui.ts book-house-stories (kniha: parts.houses a chapterHouses; stránky: houses pages), readDialogHouses, src/family-pages-html.ts setStoryHouses (houseStoriesLiving) · strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint · src/gift-package.ts (bez houseResearch) · dirigent:prace/1128-app-dum-vypraveni-ochrana Výsledek (dárek vyprávění domů nenese; osoba mimo strom bez úmrtí není žijící) -->

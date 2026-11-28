@@ -300,8 +300,12 @@ brauchen, öffnen das Terminal der Forschung auf dem Computer.
 - **Ab Forschung 1.37.0 (App 3.32.0):** die App gibt selbst eine Aufgabe an den Agenten zurück, die auf Aufnahmen
   wartet, die der Agent selbst schafft (**Erneut über den Agenten versuchen**, auch für die ganze Gruppe eines
   Archivs; [R6.7.3](#R6.7.3), [S4.4.14](S4-research-from-the-app.md#S4.4.14)).
+- **Ab Forschung 1.38.0 (App 3.33.0):** **Gesendet** fragt nach dem Tag des Versands, und der Tag eines gesendeten
+  Eintrags lässt sich berichtigen: in der App **Versanddatum ändern**, im Terminal **Versanddatum berichtigen**
+  ([R6.7](#R6.7)). In der App lässt sich die Liste auf eine Richtung oder eine Person eingrenzen
+  ([S4.4](S4-research-from-the-app.md#S4.4)).
 
-<!-- zdroj: research:src/core/live.ts:60-80 (POST /waiting, /group, PUT /media X-Strom-Task, POST /places/answer, /conflict 403), :2761 · src/core/waiting.ts:78-88 actionsOf · app:src/ui/research-overview-ui.ts · strings.ts:9972, :10078, :11953 -->
+<!-- zdroj: research:src/core/live.ts:60-80 (POST /waiting, /group, PUT /media X-Strom-Task, POST /places/answer, /conflict 403), :2761 · src/core/waiting.ts:78-88 actionsOf · app:src/ui/research-overview-ui.ts · strings.ts:9972, :10078, :11953 · 1.38.0: research:fdfc1f26 src/core/live.ts POST /waiting {"do":"sent","at"}, /group (waiting.sentDay), src/cli/menu-waiting.ts ui.wait.a.redate · 1bc0d87c src/core/waiting.ts personsOf (waiting.persons) · app:6112d1eb src/research-waiting-write.ts waitingWrites (sentDay) · e4360924 src/research-waiting.ts WaitingScope, scopedWaiting -->
 
 <a id="R6.6"></a>
 ## R6.6 Was nur der Mensch darf
@@ -353,8 +357,41 @@ Eine Antwort bringt die Aufgabe in die Warteschlange zurück, und der Agent vera
 - **Bedienung:** App: **Gesendet**, **Zurück zu „Zu erledigen“** · Terminal: **Gesendet**, `strom task sent T…`,
   zurück mit `--undo`.
 - **Gilt seit:** Forschung 1.14.0
+- **Ab Forschung 1.38.0:** der Tag, an dem die Anfrage hinausging:
+  - `strom task sent T… --date 2026-11-24` vermerkt den angegebenen Tag. Der Tag muss im Kalender stehen und darf
+    nicht erst kommen; ein Tag vor dem Beginn des Wartens geht durch. `--date` zusammen mit `--undo` lehnt die
+    Forschung ab;
+  - bei einer schon gesendeten Aufgabe berichtigt `--date` den Tag, und die Aufgabe wartet weiter. Die Ausgabe nennt
+    den Tag davor und den Befehl zurück, z. B. „T0003 sent on 2026-11-24 (was 2026-11-28) — back: strom task sent
+    T0003 --date 2026-11-28“. Derselbe Tag noch einmal ändert nichts;
+  - ein angegebener Tag ist auf jeder Uhr derselbe. Ein Versand, der ohne angegebenen Tag vermerkt wurde, gilt als
+    der Tag nach dem Kalender dieses Computers;
+  - wie lange eine Aufgabe wartet, wird nach Tagen des Kalenders dieses Computers gezählt, nicht nach 24 Stunden.
+    **seit über 30 Tagen keine Antwort** kommt am 31. Tag nach dem Tag des Versands hinzu;
+  - Menü **Was wartet**: nach **Gesendet** und der Bestätigung fragt es „Tag des Versands (Enter = heute; z. B.
+    24. 11. 2026 oder 2026-11-24)“. Es nimmt einen Tag mit Punkten (ohne Jahr das laufende Jahr) und die Form
+    2026-11-24; 0 geht zurück und vermerkt nichts. Einen Tag, den es im Kalender nicht gibt oder der erst kommt,
+    nennt das Menü und fragt erneut. **Für die ganze Gruppe gesendet** fragt einmal und gibt allen Einträgen der
+    Gruppe denselben Tag;
+  - ein gesendeter Eintrag hat im Menü die Wahl **Versanddatum berichtigen** („Tatsächlicher Tag des Versands …“;
+    Enter oder 0 geht zurück);
+  - ein Link aus der App ins Terminal fragt nicht nach dem Tag und vermerkt wie bisher heute.
+- **Ab App 3.33.0 mit Forschung 1.38.0:** **Gesendet** öffnet in der App unter der Schaltfläche ein kleines Feld
+  **Tag des Versands** mit dem heutigen Tag. Ein Tag in der Zukunft geht nicht („Dieser Tag kommt erst noch.“).
+  **Vermerken** (oder Enter) vermerkt; **Abbrechen**, Escape oder ein Klick außerhalb schließen das Feld. Bei einer
+  Gruppe sagt das Feld, für wie viele Einträge der Tag gilt („Ein Tag für 3 Einträge“). Der Hinweis nennt den Tag,
+  den die Forschung vermerkt hat („Als gesendet vermerkt am 24.11.“, mit **Rückgängig**):
+  - ein gesendeter Eintrag hat nach **Zurück zu „Zu erledigen“** die Aktion **Versanddatum ändern**: dasselbe Feld
+    mit dem bisherigen Tag. Der Hinweis „Versanddatum geändert auf 24.11.“ hat **Rückgängig**, das den Tag davor
+    wieder vermerkt;
+  - ein Tag des laufenden Jahres steht ohne Jahr, ein Tag eines anderen Jahres ganz;
+  - ein Tag, den die Forschung nicht annimmt: „Nicht vermerkt: Diesen Tag nimmt die Forschung nicht an (kein Tag im
+    Kalender, oder er kommt erst noch).“;
+  - auf dem Telefon ebenso;
+  - mit einer Forschung, die den Tag nicht annimmt, vermerkt **Gesendet** wie bisher heute, und **Versanddatum
+    ändern** gibt es nicht.
 
-<!-- zdroj: research:src/commands/tasks.ts:1053-1118 task sent (task.not-waiting, task.not-sendable) · src/core/waitkind.ts:23 SENDABLE · src/cli/menu-waiting.ts:49 NO_REPLY_DAYS, :126 -->
+<!-- zdroj: research:src/commands/tasks.ts:1053-1118 task sent (task.not-waiting, task.not-sendable) · src/core/waitkind.ts:23 SENDABLE · src/cli/menu-waiting.ts:49 NO_REPLY_DAYS, :126 · 1.38.0: research:fdfc1f26 src/core/waitkind.ts sentOn (poledne UTC), sentDay, localDay, daysFrom, givenSentDay · src/commands/tasks.ts task sent --date (--undo s --date odmítnuto; op task.sent.date, „(was …) — back: strom task sent T… --date …“, „already — nothing changed“) · src/cli/menu-links.ts typedDay, askSentDay (Enter dnes, 0 zpět, ui.wait.day.bad), waitingDo (odkaz bez dotazu) · src/cli/menu-waiting.ts sentWords (days > NO_REPLY_DAYS), skupina (ui.wait.group.sent.on.done), ui.wait.a.redate, ui.wait.redate.day, ui.wait.redate.done · assets/lang/cs.json ui.wait.sent.day, ui.wait.sent.on.done · 79b5e917 test/cli menu Co čeká na pevných hodinách · strom help task sent · app:6112d1eb, 0c9d69b8 src/research-waiting-write.ts waitingWrites (waiting.sent + waiting.sentDay), src/ui/waiting-sent-day.ts (dnešek, max dnes, Enter, Escape, klik mimo), src/ui/research-waiting-write-ui.ts askWaitingSentDay, markWaitingSent (sentToast, undo), changeWaitingSentDay (sentDayChangedToast, undo s předchozím dnem), markWaitingGroupSent (groupSentToast), waitingDayShown · src/ui/phone-research-ui.ts · strings.ts live.waitingWrite.sentDayTitle, sentDayGroup, sentDaySave, sentDayCancel, sentDayFuture, changeSentDay, sentDayChangedToast, sentToast, groupSentToast, badDate -->
 
 <a id="R6.7.1"></a>
 ### R6.7.1 Antwort als Datei oder in Worten

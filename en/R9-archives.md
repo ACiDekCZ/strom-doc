@@ -389,7 +389,27 @@ the archive's viewer zoomed in, or at its full resolution.
   strom recognizes both files as the same scan turned the same way and it is not a screenshot beside a scan;
   otherwise it stays on the old copy and the listing gives the commands to mark it anew. An excerpt of the whole
   image always goes. Nothing is moved by itself; `--dry-run` says what would happen.
+- **From research 1.38.0 (image number):** a registered image with a wrong number is set right by `strom media
+  renumber M…=<number> --reason "…"` (the image can also be named as `B…:<number>`, the image that has that number
+  now):
+  - only the number changes (with one image also `--url` and `--page`); the ID, the file and the sources' citations
+    and clips stay;
+  - several images in one command are written at once and checked as they end up: swapping 9 and 10 is one command;
+  - the research refuses when another scan would be at the new number (the image there, or another one named to the
+    same number), unless strom tells it the same scan; the same scan there is a copy;
+  - a sharper part of the image goes along only when named. Parts and copies that stay at the old number the output
+    says, with how to name them;
+  - the change is kept in the image's history; `strom media show` shows it (`renumbered: 9 → 10 (<day>: <reason>)`).
+    The same command the other way round undoes it; the output writes it;
+  - `--reason` is required, also with `--dry-run`, which only says what would happen;
+  - for an image fetched by the downloader and for a calibration point of the book at the old number the output only
+    warns and gives the command; by itself it changes nothing else;
+  - the image numbers of the sources that cite it: [R3.4.3](R3-verification-and-citation.md#R3.4.3);
+  - `strom media retract` of an image a source cites is still refused. When another copy is the image, it advises
+    `strom media cites M… --move-to M…`, otherwise `strom media renumber` (a wrong number) and `strom source edit S…
+    --media-remove M…` (an image at a wrong source).
 
+<!-- zdroj: research:e8ab80d0, 6978b6f9 src/commands/media.ts media renumber (renumbersOf: M…=n, B…:n=n, media.renumber.arg; renumberClash: scanLikeness same → kopie, media.renumber.other-scan; renumberLeft, renumberLeftLine; putMany op media.renumber; Media.renumbered from/to/at/reason; fetched, calibration jen ve výpisu; undo řádek; --reason povinný reason.missing; --url/--page jen s jedním), media show (řádek renumbered), media retract (popis a hint: cites --move-to, jinak renumber a --media-remove) · assets/lang/cs.json ui.help.cmd.media.renumber, log.media.renumber · strom help media renumber · CHANGELOG.cs.md 1.38.0 (5651cc28) -->
 <!-- zdroj: research:6651b60b src/commands/media.ts media save --again, againPending, settleAgain · src/core/media.ts findImage (nejvíc pixelů, ne část) · src/core/browser.ts SaveRecord.again · strom help media save (--again) · dirigent:prace/1114-vyzkum-z-hlidani-2/vysledek-sub1.md (A2, otevřené: výřez ne; citace na M… zůstávají) · CHANGELOG.cs.md 1.33.0 · 1.37.0: research:66ef4451 (--again převzato hned, bez media aside --take) · a2fe388d src/core/media.ts rankCopies (jméno snímku obrazovky, poměr stran > 15 %), src/commands/media.ts media cites --move-to (výřez jen u téhož skenu, jinak příkazy) · d93be067 (PNG vedle JPEG; savedProperly: stahovač nebo jméno strom-…) · 0c7ed4d3 · strom help media cites · CHANGELOG.cs.md 1.37.0 -->
 
 <a id="R9.5.2"></a>

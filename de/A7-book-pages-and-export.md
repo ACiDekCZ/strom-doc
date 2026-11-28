@@ -158,11 +158,14 @@ Quellen.
   Ereignisse des Paares; ein Stammbaum, dessen einzige Bilder Paarfotos sind, bietet diesen Teil an
   ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
 - **Ab App 3.33.0:** die Auswahl **Haus** (ein Buch über ein Haus), der Teil **Häuser** und das **Häuserverzeichnis**
-  ([S10.10](S10-houses.md#S10.10)); im Teil **Häuser** die Erzählung über das Haus (ein Entwurf mit Etikett), die
-  Bilder des Hauses und des Ortes und mit der Option **Lage der Häuser** ein Kartenausschnitt
-  ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1), [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)); im Teil **Häuser** die Erzählung über das Haus (auch ein Entwurf, ohne Etikett),
+  die Bilder des Hauses und des Ortes und mit der Option **Lage der Häuser** ein Kartenausschnitt
+  ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1), [S10.3.4](S10-houses.md#S10.3.4)). In
+  **Teile des Buchs** hat der Teil **Häuser** den Schalter **Erzählungen über Häuser mit lebenden Personen**
+  (standardmäßig an); aus, lässt er eine Erzählung weg, in der eine lebende Person vorkommt. Angeboten nur, wenn das
+  Buch eine solche Erzählung hat.
 
-<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 -->
+<!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 · 3.33.0 vyprávění o domě: app:28099151 src/book.ts houseStoryForOutput, src/book-houses.ts (bez štítku), src/book-options.ts housesStoryWithLiving, bookHouseStoriesLiving, src/ui/book-ui.ts book-house-stories, strings.ts book.dlg.houseStoriesLiving, houseStoriesLivingHint -->
 
 <a id="A7.4.1"></a>
 ### A7.4.1 Auswahl der Personen für Buch und Seiten
@@ -197,11 +200,14 @@ Registern der Personen, Familien, Nachnamen und Orte.
 - Schutz lebender Personen und Quellen nach [A7.2](#A7.2); Standard Initialen + Geburtsjahr.
 - **Gilt seit:** Familienseiten App 3.20.0; Seiten des Stammbaums App 3.21.0
 - **Ab App 3.33.0:** die Option **Häuser**: Häuser mit Geschichte, das Häuserverzeichnis und eine Seite für jedes Haus
-  ([S10.10](S10-houses.md#S10.10)), beim Haus auch die Erzählung (ein Entwurf mit Etikett), die Bilder des Hauses und
-  des Ortes und ein Kartenausschnitt mit der Lage ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
-  [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)), beim Haus auch die Erzählung (auch ein Entwurf, ohne Etikett), die Bilder des
+  Hauses und des Ortes und ein Kartenausschnitt mit der Lage ([S10.14.2](S10-houses.md#S10.14.2),
+  [S10.7.1](S10-houses.md#S10.7.1), [S10.3.4](S10-houses.md#S10.3.4)). Bei der Option **Häuser** steht der Schalter
+  **Erzählungen über Häuser mit lebenden Personen** (standardmäßig an); aus, lässt er eine Erzählung weg, in der eine
+  lebende Person vorkommt. Angeboten nur, wenn die Hausseiten eine solche Erzählung haben. Ein Entwurf der Erzählung
+  einer Person oder eines Paares steht in den Seiten ohne die Marke **Entwurf** ([A7.8](#A7.8)).
 
-<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 -->
+<!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 · 3.33.0 vyprávění: app:28099151 src/family-pages.ts houseStoriesLiving, src/family-pages-html.ts setStoryHouses, coupleChapterHtml bez draftTag, src/house-page.ts storyLiving, src/ui/book-ui.ts syncPages book-house-stories, src/book-memory.ts PagesChoices.houseStoriesLiving -->
 
 <a id="A7.5.1"></a>
 ### A7.5.1 Geschichte auf der Zeitleiste der Stammlinie
@@ -247,10 +253,13 @@ den Abschnitt **Für Forschende**.
   Foto**, die gespeicherte Seite den Link **Ganzes Foto**, wenn die Datei dieses Foto enthält. ⋯ **Weitere Aktionen**
   bietet **Porträtausschnitt bearbeiten** ([A12.3](A12-portrait-and-couple-photo.md#A12.3),
   [A12.6](A12-portrait-and-couple-photo.md#A12.6)).
+- **Ab App 3.33.0:** eine noch nicht freigegebene Erzählung der Forschung trägt die Marke **Entwurf** nur in der
+  Personenseite im Fenster der App. Die gespeicherte Seite gibt sie genauso wie eine freigegebene Erzählung, ohne
+  Marke; ebenso die Erzählung eines Paares und ihren Link ([A7.8](#A7.8)).
 - **Bedienung:** Angebot der Personenkarte, **Personenseite**; auch aus dem Fächer.
 - **Gilt seit:** App 3.18.0
 
-<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a -->
+<!-- zdroj: app:src/person-page.ts · strings.ts personPage.save, fan.personPage · CHANGELOG.cs.md 3.18.0 · 3.28.0: app:src/person-page-map.ts pp-map-path (jen mode app), src/ui/person-page-ui.ts personPageMapPath, commit 34e82d43 · mapPathRowHtml (bez oddílu Místa života), commit caea192a · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged (c.app a links app), draftTag, coupleChapterHtml draftTag, coupleChapterLinkTip · app:43794e42 src/__tests__/couple-story-chapter.test.ts · app:d3e9cdfd e2e/person-page.spec.ts -->
 
 <a id="A7.7"></a>
 ## A7.7 Gespeichertes HTML (eigenständige Datei)
@@ -294,8 +303,12 @@ geschrieben. Sie ist keine Quelle: Die Fakten belegen Quellen, die Erzählung gi
   - in einer GEDCOM-Datei steht die Erzählung im eigenen Tag `_STORY`, nicht in einer Notiz.
 - **Bedienung:** Menü der Personenkarte → **Erzählung**; Person bearbeiten → Abschnitt **Erzählung**.
 - **Gilt seit:** App 2.8.0; Erzählungen von Paaren und die Personenseite 3.18.0; im Familienbuch 3.19.0
+- **Ab App 3.33.0:** die Marke **Entwurf** gibt es nur in der App. Die gespeicherte Personenseite ([A7.6](#A7.6)) und
+  die Familienseiten ([A7.5](#A7.5)) geben einen Entwurf genauso wie eine freigegebene Erzählung, ohne Marke. Das Buch
+  kennzeichnet einen Entwurf nicht; **In der Forschung freigeben** steht nur im Fenster des Buchs, nicht in der
+  gespeicherten Datei. Zur Erzählung über ein Haus siehe [S10.14.2](S10-houses.md#S10.14.2).
 
-<!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 -->
+<!-- zdroj: app:src/story-text.ts:1 storyProseHtml (odstavce, ##, -, **, *) · src/ui/person-modal.ts:662 fillStoryFields · index.html pm-story-section · src/book-blocks.ts:594 storyBlock · src/book.ts proseHtml · src/person-page.ts · src/ged-exporter.ts:449 pushStory _STORY · strings.ts story.* · commit 52000825 (aplikace 2.8.0) · CHANGELOG.cs.md 3.18.0, 3.22.0 · 3.33.0: app:28099151 src/person-page.ts storyDraftTagged, draftTag, coupleChapterHtml draftTag · src/book-blocks.ts storyBlock (bez štítku, approve z extras), src/book.ts extras („on the screen only, never in a saved file“) -->
 
 <a id="A7.9"></a>
 ## A7.9 Stammbaum verschenken

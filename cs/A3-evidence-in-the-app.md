@@ -370,8 +370,14 @@ s výzkumem nebo Archivem Stromu ukazuje i soubory výzkumu, které ve stromu ni
   - soubor, který agent ještě neprošel, má v Materiálech stav **neroztříděno** (zapnuto: **čeká na zpracování**).
 
   Se starším výzkumem platí dosavadní texty.
+- **Od aplikace 3.33.0:** dávka, ve které nic nového není (výzkum všechny soubory už má, žádný nepřijal ani
+  neodmítl), končí vedle archivu „✓ Už v Materiálech“: „Tento soubor už v Materiálech je: „<titulek>“.“, u více
+  souborů „Těchto N souborů už v Materiálech je:“ s nejvýš pěti titulky a „… a dalších N“. **Otevřít v Materiálech**
+  otevře okno jen s těmito soubory (čip **Soubory: N**, nepamatuje se), ne prázdnou dávku. Hláška dávky na pozadí je
+  „Už v Materiálech“. Dávka z domu takové soubory připojí k domu ([S10.8](S10-houses.md#S10.8)). Dávka s novými
+  soubory končí jako dosud.
 
-<!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 -->
+<!-- zdroj: dirigent:spec/102-sprava-materialu-a-pramenu · app:2b66d7cf src/types.ts STROM_DATA_VERSION 24, Attachment.places (MediaPlace), migrace v23→v24 (stejný soubor u více osob jeden záznam) · src/media.ts allMedia, treeMedia · app:1ebf7896 src/ui/materials-ui.ts materialsWindowOn, materialsListOn · src/ui/tree-management.ts (Akce › Materiály) · src/ui/research-actions-ui.ts:373 · src/ui/attachments-ui.ts attachments-all-materials · app:a275d977 menu osoby Materiály · src/ui/material-ui.ts MATERIAL_MAX_FILES, MATERIAL_NOTE_MAX, REFUSED_EXT, materialAvailable · strings.ts material.*, materials.desktopOnlyResearch, treeReadOnly, olderEdit, assignNewer, agentSort.older · app:CHANGELOG.cs.md 3.30.0 · 3.33.0: app:fc290355 src/ui/batch-ui.ts noteHad (media/known, GET/PUT /media, zip known, batch/done files[].known), batchNothingNew (received 0, refused 0, had > 0, materialsListOn), batchHadHtml (5 titulků), openInMaterials s filtrem souborů · src/ui/materials-ui.ts filtr souborů (čip, nepamatuje se) · strings.ts batch.hadTitle, hadOne, hadMany, hadMore, materials.fFiles -->
 
 <a id="A3.5.1"></a>
 ### A3.5.1 Okno Materiály
@@ -440,8 +446,13 @@ Každý soubor ukazuje, kde je použit: osoby, portrét, svazek, události, pram
   výzkum neběží, jsou podle stavu, který aplikace naposledy znala.
 - **Ovládání:** prohlížeč souboru (panel, na telefonu vytažený list); dialog **Příloha**.
 - **Platí od:** aplikace 3.30.0
+- **Od aplikace 3.33.0 s výzkumem 1.38.0:** soubor, který výzkum vede jako materiál domu, má v části **Ve stromu** za
+  místy řádky **Dům** ([S10.8](S10-houses.md#S10.8)). Dům stromu je odkaz („Bělokamen čp. 16 · U Horáků“): zavře
+  prohlížeč i okno **Materiály** a otevře stránku domu. Dům, který má jen výzkum, je prostý text (obec, číslo,
+  název domu). Řádky domů se počítají do „N míst“, nesbalují se a nemají ×; se řádkem domu se neukazuje „Ve
+  stromu zatím nikde.“ Jen vedle archivu, jen u výzkumu, který řádky domů nabízí, a ne u souborů z rodokmenu.
 
-<!-- zdroj: app:4bf66048 src/ui/material-uses-ui.ts (prameny první, usesSourceOf, keptViaSource) · app:1ccc666c src/media-uses.ts (pořadí person, portrait, couple, event, source, excerpt) · src/ui/material-uses-ui.ts COLLAPSE_OVER=5, COLLAPSED_ROWS=4 · app:55d66efd sourceCitedAt · strings.ts materials.used, usedInTree, usedInArchive, usedType, docCitedAt, moreN, unlink, usesArchive, usesOlder, usesStale · research:a7df632d GET /material/<I…>/uses -->
+<!-- zdroj: app:4bf66048 src/ui/material-uses-ui.ts (prameny první, usesSourceOf, keptViaSource) · app:1ccc666c src/media-uses.ts (pořadí person, portrait, couple, event, source, excerpt) · src/ui/material-uses-ui.ts COLLAPSE_OVER=5, COLLAPSED_ROWS=4 · app:55d66efd sourceCitedAt · strings.ts materials.used, usedInTree, usedInArchive, usedType, docCitedAt, moreN, unlink, usesArchive, usesOlder, usesStale · research:a7df632d GET /material/<I…>/uses · 3.33.0: app:f527db12 src/ui/material-uses-ui.ts materialHouseRow (caps.houses, ne item.tree, houseNamedTitle, zavře prohlížeč a okno, openHousePage; jen výzkum: obec číslo · název nebo klíč za „|“), počet míst s domy, bez sbalení a × · src/ui/materials-ui.ts caps.houses (feature material.houses) · strings.ts materials.usedType.house · research:c29010f7 houses na GET /material a GET /material/<I…>/uses -->
 
 <a id="A3.5.4"></a>
 ### A3.5.4 Připojit k…
@@ -471,8 +482,17 @@ Každý soubor ukazuje, kde je použit: osoby, portrét, svazek, události, pram
   události) také do výzkumu přes most, jako ⋯ **Přiřadit k osobě…**. Okno **Materiály** je pak u souboru ukáže hned
   a další třídění soubor nenabídne ([A3.5.19](#A3.5.19)). Když výzkum zápis nepřijme, oznámení chyby nabídne zkusit
   znovu. **Zpět** vrací jen strom; osoby zapsané do výzkumu zůstanou. Jen s běžícím mostem.
+- **Od aplikace 3.33.0:** záložka **Dům** připojí soubory výzkumu k domu ([S10.8](S10-houses.md#S10.8)). Pole
+  „Hledat dům – obec, číslo nebo název“ hledá mezi domy stromu: číslo podle čísla domu, slova podle obce a názvu;
+  ukáže nejvýš 60 domů („Žádný dům neodpovídá.“). Pod ním: „Výzkum soubor vede jako materiál domu; strom se
+  nemění.“ Po připojení „Připojeno k domu <dům>.“ a dům má soubor v **Materiály domu**. Když výzkum zápis
+  nepřijme, chyba nabídne zkusit znovu (ne u neplatného domu a u obce, kterou výzkum nemá mezi místy).
+  - záložka je jen u stromu s výzkumem, který přijímá materiál domu, a jen když jsou všechny zvolené soubory
+    soubory výzkumu;
+  - připojit jde jen s běžícím mostem, ve stromu sledovaném živě ne;
+  - zapisuje jen do výzkumu, strom se nemění.
 
-<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B · 3.33.0: app:223a4272 src/ui/material-attach-ui.ts attachResearchAssign (REFN osob míst, soubory s file a ne tree, bez osob výzkumu researchPersonsOf), writeAssign s caps.assign a bridgeUp, materialErrorToast s opakováním · dirigent:spec/147 K3, prace/1127-app-147-materialy (Omezení: Zpět jen strom) -->
+<!-- zdroj: app:a275d977 src/ui/material-attach-ui.ts openAttachDialog, MAX_PEOPLE=50, materialKeptByArchive, dup dialog · strings.ts materials.attach, attachTarget, coupleNote, archiveOnlyResearch, dupTitle, dupAttach, dupNew, dupLinkedToast, assignMax, noRefnTreeResearch · 3.31.0: app:9eee6b2c src/ui/material-attach-ui.ts attachFixedPeople (místo ve stromu nebo REFN ve výzkumu, u všech souborů), src/person-picker.ts fixedChips · strings.ts materials.attachAlready, noneChosen · dirigent:prace/1122-app-portret-dev · 3.32.0: app:6a3f1550 (1123-app-vyrez-pripojit) src/ui/material-uses-ui.ts canEditMedia(id, {exceptFollow:true}), isTreeLocked({exceptFollow}) · src/ui/material-attach-ui.ts:215 followedNote + endFollow · strings.ts materials.attachFollowed · dirigent:test/vysledek-1123-app-vyrez-pripojit.md B · 3.33.0: app:223a4272 src/ui/material-attach-ui.ts attachResearchAssign (REFN osob míst, soubory s file a ne tree, bez osob výzkumu researchPersonsOf), writeAssign s caps.assign a bridgeUp, materialErrorToast s opakováním · dirigent:spec/147 K3, prace/1127-app-147-materialy (Omezení: Zpět jen strom) · 3.33.0 Dům: app:7389ceb2 src/ui/material-attach-ui.ts (cíl house: houseResearchBridge, houseFeature house.material, soubory /^I\d{1,9}$/; collectHouses, houseMatches, MAX_SOURCES 60, houseNamedTitle; bridgeUp, ne sledovaný strom; POST /houses/material {house, files}; houseMaterialsChanged; houseMaterialError) · strings.ts materials.attachTarget.house, attachHousePh, attachNoHouses, houseAttachNote, attachedToast.house -->
 
 <a id="A3.5.5"></a>
 ### A3.5.5 Pramen ze souboru a doklad pramene

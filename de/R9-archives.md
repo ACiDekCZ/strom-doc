@@ -416,7 +416,29 @@ einmal: mit dem Betrachter des Archivs vergrößert oder in voller Auflösung.
   Bildschirmfoto neben einem Scan ist; sonst bleibt er auf der alten Kopie, und die Ausgabe nennt die Befehle für
   seine neue Markierung. Ein Ausschnitt des ganzen Bildes geht immer mit. Nichts wird von selbst verlegt;
   `--dry-run` sagt, was geschähe.
+- **Ab Forschung 1.38.0 (Bildnummer):** ein registriertes Bild mit falscher Nummer berichtigt `strom media renumber
+  M…=<Nummer> --reason "…"` (das Bild lässt sich auch als `B…:<Nummer>` nennen, das Bild, das diese Nummer jetzt
+  hat):
+  - nur die Nummer ändert sich (bei einem Bild auch `--url` und `--page`); ID, Datei sowie Zitate und Ausschnitte der
+    Quellen bleiben;
+  - mehrere Bilder in einem Befehl werden auf einmal geschrieben und so geprüft, wie sie am Ende stehen: 9 und 10
+    zu tauschen ist ein Befehl;
+  - die Forschung lehnt ab, wenn auf der neuen Nummer ein anderer Scan wäre (das Bild dort oder ein anderes, das auf
+    dieselbe Nummer genannt ist), sofern strom ihn nicht als denselben Scan erkennt; derselbe Scan dort ist eine
+    Kopie;
+  - ein schärferer Teil des Bildes geht nur mit, wenn er genannt ist. Teile und Kopien, die auf der alten Nummer
+    bleiben, nennt die Ausgabe mit dem Weg, sie zu nennen;
+  - die Berichtigung steht in der Geschichte des Bildes; `strom media show` zeigt sie (`renumbered: 9 → 10 (<Tag>:
+    <Grund>)`). Derselbe Befehl umgekehrt macht sie rückgängig; die Ausgabe schreibt ihn;
+  - `--reason` ist Pflicht, auch mit `--dry-run`, das nur sagt, was geschähe;
+  - bei einem vom Downloader geholten Bild und bei einem Kalibrierungspunkt des Buches auf der alten Nummer warnt die
+    Ausgabe nur und nennt den Befehl; von selbst ändert sie nichts weiter;
+  - die Bildnummern der Quellen, die es zitieren: [R3.4.3](R3-verification-and-citation.md#R3.4.3);
+  - `strom media retract` eines Bildes, das eine Quelle zitiert, lehnt die Forschung weiter ab. Ist eine andere
+    Kopie das Bild, rät sie zu `strom media cites M… --move-to M…`, sonst zu `strom media renumber` (falsche Nummer)
+    und `strom source edit S… --media-remove M…` (Bild bei einer falschen Quelle).
 
+<!-- zdroj: research:e8ab80d0, 6978b6f9 src/commands/media.ts media renumber (renumbersOf: M…=n, B…:n=n, media.renumber.arg; renumberClash: scanLikeness same → kopie, media.renumber.other-scan; renumberLeft, renumberLeftLine; putMany op media.renumber; Media.renumbered from/to/at/reason; fetched, calibration jen ve výpisu; undo řádek; --reason povinný reason.missing; --url/--page jen s jedním), media show (řádek renumbered), media retract (popis a hint: cites --move-to, jinak renumber a --media-remove) · assets/lang/cs.json ui.help.cmd.media.renumber, log.media.renumber · strom help media renumber · CHANGELOG.cs.md 1.38.0 (5651cc28) -->
 <!-- zdroj: research:6651b60b src/commands/media.ts media save --again, againPending, settleAgain · src/core/media.ts findImage (nejvíc pixelů, ne část) · src/core/browser.ts SaveRecord.again · strom help media save (--again) · dirigent:prace/1114-vyzkum-z-hlidani-2/vysledek-sub1.md (A2, otevřené: výřez ne; citace na M… zůstávají) · CHANGELOG.cs.md 1.33.0 · 1.37.0: research:66ef4451 (--again převzato hned, bez media aside --take) · a2fe388d src/core/media.ts rankCopies (jméno snímku obrazovky, poměr stran > 15 %), src/commands/media.ts media cites --move-to (výřez jen u téhož skenu, jinak příkazy) · d93be067 (PNG vedle JPEG; savedProperly: stahovač nebo jméno strom-…) · 0c7ed4d3 · strom help media cites · CHANGELOG.cs.md 1.37.0 -->
 
 <a id="R9.5.2"></a>
