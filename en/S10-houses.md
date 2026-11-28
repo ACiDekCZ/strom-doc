@@ -191,9 +191,9 @@ sentence under the map says where the location comes from.
 ### S10.3.2 The saved house page and protecting people
 
 **Save HTML** saves the house page as one file (e.g. `belokamen-cp-16.html`) without map tiles from the network;
-pictures of the house are only a link, the location is a cut of the map right in the file ([S10.3.4](#S10.3.4)). The
-saved house page, the book and the family pages protect the people of the last roughly
-100 years.
+the location is a cut of the map right in the file ([S10.3.4](#S10.3.4)), the pictures of the house and the town load
+from the web or are only a link ([S10.7.1](#S10.7.1)). The saved house page, the book and the family pages protect the
+people of the last roughly 100 years.
 
 - **Never:** today's owners; names of the living; the name of a witness.
 - **People of the last roughly 100 years** only by name and role, without years.
@@ -201,15 +201,15 @@ saved house page, the book and the family pages protect the people of the last r
   a person reveals them (**Show in outputs**).
 - **Location** only for a house without people of the last roughly 100 years and only when not hidden by hand
   ([S10.3.4](#S10.3.4)); for a house with such people no house name either.
-- **The story of the house** only approved and only whole: a story that names a protected person is left out whole
-  ([S10.14.2](#S10.14.2)).
+- **The story of the house** approved, or a draft tagged “draft, waiting for approval”, and only whole: a story that
+  names a protected person is left out whole ([S10.14.2](#S10.14.2)).
 - The house page says what is missing in the outputs and why: “In outputs (HTML, book) N events and the house
   location are not shown (people of the last ~100 years).”, “… N events are not shown; the house location is hidden
   by hand.”
 - **Controls:** app: house page → **Save HTML**; at an event **Show in outputs**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 The timeline from the tree's records
@@ -518,6 +518,9 @@ describes the building, or **no more automatically**.
   **queued: the look of the house**.
 - **Material for a finished house** (with House history and Look of the houses on) creates a look task (“material was
   given to the house after its research”).
+- **In outputs:** the look is also in the saved house page, in the book's **Houses** chapter and in the family pages;
+  the pictures of the house with licence and the pictures of the town by the setting **Web photos in outputs**
+  ([S10.7.1](#S10.7.1)).
 - **Limits:**
   - a look task after a requested house is requested too (not postponed), but does not go to the top of the queue;
   - with Look of the houses off only the short look stays;
@@ -529,6 +532,38 @@ describes the building, or **no more automatically**.
   automatically”.
 
 <!-- zdroj: research:src/core/houseauto.ts houseTaskDone 334, createLookTask (asked bez top), houseTaskForMaterial 484 (house.look.material) · src/commands/house.ts look, look-check (--next material|picture|source|none, house.look.unknown), picture, field-name · cs.json ui.house.look, lookCheck, lookNext.*, pictures, fieldNames, house.look.what/why/done · assets/method/house.md house-look · app:src/house-page.ts sec.look, lookUnknown · strings.ts houses.st.queuedLook · commity research 8561e5b1, 202c0927, 9242429a, app 21584d89 · dirigent:spec/145 T1 · nález: úkol podoby vyžádaný, ale ne na vršek -->
+
+<a id="S10.7.1"></a>
+### S10.7.1 Pictures of the house and the town in outputs
+
+The saved house page ([S10.3.2](#S10.3.2)), the **Houses** chapter in the book and the house pages in the family pages
+([S10.10](#S10.10)) show the pictures of the house under a free licence and **Pictures of the town** ([S10.7](#S10.7)).
+Each picture has a caption: what it shows (for a picture of the town), the author, the licence and a link to its
+address on the web.
+
+- **The setting Web photos in outputs** applies to all three outputs and this browser remembers it:
+  - **Load from web** (default): when the file is opened, it loads the picture from its address on the web, above the
+    caption with the link;
+  - **Link only**: only the caption and the link.
+- **The Book and pages dialog** has the switch **Photos of houses from the web** (on = **Load from web**). It is the
+  same setting: switching it in the dialog changes Settings too. It shows only when a house of the selection has a
+  picture:
+  - book: in **Parts of the book** under **House locations**, only with the part **Houses**;
+  - family pages: at the option **Houses**, only with **In the family pages, linked with the people**.
+- **Save HTML** on the house page has no switch; it follows the setting.
+- **Without the network** the picture takes no room in the file and the caption with the link stays.
+- **Limits:**
+  - a picture of the house only with a licence; pictures of the house and the town only with an `http` or `https`
+    address;
+  - the book gives each picture once: a picture of the town already at an earlier house of the chapter is not
+    repeated;
+  - the file loads no scripts, fonts or frames from outside; a picture loads without saying where it is opened from;
+  - in the app window the pictures always load; the setting applies to files only.
+- **Controls:** app: **Settings → Data and privacy → Web photos in outputs** (**Load from web** / **Link only**);
+  dialog **Book and pages** → **Photos of houses from the web**.
+- **Since:** app 3.33.0
+
+<!-- zdroj: app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · src/ui/house-page-ui.ts webPhotos z nastavení · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
 
 <a id="S10.8"></a>
 ## S10.8 Own research and material for a house
@@ -592,10 +627,10 @@ follow-up task only when a person asks for one.
   option **Last 100 years by name only** (on by default): people of the last roughly 100 years only by name and role,
   without dates. From the house page **Open in the book…** opens the book at this house.
 - **The Houses chapter** in the book: houses of the book's people with history ([S10.1](#S10.1)) or with a finished
-  history from the research; for each house the approved story ([S10.14.2](#S10.14.2)), the name, the look, numbers
-  over time, the timeline, holders, residents, notable things, the location ([S10.3.4](#S10.3.4)) and sources as
-  numbered notes. On by default only when the tree has at least one house with a
-  finished history. **Index of houses** only with the Houses chapter.
+  history from the research; for each house the story ([S10.14.2](#S10.14.2)), the name, the look with the pictures of
+  the house and the town ([S10.7.1](#S10.7.1)), numbers over time, the timeline, holders, residents, notable things, the
+  location ([S10.3.4](#S10.3.4)) and sources as numbered notes. On by default only when the tree has at least one house
+  with a finished history. **Index of houses** only with the Houses chapter.
 - **Family pages and tree pages** ([A7.5](A7-book-pages-and-export.md#A7.5)): the option **Houses**: **In the family
   pages, linked with the people** (default; houses with history with period and generations, **Index of houses** after
   the towns and the page of each house), **Only a mention of the house, without its pages**, **Without houses**. It is
@@ -611,10 +646,11 @@ follow-up task only when a person asks for one.
   - the choice **House** only in a tree with a numbered house and only for the book; the gift
     ([A7.9](A7-book-pages-and-export.md#A7.9)) and the picture have no houses.
 - **Controls:** app: export **Family book** → **House**, the part **Houses**, **Index of houses**, **House
-  locations**; family pages and tree pages → **Houses**.
+  locations**, **Photos of houses from the web**; family pages and tree pages → **Houses**, **Photos of houses from the
+  web**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
 
 <a id="S10.11"></a>
 ## S10.11 Houses elsewhere in the app
@@ -723,8 +759,9 @@ research documented.
   approval” with the link **House <number> ›** to the **Story** section, in the terminal “A new version of the story
   of the house <house> — the approved one stays until a decision”. The first draft is not there: it is approved on the
   house page, or with `strom story approve A…`.
-- **A person's story**, of someone who lived in the house, has under the text the link **House <number> ›** to the
-  house's story, only when the house has an approved story; the house's text is not repeated.
+- **A person's story**, of someone who lived in the house, has in the app under the text the link **House <number> ›**
+  to the house's story, only when the house has an approved story; the house's text is not repeated. In the book and
+  in the family pages see [S10.14.2](#S10.14.2).
 - **Limits:** the app takes the story of a house only through the research's bridge (GEDCOM does not carry it);
   without a connection to the research there is neither the section nor the link.
 - **Controls:** app: house page → **Story**, **Approve in the research**, **Compare**; terminal:
@@ -762,16 +799,17 @@ research documented.
 <a id="S10.14.2"></a>
 ### S10.14.2 The story in outputs and protecting people
 
-- The family book (the part **Houses**), the saved house page and the family pages show only the approved text; a
-  draft never, and with a new version beside the approved one still the approved one. In the book the story stands
+- The family book (the part **Houses**), the saved house page and the family pages show the approved text. Until
+  the story is approved, they show the draft tagged “draft, waiting for approval”, without buttons. With a new version
+  beside the approved one the approved text goes into the file, the new version does not. In the book the story stands
   before the house's sections and its sources are among the chapter's numbered notes.
-- The output leaves the story out **whole** (the text is not rewritten) when it names a living person, a person of the
-  last roughly 100 years or a person of the research without a record of death whom the tree does not know, or when
-  it rests on an item of the house the output hides ([S10.3.2](#S10.3.2)).
-- The link from a person's story to the house is in the book and in the family pages only when the output shows the
-  house's story.
+- The output leaves the story out **whole** (the text is not rewritten, a draft too) when it names a living person, a
+  person of the last roughly 100 years or a person of the research without a record of death whom the tree does not
+  know, or when it rests on an item of the house the output hides ([S10.3.2](#S10.3.2)).
+- The link **House <number> ›** from a person's story to the house is in the book and in the family pages only when
+  the output shows the house's story, even when it is a draft.
 - **Controls:** app: export **Family book** → the part **Houses**; house page → **Save HTML**; family pages →
   **Houses**.
 - **Since:** app 3.33.0
 
-<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} -->
+<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (status draft → draft: true; nová verze vedle final → final), src/book-houses.ts book-house-story-tag P.storyDraft, src/family-pages-html.ts setStoryHouses (status draft i final), src/house-page.ts storyHtml (Schválit jen c.app) · strings.ts houses.page.storyDraft · test person-page-house-story „a draft the house's page shows tagged“ -->

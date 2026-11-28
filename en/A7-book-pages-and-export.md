@@ -152,8 +152,9 @@ The family book is a book to read from the start: a family tree, families by gen
   above the couple's events; a tree whose only pictures are couples' photos offers that part
   ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
 - **From app 3.33.0:** the choice **House** (a book about one house), the part **Houses** and the **Index of houses**
-  ([S10.10](S10-houses.md#S10.10)); in the part **Houses** the approved story of the house and, with the option
-  **House locations**, a cut of the map ([S10.14.2](S10-houses.md#S10.14.2), [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)); in the part **Houses** the story of the house (a draft tagged), the pictures of
+  the house and the town and, with the option **House locations**, a cut of the map
+  ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1), [S10.3.4](S10-houses.md#S10.3.4)).
 
 <!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 -->
 
@@ -190,8 +191,9 @@ of people, families, surnames and towns.
 - Privacy of living people and sources as in [A7.2](#A7.2); default Initials + birth year.
 - **Since:** Family pages app 3.20.0; Tree pages app 3.21.0
 - **From app 3.33.0:** the option **Houses**: houses with history, the index of houses and a page for each house
-  ([S10.10](S10-houses.md#S10.10)), at a house also the approved story and a cut of the map with its location
-  ([S10.14.2](S10-houses.md#S10.14.2), [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)), at a house also the story (a draft tagged), the pictures of the house and the town
+  and a cut of the map with its location ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
+  [S10.3.4](S10-houses.md#S10.3.4)).
 
 <!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 -->
 

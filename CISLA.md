@@ -659,6 +659,7 @@ nenapsáno) · `neplatí od <verze>`.
 | S10.6.1 | S10-houses.md | výzkum 1.38.0 | platí | Prameny domu a co nejde ven | A house's sources and what does not go out | Quellen eines Hauses und was nicht hinausgeht | Źródła domu i co nie wychodzi na zewnątrz |
 | S10.6.2 | S10-houses.md | výzkum 1.38.0 | platí | Převzaté údaje s pramenem na webu | Taken-over facts with a source on the web | Übernommene Angaben mit Quelle im Web | Przejęte dane ze źródłem w sieci |
 | S10.7 | S10-houses.md | výzkum 1.38.0, aplikace 3.33.0 | platí | Podoba domu | The look of the house | Das Aussehen des Hauses | Wygląd domu |
+| S10.7.1 | S10-houses.md | aplikace 3.33.0 | platí | Fotky domu a obce ve výstupech | Pictures of the house and the town in outputs | Bilder des Hauses und des Ortes in Ausgaben | Zdjęcia domu i miejscowości w wynikach |
 | S10.8 | S10-houses.md | výzkum 1.38.0, aplikace 3.33.0 | platí | Vlastní rešerše a materiál k domu | Own research and material for a house | Eigene Recherche und Material zum Haus | Własna kwerenda i materiał do domu |
 | S10.9 | S10-houses.md | aplikace 3.33.0, výzkum 1.38.0 | platí | Probrat dům s agentem | Discussing a house with the agent | Ein Haus mit dem Agenten besprechen | Omówić dom z agentem |
 | S10.10 | S10-houses.md | aplikace 3.33.0 | platí | Domy v knize a ve stránkách | Houses in the book and the pages | Häuser im Buch und in den Seiten | Domy w księdze i na stronach |

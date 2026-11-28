@@ -147,8 +147,9 @@ Kniha rodu je kniha ke čtení od začátku: rodokmen, rodiny po generacích, vy
 - **Od aplikace 3.30.0:** část **Výřezy zápisů a fotky** dává do kapitoly rodiny i fotku svazku nad události páru;
   strom, jehož jediné obrázky jsou fotky svazků, tu část nabídne ([A12.6](A12-portrait-and-couple-photo.md#A12.6)).
 - **Od aplikace 3.33.0:** výběr **Dům** (kniha o jednom domě), část **Domy** a **Rejstřík domů**
-  ([S10.10](S10-houses.md#S10.10)); v části **Domy** schválené vyprávění o domě a s volbou **Poloha domů** výřez mapy
-  ([S10.14.2](S10-houses.md#S10.14.2), [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)); v části **Domy** vyprávění o domě (koncept se štítkem), fotky domu a obce
+  a s volbou **Poloha domů** výřez mapy ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
+  [S10.3.4](S10-houses.md#S10.3.4)).
 
 <!-- zdroj: app:src/book-options.ts (části, předvolby, výchozí :55) · strings.ts book.dlg.kind, book.dlg.parts, book.dlg.preset, book.dlg.lang, book.parts, book.unavailable · CHANGELOG.cs.md 3.19.0, 3.21.0 -->
 
@@ -184,8 +185,9 @@ příjmení a obcí.
 - Ochrana žijících a prameny podle [A7.2](#A7.2); výchozí Iniciály + rok narození.
 - **Platí od:** Stránky rodu aplikace 3.20.0; Stránky stromu aplikace 3.21.0
 - **Od aplikace 3.33.0:** volba **Domy**: domy s historií, rejstřík domů a stránka každého domu
-  ([S10.10](S10-houses.md#S10.10)), u domu i schválené vyprávění a výřez mapy s polohou
-  ([S10.14.2](S10-houses.md#S10.14.2), [S10.3.4](S10-houses.md#S10.3.4)).
+  ([S10.10](S10-houses.md#S10.10)), u domu i vyprávění (koncept se štítkem), fotky domu a obce a výřez mapy
+  s polohou ([S10.14.2](S10-houses.md#S10.14.2), [S10.7.1](S10-houses.md#S10.7.1),
+  [S10.3.4](S10-houses.md#S10.3.4)).
 
 <!-- zdroj: app:src/family-pages.ts · strings.ts familyPages.menuItem, familyPages.treePages, familyPages.treePagesAction, familyPages.indexTitle · spec 026 · CHANGELOG.cs.md 3.20.0, 3.21.0 -->
 

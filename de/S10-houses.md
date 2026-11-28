@@ -202,8 +202,9 @@ Ein Satz unter der Karte sagt, woher die Lage stammt.
 ### S10.3.2 Die gespeicherte Hausseite und der Schutz von Personen
 
 **HTML speichern** speichert die Hausseite als eine Datei (z. B. `belokamen-cp-16.html`) ohne Kartenkacheln aus dem
-Netz; Bilder des Hauses sind nur verlinkt, die Lage ist ein Kartenausschnitt direkt in der Datei ([S10.3.4](#S10.3.4)).
-Die gespeicherte Hausseite, das Buch und die Familienseiten schützen die Personen der letzten rund 100 Jahre.
+Netz; die Lage ist ein Kartenausschnitt direkt in der Datei ([S10.3.4](#S10.3.4)), die Bilder des Hauses und des Ortes
+werden aus dem Web geladen oder sind nur verlinkt ([S10.7.1](#S10.7.1)). Die gespeicherte Hausseite, das Buch und die
+Familienseiten schützen die Personen der letzten rund 100 Jahre.
 
 - **Nie:** heutige Eigentümer; Namen Lebender; der Name eines Zeitzeugen.
 - **Personen der letzten rund 100 Jahre** nur mit Namen und Rolle, ohne Jahre.
@@ -211,15 +212,15 @@ Die gespeicherte Hausseite, das Buch und die Familienseiten schützen die Person
   werden ausgelassen, bis ein Mensch sie freigibt (**In Ausgaben zeigen**).
 - **Lage** nur bei einem Haus ohne Personen der letzten rund 100 Jahre und nur, wenn sie nicht von Hand ausgeblendet
   ist ([S10.3.4](#S10.3.4)); bei einem Haus mit solchen Personen auch kein Hausname.
-- **Erzählung über das Haus** nur freigegeben und nur ganz: eine Erzählung, die eine geschützte Person nennt, wird ganz
-  ausgelassen ([S10.14.2](#S10.14.2)).
+- **Erzählung über das Haus** freigegeben oder als Entwurf mit dem Etikett „Entwurf, wartet auf Freigabe“, und nur
+  ganz: eine Erzählung, die eine geschützte Person nennt, wird ganz ausgelassen ([S10.14.2](#S10.14.2)).
 - Die Hausseite sagt, was in den Ausgaben fehlt und warum: „In Ausgaben (HTML, Buch) werden N Ereignisse und die Lage
   des Hauses nicht gezeigt (Menschen der letzten ~100 Jahre).“, „… werden N Ereignisse nicht gezeigt; die Lage des
   Hauses ist von Hand ausgeblendet.“
 - **Bedienung:** App: Hausseite → **HTML speichern**; bei einem Ereignis **In Ausgaben zeigen**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 Die Zeitleiste aus den Einträgen des Stammbaums
@@ -541,6 +542,9 @@ vorliegende Quelle**, die das Gebäude beschreibt, oder **automatisch nicht mehr
   Aussehen des Hauses**.
 - **Material zu einem fertigen Haus** (bei eingeschalteter Hausgeschichte und eingeschaltetem Aussehen der Häuser)
   legt eine Aufgabe zum Aussehen an („nach der Recherche kam Material zum Haus hinzu“).
+- **In Ausgaben:** das Aussehen steht auch in der gespeicherten Hausseite, im Kapitel **Häuser** des Buches und in den
+  Familienseiten; die Bilder des Hauses mit Lizenz und die Bilder des Ortes nach der Einstellung **Fotos aus dem Web in
+  Ausgaben** ([S10.7.1](#S10.7.1)).
 - **Grenzen:**
   - eine Aufgabe zum Aussehen nach einem angeforderten Haus ist ebenfalls angefordert (wird nicht zurückgestellt),
     kommt aber nicht an die Spitze der Warteschlange;
@@ -553,6 +557,38 @@ vorliegende Quelle**, die das Gebäude beschreibt, oder **automatisch nicht mehr
   „automatisch nicht mehr“.
 
 <!-- zdroj: research:src/core/houseauto.ts houseTaskDone 334, createLookTask (asked bez top), houseTaskForMaterial 484 (house.look.material) · src/commands/house.ts look, look-check (--next material|picture|source|none, house.look.unknown), picture, field-name · cs.json ui.house.look, lookCheck, lookNext.*, pictures, fieldNames, house.look.what/why/done · assets/method/house.md house-look · app:src/house-page.ts sec.look, lookUnknown · strings.ts houses.st.queuedLook · commity research 8561e5b1, 202c0927, 9242429a, app 21584d89 · dirigent:spec/145 T1 · nález: úkol podoby vyžádaný, ale ne na vršek -->
+
+<a id="S10.7.1"></a>
+### S10.7.1 Bilder des Hauses und des Ortes in Ausgaben
+
+Die gespeicherte Hausseite ([S10.3.2](#S10.3.2)), das Kapitel **Häuser** im Buch und die Hausseiten in den
+Familienseiten ([S10.10](#S10.10)) zeigen die Bilder des Hauses unter freier Lizenz und **Bilder des Ortes**
+([S10.7](#S10.7)). Jedes Bild hat eine Bildunterschrift: was es zeigt (bei einem Bild des Ortes), Autor, Lizenz und
+einen Link auf seine Adresse im Web.
+
+- **Die Einstellung Fotos aus dem Web in Ausgaben** gilt für alle drei Ausgaben, und dieser Browser merkt sie sich:
+  - **Aus dem Web laden** (Voreinstellung): die Datei lädt das Bild beim Öffnen von seiner Adresse im Web, über der
+    Bildunterschrift mit dem Link;
+  - **Nur Link**: nur Bildunterschrift und Link.
+- **Der Dialog Buch und Seiten** hat den Schalter **Fotos der Häuser aus dem Web** (ein = **Aus dem Web laden**). Es ist
+  dieselbe Einstellung: ein Umschalten im Dialog ändert auch die Einstellungen. Er erscheint nur, wenn ein Haus der
+  Auswahl ein Bild hat:
+  - Buch: in **Teile des Buchs** unter **Lage der Häuser**, nur mit dem Teil **Häuser**;
+  - Familienseiten: bei der Option **Häuser**, nur mit **In den Familienseiten, mit den Personen verknüpft**.
+- **HTML speichern** auf der Hausseite hat keinen Schalter und folgt der Einstellung.
+- **Ohne Netz** nimmt das Bild in der Datei keinen Platz ein, und die Bildunterschrift mit dem Link bleibt.
+- **Grenzen:**
+  - ein Bild des Hauses nur mit Lizenz; Bilder des Hauses und des Ortes nur mit einer Adresse `http` oder `https`;
+  - das Buch gibt jedes Bild einmal: ein Bild des Ortes, das schon bei einem früheren Haus des Kapitels steht, wird
+    nicht wiederholt;
+  - die Datei lädt keine Skripte, Schriften oder Rahmen von außen; ein Bild wird geladen, ohne zu sagen, von wo es
+    geöffnet wird;
+  - im Fenster der App werden die Bilder immer geladen; die Einstellung gilt nur für Dateien.
+- **Bedienung:** App: **Einstellungen → Daten und Datenschutz → Fotos aus dem Web in Ausgaben** (**Aus dem Web laden** /
+  **Nur Link**); Dialog **Buch und Seiten** → **Fotos der Häuser aus dem Web**.
+- **Gilt seit:** App 3.33.0
+
+<!-- zdroj: app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · src/ui/house-page-ui.ts webPhotos z nastavení · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
 
 <a id="S10.8"></a>
 ## S10.8 Eigene Recherche und Material zum Haus
@@ -619,10 +655,10 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
   letzten rund 100 Jahre nur mit Namen und Rolle, ohne Daten. Von der Hausseite öffnet **Im Buch öffnen…** das Buch bei
   diesem Haus.
 - **Kapitel Häuser** im Buch: Häuser der Personen des Buches mit Geschichte ([S10.1](#S10.1)) oder mit fertiger
-  Geschichte aus der Forschung; beim Haus die freigegebene Erzählung ([S10.14.2](#S10.14.2)), Name, Aussehen, Nummern
-  im Lauf der Zeit, Zeitleiste, Besitzer, Bewohner, Bemerkenswertes, Lage ([S10.3.4](#S10.3.4)) und Quellen als
-  nummerierte Anmerkungen. Standardmäßig an, nur wenn der Stammbaum mindestens ein Haus
-  mit fertiger Geschichte hat. **Häuserverzeichnis** nur mit dem Kapitel Häuser.
+  Geschichte aus der Forschung; beim Haus die Erzählung ([S10.14.2](#S10.14.2)), Name, Aussehen mit den Bildern des
+  Hauses und des Ortes ([S10.7.1](#S10.7.1)), Nummern im Lauf der Zeit, Zeitleiste, Besitzer, Bewohner, Bemerkenswertes,
+  Lage ([S10.3.4](#S10.3.4)) und Quellen als nummerierte Anmerkungen. Standardmäßig an, nur wenn der Stammbaum
+  mindestens ein Haus mit fertiger Geschichte hat. **Häuserverzeichnis** nur mit dem Kapitel Häuser.
 - **Familienseiten und Seiten des Stammbaums** ([A7.5](A7-book-pages-and-export.md#A7.5)): Option **Häuser**: **In den
   Familienseiten, mit den Personen verknüpft** (Voreinstellung; Häuser mit Geschichte mit Zeitraum und Generationen,
   **Häuserregister** nach den Orten und eine Seite für jedes Haus), **Nur eine Erwähnung des Hauses, ohne seine
@@ -638,10 +674,12 @@ legt eine Folgeaufgabe nur an, wenn ein Mensch darum bittet.
     Geschichte aus der Forschung;
   - die Auswahl **Haus** nur in einem Stammbaum mit einem Haus mit Nummer und nur für das Buch; das Geschenk
     ([A7.9](A7-book-pages-and-export.md#A7.9)) und das Bild haben keine Häuser.
-- **Bedienung:** App: Export **Familienbuch** → **Haus**, Teil **Häuser**, **Häuserverzeichnis**, **Lage der Häuser**; Familienseiten und Seiten des Stammbaums → **Häuser**.
+- **Bedienung:** App: Export **Familienbuch** → **Haus**, Teil **Häuser**, **Häuserverzeichnis**, **Lage der Häuser**,
+  **Fotos der Häuser aus dem Web**; Familienseiten und Seiten des Stammbaums → **Häuser**, **Fotos der Häuser aus dem
+  Web**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
 
 <a id="S10.11"></a>
 ## S10.11 Häuser an anderen Stellen der App
@@ -753,8 +791,9 @@ sie keine Quelle: sie erzählt nur nach, was die Forschung belegt hat.
   <Nummer> wartet auf Freigabe“ mit dem Link **Haus <Nummer> ›** auf den Abschnitt **Erzählung**, im Terminal „Eine
   neue Fassung der Erzählung über das Haus <Haus> – die freigegebene bleibt bis zur Entscheidung“. Der erste Entwurf
   steht dort nicht: er wird auf der Hausseite freigegeben, oder mit `strom story approve A…`.
-- Die **Erzählung einer Person**, die im Haus lebte, hat unter dem Text den Link **Haus <Nummer> ›** auf die Erzählung
-  des Hauses, nur wenn das Haus eine freigegebene Erzählung hat; der Text des Hauses wird nicht wiederholt.
+- Die **Erzählung einer Person**, die im Haus lebte, hat in der App unter dem Text den Link **Haus <Nummer> ›** auf die
+  Erzählung des Hauses, nur wenn das Haus eine freigegebene Erzählung hat; der Text des Hauses wird nicht wiederholt.
+  Im Buch und in den Familienseiten siehe [S10.14.2](#S10.14.2).
 - **Grenzen:** die App nimmt die Erzählung über das Haus nur über die Brücke der Forschung (GEDCOM trägt sie nicht);
   ohne Verbindung zur Forschung gibt es weder den Abschnitt noch den Link.
 - **Bedienung:** App: Hausseite → **Erzählung**, **In der Forschung freigeben**, **Vergleichen**; Terminal:
@@ -794,16 +833,19 @@ sie keine Quelle: sie erzählt nur nach, was die Forschung belegt hat.
 <a id="S10.14.2"></a>
 ### S10.14.2 Die Erzählung in Ausgaben und der Schutz von Personen
 
-- Das Familienbuch (Teil **Häuser**), die gespeicherte Hausseite und die Familienseiten zeigen nur den freigegebenen
-  Text; einen Entwurf nie, bei einer neuen Fassung neben der freigegebenen weiter die freigegebene. Im Buch steht die
+- Das Familienbuch (Teil **Häuser**), die gespeicherte Hausseite und die Familienseiten zeigen den freigegebenen Text.
+  Solange die Erzählung nicht freigegeben ist, zeigen sie den Entwurf mit dem Etikett „Entwurf, wartet auf Freigabe“,
+  ohne Schaltflächen. Bei einer neuen Fassung neben der freigegebenen kommt der freigegebene Text in die Datei, die neue
+  Fassung nicht. Im Buch steht die
   Erzählung vor den Abschnitten des Hauses, und ihre Quellen sind unter den nummerierten Anmerkungen des Kapitels.
-- Die Ausgabe lässt die Erzählung **ganz** aus (der Text wird nicht umgeschrieben), wenn sie einen Lebenden, eine
-  Person der letzten rund 100 Jahre oder eine Person der Forschung ohne Eintrag über den Tod nennt, die der Stammbaum
-  nicht kennt, oder wenn sie auf einem Eintrag des Hauses beruht, den die Ausgabe ausblendet ([S10.3.2](#S10.3.2)).
-- Der Link von der Erzählung einer Person auf das Haus steht im Buch und in den Familienseiten nur, wenn die Ausgabe
-  die Erzählung des Hauses zeigt.
+- Die Ausgabe lässt die Erzählung **ganz** aus (der Text wird nicht umgeschrieben, auch ein Entwurf), wenn sie einen
+  Lebenden, eine Person der letzten rund 100 Jahre oder eine Person der Forschung ohne Eintrag über den Tod nennt, die
+  der Stammbaum nicht kennt, oder wenn sie auf einem Eintrag des Hauses beruht, den die Ausgabe ausblendet
+  ([S10.3.2](#S10.3.2)).
+- Der Link **Haus <Nummer> ›** von der Erzählung einer Person auf das Haus steht im Buch und in den Familienseiten nur,
+  wenn die Ausgabe die Erzählung des Hauses zeigt, auch wenn es ein Entwurf ist.
 - **Bedienung:** App: Export **Familienbuch** → Teil **Häuser**; Hausseite → **HTML speichern**; Familienseiten →
   **Häuser**.
 - **Gilt seit:** App 3.33.0
 
-<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} -->
+<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (status draft → draft: true; nová verze vedle final → final), src/book-houses.ts book-house-story-tag P.storyDraft, src/family-pages-html.ts setStoryHouses (status draft i final), src/house-page.ts storyHtml (Schválit jen c.app) · strings.ts houses.page.storyDraft · test person-page-house-story „a draft the house's page shows tagged“ -->

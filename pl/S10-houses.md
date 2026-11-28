@@ -183,8 +183,10 @@ Zdanie pod mapą mówi, skąd jest położenie.
 <a id="S10.3.2"></a>
 ### S10.3.2 Zapisana strona domu i ochrona osób
 
-**Zapisz HTML** zapisuje stronę domu jako jeden plik (np. `belokamen-cp-16.html`) bez kafelków mapy z sieci; obrazy
-domu są tylko linkiem, położenie jest wycinkiem mapy wprost w pliku ([S10.3.4](#S10.3.4)). Zapisana strona domu, księga i strony rodu chronią osoby z mniej więcej ostatnich 100 lat.
+**Zapisz HTML** zapisuje stronę domu jako jeden plik (np. `belokamen-cp-16.html`) bez kafelków mapy z sieci; położenie
+jest wycinkiem mapy wprost w pliku ([S10.3.4](#S10.3.4)), zdjęcia domu i miejscowości wczytują się z internetu albo są
+tylko linkiem ([S10.7.1](#S10.7.1)). Zapisana strona domu, księga i strony rodu chronią osoby z mniej więcej ostatnich
+100 lat.
 
 - **Nigdy:** dzisiejsi właściciele; imiona i nazwiska żyjących; nazwisko świadka.
 - **Osoby z mniej więcej ostatnich 100 lat** tylko z imienia, nazwiska i roli, bez lat.
@@ -192,14 +194,14 @@ domu są tylko linkiem, położenie jest wycinkiem mapy wprost w pliku ([S10.3.4
   pomijane, dopóki człowiek ich nie odkryje (**Pokaż w wynikach**).
 - **Położenie** tylko przy domu bez osób z mniej więcej ostatnich 100 lat i tylko bez ręcznego ukrycia
   ([S10.3.4](#S10.3.4)); nazwy domu przy domu z takimi osobami też nie.
-- **Opowieść o domu** tylko zatwierdzona i tylko w całości: opowieść, która wymienia chronioną osobę, jest pomijana
-  w całości ([S10.14.2](#S10.14.2)).
+- **Opowieść o domu** zatwierdzona albo szkic z etykietą „szkic, czeka na zatwierdzenie”, i tylko w całości: opowieść,
+  która wymienia chronioną osobę, jest pomijana w całości ([S10.14.2](#S10.14.2)).
 - Strona domu mówi, czego brakuje w wynikach i dlaczego: „W wynikach (HTML, książka) N wydarzeń i położenie domu nie są
   pokazywane (ludzie ostatnich ~100 lat).”, „… N wydarzeń nie jest pokazywanych; położenie domu jest ukryte ręcznie.”
 - **Obsługa:** aplikacja: strona domu → **Zapisz HTML**; przy wydarzeniu **Pokaż w wynikach**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
-<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput -->
+<!-- zdroj: app:src/house-privacy.ts, src/privacy.ts RECENT_YEARS 100, buildHousePageDocument, housePageFileName · strings.ts houses.reveal, houses.hiddenSummary, houses.page.save · commit 6f8a9d88 · T3: app:438de916 src/house-privacy.ts houseOutputFilter (locationBy recent|manual), strings.ts houses.hiddenSummary · T4: app:3473602e src/house-privacy.ts houseStoryForOutput · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (draft s příznakem), src/house-page.ts storyHtml, pictureImg (webPhotos) -->
 
 <a id="S10.3.3"></a>
 ### S10.3.3 Oś czasu z zapisów drzewa
@@ -501,6 +503,8 @@ budynek, albo **automatycznie nic więcej**.
   wyglądał.”, ręczny sposób i **Dołącz materiał…**. Stan **w kolejce: wygląd domu**.
 - **Materiał do gotowego domu** (z włączoną Historią domów i Wyglądem domów) zakłada zadanie wyglądu („po badaniu domu
   dodano do niego materiał”).
+- **W wynikach:** wygląd jest też na zapisanej stronie domu, w rozdziale **Domy** księgi i na stronach rodu; obrazy
+  domu z licencją i obrazy miejscowości według ustawienia **Zdjęcia z internetu w wynikach** ([S10.7.1](#S10.7.1)).
 - **Granice:**
   - zadanie wyglądu po zamówionym domu jest też zamówione (nie jest odkładane), ale nie idzie na początek kolejki;
   - z wyłączonym Wyglądem domów zostaje tylko krótki wygląd;
@@ -512,6 +516,36 @@ budynek, albo **automatycznie nic więcej**.
   nie da”.
 
 <!-- zdroj: research:src/core/houseauto.ts houseTaskDone 334, createLookTask (asked bez top), houseTaskForMaterial 484 (house.look.material) · src/commands/house.ts look, look-check (--next material|picture|source|none, house.look.unknown), picture, field-name · cs.json ui.house.look, lookCheck, lookNext.*, pictures, fieldNames, house.look.what/why/done · assets/method/house.md house-look · app:src/house-page.ts sec.look, lookUnknown · strings.ts houses.st.queuedLook · commity research 8561e5b1, 202c0927, 9242429a, app 21584d89 · dirigent:spec/145 T1 · nález: úkol podoby vyžádaný, ale ne na vršek -->
+
+<a id="S10.7.1"></a>
+### S10.7.1 Zdjęcia domu i miejscowości w wynikach
+
+Zapisana strona domu ([S10.3.2](#S10.3.2)), rozdział **Domy** w księdze i strony domów na stronach rodu
+([S10.10](#S10.10)) pokazują obrazy domu na wolnej licencji i **Obrazy miejscowości** ([S10.7](#S10.7)). Każdy obraz
+ma podpis: co przedstawia (przy obrazie miejscowości), autor, licencja i link do jego adresu w internecie.
+
+- **Ustawienie Zdjęcia z internetu w wynikach** dotyczy wszystkich trzech wyników i zapamiętuje je ta przeglądarka:
+  - **Wczytaj z internetu** (domyślnie): plik po otwarciu wczytuje obraz z jego adresu w internecie, nad podpisem
+    z linkiem;
+  - **Tylko odnośnik**: tylko podpis i link.
+- **Okno Księga i strony** ma przełącznik **Zdjęcia domów z internetu** (włączony = **Wczytaj z internetu**). To samo
+  ustawienie: przełączenie w oknie zmienia też Ustawienia. Pokazuje się tylko, gdy dom wyboru ma obraz:
+  - księga: w **Części księgi** pod **Położenie domów**, tylko z częścią **Domy**;
+  - strony rodu: przy opcji **Domy**, tylko z **W stronach rodzinnych, powiązane z osobami**.
+- **Zapisz HTML** na stronie domu nie ma przełącznika, działa według ustawienia.
+- **Bez sieci** obraz w pliku nie zajmuje miejsca i zostaje podpis z linkiem.
+- **Granice:**
+  - obraz domu tylko z licencją; obrazy domu i miejscowości tylko z adresem `http` lub `https`;
+  - księga daje każdy obraz raz: obraz miejscowości, który już stoi przy wcześniejszym domu rozdziału, się nie
+    powtarza;
+  - plik nie wczytuje z zewnątrz skryptów, czcionek ani ramek; obraz wczytuje się bez informacji, skąd plik jest
+    otwierany;
+  - w oknie aplikacji obrazy wczytują się zawsze; ustawienie dotyczy tylko plików.
+- **Obsługa:** aplikacja: **Ustawienia → Dane i prywatność → Zdjęcia z internetu w wynikach** (**Wczytaj z internetu** /
+  **Tylko odnośnik**); okno **Księga i strony** → **Zdjęcia domów z internetu**.
+- **Obowiązuje od:** aplikacja 3.33.0
+
+<!-- zdroj: app:45d99711 src/settings.ts isOutputWebPhotos (výchozí true), setOutputWebPhotos · index.html output-web-photos-setting (settings.groupData) · src/ui/misc.ts output-web-photos · src/house-page.ts housePicturesOf, webPictures (c.app vždy), pictureImg (alt "", referrerpolicy no-referrer, bez onerror), look.images jen s license, town.pictures safeHttpUrl · src/book-houses.ts picturesHtml (seen: obrázek jednou za kapitolu, P.lookPictures) · src/ui/book-ui.ts book-house-photos (kniha: avail.houses && parts.houses && housePicturesOf; stránky: houses === 'pages'), data-switch webPhotos → SettingsManager · src/ui/house-page-ui.ts webPhotos z nastavení · strings.ts outputWebPhotos.setting, load, link, settingHint, bookSwitch, bookSwitchHint; book.dialogTitle, dlg.parts, dlg.houseMaps · dirigent:spec/145 T8, prace/1128-app-dum-export-navrh-fotky -->
 
 <a id="S10.8"></a>
 ## S10.8 Własna kwerenda i materiał do domu
@@ -574,7 +608,8 @@ o nie poprosi.
   z mniej więcej ostatnich 100 lat tylko z imienia, nazwiska i roli, bez dat. Ze strony domu **Otwórz w książce…**
   otwiera księgę na tym domu.
 - **Rozdział Domy** w księdze: domy osób księgi z historią ([S10.1](#S10.1)) lub z gotową historią z badania; przy
-  domu zatwierdzona opowieść ([S10.14.2](#S10.14.2)), nazwa, wygląd, numery w czasie, oś czasu, właściciele,
+  domu opowieść ([S10.14.2](#S10.14.2)), nazwa, wygląd z obrazami domu i miejscowości ([S10.7.1](#S10.7.1)), numery
+  w czasie, oś czasu, właściciele,
   mieszkańcy, osobliwości, położenie ([S10.3.4](#S10.3.4)) i źródła jako numerowane przypisy. Domyślnie włączony, tylko gdy drzewo ma co najmniej jeden dom z gotową historią. **Indeks domów** tylko
   z rozdziałem Domy.
 - **Strony rodu i Strony drzewa** ([A7.5](A7-book-pages-and-export.md#A7.5)): opcja **Domy**: **W stronach
@@ -589,11 +624,11 @@ o nie poprosi.
   - strony biorą domy z historią według progu ([S10.1](#S10.1)), księga także domy z gotową historią z badania;
   - wybór **Dom** tylko w drzewie z domem z numerem i tylko dla księgi; prezent
     ([A7.9](A7-book-pages-and-export.md#A7.9)) i obraz domów nie mają.
-- **Obsługa:** aplikacja: eksport **Księga rodu** → **Dom**, część **Domy**, **Indeks domów**, **Położenie domów**;
-  Strony rodu i Strony drzewa → **Domy**.
+- **Obsługa:** aplikacja: eksport **Księga rodu** → **Dom**, część **Domy**, **Indeks domów**, **Położenie domów**,
+  **Zdjęcia domów z internetu**; Strony rodu i Strony drzewa → **Domy**, **Zdjęcia domów z internetu**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
-<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
+<!-- zdroj: app:src/book-options.ts (book.dlg.kind.house, kindHint.house, chooseHouse, housesHistory, housesOther, dlg.houseScope, houseRecent, bookHouseRecent, parts.houses, parts.houseIndex, bookHouseDefaults, unavailable.houses, unavailable.houseIndexChapter, unavailable.houseIndex), src/book-houses.ts, src/book.ts houseOutputFilter, book.houseIndexProtected, src/lineage.ts case 'house' · src/family-pages.ts 709 outputHouses (overThreshold), src/ui/book-ui.ts 521 familyPages.housesRow, housesOpt.pages/mention/none · page.openInBook · commity 26a28e96, ffc93153, a9f8f9cd, d7db62b4, 5b4d880a, 230afefd, f5b46c5b, 8d93f0d5 · dirigent:spec/145 T6 · T3 poloha v knize: app:438de916 (book.houseChapterProtected) · T4 vyprávění v knize: app:d7f65e13 src/book-houses.ts · T8 koncept a fotky: app:45d99711 src/book-houses.ts picturesHtml, src/book.ts webPhotos, src/family-pages.ts webPhotos · nález N10 (výstupy podle prahu × kniha i s hotovou historií) -->
 
 <a id="S10.11"></a>
 ## S10.11 Domy w innych miejscach aplikacji
@@ -698,8 +733,9 @@ badanie ustaliło o domu i jego miejscowości; niczego nie szuka od nowa. Tak ja
   zatwierdzenie” z linkiem **Dom <numer> ›** do sekcji **Opowieść**, w terminalu „Nowa wersja opowieści o domu <dom> –
   do czasu decyzji obowiązuje wersja zatwierdzona”. Pierwszego szkicu tam nie ma: zatwierdza się go na stronie domu
   albo `strom story approve A…`.
-- **Opowieść osoby**, która w domu mieszkała, ma pod tekstem link **Dom <numer> ›** do opowieści domu, tylko gdy dom ma
-  zatwierdzoną opowieść; tekst domu się nie powtarza.
+- **Opowieść osoby**, która w domu mieszkała, ma w aplikacji pod tekstem link **Dom <numer> ›** do opowieści domu,
+  tylko gdy dom ma zatwierdzoną opowieść; tekst domu się nie powtarza. W księdze i na stronach rodu zob.
+  [S10.14.2](#S10.14.2).
 - **Granice:** aplikacja bierze opowieść o domu tylko z mostu badania (GEDCOM jej nie przenosi); bez połączenia
   z badaniem nie ma sekcji ani linku.
 - **Obsługa:** aplikacja: strona domu → **Opowieść**, **Zatwierdź w badaniu**, **Porównaj**; terminal:
@@ -737,15 +773,17 @@ badanie ustaliło o domu i jego miejscowości; niczego nie szuka od nowa. Tak ja
 <a id="S10.14.2"></a>
 ### S10.14.2 Opowieść w wynikach i ochrona osób
 
-- Księga rodu (część **Domy**), zapisana strona domu i strony rodu pokazują tylko zatwierdzony tekst; szkic nigdy,
-  przy nowej wersji obok zatwierdzonej nadal zatwierdzony. W księdze opowieść stoi przed sekcjami domu, a jej źródła
-  są wśród numerowanych przypisów rozdziału.
-- Wynik pomija opowieść **w całości** (tekst nie jest przerabiany), gdy wymienia żyjącego, osobę z mniej więcej
-  ostatnich 100 lat albo osobę badania bez zapisu o zgonie, której drzewo nie zna, albo gdy opiera się na pozycji domu,
-  którą wynik ukrywa ([S10.3.2](#S10.3.2)).
-- Link z opowieści osoby do domu jest w księdze i na stronach rodu tylko wtedy, gdy wynik pokazuje opowieść domu.
+- Księga rodu (część **Domy**), zapisana strona domu i strony rodu pokazują zatwierdzony tekst. Dopóki opowieść nie jest
+  zatwierdzona, pokazują szkic z etykietą „szkic, czeka na zatwierdzenie”, bez przycisków. Przy nowej wersji obok
+  zatwierdzonej do pliku trafia zatwierdzony tekst, nowa wersja nie. W księdze opowieść stoi przed sekcjami domu, a jej
+  źródła są wśród numerowanych przypisów rozdziału.
+- Wynik pomija opowieść **w całości** (tekst nie jest przerabiany, także szkic), gdy wymienia żyjącego, osobę z mniej
+  więcej ostatnich 100 lat albo osobę badania bez zapisu o zgonie, której drzewo nie zna, albo gdy opiera się na pozycji
+  domu, którą wynik ukrywa ([S10.3.2](#S10.3.2)).
+- Link **Dom <numer> ›** z opowieści osoby do domu jest w księdze i na stronach rodu tylko wtedy, gdy wynik pokazuje
+  opowieść domu, także gdy jest to szkic.
 - **Obsługa:** aplikacja: eksport **Księga rodu** → część **Domy**; strona domu → **Zapisz HTML**; strony rodu →
   **Domy**.
 - **Obowiązuje od:** aplikacja 3.33.0
 
-<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} -->
+<!-- zdroj: app:3473602e src/house-privacy.ts houseStoryForOutput (people: žijící, recent, bez úmrtí a mimo strom; facts na skryté položce → null) · app:d7f65e13 src/book-houses.ts (vyprávění před oddíly, prameny v poznámkách kapitoly, draft nikdy) · app:3080a121 src/family-pages-html.ts setStoryHouses · research:src/core/housestory.ts houseStoryView people {id, died} · T8: app:45d99711 src/house-privacy.ts houseStoryForOutput (status draft → draft: true; nová verze vedle final → final), src/book-houses.ts book-house-story-tag P.storyDraft, src/family-pages-html.ts setStoryHouses (status draft i final), src/house-page.ts storyHtml (Schválit jen c.app) · strings.ts houses.page.storyDraft · test person-page-house-story „a draft the house's page shows tagged“ -->
